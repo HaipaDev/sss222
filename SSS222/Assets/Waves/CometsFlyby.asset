@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a14c5dde1fe9e4aaf080d5453ad783, type: 3}
+  m_Name: CometsFlyby
+  m_EditorClassIdentifier: 
+  waveName: Comets Flyby
+  enemies:
+  - {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475, type: 3}
+  timeSpawn: 0
+  timeSpawnWave: 1.8
+  spawnRandomFactor: 0
+  numberOfEnemies: 1
+  moveSpeed: 1.66
+  randomSpeed: 1
+  moveSpeedS: 1.55
+  moveSpeedE: 2.74
+  startToEndPath: 0
+  between2PtsPath: 1
+  pathStartPrefab: {fileID: 7846228419670946794, guid: dffab90ce99bc95479e1e3d6390ac86e,
+    type: 3}
+  pathEndPrefab: {fileID: 0}
+  randomPath: 0
+  randomPathEach: 0
+  pathsRandom: []
+  shipPlace: 0

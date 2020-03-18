@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3860724879463956440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7985188867064137226}
+  - component: {fileID: 884923418037271656}
+  m_Layer: 0
+  m_Name: PowerupsSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7985188867064137226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860724879463956440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &884923418037271656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860724879463956440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1f804133db36c4fb88cb24f950f7d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerups:
+  - {fileID: 5649215481239408911, guid: b68538418da2b5943be6fd26f9e0ddec, type: 3}
+  - {fileID: 530782707432221319, guid: 79e3a62b1e44c5c42afcffa470e5736a, type: 3}
+  - {fileID: 274471404120805607, guid: c16ad10c3be8d894a81ec53963a84d36, type: 3}
+  - {fileID: 7318881522084147253, guid: 0e2ef393ab2246b4a877082641eb520d, type: 3}
+  - {fileID: 4548736405339070879, guid: 76d0a650fa6095b4d9e2950fb018aeaa, type: 3}
+  - {fileID: 4548736405339070879, guid: bbbfc3cfe6944bb4cadd94872c94df49, type: 3}
+  - {fileID: 4548736405339070879, guid: d44872e141aa7484a8ce2adfdcd8fb86, type: 3}
+  - {fileID: 4548736405339070879, guid: da69c5e66b1dd2941ba313f4c96bc246, type: 3}
+  - {fileID: 4548736405339070879, guid: 5924af7ffd96c8147b6d83568c56580e, type: 3}
+  - {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268, type: 3}
+  mTimePowerupSpawns: 10
+  firstSpawn: 15
