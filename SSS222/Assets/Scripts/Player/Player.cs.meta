@@ -14,27 +14,6 @@ MonoImporter:
       type: 3}
   - lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
       type: 3}
-  - explosionVFX: {fileID: 100000, guid: 7d846c02296ef4dc4abff04ce3e5262c, type: 3}
-  - flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
-  - flareShootVFX: {fileID: 100000, guid: c151221cd78239d4ba56697f5a78532e, type: 3}
-  - shipHitSFX: {fileID: 8300000, guid: a18b151904914894d8ca0c87023051ad, type: 3}
-  - explosionSFX: {fileID: 8300000, guid: b2affc4fb28935c4ab45801b98257f10, type: 3}
-  - deathSFX: {fileID: 8300000, guid: faef65200c0014d4aa2393d42b24c515, type: 3}
-  - soundwaveHitSFX: {fileID: 8300000, guid: c589bfb346cbbd8479b5f21c6982cab5, type: 3}
-  - powerupSFX: {fileID: 8300000, guid: 6f4738a10b9ca5a40b2aa0cd26efc961, type: 3}
-  - noEnergySFX: {fileID: 8300000, guid: 1c11946ec7b1172408473ded0c194601, type: 3}
-  - energyBallSFX: {fileID: 8300000, guid: f076b87aac8611a43aa15c115fec5bb9, type: 3}
-  - coinSFX: {fileID: 8300000, guid: 66b797acedbdabe42a159451419d2398, type: 3}
-  - cometPrefab: {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475,
-      type: 3}
-  - batPrefab: {fileID: 3147796775416149952, guid: 2c3f94b277a11e0478605915547d8fed,
-      type: 3}
-  - enShip1Prefab: {fileID: 6432250634095115783, guid: 37903edfff6f26349954ed2b719c593a,
-      type: 3}
-  - soundwavePrefab: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
-      type: 3}
-  - EBtPrefab: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1,
-      type: 3}
   - CoinPrefab: {fileID: 1056705403108089519, guid: eebb358fa9ff6af419cd68bd020a4289,
       type: 3}
   - enBallPrefab: {fileID: 1056705403108089519, guid: b02c0de83bb50b44aadff0efec44e73f,
@@ -59,6 +38,32 @@ MonoImporter:
       type: 3}
   - gcloverPwrupPrefab: {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268,
       type: 3}
+  - cometPrefab: {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475,
+      type: 3}
+  - batPrefab: {fileID: 3147796775416149952, guid: 2c3f94b277a11e0478605915547d8fed,
+      type: 3}
+  - enShip1Prefab: {fileID: 6432250634095115783, guid: 37903edfff6f26349954ed2b719c593a,
+      type: 3}
+  - soundwavePrefab: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
+      type: 3}
+  - EBtPrefab: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1,
+      type: 3}
+  - explosionVFX: {fileID: 100000, guid: 7d846c02296ef4dc4abff04ce3e5262c, type: 3}
+  - flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
+  - flareShootVFX: {fileID: 100000, guid: c151221cd78239d4ba56697f5a78532e, type: 3}
+  - gcloverVFX: {fileID: 100000, guid: 93654d0135dbfd741b138964b108e311, type: 3}
+  - gcloverOVFX: {fileID: 100000, guid: 41fbf007ac904dd48afafa7a6655e3ef, type: 3}
+  - shipHitSFX: {fileID: 8300000, guid: a18b151904914894d8ca0c87023051ad, type: 3}
+  - explosionSFX: {fileID: 8300000, guid: b2affc4fb28935c4ab45801b98257f10, type: 3}
+  - deathSFX: {fileID: 8300000, guid: faef65200c0014d4aa2393d42b24c515, type: 3}
+  - soundwaveHitSFX: {fileID: 8300000, guid: c589bfb346cbbd8479b5f21c6982cab5, type: 3}
+  - powerupSFX: {fileID: 8300000, guid: 6f4738a10b9ca5a40b2aa0cd26efc961, type: 3}
+  - powerupOffSFX: {instanceID: 0}
+  - gcloverSFX: {instanceID: 0}
+  - gcloverOffSFX: {instanceID: 0}
+  - noEnergySFX: {fileID: 8300000, guid: 1c11946ec7b1172408473ded0c194601, type: 3}
+  - energyBallSFX: {fileID: 8300000, guid: f076b87aac8611a43aa15c115fec5bb9, type: 3}
+  - coinSFX: {fileID: 8300000, guid: 66b797acedbdabe42a159451419d2398, type: 3}
   - gameOverCanvasPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}

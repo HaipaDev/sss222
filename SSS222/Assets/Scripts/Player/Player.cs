@@ -35,8 +35,12 @@ public class Player : MonoBehaviour{
     [SerializeField] int mlaserBulletsAmount = 10;
     [SerializeField] float lsaberEnPeriod = 0.1f;
     [HeaderAttribute("States")]
-    [SerializeField] bool flip = false;
-    [SerializeField] bool gclover = false;
+    [SerializeField] public bool flip = false;
+    [SerializeField] float flipTime = 7f;
+    public float flipTimer=-4;
+    [SerializeField] public bool gclover = false;
+    [SerializeField] float gcloverTime = 6f;
+    public float gcloverTimer =-4;
     [HeaderAttribute("Energy Costs")]
     [SerializeField] float laserEn = 2f;
     [SerializeField] float laser2En = 4f;
@@ -49,25 +53,6 @@ public class Player : MonoBehaviour{
     [SerializeField] float medkitEnergyGet = 2f;
     [SerializeField] float medkitUEnergyGet = 8f;
     [SerializeField] float pwrupEnergyGet = 48f;
-    [HeaderAttribute("Effects")]
-    [SerializeField] GameObject explosionVFX;
-    [SerializeField] GameObject flareHitVFX;
-    [SerializeField] GameObject flareShootVFX;
-    //[SerializeField] AudioClip shootLaserSFX;
-    [SerializeField] AudioClip shipHitSFX;
-    [SerializeField] AudioClip explosionSFX;
-    [SerializeField] AudioClip deathSFX;
-    [SerializeField] AudioClip soundwaveHitSFX;
-    [SerializeField] AudioClip powerupSFX;
-    [SerializeField] AudioClip noEnergySFX;
-    [SerializeField] AudioClip energyBallSFX;
-    [SerializeField] AudioClip coinSFX;
-    [HeaderAttribute("Damage Dealers")]
-    [SerializeField] GameObject cometPrefab;
-    [SerializeField] GameObject batPrefab;
-    [SerializeField] GameObject enShip1Prefab;
-    [SerializeField] GameObject soundwavePrefab;
-    [SerializeField] GameObject EBtPrefab;
     [HeaderAttribute("Powerups")]
     [SerializeField] GameObject CoinPrefab;
     [SerializeField] GameObject enBallPrefab;
@@ -81,6 +66,30 @@ public class Player : MonoBehaviour{
     [SerializeField] GameObject lsaberPwrupPrefab;
     [SerializeField] GameObject flipPwrupPrefab;
     [SerializeField] GameObject gcloverPwrupPrefab;
+    [HeaderAttribute("Damage Dealers")]
+    [SerializeField] GameObject cometPrefab;
+    [SerializeField] GameObject batPrefab;
+    [SerializeField] GameObject enShip1Prefab;
+    [SerializeField] GameObject soundwavePrefab;
+    [SerializeField] GameObject EBtPrefab;
+    [HeaderAttribute("Effects")]
+    [SerializeField] GameObject explosionVFX;
+    [SerializeField] GameObject flareHitVFX;
+    [SerializeField] GameObject flareShootVFX;
+    [SerializeField] GameObject gcloverVFX;
+    [SerializeField] GameObject gcloverOVFX;
+    //[SerializeField] AudioClip shootLaserSFX;
+    [SerializeField] AudioClip shipHitSFX;
+    [SerializeField] AudioClip explosionSFX;
+    [SerializeField] AudioClip deathSFX;
+    [SerializeField] AudioClip soundwaveHitSFX;
+    [SerializeField] AudioClip powerupSFX;
+    [SerializeField] AudioClip powerupOffSFX;
+    [SerializeField] AudioClip gcloverSFX;
+    [SerializeField] AudioClip gcloverOffSFX;
+    [SerializeField] AudioClip noEnergySFX;
+    [SerializeField] AudioClip energyBallSFX;
+    [SerializeField] AudioClip coinSFX;
     [HeaderAttribute("Others")]
     [SerializeField] GameObject gameOverCanvasPrefab;
     [SerializeField] float flareShootYY = 0.2f;
@@ -111,6 +120,9 @@ public class Player : MonoBehaviour{
         States();
         Die();
     }
+
+    public float GetFlipTimer(){ return flipTimer; }
+    public float GetGCloverTimer(){ return gcloverTimer; }
 
     private void MovePlayer()
     {
@@ -270,18 +282,23 @@ public class Player : MonoBehaviour{
             Destroy(GameObject.Find(lsaberName));
             Destroy(GameObject.Find(lsaberName1));
             moveSpeedCurrent = moveSpeed;
+            powerup = "laser";
         }
     }
     #endregion
 
     private void States(){
-        if (flip == true) { moveDir = -1; } else { moveDir = 1; }
+        if (flip == true) { moveDir = -1; flipTimer -= Time.deltaTime; } else { moveDir = 1; }
+        if(flipTimer<= 0 && flipTimer>-4) { flip = false; flipTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
         if (gclover == true) {
             health = maxHP;
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover = true;
-        }else{
+            gcloverTimer -= Time.deltaTime;
+        }
+        else{
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover = false;
         }
+        if (gcloverTimer <= 0 && gcloverTimer>-4) { gclover = false; gcloverTimer = -4; AudioSource.PlayClipAtPoint(gcloverOffSFX, new Vector2(transform.position.x, transform.position.y)); }
     }
 
     private void Die(){
@@ -344,10 +361,16 @@ public class Player : MonoBehaviour{
                 if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { health += 58; energy += medkitUEnergyGet; }
 
                 var flipName = flipPwrupPrefab.name; var flipName1 = flipPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == flipName || other.gameObject.name == flipName1) { flip=true; }
+                if (other.gameObject.name == flipName || other.gameObject.name == flipName1) { flip=true; flipTimer = flipTime; }
 
                 var gcloverName = gcloverPwrupPrefab.name; var gcloverName1 = gcloverPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == gcloverName || other.gameObject.name == gcloverName1) { gclover=true; }
+                if (other.gameObject.name == gcloverName || other.gameObject.name == gcloverName1) { gclover=true; gcloverTimer = gcloverTime;
+                    //GameObject gcloverexVFX = Instantiate(gcloverVFX, new Vector2(0, 0), Quaternion.identity);
+                    GameObject gcloverexOVFX = Instantiate(gcloverOVFX, new Vector2(0, 0), Quaternion.identity);
+                    //Destroy(gcloverexVFX, 1f);
+                    Destroy(gcloverexOVFX, 1f);
+                }
+
 
 
                 var laser2Name = laser2PwrupPrefab.name; var laser2Name1 = laser2PwrupPrefab.name + "(Clone)";
@@ -368,12 +391,16 @@ public class Player : MonoBehaviour{
                 var lsaberName = lsaberPwrupPrefab.name; var lsaberName1 = lsaberPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == lsaberName || other.gameObject.name == lsaberName1) { powerup = "lsaber"; energy += pwrupEnergyGet; }
 
+
                 if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1){
                     AudioSource.PlayClipAtPoint(energyBallSFX, new Vector2(transform.position.x, transform.position.y));
                 }
                 else if(other.gameObject.name == CoinName || other.gameObject.name == CoinName1)
                 {
                     AudioSource.PlayClipAtPoint(coinSFX, new Vector2(transform.position.x, transform.position.y));
+                } else if(other.gameObject.name == gcloverName || other.gameObject.name == gcloverName1)
+                {
+                    AudioSource.PlayClipAtPoint(gcloverSFX, new Vector2(transform.position.x, transform.position.y));
                 } else{
                     AudioSource.PlayClipAtPoint(powerupSFX, new Vector2(transform.position.x, transform.position.y));
                 }

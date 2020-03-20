@@ -238,15 +238,15 @@ RectTransform:
   m_GameObject: {fileID: 397147723452152765}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 10}
-  m_LocalScale: {x: 3.625, y: 1, z: 1}
+  m_LocalScale: {x: 3.625, y: 0.82, z: 1}
   m_Children: []
   m_Father: {fileID: 1900147637101581620}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000026703, y: 397}
-  m_SizeDelta: {x: 261.7, y: 219.7}
+  m_AnchoredPosition: {x: -7, y: 398.31}
+  m_SizeDelta: {x: 341.2, y: 286.43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &486376355186475598
 CanvasRenderer:
@@ -708,6 +708,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3735966101067930871, guid: 1125c619486b7ae4bb159af2f0f88def,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 5173487273394155241, guid: 1125c619486b7ae4bb159af2f0f88def,
         type: 3}

@@ -42,17 +42,15 @@ public class Follow : MonoBehaviour{
             else{ rb.velocity = new Vector2(0f, -vspeed); }
         }else{
             if(dirYYUp==true){
-                if(transform.position.y < targetObj.transform.position.y + OOR_YY){
+                if(transform.position.y < targetObj.transform.position.y + OOR_YY){// && transform.position.y > targetObj.transform.position.y - OOR_YY+0.5){
                     if (dist < distReq) { transform.position = Vector2.MoveTowards(transform.position, targetPos, step); }
                     else { rb.velocity = new Vector2(0f, -vspeed); }
                 }else { rb.velocity = new Vector2(0f, -vspeed); }
             }else{
-                if (transform.position.y > targetObj.transform.position.y - OOR_YY)
-                {
+                if (transform.position.y > targetObj.transform.position.y - OOR_YY){// && transform.position.y < targetObj.transform.position.y + OOR_YY + 0.5){
                     if (dist < distReq) { transform.position = Vector2.MoveTowards(transform.position, targetPos, step); }
                     else { rb.velocity = new Vector2(0f, -vspeed); }
-                }
-                else { rb.velocity = new Vector2(0f, -vspeed); }
+                }else { rb.velocity = new Vector2(0f, -vspeed); }
             }
         }
 
