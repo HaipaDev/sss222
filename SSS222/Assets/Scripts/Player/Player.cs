@@ -18,11 +18,12 @@ public class Player : MonoBehaviour{
     [SerializeField] public float energy = 80f;
     [SerializeField] public float maxEnergy = 200f;
     [HeaderAttribute("Weapons")]
-    [SerializeField] GameObject laserPrefab;
-    [SerializeField] GameObject phaserPrefab;
-    [SerializeField] GameObject hrocketPrefab;
-    [SerializeField] GameObject mlaserPrefab;
-    [SerializeField] GameObject lsaberPrefab;
+    [SerializeField] public GameObject laserPrefab;
+    [SerializeField] public GameObject phaserPrefab;
+    [SerializeField] public GameObject hrocketPrefab;
+    [SerializeField] public GameObject mlaserPrefab;
+    [SerializeField] public GameObject lsaberPrefab;
+    [SerializeField] public GameObject shadowBTPrefab;
     [SerializeField] float laserSpeed = 9f;
     [SerializeField] float laserShootPeriod = 0.34f;
     [SerializeField] float phaserSpeed = 10.5f;
@@ -34,67 +35,67 @@ public class Player : MonoBehaviour{
     [SerializeField] float mlaserShootPeriod = 0.1f;
     [SerializeField] int mlaserBulletsAmount = 10;
     [SerializeField] float lsaberEnPeriod = 0.1f;
+    [SerializeField] float shadowBTSpeed = 4f;
+    [SerializeField] float shadowBTShootPeriod = 0.65f;
     [HeaderAttribute("States")]
     [SerializeField] public bool flip = false;
-    [SerializeField] float flipTime = 7f;
+    [SerializeField] public float flipTime = 7f;
     public float flipTimer=-4;
     [SerializeField] public bool gclover = false;
-    [SerializeField] float gcloverTime = 6f;
+    [SerializeField] public float gcloverTime = 6f;
     public float gcloverTimer =-4;
+    [SerializeField] public bool shadow = false;
+    [SerializeField] public float shadowTime = 10f;
+    public float shadowTimer = -4;
+    [SerializeField] public float shadowLength=0.33f;
+    [SerializeField] public float dashSpeed=10f;
+    [SerializeField] public float startDashTime=0.1f;
+    float dashTime;
     [HeaderAttribute("Energy Costs")]
-    [SerializeField] float laserEn = 2f;
-    [SerializeField] float laser2En = 4f;
-    [SerializeField] float laser3En = 6f;
-    [SerializeField] float phaserEn = 3f;
-    [SerializeField] float hrocketEn = 5f;
-    [SerializeField] float mlaserEn = 0.225f;
-    [SerializeField] float lsaberEn = 0.2f;
-    [SerializeField] float energyBallGet = 6f;
-    [SerializeField] float medkitEnergyGet = 2f;
-    [SerializeField] float medkitUEnergyGet = 8f;
-    [SerializeField] float pwrupEnergyGet = 48f;
-    [HeaderAttribute("Powerups")]
-    [SerializeField] GameObject CoinPrefab;
-    [SerializeField] GameObject enBallPrefab;
-    [SerializeField] GameObject armorPwrupPrefab;
-    [SerializeField] GameObject armorUPwrupPrefab;
-    [SerializeField] GameObject laser2PwrupPrefab;
-    [SerializeField] GameObject laser3PwrupPrefab;
-    [SerializeField] GameObject phaserPwrupPrefab;
-    [SerializeField] GameObject hrocketPwrupPrefab;
-    [SerializeField] GameObject mlaserPwrupPrefab;
-    [SerializeField] GameObject lsaberPwrupPrefab;
-    [SerializeField] GameObject flipPwrupPrefab;
-    [SerializeField] GameObject gcloverPwrupPrefab;
-    [HeaderAttribute("Damage Dealers")]
-    [SerializeField] GameObject cometPrefab;
-    [SerializeField] GameObject batPrefab;
-    [SerializeField] GameObject enShip1Prefab;
-    [SerializeField] GameObject soundwavePrefab;
-    [SerializeField] GameObject EBtPrefab;
+    [SerializeField] public float laserEn = 2f;
+    [SerializeField] public float laser2En = 4f;
+    [SerializeField] public float laser3En = 6f;
+    [SerializeField] public float phaserEn = 3f;
+    [SerializeField] public float hrocketEn = 5f;
+    [SerializeField] public float mlaserEn = 0.225f;
+    [SerializeField] public float lsaberEn = 0.2f;
+    [SerializeField] public float shadowEn = 3.5f;
+    [SerializeField] public float shadowBTEn = 10f;
+    [SerializeField] public float energyBallGet = 6f;
+    [SerializeField] public float medkitEnergyGet = 2f;
+    [SerializeField] public float medkitUEnergyGet = 8f;
+    [SerializeField] public float pwrupEnergyGet = 48f;
     [HeaderAttribute("Effects")]
-    [SerializeField] GameObject explosionVFX;
-    [SerializeField] GameObject flareHitVFX;
-    [SerializeField] GameObject flareShootVFX;
-    [SerializeField] GameObject gcloverVFX;
-    [SerializeField] GameObject gcloverOVFX;
+    [SerializeField] public GameObject explosionVFX;
+    [SerializeField] public GameObject flareHitVFX;
+    [SerializeField] public GameObject flareShootVFX;
+    [SerializeField] public GameObject shadowShootVFX;
+    [SerializeField] public GameObject gcloverVFX;
+    [SerializeField] public GameObject gcloverOVFX;
     //[SerializeField] AudioClip shootLaserSFX;
-    [SerializeField] AudioClip shipHitSFX;
-    [SerializeField] AudioClip explosionSFX;
-    [SerializeField] AudioClip deathSFX;
-    [SerializeField] AudioClip soundwaveHitSFX;
-    [SerializeField] AudioClip powerupSFX;
-    [SerializeField] AudioClip powerupOffSFX;
-    [SerializeField] AudioClip gcloverSFX;
-    [SerializeField] AudioClip gcloverOffSFX;
-    [SerializeField] AudioClip noEnergySFX;
-    [SerializeField] AudioClip energyBallSFX;
-    [SerializeField] AudioClip coinSFX;
+    [SerializeField] public AudioClip shipHitSFX;
+    [SerializeField] public AudioClip explosionSFX;
+    [SerializeField] public AudioClip deathSFX;
+    [SerializeField] public AudioClip soundwaveHitSFX;
+    [SerializeField] public AudioClip powerupSFX;
+    [SerializeField] public AudioClip powerupOffSFX;
+    [SerializeField] public AudioClip gcloverSFX;
+    [SerializeField] public AudioClip gcloverOffSFX;
+    [SerializeField] public AudioClip shadowbtPwrupSFX;
+    [SerializeField] public AudioClip noEnergySFX;
+    [SerializeField] public AudioClip energyBallSFX;
+    [SerializeField] public AudioClip coinSFX;
     [HeaderAttribute("Others")]
     [SerializeField] GameObject gameOverCanvasPrefab;
+    [SerializeField] GameObject shadowPrefab;
     [SerializeField] float flareShootYY = 0.2f;
     int moveDir = 1;
+    const float DCLICK_TIME = 0.2f;
+    float lastClickTime;
+    int dashDirX;
+    int dashDirY;
 
+    Rigidbody2D rb;
     GameSession gameSession;
     Coroutine shootCoroutine;
 
@@ -105,9 +106,11 @@ public class Player : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start(){
+        rb = GetComponent<Rigidbody2D>();
         gameSession=FindObjectOfType<GameSession>();
         SetUpMoveBoundaries();
         moveSpeedCurrent = moveSpeed;
+        dashTime = startDashTime;
     }
     // Update is called once per frame
     void Update(){
@@ -123,11 +126,25 @@ public class Player : MonoBehaviour{
 
     public float GetFlipTimer(){ return flipTimer; }
     public float GetGCloverTimer(){ return gcloverTimer; }
+    public float GetShadowTimer(){ return shadowTimer; }
 
     private void MovePlayer()
     {
-        var deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir;
-        var deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir;
+        var deltaX=0f;
+        var deltaY=0f;
+        if (Input.GetButtonDown("Horizontal")){
+            float timeSinceLastClick = Time.time - lastClickTime;
+            if (timeSinceLastClick <= DCLICK_TIME) { DClick(); deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir; }
+            else{ deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir; }
+            lastClickTime = Time.time;  }
+        if(Input.GetButtonDown("Vertical")){
+            float timeSinceLastClick = Time.time - lastClickTime;
+            if(timeSinceLastClick<=DCLICK_TIME){ DClick(); deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
+            else{ deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
+            lastClickTime = Time.time; }
+
+        deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir;
+        deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir;
 
         var newXpos = transform.position.x;
         var newYpos = transform.position.y;
@@ -135,6 +152,8 @@ public class Player : MonoBehaviour{
         if (moveX==true) newXpos = Mathf.Clamp(transform.position.x,xMin,xMax) + deltaX;
         if (moveY == true) newYpos = Mathf.Clamp(transform.position.y,yMin,yMax) + deltaY;
         transform.position = new Vector2(newXpos,newYpos);
+        //Debug.Log(timeSinceLastClick);
+        //Debug.Log(dashTime);
     }
     private void SetUpMoveBoundaries()
     {
@@ -152,6 +171,18 @@ public class Player : MonoBehaviour{
         if (Input.GetButtonUp("Fire1")){
             StopCoroutine(shootCoroutine);
         }
+    }
+    private void DClick(){
+        Debug.Log("DClick");
+        if(shadow==true){
+            if(Input.GetAxisRaw("Vertical")<0) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
+            if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
+            if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
+            if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+            energy -= shadowEn;
+            //else{ rb.velocity = Vector2.zero; }
+        }//else { dashTime = startDashTime; rb.velocity = Vector2.zero; }
+        
     }
     #region//Powerups
     IEnumerator ShootContinuously(){
@@ -253,6 +284,19 @@ public class Player : MonoBehaviour{
                     hrocket.GetComponent<Rigidbody2D>().velocity = new Vector2(0, hrocketSpeed);
                     energy -= hrocketEn;
                     yield return new WaitForSeconds(hrocketShootPeriod);
+                }else if (powerup == "shadowbt")
+                {
+                    GameObject laserL = Instantiate(shadowBTPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject laserR = Instantiate(shadowBTPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject flareL = Instantiate(shadowShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                    GameObject flareR = Instantiate(shadowShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                    Destroy(flareL.gameObject, 0.3f);
+                    Destroy(flareR.gameObject, 0.3f);
+                    laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
+                    laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
+                    energy -= shadowBTEn;
+                    yield return new WaitForSeconds(shadowBTShootPeriod);
+                    //AudioSource.PlayClipAtPoint(shootLaserSFX, new Vector2(transform.position.x, transform.position.y));
                 }
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
                 else {if(powerup!="lsaberA")powerup = "laser";yield return new WaitForSeconds(1f); }
@@ -288,8 +332,11 @@ public class Player : MonoBehaviour{
     #endregion
 
     private void States(){
-        if (flip == true) { moveDir = -1; flipTimer -= Time.deltaTime; } else { moveDir = 1; }
+        if (flip == true) { flipTimer -= Time.deltaTime; moveDir = -1; } else { moveDir = 1; }
         if(flipTimer<= 0 && flipTimer>-4) { flip = false; flipTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
+        if(shadow==true){ shadowTimer -= Time.deltaTime; }
+        if(shadowTimer<=0 && shadowTimer>-4){ shadow = false; shadowTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
+
         if (gclover == true) {
             health = maxHP;
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover = true;
@@ -299,8 +346,17 @@ public class Player : MonoBehaviour{
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover = false;
         }
         if (gcloverTimer <= 0 && gcloverTimer>-4) { gclover = false; gcloverTimer = -4; AudioSource.PlayClipAtPoint(gcloverOffSFX, new Vector2(transform.position.x, transform.position.y)); }
-    }
 
+        if(shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
+        else{ dashTime = startDashTime; rb.velocity = Vector2.zero; GetComponent<BackflameEffect>().enabled=true; }
+        if (dashTime <= 0) { dashTime = startDashTime; rb.velocity = Vector2.zero; }
+        else{ dashTime -= Time.deltaTime; }
+    }
+    private void Shadow(){
+        GameObject shadow = Instantiate(shadowPrefab,new Vector2(transform.position.x,transform.position.y), Quaternion.identity);
+        Destroy(shadow.gameObject, shadowLength);
+        //yield return new WaitForSeconds(0.2f);
+    }
     private void Die(){
         if (health <= 0){
             GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
@@ -314,101 +370,6 @@ public class Player : MonoBehaviour{
         }
     }
 
-
-    private void OnTriggerEnter2D(Collider2D other){
-        
-        if (!other.CompareTag(tag))
-        {
-            #region//Enemies
-            if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet")){
-                DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
-                if (!damageDealer) { return; }
-                bool en = false;
-                var dmg=damageDealer.GetDamage();
-
-                var cometName = cometPrefab.name; var cometName1 = cometPrefab.name + "(Clone)";
-                if (other.gameObject.name == cometName || other.gameObject.name == cometName1) { dmg = damageDealer.GetDamageComet(); en = true; }
-                var batName = batPrefab.name; var batName1 = batPrefab.name + "(Clone)";
-                if (other.gameObject.name == batName || other.gameObject.name == batName1){dmg = damageDealer.GetDamageBat();en=true;}
-                var enShip1Name = enShip1Prefab.name; var enShip1Name1 = enShip1Prefab.name + "(Clone)";
-                if (other.gameObject.name == enShip1Name || other.gameObject.name == enShip1Name1){dmg = damageDealer.GetDamageEnemyShip1();en=true;}
-
-                var Sname = soundwavePrefab.name;var Sname1 = soundwavePrefab.name + "(Clone)";
-                if (other.gameObject.name == Sname || other.gameObject.name == Sname1) {dmg =damageDealer.GetDamageSoundwave(); AudioSource.PlayClipAtPoint(soundwaveHitSFX, new Vector2(transform.position.x, transform.position.y)); }
-                var EBtname = EBtPrefab.name; var EBtname1 = EBtPrefab.name + "(Clone)";
-                if (other.gameObject.name == EBtname || other.gameObject.name == EBtname1) dmg = damageDealer.GetDamageEBt();
-                health -= dmg;
-                if(en!=true){Destroy(other.gameObject, 0.05f);}
-                else{ if (other.GetComponent<Enemy>().health > -1) { other.GetComponent<Enemy>().givePts = false; other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die();  } }
-
-                AudioSource.PlayClipAtPoint(shipHitSFX, new Vector2(transform.position.x, transform.position.y));
-                var flare = Instantiate(flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
-                Destroy(flare.gameObject, 0.3f);
-            }
-            #endregion
-            #region//Powerups
-            else if (other.gameObject.CompareTag("Powerups")){
-                var enBallName = enBallPrefab.name; var enBallName1 = enBallPrefab.name + "(Clone)";
-                if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1) { energy += energyBallGet; }
-
-                var CoinName = CoinPrefab.name; var CoinName1 = CoinPrefab.name + "(Clone)";
-                if (other.gameObject.name == CoinName || other.gameObject.name == CoinName1) { gameSession.coins += 1; }
-
-
-                var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { health += 25; energy += medkitEnergyGet; }
-                var armorUName = armorUPwrupPrefab.name; var armorUName1 = armorUPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { health += 58; energy += medkitUEnergyGet; }
-
-                var flipName = flipPwrupPrefab.name; var flipName1 = flipPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == flipName || other.gameObject.name == flipName1) { flip=true; flipTimer = flipTime; }
-
-                var gcloverName = gcloverPwrupPrefab.name; var gcloverName1 = gcloverPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == gcloverName || other.gameObject.name == gcloverName1) { gclover=true; gcloverTimer = gcloverTime;
-                    //GameObject gcloverexVFX = Instantiate(gcloverVFX, new Vector2(0, 0), Quaternion.identity);
-                    GameObject gcloverexOVFX = Instantiate(gcloverOVFX, new Vector2(0, 0), Quaternion.identity);
-                    //Destroy(gcloverexVFX, 1f);
-                    Destroy(gcloverexOVFX, 1f);
-                }
-
-
-
-                var laser2Name = laser2PwrupPrefab.name; var laser2Name1 = laser2PwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == laser2Name || other.gameObject.name == laser2Name1) { powerup = "laser2"; energy += pwrupEnergyGet; }
-
-                var laser3Name = laser3PwrupPrefab.name; var laser3Name1 = laser3PwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == laser3Name || other.gameObject.name == laser3Name1) { powerup = "laser3"; energy += pwrupEnergyGet; }
-
-                var phaserName = phaserPwrupPrefab.name; var phaserName1 = phaserPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == phaserName || other.gameObject.name == phaserName1) { powerup = "phaser"; energy += pwrupEnergyGet; }
-                
-                var hrocketName = hrocketPwrupPrefab.name; var hrocketName1 = hrocketPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == hrocketName || other.gameObject.name == hrocketName1) { powerup = "hrockets"; energy += pwrupEnergyGet; }
-                
-                var minilaserName = mlaserPwrupPrefab.name; var minilaserName1 = mlaserPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == minilaserName || other.gameObject.name == minilaserName1) { powerup = "mlaser"; energy += pwrupEnergyGet; }
-                
-                var lsaberName = lsaberPwrupPrefab.name; var lsaberName1 = lsaberPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == lsaberName || other.gameObject.name == lsaberName1) { powerup = "lsaber"; energy += pwrupEnergyGet; }
-
-
-                if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1){
-                    AudioSource.PlayClipAtPoint(energyBallSFX, new Vector2(transform.position.x, transform.position.y));
-                }
-                else if(other.gameObject.name == CoinName || other.gameObject.name == CoinName1)
-                {
-                    AudioSource.PlayClipAtPoint(coinSFX, new Vector2(transform.position.x, transform.position.y));
-                } else if(other.gameObject.name == gcloverName || other.gameObject.name == gcloverName1)
-                {
-                    AudioSource.PlayClipAtPoint(gcloverSFX, new Vector2(transform.position.x, transform.position.y));
-                } else{
-                    AudioSource.PlayClipAtPoint(powerupSFX, new Vector2(transform.position.x, transform.position.y));
-                }
-                Destroy(other.gameObject, 0.05f);
-            }
-            #endregion
-        }
-    }
     /*private void OnTriggerStay2D(Collider2D other)
     {
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();

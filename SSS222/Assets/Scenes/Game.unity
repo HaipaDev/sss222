@@ -616,6 +616,12 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -3254622233327154883, guid: 8846055b94cbfd147946514f0ab054a4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8846055b94cbfd147946514f0ab054a4, type: 3}
+--- !u!1 &1246426770 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4404094810837039186, guid: d586ee1ab8d702b4fb0b85e008987727,
+    type: 3}
+  m_PrefabInstance: {fileID: 2828492360919689622}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1530955281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -771,13 +777,23 @@ PrefabInstance:
     - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
         type: 3}
       propertyPath: powerups.Array.size
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: mTimePowerupSpawns
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: firstSpawn
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
         type: 3}
       propertyPath: powerups.Array.data[0]
       value: 
-      objectReference: {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268,
+      objectReference: {fileID: 4548736405339070879, guid: 506b460219bf5b24db97b32612acb51c,
         type: 3}
     - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
         type: 3}
@@ -787,14 +803,10 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
         type: 3}
-      propertyPath: firstSpawn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
+      propertyPath: powerups.Array.data[2]
+      value: 
+      objectReference: {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268,
         type: 3}
-      propertyPath: mTimePowerupSpawns
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3860724879463956440, guid: c65d768f3c3f0f84da827b9eb6a21670,
         type: 3}
       propertyPath: m_Name
@@ -982,19 +994,19 @@ PrefabInstance:
     - target: {fileID: 356336301364335482, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
       propertyPath: waveConfigs.Array.size
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 356336301364335482, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
       propertyPath: waveConfigs.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b,
+      objectReference: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289,
         type: 2}
     - target: {fileID: 356336301364335482, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
       propertyPath: waveConfigs.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf,
+      objectReference: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a,
         type: 2}
     - target: {fileID: 356336301364335482, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
@@ -2174,13 +2186,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
-      propertyPath: energy
-      value: 200
+      propertyPath: gameOverCanvasPrefab
+      value: 
+      objectReference: {fileID: 1246426770}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: shadow
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
-      propertyPath: powerup
-      value: laser
+      propertyPath: shadowBTEn
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547399, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
@@ -2255,11 +2272,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HUD
-      objectReference: {fileID: 0}
-    - target: {fileID: 5802341655381487775, guid: db6f21db03d81e24fa8a1e4230da0599,
-        type: 3}
-      propertyPath: m_TagString
-      value: GameController
       objectReference: {fileID: 0}
     - target: {fileID: 6644735265139863176, guid: db6f21db03d81e24fa8a1e4230da0599,
         type: 3}

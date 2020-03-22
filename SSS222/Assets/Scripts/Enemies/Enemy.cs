@@ -30,12 +30,14 @@ public class Enemy : MonoBehaviour{
     [SerializeField] AudioClip hrocketHitSFX;
     [SerializeField] AudioClip phaserHitSFX;
     [SerializeField] AudioClip lsaberHitSFX;
+    [SerializeField] AudioClip shadowbtHitSFX;
     [HeaderAttribute("Damage Dealers")]
     [SerializeField] GameObject laserPrefab;
     [SerializeField] GameObject mlaserPrefab;
     [SerializeField] GameObject hrocketPrefab;
     [SerializeField] GameObject phaserPrefab;
     [SerializeField] GameObject lsaberPrefab;
+    [SerializeField] GameObject shadowbtPrefab;
     [HeaderAttribute("Drops")]
     [SerializeField] GameObject energyBallPrefab;
     [SerializeField] GameObject coinPrefab;
@@ -114,6 +116,9 @@ public class Enemy : MonoBehaviour{
 
             var LSabername = lsaberPrefab.name; var LSabername1 = lsaberPrefab.name + "(Clone)";
             if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1){ dmg = damageDealer.GetDamageLSaber(); AudioSource.PlayClipAtPoint(lsaberHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+
+            var shadowbtName = shadowbtPrefab.name; var shadowbtName1 = shadowbtPrefab.name + "(Clone)";
+            if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { dmg = damageDealer.GetDamageShadowBT(); AudioSource.PlayClipAtPoint(shadowbtHitSFX, new Vector2(transform.position.x, transform.position.y)); }
 
 
 

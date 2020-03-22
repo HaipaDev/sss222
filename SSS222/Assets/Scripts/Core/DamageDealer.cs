@@ -9,6 +9,7 @@ public class DamageDealer : MonoBehaviour{
     float dmgHRocket = 7f;
     float dmgMiniLaser = 0.75f;
     float dmgLSaber = 3.5f;
+    float dmgShadowBT = 40.5f;
     int dmgComet = 37;
     int dmgBat = 26;
     int dmgEnemyShip1 = 80;
@@ -21,6 +22,7 @@ public class DamageDealer : MonoBehaviour{
     public float GetDamageHRocket(){return dmgHRocket; }
     public float GetDamageMiniLaser(){return dmgMiniLaser; }
     public float GetDamageLSaber(){return dmgLSaber; }
+    public float GetDamageShadowBT(){return dmgShadowBT; }
 
 
     public int GetDamageComet(){return dmgComet;}
