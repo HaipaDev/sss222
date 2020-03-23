@@ -153,7 +153,7 @@ MonoBehaviour:
   health: 200
   maxHP: 200
   powerup: laser
-  energy: 200
+  energy: 160
   maxEnergy: 200
   laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
     type: 3}
@@ -227,6 +227,9 @@ MonoBehaviour:
   shadowPrefab: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699,
     type: 3}
   flareShootYY: 0.2
+  damaged: 0
+  healed: 0
+  shadowed: 0
 --- !u!114 &1949430517914965929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +280,10 @@ MonoBehaviour:
     type: 3}
   EBtPrefab: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1,
     type: 3}
+  leechPrefab: {fileID: 3147796775416149952, guid: c720f3d821454e2429194e37df8ad1a3,
+    type: 3}
+  dmgFreq: 0.38
+  dmgTimer: 0
 --- !u!114 &502397296
 MonoBehaviour:
   m_ObjectHideFlags: 0

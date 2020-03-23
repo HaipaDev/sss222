@@ -24,6 +24,10 @@ public class PlayerCollider : MonoBehaviour{
     [SerializeField] GameObject enShip1Prefab;
     [SerializeField] GameObject soundwavePrefab;
     [SerializeField] GameObject EBtPrefab;
+    [SerializeField] GameObject leechPrefab;
+    [HeaderAttribute("Other")]
+    [SerializeField] float dmgFreq=0.38f;
+    public float dmgTimer;
 
     Player player;
     GameSession gameSession;
@@ -51,6 +55,7 @@ public class PlayerCollider : MonoBehaviour{
                 DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
                 if (!damageDealer) { return; }
                 bool en = false;
+                bool destroy = true;
                 var dmg = damageDealer.GetDamage();
 
                 var cometName = cometPrefab.name; var cometName1 = cometPrefab.name + "(Clone)";
@@ -64,13 +69,29 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == Sname || other.gameObject.name == Sname1) { dmg = damageDealer.GetDamageSoundwave(); AudioSource.PlayClipAtPoint(player.soundwaveHitSFX, new Vector2(transform.position.x, transform.position.y)); }
                 var EBtname = EBtPrefab.name; var EBtname1 = EBtPrefab.name + "(Clone)";
                 if (other.gameObject.name == EBtname || other.gameObject.name == EBtname1) dmg = damageDealer.GetDamageEBt();
-                player.health -= dmg;
-                if (en != true) { Destroy(other.gameObject, 0.05f); }
-                else { other.GetComponent<Enemy>().givePts = false; other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die(); } 
 
-                AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
-                var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
-                Destroy(flare.gameObject, 0.3f);
+                var leechName = leechPrefab.name; var leechName1 = leechPrefab.name + "(Clone)";
+                if (other.gameObject.name == leechName || other.gameObject.name == leechName1) { en = true;  destroy = false; }
+
+                if(player.dashing==false){
+                    player.health -= dmg;
+                    if(destroy==true){
+                        if (en != true) { Destroy(other.gameObject, 0.05f); }
+                        else { other.GetComponent<Enemy>().givePts = false; other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die(); }
+                    }else{ }
+                    player.damaged = true;
+                    AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
+                    var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
+                    Destroy(flare.gameObject, 0.3f);
+                }
+                else if(player.shadow==true && player.dashing==true){
+                    //if (destroy == true){
+                        if (en != true) { Destroy(other.gameObject, 0.05f); }
+                        else { other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die(); }
+                    //}else{ }
+                }
+
+                
             }
             #endregion
             #region//Powerups
@@ -84,9 +105,9 @@ public class PlayerCollider : MonoBehaviour{
 
 
                 var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { player.health += 25; player.energy += player.medkitEnergyGet; }
+                if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { player.health += 25; player.energy += player.medkitEnergyGet; player.healed = true; }
                 var armorUName = armorUPwrupPrefab.name; var armorUName1 = armorUPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { player.health += 58; player.energy += player.medkitUEnergyGet; }
+                if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { player.health += 58; player.energy += player.medkitUEnergyGet; player.healed = true; }
 
                 var flipName = flipPwrupPrefab.name; var flipName1 = flipPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == flipName || other.gameObject.name == flipName1) { player.flip = true; player.flipTimer = player.flipTime; }
@@ -103,7 +124,9 @@ public class PlayerCollider : MonoBehaviour{
                 var shadowName = shadowPwrupPrefab.name; var shadowName1 = shadowPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == shadowName || other.gameObject.name == shadowName1)
                 {
-                    player.shadow = true; player.shadowTimer = player.shadowTime;
+                    player.shadow = true;
+                    player.shadowTimer = player.shadowTime;
+                    player.shadowed = true;
                     //GameObject gcloverexVFX = Instantiate(gcloverVFX, new Vector2(0, 0), Quaternion.identity);
                     //GameObject gcloverexOVFX = Instantiate(shadowEVFX, new Vector2(0, 0), Quaternion.identity);
                     //Destroy(gcloverexVFX, 1f);
@@ -157,6 +180,30 @@ public class PlayerCollider : MonoBehaviour{
                 Destroy(other.gameObject, 0.05f);
             }
             #endregion
+        }
+    }
+    private void OnTriggerStay2D(Collider2D other){
+        if (!other.CompareTag(tag))
+        {
+            if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet"))
+            {
+                DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
+                if (!damageDealer) { return; }
+                //bool en = false;
+                var dmg = damageDealer.GetDamage();
+
+                var leechName = leechPrefab.name; var leechName1 = leechPrefab.name + "(Clone)";
+                if (other.gameObject.name == leechName || other.gameObject.name == leechName1) { dmg = damageDealer.GetDamageLeech(); }
+
+                if(dmgTimer<=0){
+                    player.health -= dmg;
+                    player.damaged = true;
+                    AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
+                    //var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
+                    //Destroy(flare.gameObject, 0.3f);
+                    dmgTimer = dmgFreq;
+                }else{ dmgTimer -= Time.deltaTime; }
+            }
         }
     }
 }

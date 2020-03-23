@@ -94,6 +94,10 @@ public class Player : MonoBehaviour{
     float lastClickTime;
     int dashDirX;
     int dashDirY;
+    public bool damaged = false;
+    public bool healed = false;
+    public bool shadowed = false;
+    public bool dashing = false;
 
     Rigidbody2D rb;
     GameSession gameSession;
@@ -172,14 +176,16 @@ public class Player : MonoBehaviour{
             StopCoroutine(shootCoroutine);
         }
     }
-    private void DClick(){
-        Debug.Log("DClick");
+    public void DClick(){
+        //Debug.Log("DClick");
         if(shadow==true){
             if(Input.GetAxisRaw("Vertical")<0) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
             if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
             if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
             if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
             energy -= shadowEn;
+            dashing = true;
+            dashTime = startDashTime;
             //else{ rb.velocity = Vector2.zero; }
         }//else { dashTime = startDashTime; rb.velocity = Vector2.zero; }
         
@@ -334,8 +340,6 @@ public class Player : MonoBehaviour{
     private void States(){
         if (flip == true) { flipTimer -= Time.deltaTime; moveDir = -1; } else { moveDir = 1; }
         if(flipTimer<= 0 && flipTimer>-4) { flip = false; flipTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
-        if(shadow==true){ shadowTimer -= Time.deltaTime; }
-        if(shadowTimer<=0 && shadowTimer>-4){ shadow = false; shadowTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
 
         if (gclover == true) {
             health = maxHP;
@@ -347,9 +351,11 @@ public class Player : MonoBehaviour{
         }
         if (gcloverTimer <= 0 && gcloverTimer>-4) { gclover = false; gcloverTimer = -4; AudioSource.PlayClipAtPoint(gcloverOffSFX, new Vector2(transform.position.x, transform.position.y)); }
 
-        if(shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
+        if (shadow == true) { shadowTimer -= Time.deltaTime; }
+        if (shadowTimer <= 0 && shadowTimer > -4) { shadow = false; shadowTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
+        if (shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
         else{ dashTime = startDashTime; rb.velocity = Vector2.zero; GetComponent<BackflameEffect>().enabled=true; }
-        if (dashTime <= 0) { dashTime = startDashTime; rb.velocity = Vector2.zero; }
+        if (dashTime <= 0) { rb.velocity = Vector2.zero; dashing = false; }
         else{ dashTime -= Time.deltaTime; }
     }
     private void Shadow(){

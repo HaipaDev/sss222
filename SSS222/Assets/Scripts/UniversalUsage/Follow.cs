@@ -11,6 +11,7 @@ public class Follow : MonoBehaviour{
     [SerializeField] float distReq = 4f;
     [SerializeField] float speedFollow = 5f;
     [SerializeField] float vspeed = 2.4f;
+    [SerializeField] float hspeed = 0f;
     [SerializeField] bool rotateTowards = false;
     [SerializeField] float speedRotate = 15f;
     [SerializeField] bool followAfterOOR;
@@ -39,18 +40,18 @@ public class Follow : MonoBehaviour{
         float step = speedFollow * Time.deltaTime;
         if(followAfterOOR==true){
             if(dist<distReq){ transform.position = Vector2.MoveTowards(transform.position, targetPos, step); }
-            else{ rb.velocity = new Vector2(0f, -vspeed); }
+            else{ rb.velocity = new Vector2(hspeed, -vspeed); }
         }else{
             if(dirYYUp==true){
                 if(transform.position.y < targetObj.transform.position.y + OOR_YY){// && transform.position.y > targetObj.transform.position.y - OOR_YY+0.5){
                     if (dist < distReq) { transform.position = Vector2.MoveTowards(transform.position, targetPos, step); }
-                    else { rb.velocity = new Vector2(0f, -vspeed); }
-                }else { rb.velocity = new Vector2(0f, -vspeed); }
+                    else { rb.velocity = new Vector2(hspeed, -vspeed); }
+                }else { rb.velocity = new Vector2(hspeed, -vspeed); }
             }else{
                 if (transform.position.y > targetObj.transform.position.y - OOR_YY){// && transform.position.y < targetObj.transform.position.y + OOR_YY + 0.5){
                     if (dist < distReq) { transform.position = Vector2.MoveTowards(transform.position, targetPos, step); }
-                    else { rb.velocity = new Vector2(0f, -vspeed); }
-                }else { rb.velocity = new Vector2(0f, -vspeed); }
+                    else { rb.velocity = new Vector2(hspeed, -vspeed); }
+                }else { rb.velocity = new Vector2(hspeed, -vspeed); }
             }
         }
 
