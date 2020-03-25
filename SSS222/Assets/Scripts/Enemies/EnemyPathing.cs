@@ -23,14 +23,15 @@ public class EnemyPathing : MonoBehaviour{
         }else{
             if(waveConfig.randomPath==true){
                 waypointsR = waveConfig.GetWaypointsRandomPath(enemyIndex);
-            }if(waveConfig.randomPathEach==true){
+            }else if(waveConfig.randomPathEach==true){
                 waypointsR = waveConfig.GetWaypointsRandomPathEach();
-            }if(waveConfig.randomPath == false && waveConfig.randomPathEach == false && waveConfig.shipPlace==false)
-            {
+            }else if (waveConfig.randomPoint == true){
+                waypointsR = waveConfig.GetWaypointsRandomPoint();
+            }else{
                 waypointsS = waveConfig.GetWaypoints();
             }
         }
-        if (waveConfig.randomPath == true || waveConfig.randomPathEach==true){ transform.position = waypointsR[waypointIndex].transform.position; }
+        if (waveConfig.randomPath == true || waveConfig.randomPathEach==true || waveConfig.randomPoint==true){ transform.position = waypointsR[waypointIndex].transform.position; }
         else if(waveConfig.between2PtsPath==true){ var p0 = waypointsS[0].transform.position; var p1 = waypointsS[1].transform.position;
             Vector3 v = p1 - p0;
             transform.position = p0 + Random.value * v;
@@ -78,7 +79,8 @@ public class EnemyPathing : MonoBehaviour{
                     transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
                     if (transform.position == targetPos)waypointIndex++;
                 }else { Destroy(gameObject); }
-            }else{
+            }else if(waveConfig.randomPoint==true){
+            } else{
                 if(waveConfig.shipPlace==false){
                     if (waypointIndex < waypointsS.Count)
                     {

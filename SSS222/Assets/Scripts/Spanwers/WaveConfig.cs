@@ -23,6 +23,7 @@ public class WaveConfig : ScriptableObject{
     [HeaderAttribute("Random Paths")]
     [SerializeField] public bool randomPath;
     [SerializeField] public bool randomPathEach;
+    [SerializeField] public bool randomPoint;
     [SerializeField] public List<GameObject> pathsRandom;
     [HeaderAttribute("Other")]
     [SerializeField] public bool shipPlace;
@@ -61,6 +62,16 @@ public class WaveConfig : ScriptableObject{
         var waveWaypoints = new List<Transform>();
         var pathIndex = Random.Range(0, pathsRandom.Count);
         foreach (Transform child in pathsRandom[pathIndex].transform)
+        {
+            waveWaypoints.Add(child);
+        }
+        return waveWaypoints;
+    }
+    public List<Transform> GetWaypointsRandomPoint()
+    {
+        var waveWaypoints = new List<Transform>();
+        //var pathIndex = Random.Range(0, waveWaypoints.Count);
+        foreach (Transform child in pathsRandom[0].transform)
         {
             waveWaypoints.Add(child);
         }

@@ -178,13 +178,14 @@ public class Player : MonoBehaviour{
     }
     public void DClick(){
         //Debug.Log("DClick");
-        if(shadow==true){
+        if(shadow==true && energy>0){
             if(Input.GetAxisRaw("Vertical")<0) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
             if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
             if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
             if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
             energy -= shadowEn;
             dashing = true;
+            shadowed = true;
             dashTime = startDashTime;
             //else{ rb.velocity = Vector2.zero; }
         }//else { dashTime = startDashTime; rb.velocity = Vector2.zero; }

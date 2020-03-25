@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27a14c5dde1fe9e4aaf080d5453ad783, type: 3}
-  m_Name: CometsFlyby
+  m_Name: MechaLeech
   m_EditorClassIdentifier: 
-  waveName: Comets Flyby
+  waveName: Mecha Leech
   enemies:
-  - {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475, type: 3}
+  - {fileID: 3147796775416149952, guid: c720f3d821454e2429194e37df8ad1a3, type: 3}
   timeSpawn: 0
-  timeSpawnWave: 1.8
+  timeSpawnWave: 0.3
   spawnRandomFactor: 0
   numberOfEnemies: 1
-  moveSpeed: 1.66
-  randomSpeed: 1
-  moveSpeedS: 1.55
-  moveSpeedE: 2.74
+  moveSpeed: 2
+  randomSpeed: 0
+  moveSpeedS: 0
+  moveSpeedE: 0
   startToEndPath: 0
-  between2PtsPath: 1
-  pathStartPrefab: {fileID: 7846228419670946794, guid: dffab90ce99bc95479e1e3d6390ac86e,
-    type: 3}
+  between2PtsPath: 0
+  pathStartPrefab: {fileID: 0}
   pathEndPrefab: {fileID: 0}
   randomPath: 0
   randomPathEach: 0
-  randomPoint: 0
-  pathsRandom: []
+  randomPoint: 1
+  pathsRandom:
+  - {fileID: 7846228419670946794, guid: 3fcaf365c5e1d1a45adb3f83965c778b, type: 3}
   shipPlace: 0

@@ -12,7 +12,7 @@ public class Waves : MonoBehaviour
     [SerializeField] bool looping = true;
     [SerializeField] bool progressiveWaves = false;
     [SerializeField] float mTimeSpawns = 2f;
-    float timeSpawns = 0f;
+    public float timeSpawns = 0f;
 
     WaveDisplay waveDisplay;
     GameSession gameSession;
@@ -70,7 +70,7 @@ public class Waves : MonoBehaviour
     public IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig)
     {
         var RpathIndex = Random.Range(0, waveConfig.pathsRandom.Count);
-        if (waveConfig.randomPath == false && waveConfig.between2PtsPath==false && waveConfig.shipPlace==false){
+        if (waveConfig.randomPath == false && waveConfig.between2PtsPath==false && waveConfig.shipPlace== false && waveConfig.randomPoint == false){
             for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
             {
                 var newEnemy = Instantiate(
@@ -105,6 +105,21 @@ public class Waves : MonoBehaviour
                     newEnemy.GetComponent<EnemyPathing>().enemyIndex = RpathIndex;
                     yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
                 }
+            }
+        }else if (waveConfig.randomPoint == true)
+        {
+            for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
+            {
+                var waveWaypoints = new List<Transform>();
+                foreach (Transform child in waveConfig.pathsRandom[0].transform) { waveWaypoints.Add(child); }
+                var pointIndex = Random.Range(0, waveWaypoints.Count);
+                var newEnemy = Instantiate(
+                    waveConfig.GetEnemyPrefab(),
+                    waveWaypoints[Random.Range(0, pointIndex)].transform.position,
+                    Quaternion.identity);
+                newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                newEnemy.GetComponent<EnemyPathing>().waypointIndex = pointIndex;
+                yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
         }else if(waveConfig.shipPlace==true){
             for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
