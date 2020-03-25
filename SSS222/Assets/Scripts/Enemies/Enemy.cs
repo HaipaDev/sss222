@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour{
     [SerializeField] GameObject phaserPrefab;
     [SerializeField] GameObject lsaberPrefab;
     [SerializeField] GameObject shadowbtPrefab;
+    [SerializeField] GameObject hlaserPrefab;
     [HeaderAttribute("Drops")]
     [SerializeField] GameObject energyBallPrefab;
     [SerializeField] GameObject coinPrefab;
@@ -129,6 +130,9 @@ public class Enemy : MonoBehaviour{
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
             var flare = Instantiate(flareHitVFX, new Vector2(transform.position.x,transform.position.y - 0.5f), Quaternion.identity);
             Destroy(flare.gameObject, 0.3f);
+        }else if(other.CompareTag(tag)){
+            var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
+            if (other.gameObject.name == hlaserName || other.gameObject.name == hlaserName1) { this.givePts = false; this.health = -1; this.Die(); }
         }
     }
     private void OnTriggerStay2D(Collider2D other)

@@ -16,6 +16,7 @@ public class DamageDealer : MonoBehaviour{
     float dmgSoundwave = 8;
     float dmgEBt = 20;
     float dmgLeech = 4f;
+    float dmgHLaser = 14f;
 
     public float GetDamage(){return dmg;}
     public float GetDamageLaser(){return dmgLaser;}
@@ -30,6 +31,7 @@ public class DamageDealer : MonoBehaviour{
     public float GetDamageBat(){return dmgBat;}
     public float GetDamageEnemyShip1(){return dmgEnemyShip1;}
     public float GetDamageLeech(){return dmgLeech; }
+    public float GetDamageHLaser(){return dmgHLaser; }
     
 
     public float GetDamageSoundwave(){return dmgSoundwave;}

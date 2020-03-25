@@ -25,6 +25,7 @@ public class PlayerCollider : MonoBehaviour{
     [SerializeField] GameObject soundwavePrefab;
     [SerializeField] GameObject EBtPrefab;
     [SerializeField] GameObject leechPrefab;
+    [SerializeField] GameObject hlaserPrefab;
     [HeaderAttribute("Other")]
     [SerializeField] float dmgFreq=0.38f;
     public float dmgTimer;
@@ -56,6 +57,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (!damageDealer) { return; }
                 bool en = false;
                 bool destroy = true;
+                bool invincible = false;
                 var dmg = damageDealer.GetDamage();
 
                 var cometName = cometPrefab.name; var cometName1 = cometPrefab.name + "(Clone)";
@@ -72,23 +74,37 @@ public class PlayerCollider : MonoBehaviour{
 
                 var leechName = leechPrefab.name; var leechName1 = leechPrefab.name + "(Clone)";
                 if (other.gameObject.name == leechName || other.gameObject.name == leechName1) { en = true;  destroy = false; }
+                
+                var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
+                if (other.gameObject.name == hlaserName || other.gameObject.name == hlaserName1) { destroy = false; invincible = true; }
 
-                if(player.dashing==false){
-                    player.health -= dmg;
-                    if(destroy==true){
-                        if (en != true) { Destroy(other.gameObject, 0.05f); }
-                        else { other.GetComponent<Enemy>().givePts = false; other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die(); }
-                    }else{ }
-                    player.damaged = true;
-                    AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
-                    var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
-                    Destroy(flare.gameObject, 0.3f);
-                }
-                else if(player.shadow==true && player.dashing==true){
-                    //if (destroy == true){
+                if (other.gameObject.name != hlaserName && other.gameObject.name != hlaserName1)
+                {
+                    if (player.dashing == false)
+                    {
+                        player.health -= dmg;
+                        if (destroy == true)
+                        {
+                            if (en != true) { Destroy(other.gameObject, 0.05f); }
+                            else { other.GetComponent<Enemy>().givePts = false; other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die(); }
+                        }
+                        else { }
+                        player.damaged = true;
+                        AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
+                        var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
+                        Destroy(flare.gameObject, 0.3f);
+                    }
+                    else if (player.shadow == true && player.dashing == true)
+                    {
+                        //if (destroy == true){
                         if (en != true) { Destroy(other.gameObject, 0.05f); }
                         else { other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die(); }
-                    //}else{ }
+                        //}else{ }
+                    }
+                }else{
+                    player.health -= dmg;
+                    player.damaged = true;
+                    AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
                 }
 
                 
@@ -195,7 +211,10 @@ public class PlayerCollider : MonoBehaviour{
                 var leechName = leechPrefab.name; var leechName1 = leechPrefab.name + "(Clone)";
                 if (other.gameObject.name == leechName || other.gameObject.name == leechName1) { dmg = damageDealer.GetDamageLeech(); }
 
-                if(dmgTimer<=0){
+                var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
+                if (other.gameObject.name == hlaserName || other.gameObject.name == hlaserName1) { dmg = damageDealer.GetDamageHLaser(); }
+
+                if (dmgTimer<=0){
                     player.health -= dmg;
                     player.damaged = true;
                     AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
@@ -204,6 +223,12 @@ public class PlayerCollider : MonoBehaviour{
                     dmgTimer = dmgFreq;
                 }else{ dmgTimer -= Time.deltaTime; }
             }
+        }
+    }
+    private void OnCollisionExit(Collision other){
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet"))
+        {
+            dmgTimer = dmgFreq;
         }
     }
 }

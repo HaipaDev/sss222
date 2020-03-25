@@ -27,6 +27,7 @@ public class WaveConfig : ScriptableObject{
     [SerializeField] public List<GameObject> pathsRandom;
     [HeaderAttribute("Other")]
     [SerializeField] public bool shipPlace;
+    [SerializeField] public float shipYY;
 
 
     public GameObject GetEnemyPrefab(){ var enIndex = Random.Range(0, enemies.Count); return enemies[enIndex]; }

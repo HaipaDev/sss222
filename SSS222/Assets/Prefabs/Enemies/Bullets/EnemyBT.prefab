@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -1475010090061264466}
   - component: {fileID: 1614588365907247811}
   - component: {fileID: -3868070912757826984}
+  - component: {fileID: 6410541325448673402}
   m_Layer: 9
   m_Name: EnemyBT
   m_TagString: EnemyBullet
@@ -160,6 +161,9 @@ MonoBehaviour:
   colorGlow: {r: 1, g: 0, b: 0, a: 1}
   sizeGlow: 2
   alphaGlow: 0.4
+  emissionSpeed: 7.63
+  xx: 0
+  yy: 0
 --- !u!82 &-3868070912757826984
 AudioSource:
   m_ObjectHideFlags: 0
@@ -256,3 +260,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6410541325448673402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
+    type: 3}

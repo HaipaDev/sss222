@@ -355,7 +355,7 @@ public class Player : MonoBehaviour{
         if (shadow == true) { shadowTimer -= Time.deltaTime; }
         if (shadowTimer <= 0 && shadowTimer > -4) { shadow = false; shadowTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
         if (shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
-        else{ dashTime = startDashTime; rb.velocity = Vector2.zero; GetComponent<BackflameEffect>().enabled=true; }
+        else{ dashTime = startDashTime; rb.velocity = Vector2.zero; }//GetComponent<BackflameEffect>().enabled=true; }
         if (dashTime <= 0) { rb.velocity = Vector2.zero; dashing = false; }
         else{ dashTime -= Time.deltaTime; }
     }

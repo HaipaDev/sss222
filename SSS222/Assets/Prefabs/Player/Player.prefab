@@ -129,7 +129,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &4546529352650547398
@@ -282,6 +282,8 @@ MonoBehaviour:
   EBtPrefab: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1,
     type: 3}
   leechPrefab: {fileID: 3147796775416149952, guid: c720f3d821454e2429194e37df8ad1a3,
+    type: 3}
+  hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
     type: 3}
   dmgFreq: 0.38
   dmgTimer: 0
