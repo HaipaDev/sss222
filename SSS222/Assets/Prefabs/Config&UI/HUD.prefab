@@ -433,6 +433,7 @@ MonoBehaviour:
   lsaberSprite: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
   hrocketsSprite: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
   phaserSprite: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
+  shadowbtSprite: {fileID: 21300000, guid: 7a13c44ce4113bd43b911f4faaf800f5, type: 3}
   flipSprite: {fileID: 21300000, guid: d71f113542d501e44ab50fae24095acb, type: 3}
   gcloverSprite: {fileID: 21300000, guid: 63a2647ea2885b44bab05e7cb94c0c90, type: 3}
   shadowSprite: {fileID: 21300000, guid: 7d2dfbf4cfecaea469f79f936b00f154, type: 3}
@@ -540,6 +541,7 @@ MonoBehaviour:
   lsaberSprite: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
   hrocketsSprite: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
   phaserSprite: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
+  shadowbtSprite: {fileID: 21300000, guid: 7a13c44ce4113bd43b911f4faaf800f5, type: 3}
   flipSprite: {fileID: 21300000, guid: d71f113542d501e44ab50fae24095acb, type: 3}
   gcloverSprite: {fileID: 21300000, guid: 63a2647ea2885b44bab05e7cb94c0c90, type: 3}
   shadowSprite: {fileID: 21300000, guid: 7d2dfbf4cfecaea469f79f936b00f154, type: 3}
@@ -1252,6 +1254,7 @@ MonoBehaviour:
   lsaberSprite: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
   hrocketsSprite: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
   phaserSprite: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
+  shadowbtSprite: {fileID: 21300000, guid: 7a13c44ce4113bd43b911f4faaf800f5, type: 3}
   flipSprite: {fileID: 21300000, guid: d71f113542d501e44ab50fae24095acb, type: 3}
   gcloverSprite: {fileID: 21300000, guid: 63a2647ea2885b44bab05e7cb94c0c90, type: 3}
   shadowSprite: {fileID: 21300000, guid: 7d2dfbf4cfecaea469f79f936b00f154, type: 3}
@@ -1359,6 +1362,7 @@ MonoBehaviour:
   lsaberSprite: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
   hrocketsSprite: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
   phaserSprite: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
+  shadowbtSprite: {fileID: 0}
   flipSprite: {fileID: 21300000, guid: d71f113542d501e44ab50fae24095acb, type: 3}
   gcloverSprite: {fileID: 21300000, guid: 63a2647ea2885b44bab05e7cb94c0c90, type: 3}
   shadowSprite: {fileID: 21300000, guid: 7d2dfbf4cfecaea469f79f936b00f154, type: 3}
@@ -1448,8 +1452,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a4cab4622fd1dc4fbe1b47d20646474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageFlashSpeed: 2
   damageFlashColor: {r: 0.92156863, g: 0, b: 0, a: 0.49803922}
+  damageFlashSpeed: 2
   healFlashColor: {r: 0.41960785, g: 0.88235295, b: 0.7058824, a: 0.49803922}
   healedFlashSpeed: 2
   shadowFlashColor: {r: 0, g: 0, b: 0, a: 0.6666667}

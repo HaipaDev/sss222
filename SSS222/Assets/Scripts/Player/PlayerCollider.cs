@@ -132,6 +132,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == gcloverName || other.gameObject.name == gcloverName1)
                 {
                     player.gclover = true; player.gcloverTimer = player.gcloverTime;
+                    gameSession.MultiplyScore(1.25f);
                     //GameObject gcloverexVFX = Instantiate(gcloverVFX, new Vector2(0, 0), Quaternion.identity);
                     GameObject gcloverexOVFX = Instantiate(player.gcloverOVFX, new Vector2(0, 0), Quaternion.identity);
                     //Destroy(gcloverexVFX, 1f);

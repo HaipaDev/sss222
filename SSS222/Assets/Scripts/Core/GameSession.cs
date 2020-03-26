@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameSession : MonoBehaviour{
-    int score = 0;
+    public int score = 0;
     public int EVscore = 0;
     public int coins = 0;
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
@@ -28,6 +28,12 @@ public class GameSession : MonoBehaviour{
     public void AddToScore(int scoreValue){
         score += scoreValue;
         EVscore += scoreValue;
+    }
+
+    public void MultiplyScore(float multipl)
+    {
+        int result=Mathf.RoundToInt(score * multipl);
+        score = result;
     }
 
     public void AddToScoreNoEV(int scoreValue){score += scoreValue;}

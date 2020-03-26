@@ -485,11 +485,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1110796801287457597, guid: 2187d17e87e167843a47ecaa776cb1b9,
-        type: 3}
-      propertyPath: gameSpeed
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2670168737584117729, guid: 2187d17e87e167843a47ecaa776cb1b9,
         type: 3}
       propertyPath: m_Name
@@ -790,39 +785,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
-        type: 3}
-      propertyPath: powerups.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
-        type: 3}
-      propertyPath: mTimePowerupSpawns
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
-        type: 3}
-      propertyPath: firstSpawn
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
-        type: 3}
-      propertyPath: powerups.Array.data[0]
-      value: 
-      objectReference: {fileID: 4548736405339070879, guid: 506b460219bf5b24db97b32612acb51c,
-        type: 3}
-    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
-        type: 3}
-      propertyPath: powerups.Array.data[1]
-      value: 
-      objectReference: {fileID: 530782707432221319, guid: 79e3a62b1e44c5c42afcffa470e5736a,
-        type: 3}
-    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
-        type: 3}
-      propertyPath: powerups.Array.data[2]
-      value: 
-      objectReference: {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268,
-        type: 3}
     - target: {fileID: 3860724879463956440, guid: c65d768f3c3f0f84da827b9eb6a21670,
         type: 3}
       propertyPath: m_Name
@@ -2362,6 +2324,16 @@ PrefabInstance:
       propertyPath: gameOverCanvasPrefab
       value: 
       objectReference: {fileID: 1246426770}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: powerup
+      value: laser
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: shadow
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547399, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2566,11 +2538,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 471278204608894437, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
-        type: 3}
-      propertyPath: mTimeSpawnsGoblin
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 471278204608894438, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
         type: 3}

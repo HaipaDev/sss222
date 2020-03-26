@@ -7,7 +7,7 @@ public class DamageDealer : MonoBehaviour{
     float dmgLaser = 5f;
     float dmgPhaser = 0.1f;
     float dmgHRocket = 7f;
-    float dmgMiniLaser = 0.75f;
+    float dmgMiniLaser = 0.32f;
     float dmgLSaber = 3.5f;
     float dmgShadowBT = 40.5f;
     float dmgComet = 37;

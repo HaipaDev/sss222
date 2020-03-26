@@ -23,26 +23,29 @@ public class PowerupDisplay : MonoBehaviour{
     [SerializeField] Sprite lsaberSprite;
     [SerializeField] Sprite hrocketsSprite;
     [SerializeField] Sprite phaserSprite;
+    [SerializeField] Sprite shadowbtSprite;
 
     [SerializeField] Sprite flipSprite;
     [SerializeField] Sprite gcloverSprite;
     [SerializeField] Sprite shadowSprite;
 
-    
 
+    Color color;
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<Player>();
         pwrup = player.GetComponent<Player>().powerup;
         spr = GetComponent<SpriteRenderer>();
-        if(textObj!=null)TMP=textObj.GetComponent<TMPro.TextMeshProUGUI>();
+        color = spr.color;
+        if (textObj!=null)TMP=textObj.GetComponent<TMPro.TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        spr.color = color;
+
         if (powerups==true){
             pwrup = player.GetComponent<Player>().powerup;
             if (pwrup=="laser2"){ spr.sprite = laser2Sprite; }
@@ -51,6 +54,7 @@ public class PowerupDisplay : MonoBehaviour{
             else if(pwrup=="lsaber"){ spr.sprite = lsaberSprite; }
             else if(pwrup== "hrockets") { spr.sprite = hrocketsSprite; }
             else if(pwrup== "phaser") { spr.sprite = phaserSprite; }
+            else if(pwrup== "shadowbt") { spr.sprite = shadowbtSprite; }
             else { spr.sprite = laserSprite; }
         }else{
             //if(player.gclover==true && (state=="" || state==null)){ spr.sprite = gcloverSprite; state = "gclover"; }
@@ -94,31 +98,37 @@ public class PowerupDisplay : MonoBehaviour{
                         }
                     }
                     //if(player.gclover!=true && player.flip!=true && player.shadow!=true){ state = ""; }
-                    if(state=="gclover"){
-                        spr.sprite = gcloverSprite;
-                        var value = System.Math.Round(player.GetGCloverTimer(), 1);
+                    if (state == "" || state == null){
+                        color.a = 0f;
+                        TMP.text = "";
+                    }else{
+                        color.a = 1f;
+                        if (state=="gclover"){
+                            spr.sprite = gcloverSprite;
+                            var value = System.Math.Round(player.GetGCloverTimer(), 1);
 
-                        if (value <= -1) { value = 0; }
-                        else { TMP.text = value.ToString(); }
+                            if (value <= -1) { value = 0; }
+                            else { TMP.text = value.ToString(); }
 
-                        if (player.gclover != true) state = "";
-                    }else if(state=="flip"){
-                        spr.sprite = flipSprite;
-                        var value = System.Math.Round(player.GetFlipTimer(), 1);
+                            if (player.gclover != true) state = "";
+                        }else if(state=="flip"){
+                            spr.sprite = flipSprite;
+                            var value = System.Math.Round(player.GetFlipTimer(), 1);
 
-                        if (value <= -1) { value = 0; }
-                        else { TMP.text = value.ToString(); }
+                            if (value <= -1) { value = 0; }
+                            else { TMP.text = value.ToString(); }
 
-                        if (player.flip != true) state = "";
-                    }
-                    else if(state=="shadow"){
-                        spr.sprite = shadowSprite;
-                        var value = System.Math.Round(player.GetShadowTimer(), 1);
+                            if (player.flip != true) state = "";
+                        }
+                        else if(state=="shadow"){
+                            spr.sprite = shadowSprite;
+                            var value = System.Math.Round(player.GetShadowTimer(), 1);
 
-                        if (value <= -1) { value = 0; }
-                        else { TMP.text = value.ToString(); }
+                            if (value <= -1) { value = 0; }
+                            else { TMP.text = value.ToString(); }
 
-                        if (player.shadow != true) state = "";
+                            if (player.shadow != true) state = "";
+                        }
                     }
                     //}
                     //}
