@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1705394396356080306}
   - component: {fileID: 4972902360308717511}
   - component: {fileID: -5710877398685932387}
-  - component: {fileID: 4330475254784462383}
+  - component: {fileID: 1973890776378167002}
+  - component: {fileID: 8817097135049350972}
   m_Layer: 0
-  m_Name: Laser PowerUp
+  m_Name: Laser3 PowerUp
   m_TagString: Powerups
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5833333, y: 0.5833333}
   m_EdgeRadius: 0
---- !u!114 &4330475254784462383
+--- !u!114 &1973890776378167002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,3 +145,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   vspeed: 4
+--- !u!114 &8817097135049350972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7318881522084147253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4952b1ae5d2056b4c83d38de0a65b91f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnRate: 8

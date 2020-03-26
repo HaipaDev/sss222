@@ -8,7 +8,15 @@ public class PowerupsSpawner : MonoBehaviour{
     [SerializeField] float mTimePowerupSpawns = 10f;
     [SerializeField] float firstSpawn = 15f;
     float timer = 0f;
-    // Start is called before the first frame update
+
+    public float sum = 0f;
+    private void Awake()
+    {
+        foreach (GameObject powerup in powerups)
+        {
+            sum += powerup.GetComponent<PowerupWeights>().spawnRate;
+        }
+    }
     IEnumerator Start(){
         timer = firstSpawn;
         do
@@ -16,6 +24,23 @@ public class PowerupsSpawner : MonoBehaviour{
                 yield return StartCoroutine(SpawnPowerupFirst());
         }
         while (true);
+    }
+
+    public GameObject GetRandomPowerup()
+    {
+        float randomWeight = 0;
+        do
+        {
+            //No weight on any number?
+            if (sum == 0) return null;
+            randomWeight = Random.Range(0, sum);
+        } while (randomWeight == sum);
+        foreach (GameObject powerup in powerups)
+        {
+            if (randomWeight < powerup.GetComponent<PowerupWeights>().spawnRate) return powerup;
+            randomWeight -= powerup.GetComponent<PowerupWeights>().spawnRate;
+        }
+        return null;
     }
 
     /*public IEnumerator SpawnAllWaves(){
@@ -35,10 +60,11 @@ public class PowerupsSpawner : MonoBehaviour{
     }
 
     private IEnumerator SpawnPowerups(){
-        var index = Random.Range(0, powerups.Count);
+        //var index = Random.Range(0, powerups.Count);
         var powerupsPos = new Vector3(Random.Range(-2.5f, 4f), 7f, 0);
         var newPowerup=Instantiate(
-            powerups[index],
+            GetRandomPowerup(),
+            //powerups[index],
             powerupsPos,
             Quaternion.identity);
         yield return new WaitForSeconds(mTimePowerupSpawns);

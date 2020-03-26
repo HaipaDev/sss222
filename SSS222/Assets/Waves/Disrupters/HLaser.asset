@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HLaser
   m_EditorClassIdentifier: 
   waveName: Homing Laser
+  spawnRate: 100
   enemies:
   - {fileID: 2323431598858436006, guid: db2419d6bf8ee5b49a9f2f24600d3ef8, type: 3}
   timeSpawn: 0

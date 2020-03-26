@@ -44,9 +44,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveConfigs:
+  - {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
+  - {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf, type: 2}
+  - {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc, type: 2}
   - {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
+  - {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
   startingWave: 0
   waveIndex: 0
+  currentWave: {fileID: 0}
   looping: 1
   progressiveWaves: 0
   mTimeSpawns: 6
+  timeSpawns: 0
+  sum: 0

@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3522212548970952304}
   - component: {fileID: 4237858124483386874}
   - component: {fileID: 7162855777663533499}
-  - component: {fileID: 5500029946500143270}
+  - component: {fileID: 3803819057532839180}
+  - component: {fileID: -2021936877651107262}
   m_Layer: 0
-  m_Name: Armor Ultra PowerUp
+  m_Name: ArmorU Powerup
   m_TagString: Powerups
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5833333, y: 0.5833333}
   m_EdgeRadius: 0
---- !u!114 &5500029946500143270
+--- !u!114 &3803819057532839180
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,4 +144,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  vspeed: 3.9
+  vspeed: 4
+--- !u!114 &-2021936877651107262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530782707432221319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4952b1ae5d2056b4c83d38de0a65b91f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnRate: 9

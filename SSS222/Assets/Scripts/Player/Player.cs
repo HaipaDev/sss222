@@ -108,6 +108,8 @@ public class Player : MonoBehaviour{
     float yMin;
     float yMax;
 
+    bool hasHandledInputThisFrame = false;
+    
     // Start is called before the first frame update
     void Start(){
         rb = GetComponent<Rigidbody2D>();
@@ -118,14 +120,29 @@ public class Player : MonoBehaviour{
     }
     // Update is called once per frame
     void Update(){
+        HandleInput(false);
         energy = Mathf.Clamp(energy, 0, maxEnergy);
         health =Mathf.Clamp(health,0f,maxHP);
-        MovePlayer();
         //PlayerBFlame();
-        Shoot();
         StartCoroutine(DrawOtherWeapons());
+        Shoot();
         States();
         Die();
+    }
+    void FixedUpdate()
+    {
+        // If we're first at-bat, handle the input immediately and mark it already-handled.
+        HandleInput(true);
+        MovePlayer();
+    }
+    void HandleInput(bool isFixedUpdate)
+    {
+        bool hadAlreadyHandled = hasHandledInputThisFrame;
+        hasHandledInputThisFrame = isFixedUpdate;
+        if (hadAlreadyHandled)
+            return;
+
+        /* Perform any instantaneous actions, using Time.fixedDeltaTime where necessary */
     }
 
     public float GetFlipTimer(){ return flipTimer; }

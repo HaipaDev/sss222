@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CometsFlyby
   m_EditorClassIdentifier: 
   waveName: Comets Flyby
+  spawnRate: 11
   enemies:
   - {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475, type: 3}
   timeSpawn: 0
@@ -33,3 +34,4 @@ MonoBehaviour:
   randomPoint: 0
   pathsRandom: []
   shipPlace: 0
+  shipYY: 0

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CometStorm
   m_EditorClassIdentifier: 
   waveName: Comet Storm
+  spawnRate: 7
   enemies:
   - {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475, type: 3}
   timeSpawn: 0
@@ -30,5 +31,7 @@ MonoBehaviour:
   pathEndPrefab: {fileID: 0}
   randomPath: 0
   randomPathEach: 0
+  randomPoint: 0
   pathsRandom: []
   shipPlace: 0
+  shipYY: 0

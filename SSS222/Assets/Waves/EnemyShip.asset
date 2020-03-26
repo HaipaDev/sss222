@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EnemyShip
   m_EditorClassIdentifier: 
   waveName: Enemy Ship
+  spawnRate: 5
   enemies:
   - {fileID: 6432250634095115783, guid: 37903edfff6f26349954ed2b719c593a, type: 3}
   timeSpawn: 0
@@ -29,5 +30,7 @@ MonoBehaviour:
   pathEndPrefab: {fileID: 0}
   randomPath: 0
   randomPathEach: 0
+  randomPoint: 0
   pathsRandom: []
   shipPlace: 1
+  shipYY: 0

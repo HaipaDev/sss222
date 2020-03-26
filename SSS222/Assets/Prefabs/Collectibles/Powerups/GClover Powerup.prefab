@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3006926218026233927}
   - component: {fileID: 6797141084457215549}
   - component: {fileID: -3403558477653786467}
-  - component: {fileID: -6548586598241326189}
   - component: {fileID: 6267724299131017878}
   - component: {fileID: -7790566868657356652}
+  - component: {fileID: -7933264846224303871}
+  - component: {fileID: 4883050271532026335}
   m_Layer: 0
   m_Name: GClover Powerup
   m_TagString: Powerups
@@ -132,20 +133,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5833333, y: 0.5833333}
   m_EdgeRadius: 0
---- !u!114 &-6548586598241326189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4548736405339070879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c942e59cf2bc3a74c9f71af997ea7e2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  vspeed: 4
 --- !u!82 &6267724299131017878
 AudioSource:
   m_ObjectHideFlags: 0
@@ -259,3 +246,30 @@ MonoBehaviour:
   xx: 0
   yy: 0.6
   time: 0.3
+--- !u!114 &-7933264846224303871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4548736405339070879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c942e59cf2bc3a74c9f71af997ea7e2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  vspeed: 3.5
+--- !u!114 &4883050271532026335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4548736405339070879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4952b1ae5d2056b4c83d38de0a65b91f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnRate: 1.5

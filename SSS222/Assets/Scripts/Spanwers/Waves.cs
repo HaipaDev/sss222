@@ -5,10 +5,10 @@ using UnityEngine;
 public class Waves : MonoBehaviour
 {
     [SerializeField] List<WaveConfig> waveConfigs;
-    [SerializeField] int[] waveConfigsWeights;
+    //[SerializeField] int[] waveConfigsWeights;
     [SerializeField] int startingWave = 0;
     public int waveIndex = 0;
-    WaveConfig currentWave;
+    public WaveConfig currentWave;
     [SerializeField] bool looping = true;
     [SerializeField] bool progressiveWaves = false;
     [SerializeField] float mTimeSpawns = 2f;
@@ -17,33 +17,16 @@ public class Waves : MonoBehaviour
     WaveDisplay waveDisplay;
     GameSession gameSession;
     Player player;
-    // Start is called before the first frame update
-    #region//GetRandomWeightedIndex
-        public int GetRandomWeightedIndex(int[] weights)
+
+    public float sum=0;
+
+    private void Awake()
+    {
+        foreach (WaveConfig waveConfig in waveConfigs)
         {
-            if (weights == null || weights.Length == 0) return -1;
-
-            int w=0;
-            int i;
-            for (i = 0; i < weights.Length; i++)
-            {
-                if (weights[i] >= 0) w += weights[i];
-            }
-
-            float r = Random.value;
-            float s = 0f;
-
-            for (i = 0; i < weights.Length; i++)
-            {
-                if (weights[i] <= 0f) continue;
-
-                s += (float)weights[i] / waveConfigsWeights.Length;
-                if (s >= r) return i;
-            }
-
-            return -1;
+            sum += waveConfig.spawnRate;
         }
-    #endregion
+    }
     IEnumerator Start()
     {
         waveDisplay = FindObjectOfType<WaveDisplay>();
@@ -56,14 +39,32 @@ public class Waves : MonoBehaviour
         while (looping);
     }
 
+    public WaveConfig GetRandomWave(){
+        if(currentWave==null)return waveConfigs[startingWave];
+        else{
+            float randomWeight = 0;
+            do
+            {
+                //No weight on any number?
+                if (sum == 0)return null;
+                randomWeight = Random.Range(0, sum);
+            } while (randomWeight == sum);
+            foreach (WaveConfig waveConfig in waveConfigs)
+            {
+                if (randomWeight < waveConfig.spawnRate)return waveConfig;
+                randomWeight -= waveConfig.spawnRate;
+            }
+            return null;
+        }
+    }
     public IEnumerator SpawnWaves()
     {
             if (timeSpawns<=0 && timeSpawns>-4){
-                currentWave = waveConfigs[waveIndex];
+                currentWave = GetRandomWave();
                 yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
                 timeSpawns = -4;
             if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
-            else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/ waveIndex = Random.Range(0, waveConfigs.Count); gameSession.EVscore = 0; } }
+            else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/ gameSession.EVscore = 0; currentWave=GetRandomWave(); } }//waveIndex = Random.Range(0, waveConfigs.Count);  } }
             }
     }
 
@@ -154,7 +155,7 @@ public class Waves : MonoBehaviour
         else if(timeSpawns==-4){ timeSpawns = currentWave.timeSpawnWave; }
         if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
         else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
-                timeSpawns = 0; waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
+                timeSpawns = 0; currentWave=GetRandomWave();//waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
                 gameSession.EVscore = 0; } }
         //if (timeSpawns <= 0) {timeSpawns = mTimeSpawns; }
         //Debug.Log(timeSpawns);

@@ -13,17 +13,26 @@ MonoBehaviour:
   m_Name: BatV
   m_EditorClassIdentifier: 
   waveName: Bat v-formation
+  spawnRate: 8
   enemies:
   - {fileID: 3147796775416149952, guid: 2c3f94b277a11e0478605915547d8fed, type: 3}
   timeSpawn: 0.001
+  timeSpawnWave: 6
   spawnRandomFactor: 0
   numberOfEnemies: 5
   moveSpeed: 1.45
+  randomSpeed: 0
+  moveSpeedS: 1
+  moveSpeedE: 3
   startToEndPath: 1
+  between2PtsPath: 0
   pathStartPrefab: {fileID: 4252214824665209170, guid: 0baa1a904ba0680498aca236c3a4ac93,
     type: 3}
   pathEndPrefab: {fileID: 4079877003467868498, guid: f87dc7e0d5691d345a0172eb5a309a59,
     type: 3}
   randomPath: 0
   randomPathEach: 0
+  randomPoint: 0
   pathsRandom: []
+  shipPlace: 0
+  shipYY: 0
