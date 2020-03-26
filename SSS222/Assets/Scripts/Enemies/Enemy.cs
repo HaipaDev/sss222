@@ -92,6 +92,7 @@ public class Enemy : MonoBehaviour{
             if(enBallchance==1){ Instantiate(energyBallPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
             if(Coinchance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
             if(randomizeWaveDeath==true){ gameSession.EVscore = 50; }
+            if (GetComponent<GoblinDrop>() != null) GetComponent<GoblinDrop>().DropPowerup();
             Destroy(explosion, 0.5f);
             Destroy(gameObject);
             shake.CamShake();

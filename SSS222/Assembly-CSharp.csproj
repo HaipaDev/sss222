@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\GoblinDrop.cs" />
     <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
     <Compile Include="Assets\Scripts\Core\GameSession.cs" />
     <Compile Include="Assets\Scripts\Core\Level.cs" />

@@ -68,22 +68,25 @@ public class DisruptersSpawner : MonoBehaviour
 
     public IEnumerator SpawnWaves()
     {
-            if (timeSpawnsLeech<=0 && timeSpawnsLeech>-4){
-                //currentWave = cfgLeech;
-                yield return StartCoroutine(SpawnAllEnemiesInWave(cfgLeech));
-                timeSpawnsLeech = -4;
-            //if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
-            //else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/
-            //waveIndex = Random.Range(0, waveConfigs.Count); gameSession.EVscore = 0; } }
-            }if (timeSpawnsHlaser <= 0 && timeSpawnsHlaser > -4){
-                //currentWave = cfgHlaser;
-                yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHlaser));
-                timeSpawnsHlaser = -4;
-            }if (timeSpawnsGoblin <= 0 && timeSpawnsGoblin > -4){
+        if (timeSpawnsLeech<=0 && timeSpawnsLeech>-4){
+            //currentWave = cfgLeech;
+            yield return StartCoroutine(SpawnAllEnemiesInWave(cfgLeech));
+            timeSpawnsLeech = -4;
+        //if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
+        //else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/
+        //waveIndex = Random.Range(0, waveConfigs.Count); gameSession.EVscore = 0; } }
+        }if (timeSpawnsHlaser <= 0 && timeSpawnsHlaser > -4){
+            //currentWave = cfgHlaser;
+            yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHlaser));
+            timeSpawnsHlaser = -4;
+        }
+        if(GameObject.FindGameObjectWithTag("Powerups")!=null){
+            if (timeSpawnsGoblin <= 0 && timeSpawnsGoblin > -4){
                 //currentWave = cfgGoblin;
                 yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGoblin));
                 timeSpawnsGoblin = -4;
             }
+        }
     }
 
     public IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig)
@@ -166,11 +169,11 @@ public class DisruptersSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(timeSpawnsLeech>-0.01){timeSpawnsLeech -= Time.deltaTime; }
+        if(timeSpawnsLeech>-0.01f){timeSpawnsLeech -= Time.deltaTime; }
         else if(timeSpawnsLeech==-4){ timeSpawnsLeech = mTimeSpawnsHlaser; }
-        if(timeSpawnsHlaser>-0.01){ timeSpawnsHlaser -= Time.deltaTime; }
+        if(timeSpawnsHlaser>-0.01f){ timeSpawnsHlaser -= Time.deltaTime; }
         else if(timeSpawnsHlaser == -4){ timeSpawnsHlaser = mTimeSpawnsHlaser; }
-        if(timeSpawnsGoblin > -0.01){ timeSpawnsGoblin -= Time.deltaTime; }
+        if(timeSpawnsGoblin > -0.01f){ timeSpawnsGoblin -= Time.deltaTime; }
         else if(timeSpawnsGoblin == -4){ timeSpawnsGoblin = mTimeSpawnsGoblin; }
         /*if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
         else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
