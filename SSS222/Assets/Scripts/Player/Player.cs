@@ -89,6 +89,7 @@ public class Player : MonoBehaviour{
     [SerializeField] GameObject gameOverCanvasPrefab;
     [SerializeField] GameObject shadowPrefab;
     [SerializeField] float flareShootYY = 0.2f;
+    [SerializeField] public MeshRenderer bgSprite;
     int moveDir = 1;
     const float DCLICK_TIME = 0.2f;
     float lastClickTime;
@@ -128,12 +129,13 @@ public class Player : MonoBehaviour{
         Shoot();
         States();
         Die();
+        MovePlayer();
     }
     void FixedUpdate()
     {
         // If we're first at-bat, handle the input immediately and mark it already-handled.
         HandleInput(true);
-        MovePlayer();
+        //MovePlayer();
     }
     void HandleInput(bool isFixedUpdate)
     {
@@ -178,11 +180,21 @@ public class Player : MonoBehaviour{
     }
     private void SetUpMoveBoundaries()
     {
-        Camera gameCamera = Camera.main;
+        /*Camera gameCamera = Camera.main;
         xMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + padding;
         xMax = gameCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - padding;
         yMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y + padding;
-        yMax = gameCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - padding;
+        yMax = gameCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - padding;*/
+
+        /*xMin = -bgSprite.bounds.size.x + padding;
+        xMax = bgSprite.bounds.size.x - padding;
+        yMin = -bgSprite.bounds.size.y + padding;
+        yMax = bgSprite.bounds.size.y - padding;*/
+
+        xMin = -3.87f + padding;
+        xMax = 3.87f - padding;
+        yMin = -6.95f + padding;
+        yMax = 7f - padding;
     }
 
     private void Shoot(){

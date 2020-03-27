@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - AmmoDisplay
     - BackflameEffect
     - BackgroundScroller
+    - CameraScript
     - CometRandomProperties
     - DamageDealer
     - DetachFromFollow
@@ -50,8 +51,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -197,6 +200,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 11702}
     - Class: 114
       Script: {instanceID: 11708}
+    - Class: 114
+      Script: {instanceID: 25136}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -254,6 +259,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 9908}
     - Class: 114
       Script: {instanceID: 9922}
+    - Class: 114
+      Script: {instanceID: 10106}
     - Class: 114
       Script: {instanceID: 10322}
     - Class: 114
@@ -541,7 +548,7 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: 4bc9f2643f95d9950da6aaeaaafdbab3
+      Hash: 6f92b583f348e20c55a17201a3581ff1
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -1141,7 +1148,7 @@ ScriptsOnlyBuild:
     className: Dropdown
   - hash:
       serializedVersion: 2
-      Hash: 30ed5d3b23f8015d0e7a84ef7c72beaa
+      Hash: b2253bc1f3a054051d614fede92933eb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DisruptersSpawner
@@ -1181,6 +1188,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 079606289b9ad7324ed7d807612459e9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CameraScript
   platform: 5
   scenePathNames:
   - Assets/Scenes/Menu.unity

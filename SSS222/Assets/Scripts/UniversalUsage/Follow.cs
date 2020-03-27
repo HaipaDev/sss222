@@ -34,6 +34,9 @@ public class Follow : MonoBehaviour{
     // Update is called once per frame
     void Update()
     {
+        if (target != null) { targetObj = GameObject.FindGameObjectWithTag(target.tag); }
+        else { targetObj = GameObject.FindGameObjectWithTag(targetTag); }
+
         targetPos = new Vector2(targetObj.transform.position.x, targetObj.transform.position.y);
         selfPos = new Vector2(transform.position.x, transform.position.y);
         dist=Vector2.Distance(targetPos, selfPos);

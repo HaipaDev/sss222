@@ -77,6 +77,8 @@
     <Compile Include="Assets\Scripts\Enemies\HLaser.cs" />
     <Compile Include="Assets\Scripts\Enemies\HLaserKillThis.cs" />
     <Compile Include="Assets\Scripts\HUD\AmmoDisplay.cs" />
+    <Compile Include="Assets\Scripts\HUD\Camera\CameraAnim\Shake.cs" />
+    <Compile Include="Assets\Scripts\HUD\Camera\CameraScript.cs" />
     <Compile Include="Assets\Scripts\HUD\EnergyBar.cs" />
     <Compile Include="Assets\Scripts\HUD\HPBar.cs" />
     <Compile Include="Assets\Scripts\HUD\PowerupDisplay.cs" />
@@ -99,7 +101,6 @@
     <Compile Include="Assets\Scripts\UniversalUsage\RandomHDir.cs" />
     <Compile Include="Assets\Scripts\Visuals\BackflameEffect.cs" />
     <Compile Include="Assets\Scripts\Visuals\BackgroundScroller.cs" />
-    <Compile Include="Assets\Scripts\Visuals\CameraAnim\Shake.cs" />
     <Compile Include="Assets\Scripts\Visuals\Glow.cs" />
     <Compile Include="Assets\Scripts\Visuals\Screenflash.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
