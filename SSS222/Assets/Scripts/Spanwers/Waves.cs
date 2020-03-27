@@ -60,8 +60,9 @@ public class Waves : MonoBehaviour
     public IEnumerator SpawnWaves()
     {
             if (timeSpawns<=0 && timeSpawns>-4){
-                currentWave = GetRandomWave();
-                yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
+            if (currentWave == null) currentWave=waveConfigs[startingWave];
+            //currentWave = GetRandomWave();
+            yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
                 timeSpawns = -4;
             if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
             else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/ gameSession.EVscore = 0; currentWave=GetRandomWave(); } }//waveIndex = Random.Range(0, waveConfigs.Count);  } }

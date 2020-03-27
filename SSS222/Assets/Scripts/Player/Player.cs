@@ -188,10 +188,12 @@ public class Player : MonoBehaviour{
     private void Shoot(){
         if (Input.GetButtonDown("Fire1")){
             shootCoroutine = StartCoroutine(ShootContinuously());
-        }
-        if (Input.GetButtonUp("Fire1")){
+        }if(!Input.GetButton("Fire1")){
             StopCoroutine(shootCoroutine);
         }
+        /*if (Input.GetButtonUp("Fire1")){
+            StopCoroutine(shootCoroutine);
+        }*/
     }
     public void DClick(){
         //Debug.Log("DClick");
