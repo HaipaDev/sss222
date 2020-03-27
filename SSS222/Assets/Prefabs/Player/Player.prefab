@@ -199,7 +199,7 @@ MonoBehaviour:
   hrocketEn: 3
   mlaserEn: 0.075
   lsaberEn: 0.2
-  shadowEn: 5
+  shadowEn: 4
   shadowBTEn: 10
   energyBallGet: 9
   medkitEnergyGet: 6
@@ -227,6 +227,8 @@ MonoBehaviour:
   shadowPrefab: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699,
     type: 3}
   flareShootYY: 0.2
+  bgSprite: {fileID: 2189054759308945357, guid: 4654ddd6ea0bb474cb8c21875804206d,
+    type: 3}
   damaged: 0
   healed: 0
   shadowed: 0

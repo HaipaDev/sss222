@@ -129,13 +129,13 @@ public class Player : MonoBehaviour{
         Shoot();
         States();
         Die();
-        MovePlayer();
+        //MovePlayer();
     }
     void FixedUpdate()
     {
         // If we're first at-bat, handle the input immediately and mark it already-handled.
         HandleInput(true);
-        //MovePlayer();
+        MovePlayer();
     }
     void HandleInput(bool isFixedUpdate)
     {
@@ -201,7 +201,7 @@ public class Player : MonoBehaviour{
         if (Input.GetButtonDown("Fire1")){
             shootCoroutine = StartCoroutine(ShootContinuously());
         }if(!Input.GetButton("Fire1")){
-            StopCoroutine(shootCoroutine);
+            StopCoroutine(ShootContinuously());
         }
         /*if (Input.GetButtonUp("Fire1")){
             StopCoroutine(shootCoroutine);

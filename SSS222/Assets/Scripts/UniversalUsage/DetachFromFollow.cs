@@ -7,6 +7,7 @@ public class DetachFromFollow : MonoBehaviour{
     [SerializeField] public float shake_distance = 0.2f;
     [SerializeField] public int count_max = 3;
     [SerializeField] float fallSpeed = 14f;
+    [SerializeField] GameObject shakeNotif;
     public bool attached = false;
     public bool detached = false;
     public int stage = 0;
@@ -15,9 +16,12 @@ public class DetachFromFollow : MonoBehaviour{
 
     Follow follow;
     Rigidbody2D rb;
+    TMPro.TextMeshProUGUI shakeNotifText;
     // Start is called before the first frame update
     void Start()
     {
+        shakeNotif = GameObject.Find("ShakeQuickly");
+        shakeNotifText = shakeNotif.GetComponent<TMPro.TextMeshProUGUI>();
         follow = GetComponent<Follow>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -57,6 +61,9 @@ public class DetachFromFollow : MonoBehaviour{
                     rb.velocity = new Vector2(fallSpeed,-fallSpeed);
                 }
             }
+            shakeNotifText.enabled = true;
+        }else{
+            shakeNotifText.enabled = false;
         }
     }
 }
