@@ -46,8 +46,6 @@ public class Enemy : MonoBehaviour{
     AudioSource myAudioSource;
     GameSession gameSession;
     Shake shake;
-    GameObject shakeNotif;
-    TMPro.TextMeshProUGUI shakeNotifText;
     // Start is called before the first frame update
     void Start(){
         enBallchance = Random.Range(0f, 100f);
@@ -58,8 +56,6 @@ public class Enemy : MonoBehaviour{
         myAudioSource = GetComponent<AudioSource>();
         gameSession = FindObjectOfType<GameSession>();
         shake = GameObject.FindObjectOfType<Shake>().GetComponent<Shake>();
-        shakeNotif = GameObject.Find("ShakeQuickly");
-        shakeNotifText = shakeNotif.GetComponent<TMPro.TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -97,7 +93,6 @@ public class Enemy : MonoBehaviour{
             if(Coinchance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
             if(randomizeWaveDeath==true){ gameSession.EVscore = 50; }
             if (GetComponent<GoblinDrop>() != null) GetComponent<GoblinDrop>().DropPowerup();
-            if (GetComponent<DetachFromFollow>() != null) shakeNotifText.enabled=false;
             Destroy(explosion, 0.5f);
             Destroy(gameObject);
             shake.CamShake();

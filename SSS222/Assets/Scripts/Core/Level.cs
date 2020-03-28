@@ -15,11 +15,15 @@ public class Level : MonoBehaviour{
         
     }
     public void LoadStartMenu(){
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu");
     }
     public void LoadGameScene(){
         SceneManager.LoadScene("Game");
         gameSession.ResetScore();
+    }
+    public void LoadOptionsScene()
+    {
+        SceneManager.LoadScene("Options");
     }
     public void RestartScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

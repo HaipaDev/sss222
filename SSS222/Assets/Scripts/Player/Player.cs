@@ -8,6 +8,7 @@ public class Player : MonoBehaviour{
     [HeaderAttribute("Player")]
     [SerializeField] bool moveX = true;
     [SerializeField] bool moveY = true;
+    [SerializeField] bool moveByMouse = false;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float lsaberSpeedMulti = 1.25f;
     public float moveSpeedCurrent;
@@ -100,9 +101,13 @@ public class Player : MonoBehaviour{
     public bool shadowed = false;
     public bool dashing = false;
 
+    public new Vector2 mousePos;
+    public float dist;
+
     Rigidbody2D rb;
     GameSession gameSession;
     Coroutine shootCoroutine;
+    //FollowMouse followMouse;
 
     float xMin;
     float xMax;
@@ -115,6 +120,7 @@ public class Player : MonoBehaviour{
     void Start(){
         rb = GetComponent<Rigidbody2D>();
         gameSession=FindObjectOfType<GameSession>();
+        //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
         moveSpeedCurrent = moveSpeed;
         dashTime = startDashTime;
@@ -129,13 +135,18 @@ public class Player : MonoBehaviour{
         Shoot();
         States();
         Die();
-        //MovePlayer();
+        if(moveByMouse!=true){ MovePlayer(); }//followMouse.enabled = false; }
+        else{ MoveWithMouse(); }// followMouse.enabled = true; }
     }
     void FixedUpdate()
     {
         // If we're first at-bat, handle the input immediately and mark it already-handled.
         HandleInput(true);
-        MovePlayer();
+        //MovePlayer();
+        if (!Input.GetButton("Fire1"))
+        {
+            StopCoroutine(shootCoroutine);
+        }
     }
     void HandleInput(bool isFixedUpdate)
     {
@@ -178,6 +189,29 @@ public class Player : MonoBehaviour{
         //Debug.Log(timeSinceLastClick);
         //Debug.Log(dashTime);
     }
+
+    private void MoveWithMouse(){
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        dist = Vector2.Distance(mousePos, transform.position);
+
+        float step = moveSpeedCurrent * Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
+
+        if(Input.GetButtonDown("Fire2")){
+            float timeSinceLastClick = Time.time - lastClickTime;
+            if (timeSinceLastClick <= DCLICK_TIME){DClick(); }
+            else{ lastClickTime = Time.time; }
+        }
+
+        var newXpos = transform.position.x;
+        var newYpos = transform.position.y;
+
+        if (moveX == true) newXpos = Mathf.Clamp(transform.position.x, xMin, xMax);
+        if (moveY == true) newYpos = Mathf.Clamp(transform.position.y, yMin, yMax);
+
+        transform.position = new Vector2(newXpos, newYpos);
+    }
+
     private void SetUpMoveBoundaries()
     {
         /*Camera gameCamera = Camera.main;
@@ -201,7 +235,7 @@ public class Player : MonoBehaviour{
         if (Input.GetButtonDown("Fire1")){
             shootCoroutine = StartCoroutine(ShootContinuously());
         }if(!Input.GetButton("Fire1")){
-            StopCoroutine(ShootContinuously());
+            StopCoroutine(shootCoroutine);
         }
         /*if (Input.GetButtonUp("Fire1")){
             StopCoroutine(shootCoroutine);
@@ -210,10 +244,14 @@ public class Player : MonoBehaviour{
     public void DClick(){
         //Debug.Log("DClick");
         if(shadow==true && energy>0){
-            if(Input.GetAxisRaw("Vertical")<0) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
-            if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
-            if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
-            if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+            if(moveByMouse!=true){
+                if(Input.GetAxisRaw("Vertical")<0) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
+                if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
+                if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
+                if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+            }else{
+                rb.velocity = mousePos * dashSpeed * moveDir;
+            }
             energy -= shadowEn;
             dashing = true;
             shadowed = true;

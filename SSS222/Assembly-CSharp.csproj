@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\HUD\PowerupDisplay.cs" />
     <Compile Include="Assets\Scripts\HUD\ValueDisplay.cs" />
     <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
+    <Compile Include="Assets\Scripts\Menu\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\Player\Lightsaber.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerCollider.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Assets\Scripts\UniversalUsage\DetachFromFollow.cs" />
     <Compile Include="Assets\Scripts\UniversalUsage\FallDown.cs" />
     <Compile Include="Assets\Scripts\UniversalUsage\Follow.cs" />
+    <Compile Include="Assets\Scripts\UniversalUsage\FollowMouse.cs" />
     <Compile Include="Assets\Scripts\UniversalUsage\FollowStrict.cs" />
     <Compile Include="Assets\Scripts\UniversalUsage\IntervalSound.cs" />
     <Compile Include="Assets\Scripts\UniversalUsage\RandomHDir.cs" />
