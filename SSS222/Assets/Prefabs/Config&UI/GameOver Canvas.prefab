@@ -108,7 +108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.11737038, y: 0.5}
   m_AnchorMax: {x: 0.8954445, y: 0.5983289}
-  m_AnchoredPosition: {x: -2.5, y: 1.5000153}
+  m_AnchoredPosition: {x: -2.5, y: 1.5}
   m_SizeDelta: {x: -3.2999992, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &432586327378585827
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -596,7 +596,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.6049051, g: 0.55291027, b: 0.6698113, a: 1}
     m_PressedColor: {r: 0.32860333, g: 0.28235137, b: 0.4245283, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.28235295, g: 0.28235295, b: 0.28235295, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -617,7 +617,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3346252275119822510, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_MethodName: LoadGameScene
+        m_MethodName: RestartScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -927,7 +927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -938,7 +938,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.6049051, g: 0.55291027, b: 0.6698113, a: 1}
     m_PressedColor: {r: 0.32860333, g: 0.28235137, b: 0.4245283, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.28235295, g: 0.28235295, b: 0.28235295, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -987,7 +987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2044199700624404127
 RectTransform:
   m_ObjectHideFlags: 0
