@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
 public class Enemy : MonoBehaviour{
     [HeaderAttribute("Enemy")]
@@ -46,6 +47,8 @@ public class Enemy : MonoBehaviour{
     AudioSource myAudioSource;
     GameSession gameSession;
     Shake shake;
+    AudioMixer mixer;
+    string _OutputMixer;
     // Start is called before the first frame update
     void Start(){
         enBallchance = Random.Range(0f, 100f);
@@ -56,12 +59,30 @@ public class Enemy : MonoBehaviour{
         myAudioSource = GetComponent<AudioSource>();
         gameSession = FindObjectOfType<GameSession>();
         shake = GameObject.FindObjectOfType<Shake>().GetComponent<Shake>();
+
+        mixer = Resources.Load("MainMixer") as AudioMixer;
+        _OutputMixer = "SoundVolume";
+        //GetComponent<AudioSource>().outputAudioMixerGroup = mixer.FindMatchingGroups(_OutputMixer)[0];
     }
 
     // Update is called once per frame
     void Update(){
         if (shooting == true){ Shoot(); }
         Die();
+    }
+
+    AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
+    {
+        GameObject tempGO = new GameObject("TempAudio"); // create the temp object
+        tempGO.transform.position = pos; // set its position
+        AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
+        aSource.clip = clip; // define the clip
+                             // set other aSource properties here, if desired
+        _OutputMixer = "SoundVolume";
+        aSource.outputAudioMixerGroup = myAudioSource.outputAudioMixerGroup;
+        aSource.Play(); // start the sound
+        MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
+        return aSource; // return the AudioSource reference
     }
 
     private void Shoot(){
@@ -88,7 +109,7 @@ public class Enemy : MonoBehaviour{
             int scoreValue = Random.Range(scoreValueStart,scoreValueEnd);
             if(givePts==true){gameSession.AddToScore(scoreValue);}
             GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-            AudioSource.PlayClipAtPoint(explosionSFX, new Vector2(transform.position.x, transform.position.y));
+            PlayClipAt(explosionSFX, new Vector2(transform.position.x, transform.position.y));
             if(enBallchance==1){ Instantiate(energyBallPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
             if(Coinchance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
             if(randomizeWaveDeath==true){ gameSession.EVscore = 50; }
@@ -106,21 +127,21 @@ public class Enemy : MonoBehaviour{
             var dmg = damageDealer.GetDamage();
 
             var Lname = laserPrefab.name; var Lname1 = laserPrefab.name + "(Clone)";
-            if (other.gameObject.name == Lname || other.gameObject.name == Lname1) { dmg = damageDealer.GetDamageLaser(); Destroy(other.gameObject); AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+            if (other.gameObject.name == Lname || other.gameObject.name == Lname1) { dmg = damageDealer.GetDamageLaser(); Destroy(other.gameObject); PlayClipAt(enemyHitSFX, new Vector2(transform.position.x, transform.position.y)); }
             
             var MLname = mlaserPrefab.name; var MLname1 = mlaserPrefab.name + "(Clone)";
-            if (other.gameObject.name == MLname || other.gameObject.name == MLname1) { dmg = damageDealer.GetDamageMiniLaser(); Destroy(other.gameObject); AudioSource.PlayClipAtPoint(mlaserHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+            if (other.gameObject.name == MLname || other.gameObject.name == MLname1) { dmg = damageDealer.GetDamageMiniLaser(); Destroy(other.gameObject); PlayClipAt(mlaserHitSFX, new Vector2(transform.position.x, transform.position.y)); }
             
             var HRname = hrocketPrefab.name; var HRname1 = hrocketPrefab.name + "(Clone)";
-            if (other.gameObject.name == HRname || other.gameObject.name == HRname1) { dmg = damageDealer.GetDamageHRocket(); Destroy(other.gameObject); AudioSource.PlayClipAtPoint(hrocketHitSFX, new Vector2(transform.position.x, transform.position.y));
+            if (other.gameObject.name == HRname || other.gameObject.name == HRname1) { dmg = damageDealer.GetDamageHRocket(); Destroy(other.gameObject); PlayClipAt(hrocketHitSFX, new Vector2(transform.position.x, transform.position.y));
                 var explosionSmall = Instantiate(explosionSmallVFX, new Vector2(transform.position.x, transform.position.y - 0.5f), Quaternion.identity); Destroy(explosionSmall.gameObject, 0.3f);
             }
 
             var LSabername = lsaberPrefab.name; var LSabername1 = lsaberPrefab.name + "(Clone)";
-            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1){ dmg = damageDealer.GetDamageLSaber(); AudioSource.PlayClipAtPoint(lsaberHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1){ dmg = damageDealer.GetDamageLSaber(); PlayClipAt(lsaberHitSFX, new Vector2(transform.position.x, transform.position.y)); }
 
             var shadowbtName = shadowbtPrefab.name; var shadowbtName1 = shadowbtPrefab.name + "(Clone)";
-            if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { dmg = damageDealer.GetDamageShadowBT(); AudioSource.PlayClipAtPoint(shadowbtHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+            if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { dmg = damageDealer.GetDamageShadowBT(); PlayClipAt(shadowbtHitSFX, new Vector2(transform.position.x, transform.position.y));}
 
 
 
@@ -145,11 +166,11 @@ public class Enemy : MonoBehaviour{
             float dmg = damageDealer.GetDamage();
 
             var Pname = phaserPrefab.name; var Pname1 = phaserPrefab.name + "(Clone)";
-            if (other.gameObject.name == Pname || other.gameObject.name == Pname1) {dmg = damageDealer.GetDamagePhaser(); AudioSource.PlayClipAtPoint(phaserHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+            if (other.gameObject.name == Pname || other.gameObject.name == Pname1) {dmg = damageDealer.GetDamagePhaser(); PlayClipAt(phaserHitSFX, new Vector2(transform.position.x, transform.position.y)); }
             else { dmg = 0; }
 
             var LSabername = lsaberPrefab.name; var LSabername1 = lsaberPrefab.name + "(Clone)";
-            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1) { dmg = damageDealer.GetDamageLSaber(); AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1) { dmg = damageDealer.GetDamageLSaber(); PlayClipAt(enemyHitSFX, new Vector2(transform.position.x, transform.position.y)); }
             else { dmg = 0; }
             health -= dmg;
             //Destroy(other.gameObject, 0.05f);

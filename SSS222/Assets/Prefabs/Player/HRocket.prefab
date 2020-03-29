@@ -174,7 +174,8 @@ AudioSource:
   m_GameObject: {fileID: 3039900905274326842}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: d340859a31584384cb3044921afdbb45, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.45
@@ -286,14 +287,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a8c4beb6393e8418ea04d76c86dccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0}
+  selfPos: {x: 0, y: 0}
   target: {fileID: 0}
   targetTag: Enemy
   dist: 0
   distReq: 25
   speedFollow: 3.8
   vspeed: -2.7
+  hspeed: 0
   rotateTowards: 1
   speedRotate: 15
+  angleAdj: -90
   followAfterOOR: 0
   dirYYUp: 1
   OOR_YY: 1.5
+  targetObj: {fileID: 0}

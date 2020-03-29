@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6441261333678637232}
   - component: {fileID: 343902056029052478}
   m_Layer: 8
-  m_Name: MiniLaser
+  m_Name: MLaser
   m_TagString: PlayerWeapons
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,7 +174,8 @@ AudioSource:
   m_GameObject: {fileID: 6041420664094412071}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 9c792512a3f294347ad71be681659376, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.165

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerCollider : MonoBehaviour{
     [HeaderAttribute("Powerups")]
@@ -32,11 +33,18 @@ public class PlayerCollider : MonoBehaviour{
 
     Player player;
     GameSession gameSession;
+    AudioSource myAudioSource;
+    AudioMixer mixer;
+    string _OutputMixer;
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<Player>().GetComponent<Player>();
         gameSession = FindObjectOfType<GameSession>();
+        myAudioSource = GetComponent<AudioSource>();
+        mixer = Resources.Load("MainMixer") as AudioMixer;
+        _OutputMixer = "SoundVolume";
+        //GetComponent<AudioSource>().outputAudioMixerGroup = mixer.FindMatchingGroups(_OutputMixer)[0];
     }
 
     // Update is called once per frame
@@ -44,7 +52,19 @@ public class PlayerCollider : MonoBehaviour{
     {
         
     }
-
+    AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
+    {
+        GameObject tempGO = new GameObject("TempAudio"); // create the temp object
+        tempGO.transform.position = pos; // set its position
+        AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
+        aSource.clip = clip; // define the clip
+                             // set other aSource properties here, if desired
+        _OutputMixer = "SoundVolume";
+        aSource.outputAudioMixerGroup = myAudioSource.outputAudioMixerGroup;
+        aSource.Play(); // start the sound
+        MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
+        return aSource; // return the AudioSource reference
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
 
@@ -68,7 +88,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == enShip1Name || other.gameObject.name == enShip1Name1) { dmg = damageDealer.GetDamageEnemyShip1(); en = true; }
 
                 var Sname = soundwavePrefab.name; var Sname1 = soundwavePrefab.name + "(Clone)";
-                if (other.gameObject.name == Sname || other.gameObject.name == Sname1) { dmg = damageDealer.GetDamageSoundwave(); AudioSource.PlayClipAtPoint(player.soundwaveHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+                if (other.gameObject.name == Sname || other.gameObject.name == Sname1) { dmg = damageDealer.GetDamageSoundwave(); PlayClipAt(player.soundwaveHitSFX, new Vector2(transform.position.x, transform.position.y)); }
                 var EBtname = EBtPrefab.name; var EBtname1 = EBtPrefab.name + "(Clone)";
                 if (other.gameObject.name == EBtname || other.gameObject.name == EBtname1) dmg = damageDealer.GetDamageEBt();
 
@@ -90,7 +110,7 @@ public class PlayerCollider : MonoBehaviour{
                         }
                         else { }
                         player.damaged = true;
-                        AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
+                        PlayClipAt(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
                         var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                         Destroy(flare.gameObject, 0.3f);
                     }
@@ -104,7 +124,7 @@ public class PlayerCollider : MonoBehaviour{
                 }else{
                     player.health -= dmg;
                     player.damaged = true;
-                    AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
+                    PlayClipAt(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
                 }
 
                 
@@ -176,23 +196,23 @@ public class PlayerCollider : MonoBehaviour{
 
                 if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1)
                 {
-                    AudioSource.PlayClipAtPoint(player.energyBallSFX, new Vector2(transform.position.x, transform.position.y));
+                    PlayClipAt(player.energyBallSFX, new Vector2(transform.position.x, transform.position.y));
                 }
                 else if (other.gameObject.name == CoinName || other.gameObject.name == CoinName1)
                 {
-                    AudioSource.PlayClipAtPoint(player.coinSFX, new Vector2(transform.position.x, transform.position.y));
+                    PlayClipAt(player.coinSFX, new Vector2(transform.position.x, transform.position.y));
                 }
                 else if (other.gameObject.name == gcloverName || other.gameObject.name == gcloverName1)
                 {
-                    AudioSource.PlayClipAtPoint(player.gcloverSFX, new Vector2(transform.position.x, transform.position.y));
+                    PlayClipAt(player.gcloverSFX, new Vector2(transform.position.x, transform.position.y));
                 }
                 else if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1)
                 {
-                    AudioSource.PlayClipAtPoint(player.shadowbtPwrupSFX, new Vector2(transform.position.x, transform.position.y));
+                    PlayClipAt(player.shadowbtPwrupSFX, new Vector2(transform.position.x, transform.position.y));
                 }
                 else
                 {
-                    AudioSource.PlayClipAtPoint(player.powerupSFX, new Vector2(transform.position.x, transform.position.y));
+                    PlayClipAt(player.powerupSFX, new Vector2(transform.position.x, transform.position.y));
                 }
                 Destroy(other.gameObject, 0.05f);
             }
@@ -218,7 +238,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (dmgTimer<=0){
                     player.health -= dmg;
                     player.damaged = true;
-                    AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
+                    PlayClipAt(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
                     //var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                     //Destroy(flare.gameObject, 0.3f);
                     dmgTimer = dmgFreq;

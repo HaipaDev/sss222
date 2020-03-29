@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 3335024609016532008}
   - component: {fileID: -4609015006554659745}
   m_Layer: 8
-  m_Name: Lightsaber
+  m_Name: LSaber
   m_TagString: PlayerWeapons
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,7 +175,8 @@ AudioSource:
   m_GameObject: {fileID: 4755926375889011706}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 65b21287da81a294fb54a8a6738dde88, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

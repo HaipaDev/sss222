@@ -161,6 +161,9 @@ MonoBehaviour:
   colorGlow: {r: 0.30704877, g: 0.6735923, b: 0.9433962, a: 1}
   sizeGlow: 2
   alphaGlow: 0.55
+  emissionSpeed: 7.63
+  xx: 0
+  yy: 0
 --- !u!82 &5381357303093761109
 AudioSource:
   m_ObjectHideFlags: 0
@@ -170,7 +173,8 @@ AudioSource:
   m_GameObject: {fileID: 5313808222654050488}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: d105b34c7d351a24aae6a38bb560f563, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
