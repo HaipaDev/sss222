@@ -5,29 +5,44 @@ using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour{
     GameSession gameSession;
-    // Start is called before the first frame update
+    //float prevGameSpeed;
+    private void Awake()
+    {
+        Time.timeScale = 1f;
+    }
     void Start(){
+        gameSession = FindObjectOfType<GameSession>();
+        //prevGameSpeed = gameSession.gameSpeed;
+    }
+    void Update()
+    {
         gameSession = FindObjectOfType<GameSession>();
     }
 
-    // Update is called once per frame
-    void Update(){
-        
-    }
     public void LoadStartMenu(){
+        Time.timeScale = 1f;
+        FindObjectOfType<GameSession>().SaveHighscore();
+        FindObjectOfType<GameSession>().ResetScore();
         SceneManager.LoadScene("Menu");
+        //FindObjectOfType<GameSession>().savableData.Save();
+        FindObjectOfType<SaveSerial>().Save();
     }
     public void LoadGameScene(){
         SceneManager.LoadScene("Game");
-        gameSession.ResetScore();
+        FindObjectOfType<GameSession>().ResetScore();
     }
     public void LoadOptionsScene()
     {
         SceneManager.LoadScene("Options");
     }
-    public void RestartScene(){
+    public void RestartGame(){
+        Time.timeScale = 1f;
+        FindObjectOfType<GameSession>().SaveHighscore();
+        FindObjectOfType<GameSession>().ResetScore();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        gameSession.ResetScore();
+    }public void RestartScene(){
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void QuitGame(){
         Application.Quit();

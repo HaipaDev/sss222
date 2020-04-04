@@ -188,7 +188,7 @@ MonoBehaviour:
   gclover: 0
   gcloverTime: 6
   gcloverTimer: -4
-  shadow: 1
+  shadow: 0
   shadowTime: 6
   shadowTimer: -4
   shadowLength: 0.2
@@ -234,6 +234,7 @@ MonoBehaviour:
   healed: 0
   shadowed: 0
   dashing: 0
+  shootTimer: 0
   mousePos: {x: 0, y: 0}
   dist: 0
 --- !u!114 &1949430517914965929

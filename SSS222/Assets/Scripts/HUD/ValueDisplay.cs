@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ValueDisplay : MonoBehaviour{
     TMPro.TextMeshProUGUI scoreText;
     GameSession gameSession;
+    DataSavable dataSavable;
     Player player;
     [SerializeField] string value = "score";
     [SerializeField] float valueLimitD=-1;
@@ -14,6 +15,7 @@ public class ValueDisplay : MonoBehaviour{
     void Start(){
         scoreText = GetComponent<TMPro.TextMeshProUGUI>();
         gameSession = FindObjectOfType<GameSession>();
+        dataSavable = FindObjectOfType<DataSavable>();
         player = FindObjectOfType<Player>();
     }
 
@@ -22,6 +24,7 @@ public class ValueDisplay : MonoBehaviour{
         if (value == "score") scoreText.text = gameSession.GetScore().ToString();
         else if (value == "evscore") scoreText.text = gameSession.GetEVScore().ToString();
         else if (value == "coins") scoreText.text = gameSession.GetCoins().ToString();
+        else if (value == "highscore") scoreText.text = gameSession.GetHighscore().ToString();
         /*else if (value == "state"){
             var value = System.Math.Round(player.GetGCloverTimer(),1);
 

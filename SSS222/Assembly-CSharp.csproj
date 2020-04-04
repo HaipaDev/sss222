@@ -63,11 +63,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
+    <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
+    <Compile Include="Assets\Scripts\Core\DataStorage.cs" />
     <Compile Include="Assets\Scripts\Core\GameSession.cs" />
     <Compile Include="Assets\Scripts\Core\Level.cs" />
+    <Compile Include="Assets\Scripts\Core\Loader.cs" />
     <Compile Include="Assets\Scripts\Core\MusicPlayer.cs" />
+    <Compile Include="Assets\Scripts\Core\SaveSerial.cs" />
+    <Compile Include="Assets\Scripts\Core\SaveSystem.cs" />
+    <Compile Include="Assets\Scripts\Core\Settings.cs" />
     <Compile Include="Assets\Scripts\Core\Shredder.cs" />
     <Compile Include="Assets\Scripts\Enemies\CometRandomProperties.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
@@ -82,6 +87,7 @@
     <Compile Include="Assets\Scripts\HUD\Camera\CameraScript.cs" />
     <Compile Include="Assets\Scripts\HUD\EnergyBar.cs" />
     <Compile Include="Assets\Scripts\HUD\HPBar.cs" />
+    <Compile Include="Assets\Scripts\HUD\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\HUD\PowerupDisplay.cs" />
     <Compile Include="Assets\Scripts\HUD\ValueDisplay.cs" />
     <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
@@ -102,6 +108,7 @@
     <Compile Include="Assets\Scripts\UniversalUsage\FollowStrict.cs" />
     <Compile Include="Assets\Scripts\UniversalUsage\IntervalSound.cs" />
     <Compile Include="Assets\Scripts\UniversalUsage\RandomHDir.cs" />
+    <Compile Include="Assets\Scripts\UniversalUsage\Task.cs" />
     <Compile Include="Assets\Scripts\Visuals\BackflameEffect.cs" />
     <Compile Include="Assets\Scripts\Visuals\BackgroundScroller.cs" />
     <Compile Include="Assets\Scripts\Visuals\Glow.cs" />
@@ -147,10 +154,41 @@
     <Compile Include="Assets\Weighted Random Numbers\Scripts\AnimCurveRect.cs" />
     <Compile Include="Assets\Weighted Random Numbers\Scripts\NumberBakery.cs" />
     <Compile Include="Assets\Weighted Random Numbers\Scripts\RandomDistribution.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Examples\Auto Save\ExampleMoveObject.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Examples\Save Custom\ExampleSaveCustom.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Examples\Save Position\ExampleSavePosition.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Examples\Save Rotation\ExampleSaveRotation.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Examples\Save Scale\ExampleSaveScale.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Examples\Save Web\ExampleSaveWeb.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Examples\Shared\Scripts\SerializerDropdown.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Encoders\ISaveGameEncoder.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Encoders\SaveGameSimpleEncoder.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\SaveGame.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\SaveGameAuto.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\SaveGameWeb.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Serializers\ISaveGameSerializer.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Serializers\SaveGameBinarySerializer.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Serializers\SaveGameJsonSerializer.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Serializers\SaveGameXmlSerializer.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Types\Color32Save.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Types\ColorSave.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Types\MeshSave.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Types\QuaternionSave.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Types\Vector2Save.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Types\Vector3Save.cs" />
+    <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Types\Vector4Save.cs" />
+    <Compile Include="Assets\ZExtendableSaveSystem\Core\ComponentData.cs" />
+    <Compile Include="Assets\ZExtendableSaveSystem\Core\ISavableComponent.cs" />
+    <Compile Include="Assets\ZExtendableSaveSystem\Core\SaveMaster.cs" />
+    <Compile Include="Assets\ZExtendableSaveSystem\Example\ExtendedComponentData.cs" />
+    <Compile Include="Assets\ZExtendableSaveSystem\Example\GameMaster.cs" />
+    <Compile Include="Assets\ZExtendableSaveSystem\Example\TransformSaver.cs" />
+    <None Include="Assets\ZBayatGames\SaveGameFree\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\ZBayatGames\SaveGameFree\Documentation\Save Game Free Documentation - Plain Text Version.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -164,6 +202,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\ZBayatGames\SaveGameFree\Plugins\FullSerializer.xml" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
     <None Include="Assets\Scripts\Visuals\Blur.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
@@ -375,6 +414,9 @@
     </Reference>
     <Reference Include="UnityEngine.XRModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="FullSerializer">
+      <HintPath>C:/Unity Projects/SSS222/SSS222/Assets/ZBayatGames/SaveGameFree/Plugins/FullSerializer.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.15f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

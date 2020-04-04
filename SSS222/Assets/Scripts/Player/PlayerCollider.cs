@@ -35,23 +35,6 @@ public class PlayerCollider : MonoBehaviour{
     GameSession gameSession;
     AudioSource myAudioSource;
     AudioMixer mixer;
-    string _OutputMixer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        player = FindObjectOfType<Player>().GetComponent<Player>();
-        gameSession = FindObjectOfType<GameSession>();
-        myAudioSource = GetComponent<AudioSource>();
-        mixer = Resources.Load("MainMixer") as AudioMixer;
-        _OutputMixer = "SoundVolume";
-        //GetComponent<AudioSource>().outputAudioMixerGroup = mixer.FindMatchingGroups(_OutputMixer)[0];
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
     {
         GameObject tempGO = new GameObject("TempAudio"); // create the temp object
@@ -65,6 +48,18 @@ public class PlayerCollider : MonoBehaviour{
         MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
         return aSource; // return the AudioSource reference
     }
+    string _OutputMixer;
+    // Start is called before the first frame update
+    void Start()
+    {
+        player = FindObjectOfType<Player>().GetComponent<Player>();
+        gameSession = FindObjectOfType<GameSession>();
+        myAudioSource = GetComponent<AudioSource>();
+        mixer = Resources.Load("MainMixer") as AudioMixer;
+        _OutputMixer = "SoundVolume";
+        //GetComponent<AudioSource>().outputAudioMixerGroup = mixer.FindMatchingGroups(_OutputMixer)[0];
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
 
@@ -77,7 +72,6 @@ public class PlayerCollider : MonoBehaviour{
                 if (!damageDealer) { return; }
                 bool en = false;
                 bool destroy = true;
-                bool invincible = false;
                 var dmg = damageDealer.GetDamage();
 
                 var cometName = cometPrefab.name; var cometName1 = cometPrefab.name + "(Clone)";
@@ -96,7 +90,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == leechName || other.gameObject.name == leechName1) { en = true;  destroy = false; }
                 
                 var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
-                if (other.gameObject.name == hlaserName || other.gameObject.name == hlaserName1) { destroy = false; invincible = true; }
+                if (other.gameObject.name == hlaserName || other.gameObject.name == hlaserName1) { destroy = false; }
 
                 if (other.gameObject.name != hlaserName && other.gameObject.name != hlaserName1)
                 {
@@ -173,25 +167,25 @@ public class PlayerCollider : MonoBehaviour{
 
 
                 var laser2Name = laser2PwrupPrefab.name; var laser2Name1 = laser2PwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == laser2Name || other.gameObject.name == laser2Name1) { player.powerup = "laser2"; player.energy += player.pwrupEnergyGet; }
+                if (other.gameObject.name == laser2Name || other.gameObject.name == laser2Name1) { player.energy += player.pwrupEnergyGet; player.powerup = "laser2"; }
 
                 var laser3Name = laser3PwrupPrefab.name; var laser3Name1 = laser3PwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == laser3Name || other.gameObject.name == laser3Name1) { player.powerup = "laser3"; player.energy += player.pwrupEnergyGet; }
+                if (other.gameObject.name == laser3Name || other.gameObject.name == laser3Name1) { player.energy += player.pwrupEnergyGet; player.powerup = "laser3"; }
 
                 var phaserName = phaserPwrupPrefab.name; var phaserName1 = phaserPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == phaserName || other.gameObject.name == phaserName1) { player.powerup = "phaser"; player.energy += player.pwrupEnergyGet; }
+                if (other.gameObject.name == phaserName || other.gameObject.name == phaserName1) { player.energy += player.pwrupEnergyGet; player.powerup = "phaser"; }
 
                 var hrocketName = hrocketPwrupPrefab.name; var hrocketName1 = hrocketPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == hrocketName || other.gameObject.name == hrocketName1) { player.powerup = "hrockets"; player.energy += player.pwrupEnergyGet; }
+                if (other.gameObject.name == hrocketName || other.gameObject.name == hrocketName1) { player.energy += player.pwrupEnergyGet; player.powerup = "hrockets"; }
 
                 var minilaserName = mlaserPwrupPrefab.name; var minilaserName1 = mlaserPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == minilaserName || other.gameObject.name == minilaserName1) { player.powerup = "mlaser"; player.energy += player.pwrupEnergyGet; }
+                if (other.gameObject.name == minilaserName || other.gameObject.name == minilaserName1) { player.energy += player.pwrupEnergyGet; player.powerup = "mlaser"; }
 
                 var lsaberName = lsaberPwrupPrefab.name; var lsaberName1 = lsaberPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == lsaberName || other.gameObject.name == lsaberName1) { player.powerup = "lsaber"; player.energy += player.pwrupEnergyGet; }
+                if (other.gameObject.name == lsaberName || other.gameObject.name == lsaberName1) { player.energy += player.pwrupEnergyGet; player.powerup = "lsaber"; }
 
                 var shadowbtName = shadowBTPwrupPrefab.name; var shadowbtName1 = shadowBTPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { player.powerup = "shadowbt"; player.energy += player.pwrupEnergyGet; }
+                if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { player.energy += player.pwrupEnergyGet; player.powerup = "shadowbt"; }
 
 
                 if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1)

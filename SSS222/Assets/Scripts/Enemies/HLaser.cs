@@ -7,8 +7,8 @@ public class HLaser : MonoBehaviour{
     [SerializeField] GameObject hlaserChargingPrefab;
     [SerializeField] GameObject hlaserPrefab;
     [SerializeField] float timerExcl=1f;
-    [SerializeField] float timerHlaserCharging=1.25f;
-    [SerializeField] float timerHlaser=3.5f;
+    [SerializeField] float timerHlaserCharging=1.12f;
+    [SerializeField] float timerHlaser=3.3f;
     public float timer=-4;
     // Start is called before the first frame update
     void Awake()

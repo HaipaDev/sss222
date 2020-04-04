@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Player : MonoBehaviour{
     //Config params
@@ -100,12 +101,14 @@ public class Player : MonoBehaviour{
     public bool healed = false;
     public bool shadowed = false;
     public bool dashing = false;
+    public float shootTimer = 0f;
 
     public new Vector2 mousePos;
     public float dist;
 
     Rigidbody2D rb;
     GameSession gameSession;
+    //Settings settings;
     Coroutine shootCoroutine;
     //FollowMouse followMouse;
 
@@ -115,15 +118,35 @@ public class Player : MonoBehaviour{
     float yMax;
 
     bool hasHandledInputThisFrame = false;
-    
+
+    AudioSource myAudioSource;
+    AudioMixer mixer;
+    string _OutputMixer;
+
+    AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
+    {
+        GameObject tempGO = new GameObject("TempAudio"); // create the temp object
+        tempGO.transform.position = pos; // set its position
+        AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
+        aSource.clip = clip; // define the clip
+                             // set other aSource properties here, if desired
+        _OutputMixer = "SoundVolume";
+        aSource.outputAudioMixerGroup = myAudioSource.outputAudioMixerGroup;
+        aSource.Play(); // start the sound
+        MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
+        return aSource; // return the AudioSource reference
+    }
+
     // Start is called before the first frame update
     void Start(){
         rb = GetComponent<Rigidbody2D>();
         gameSession=FindObjectOfType<GameSession>();
+        //settings = FindObjectOfType<Settings>();
         //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
         moveSpeedCurrent = moveSpeed;
         dashTime = startDashTime;
+        moveByMouse = gameSession.moveByMouse;
     }
     // Update is called once per frame
     void Update(){
@@ -137,6 +160,7 @@ public class Player : MonoBehaviour{
         Die();
         if(moveByMouse!=true){ MovePlayer(); }//followMouse.enabled = false; }
         else{ MoveWithMouse(); }// followMouse.enabled = true; }
+        shootTimer -= Time.deltaTime;
     }
     void FixedUpdate()
     {
@@ -145,7 +169,7 @@ public class Player : MonoBehaviour{
         //MovePlayer();
         if (!Input.GetButton("Fire1"))
         {
-            StopCoroutine(shootCoroutine);
+            if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
         }
     }
     void HandleInput(bool isFixedUpdate)
@@ -232,14 +256,16 @@ public class Player : MonoBehaviour{
     }
 
     private void Shoot(){
-        if (Input.GetButtonDown("Fire1")){
-            shootCoroutine = StartCoroutine(ShootContinuously());
-        }if(!Input.GetButton("Fire1")){
-            StopCoroutine(shootCoroutine);
+        if(Time.timeScale>0.0001f){
+            if (Input.GetButtonDown("Fire1")){
+                if(shootTimer<=0f)shootCoroutine = StartCoroutine(ShootContinuously());
+            }if(!Input.GetButton("Fire1")){
+                if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
+            }
+            /*if (Input.GetButtonUp("Fire1")){
+                StopCoroutine(shootCoroutine);
+            }*/
         }
-        /*if (Input.GetButtonUp("Fire1")){
-            StopCoroutine(shootCoroutine);
-        }*/
     }
     public void DClick(){
         //Debug.Log("DClick");
@@ -263,6 +289,7 @@ public class Player : MonoBehaviour{
     #region//Powerups
     IEnumerator ShootContinuously(){
         while (true){
+            if (Time.timeScale > 0.0001f){
             if (energy > 0){
                 if (powerup=="laser"){
                     GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -274,8 +301,8 @@ public class Player : MonoBehaviour{
                     laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     energy -= laserEn;
-                    yield return new WaitForSeconds(laserShootPeriod);
-                    //AudioSource.PlayClipAtPoint(shootLaserSFX, new Vector2(transform.position.x, transform.position.y));
+                        shootTimer = laserShootPeriod * 0.75f;
+                        yield return new WaitForSeconds(laserShootPeriod);
                 }else if(powerup=="laser2"){
                     GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject laserL2 = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.4f, transform.position.y), Quaternion.identity) as GameObject;
@@ -294,7 +321,8 @@ public class Player : MonoBehaviour{
                     laserL2.transform.eulerAngles=new Vector3(0,0,10f);
                     laserR2.transform.eulerAngles=new Vector3(0,0,-10f);
                     energy -= laser2En;
-                    yield return new WaitForSeconds(laserShootPeriod);
+                        shootTimer = laserShootPeriod * 0.75f;
+                        yield return new WaitForSeconds(laserShootPeriod);
                 }
                 else if (powerup == "laser3"){
                     GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.3f, transform.position.y), Quaternion.identity) as GameObject;
@@ -322,7 +350,8 @@ public class Player : MonoBehaviour{
                     laserR2.transform.eulerAngles = new Vector3(0, 0, -8f);
                     laserR3.transform.eulerAngles = new Vector3(0, 0, -13f);
                     energy -= laser3En;
-                    yield return new WaitForSeconds(laserShootPeriod);
+                        shootTimer = laserShootPeriod*0.75f;
+                        yield return new WaitForSeconds(laserShootPeriod);
                 }else if (powerup == "phaser"){
                     GameObject phaserL = Instantiate(phaserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject phaserR = Instantiate(phaserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -333,7 +362,8 @@ public class Player : MonoBehaviour{
                     phaserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, phaserSpeed);
                     phaserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, phaserSpeed);
                     energy -= phaserEn;
-                    yield return new WaitForSeconds(phaserShootPeriod);
+                        shootTimer = phaserShootPeriod;
+                        yield return new WaitForSeconds(phaserShootPeriod);
                 }else if (powerup == "mlaser"){
                     var xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); var xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
                     var yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); var yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
@@ -350,7 +380,8 @@ public class Player : MonoBehaviour{
                     GameObject flareR = Instantiate(flareShootVFX, new Vector2(xxR, yyR - flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flareL.gameObject, 0.3f);
                     Destroy(flareR.gameObject, 0.3f);
-                    yield return new WaitForSeconds(mlaserShootPeriod);
+                        shootTimer = mlaserShootPeriod;
+                        yield return new WaitForSeconds(mlaserShootPeriod);
                 }else if (powerup == "hrockets"){
                     var xx = transform.position.x - 0.35f;
                     if (UnityEngine.Random.Range(0f,1f)>0.5f){ xx = transform.position.x + 0.35f; }
@@ -359,7 +390,8 @@ public class Player : MonoBehaviour{
                     Destroy(flare.gameObject, 0.3f);
                     hrocket.GetComponent<Rigidbody2D>().velocity = new Vector2(0, hrocketSpeed);
                     energy -= hrocketEn;
-                    yield return new WaitForSeconds(hrocketShootPeriod);
+                        shootTimer = hrocketShootPeriod;
+                        yield return new WaitForSeconds(hrocketShootPeriod);
                 }else if (powerup == "shadowbt")
                 {
                     GameObject laserL = Instantiate(shadowBTPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -371,13 +403,14 @@ public class Player : MonoBehaviour{
                     laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
                     laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
                     energy -= shadowBTEn;
-                    yield return new WaitForSeconds(shadowBTShootPeriod);
-                    //AudioSource.PlayClipAtPoint(shootLaserSFX, new Vector2(transform.position.x, transform.position.y));
+                        shootTimer = shadowBTShootPeriod;
+                        yield return new WaitForSeconds(shadowBTShootPeriod);
                 }
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
-                else {if(powerup!="lsaberA")powerup = "laser";yield return new WaitForSeconds(1f); }
-            }else{ energy = 0; AudioSource.PlayClipAtPoint(noEnergySFX, new Vector2(transform.position.x, transform.position.y)); yield return new WaitForSeconds(1f); }
+                else {if(powerup!="lsaberA")powerup = "laser"; shootTimer = 1f; yield return new WaitForSeconds(1f); }
+            }else{ energy = 0; AudioSource.PlayClipAtPoint(noEnergySFX, new Vector2(transform.position.x, transform.position.y)); shootTimer = 0f; yield return new WaitForSeconds(1f); }
             }
+        }
     }
 
     IEnumerator DrawOtherWeapons(){
@@ -427,11 +460,15 @@ public class Player : MonoBehaviour{
         else{ dashTime = startDashTime; rb.velocity = Vector2.zero; GetComponent<BackflameEffect>().enabled=true; }
         if (dashTime <= 0) { rb.velocity = Vector2.zero; dashing = false; }
         else{ dashTime -= Time.deltaTime; }
+        if(energy<=0){ shadow = false; }
     }
     private void Shadow(){
-        GameObject shadow = Instantiate(shadowPrefab,new Vector2(transform.position.x,transform.position.y), Quaternion.identity);
-        Destroy(shadow.gameObject, shadowLength);
-        //yield return new WaitForSeconds(0.2f);
+        if (Time.timeScale > 0.0001f)
+        {
+            GameObject shadow = Instantiate(shadowPrefab,new Vector2(transform.position.x,transform.position.y), Quaternion.identity);
+            Destroy(shadow.gameObject, shadowLength);
+            //yield return new WaitForSeconds(0.2f);
+        }
     }
     private void Die(){
         if (health <= 0){

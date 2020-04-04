@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 9212667451667108736}
   - component: {fileID: 8045935328358193819}
   - component: {fileID: -5285344342741295630}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HLaserCharging
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,13 +134,13 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5297393032930098129}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00000023841858, y: -4.800232}
+  m_Offset: {x: -0.056236625, y: 0.20382345}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -151,7 +151,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.1896749, y: 9.579161}
+  m_Size: {x: 2.233648, y: 0.9616103}
   m_EdgeRadius: 0
 --- !u!82 &9212667451667108736
 AudioSource:

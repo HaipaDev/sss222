@@ -15,10 +15,12 @@ public class BackflameEffect : MonoBehaviour{
     }*/
     // Update is called once per frame
     void Update(){
-        var xxx = transform.position.x + xx;
-        var yyy = transform.position.y + yy;
-        GameObject BFlame = Instantiate(part, new Vector3(xxx, yyy, transform.position.z - 0.01f), Quaternion.identity);
-        Destroy(BFlame, time);
-        if (twice==true){GameObject BFlame2 = Instantiate(part, new Vector3(xxx, yyy, transform.position.z - 0.01f), Quaternion.identity); Destroy(BFlame2, time); }
+        if(Time.timeScale>0.0001f){
+            var xxx = transform.position.x + xx;
+            var yyy = transform.position.y + yy;
+            GameObject BFlame = Instantiate(part, new Vector3(xxx, yyy, transform.position.z - 0.01f), Quaternion.identity);
+            Destroy(BFlame, time);
+            if (twice == true) { GameObject BFlame2 = Instantiate(part, new Vector3(xxx, yyy, transform.position.z - 0.01f), Quaternion.identity); Destroy(BFlame2, time); }
+        }
     }
 }

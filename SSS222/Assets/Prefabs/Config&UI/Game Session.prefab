@@ -43,3 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da37379824486b54ea7f2696a5b904fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
+  EVscore: 0
+  coins: 0
+  gameSpeed: 1
+  moveByMouse: 1
+  data:
+    highscore: 0

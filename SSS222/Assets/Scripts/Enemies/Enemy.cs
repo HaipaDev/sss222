@@ -49,6 +49,20 @@ public class Enemy : MonoBehaviour{
     Shake shake;
     AudioMixer mixer;
     string _OutputMixer;
+    AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
+    {
+        GameObject tempGO = new GameObject("TempAudio"); // create the temp object
+        tempGO.transform.position = pos; // set its position
+        AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
+        aSource.clip = clip; // define the clip
+                             // set other aSource properties here, if desired
+        _OutputMixer = "SoundVolume";
+        aSource.outputAudioMixerGroup = myAudioSource.outputAudioMixerGroup;
+        aSource.Play(); // start the sound
+        MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
+        return aSource; // return the AudioSource reference
+    }
+
     // Start is called before the first frame update
     void Start(){
         enBallchance = Random.Range(0f, 100f);
@@ -70,21 +84,7 @@ public class Enemy : MonoBehaviour{
         if (shooting == true){ Shoot(); }
         Die();
     }
-
-    AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
-    {
-        GameObject tempGO = new GameObject("TempAudio"); // create the temp object
-        tempGO.transform.position = pos; // set its position
-        AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
-        aSource.clip = clip; // define the clip
-                             // set other aSource properties here, if desired
-        _OutputMixer = "SoundVolume";
-        aSource.outputAudioMixerGroup = myAudioSource.outputAudioMixerGroup;
-        aSource.Play(); // start the sound
-        MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
-        return aSource; // return the AudioSource reference
-    }
-
+    
     private void Shoot(){
         shotCounter -= Time.deltaTime;
         if(shotCounter<=0f){
