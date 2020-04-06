@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 02d69f6be77d3c44197239d9852ac483, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -272,10 +272,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f19f394ac284834b8e769ab6deb8ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catch_distance: 5
+  catch_distance: 1.5
   shake_distance: 0.05
   count_max: 3
   fallSpeed: 6
+  leechAttachSFX: {fileID: 8300000, guid: a08cd7c3019c6a9488a779f692ebc6b5, type: 3}
   attached: 0
   detached: 0
   stage: 0

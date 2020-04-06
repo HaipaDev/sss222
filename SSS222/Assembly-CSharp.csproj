@@ -63,9 +63,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\GameCreator.cs" />
     <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
     <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
     <Compile Include="Assets\Scripts\Core\DataStorage.cs" />
+    <Compile Include="Assets\Scripts\Core\GameAssets.cs" />
     <Compile Include="Assets\Scripts\Core\GameSession.cs" />
     <Compile Include="Assets\Scripts\Core\Level.cs" />
     <Compile Include="Assets\Scripts\Core\Loader.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Assets\Scripts\Core\SaveSystem.cs" />
     <Compile Include="Assets\Scripts\Core\Settings.cs" />
     <Compile Include="Assets\Scripts\Core\Shredder.cs" />
+    <Compile Include="Assets\Scripts\Core\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Enemies\CometRandomProperties.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyPathing.cs" />
@@ -89,12 +92,15 @@
     <Compile Include="Assets\Scripts\HUD\HPBar.cs" />
     <Compile Include="Assets\Scripts\HUD\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\HUD\PowerupDisplay.cs" />
+    <Compile Include="Assets\Scripts\HUD\ShakeQuicklyUI.cs" />
     <Compile Include="Assets\Scripts\HUD\ValueDisplay.cs" />
     <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
+    <Compile Include="Assets\Scripts\Menu\Inventory.cs" />
     <Compile Include="Assets\Scripts\Menu\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\Player\Lightsaber.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerCollider.cs" />
+    <Compile Include="Assets\Scripts\Player\ShipSkinManager.cs" />
     <Compile Include="Assets\Scripts\Spanwers\DisruptersSpawner.cs" />
     <Compile Include="Assets\Scripts\Spanwers\EnemySpawnerOld.cs" />
     <Compile Include="Assets\Scripts\Spanwers\PowerupsSpawner.cs" />

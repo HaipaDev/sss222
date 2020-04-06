@@ -87,6 +87,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public AudioClip noEnergySFX;
     [SerializeField] public AudioClip energyBallSFX;
     [SerializeField] public AudioClip coinSFX;
+    [SerializeField] public AudioClip leechBiteSFX;
     [HeaderAttribute("Others")]
     [SerializeField] GameObject gameOverCanvasPrefab;
     [SerializeField] GameObject shadowPrefab;
@@ -108,6 +109,7 @@ public class Player : MonoBehaviour{
 
     Rigidbody2D rb;
     GameSession gameSession;
+    SaveSerial saveSerial;
     //Settings settings;
     Coroutine shootCoroutine;
     //FollowMouse followMouse;
@@ -141,12 +143,13 @@ public class Player : MonoBehaviour{
     void Start(){
         rb = GetComponent<Rigidbody2D>();
         gameSession=FindObjectOfType<GameSession>();
+        saveSerial = FindObjectOfType<SaveSerial>();
         //settings = FindObjectOfType<Settings>();
         //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
         moveSpeedCurrent = moveSpeed;
         dashTime = startDashTime;
-        moveByMouse = gameSession.moveByMouse;
+        moveByMouse = saveSerial.moveByMouse;
     }
     // Update is called once per frame
     void Update(){
@@ -421,10 +424,13 @@ public class Player : MonoBehaviour{
                 powerup = "lsaberA";
                 //yield return new WaitForSeconds(lsaberEnPeriod);
             }else if (powerup == "lsaberA"){
-                energy -= lsaberEn;
-                moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
+                if(Time.timeScale>0.0001f){
+                    energy -= lsaberEn;
+                    moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
+                }
                 yield return new WaitForSeconds(lsaberEnPeriod);
-            }else{
+            }
+            else{
                 var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
                 Destroy(GameObject.Find(lsaberName));
                 Destroy(GameObject.Find(lsaberName1));

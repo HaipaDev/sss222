@@ -135,9 +135,9 @@ public class PlayerCollider : MonoBehaviour{
 
 
                 var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { player.health += 25; player.energy += player.medkitEnergyGet; player.healed = true; }
+                if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { if(player.health>player.maxHP-20){gameSession.AddToScore(25);} player.health += 25; player.energy += player.medkitEnergyGet; player.healed = true; }
                 var armorUName = armorUPwrupPrefab.name; var armorUName1 = armorUPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { player.health += 58; player.energy += player.medkitUEnergyGet; player.healed = true; }
+                if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { if (player.health>player.maxHP-20) {gameSession.AddToScore(25);} player.health += 58; player.energy += player.medkitUEnergyGet; player.healed = true; }
 
                 var flipName = flipPwrupPrefab.name; var flipName1 = flipPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == flipName || other.gameObject.name == flipName1) { player.flip = true; player.flipTimer = player.flipTime; }
@@ -147,6 +147,7 @@ public class PlayerCollider : MonoBehaviour{
                 {
                     player.gclover = true; player.gcloverTimer = player.gcloverTime;
                     gameSession.MultiplyScore(1.25f);
+                    player.energy = player.maxEnergy;
                     //GameObject gcloverexVFX = Instantiate(gcloverVFX, new Vector2(0, 0), Quaternion.identity);
                     GameObject gcloverexOVFX = Instantiate(player.gcloverOVFX, new Vector2(0, 0), Quaternion.identity);
                     //Destroy(gcloverexVFX, 1f);
@@ -158,6 +159,7 @@ public class PlayerCollider : MonoBehaviour{
                     player.shadow = true;
                     player.shadowTimer = player.shadowTime;
                     player.shadowed = true;
+                    player.energy += player.pwrupEnergyGet;
                     //GameObject gcloverexVFX = Instantiate(gcloverVFX, new Vector2(0, 0), Quaternion.identity);
                     //GameObject gcloverexOVFX = Instantiate(shadowEVFX, new Vector2(0, 0), Quaternion.identity);
                     //Destroy(gcloverexVFX, 1f);
@@ -206,6 +208,7 @@ public class PlayerCollider : MonoBehaviour{
                 }
                 else
                 {
+                    //SoundManager.PlaySound(SoundManager.Sound.powerupSFX);
                     PlayClipAt(player.powerupSFX, new Vector2(transform.position.x, transform.position.y));
                 }
                 Destroy(other.gameObject, 0.05f);
@@ -232,7 +235,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (dmgTimer<=0){
                     player.health -= dmg;
                     player.damaged = true;
-                    PlayClipAt(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
+                    PlayClipAt(player.leechBiteSFX, new Vector2(transform.position.x, transform.position.y));
                     //var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                     //Destroy(flare.gameObject, 0.3f);
                     dmgTimer = dmgFreq;

@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lightsaber : MonoBehaviour
-{
+public class Lightsaber : MonoBehaviour{
     [SerializeField] AudioClip lsaberBlockSFX;
-    // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        int numberOfObj = FindObjectsOfType<Lightsaber>().Length;
+        if (numberOfObj > 1)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5312062585736319104}
   - component: {fileID: 5582614905151606910}
   m_Layer: 0
-  m_Name: DataLoader
+  m_Name: Loader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0.4
+  audioMixer: {fileID: 24100000, guid: cdf423136b4935c44a751cae8c8b0d94, type: 2}

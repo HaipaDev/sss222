@@ -43,4 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afeecf0a3642dbe4398a0c42f11afe9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filename: playerData
+  filenameSettings: gameSettings.cfg
   highscore: 0
+  chameleonColor:
+  - 0
+  - 0
+  - 0
+  moveByMouse: 1
+  fullscreen: 1
+  quality: 4
+  masterVolume: 0
+  soundVolume: 0
+  musicVolume: 0

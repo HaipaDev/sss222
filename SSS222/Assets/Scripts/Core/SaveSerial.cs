@@ -9,33 +9,93 @@ using BayatGames.SaveGameFree.Encoders;
 using BayatGames.SaveGameFree.Serializers;
 
 public class SaveSerial : MonoBehaviour{
+	[SerializeField] string filename = "playerData";
+	[SerializeField] string filenameSettings = "gameSettings.cfg";
+	[HeaderAttribute("PlayerData")]
 	public int highscore;
-	public bool moveByMouse=true;
+	public float[] chameleonColor = new float[3];
+	[HeaderAttribute("SettingsData")]
+	public bool moveByMouse;
+	public bool fullscreen;
+	public int quality;
+	public float masterVolume;
+	public float soundVolume;
+	public float musicVolume;
 	public class PlayerData
 	{
 		public int highscore;
+		public float[] chameleonColor=new float[3];
+		
+	}public class SettingsData
+	{
 		public bool moveByMouse;
+		public bool fullscreen;
+		public int quality;
+		public float masterVolume;
+		public float soundVolume;
+		public float musicVolume;
 	}
 
 	public void Save()
 	{
 		PlayerData data = new PlayerData();
 		data.highscore = highscore;
-		data.moveByMouse = moveByMouse;
+		data.chameleonColor[0] = chameleonColor[0];
+		data.chameleonColor[1] = chameleonColor[1];
+		data.chameleonColor[2] = chameleonColor[2];
 
 		// Saving the data
 		SaveGame.Encode = true;
 		SaveGame.Serializer = new SaveGameJsonSerializer();
-		SaveGame.Save("playerData", data);
+		SaveGame.Save(filename, data);
+		Debug.Log("Game Data saved");
+	}
+	public void SaveSettings()
+	{
+		SettingsData data = new SettingsData();
+		data.moveByMouse = moveByMouse;
+		data.fullscreen = fullscreen;
+		data.quality = quality;
+		data.masterVolume = masterVolume;
+		data.soundVolume = soundVolume;
+		data.musicVolume = musicVolume;
+
+		// Saving the data
+		SaveGame.Encode = false;
+		SaveGame.Serializer = new SaveGameJsonSerializer();
+		SaveGame.Save(filenameSettings, data);
+		Debug.Log("Settings saved");
 	}
 	public void Load()
 	{
-		PlayerData data = new PlayerData();
-		SaveGame.Encode = true;
-		SaveGame.Serializer = new SaveGameJsonSerializer();
-		data = SaveGame.Load<PlayerData>("playerData");
-		highscore = data.highscore;
-		moveByMouse = data.moveByMouse;
+		if (File.Exists(Application.persistentDataPath + "/"+filename)){
+			PlayerData data = new PlayerData();
+			SaveGame.Encode = true;
+			SaveGame.Serializer = new SaveGameJsonSerializer();
+			data = SaveGame.Load<PlayerData>(filename);
+			highscore = data.highscore;
+			chameleonColor[0] = data.chameleonColor[0];
+			chameleonColor[1] = data.chameleonColor[1];
+			chameleonColor[2] = data.chameleonColor[2];
+			Debug.Log("Game Data loaded");
+		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
+	}
+	public void LoadSettings()
+	{
+		if (File.Exists(Application.persistentDataPath + "/"+filenameSettings)){
+			SettingsData data = new SettingsData();
+			SaveGame.Encode = false;
+			SaveGame.Serializer = new SaveGameJsonSerializer();
+			data = SaveGame.Load<SettingsData>(filenameSettings);
+			moveByMouse = data.moveByMouse;
+			fullscreen = data.fullscreen;
+			quality = data.quality;
+			masterVolume = data.masterVolume;
+			soundVolume = data.soundVolume;
+			musicVolume = data.musicVolume;
+			Debug.Log("Settings loaded");
+		}
+		else Debug.Log("Settings file not found in " + Application.persistentDataPath + "/" + filenameSettings);
 	}
 	#region//Singleton
 	private void Awake()

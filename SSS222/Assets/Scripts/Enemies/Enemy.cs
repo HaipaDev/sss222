@@ -83,6 +83,7 @@ public class Enemy : MonoBehaviour{
     void Update(){
         if (shooting == true){ Shoot(); }
         Die();
+        DestroyOutside();
     }
     
     private void Shoot(){
@@ -119,7 +120,9 @@ public class Enemy : MonoBehaviour{
             shake.CamShake();
         }
     }
-
+    private void DestroyOutside(){
+        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){ Destroy(gameObject); }
+    }
     private void OnTriggerEnter2D(Collider2D other){
         if(!other.CompareTag(tag)){
             DamageDealer damageDealer=other.gameObject.GetComponent<DamageDealer>();

@@ -26,7 +26,8 @@ public class Follow : MonoBehaviour{
     // Start is called before the first frame update
     void Start()
     {
-        if(target!=null){targetObj = GameObject.FindGameObjectWithTag(target.tag); }
+        //var tempTarget = GameObject.FindGameObjectWithTag(target.tag);
+        if (target!=null){targetObj = GameObject.FindGameObjectWithTag(target.tag); }
         else{targetObj = GameObject.FindGameObjectWithTag(targetTag); }
         rb = GetComponent<Rigidbody2D>();
     }

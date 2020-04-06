@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1949430517914965929}
   - component: {fileID: 502397296}
   - component: {fileID: 1143734159}
+  - component: {fileID: -6162074867996871907}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b1685888490527541a7b090feb214592, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f2d5522a48697ed46a9815b37512e5ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -155,7 +156,7 @@ MonoBehaviour:
   health: 200
   maxHP: 200
   powerup: laser
-  energy: 160
+  energy: 200
   maxEnergy: 200
   laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
     type: 3}
@@ -179,20 +180,20 @@ MonoBehaviour:
   mlaserSpeedE: 10
   mlaserShootPeriod: 0.1
   mlaserBulletsAmount: 25
-  lsaberEnPeriod: 0.1
+  lsaberEnPeriod: 0.26
   shadowBTSpeed: 9
   shadowBTShootPeriod: 0.34
   flip: 0
-  flipTime: 7
+  flipTime: 7.5
   flipTimer: -4
   gclover: 0
-  gcloverTime: 6
+  gcloverTime: 7
   gcloverTimer: -4
   shadow: 0
-  shadowTime: 6
+  shadowTime: 9
   shadowTimer: -4
   shadowLength: 0.2
-  dashSpeed: 22
+  dashSpeed: 24
   startDashTime: 0.1
   laserEn: 1
   laser2En: 2
@@ -200,7 +201,7 @@ MonoBehaviour:
   phaserEn: 3
   hrocketEn: 3
   mlaserEn: 0.075
-  lsaberEn: 0.2
+  lsaberEn: 0.08
   shadowEn: 5
   shadowBTEn: 10
   energyBallGet: 9
@@ -225,6 +226,7 @@ MonoBehaviour:
   noEnergySFX: {fileID: 8300000, guid: 1c11946ec7b1172408473ded0c194601, type: 3}
   energyBallSFX: {fileID: 8300000, guid: f076b87aac8611a43aa15c115fec5bb9, type: 3}
   coinSFX: {fileID: 8300000, guid: 66b797acedbdabe42a159451419d2398, type: 3}
+  leechBiteSFX: {fileID: 8300000, guid: 5198f100b29a378479c77e37079cf250, type: 3}
   gameOverCanvasPrefab: {fileID: 0}
   shadowPrefab: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699,
     type: 3}
@@ -323,7 +325,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 9702fbb395c910b449526048800ee86e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -407,3 +409,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-6162074867996871907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4546529352650547393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e1bc0376da4f34bb96c9aab489ea09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinID: 0
+  addOverlay: 0
+  overlayPrefab: {fileID: 4881046078246147718, guid: ecc7f2d405fb33542808b48eca5c3d11,
+    type: 3}
+  chameleonOverlay: {fileID: 21300000, guid: 5210dd1cd47a95b4da714af8ef21499b, type: 3}
+  chameleonOvColor: {r: 1, g: 1, b: 1, a: 1}
