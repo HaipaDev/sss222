@@ -2,36 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Waves : MonoBehaviour
+public class DisruptersSpawner : MonoBehaviour
 {
-    [SerializeField] List<WaveConfig> waveConfigs;
+    [SerializeField] WaveConfig cfgLeech;
+    [SerializeField] WaveConfig cfgHlaser;
+    [SerializeField] WaveConfig cfgGoblin;
     //[SerializeField] int[] waveConfigsWeights;
-    [SerializeField] int startingWave = 0;
+    //[SerializeField] int startingWave = 0;
+    
+    [SerializeField] float mSTimeSpawnsLeech = 55f;
+    [SerializeField] float mETimeSpawnsLeech = 80f;
+    public float timeSpawnsLeech = 0f;
+    [SerializeField] float mSTimeSpawnsHlaser = 30f;
+    [SerializeField] float mETimeSpawnsHlaser = 60f;
+    public float timeSpawnsHlaser = 0f;
+    [SerializeField] float mSTimeSpawnsGoblin = 40f;
+    [SerializeField] float mESTimeSpawnsGoblin = 50f;
+    public float timeSpawnsGoblin = 0f;
     public int waveIndex = 0;
-    public WaveConfig currentWave;
+    //WaveConfig currentWave;
     [SerializeField] bool looping = true;
-    [SerializeField] bool progressiveWaves = false;
-    [SerializeField] float mTimeSpawns = 2f;
-    public float timeSpawns = 0f;
+    //[SerializeField] bool progressiveWaves = false;
 
-    WaveDisplay waveDisplay;
+    //WaveDisplay waveDisplay;
     GameSession gameSession;
     Player player;
-
-    public float sum=0;
-
-    private void Awake()
-    {
-        foreach (WaveConfig waveConfig in waveConfigs)
+    // Start is called before the first frame update
+    #region//GetRandomWeightedIndex
+        /*public int GetRandomWeightedIndex(int[] weights)
         {
-            sum += waveConfig.spawnRate;
-        }
-    }
+            if (weights == null || weights.Length == 0) return -1;
+
+            int w=0;
+            int i;
+            for (i = 0; i < weights.Length; i++)
+            {
+                if (weights[i] >= 0) w += weights[i];
+            }
+
+            float r = Random.value;
+            float s = 0f;
+
+            for (i = 0; i < weights.Length; i++)
+            {
+                if (weights[i] <= 0f) continue;
+
+                s += (float)weights[i] / waveConfigsWeights.Length;
+                if (s >= r) return i;
+            }
+
+            return -1;
+        }*/
+    #endregion
     IEnumerator Start()
     {
-        waveDisplay = FindObjectOfType<WaveDisplay>();
+        //waveDisplay = FindObjectOfType<WaveDisplay>();
         gameSession = FindObjectOfType<GameSession>();
         player = FindObjectOfType<Player>();
+        timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech,mETimeSpawnsLeech);
+        timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser);
+        timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mESTimeSpawnsGoblin);
         do
         {
             yield return StartCoroutine(SpawnWaves());
@@ -39,40 +69,33 @@ public class Waves : MonoBehaviour
         while (looping);
     }
 
-    public WaveConfig GetRandomWave(){
-        if(currentWave==null)return waveConfigs[startingWave];
-        else{
-            float randomWeight = 0;
-            do
-            {
-                //No weight on any number?
-                if (sum == 0)return null;
-                randomWeight = Random.Range(0, sum);
-            } while (randomWeight == sum);
-            foreach (WaveConfig waveConfig in waveConfigs)
-            {
-                if (randomWeight < waveConfig.spawnRate)return waveConfig;
-                randomWeight -= waveConfig.spawnRate;
-            }
-            return null;
-        }
-    }
     public IEnumerator SpawnWaves()
     {
-            if (timeSpawns<=0 && timeSpawns>-4){
-            if (currentWave == null) currentWave=waveConfigs[startingWave];
-            //currentWave = GetRandomWave();
-            yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
-                timeSpawns = -4;
-            if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
-            else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/ gameSession.EVscore = 0; currentWave=GetRandomWave(); } }//waveIndex = Random.Range(0, waveConfigs.Count);  } }
+        if (timeSpawnsLeech<=0 && timeSpawnsLeech>-4){
+            //currentWave = cfgLeech;
+            yield return StartCoroutine(SpawnAllEnemiesInWave(cfgLeech));
+            timeSpawnsLeech = -4;
+        //if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
+        //else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/
+        //waveIndex = Random.Range(0, waveConfigs.Count); gameSession.EVscore = 0; } }
+        }if (timeSpawnsHlaser <= 0 && timeSpawnsHlaser > -4){
+            //currentWave = cfgHlaser;
+            yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHlaser));
+            timeSpawnsHlaser = -4;
+        }
+        if(GameObject.FindGameObjectWithTag("Powerups")!=null){
+            if (timeSpawnsGoblin <= 0 && timeSpawnsGoblin > -4){
+                //currentWave = cfgGoblin;
+                yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGoblin));
+                timeSpawnsGoblin = -4;
             }
+        }
     }
 
     public IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig)
     {
         var RpathIndex = Random.Range(0, waveConfig.pathsRandom.Count);
-        if (waveConfig.randomPath == false && waveConfig.between2PtsPath==false && waveConfig.shipPlace== false && waveConfig.randomPoint == false){
+        if (waveConfig.randomPath == false && waveConfig.between2PtsPath==false && waveConfig.shipPlace==false && waveConfig.randomPoint==false){
             for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
             {
                 var newEnemy = Instantiate(
@@ -108,12 +131,11 @@ public class Waves : MonoBehaviour
                     yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
                 }
             }
-        }else if (waveConfig.randomPoint == true)
-        {
+        }else if(waveConfig.randomPoint==true){
             for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
             {
                 var waveWaypoints = new List<Transform>();
-                foreach (Transform child in waveConfig.pathsRandom[0].transform) { waveWaypoints.Add(child); }
+                foreach (Transform child in waveConfig.pathsRandom[0].transform){waveWaypoints.Add(child);}
                 var pointIndex = Random.Range(0, waveWaypoints.Count);
                 var newEnemy = Instantiate(
                     waveConfig.GetEnemyPrefab(),
@@ -128,7 +150,7 @@ public class Waves : MonoBehaviour
             {
                 var newEnemy = Instantiate(
                     waveConfig.GetEnemyPrefab(),
-                    new Vector2(player.transform.position.x, 7.2f),
+                    new Vector2(player.transform.position.x, 7.2f+waveConfig.shipYY),
                 Quaternion.identity);
                 newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
@@ -146,19 +168,23 @@ public class Waves : MonoBehaviour
 
         WaveConfig selected = WeightedRandomizer.From(weights).TakeOne(); // Strongly-typed object returned. No casting necessary.
     }*/
-    public string GetWaveName(){
-        return currentWave.waveName;
-    }
+    //public string GetWaveName(){return currentWave.waveName;}
     // Update is called once per frame
     void Update()
     {
-        if(timeSpawns>-0.01){timeSpawns -= Time.deltaTime; }
-        else if(timeSpawns==-4){ timeSpawns = currentWave.timeSpawnWave; }
-        if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
-        else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
-                timeSpawns = 0; currentWave=GetRandomWave();//waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
-                gameSession.EVscore = 0; } }
-        //if (timeSpawns <= 0) {timeSpawns = mTimeSpawns; }
-        //Debug.Log(timeSpawns);
+        if(Time.timeScale>0.0001f){
+            if(timeSpawnsLeech>-0.01f){timeSpawnsLeech -= Time.deltaTime; }
+            else if(timeSpawnsLeech==-4){ timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech, mETimeSpawnsLeech); }
+            if(timeSpawnsHlaser>-0.01f){ timeSpawnsHlaser -= Time.deltaTime; }
+            else if(timeSpawnsHlaser == -4){ Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser); }
+            if(timeSpawnsGoblin > -0.01f){ timeSpawnsGoblin -= Time.deltaTime; }
+            else if(timeSpawnsGoblin == -4){ timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mESTimeSpawnsGoblin); }
+            /*if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
+            else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
+                    timeSpawns = 0; waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
+                    gameSession.EVscore = 0; } }*/
+            //if (timeSpawns <= 0) {timeSpawns = mTimeSpawns; }
+            //Debug.Log(timeSpawns);
+        }
     }
 }

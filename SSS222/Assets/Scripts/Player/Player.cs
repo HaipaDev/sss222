@@ -66,6 +66,8 @@ public class Player : MonoBehaviour{
     [SerializeField] public float energyBallGet = 6f;
     [SerializeField] public float medkitEnergyGet = 2f;
     [SerializeField] public float medkitUEnergyGet = 8f;
+    [SerializeField] public float medkitHpAmnt = 25f;
+    [SerializeField] public float medkitUHpAmnt = 58f;
     [SerializeField] public float pwrupEnergyGet = 48f;
     [HeaderAttribute("Effects")]
     [SerializeField] public GameObject explosionVFX;

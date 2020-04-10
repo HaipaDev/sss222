@@ -63,11 +63,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GameCreator.cs" />
     <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
     <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
     <Compile Include="Assets\Scripts\Core\DataStorage.cs" />
     <Compile Include="Assets\Scripts\Core\GameAssets.cs" />
+    <Compile Include="Assets\Scripts\Core\GameCreator.cs" />
     <Compile Include="Assets\Scripts\Core\GameSession.cs" />
     <Compile Include="Assets\Scripts\Core\Level.cs" />
     <Compile Include="Assets\Scripts\Core\Loader.cs" />
@@ -101,12 +101,15 @@
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerCollider.cs" />
     <Compile Include="Assets\Scripts\Player\ShipSkinManager.cs" />
-    <Compile Include="Assets\Scripts\Spanwers\DisruptersSpawner.cs" />
-    <Compile Include="Assets\Scripts\Spanwers\EnemySpawnerOld.cs" />
-    <Compile Include="Assets\Scripts\Spanwers\PowerupsSpawner.cs" />
-    <Compile Include="Assets\Scripts\Spanwers\PowerupWeights.cs" />
-    <Compile Include="Assets\Scripts\Spanwers\WaveConfig.cs" />
-    <Compile Include="Assets\Scripts\Spanwers\Waves.cs" />
+    <Compile Include="Assets\Scripts\SpanwersEvents\DisruptersSpawner.cs" />
+    <Compile Include="Assets\Scripts\SpanwersEvents\EnemySpawnerOld.cs" />
+    <Compile Include="Assets\Scripts\SpanwersEvents\PowerupsSpawner.cs" />
+    <Compile Include="Assets\Scripts\SpanwersEvents\PowerupWeights.cs" />
+    <Compile Include="Assets\Scripts\SpanwersEvents\Shop.cs" />
+    <Compile Include="Assets\Scripts\SpanwersEvents\ShopSlot.cs" />
+    <Compile Include="Assets\Scripts\SpanwersEvents\ShopSlotID.cs" />
+    <Compile Include="Assets\Scripts\SpanwersEvents\WaveConfig.cs" />
+    <Compile Include="Assets\Scripts\SpanwersEvents\Waves.cs" />
     <Compile Include="Assets\Scripts\UniversalUsage\DetachFromFollow.cs" />
     <Compile Include="Assets\Scripts\UniversalUsage\FallDown.cs" />
     <Compile Include="Assets\Scripts\UniversalUsage\Follow.cs" />

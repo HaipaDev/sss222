@@ -8,7 +8,7 @@ public class GameCreator : MonoBehaviour{
     [SerializeField] GameObject loaderPrefab;
     [SerializeField] GameObject saveSerialPrefab;
     [SerializeField] GameObject gameAssetsPrefab;
-    private void Start()
+    private void Awake()
     {
         if (FindObjectOfType<GameSession>() == null){Instantiate(gameSessionPrefab);}
         //if (FindObjectOfType<Loader>() == null){Instantiate(loaderPrefab);}

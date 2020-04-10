@@ -135,9 +135,9 @@ public class PlayerCollider : MonoBehaviour{
 
 
                 var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { if(player.health>player.maxHP-20){gameSession.AddToScore(25);} player.health += 25; player.energy += player.medkitEnergyGet; player.healed = true; }
+                if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { if(player.health>player.maxHP-25){gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health));} player.health += player.medkitHpAmnt; player.energy += player.medkitEnergyGet; player.healed = true; }
                 var armorUName = armorUPwrupPrefab.name; var armorUName1 = armorUPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { if (player.health>player.maxHP-20) {gameSession.AddToScore(25);} player.health += 58; player.energy += player.medkitUEnergyGet; player.healed = true; }
+                if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { if (player.health>player.maxHP-30) {gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health));} player.health += player.medkitUHpAmnt; player.energy += player.medkitUEnergyGet; player.healed = true; }
 
                 var flipName = flipPwrupPrefab.name; var flipName1 = flipPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == flipName || other.gameObject.name == flipName1) { player.flip = true; player.flipTimer = player.flipTime; }

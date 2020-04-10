@@ -7,7 +7,7 @@ public class PowerupsSpawner : MonoBehaviour{
     //[SerializeField] bool looping = false;
     [SerializeField] float mTimePowerupSpawns = 10f;
     [SerializeField] float firstSpawn = 15f;
-    float timer = 0f;
+    public float timer;
 
     public float sum = 0f;
     private void Awake()
@@ -71,7 +71,7 @@ public class PowerupsSpawner : MonoBehaviour{
     }
     private void Update(){
         //if(currentWave >= waveConfigs.Count)
-        if(timer>0)timer -= Time.deltaTime;
+        if(Time.timeScale>0.0001f)if(timer>0)timer -= Time.deltaTime;
         //Debug.Log(timer);
     }
 }

@@ -5,6 +5,8 @@ using BayatGames.SaveGameFree;
 public class GameSession : MonoBehaviour{
     public int score = 0;
     public int EVscore = 0;
+    public int shopScore = 0;
+    public int shopScoreMax = 500;
     public int coins = 0;
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
     //public bool moveByMouse = true;
@@ -45,16 +47,31 @@ public class GameSession : MonoBehaviour{
     private void Update()
     {
         Time.timeScale = gameSpeed;
+        if(shopScore>=shopScoreMax)
+        {
+            FindObjectOfType<Shop>().shopOpened = true;
+            Enemy[] enemies = FindObjectsOfType<Enemy>();
+            foreach(Enemy enemy in enemies){
+                enemy.givePts = false;
+                enemy.health = -1;
+                enemy.Die();
+            }
+            gameSpeed = 0f;
+            shopScoreMax = Random.Range(45,85);
+            shopScore = 0;
+        }
     }
 
     public int GetScore(){return score;}
     public int GetCoins(){return coins;}
     public int GetEVScore(){return EVscore;}
+    public int GetShopScore(){return shopScore; }
     public int GetHighscore(){return FindObjectOfType<SaveSerial>().highscore;}
 
     public void AddToScore(int scoreValue){
         score += scoreValue;
         EVscore += scoreValue;
+        shopScore += scoreValue;
     }
 
     public void MultiplyScore(float multipl)
@@ -68,6 +85,7 @@ public class GameSession : MonoBehaviour{
     public void ResetScore(){
         score=0;
         EVscore = 0;
+        shopScore = 0;
         coins = 0;
     }
     public void SaveHighscore()
