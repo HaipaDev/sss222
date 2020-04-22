@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6441261333678637232}
   - component: {fileID: 343902056029052478}
   - component: {fileID: 3229580754545001376}
+  - component: {fileID: 6705251974857386957}
   m_Layer: 8
   m_Name: CBullet
   m_TagString: PlayerWeapons
@@ -119,7 +120,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.005306542, y: 0.0026361942}
@@ -177,7 +178,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 9c792512a3f294347ad71be681659376, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a57e44c0ea51cea48a093eb36f690ed7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.165
   m_Pitch: 1
@@ -312,3 +313,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e3f50f5c4b640a40b38c9b4e7b9ad2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 9
+  enemiesHit: []
+--- !u!114 &6705251974857386957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a8c4beb6393e8418ea04d76c86dccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0}
+  selfPos: {x: 0, y: 0}
+  target: {fileID: 0}
+  targetTag: 
+  dist: 0
+  distReq: 4
+  speedFollow: 5
+  vspeed: 2.4
+  hspeed: 0
+  rotateTowards: 0
+  speedRotate: 15
+  angleAdj: -90
+  followAfterOOR: 0
+  dirYYUp: 0
+  OOR_YY: 1.5
+  targetObj: {fileID: 0}

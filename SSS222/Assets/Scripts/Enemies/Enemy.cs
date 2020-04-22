@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour{
     [SerializeField] public AudioClip shadowbtHitSFX;
     [SerializeField] public AudioClip qrocketHitSFX;
     [SerializeField] public AudioClip procketHitSFX;
+    [SerializeField] public AudioClip cbulletHitSFX;
     [HeaderAttribute("Damage Dealers")]
     [SerializeField] GameObject laserPrefab;
     [SerializeField] GameObject mlaserPrefab;
@@ -45,9 +46,12 @@ public class Enemy : MonoBehaviour{
     [SerializeField] GameObject qrocketPrefab;
     [SerializeField] GameObject procketPrefab;
     [SerializeField] GameObject procketExplPrefab;
+    [SerializeField] GameObject cbulletPrefab;
     [HeaderAttribute("Drops")]
     [SerializeField] GameObject energyBallPrefab;
     [SerializeField] GameObject coinPrefab;
+    [HeaderAttribute("Others")]
+    [SerializeField] public bool cTagged=false;
 
     AudioSource myAudioSource;
     GameSession gameSession;
@@ -166,6 +170,8 @@ public class Enemy : MonoBehaviour{
             var PRExplname = procketExplPrefab.name; var PRExplname1 = procketExplPrefab.name + "(Clone)";
             if (other.gameObject.name == PRExplname || other.gameObject.name == PRExplname1) { dmg = damageDealer.GetDamagePRocketExpl(); GetComponent<Rigidbody2D>().velocity = Vector2.up*6f;}// PlayClipAt(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
 
+            var cBulletname = cbulletPrefab.name; var cBulletname1 = cbulletPrefab.name + "(Clone)";
+            if (other.gameObject.name == cBulletname || other.gameObject.name == cBulletname1) { dmg = damageDealer.GetDamageCBullet(); PlayClipAt(cbulletHitSFX, new Vector2(transform.position.x, transform.position.y));}
 
             health -= dmg;
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
@@ -195,7 +201,10 @@ public class Enemy : MonoBehaviour{
 
             var PRExplname = procketExplPrefab.name; var PRExplname1 = procketExplPrefab.name + "(Clone)";
             if (other.gameObject.name == PRExplname || other.gameObject.name == PRExplname1) { dmg = damageDealer.GetDamagePRocketExpl(); }//PlayClipAt(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
-            //else {dmg=0;}
+            else {dmg=0;}
+
+            var cBulletname = cbulletPrefab.name; var cBulletname1 = cbulletPrefab.name + "(Clone)";
+            if (other.gameObject.name == cBulletname || other.gameObject.name == cBulletname1) { dmg = damageDealer.GetDamageCBullet(); PlayClipAt(cbulletHitSFX, new Vector2(transform.position.x, transform.position.y));}else {dmg=0;}
 
 
             health -= dmg;

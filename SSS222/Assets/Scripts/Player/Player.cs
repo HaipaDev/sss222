@@ -464,7 +464,7 @@ public class Player : MonoBehaviour{
                     }
                         shootTimer = procketShootPeriod;
                         yield return new WaitForSeconds(procketShootPeriod);
-                }else if (powerup=="cbullets"){
+                }else if (powerup=="cstream"){
                     var xx = transform.position.x - 0.35f;
                     if (UnityEngine.Random.Range(0f,1f)>0.5f){ xx = transform.position.x + 0.35f; }
                     GameObject cbullet = Instantiate(cbulletPrefab, new Vector2(xx, transform.position.y), Quaternion.identity) as GameObject;

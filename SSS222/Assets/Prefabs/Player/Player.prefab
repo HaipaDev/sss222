@@ -223,7 +223,7 @@ MonoBehaviour:
   shadowBTEn: 10
   qrocketEn: 5.5
   procketEn: 1
-  cbulletEn: 3
+  cbulletEn: 2
   energyBallGet: 9
   medkitEnergyGet: 6
   medkitUEnergyGet: 12
@@ -307,6 +307,8 @@ MonoBehaviour:
   qrocketPwrupPrefab: {fileID: 4548736405339070879, guid: 344da1b4b981f0442828a9bcd1b5c7a3,
     type: 3}
   procketPwrupPrefab: {fileID: 4548736405339070879, guid: a8cf40cf136a1904ab8dc7e10093b0ea,
+    type: 3}
+  cstreamPwrupPrefab: {fileID: 4548736405339070879, guid: f6cc792fe400da64187dce1a17381752,
     type: 3}
   cometPrefab: {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475,
     type: 3}

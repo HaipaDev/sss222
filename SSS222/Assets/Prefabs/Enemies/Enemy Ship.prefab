@@ -203,6 +203,7 @@ MonoBehaviour:
   shadowbtHitSFX: {fileID: 8300000, guid: 4e17bc3df56973a449da39d8719bc60e, type: 3}
   qrocketHitSFX: {fileID: 8300000, guid: 06c1a1b5cc5a3a44b855a1f5c4873af9, type: 3}
   procketHitSFX: {fileID: 8300000, guid: ea3463c0ef5e6e54e8350672e73f600a, type: 3}
+  cbulletHitSFX: {fileID: 8300000, guid: 3041b2799fc1ef4479a66e6a92fb8e8a, type: 3}
   laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
     type: 3}
   mlaserPrefab: {fileID: 6041420664094412071, guid: 293c7e02b2b001849bb8df6402127050,
@@ -222,10 +223,13 @@ MonoBehaviour:
   procketPrefab: {fileID: 3039900905274326842, guid: 0b49874a4081de04386a8d1ce4a4fe63,
     type: 3}
   procketExplPrefab: {fileID: 100000, guid: 7d846c02296ef4dc4abff04ce3e5262c, type: 3}
+  cbulletPrefab: {fileID: 6041420664094412071, guid: caecc161b4ab6f041977bf96ceff3dba,
+    type: 3}
   energyBallPrefab: {fileID: 1056705403108089519, guid: b02c0de83bb50b44aadff0efec44e73f,
     type: 3}
   coinPrefab: {fileID: 1056705403108089519, guid: eebb358fa9ff6af419cd68bd020a4289,
     type: 3}
+  cTagged: 0
 --- !u!114 &1234536692577487592
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -22,6 +22,7 @@ public class PlayerCollider : MonoBehaviour{
     [SerializeField] GameObject shadowBTPwrupPrefab;
     [SerializeField] GameObject qrocketPwrupPrefab;
     [SerializeField] GameObject procketPwrupPrefab;
+    [SerializeField] GameObject cstreamPwrupPrefab;
     [HeaderAttribute("Damage Dealers")]
     [SerializeField] GameObject cometPrefab;
     [SerializeField] GameObject batPrefab;
@@ -199,6 +200,9 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == hrocketName || other.gameObject.name == qrocketName1) { player.energy += player.pwrupEnergyGet; player.powerup = "qrockets"; }
                 var procketName = hrocketPwrupPrefab.name; var procketName1 = procketPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == procketName || other.gameObject.name == procketName1) { player.energy += player.pwrupEnergyGet; player.powerup = "prockets"; }
+
+                var cstreamName = cstreamPwrupPrefab.name; var cstreamName1 = cstreamPwrupPrefab.name + "(Clone)";
+                if (other.gameObject.name == cstreamName || other.gameObject.name == cstreamName1) { player.energy += player.pwrupEnergyGet; player.powerup = "cstream"; }
 
 
                 if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1)
