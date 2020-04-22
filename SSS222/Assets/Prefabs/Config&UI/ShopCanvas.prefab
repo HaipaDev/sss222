@@ -139,7 +139,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: -10
+  m_SortingOrder: -11
   m_TargetDisplay: 0
 --- !u!114 &3679422391987501173
 MonoBehaviour:
@@ -194,15 +194,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopOpened: 0
   shopMenuUI: {fileID: 3679422391047689949}
-  slotObj:
-  - {fileID: 6013975899518425833}
-  - {fileID: 6013975900118945680}
-  - {fileID: 6013975900818072957}
-  - {fileID: 6013975899386927790}
-  slot1: {fileID: 0}
-  slot2: {fileID: 0}
-  slot3: {fileID: 0}
-  slot4: {fileID: 0}
+  slots:
+  - {fileID: 3912464422630751685}
+  - {fileID: 6406405220962881024}
+  - {fileID: 8249889088997001653}
+  - {fileID: 3604374660596552870}
   shopSlotIDs:
   - {fileID: 11400000, guid: 6ec05bf2e77023040a7434c469830641, type: 2}
   - {fileID: 11400000, guid: 3dbde611149621a41921a182d1909a6c, type: 2}
@@ -210,14 +206,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: abb4cfc964a457a43966da12baf2d6e1, type: 2}
   - {fileID: 11400000, guid: 165a7c68e9b1f2c47b32f92ac76ac387, type: 2}
   - {fileID: 11400000, guid: b85bbd8627abfd044ba3d84fbb99696a, type: 2}
-  prices: 060000000500000004000000030000000400000002000000
-  sprites:
-  - {fileID: 21300000, guid: 85c5aff371e073c47b08b82ad1fcd93e, type: 3}
-  - {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
-  - {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
-  - {fileID: 21300000, guid: 40273a285fbc90640907afae766f3be3, type: 3}
-  - {fileID: 21300000, guid: 5be7a6153213a854daafc61bf3be8881, type: 3}
-  - {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
   sum: 0
 --- !u!82 &1241189996
 AudioSource:

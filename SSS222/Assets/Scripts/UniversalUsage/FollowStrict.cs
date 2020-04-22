@@ -10,6 +10,7 @@ public class FollowStrict : MonoBehaviour{
     //public float dist;
     [SerializeField] float xx;
     [SerializeField] float yy;
+    //[SerializeField] Quaternion rotation;
 
     //Player player;
     GameObject targetObj;

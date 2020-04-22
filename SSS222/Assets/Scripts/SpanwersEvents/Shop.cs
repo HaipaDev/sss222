@@ -6,16 +6,12 @@ using UnityEngine.UI;
 public class Shop : MonoBehaviour{
     public bool shopOpened;
     public GameObject shopMenuUI;
-    public GameObject[] slotObj;
+    public ShopSlot[] slots;
     //public GameObject[] slotText;
-    public ShopSlot slot1;
-    public ShopSlot slot2;
-    public ShopSlot slot3;
-    public ShopSlot slot4;
     public List<ShopSlotID> shopSlotIDs;
-    public List<int> prices;
-    int maxID;
-    public List<Sprite> sprites;
+    //public List<int> prices;
+    //int maxID;
+    //public List<Sprite> sprites;
     public float sum;
 
     //Player player;
@@ -27,11 +23,11 @@ public class Shop : MonoBehaviour{
         }
     }
     void Start(){
-        maxID = prices.Count;
-        slot1 = slotObj[0].GetComponent<ShopSlot>();
+        //maxID = shopSlotIDs.Count;
+        /*slot1 = slotObj[0].GetComponent<ShopSlot>();
         slot2 = slotObj[1].GetComponent<ShopSlot>();
         slot3 = slotObj[2].GetComponent<ShopSlot>();
-        slot4 = slotObj[3].GetComponent<ShopSlot>();
+        slot4 = slotObj[3].GetComponent<ShopSlot>();*/
         //player = FindObjectOfType<Player>();
     }
 
@@ -50,14 +46,11 @@ public class Shop : MonoBehaviour{
         FindObjectOfType<GameSession>().gameSpeed = 1f;
     }
     public void RandomizeShop(){
-        slot1.ID = GetRandomID().ID;
-        slot2.ID = GetRandomID().ID;
-        slot3.ID = GetRandomID().ID;
-        slot4.ID = GetRandomID().ID;
-        slot1.ResetState();
-        slot2.ResetState();
-        slot3.ResetState();
-        slot4.ResetState();
+        foreach(ShopSlot slot in slots)
+        {
+            slot.ID = GetRandomID().ID;
+            slot.ResetState();
+        }
         /*slotObj[1].GetComponent<Image>().sprite = sprites[slot2.ID];
         slotObj[2].GetComponent<Image>().sprite = sprites[slot3.ID];
         slotObj[3].GetComponent<Image>().sprite = sprites[slot4.ID];

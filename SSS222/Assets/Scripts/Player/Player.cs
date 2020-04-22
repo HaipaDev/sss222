@@ -25,7 +25,11 @@ public class Player : MonoBehaviour{
     [SerializeField] public GameObject hrocketPrefab;
     [SerializeField] public GameObject mlaserPrefab;
     [SerializeField] public GameObject lsaberPrefab;
+    [SerializeField] public GameObject lclawsPrefab;
     [SerializeField] public GameObject shadowBTPrefab;
+    [SerializeField] public GameObject qrocketPrefab;
+    [SerializeField] public GameObject procketPrefab;
+    [SerializeField] public GameObject cbulletPrefab;
     [SerializeField] float laserSpeed = 9f;
     [SerializeField] float laserShootPeriod = 0.34f;
     [SerializeField] float phaserSpeed = 10.5f;
@@ -35,10 +39,19 @@ public class Player : MonoBehaviour{
     [SerializeField] float mlaserSpeedS = 8.5f;
     [SerializeField] float mlaserSpeedE = 10f;
     [SerializeField] float mlaserShootPeriod = 0.1f;
-    [SerializeField] int mlaserBulletsAmount = 10;
+    [SerializeField] int mlaserBulletsAmmount = 10;
     [SerializeField] float lsaberEnPeriod = 0.1f;
     [SerializeField] float shadowBTSpeed = 4f;
     [SerializeField] float shadowBTShootPeriod = 0.65f;
+    [SerializeField] float qrocketSpeed = 9.5f;
+    [SerializeField] float qrocketShootPeriod = 0.3f;
+    [SerializeField] float procketSpeedS = 9.5f;
+    [SerializeField] float procketSpeedE = 10.5f;
+    [SerializeField] float procketShootPeriod = 0.5f;
+    [SerializeField] int procketsBulletsAmmount = 10;
+    [SerializeField] float cbulletSpeed = 8.25f;
+    [SerializeField] float cbulletShootPeriod = 0.15f;
+
     [HeaderAttribute("States")]
     [SerializeField] public bool flip = false;
     [SerializeField] public float flipTime = 7f;
@@ -60,12 +73,16 @@ public class Player : MonoBehaviour{
     [SerializeField] public float phaserEn = 3f;
     [SerializeField] public float hrocketEn = 5f;
     [SerializeField] public float mlaserEn = 0.225f;
-    [SerializeField] public float lsaberEn = 0.2f;
+    [SerializeField] public float lsaberEn = 0.11f;
+    [SerializeField] public float lclawsEn = 0.12f;
     [SerializeField] public float shadowEn = 3.5f;
     [SerializeField] public float shadowBTEn = 10f;
+    [SerializeField] public float qrocketEn = 5.5f;
+    [SerializeField] public float procketEn = 0.24f;
+    [SerializeField] public float cbulletEn = 3f;
     [SerializeField] public float energyBallGet = 6f;
-    [SerializeField] public float medkitEnergyGet = 2f;
-    [SerializeField] public float medkitUEnergyGet = 8f;
+    [SerializeField] public float medkitEnergyGet = 26f;
+    [SerializeField] public float medkitUEnergyGet = 30f;
     [SerializeField] public float medkitHpAmnt = 25f;
     [SerializeField] public float medkitUHpAmnt = 58f;
     [SerializeField] public float pwrupEnergyGet = 48f;
@@ -76,6 +93,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public GameObject shadowShootVFX;
     [SerializeField] public GameObject gcloverVFX;
     [SerializeField] public GameObject gcloverOVFX;
+    [SerializeField] public GameObject lclawsVFX;
     //[SerializeField] AudioClip shootLaserSFX;
     [SerializeField] public AudioClip shipHitSFX;
     [SerializeField] public AudioClip explosionSFX;
@@ -106,7 +124,7 @@ public class Player : MonoBehaviour{
     public bool dashing = false;
     public float shootTimer = 0f;
 
-    public new Vector2 mousePos;
+    public Vector2 mousePos;
     public float dist;
 
     Rigidbody2D rb;
@@ -372,7 +390,7 @@ public class Player : MonoBehaviour{
                 }else if (powerup == "mlaser"){
                     var xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); var xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
                     var yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); var yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
-                    for (var i=0; i<mlaserBulletsAmount; i++){
+                    for (var i=0; i<mlaserBulletsAmmount; i++){
                         xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
                         yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
                         GameObject mlaserL = Instantiate(mlaserPrefab, new Vector2(xxL, yyL), Quaternion.identity) as GameObject;
@@ -410,14 +428,89 @@ public class Player : MonoBehaviour{
                     energy -= shadowBTEn;
                         shootTimer = shadowBTShootPeriod;
                         yield return new WaitForSeconds(shadowBTShootPeriod);
+                }else if(powerup=="lclawsA"){
+                        var enemy = FindClosestEnemy();
+                        if(enemy!=null){
+                            AudioSource.PlayClipAtPoint(enemy.lsaberHitSFX, transform.position);
+                            GameObject clawsPart = Instantiate(lclawsVFX, enemy.transform.position, Quaternion.identity) as GameObject;
+                            Destroy(clawsPart, 1f);
+                            enemy.health -= FindObjectOfType<DamageDealer>().GetDamageLCLaws();
+                        }else{ AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); }
+                        shootTimer = 0.5f;
+                        yield return new WaitForSeconds(0.5f);
+                }else if (powerup == "qrockets"){
+                    GameObject hrocketL = Instantiate(qrocketPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject hrocketR = Instantiate(qrocketPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                    GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                    Destroy(flareL.gameObject, 0.3f);
+                    Destroy(flareR.gameObject, 0.3f);
+                    hrocketL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
+                    hrocketR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
+                    energy -= qrocketEn;
+                        shootTimer = qrocketShootPeriod;
+                        yield return new WaitForSeconds(qrocketShootPeriod);
+                }else if (powerup == "prockets"){
+                    var xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); var xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
+                    var yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); var yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
+                    for (var i=0; i<procketsBulletsAmmount; i++){
+                        xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
+                        yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
+                        GameObject procketL = Instantiate(procketPrefab, new Vector2(xxL, yyL), Quaternion.identity) as GameObject;
+                        GameObject procketR = Instantiate(procketPrefab, new Vector2(xxR, yyR), Quaternion.identity) as GameObject;
+                        Rigidbody2D rbL = procketL.GetComponent<Rigidbody2D>(); rbL.velocity = new Vector2(rbL.velocity.x, UnityEngine.Random.Range(procketSpeedS, procketSpeedE));
+                        Rigidbody2D rbR = procketR.GetComponent<Rigidbody2D>(); rbR.velocity = new Vector2(rbR.velocity.x, UnityEngine.Random.Range(procketSpeedS, procketSpeedE));
+                        energy -= procketEn;
+                    }
+                        shootTimer = procketShootPeriod;
+                        yield return new WaitForSeconds(procketShootPeriod);
+                }else if (powerup=="cbullets"){
+                    var xx = transform.position.x - 0.35f;
+                    if (UnityEngine.Random.Range(0f,1f)>0.5f){ xx = transform.position.x + 0.35f; }
+                    GameObject cbullet = Instantiate(cbulletPrefab, new Vector2(xx, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject flare = Instantiate(flareShootVFX, new Vector2(xx, transform.position.y+flareShootYY), Quaternion.identity) as GameObject;
+                    Destroy(flare.gameObject, 0.3f);
+                    cbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
+                    energy -= cbulletEn;
+                        shootTimer = cbulletShootPeriod * 0.825f;
+                        yield return new WaitForSeconds(cbulletShootPeriod);
                 }
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
                 else {if(powerup!="lsaberA")powerup = "laser"; shootTimer = 1f; yield return new WaitForSeconds(1f); }
-            }else{ energy = 0; AudioSource.PlayClipAtPoint(noEnergySFX, new Vector2(transform.position.x, transform.position.y)); shootTimer = 0f; yield return new WaitForSeconds(1f); }
+            }else{ energy = 0; AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); shootTimer = 0f; yield return new WaitForSeconds(1f); }
             }
         }
     }
-
+    public Enemy FindClosestEnemy(){
+        KdTree<Enemy> Enemies = new KdTree<Enemy>();
+        Enemy[] EnemiesArr;
+        EnemiesArr = FindObjectsOfType<Enemy>();
+        foreach(Enemy enemy in EnemiesArr){
+            Enemies.Add(enemy);
+        }
+        Enemy closest = Enemies.FindClosest(transform.position);
+        return closest;
+    }
+    /*public Enemy FindClosestEnemy()
+    {
+        Enemy[] gos;
+        gos = Enemy.FindObjectsOfType<Enemy>();
+        Enemy closest;
+        float distance = 44f;
+        Vector3 position = transform.position;
+        foreach (Enemy go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+                return closest;
+            }else { return null; }
+        }
+        return null;
+    }*/
     IEnumerator DrawOtherWeapons(){
         GameObject lsaber;
         if (energy > 0){
@@ -432,16 +525,34 @@ public class Player : MonoBehaviour{
                 }
                 yield return new WaitForSeconds(lsaberEnPeriod);
             }
+            else if (powerup == "lclaws"){
+                lsaber = Instantiate(lclawsPrefab, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity) as GameObject;
+                lsaber.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -10);
+                powerup = "lclawsA";
+                //yield return new WaitForSeconds(lsaberEnPeriod);
+            }else if (powerup == "lclawsA"){
+                if(Time.timeScale>0.0001f){
+                    energy -= lclawsEn;
+                    moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
+                }
+                yield return new WaitForSeconds(lsaberEnPeriod);
+            }
             else{
                 var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
                 Destroy(GameObject.Find(lsaberName));
                 Destroy(GameObject.Find(lsaberName1));
+                var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
+                Destroy(GameObject.Find(lclawsName));
+                Destroy(GameObject.Find(lclawsName1));
                 moveSpeedCurrent = moveSpeed;
             }
         }else { energy = 0; yield return new WaitForSeconds(1f);
             var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
             Destroy(GameObject.Find(lsaberName));
             Destroy(GameObject.Find(lsaberName1));
+            var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
+            Destroy(GameObject.Find(lclawsName));
+            Destroy(GameObject.Find(lclawsName1));
             moveSpeedCurrent = moveSpeed;
             powerup = "laser";
         }

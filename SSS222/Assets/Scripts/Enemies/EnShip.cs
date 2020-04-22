@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnShip : MonoBehaviour{
-    new Vector2 playerPosX;
-    new Vector2 posY;
-    new Vector2 selfPos;
+    Vector2 playerPosX;
+    Vector2 posY;
+    Vector2 selfPos;
     Transform target;
     [SerializeField] float speedFollow = 2f;
     [SerializeField] float vspeed = 0.1f;

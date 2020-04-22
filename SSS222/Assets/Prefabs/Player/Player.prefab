@@ -155,7 +155,7 @@ MonoBehaviour:
   padding: 0.55
   health: 200
   maxHP: 200
-  powerup: laser
+  powerup: lclaws
   energy: 200
   maxEnergy: 200
   laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
@@ -168,7 +168,15 @@ MonoBehaviour:
     type: 3}
   lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
     type: 3}
+  lclawsPrefab: {fileID: 4755926375889011706, guid: b9340c203c57d954687d49864bad3d74,
+    type: 3}
   shadowBTPrefab: {fileID: 5313808222654050488, guid: 4fa01687837a73e42ad4bd043a443c79,
+    type: 3}
+  qrocketPrefab: {fileID: 3039900905274326842, guid: ee62cdec35026cb41bca88bd2914c697,
+    type: 3}
+  procketPrefab: {fileID: 3039900905274326842, guid: 0b49874a4081de04386a8d1ce4a4fe63,
+    type: 3}
+  cbulletPrefab: {fileID: 6041420664094412071, guid: caecc161b4ab6f041977bf96ceff3dba,
     type: 3}
   laserSpeed: 9
   laserShootPeriod: 0.34
@@ -179,10 +187,18 @@ MonoBehaviour:
   mlaserSpeedS: 8.5
   mlaserSpeedE: 10
   mlaserShootPeriod: 0.1
-  mlaserBulletsAmount: 25
+  mlaserBulletsAmmount: 10
   lsaberEnPeriod: 0.26
   shadowBTSpeed: 9
   shadowBTShootPeriod: 0.34
+  qrocketSpeed: 9.5
+  qrocketShootPeriod: 0.3
+  procketSpeedS: 9.5
+  procketSpeedE: 10.5
+  procketShootPeriod: 0.5
+  procketsBulletsAmmount: 10
+  cbulletSpeed: 8.25
+  cbulletShootPeriod: 0.15
   flip: 0
   flipTime: 7.5
   flipTimer: -4
@@ -202,18 +218,25 @@ MonoBehaviour:
   hrocketEn: 3
   mlaserEn: 0.075
   lsaberEn: 0.08
+  lclawsEn: 0.2
   shadowEn: 5
   shadowBTEn: 10
+  qrocketEn: 5.5
+  procketEn: 1
+  cbulletEn: 3
   energyBallGet: 9
   medkitEnergyGet: 6
   medkitUEnergyGet: 12
+  medkitHpAmnt: 25
+  medkitUHpAmnt: 58
   pwrupEnergyGet: 48
-  explosionVFX: {fileID: 100000, guid: 7d846c02296ef4dc4abff04ce3e5262c, type: 3}
+  explosionVFX: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
   flareShootVFX: {fileID: 100000, guid: c151221cd78239d4ba56697f5a78532e, type: 3}
   shadowShootVFX: {fileID: 100000, guid: 096832bfc2651eb4b92bc8012922197b, type: 3}
   gcloverVFX: {fileID: 100000, guid: 93654d0135dbfd741b138964b108e311, type: 3}
   gcloverOVFX: {fileID: 100000, guid: 41fbf007ac904dd48afafa7a6655e3ef, type: 3}
+  lclawsVFX: {fileID: 100000, guid: 405398434fd7ed640a8082ddb451bddf, type: 3}
   shipHitSFX: {fileID: 8300000, guid: a18b151904914894d8ca0c87023051ad, type: 3}
   explosionSFX: {fileID: 8300000, guid: b2affc4fb28935c4ab45801b98257f10, type: 3}
   deathSFX: {fileID: 8300000, guid: faef65200c0014d4aa2393d42b24c515, type: 3}
@@ -271,6 +294,8 @@ MonoBehaviour:
     type: 3}
   lsaberPwrupPrefab: {fileID: 4548736405339070879, guid: da69c5e66b1dd2941ba313f4c96bc246,
     type: 3}
+  lclawsPwrupPrefab: {fileID: 4548736405339070879, guid: 5a016be1fe8ea64479b960ba66d5e80e,
+    type: 3}
   flipPwrupPrefab: {fileID: 4548736405339070879, guid: 5924af7ffd96c8147b6d83568c56580e,
     type: 3}
   gcloverPwrupPrefab: {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268,
@@ -278,6 +303,10 @@ MonoBehaviour:
   shadowPwrupPrefab: {fileID: 4548736405339070879, guid: 506b460219bf5b24db97b32612acb51c,
     type: 3}
   shadowBTPwrupPrefab: {fileID: 4548736405339070879, guid: 09e222a729e8d7a46b1ed32960cf9e6e,
+    type: 3}
+  qrocketPwrupPrefab: {fileID: 4548736405339070879, guid: 344da1b4b981f0442828a9bcd1b5c7a3,
+    type: 3}
+  procketPwrupPrefab: {fileID: 4548736405339070879, guid: a8cf40cf136a1904ab8dc7e10093b0ea,
     type: 3}
   cometPrefab: {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475,
     type: 3}
@@ -427,3 +456,5 @@ MonoBehaviour:
     type: 3}
   chameleonOverlay: {fileID: 21300000, guid: 5210dd1cd47a95b4da714af8ef21499b, type: 3}
   chameleonOvColor: {r: 1, g: 1, b: 1, a: 1}
+  skins:
+  - {fileID: 21300000, guid: b1685888490527541a7b090feb214592, type: 3}

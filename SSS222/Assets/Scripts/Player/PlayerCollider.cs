@@ -15,10 +15,13 @@ public class PlayerCollider : MonoBehaviour{
     [SerializeField] GameObject hrocketPwrupPrefab;
     [SerializeField] GameObject mlaserPwrupPrefab;
     [SerializeField] GameObject lsaberPwrupPrefab;
+    [SerializeField] GameObject lclawsPwrupPrefab;
     [SerializeField] GameObject flipPwrupPrefab;
     [SerializeField] GameObject gcloverPwrupPrefab;
     [SerializeField] GameObject shadowPwrupPrefab;
     [SerializeField] GameObject shadowBTPwrupPrefab;
+    [SerializeField] GameObject qrocketPwrupPrefab;
+    [SerializeField] GameObject procketPwrupPrefab;
     [HeaderAttribute("Damage Dealers")]
     [SerializeField] GameObject cometPrefab;
     [SerializeField] GameObject batPrefab;
@@ -185,9 +188,17 @@ public class PlayerCollider : MonoBehaviour{
 
                 var lsaberName = lsaberPwrupPrefab.name; var lsaberName1 = lsaberPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == lsaberName || other.gameObject.name == lsaberName1) { player.energy += player.pwrupEnergyGet; player.powerup = "lsaber"; }
+                
+                var lclawsName = lclawsPwrupPrefab.name; var lclawsName1 = lclawsPwrupPrefab.name + "(Clone)";
+                if (other.gameObject.name == lclawsName || other.gameObject.name == lclawsName1) { player.energy += player.pwrupEnergyGet; player.powerup = "lclaws"; }
 
                 var shadowbtName = shadowBTPwrupPrefab.name; var shadowbtName1 = shadowBTPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { player.energy += player.pwrupEnergyGet; player.powerup = "shadowbt"; }
+
+                var qrocketName = qrocketPwrupPrefab.name; var qrocketName1 = qrocketPwrupPrefab.name + "(Clone)";
+                if (other.gameObject.name == hrocketName || other.gameObject.name == qrocketName1) { player.energy += player.pwrupEnergyGet; player.powerup = "qrockets"; }
+                var procketName = hrocketPwrupPrefab.name; var procketName1 = procketPwrupPrefab.name + "(Clone)";
+                if (other.gameObject.name == procketName || other.gameObject.name == procketName1) { player.energy += player.pwrupEnergyGet; player.powerup = "prockets"; }
 
 
                 if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1)
@@ -235,7 +246,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (dmgTimer<=0){
                     player.health -= dmg;
                     player.damaged = true;
-                    PlayClipAt(player.leechBiteSFX, new Vector2(transform.position.x, transform.position.y));
+                    if (other.gameObject.name == leechName || other.gameObject.name == leechName1){PlayClipAt(player.leechBiteSFX, new Vector2(transform.position.x, transform.position.y));}
                     //var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                     //Destroy(flare.gameObject, 0.3f);
                     dmgTimer = dmgFreq;

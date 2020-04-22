@@ -22,16 +22,18 @@ public class Enemy : MonoBehaviour{
     [SerializeField] int scoreValueEnd = 10;
     [SerializeField] bool randomizeWaveDeath = false;
     [HeaderAttribute("Effects")]
-    [SerializeField] GameObject explosionVFX;
-    [SerializeField] GameObject explosionSmallVFX;
-    [SerializeField] GameObject flareHitVFX;
-    [SerializeField] AudioClip explosionSFX;
-    [SerializeField] AudioClip enemyHitSFX;
-    [SerializeField] AudioClip mlaserHitSFX;
-    [SerializeField] AudioClip hrocketHitSFX;
-    [SerializeField] AudioClip phaserHitSFX;
-    [SerializeField] AudioClip lsaberHitSFX;
-    [SerializeField] AudioClip shadowbtHitSFX;
+    [SerializeField] public GameObject explosionVFX;
+    [SerializeField] public GameObject explosionSmallVFX;
+    [SerializeField] public GameObject flareHitVFX;
+    [SerializeField] public AudioClip explosionSFX;
+    [SerializeField] public AudioClip enemyHitSFX;
+    [SerializeField] public AudioClip mlaserHitSFX;
+    [SerializeField] public AudioClip hrocketHitSFX;
+    [SerializeField] public AudioClip phaserHitSFX;
+    [SerializeField] public AudioClip lsaberHitSFX;
+    [SerializeField] public AudioClip shadowbtHitSFX;
+    [SerializeField] public AudioClip qrocketHitSFX;
+    [SerializeField] public AudioClip procketHitSFX;
     [HeaderAttribute("Damage Dealers")]
     [SerializeField] GameObject laserPrefab;
     [SerializeField] GameObject mlaserPrefab;
@@ -40,6 +42,9 @@ public class Enemy : MonoBehaviour{
     [SerializeField] GameObject lsaberPrefab;
     [SerializeField] GameObject shadowbtPrefab;
     [SerializeField] GameObject hlaserPrefab;
+    [SerializeField] GameObject qrocketPrefab;
+    [SerializeField] GameObject procketPrefab;
+    [SerializeField] GameObject procketExplPrefab;
     [HeaderAttribute("Drops")]
     [SerializeField] GameObject energyBallPrefab;
     [SerializeField] GameObject coinPrefab;
@@ -145,11 +150,22 @@ public class Enemy : MonoBehaviour{
 
             var shadowbtName = shadowbtPrefab.name; var shadowbtName1 = shadowbtPrefab.name + "(Clone)";
             if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { dmg = damageDealer.GetDamageShadowBT(); PlayClipAt(shadowbtHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            
 
-
+            var QRname = qrocketPrefab.name; var QRname1 = qrocketPrefab.name + "(Clone)";
+            if (other.gameObject.name == QRname || other.gameObject.name == QRname1) { dmg = damageDealer.GetDamageQRocket(); Destroy(other.gameObject); PlayClipAt(qrocketHitSFX, new Vector2(transform.position.x, transform.position.y));
+                var explosionSmall = Instantiate(explosionSmallVFX, new Vector2(transform.position.x, transform.position.y - 0.5f), Quaternion.identity); Destroy(explosionSmall.gameObject, 0.3f);
+            }
+            var PRname = procketPrefab.name; var PRname1 = procketPrefab.name + "(Clone)";
+            if (other.gameObject.name == PRname || other.gameObject.name == PRname1) { dmg = damageDealer.GetDamagePRocket(); //PlayClipAt(hrocketHitSFX, new Vector2(transform.position.x, transform.position.y));
+                //var explosionSmall = Instantiate(explosionSmallVFX, new Vector2(transform.position.x, transform.position.y - 0.5f), Quaternion.identity); Destroy(explosionSmall.gameObject, 0.3f);
+            }
 
             /*var Pname = phaserPrefab.name; var Pname1 = phaserPrefab.name + "(Clone)";
             if (other.gameObject.name != Pname && other.gameObject.name != Pname1){Destroy(other.gameObject,0.05f);}*/
+            var PRExplname = procketExplPrefab.name; var PRExplname1 = procketExplPrefab.name + "(Clone)";
+            if (other.gameObject.name == PRExplname || other.gameObject.name == PRExplname1) { dmg = damageDealer.GetDamagePRocketExpl(); GetComponent<Rigidbody2D>().velocity = Vector2.up*6f;}// PlayClipAt(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
+
 
             health -= dmg;
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
@@ -175,6 +191,13 @@ public class Enemy : MonoBehaviour{
             var LSabername = lsaberPrefab.name; var LSabername1 = lsaberPrefab.name + "(Clone)";
             if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1) { dmg = damageDealer.GetDamageLSaber(); PlayClipAt(enemyHitSFX, new Vector2(transform.position.x, transform.position.y)); }
             else { dmg = 0; }
+            
+
+            var PRExplname = procketExplPrefab.name; var PRExplname1 = procketExplPrefab.name + "(Clone)";
+            if (other.gameObject.name == PRExplname || other.gameObject.name == PRExplname1) { dmg = damageDealer.GetDamagePRocketExpl(); }//PlayClipAt(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            //else {dmg=0;}
+
+
             health -= dmg;
             //Destroy(other.gameObject, 0.05f);
 

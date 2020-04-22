@@ -8,12 +8,14 @@ public class ShipSkinManager : MonoBehaviour{
     [SerializeField] GameObject overlayPrefab;
     [SerializeField] Sprite chameleonOverlay;
     [SerializeField] Color chameleonOvColor;
+    [SerializeField] Sprite[] skins;
     //[SerializeField] int chameleonOvAlpha;
     GameObject overlayOBJ;
     SpriteRenderer overlay;
-
+    SpriteRenderer spr;
     SaveSerial saveSerial;
     void Start(){
+        spr=GetComponent<SpriteRenderer>();
         saveSerial = FindObjectOfType<SaveSerial>();
         LoadValues();
         if (skinID==0){ addOverlay = true; }
@@ -29,6 +31,9 @@ public class ShipSkinManager : MonoBehaviour{
             overlay.sprite = chameleonOverlay;
             //chameleonOvColor.a = chameleonOvAlpha;
             overlay.color = chameleonOvColor;
+        }
+        else{
+            spr.sprite=skins[skinID-1];
         }
     }
     void LoadValues(){

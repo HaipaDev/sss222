@@ -39,11 +39,11 @@ public class ShopSlot : MonoBehaviour{
         {
             gameSession.coins -= shopMenu.shopSlotIDs[ID].price;
             //if(ID<=shopMenu.shopSlotIDs.Count){
-                if (ID == 0) { player.powerup = "mlaser"; }
-                if (ID==1) { player.powerup = "phaser"; }
-                if (ID==2) { player.powerup = "hrockets"; }
-                if (ID==3) { player.powerup = "laser3"; }
-                if (ID==4) { if (player.health > player.maxHP - 30) { gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP-player.health)); } player.health += player.medkitUHpAmnt; }
+                if (ID == 0) { player.powerup = "mlaser"; player.energy += player.pwrupEnergyGet; }
+                if (ID==1) { player.powerup = "phaser"; player.energy += player.pwrupEnergyGet; }
+                if (ID==2) { player.powerup = "hrockets"; player.energy +=player.pwrupEnergyGet; }
+                if (ID==3) { player.powerup = "laser3"; player.energy += player.pwrupEnergyGet; }
+                if (ID==4) { if (player.health > player.maxHP - 30) { gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP-player.health)); } player.health += player.medkitUHpAmnt; player.energy += player.medkitUEnergyGet; }
                 if (ID == 5) { player.powerup = "lsaber"; }
             //} else { Debug.LogError("Shop Slot ID out of bounds"); }
         }else{
