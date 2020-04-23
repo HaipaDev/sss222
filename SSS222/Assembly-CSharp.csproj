@@ -81,6 +81,7 @@
      <Compile Include="Assets\Scripts\HUD\ShakeQuicklyUI.cs" />
      <Compile Include="Assets\Scripts\HUD\ValueDisplay.cs" />
      <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
+     <Compile Include="Assets\Scripts\InvertAllAudio.cs" />
      <Compile Include="Assets\Scripts\Menu\ButtonInterval.cs" />
      <Compile Include="Assets\Scripts\Menu\Inventory.cs" />
      <Compile Include="Assets\Scripts\Menu\SettingsMenu.cs" />
@@ -90,6 +91,9 @@
      <Compile Include="Assets\Scripts\Player\PlayerCollider.cs" />
      <Compile Include="Assets\Scripts\Player\PRocketsExplode.cs" />
      <Compile Include="Assets\Scripts\Player\ShipSkinManager.cs" />
+     <Compile Include="Assets\Scripts\QuickGlow.cs" />
+     <Compile Include="Assets\Scripts\ReplacementShaderEffect.cs" />
+     <Compile Include="Assets\Scripts\SimpleBlur.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\DisruptersSpawner.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\EnemySpawnerOld.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\PowerupsSpawner.cs" />
@@ -182,12 +186,15 @@
      <Compile Include="Assets\ZExtendableSaveSystem\Example\ExtendedComponentData.cs" />
      <Compile Include="Assets\ZExtendableSaveSystem\Example\GameMaster.cs" />
      <Compile Include="Assets\ZExtendableSaveSystem\Example\TransformSaver.cs" />
+     <None Include="Assets\Shaders\QuickBlur.shader" />
      <None Include="Assets\ZBayatGames\SaveGameFree\Readme.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\Scripts\Visuals\$dd_Invert.shader" />
      <None Include="Assets\ZBayatGames\SaveGameFree\Documentation\Save Game Free Documentation - Plain Text Version.txt" />
+     <None Include="Assets\Shaders\CompositeAdd.shader" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -195,10 +202,12 @@
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+     <None Include="Assets\Shaders\OverDraw.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\Shaders\ShowDepth.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\ZBayatGames\SaveGameFree\Plugins\FullSerializer.xml" />

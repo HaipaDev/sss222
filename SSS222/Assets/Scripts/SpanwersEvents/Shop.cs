@@ -37,12 +37,14 @@ public class Shop : MonoBehaviour{
     }
     public void OpenShop(){
         shopMenuUI.SetActive(true);
+        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         RandomizeShop();
         shopOpened = false;
     }
     public void Resume()
     {
         shopMenuUI.SetActive(false);
+        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         FindObjectOfType<GameSession>().gameSpeed = 1f;
     }
     public void RandomizeShop(){

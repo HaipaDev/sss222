@@ -24,12 +24,14 @@ public class PauseMenu : MonoBehaviour{
     }
     public void Resume(){
         pauseMenuUI.SetActive(false);
+        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         gameSession.gameSpeed = 1f;
         GameIsPaused = false;
     }
     public void Pause(){
         //prevGameSpeed = gameSession.gameSpeed;
         pauseMenuUI.SetActive(true);
+        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         gameSession.gameSpeed = 0.0001f;
         GameIsPaused = true;
         //ParticleSystem.Stop();

@@ -24,10 +24,15 @@ public class PowerupDisplay : MonoBehaviour{
     [SerializeField] Sprite hrocketsSprite;
     [SerializeField] Sprite phaserSprite;
     [SerializeField] Sprite shadowbtSprite;
+    [SerializeField] Sprite lclawsSprite;
+    [SerializeField] Sprite qrocketsSprite;
+    [SerializeField] Sprite procketsSprite;
+    [SerializeField] Sprite cstreamSprite;
 
     [SerializeField] Sprite flipSprite;
     [SerializeField] Sprite gcloverSprite;
     [SerializeField] Sprite shadowSprite;
+    [SerializeField] Sprite inverterSprite;
 
 
     Color color;
@@ -55,6 +60,10 @@ public class PowerupDisplay : MonoBehaviour{
             else if(pwrup== "hrockets") { spr.sprite = hrocketsSprite; }
             else if(pwrup== "phaser") { spr.sprite = phaserSprite; }
             else if(pwrup== "shadowbt") { spr.sprite = shadowbtSprite; }
+            else if(pwrup== "lclaws") { spr.sprite = lclawsSprite; }
+            else if(pwrup== "qrockets") { spr.sprite = qrocketsSprite; }
+            else if(pwrup== "prockets") { spr.sprite = procketsSprite; }
+            else if(pwrup== "cstream") { spr.sprite = cstreamSprite; }
             else { spr.sprite = laserSprite; }
         }else{
             //if(player.gclover==true && (state=="" || state==null)){ spr.sprite = gcloverSprite; state = "gclover"; }
@@ -95,6 +104,10 @@ public class PowerupDisplay : MonoBehaviour{
                             {
                                 if (player.shadow == true){state = "shadow"; }//else { state = ""; }
                             }//else { state = ""; }
+                            if (((displays[iP].GetComponent<PowerupDisplay>().state != "inverted") && (displays[iM].GetComponent<PowerupDisplay>().state != "inverted") && displays[iM - 1].GetComponent<PowerupDisplay>().state != "inverted"))
+                            {
+                                if (player.inverted == true){state = "inverted"; }//else { state = ""; }
+                            }//else { state = ""; }
                         }
                     }
                     //if(player.gclover!=true && player.flip!=true && player.shadow!=true){ state = ""; }
@@ -119,8 +132,7 @@ public class PowerupDisplay : MonoBehaviour{
                             else { TMP.text = value.ToString(); }
 
                             if (player.flip != true) state = "";
-                        }
-                        else if(state=="shadow"){
+                        }else if(state=="shadow"){
                             spr.sprite = shadowSprite;
                             var value = System.Math.Round(player.GetShadowTimer(), 1);
 
@@ -128,6 +140,14 @@ public class PowerupDisplay : MonoBehaviour{
                             else { TMP.text = value.ToString(); }
 
                             if (player.shadow != true) state = "";
+                        }else if(state=="inverted"){
+                            spr.sprite = inverterSprite;
+                            var value = System.Math.Round(player.GetInvertedTimer(), 1);
+
+                            if (value <= -1) { value = 0; }
+                            else { TMP.text = value.ToString(); }
+
+                            if (player.inverted!= true) state = "";
                         }
                     }
                     //}

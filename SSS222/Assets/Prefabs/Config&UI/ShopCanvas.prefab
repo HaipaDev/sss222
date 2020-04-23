@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Sprite: {fileID: 8002989269472540000, guid: 753a4f53791c8764085e0d51f3edfa0c,
     type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1812,6 +1812,7 @@ GameObject:
   - component: {fileID: 365498385951045291}
   - component: {fileID: 4944979910374474269}
   - component: {fileID: 8233997310932699744}
+  - component: {fileID: 1325447468}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -1929,6 +1930,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+--- !u!114 &1325447468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7322638315930572801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0.5
 --- !u!1 &8900824473014886772
 GameObject:
   m_ObjectHideFlags: 0

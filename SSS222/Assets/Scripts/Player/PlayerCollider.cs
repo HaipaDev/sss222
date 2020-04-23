@@ -23,6 +23,7 @@ public class PlayerCollider : MonoBehaviour{
     [SerializeField] GameObject qrocketPwrupPrefab;
     [SerializeField] GameObject procketPwrupPrefab;
     [SerializeField] GameObject cstreamPwrupPrefab;
+    [SerializeField] GameObject inverterPwrupPrefab;
     [HeaderAttribute("Damage Dealers")]
     [SerializeField] GameObject cometPrefab;
     [SerializeField] GameObject batPrefab;
@@ -145,6 +146,12 @@ public class PlayerCollider : MonoBehaviour{
 
                 var flipName = flipPwrupPrefab.name; var flipName1 = flipPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == flipName || other.gameObject.name == flipName1) { player.flip = true; player.flipTimer = player.flipTime; }
+                
+                var inverterName = inverterPwrupPrefab.name; var inverterName1 = inverterPwrupPrefab.name + "(Clone)";
+                if (other.gameObject.name == inverterName || other.gameObject.name == inverterName1) { /*player.inverted = true;*/ 
+                var tempHP = player.health; var tempEn = player.energy;
+                player.energy=tempHP; player.health=tempEn;
+                player.inverted=true; player.inverterTimer = 0; }
 
                 var gcloverName = gcloverPwrupPrefab.name; var gcloverName1 = gcloverPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == gcloverName || other.gameObject.name == gcloverName1)

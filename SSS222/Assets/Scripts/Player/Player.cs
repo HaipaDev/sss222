@@ -62,10 +62,13 @@ public class Player : MonoBehaviour{
     [SerializeField] public bool shadow = false;
     [SerializeField] public float shadowTime = 10f;
     public float shadowTimer = -4;
+    float dashTime;
     [SerializeField] public float shadowLength=0.33f;
     [SerializeField] public float dashSpeed=10f;
     [SerializeField] public float startDashTime=0.1f;
-    float dashTime;
+    [SerializeField] public bool inverted = false;
+    [SerializeField] public float inverterTime=10f;
+    public float inverterTimer = 14;
     [HeaderAttribute("Energy Costs")]
     [SerializeField] public float laserEn = 2f;
     [SerializeField] public float laser2En = 4f;
@@ -208,6 +211,7 @@ public class Player : MonoBehaviour{
     public float GetFlipTimer(){ return flipTimer; }
     public float GetGCloverTimer(){ return gcloverTimer; }
     public float GetShadowTimer(){ return shadowTimer; }
+    public float GetInvertedTimer(){ return inverterTimer; }
 
     private void MovePlayer()
     {
@@ -580,6 +584,11 @@ public class Player : MonoBehaviour{
         if (dashTime <= 0) { rb.velocity = Vector2.zero; dashing = false; }
         else{ dashTime -= Time.deltaTime; }
         if(energy<=0){ shadow = false; }
+
+        if(inverted==true){if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==false)GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=true;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().enabled=true;
+        inverterTimer+=Time.deltaTime;}
+        else{if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==true)GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=false;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().enabled=false;}
+        if(inverterTimer >=10 && inverterTimer<14){inverted=false; inverterTimer=14;}
     }
     private void Shadow(){
         if (Time.timeScale > 0.0001f)

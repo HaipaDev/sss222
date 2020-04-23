@@ -51,7 +51,8 @@ public class Enemy : MonoBehaviour{
     [SerializeField] GameObject energyBallPrefab;
     [SerializeField] GameObject coinPrefab;
     [HeaderAttribute("Others")]
-    [SerializeField] public bool cTagged=false;
+    //[SerializeField] public bool cTagged=false;
+    [SerializeField] public bool yeeted=false;
 
     AudioSource myAudioSource;
     GameSession gameSession;
@@ -130,7 +131,7 @@ public class Enemy : MonoBehaviour{
         }
     }
     private void DestroyOutside(){
-        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){ Destroy(gameObject); }
+        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){ if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject); }}
     }
     private void OnTriggerEnter2D(Collider2D other){
         if(!other.CompareTag(tag)){
@@ -168,7 +169,7 @@ public class Enemy : MonoBehaviour{
             /*var Pname = phaserPrefab.name; var Pname1 = phaserPrefab.name + "(Clone)";
             if (other.gameObject.name != Pname && other.gameObject.name != Pname1){Destroy(other.gameObject,0.05f);}*/
             var PRExplname = procketExplPrefab.name; var PRExplname1 = procketExplPrefab.name + "(Clone)";
-            if (other.gameObject.name == PRExplname || other.gameObject.name == PRExplname1) { dmg = damageDealer.GetDamagePRocketExpl(); GetComponent<Rigidbody2D>().velocity = Vector2.up*6f;}// PlayClipAt(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            if (other.gameObject.name == PRExplname || other.gameObject.name == PRExplname1) { dmg = damageDealer.GetDamagePRocketExpl(); GetComponent<Rigidbody2D>().velocity = Vector2.up*6f; yeeted=true; }// PlayClipAt(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
 
             var cBulletname = cbulletPrefab.name; var cBulletname1 = cbulletPrefab.name + "(Clone)";
             if (other.gameObject.name == cBulletname || other.gameObject.name == cBulletname1) { dmg = damageDealer.GetDamageCBullet(); PlayClipAt(cbulletHitSFX, new Vector2(transform.position.x, transform.position.y));}

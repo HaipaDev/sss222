@@ -211,6 +211,9 @@ MonoBehaviour:
   shadowLength: 0.2
   dashSpeed: 24
   startDashTime: 0.1
+  inverted: 0
+  inverterTime: 10
+  inverterTimer: -4
   laserEn: 1
   laser2En: 2
   laser3En: 5
@@ -309,6 +312,8 @@ MonoBehaviour:
   procketPwrupPrefab: {fileID: 4548736405339070879, guid: a8cf40cf136a1904ab8dc7e10093b0ea,
     type: 3}
   cstreamPwrupPrefab: {fileID: 4548736405339070879, guid: f6cc792fe400da64187dce1a17381752,
+    type: 3}
+  inverterPwrupPrefab: {fileID: 4548736405339070879, guid: 78f32229652b5c245b94bb675fb6be7a,
     type: 3}
   cometPrefab: {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475,
     type: 3}

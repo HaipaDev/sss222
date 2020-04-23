@@ -870,7 +870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3124455380197693946
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1011,7 +1011,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.999985, y: -293.2}
+  m_AnchoredPosition: {x: 16.999985, y: -225}
   m_SizeDelta: {x: 811.4, y: 149.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3661536995339280107
@@ -1352,7 +1352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 17, y: 144}
+  m_AnchoredPosition: {x: 17, y: 212.20001}
   m_SizeDelta: {x: 811.4, y: 149.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4663692512742735588
@@ -1436,7 +1436,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3346252275119822510, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_MethodName: LoadGameScene
+        m_MethodName: LoadGamrModeChooseScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1482,7 +1482,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.999985, y: -70.900085}
+  m_AnchoredPosition: {x: 16.999985, y: -2.7000732}
   m_SizeDelta: {x: 811.4, y: 149.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4663692512906347998
@@ -2034,7 +2034,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.999985, y: -507}
+  m_AnchoredPosition: {x: 16.999985, y: -438.8}
   m_SizeDelta: {x: 811.4, y: 149.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4663692513654627967
@@ -2403,7 +2403,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Beta 0.1
+  m_text: Beta 0.2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 13dff27117de7784aa829ee75036f0d9, type: 2}
   m_sharedMaterial: {fileID: 6581805080684448238, guid: 13dff27117de7784aa829ee75036f0d9,
@@ -2584,7 +2584,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 398.31}
+  m_AnchoredPosition: {x: 2, y: 593}
   m_SizeDelta: {x: 341.2, y: 286.43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5046062475730036252
