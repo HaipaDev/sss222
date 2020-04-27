@@ -25,11 +25,11 @@ public class PauseMenu : MonoBehaviour{
     public void Resume(){
         pauseMenuUI.SetActive(false);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
-        gameSession.gameSpeed = 1f;
+        gameSession.gameSpeed = prevGameSpeed;
         GameIsPaused = false;
     }
     public void Pause(){
-        //prevGameSpeed = gameSession.gameSpeed;
+        prevGameSpeed = gameSession.gameSpeed;
         pauseMenuUI.SetActive(true);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         gameSession.gameSpeed = 0.0001f;
@@ -44,6 +44,6 @@ public class PauseMenu : MonoBehaviour{
         SceneManager.LoadScene("Menu");
     }
     public void PreviousGameSpeed(){
-        gameSession.gameSpeed = 1f;
+        gameSession.gameSpeed = prevGameSpeed;
     }
 }

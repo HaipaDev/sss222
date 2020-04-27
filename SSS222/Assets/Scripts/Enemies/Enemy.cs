@@ -118,11 +118,14 @@ public class Enemy : MonoBehaviour{
     public void Die(){
         if (health <= 0){
             int scoreValue = Random.Range(scoreValueStart,scoreValueEnd);
-            if(givePts==true){gameSession.AddToScore(scoreValue);}
+            if(givePts==true){
+                gameSession.AddToScore(scoreValue);
+                if(enBallchance==1){ Instantiate(energyBallPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
+                if(Coinchance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
+            }
             GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
             PlayClipAt(explosionSFX, new Vector2(transform.position.x, transform.position.y));
-            if(enBallchance==1){ Instantiate(energyBallPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
-            if(Coinchance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
+            
             if(randomizeWaveDeath==true){ gameSession.EVscore = 50; }
             if (GetComponent<GoblinDrop>() != null) GetComponent<GoblinDrop>().DropPowerup();
             Destroy(explosion, 0.5f);
@@ -151,7 +154,7 @@ public class Enemy : MonoBehaviour{
             }
 
             var LSabername = lsaberPrefab.name; var LSabername1 = lsaberPrefab.name + "(Clone)";
-            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1){ dmg = damageDealer.GetDamageLSaber(); PlayClipAt(lsaberHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1){ dmg = damageDealer.GetDamageLSaber()*1.5f; PlayClipAt(lsaberHitSFX, new Vector2(transform.position.x, transform.position.y)); }
 
             var shadowbtName = shadowbtPrefab.name; var shadowbtName1 = shadowbtPrefab.name + "(Clone)";
             if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { dmg = damageDealer.GetDamageShadowBT(); PlayClipAt(shadowbtHitSFX, new Vector2(transform.position.x, transform.position.y));}
@@ -193,19 +196,20 @@ public class Enemy : MonoBehaviour{
 
             var Pname = phaserPrefab.name; var Pname1 = phaserPrefab.name + "(Clone)";
             if (other.gameObject.name == Pname || other.gameObject.name == Pname1) {dmg = damageDealer.GetDamagePhaser(); PlayClipAt(phaserHitSFX, new Vector2(transform.position.x, transform.position.y)); }
-            else { dmg = 0; }
+            //else { dmg = 0; }
 
             var LSabername = lsaberPrefab.name; var LSabername1 = lsaberPrefab.name + "(Clone)";
             if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1) { dmg = damageDealer.GetDamageLSaber(); PlayClipAt(enemyHitSFX, new Vector2(transform.position.x, transform.position.y)); }
-            else { dmg = 0; }
+            //else { dmg = 0; }
             
 
             var PRExplname = procketExplPrefab.name; var PRExplname1 = procketExplPrefab.name + "(Clone)";
             if (other.gameObject.name == PRExplname || other.gameObject.name == PRExplname1) { dmg = damageDealer.GetDamagePRocketExpl(); }//PlayClipAt(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
-            else {dmg=0;}
+            //else {dmg=0;}
 
             var cBulletname = cbulletPrefab.name; var cBulletname1 = cbulletPrefab.name + "(Clone)";
-            if (other.gameObject.name == cBulletname || other.gameObject.name == cBulletname1) { dmg = damageDealer.GetDamageCBullet(); PlayClipAt(cbulletHitSFX, new Vector2(transform.position.x, transform.position.y));}else {dmg=0;}
+            if (other.gameObject.name == cBulletname || other.gameObject.name == cBulletname1) { dmg = damageDealer.GetDamageCBullet(); PlayClipAt(cbulletHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            //else {dmg=0;}
 
 
             health -= dmg;

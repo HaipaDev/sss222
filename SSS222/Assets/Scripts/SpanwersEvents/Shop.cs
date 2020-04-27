@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Shop : MonoBehaviour{
-    public bool shopOpened;
+    public static bool shopOpen;
+    public static bool shopOpened;
     public GameObject shopMenuUI;
     public ShopSlot[] slots;
     //public GameObject[] slotText;
@@ -32,19 +33,21 @@ public class Shop : MonoBehaviour{
     }
 
     void Update(){
-        if (shopOpened == true) { OpenShop(); }
+        if (shopOpen == true) { OpenShop(); }
         //if (player == null) player = FindObjectOfType<Player>();
     }
     public void OpenShop(){
         shopMenuUI.SetActive(true);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         RandomizeShop();
-        shopOpened = false;
+        shopOpen = false;
+        shopOpened=true;
     }
     public void Resume()
     {
         shopMenuUI.SetActive(false);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
+        shopOpened=false;
         FindObjectOfType<GameSession>().gameSpeed = 1f;
     }
     public void RandomizeShop(){

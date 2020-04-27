@@ -5,7 +5,7 @@ using UnityEngine;
 public class Follow : MonoBehaviour{
     public Vector2 targetPos;
     public Vector2 selfPos;
-    [SerializeField] GameObject target;
+    [SerializeField] public GameObject target;
     [SerializeField] string targetTag;
     public float dist;
     [SerializeField] float distReq = 4f;

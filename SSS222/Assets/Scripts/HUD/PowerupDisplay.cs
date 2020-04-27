@@ -33,6 +33,9 @@ public class PowerupDisplay : MonoBehaviour{
     [SerializeField] Sprite gcloverSprite;
     [SerializeField] Sprite shadowSprite;
     [SerializeField] Sprite inverterSprite;
+    [SerializeField] Sprite magnetSprite;
+    [SerializeField] Sprite scalerSprite;
+    [SerializeField] Sprite matrixSprite;
 
 
     Color color;
@@ -56,11 +59,11 @@ public class PowerupDisplay : MonoBehaviour{
             if (pwrup=="laser2"){ spr.sprite = laser2Sprite; }
             else if(pwrup=="laser3"){ spr.sprite = laser3Sprite; }
             else if(pwrup=="mlaser"){ spr.sprite = mlaserSprite; }
-            else if(pwrup=="lsaber"){ spr.sprite = lsaberSprite; }
+            else if(pwrup=="lsaberA"){ spr.sprite = lsaberSprite; }
             else if(pwrup== "hrockets") { spr.sprite = hrocketsSprite; }
             else if(pwrup== "phaser") { spr.sprite = phaserSprite; }
             else if(pwrup== "shadowbt") { spr.sprite = shadowbtSprite; }
-            else if(pwrup== "lclaws") { spr.sprite = lclawsSprite; }
+            else if(pwrup== "lclawsA") { spr.sprite = lclawsSprite; }
             else if(pwrup== "qrockets") { spr.sprite = qrocketsSprite; }
             else if(pwrup== "prockets") { spr.sprite = procketsSprite; }
             else if(pwrup== "cstream") { spr.sprite = cstreamSprite; }
@@ -108,6 +111,18 @@ public class PowerupDisplay : MonoBehaviour{
                             {
                                 if (player.inverted == true){state = "inverted"; }//else { state = ""; }
                             }//else { state = ""; }
+                            if (((displays[iP].GetComponent<PowerupDisplay>().state != "magnetized") && (displays[iM].GetComponent<PowerupDisplay>().state != "magnetized") && displays[iM - 1].GetComponent<PowerupDisplay>().state != "magnetized"))
+                            {
+                                if (player.magnetized == true){state = "magnetized"; }//else { state = ""; }
+                            }//else { state = ""; }
+                            if (((displays[iP].GetComponent<PowerupDisplay>().state != "scaler") && (displays[iM].GetComponent<PowerupDisplay>().state != "scaler") && displays[iM - 1].GetComponent<PowerupDisplay>().state != "scaler"))
+                            {
+                                if (player.scaler == true){state = "scaler"; }//else { state = ""; }
+                            }//else { state = ""; }
+                            if (((displays[iP].GetComponent<PowerupDisplay>().state != "matrix") && (displays[iM].GetComponent<PowerupDisplay>().state != "matrix") && displays[iM - 1].GetComponent<PowerupDisplay>().state != "matrix"))
+                            {
+                                if (player.matrix == true){state = "matrix"; }//else { state = ""; }
+                            }//else { state = ""; }
                         }
                     }
                     //if(player.gclover!=true && player.flip!=true && player.shadow!=true){ state = ""; }
@@ -148,6 +163,30 @@ public class PowerupDisplay : MonoBehaviour{
                             else { TMP.text = value.ToString(); }
 
                             if (player.inverted!= true) state = "";
+                        }else if(state=="magnetized"){
+                            spr.sprite = magnetSprite;
+                            var value = System.Math.Round(player.GetMagnetTimer(), 1);
+
+                            if (value <= -1) { value = 0; }
+                            else { TMP.text = value.ToString(); }
+
+                            if (player.magnetized!= true) state = "";
+                        }else if(state=="scaler"){
+                            spr.sprite = scalerSprite;
+                            var value = System.Math.Round(player.GetScalerTimer(), 1);
+
+                            if (value <= -1) { value = 0; }
+                            else { TMP.text = value.ToString(); }
+
+                            if (player.scaler!= true) state = "";
+                        }else if(state=="matrix"){
+                            spr.sprite = matrixSprite;
+                            var value = System.Math.Round(player.GetMatrixTimer(), 1);
+
+                            if (value <= -1) { value = 0; }
+                            else { TMP.text = value.ToString(); }
+
+                            if (player.matrix!= true) state = "";
                         }
                     }
                     //}

@@ -6,7 +6,9 @@ public class GameSession : MonoBehaviour{
     public int score = 0;
     public int EVscore = 0;
     public int shopScore = 0;
-    public int shopScoreMax = 500;
+    public int shopScoreMax = 200;
+    public int shopScoreMaxS = 200;
+    public int shopScoreMaxE = 450;
     public int coins = 0;
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
     //public bool moveByMouse = true;
@@ -49,7 +51,7 @@ public class GameSession : MonoBehaviour{
         Time.timeScale = gameSpeed;
         if(shopScore>=shopScoreMax)
         {
-            FindObjectOfType<Shop>().shopOpened = true;
+            Shop.shopOpen = true;
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             foreach(Enemy enemy in enemies){
                 enemy.givePts = false;
@@ -57,7 +59,7 @@ public class GameSession : MonoBehaviour{
                 enemy.Die();
             }
             gameSpeed = 0f;
-            shopScoreMax = Random.Range(45,85);
+            shopScoreMax = Random.Range(shopScoreMaxS,shopScoreMaxE);
             shopScore = 0;
         }
     }

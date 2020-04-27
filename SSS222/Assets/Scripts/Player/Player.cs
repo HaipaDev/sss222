@@ -69,6 +69,16 @@ public class Player : MonoBehaviour{
     [SerializeField] public bool inverted = false;
     [SerializeField] public float inverterTime=10f;
     public float inverterTimer = 14;
+    [SerializeField] public bool magnetized = false;
+    [SerializeField] public float magnetTime=15f;
+    public float magnetTimer = -4;
+    [SerializeField] public bool scaler = false;
+    [SerializeField] public float scalerFreq=0.5f;
+    [SerializeField] public float scalerTime=15f;
+    public float scalerTimer = -4;
+    [SerializeField] public bool matrix = false;
+    [SerializeField] public float matrixTime=7f;
+    public float matrixTimer = -4;
     [HeaderAttribute("Energy Costs")]
     [SerializeField] public float laserEn = 2f;
     [SerializeField] public float laser2En = 4f;
@@ -89,6 +99,9 @@ public class Player : MonoBehaviour{
     [SerializeField] public float medkitHpAmnt = 25f;
     [SerializeField] public float medkitUHpAmnt = 58f;
     [SerializeField] public float pwrupEnergyGet = 48f;
+    public float refillEnergyAmnt=50f;
+    public int refillCostS=1;
+    public int refillCostE=2;
     [HeaderAttribute("Effects")]
     [SerializeField] public GameObject explosionVFX;
     [SerializeField] public GameObject flareHitVFX;
@@ -109,6 +122,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public AudioClip shadowbtPwrupSFX;
     [SerializeField] public AudioClip noEnergySFX;
     [SerializeField] public AudioClip energyBallSFX;
+    [SerializeField] public AudioClip energyRefillSFX;
     [SerializeField] public AudioClip coinSFX;
     [SerializeField] public AudioClip leechBiteSFX;
     [HeaderAttribute("Others")]
@@ -126,9 +140,16 @@ public class Player : MonoBehaviour{
     public bool shadowed = false;
     public bool dashing = false;
     public float shootTimer = 0f;
+    public float instantiateTime = 0.025f;
+    public float instantiateTimer = 0f;
 
     public Vector2 mousePos;
+    public float shipScale=1f;
     public float dist;
+    public Vector2 velocity;
+     float hPressedTime;
+     float vPressedTime;
+    public float mPressedTime;
 
     Rigidbody2D rb;
     GameSession gameSession;
@@ -143,7 +164,12 @@ public class Player : MonoBehaviour{
     float yMax;
 
     bool hasHandledInputThisFrame = false;
+    bool scaleUp;
 
+    PauseMenu pauseMenu;
+    FollowUI refillUI;
+    GameObject refilltxtS;
+    GameObject refilltxtE;
     AudioSource myAudioSource;
     AudioMixer mixer;
     string _OutputMixer;
@@ -162,7 +188,6 @@ public class Player : MonoBehaviour{
         return aSource; // return the AudioSource reference
     }
 
-    // Start is called before the first frame update
     void Start(){
         rb = GetComponent<Rigidbody2D>();
         gameSession=FindObjectOfType<GameSession>();
@@ -173,8 +198,11 @@ public class Player : MonoBehaviour{
         moveSpeedCurrent = moveSpeed;
         dashTime = startDashTime;
         moveByMouse = saveSerial.moveByMouse;
+        pauseMenu=FindObjectOfType<PauseMenu>().GetComponent<PauseMenu>();
+        refillUI=FindObjectOfType<FollowUI>();
+        refilltxtS=GameObject.Find("RefillText1");
+        refilltxtE=GameObject.Find("RefillText2");
     }
-    // Update is called once per frame
     void Update(){
         HandleInput(false);
         energy = Mathf.Clamp(energy, 0, maxEnergy);
@@ -184,9 +212,13 @@ public class Player : MonoBehaviour{
         Shoot();
         States();
         Die();
+        CountTimeMovementPressed();
+        RefillEnergy();
         if(moveByMouse!=true){ MovePlayer(); }//followMouse.enabled = false; }
         else{ MoveWithMouse(); }// followMouse.enabled = true; }
         shootTimer -= Time.deltaTime;
+        instantiateTimer-=Time.deltaTime;
+        velocity=rb.velocity;
     }
     void FixedUpdate()
     {
@@ -207,12 +239,23 @@ public class Player : MonoBehaviour{
 
         /* Perform any instantaneous actions, using Time.fixedDeltaTime where necessary */
     }
+    void CountTimeMovementPressed(){
+        if(Input.GetButton("Horizontal")){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
+        if(Input.GetButton("Vertical")){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
+        if(!Input.GetButton("Horizontal")){hPressedTime=0;}
+        if(!Input.GetButton("Vertical")){vPressedTime=0;}
+        if(!Input.GetButton("Horizontal")&&!Input.GetButton("Vertical")){mPressedTime=0;}
+    }
 
+    public float GetAmmo(){return energy;}
     public float GetFlipTimer(){ return flipTimer; }
     public float GetGCloverTimer(){ return gcloverTimer; }
     public float GetShadowTimer(){ return shadowTimer; }
     public float GetInvertedTimer(){ return inverterTimer; }
-
+    public float GetMagnetTimer(){ return magnetTimer; }
+    public float GetScalerTimer(){ return scalerTimer; }
+    public float GetMatrixTimer(){ return matrixTimer; }
+    
     private void MovePlayer()
     {
         var deltaX=0f;
@@ -329,7 +372,7 @@ public class Player : MonoBehaviour{
                     laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     energy -= laserEn;
                         shootTimer = laserShootPeriod * 0.75f;
-                        yield return new WaitForSeconds(laserShootPeriod);
+                        yield return new WaitForSeconds(laserShootPeriod*1.7f);
                 }else if(powerup=="laser2"){
                     GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject laserL2 = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.4f, transform.position.y), Quaternion.identity) as GameObject;
@@ -517,8 +560,12 @@ public class Player : MonoBehaviour{
     }*/
     IEnumerator DrawOtherWeapons(){
         GameObject lsaber;
+        GameObject lclaws;
+        var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
+        var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
         if (energy > 0){
             if (powerup == "lsaber"){
+                //Destroy(GameObject.Find(lclawsName1));
                 lsaber = Instantiate(lsaberPrefab, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity) as GameObject;
                 powerup = "lsaberA";
                 //yield return new WaitForSeconds(lsaberEnPeriod);
@@ -526,36 +573,37 @@ public class Player : MonoBehaviour{
                 if(Time.timeScale>0.0001f){
                     energy -= lsaberEn;
                     moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
+                    if(GameObject.Find(lsaberName1)==null){powerup="lsaber";}
                 }
                 yield return new WaitForSeconds(lsaberEnPeriod);
             }
-            else if (powerup == "lclaws"){
-                lsaber = Instantiate(lclawsPrefab, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity) as GameObject;
-                lsaber.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -10);
+            if (powerup == "lclaws"){
+                //Destroy(GameObject.Find(lsaberName1));
+                lclaws = Instantiate(lclawsPrefab, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity) as GameObject;
+                lclaws.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -10);
                 powerup = "lclawsA";
                 //yield return new WaitForSeconds(lsaberEnPeriod);
             }else if (powerup == "lclawsA"){
                 if(Time.timeScale>0.0001f){
                     energy -= lclawsEn;
                     moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
+                    if(GameObject.Find(lclawsName1)==null){powerup="lclaws";}
                 }
                 yield return new WaitForSeconds(lsaberEnPeriod);
             }
-            else{
-                var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
-                Destroy(GameObject.Find(lsaberName));
+            /*if(powerup!="lsaberA"){
                 Destroy(GameObject.Find(lsaberName1));
-                var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
-                Destroy(GameObject.Find(lclawsName));
+            }if(powerup!="lclawsA"){
+                Destroy(GameObject.Find(lclawsName1));
+            }*/
+            if(powerup!="lsaberA"&&powerup!="lclawsA"){
+                Destroy(GameObject.Find(lsaberName1));
                 Destroy(GameObject.Find(lclawsName1));
                 moveSpeedCurrent = moveSpeed;
+                //yield return new WaitForSeconds(0.2f);
             }
         }else { energy = 0; yield return new WaitForSeconds(1f);
-            var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
-            Destroy(GameObject.Find(lsaberName));
             Destroy(GameObject.Find(lsaberName1));
-            var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
-            Destroy(GameObject.Find(lclawsName));
             Destroy(GameObject.Find(lclawsName1));
             moveSpeedCurrent = moveSpeed;
             powerup = "laser";
@@ -589,12 +637,70 @@ public class Player : MonoBehaviour{
         inverterTimer+=Time.deltaTime;}
         else{if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==true)GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=false;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().enabled=false;}
         if(inverterTimer >=10 && inverterTimer<14){inverted=false; inverterTimer=14;}
+
+        if(magnetized==true){
+            if(FindObjectsOfType<PowerupWeights>()!=null){
+                magnetTimer-=Time.deltaTime;
+                PowerupWeights[] powerups = FindObjectsOfType<PowerupWeights>();
+                foreach(PowerupWeights powerup in powerups){
+                    var followC = powerup.GetComponent<Follow>();
+                    if(followC==null){Follow follow = powerup.gameObject.AddComponent(typeof(Follow)) as Follow; follow.target=this.gameObject;}
+                }
+            }else{
+                PowerupWeights[] powerups = FindObjectsOfType<PowerupWeights>();
+                foreach(PowerupWeights powerup in powerups){
+                    var follow = powerup.GetComponent<Follow>();
+                    if(follow!=null)Destroy(follow);
+                }
+            }
+        }
+        if(magnetTimer <=0 && magnetTimer>-4){magnetized=false; magnetTimer=-4;}
+        
+        if(scaler==true){
+            var i=0;
+            scalerTimer-=Time.deltaTime;
+            if(Time.timeScale>0.0001f && instantiateTimer<=0){
+                for(i=0; i<100; i++){
+                    if(UnityEngine.Random.Range(0,100)>50){scaleUp=true;}else{scaleUp=false;}
+                    if(i>99)i=0;
+                }
+
+                if(scaleUp==false && shipScale>0.45){shipScale-=0.1f;}
+                if(scaleUp==true && shipScale<2){shipScale+=0.1f;}
+                //if(shipScale<=0.45){scaleUp=true;}
+                //if(shipScale>=1.64){scaleUp=false;}
+                instantiateTimer=instantiateTime;
+            }
+        }else{
+            shipScale=1;
+        }
+        if(scalerTimer <=0 && scalerTimer>-4){scaler=false; scalerTimer=-4;}
+        transform.localScale=new Vector3(shipScale,shipScale,1);
+        
+        if(matrix==true){
+            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true){
+                matrixTimer-=Time.deltaTime;
+                //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
+                //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
+                if(moveByMouse==true && dist<1){
+                    gameSession.gameSpeed=dist;
+                }else if(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6)||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))){
+                    
+                    //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,1f);
+                }else{
+                    gameSession.gameSpeed=1f;
+                }
+            }
+        }
+        if(matrixTimer <=0 && matrixTimer>-4){gameSession.gameSpeed=1f; matrix=false; matrixTimer=-4;}
     }
     private void Shadow(){
-        if (Time.timeScale > 0.0001f)
+        if (Time.timeScale > 0.0001f && instantiateTimer<=0)
         {
             GameObject shadow = Instantiate(shadowPrefab,new Vector2(transform.position.x,transform.position.y), Quaternion.identity);
             Destroy(shadow.gameObject, shadowLength);
+            instantiateTimer=instantiateTime;
             //yield return new WaitForSeconds(0.2f);
         }
     }
@@ -611,6 +717,34 @@ public class Player : MonoBehaviour{
         }
     }
 
+    private void RefillEnergy(){
+        if(energy<=0){
+            //refillUI.gameObject.SetActive(true);
+            SetActiveAllChildren(refillUI.transform,true);
+            refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostS.ToString();
+            refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostE.ToString();
+            if(Input.GetButtonDown("Fire1")){
+                var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
+                if(gameSession.coins>refillCost){
+                    energy+=refillEnergyAmnt;
+                    gameSession.coins-=refillCost;
+                    AudioSource.PlayClipAtPoint(energyRefillSFX, new Vector2(transform.position.x, transform.position.y));
+                }
+            }
+        }else{
+            if(refillUI.gameObject.activeSelf==true)SetActiveAllChildren(refillUI.transform,false);//refillUI.gameObject.SetActive(false);
+        }
+        
+    }
+    private void SetActiveAllChildren(Transform transform, bool value)
+     {
+         foreach (Transform child in transform)
+         {
+             child.gameObject.SetActive(value);
+ 
+             SetActiveAllChildren(child, value);
+         }
+     }
     /*private void OnTriggerStay2D(Collider2D other)
     {
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
@@ -621,5 +755,4 @@ public class Player : MonoBehaviour{
         if (other.gameObject.name == cometName || other.gameObject.name == cometName1) { stay = false; }
         if (stay!=true){if(other.GetComponent<Enemy>().health>0){ other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die();} }
     }*/
-    public float GetAmmo(){return energy;}
 }

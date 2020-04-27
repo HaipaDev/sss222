@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShakeQuicklyUI : MonoBehaviour{
     void Update(){
-        if (FindObjectOfType<DetachFromFollow>().attached == true){GetComponent<TMPro.TextMeshProUGUI>().enabled = true; }
-        if(FindObjectOfType<DetachFromFollow>()==null){GetComponent<TMPro.TextMeshProUGUI>().enabled = false;}
+        if(FindObjectOfType<DetachFromFollow>()!=null && FindObjectOfType<DetachFromFollow>().attached == true){GetComponent<TMPro.TextMeshProUGUI>().enabled = true; }
+        else{GetComponent<TMPro.TextMeshProUGUI>().enabled = false;}
     }
 }

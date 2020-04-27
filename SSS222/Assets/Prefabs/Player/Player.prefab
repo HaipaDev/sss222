@@ -155,7 +155,7 @@ MonoBehaviour:
   padding: 0.55
   health: 200
   maxHP: 200
-  powerup: lclaws
+  powerup: laser
   energy: 200
   maxEnergy: 200
   laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
@@ -214,6 +214,16 @@ MonoBehaviour:
   inverted: 0
   inverterTime: 10
   inverterTimer: -4
+  magnetized: 0
+  magnetTime: 15
+  magnetTimer: -4
+  scaler: 0
+  scalerFreq: 0.5
+  scalerTime: 9
+  scalerTimer: -4
+  matrix: 0
+  matrixTime: 14
+  matrixTimer: -4
   laserEn: 1
   laser2En: 2
   laser3En: 5
@@ -232,7 +242,10 @@ MonoBehaviour:
   medkitUEnergyGet: 12
   medkitHpAmnt: 25
   medkitUHpAmnt: 58
-  pwrupEnergyGet: 48
+  pwrupEnergyGet: 36
+  refillEnergyAmnt: 50
+  refillCostS: 1
+  refillCostE: 2
   explosionVFX: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
   flareShootVFX: {fileID: 100000, guid: c151221cd78239d4ba56697f5a78532e, type: 3}
@@ -251,6 +264,7 @@ MonoBehaviour:
   shadowbtPwrupSFX: {fileID: 8300000, guid: 74abe63daa3fee64e9bde8a143a4caa2, type: 3}
   noEnergySFX: {fileID: 8300000, guid: 1c11946ec7b1172408473ded0c194601, type: 3}
   energyBallSFX: {fileID: 8300000, guid: f076b87aac8611a43aa15c115fec5bb9, type: 3}
+  energyRefillSFX: {fileID: 8300000, guid: fb4f60f019245994bbe3ef41560a3de3, type: 3}
   coinSFX: {fileID: 8300000, guid: 66b797acedbdabe42a159451419d2398, type: 3}
   leechBiteSFX: {fileID: 8300000, guid: 5198f100b29a378479c77e37079cf250, type: 3}
   gameOverCanvasPrefab: {fileID: 0}
@@ -263,8 +277,13 @@ MonoBehaviour:
   shadowed: 0
   dashing: 0
   shootTimer: 0
+  instantiateTime: 0.025
+  instantiateTimer: 0
   mousePos: {x: 0, y: 0}
+  shipScale: 1
   dist: 0
+  velocity: {x: 0, y: 0}
+  mPressedTime: 0
 --- !u!114 &1949430517914965929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,6 +333,12 @@ MonoBehaviour:
   cstreamPwrupPrefab: {fileID: 4548736405339070879, guid: f6cc792fe400da64187dce1a17381752,
     type: 3}
   inverterPwrupPrefab: {fileID: 4548736405339070879, guid: 78f32229652b5c245b94bb675fb6be7a,
+    type: 3}
+  magnetPwrupPrefab: {fileID: 5649215481239408911, guid: 783ed3a20f22d5c408b2c7c789cd06e9,
+    type: 3}
+  scalerPwrupPrefab: {fileID: 4548736405339070879, guid: fef9a70d1e2661246b686c5f3f207fff,
+    type: 3}
+  matrixPwrupPrefab: {fileID: 4548736405339070879, guid: c430f5cd45eed4947ad8424c9ab96449,
     type: 3}
   cometPrefab: {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475,
     type: 3}
