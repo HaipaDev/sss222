@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3700841201686134059}
   - component: {fileID: -2526951079648213008}
   - component: {fileID: 1529301144}
+  - component: {fileID: -8348096473155390100}
   m_Layer: 0
   m_Name: EnergyBall
   m_TagString: Powerups
@@ -133,12 +134,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a8c4beb6393e8418ea04d76c86dccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0}
+  selfPos: {x: 0, y: 0}
   target: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
   targetTag: 
   dist: 0
   distReq: 5
   speedFollow: 5
   vspeed: 2.4
+  hspeed: 0
+  rotateTowards: 0
+  speedRotate: 15
+  angleAdj: -90
+  followAfterOOR: 0
+  dirYYUp: 0
+  OOR_YY: 1.5
+  targetObj: {fileID: 0}
 --- !u!114 &1529301144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +166,18 @@ MonoBehaviour:
   colorGlow: {r: 0, g: 1, b: 0.6444621, a: 1}
   sizeGlow: 1.15
   alphaGlow: 0.5
+  emissionSpeed: 7.63
+  xx: 0
+  yy: 0
+--- !u!114 &-8348096473155390100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056705403108089519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
