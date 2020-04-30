@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class Player : MonoBehaviour{
-    //Config params
+    #region Vars
     [HeaderAttribute("Player")]
     [SerializeField] bool moveX = true;
     [SerializeField] bool moveY = true;
@@ -87,7 +87,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public float hrocketEn = 5f;
     [SerializeField] public float mlaserEn = 0.225f;
     [SerializeField] public float lsaberEn = 0.11f;
-    [SerializeField] public float lclawsEn = 0.12f;
+    [SerializeField] public float lclawsEn = 0.2f;
     [SerializeField] public float shadowEn = 3.5f;
     [SerializeField] public float shadowBTEn = 10f;
     [SerializeField] public float qrocketEn = 5.5f;
@@ -99,9 +99,12 @@ public class Player : MonoBehaviour{
     [SerializeField] public float medkitHpAmnt = 25f;
     [SerializeField] public float medkitUHpAmnt = 58f;
     [SerializeField] public float pwrupEnergyGet = 48f;
-    public float refillEnergyAmnt=50f;
+    [SerializeField] public float enForPwrupRefill = 25f;
+    [SerializeField] public float enPwrupDuplicate = 40f;
+    public float refillEnergyAmnt=140f;
     public int refillCostS=1;
     public int refillCostE=2;
+    public float refillDelay=1.6f;
     [HeaderAttribute("Effects")]
     [SerializeField] public GameObject explosionVFX;
     [SerializeField] public GameObject flareHitVFX;
@@ -142,7 +145,7 @@ public class Player : MonoBehaviour{
     public float shootTimer = 0f;
     public float instantiateTime = 0.025f;
     public float instantiateTimer = 0f;
-
+    float lsaberEnTimer;
     public Vector2 mousePos;
     public float shipScale=1f;
     public float dist;
@@ -173,6 +176,7 @@ public class Player : MonoBehaviour{
     AudioSource myAudioSource;
     AudioMixer mixer;
     string _OutputMixer;
+    #endregion
 
     AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
     {
@@ -208,7 +212,8 @@ public class Player : MonoBehaviour{
         energy = Mathf.Clamp(energy, 0, maxEnergy);
         health =Mathf.Clamp(health,0f,maxHP);
         //PlayerBFlame();
-        StartCoroutine(DrawOtherWeapons());
+        //if(powerup=="lsaber"||powerup=="lclaws")StartCoroutine(DrawOtherWeapons());
+        DrawOtherWeapons();
         Shoot();
         States();
         Die();
@@ -227,7 +232,7 @@ public class Player : MonoBehaviour{
         //MovePlayer();
         if (!Input.GetButton("Fire1"))
         {
-            if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
+            if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
         }
     }
     void HandleInput(bool isFixedUpdate)
@@ -330,7 +335,7 @@ public class Player : MonoBehaviour{
             if (Input.GetButtonDown("Fire1")){
                 if(shootTimer<=0f)shootCoroutine = StartCoroutine(ShootContinuously());
             }if(!Input.GetButton("Fire1")){
-                if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
+                if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
             }
             /*if (Input.GetButtonUp("Fire1")){
                 StopCoroutine(shootCoroutine);
@@ -470,8 +475,8 @@ public class Player : MonoBehaviour{
                     GameObject flareR = Instantiate(shadowShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flareL.gameObject, 0.3f);
                     Destroy(flareR.gameObject, 0.3f);
-                    laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
-                    laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
+                    //laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
+                    //laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
                     energy -= shadowBTEn;
                         shootTimer = shadowBTShootPeriod;
                         yield return new WaitForSeconds(shadowBTShootPeriod);
@@ -483,8 +488,9 @@ public class Player : MonoBehaviour{
                             Destroy(clawsPart, 1f);
                             enemy.health -= FindObjectOfType<DamageDealer>().GetDamageLCLaws();
                         }else{ AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); }
-                        shootTimer = 0.5f;
-                        yield return new WaitForSeconds(0.5f);
+                        energy -= lclawsEn;
+                            shootTimer = 0.5f;
+                            yield return new WaitForSeconds(0.5f);
                 }else if (powerup == "qrockets"){
                     GameObject hrocketL = Instantiate(qrocketPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject hrocketR = Instantiate(qrocketPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -558,38 +564,39 @@ public class Player : MonoBehaviour{
         }
         return null;
     }*/
-    IEnumerator DrawOtherWeapons(){
+    //IEnumerator DrawOtherWeapons(){
+    private void DrawOtherWeapons(){
         GameObject lsaber;
         GameObject lclaws;
         var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
         var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
         if (energy > 0){
+            //yield return new WaitForSeconds(lsaberEnPeriod);
             if (powerup == "lsaber"){
+                //yield return new WaitForSeconds(lsaberEnPeriod);
                 //Destroy(GameObject.Find(lclawsName1));
                 lsaber = Instantiate(lsaberPrefab, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity) as GameObject;
+                moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
+                lsaberEnTimer=lsaberEnPeriod;
                 powerup = "lsaberA";
-                //yield return new WaitForSeconds(lsaberEnPeriod);
             }else if (powerup == "lsaberA"){
                 if(Time.timeScale>0.0001f){
-                    energy -= lsaberEn;
-                    moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
+                    if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
+                    if(lsaberEnTimer<=0){energy -= lsaberEn;lsaberEnTimer=lsaberEnPeriod;}
                     if(GameObject.Find(lsaberName1)==null){powerup="lsaber";}
                 }
-                yield return new WaitForSeconds(lsaberEnPeriod);
             }
             if (powerup == "lclaws"){
                 //Destroy(GameObject.Find(lsaberName1));
                 lclaws = Instantiate(lclawsPrefab, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity) as GameObject;
                 lclaws.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -10);
+                moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
                 powerup = "lclawsA";
-                //yield return new WaitForSeconds(lsaberEnPeriod);
             }else if (powerup == "lclawsA"){
                 if(Time.timeScale>0.0001f){
-                    energy -= lclawsEn;
-                    moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
+                    //if(lsaberEnTimer<0){energy -= lclaws;lsaberEnTimer=lsaberEnPeriod;}//0.2
                     if(GameObject.Find(lclawsName1)==null){powerup="lclaws";}
                 }
-                yield return new WaitForSeconds(lsaberEnPeriod);
             }
             /*if(powerup!="lsaberA"){
                 Destroy(GameObject.Find(lsaberName1));
@@ -600,9 +607,8 @@ public class Player : MonoBehaviour{
                 Destroy(GameObject.Find(lsaberName1));
                 Destroy(GameObject.Find(lclawsName1));
                 moveSpeedCurrent = moveSpeed;
-                //yield return new WaitForSeconds(0.2f);
             }
-        }else { energy = 0; yield return new WaitForSeconds(1f);
+        }else { energy = 0; //yield return new WaitForSeconds(0.2f);
             Destroy(GameObject.Find(lsaberName1));
             Destroy(GameObject.Find(lclawsName1));
             moveSpeedCurrent = moveSpeed;
@@ -639,17 +645,18 @@ public class Player : MonoBehaviour{
         if(inverterTimer >=10 && inverterTimer<14){inverted=false; inverterTimer=14;}
 
         if(magnetized==true){
-            if(FindObjectsOfType<PowerupWeights>()!=null){
+            if(FindObjectsOfType<Tag_MagnetAffected>()!=null){
                 magnetTimer-=Time.deltaTime;
-                PowerupWeights[] powerups = FindObjectsOfType<PowerupWeights>();
-                foreach(PowerupWeights powerup in powerups){
-                    var followC = powerup.GetComponent<Follow>();
-                    if(followC==null){Follow follow = powerup.gameObject.AddComponent(typeof(Follow)) as Follow; follow.target=this.gameObject;}
+                Tag_MagnetAffected[] objs = FindObjectsOfType<Tag_MagnetAffected>();
+                foreach(Tag_MagnetAffected obj in objs){
+                    var followC = obj.GetComponent<Follow>();
+                    if(followC==null){Follow follow = obj.gameObject.AddComponent(typeof(Follow)) as Follow; follow.target=this.gameObject;}
+                    else{followC.distReq=6f;followC.speedFollow=5f;}
                 }
             }else{
-                PowerupWeights[] powerups = FindObjectsOfType<PowerupWeights>();
-                foreach(PowerupWeights powerup in powerups){
-                    var follow = powerup.GetComponent<Follow>();
+                PowerupWeights[] objs = FindObjectsOfType<PowerupWeights>();
+                foreach(PowerupWeights obj in objs){
+                    var follow = obj.GetComponent<Follow>();
                     if(follow!=null)Destroy(follow);
                 }
             }
@@ -719,16 +726,23 @@ public class Player : MonoBehaviour{
 
     private void RefillEnergy(){
         if(energy<=0){
+            refillDelay-=Time.deltaTime;
             //refillUI.gameObject.SetActive(true);
             SetActiveAllChildren(refillUI.transform,true);
             refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostS.ToString();
             refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostE.ToString();
             if(Input.GetButtonDown("Fire1")){
-                var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
-                if(gameSession.coins>refillCost){
-                    energy+=refillEnergyAmnt;
-                    gameSession.coins-=refillCost;
-                    AudioSource.PlayClipAtPoint(energyRefillSFX, new Vector2(transform.position.x, transform.position.y));
+                if(refillDelay<=0){
+                    var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
+                    if(gameSession.coins>refillCost){
+                        energy+=refillEnergyAmnt;
+                        gameSession.coins-=refillCost;
+                        AudioSource.PlayClipAtPoint(energyRefillSFX, new Vector2(transform.position.x, transform.position.y));
+                    }else{
+                        refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCost.ToString();
+                        refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text="";
+                    }
+                    refillDelay=1.6f;
                 }
             }
         }else{

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: -6171021230754350541}
   - component: {fileID: 6905334083320018934}
   - component: {fileID: -351982121849671072}
+  - component: {fileID: 4305882262000766416}
+  - component: {fileID: -6444293445127140414}
   m_Layer: 0
   m_Name: Magnet Powerup
   m_TagString: Powerups
@@ -158,3 +160,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRate: 7
+--- !u!114 &4305882262000766416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649215481239408911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04326831ef30704a84404316f25314d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6444293445127140414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649215481239408911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

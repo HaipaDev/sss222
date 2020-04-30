@@ -45,7 +45,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\FollowUI.cs" />
      <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
      <Compile Include="Assets\Scripts\Core\DataStorage.cs" />
@@ -82,19 +81,20 @@
      <Compile Include="Assets\Scripts\HUD\ShakeQuicklyUI.cs" />
      <Compile Include="Assets\Scripts\HUD\ValueDisplay.cs" />
      <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
-     <Compile Include="Assets\Scripts\InvertAllAudio.cs" />
      <Compile Include="Assets\Scripts\Menu\ButtonInterval.cs" />
      <Compile Include="Assets\Scripts\Menu\Inventory.cs" />
      <Compile Include="Assets\Scripts\Menu\SettingsMenu.cs" />
      <Compile Include="Assets\Scripts\Player\BounceFromEnemies.cs" />
+     <Compile Include="Assets\Scripts\Player\GloomyScythe.cs" />
      <Compile Include="Assets\Scripts\Player\Lightsaber.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerCollider.cs" />
      <Compile Include="Assets\Scripts\Player\PRocketsExplode.cs" />
      <Compile Include="Assets\Scripts\Player\ShipSkinManager.cs" />
-     <Compile Include="Assets\Scripts\QuickGlow.cs" />
-     <Compile Include="Assets\Scripts\ReplacementShaderEffect.cs" />
-     <Compile Include="Assets\Scripts\SimpleBlur.cs" />
+     <Compile Include="Assets\Scripts\Shaders\InvertAllAudio.cs" />
+     <Compile Include="Assets\Scripts\Shaders\QuickGlow.cs" />
+     <Compile Include="Assets\Scripts\Shaders\ReplacementShaderEffect.cs" />
+     <Compile Include="Assets\Scripts\Shaders\SimpleBlur.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\DisruptersSpawner.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\EnemySpawnerOld.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\PowerupsSpawner.cs" />
@@ -109,7 +109,9 @@
      <Compile Include="Assets\Scripts\UniversalUsage\Follow.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowMouse.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowStrict.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\FollowUI.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\IntervalSound.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\LootTable.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\ParabolaLR.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\RandomHDir.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\Task.cs" />

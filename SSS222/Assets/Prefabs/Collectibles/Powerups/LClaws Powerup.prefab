@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: -3403558477653786467}
   - component: {fileID: 7525320920315324444}
   - component: {fileID: -8152912361647566963}
+  - component: {fileID: 8750722719677159592}
+  - component: {fileID: 2618434109637943050}
   m_Layer: 0
   m_Name: LClaws Powerup
   m_TagString: Powerups
@@ -158,3 +160,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRate: 7.5
+--- !u!114 &8750722719677159592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4548736405339070879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04326831ef30704a84404316f25314d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2618434109637943050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4548736405339070879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

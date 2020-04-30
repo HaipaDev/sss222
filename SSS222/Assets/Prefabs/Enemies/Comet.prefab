@@ -174,7 +174,7 @@ MonoBehaviour:
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
-  enBallchanceInit: 50
+  enBallchanceInit: 30
   CoinchanceInit: 4
   enBallchance: 0
   Coinchance: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
   explosionSFX: {fileID: 8300000, guid: b2affc4fb28935c4ab45801b98257f10, type: 3}
   enemyHitSFX: {fileID: 8300000, guid: 9090e0c353c6e9c4e98999e3b6782f51, type: 3}
-  mlaserHitSFX: {fileID: 8300000, guid: 8165b30def3ca9e40847546cfdf0d54c, type: 3}
+  mlaserHitSFX: {fileID: 8300000, guid: d8035ccb30f74934d8821789b666f065, type: 3}
   hrocketHitSFX: {fileID: 8300000, guid: d2b91433b51c3af4995a35d24ab8887c, type: 3}
   phaserHitSFX: {fileID: 8300000, guid: 546b4b23e3b0b674a9584e6b1cd01739, type: 3}
   lsaberHitSFX: {fileID: 8300000, guid: 31e765c04d8a8c2428de743ff45b3c78, type: 3}
@@ -205,7 +205,7 @@ MonoBehaviour:
     type: 3}
   lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
     type: 3}
-  shadowbtPrefab: {fileID: 5313808222654050488, guid: 4fa01687837a73e42ad4bd043a443c79,
+  shadowbtPrefab: {fileID: 5313808222654050488, guid: 6f86399c48e08bc4c9514b05241611f1,
     type: 3}
   hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
     type: 3}
@@ -273,7 +273,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c047f9347fd470346bc3fff60d9db0c5, type: 3}
   lunarCometChance: 10
   lunarHealthMulti: 2.5
-  lunarSpeedMulti: 0.37
+  lunarSpeedMulti: 0.415
   lunarPart: {fileID: 100000, guid: 6a9f1cf68d74a5148be7c5f2784dbc38, type: 3}
 --- !u!82 &1306324344444208931
 AudioSource:

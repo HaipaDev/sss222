@@ -45,6 +45,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Editor\CustomEditorBase.cs" />
      <Compile Include="Assets\Weighted Random Numbers\Scripts\Editor\RandomDistributionEditor.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Editor\Tests\SaveGameTests.cs" />
  <Reference Include="UnityEditor.TestRunner">
@@ -283,6 +284,21 @@
  </Reference>
  <Reference Include="FullSerializer">
  <HintPath>C:/Unity Projects/SSS222/SSS222/Assets/ZBayatGames/SaveGameFree/Plugins/FullSerializer.dll</HintPath>
+ </Reference>
+ <Reference Include="GitHub.Api.45">
+ <HintPath>C:/Unity Projects/SSS222/SSS222/Assets/Plugins/GitHub/Editor/GitHub.Api.45.dll</HintPath>
+ </Reference>
+ <Reference Include="GitHub.Unity.45">
+ <HintPath>C:/Unity Projects/SSS222/SSS222/Assets/Plugins/GitHub/Editor/GitHub.Unity.45.dll</HintPath>
+ </Reference>
+ <Reference Include="sfw.net">
+ <HintPath>C:/Unity Projects/SSS222/SSS222/Assets/Plugins/GitHub/Editor/sfw.net.dll</HintPath>
+ </Reference>
+ <Reference Include="GitHub.UnityShim">
+ <HintPath>C:/Unity Projects/SSS222/SSS222/Assets/Plugins/GitHub/Editor/GitHub.UnityShim.dll</HintPath>
+ </Reference>
+ <Reference Include="GitHub.Logging">
+ <HintPath>C:/Unity Projects/SSS222/SSS222/Assets/Plugins/GitHub/Editor/GitHub.Logging.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Unity Projects/SSS222/SSS222/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
@@ -646,6 +662,10 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{065C0BF5-0B1D-B7EA-E560-11CA9B6CEBD8}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp-Editor-firstpass.csproj">
+      <Project>{BF6B3178-CF04-8518-3552-5B8CF74DF968}</Project>
+      <Name>Assembly-CSharp-Editor-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

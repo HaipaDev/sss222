@@ -170,7 +170,7 @@ MonoBehaviour:
     type: 3}
   lclawsPrefab: {fileID: 4755926375889011706, guid: b9340c203c57d954687d49864bad3d74,
     type: 3}
-  shadowBTPrefab: {fileID: 5313808222654050488, guid: 4fa01687837a73e42ad4bd043a443c79,
+  shadowBTPrefab: {fileID: 5313808222654050488, guid: 6f86399c48e08bc4c9514b05241611f1,
     type: 3}
   qrocketPrefab: {fileID: 3039900905274326842, guid: ee62cdec35026cb41bca88bd2914c697,
     type: 3}
@@ -188,7 +188,7 @@ MonoBehaviour:
   mlaserSpeedE: 10
   mlaserShootPeriod: 0.1
   mlaserBulletsAmmount: 10
-  lsaberEnPeriod: 0.26
+  lsaberEnPeriod: 0.05
   shadowBTSpeed: 9
   shadowBTShootPeriod: 0.34
   qrocketSpeed: 9.5
@@ -215,7 +215,7 @@ MonoBehaviour:
   inverterTime: 10
   inverterTimer: -4
   magnetized: 0
-  magnetTime: 15
+  magnetTime: 25
   magnetTimer: -4
   scaler: 0
   scalerFreq: 0.5
@@ -230,22 +230,25 @@ MonoBehaviour:
   phaserEn: 3
   hrocketEn: 3
   mlaserEn: 0.075
-  lsaberEn: 0.08
-  lclawsEn: 0.2
+  lsaberEn: 0.375
+  lclawsEn: 4
   shadowEn: 5
   shadowBTEn: 10
   qrocketEn: 5.5
   procketEn: 1
   cbulletEn: 2
   energyBallGet: 9
-  medkitEnergyGet: 6
-  medkitUEnergyGet: 12
+  medkitEnergyGet: 16
+  medkitUEnergyGet: 40
   medkitHpAmnt: 25
-  medkitUHpAmnt: 58
+  medkitUHpAmnt: 62
   pwrupEnergyGet: 36
+  enForPwrupRefill: 25
+  enPwrupDuplicate: 40
   refillEnergyAmnt: 50
   refillCostS: 1
   refillCostE: 2
+  refillDelay: 1.6
   explosionVFX: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
   flareShootVFX: {fileID: 100000, guid: c151221cd78239d4ba56697f5a78532e, type: 3}
@@ -263,9 +266,9 @@ MonoBehaviour:
   gcloverOffSFX: {fileID: 8300000, guid: c3f18becb532a2947a5894e7c7975cbd, type: 3}
   shadowbtPwrupSFX: {fileID: 8300000, guid: 74abe63daa3fee64e9bde8a143a4caa2, type: 3}
   noEnergySFX: {fileID: 8300000, guid: 1c11946ec7b1172408473ded0c194601, type: 3}
-  energyBallSFX: {fileID: 8300000, guid: f076b87aac8611a43aa15c115fec5bb9, type: 3}
+  energyBallSFX: {fileID: 8300000, guid: dfa68626a29f7f74eb8067935ea8d1b7, type: 3}
   energyRefillSFX: {fileID: 8300000, guid: fb4f60f019245994bbe3ef41560a3de3, type: 3}
-  coinSFX: {fileID: 8300000, guid: 66b797acedbdabe42a159451419d2398, type: 3}
+  coinSFX: {fileID: 8300000, guid: 5e8b43d317853f749b41d6aaf8ed9f55, type: 3}
   leechBiteSFX: {fileID: 8300000, guid: 5198f100b29a378479c77e37079cf250, type: 3}
   gameOverCanvasPrefab: {fileID: 0}
   shadowPrefab: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699,
@@ -386,13 +389,13 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 9702fbb395c910b449526048800ee86e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 156
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

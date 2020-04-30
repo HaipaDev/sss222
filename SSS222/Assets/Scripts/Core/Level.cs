@@ -8,6 +8,7 @@ public class Level : MonoBehaviour{
     //float prevGameSpeed;
     private void Awake()
     {
+        gameSession.gameSpeed=1f;
         Time.timeScale = 1f;
     }
     void Start(){
@@ -20,28 +21,33 @@ public class Level : MonoBehaviour{
     }
 
     public void LoadStartMenu(){
-        Time.timeScale = 1f;
         FindObjectOfType<GameSession>().SaveHighscore();
         FindObjectOfType<GameSession>().ResetScore();
         SceneManager.LoadScene("Menu");
+        gameSession.gameSpeed=1f;
+        Time.timeScale = 1f;
         //FindObjectOfType<GameSession>().savableData.Save();
         //FindObjectOfType<SaveSerial>().Save();
     }
     public void LoadGameScene(){
         SceneManager.LoadScene("Game");
         FindObjectOfType<GameSession>().ResetScore();
+        gameSession.gameSpeed=1f;
+        Time.timeScale = 1f;
     }
     public void LoadGamrModeChooseScene(){SceneManager.LoadScene("GameModeChoose");}
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
     public void LoadInventoryScene(){SceneManager.LoadScene("Inventory");}
     public void RestartGame(){
-        Time.timeScale = 1f;
         FindObjectOfType<GameSession>().SaveHighscore();
         FindObjectOfType<GameSession>().ResetScore();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }public void RestartScene(){
+        gameSession.gameSpeed=1f;
         Time.timeScale = 1f;
+    }public void RestartScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gameSession.gameSpeed=1f;
+        Time.timeScale = 1f;
     }
     public void QuitGame(){
         Application.Quit();

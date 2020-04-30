@@ -183,7 +183,7 @@ MonoBehaviour:
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
-  enBallchanceInit: 36
+  enBallchanceInit: 16
   CoinchanceInit: 6
   enBallchance: 0
   Coinchance: 0
@@ -196,7 +196,7 @@ MonoBehaviour:
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
   explosionSFX: {fileID: 8300000, guid: b2affc4fb28935c4ab45801b98257f10, type: 3}
   enemyHitSFX: {fileID: 8300000, guid: 9090e0c353c6e9c4e98999e3b6782f51, type: 3}
-  mlaserHitSFX: {fileID: 8300000, guid: 8165b30def3ca9e40847546cfdf0d54c, type: 3}
+  mlaserHitSFX: {fileID: 8300000, guid: d8035ccb30f74934d8821789b666f065, type: 3}
   hrocketHitSFX: {fileID: 8300000, guid: d2b91433b51c3af4995a35d24ab8887c, type: 3}
   phaserHitSFX: {fileID: 8300000, guid: 546b4b23e3b0b674a9584e6b1cd01739, type: 3}
   lsaberHitSFX: {fileID: 8300000, guid: 31e765c04d8a8c2428de743ff45b3c78, type: 3}
@@ -214,7 +214,7 @@ MonoBehaviour:
     type: 3}
   lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
     type: 3}
-  shadowbtPrefab: {fileID: 5313808222654050488, guid: 4fa01687837a73e42ad4bd043a443c79,
+  shadowbtPrefab: {fileID: 5313808222654050488, guid: 6f86399c48e08bc4c9514b05241611f1,
     type: 3}
   hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
     type: 3}
@@ -229,7 +229,7 @@ MonoBehaviour:
     type: 3}
   coinPrefab: {fileID: 1056705403108089519, guid: eebb358fa9ff6af419cd68bd020a4289,
     type: 3}
-  cTagged: 0
+  yeeted: 0
 --- !u!114 &801518567914847888
 MonoBehaviour:
   m_ObjectHideFlags: 0

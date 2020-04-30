@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 861680964580927169}
   - component: {fileID: 4910493507970672345}
-  - component: {fileID: 4562925101624820977}
+  - component: {fileID: -2139053641053774133}
   - component: {fileID: 3700841201686134059}
   - component: {fileID: -2526951079648213008}
   - component: {fileID: 1529301144}
+  - component: {fileID: 3676386598028052292}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Powerups
@@ -84,8 +85,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &4562925101624820977
-CircleCollider2D:
+--- !u!61 &-2139053641053774133
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,12 +95,22 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.3, y: 0.53333336}
+    newSize: {x: 0.08, y: 0.08}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.16666667
+  m_Size: {x: 0.3, y: 0.53333336}
+  m_EdgeRadius: 0
 --- !u!50 &3700841201686134059
 Rigidbody2D:
   serializedVersion: 4
@@ -133,11 +144,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a8c4beb6393e8418ea04d76c86dccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0}
+  selfPos: {x: 0, y: 0}
   target: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
   targetTag: 
   dist: 0
-  speedFollow: 3.43
+  distReq: 2
+  speedFollow: 2.43
   vspeed: 2.14
+  hspeed: 0
+  rotateTowards: 0
+  speedRotate: 15
+  angleAdj: -90
+  followAfterOOR: 0
+  dirYYUp: 0
+  OOR_YY: 1.5
+  targetObj: {fileID: 0}
 --- !u!114 &1529301144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,3 +176,18 @@ MonoBehaviour:
   colorGlow: {r: 0.46659088, g: 0, b: 1, a: 1}
   sizeGlow: 1.24
   alphaGlow: 0.7
+  emissionSpeed: 7.63
+  xx: 0
+  yy: 0
+--- !u!114 &3676386598028052292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056705403108089519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

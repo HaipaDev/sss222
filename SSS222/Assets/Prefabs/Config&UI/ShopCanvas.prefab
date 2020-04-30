@@ -192,7 +192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9c48955f0426844b77ff75f33e92cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopOpened: 0
   shopMenuUI: {fileID: 3679422391047689949}
   slots:
   - {fileID: 3912464422630751685}
@@ -206,6 +205,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: abb4cfc964a457a43966da12baf2d6e1, type: 2}
   - {fileID: 11400000, guid: 165a7c68e9b1f2c47b32f92ac76ac387, type: 2}
   - {fileID: 11400000, guid: b85bbd8627abfd044ba3d84fbb99696a, type: 2}
+  noCoinsSFX: {fileID: 8300000, guid: 52a7f58fa80cd6e49aed67e5f20b7593, type: 3}
+  buySFX: {fileID: 8300000, guid: 59f756011592c284286b30fac83f4c26, type: 3}
   sum: 0
 --- !u!82 &1241189996
 AudioSource:
@@ -214,7 +215,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3679422391987501171}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
     type: 2}

@@ -38,7 +38,9 @@ public class ShopSlot : MonoBehaviour{
         if (gameSession.coins >= shopMenu.shopSlotIDs[ID].price)
         {
             gameSession.coins -= shopMenu.shopSlotIDs[ID].price;
+            AudioSource.PlayClipAtPoint(shopMenu.buySFX,player.transform.position);
             //if(ID<=shopMenu.shopSlotIDs.Count){
+                player.energy+=10f;
                 if (ID == 0) { player.powerup = "mlaser"; player.energy += player.pwrupEnergyGet; }
                 if (ID==1) { player.powerup = "phaser"; player.energy += player.pwrupEnergyGet; }
                 if (ID==2) { player.powerup = "hrockets"; player.energy +=player.pwrupEnergyGet; }
@@ -47,7 +49,8 @@ public class ShopSlot : MonoBehaviour{
                 if (ID == 5) { player.powerup = "lsaber"; }
             //} else { Debug.LogError("Shop Slot ID out of bounds"); }
         }else{
-            shopMenu.GetComponent<AudioSource>().Play();//PlayClipAtPoint(player.noEnergySFX,transform.position,100);
+            //shopMenu.GetComponent<AudioSource>().Play();//PlayClipAtPoint(player.noEnergySFX,transform.position,100);
+            AudioSource.PlayClipAtPoint(shopMenu.noCoinsSFX,player.transform.position);
         }
     }
 }

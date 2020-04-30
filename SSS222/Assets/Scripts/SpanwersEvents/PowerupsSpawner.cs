@@ -10,12 +10,14 @@ public class PowerupsSpawner : MonoBehaviour{
     public float timer;
 
     public float sum = 0f;
+    LootTable lootTable;
     private void Awake()
     {
         foreach (GameObject powerup in powerups)
         {
             sum += powerup.GetComponent<PowerupWeights>().spawnRate;
         }
+        lootTable=GetComponent<LootTable>();
     }
     IEnumerator Start(){
         timer = firstSpawn;
@@ -63,11 +65,13 @@ public class PowerupsSpawner : MonoBehaviour{
         //var index = Random.Range(0, powerups.Count);
         var powerupsPos = new Vector3(Random.Range(-2.5f, 4f), 7f, 0);
         var newPowerup=Instantiate(
-            GetRandomPowerup(),
+            //GetRandomPowerup(),
+            lootTable.GetItem(),
             //powerups[index],
             powerupsPos,
             Quaternion.identity);
         yield return new WaitForSeconds(mTimePowerupSpawns);
+        timer=mTimePowerupSpawns;
     }
     private void Update(){
         //if(currentWave >= waveConfigs.Count)

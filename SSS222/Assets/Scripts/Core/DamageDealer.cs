@@ -6,12 +6,12 @@ public class DamageDealer : MonoBehaviour{
     float dmg = 10;
     float dmgLaser = 5f;
     float dmgPhaser = 0.1f;
-    float dmgHRocket = 7f;
+    float dmgHRocket = 13.5f;
     float dmgMiniLaser = 0.32f;
     float dmgLSaber = 3.5f;
     float dmgLClaws = 24f;
     float dmgShadowBT = 40.5f;
-    float dmgQRocket = 9.5f;
+    float dmgQRocket = 14.5f;
     float dmgPRocket = 0f;
     float dmgPRocketExpl = 0.5f;
     float dmgCBullet = 1f;
@@ -22,7 +22,7 @@ public class DamageDealer : MonoBehaviour{
     float dmgSoundwave = 8;
     float dmgEBt = 20;
     float dmgLeech = 4f;
-    float dmgHLaser = 14f;
+    float dmgHLaser = 36f;
 
     public float GetDamage(){return dmg;}
     public float GetDamageLaser(){return dmgLaser;}

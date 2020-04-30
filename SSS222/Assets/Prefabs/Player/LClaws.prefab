@@ -159,12 +159,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 4825125176181819323, guid: 88961786c52cb5146bb7b41417f996bf, type: 3}
+  glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
   colorGlow: {r: 0.04705883, g: 0.9333334, b: 0.07450981, a: 1}
-  sizeGlow: 3.1
+  sizeGlow: 3
   alphaGlow: 0.45
   emissionSpeed: 9.9
-  xx: 0.25
+  xx: 0.1
   yy: -0.25
 --- !u!82 &4688364101293123351
 AudioSource:
