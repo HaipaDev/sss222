@@ -8,8 +8,8 @@ public class Follow : MonoBehaviour{
     [SerializeField] public GameObject target;
     [SerializeField] string targetTag;
     public float dist;
-    [SerializeField] float distReq = 4f;
-    [SerializeField] float speedFollow = 5f;
+    [SerializeField] public float distReq = 4f;
+    [SerializeField] public float speedFollow = 5f;
     [SerializeField] public float vspeed = 2.4f;
     [SerializeField] public float hspeed = 0f;
     [SerializeField] bool rotateTowards = false;
