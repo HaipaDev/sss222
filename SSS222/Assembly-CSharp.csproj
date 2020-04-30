@@ -45,6 +45,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\RandomSound.cs" />
      <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
      <Compile Include="Assets\Scripts\Core\DataStorage.cs" />
@@ -119,6 +120,8 @@
      <Compile Include="Assets\Scripts\Visuals\BackgroundScroller.cs" />
      <Compile Include="Assets\Scripts\Visuals\Glow.cs" />
      <Compile Include="Assets\Scripts\Visuals\Screenflash.cs" />
+     <Compile Include="Assets\Tags\LootItem.cs" />
+     <Compile Include="Assets\Tags\Tag_MagnetAffected.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

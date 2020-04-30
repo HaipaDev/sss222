@@ -105,6 +105,8 @@ public class Player : MonoBehaviour{
     public int refillCostS=1;
     public int refillCostE=2;
     public float refillDelay=1.6f;
+    public float refillCount;
+    public bool refillRandomized;
     [HeaderAttribute("Effects")]
     [SerializeField] public GameObject explosionVFX;
     [SerializeField] public GameObject flareHitVFX;
@@ -483,10 +485,10 @@ public class Player : MonoBehaviour{
                 }else if(powerup=="lclawsA"){
                         var enemy = FindClosestEnemy();
                         if(enemy!=null){
-                            AudioSource.PlayClipAtPoint(enemy.lsaberHitSFX, transform.position);
+                            //AudioSource.PlayClipAtPoint(enemy.lsaberHitSFX, transform.position);
                             GameObject clawsPart = Instantiate(lclawsVFX, enemy.transform.position, Quaternion.identity) as GameObject;
-                            Destroy(clawsPart, 1f);
-                            enemy.health -= FindObjectOfType<DamageDealer>().GetDamageLCLaws();
+                            Destroy(clawsPart, 0.15f);
+                            //enemy.health -= FindObjectOfType<DamageDealer>().GetDamageLCLaws();
                         }else{ AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); }
                         energy -= lclawsEn;
                             shootTimer = 0.5f;
@@ -583,7 +585,7 @@ public class Player : MonoBehaviour{
                 if(Time.timeScale>0.0001f){
                     if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
                     if(lsaberEnTimer<=0){energy -= lsaberEn;lsaberEnTimer=lsaberEnPeriod;}
-                    if(GameObject.Find(lsaberName1)==null){powerup="lsaber";}
+                    if(GameObject.Find(lsaberName)==null&&GameObject.Find(lsaberName1)==null){powerup="lsaber";}
                 }
             }
             if (powerup == "lclaws"){
@@ -595,7 +597,7 @@ public class Player : MonoBehaviour{
             }else if (powerup == "lclawsA"){
                 if(Time.timeScale>0.0001f){
                     //if(lsaberEnTimer<0){energy -= lclaws;lsaberEnTimer=lsaberEnPeriod;}//0.2
-                    if(GameObject.Find(lclawsName1)==null){powerup="lclaws";}
+                    if(GameObject.Find(lclawsName)==null&&GameObject.Find(lclawsName1)==null){powerup="lclaws";}
                 }
             }
             /*if(powerup!="lsaberA"){
@@ -726,17 +728,51 @@ public class Player : MonoBehaviour{
 
     private void RefillEnergy(){
         if(energy<=0){
-            refillDelay-=Time.deltaTime;
+            if(refillDelay>0)refillDelay-=Time.deltaTime;
+            if(refillDelay<=0){refillDelay=-4;}
             //refillUI.gameObject.SetActive(true);
-            SetActiveAllChildren(refillUI.transform,true);
+
+            if(refillRandomized==false){
+                SetActiveAllChildren(refillUI.transform,true);
+                //refilltxtS=GameObject.Find("RefillText1");
+                //refilltxtE=GameObject.Find("RefillText2");
+                if(refillCount==0){
+                    GameObject.Find("RandomArrows").SetActive(false);
+                    //GameObject.Find("HUD 9:16/Game Canvas/RefillUI/RandomArrows").SetActive(false);
+                    refilltxtE.SetActive(false);
+                    refillCostS=1;
+                    refillCostE=1;
+                }else if(refillCount>0 && refillCount<=3){
+                    refillCostS=1;
+                    refillCostE=2;
+                }else if(refillCount>=4){
+                    var choose=UnityEngine.Random.Range(1,3);
+                    if(choose==1){
+                        refillCostS=1;
+                        refillCostE=3;
+                    }else if(choose==2){
+                        refillCostS=2;
+                        refillCostE=4;
+                    }if(choose==3){
+                        GameObject.Find("RandomArrows").SetActive(false);
+                        refilltxtE.SetActive(false);
+                        refillCostS=3;
+                        refillCostE=3;
+                    }
+                }
+                refillRandomized=true;
+            }
+
             refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostS.ToString();
             refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostE.ToString();
             if(Input.GetButtonDown("Fire1")){
-                if(refillDelay<=0){
+                if(refillDelay==-4){
                     var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
                     if(gameSession.coins>refillCost){
                         energy+=refillEnergyAmnt;
+                        refillCount++;
                         gameSession.coins-=refillCost;
+                        refillRandomized=false;
                         AudioSource.PlayClipAtPoint(energyRefillSFX, new Vector2(transform.position.x, transform.position.y));
                     }else{
                         refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCost.ToString();

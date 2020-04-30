@@ -307,6 +307,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgSprite: {fileID: 1764790085}
+--- !u!1 &487619882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1990238223, guid: db6f21db03d81e24fa8a1e4230da0599,
+    type: 3}
+  m_PrefabInstance: {fileID: 7293689707689345921}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &622614496 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1195664776, guid: db6f21db03d81e24fa8a1e4230da0599,
+    type: 3}
+  m_PrefabInstance: {fileID: 7293689707689345921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &643586546 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4079877003467868499, guid: f87dc7e0d5691d345a0172eb5a309a59,
@@ -792,6 +804,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4936473040245061728, guid: 518ffa51e13715847a61b77b049a6386, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 518ffa51e13715847a61b77b049a6386, type: 3}
+--- !u!114 &1341237885 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1471795283518832896, guid: db6f21db03d81e24fa8a1e4230da0599,
+    type: 3}
+  m_PrefabInstance: {fileID: 7293689707689345921}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa19b9539baff354cbb402b21d7b1a7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1350970951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -989,6 +1013,12 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4936473040245061728, guid: 518ffa51e13715847a61b77b049a6386, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 518ffa51e13715847a61b77b049a6386, type: 3}
+--- !u!1 &1526990512 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 901172613, guid: db6f21db03d81e24fa8a1e4230da0599,
+    type: 3}
+  m_PrefabInstance: {fileID: 7293689707689345921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1530955281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1631,21 +1661,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Waves
-      objectReference: {fileID: 0}
-    - target: {fileID: 356336301364335481, guid: f406453d807c7104bbf48d3e3680ba15,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 356336301364335482, guid: f406453d807c7104bbf48d3e3680ba15,
-        type: 3}
-      propertyPath: waveIndex
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 356336301364335482, guid: f406453d807c7104bbf48d3e3680ba15,
-        type: 3}
-      propertyPath: startingWave
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 356336301364335483, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
@@ -2711,6 +2726,31 @@ PrefabInstance:
       propertyPath: bgSprite
       value: 
       objectReference: {fileID: 1764790085}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: energy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: refilltxtS
+      value: 
+      objectReference: {fileID: 487619882}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: refillUI
+      value: 
+      objectReference: {fileID: 1341237885}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: refilltxtE
+      value: 
+      objectReference: {fileID: 1526990512}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: refillRandomArrows
+      value: 
+      objectReference: {fileID: 622614496}
     - target: {fileID: 4546529352650547399, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3274,6 +3314,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 692a8ad24f832a547a376f4d7a93d022,
         type: 3}
+    - target: {fileID: 928703335352380224, guid: db6f21db03d81e24fa8a1e4230da0599,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2528102501405751207, guid: db6f21db03d81e24fa8a1e4230da0599,
         type: 3}
       propertyPath: m_LocalPosition.z

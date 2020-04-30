@@ -3,24 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Follow : MonoBehaviour{
-    public Vector2 targetPos;
+    [HeaderAttribute("Target")]
     public Vector2 selfPos;
+    public Vector2 targetPos;
     [SerializeField] public GameObject target;
     [SerializeField] string targetTag;
+    public GameObject targetObj;
     public float dist;
+    [HeaderAttribute("Properties")]
     [SerializeField] public float distReq = 4f;
     [SerializeField] public float speedFollow = 5f;
     [SerializeField] public float vspeed = 2.4f;
     [SerializeField] public float hspeed = 0f;
+    [HeaderAttribute("Rotation")]
     [SerializeField] bool rotateTowards = false;
     [SerializeField] float speedRotate = 15f;
     [SerializeField] float angleAdj = -90f;
+    [HeaderAttribute("Other")]
     [SerializeField] bool followAfterOOR;
     [SerializeField] bool dirYYUp = false;
     [SerializeField] float OOR_YY = 1.5f;
+    [SerializeField] bool followClosestEnemy = false;
 
     //Player player;
-    public GameObject targetObj;
     Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -29,6 +34,7 @@ public class Follow : MonoBehaviour{
         //var tempTarget = GameObject.FindGameObjectWithTag(target.tag);
         if (target!=null){targetObj = GameObject.FindGameObjectWithTag(target.tag); }
         else{targetObj = GameObject.FindGameObjectWithTag(targetTag); }
+        if(followClosestEnemy==true){targetObj=FindClosestEnemy().gameObject;}
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -71,5 +77,12 @@ public class Follow : MonoBehaviour{
                 transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * stepR);
             }
         }
+    }
+    public Enemy FindClosestEnemy(){
+        KdTree<Enemy> Enemies = new KdTree<Enemy>();
+        Enemy[] EnemiesArr;
+        EnemiesArr = FindObjectsOfType<Enemy>();
+        Enemy closest = Enemies.FindClosest(transform.position);
+        return closest;
     }
 }

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5820739300652673482}
   - component: {fileID: 6441261333678637232}
   - component: {fileID: 343902056029052478}
+  - component: {fileID: -8148520281533814548}
   m_Layer: 8
   m_Name: MLaser
   m_TagString: PlayerWeapons
@@ -299,3 +300,28 @@ MonoBehaviour:
   timeToChangeSpeedE: 0.45
   timerSpeed: 0
   dir: 1
+--- !u!114 &-8148520281533814548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 569445c5214dff048b7471584b076a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forThisObject: 1
+  playLimitForThis: 1
+  thisSoundLimit: 2
+  playAtStart: 0
+  sounds:
+  - {fileID: 8300000, guid: 9c792512a3f294347ad71be681659376, type: 3}
+  - {fileID: 8300000, guid: 023ef4b1037e047458f93dd99fcf652f, type: 3}
+  - {fileID: 8300000, guid: 8165b30def3ca9e40847546cfdf0d54c, type: 3}
+  - {fileID: 8300000, guid: d8035ccb30f74934d8821789b666f065, type: 3}
+  id: 0
+  id2: 0
+  sound: {fileID: 0}
+  sound2: {fileID: 0}

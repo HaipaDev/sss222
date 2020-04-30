@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Lightsaber : MonoBehaviour{
     [SerializeField] AudioClip lsaberBlockSFX;
-    void Start()
+    /*void Start()
     {
         int numberOfObj = FindObjectsOfType<Lightsaber>().Length;
         if (numberOfObj > 1)
         {
             Destroy(gameObject);
         }
-    }
+    }*/
 
     private void OnTriggerEnter2D(Collider2D other)
     {

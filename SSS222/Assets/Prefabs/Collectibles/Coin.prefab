@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2526951079648213008}
   - component: {fileID: 1529301144}
   - component: {fileID: 3676386598028052292}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Coin
   m_TagString: Powerups
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -144,10 +144,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a8c4beb6393e8418ea04d76c86dccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPos: {x: 0, y: 0}
   selfPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
   target: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
   targetTag: 
+  targetObj: {fileID: 0}
   dist: 0
   distReq: 2
   speedFollow: 2.43
@@ -159,7 +160,7 @@ MonoBehaviour:
   followAfterOOR: 0
   dirYYUp: 0
   OOR_YY: 1.5
-  targetObj: {fileID: 0}
+  followClosestEnemy: 0
 --- !u!114 &1529301144
 MonoBehaviour:
   m_ObjectHideFlags: 0
