@@ -6,8 +6,9 @@ using UnityEditor.AnimatedValues;
 
 [CustomEditor(typeof(UnityEngine.Object), true, isFallback = true)]
 [CanEditMultipleObjects]
-public class CustomEditorBase : Editor
-{
+public class CustomEditorBase : Editor{
+	/*
+	#region
 	#if UNITY_EDITOR
 	private Dictionary<string, ReorderableListProperty> reorderableLists;
 
@@ -168,4 +169,5 @@ public class CustomEditorBase : Editor
 	}
 	#endregion
 	#endif
-}
+	#endregion
+*/}

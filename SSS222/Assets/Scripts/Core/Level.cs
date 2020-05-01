@@ -8,6 +8,7 @@ public class Level : MonoBehaviour{
     //float prevGameSpeed;
     private void Awake()
     {
+        gameSession = FindObjectOfType<GameSession>();
         gameSession.gameSpeed=1f;
         Time.timeScale = 1f;
     }

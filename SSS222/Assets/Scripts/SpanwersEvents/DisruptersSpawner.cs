@@ -2,26 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisruptersSpawner : MonoBehaviour
-{
-    [SerializeField] WaveConfig cfgLeech;
-    [SerializeField] WaveConfig cfgHlaser;
-    [SerializeField] WaveConfig cfgGoblin;
+public class DisruptersSpawner : MonoBehaviour{
     //[SerializeField] int[] waveConfigsWeights;
     //[SerializeField] int startingWave = 0;
-    
+    [HeaderAttribute("Mecha Leech")]
+    public bool spawnLeech=true;
+    [SerializeField] WaveConfig cfgLeech;
     [SerializeField] float mSTimeSpawnsLeech = 55f;
     [SerializeField] float mETimeSpawnsLeech = 80f;
     public float timeSpawnsLeech = 0f;
+    [HeaderAttribute("Homing Laser")]
+    public bool spawnHlaser=true;
+    [SerializeField] WaveConfig cfgHlaser;
     [SerializeField] float mSTimeSpawnsHlaser = 30f;
     [SerializeField] float mETimeSpawnsHlaser = 60f;
     public float timeSpawnsHlaser = 0f;
+    [HeaderAttribute("Goblin Thief")]
+    public bool spawnGoblin=true;
+    [SerializeField] WaveConfig cfgGoblin;
     [SerializeField] float mSTimeSpawnsGoblin = 40f;
     [SerializeField] float mESTimeSpawnsGoblin = 50f;
     public float timeSpawnsGoblin = 0f;
-    public int waveIndex = 0;
+    //public int waveIndex = 0;
     //WaveConfig currentWave;
-    [SerializeField] bool looping = true;
+    bool looping = true;
     //[SerializeField] bool progressiveWaves = false;
 
     //WaveDisplay waveDisplay;
@@ -59,9 +63,9 @@ public class DisruptersSpawner : MonoBehaviour
         //waveDisplay = FindObjectOfType<WaveDisplay>();
         gameSession = FindObjectOfType<GameSession>();
         player = FindObjectOfType<Player>();
-        timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech,mETimeSpawnsLeech);
-        timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser);
-        timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mESTimeSpawnsGoblin);
+        if(spawnLeech==true)timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech,mETimeSpawnsLeech);
+        if(spawnHlaser==true)timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser);
+        if(spawnGoblin==true)timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mESTimeSpawnsGoblin);
         do
         {
             yield return StartCoroutine(SpawnWaves());
@@ -71,23 +75,29 @@ public class DisruptersSpawner : MonoBehaviour
 
     public IEnumerator SpawnWaves()
     {
+        if(spawnLeech==true){
         if (timeSpawnsLeech<=0 && timeSpawnsLeech>-4){
             //currentWave = cfgLeech;
             yield return StartCoroutine(SpawnAllEnemiesInWave(cfgLeech));
             timeSpawnsLeech = -4;
+        }
         //if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
         //else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/
         //waveIndex = Random.Range(0, waveConfigs.Count); gameSession.EVscore = 0; } }
-        }if (timeSpawnsHlaser <= 0 && timeSpawnsHlaser > -4){
-            //currentWave = cfgHlaser;
-            yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHlaser));
-            timeSpawnsHlaser = -4;
+        }if(spawnHlaser==true){
+            if (timeSpawnsHlaser <= 0 && timeSpawnsHlaser > -4){
+                //currentWave = cfgHlaser;
+                yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHlaser));
+                timeSpawnsHlaser = -4;
+            }
         }
-        if(GameObject.FindGameObjectWithTag("Powerups")!=null){
-            if (timeSpawnsGoblin <= 0 && timeSpawnsGoblin > -4){
-                //currentWave = cfgGoblin;
-                yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGoblin));
-                timeSpawnsGoblin = -4;
+        if(spawnGoblin==true){
+            if(GameObject.FindGameObjectWithTag("Powerups")!=null){
+                if (timeSpawnsGoblin <= 0 && timeSpawnsGoblin > -4){
+                    //currentWave = cfgGoblin;
+                    yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGoblin));
+                    timeSpawnsGoblin = -4;
+                }
             }
         }
     }
@@ -173,12 +183,18 @@ public class DisruptersSpawner : MonoBehaviour
     void Update()
     {
         if(Time.timeScale>0.0001f){
-            if(timeSpawnsLeech>-0.01f){timeSpawnsLeech -= Time.deltaTime; }
-            else if(timeSpawnsLeech==-4){ timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech, mETimeSpawnsLeech); }
-            if(timeSpawnsHlaser>-0.01f){ timeSpawnsHlaser -= Time.deltaTime; }
-            else if(timeSpawnsHlaser == -4){ Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser); }
-            if(timeSpawnsGoblin > -0.01f){ timeSpawnsGoblin -= Time.deltaTime; }
-            else if(timeSpawnsGoblin == -4){ timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mESTimeSpawnsGoblin); }
+            if(spawnLeech==true){
+                if(timeSpawnsLeech>-0.01f){timeSpawnsLeech -= Time.deltaTime; }
+                else if(timeSpawnsLeech==-4){ timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech, mETimeSpawnsLeech); }
+            }
+            if(spawnHlaser==true){
+                if(timeSpawnsHlaser>-0.01f){ timeSpawnsHlaser -= Time.deltaTime; }
+                else if(timeSpawnsHlaser == -4){ Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser); }
+            }
+            if(spawnGoblin==true){
+                if(timeSpawnsGoblin > -0.01f){ timeSpawnsGoblin -= Time.deltaTime; }
+                else if(timeSpawnsGoblin == -4){ timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mESTimeSpawnsGoblin); }
+            }
             /*if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
             else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
                     timeSpawns = 0; waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];

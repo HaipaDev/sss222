@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonInterval : MonoBehaviour{
-    [SerializeField] float timer;
+    [SerializeField] float timer=0.5f;
     Button button;
     void Start(){
         button = GetComponent<Button>();

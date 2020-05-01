@@ -200,10 +200,10 @@ MonoBehaviour:
   cbulletSpeed: 8.25
   cbulletShootPeriod: 0.15
   flip: 0
-  flipTime: 7.5
+  flipTime: 8.5
   flipTimer: -4
   gclover: 0
-  gcloverTime: 7
+  gcloverTime: 8
   gcloverTimer: -4
   shadow: 0
   shadowTime: 9
@@ -211,6 +211,7 @@ MonoBehaviour:
   shadowLength: 0.2
   dashSpeed: 24
   startDashTime: 0.1
+  dashTime: 0
   inverted: 0
   inverterTime: 10
   inverterTimer: -4
@@ -218,12 +219,15 @@ MonoBehaviour:
   magnetTime: 25
   magnetTimer: -4
   scaler: 0
-  scalerFreq: 0.5
-  scalerTime: 9
+  shipScaleMin: 0.45
+  shipScaleMax: 2.5
+  scalerTime: 12
   scalerTimer: -4
   matrix: 0
   matrixTime: 14
   matrixTimer: -4
+  pmultiTime: 24
+  pmultiTimer: -4
   laserEn: 1
   laser2En: 2
   laser3En: 5
@@ -238,17 +242,19 @@ MonoBehaviour:
   procketEn: 1
   cbulletEn: 2
   energyBallGet: 9
-  medkitEnergyGet: 16
+  medkitEnergyGet: 26
   medkitUEnergyGet: 40
   medkitHpAmnt: 25
   medkitUHpAmnt: 62
   pwrupEnergyGet: 36
   enForPwrupRefill: 25
-  enPwrupDuplicate: 40
-  refillEnergyAmnt: 100
+  enPwrupDuplicate: 42
+  refillEnergyAmnt: 110
   refillCostS: 1
   refillCostE: 2
   refillDelay: 1.6
+  refillCount: 0
+  refillRandomized: 0
   explosionVFX: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
   flareShootVFX: {fileID: 100000, guid: c151221cd78239d4ba56697f5a78532e, type: 3}
@@ -343,6 +349,10 @@ MonoBehaviour:
     type: 3}
   matrixPwrupPrefab: {fileID: 4548736405339070879, guid: c430f5cd45eed4947ad8424c9ab96449,
     type: 3}
+  pmultiPwrupPrefab: {fileID: 5649215481239408911, guid: 8c7a6bb61db1fe54c8c2e4559b9978fb,
+    type: 3}
+  randomizerPwrupPrefab: {fileID: 5649215481239408911, guid: 404504c142e7a4a40805ec056d2a842f,
+    type: 3}
   cometPrefab: {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475,
     type: 3}
   batPrefab: {fileID: 3147796775416149952, guid: 2c3f94b277a11e0478605915547d8fed,
@@ -389,7 +399,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 9702fbb395c910b449526048800ee86e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0.17
   m_Pitch: 1
   Loop: 1
   Mute: 0

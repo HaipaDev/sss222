@@ -82,85 +82,115 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemList:
-  - lootItem: {fileID: -6559572297083776647, guid: b68538418da2b5943be6fd26f9e0ddec,
+  - name: Amor PowerUp
+    lootItem: {fileID: -6559572297083776647, guid: b68538418da2b5943be6fd26f9e0ddec,
       type: 3}
     dropChance: 10
-  - lootItem: {fileID: 4071643129898169003, guid: 79e3a62b1e44c5c42afcffa470e5736a,
+  - name: ArmorU Powerup
+    lootItem: {fileID: 4071643129898169003, guid: 79e3a62b1e44c5c42afcffa470e5736a,
       type: 3}
     dropChance: 8
-  - lootItem: {fileID: 8467605574232654556, guid: c16ad10c3be8d894a81ec53963a84d36,
+  - name: Laser2 Powerup
+    lootItem: {fileID: 8467605574232654556, guid: c16ad10c3be8d894a81ec53963a84d36,
       type: 3}
     dropChance: 12
-  - lootItem: {fileID: -6929926316309368144, guid: 0e2ef393ab2246b4a877082641eb520d,
+  - name: Laser3 PowerUp
+    lootItem: {fileID: -6929926316309368144, guid: 0e2ef393ab2246b4a877082641eb520d,
       type: 3}
     dropChance: 8
-  - lootItem: {fileID: -4513847231358184560, guid: 76d0a650fa6095b4d9e2950fb018aeaa,
+  - name: Phaser Powerup
+    lootItem: {fileID: -4513847231358184560, guid: 76d0a650fa6095b4d9e2950fb018aeaa,
       type: 3}
     dropChance: 7
-  - lootItem: {fileID: 7481789463701768704, guid: bbbfc3cfe6944bb4cadd94872c94df49,
-      type: 3}
-    dropChance: 10
-  - lootItem: {fileID: 1625218228944727905, guid: d44872e141aa7484a8ce2adfdcd8fb86,
-      type: 3}
-    dropChance: 6.5
-  - lootItem: {fileID: -7642471649942006840, guid: da69c5e66b1dd2941ba313f4c96bc246,
-      type: 3}
-    dropChance: 9.5
-  - lootItem: {fileID: -794193057557848658, guid: 5924af7ffd96c8147b6d83568c56580e,
-      type: 3}
-    dropChance: 11
-  - lootItem: {fileID: 7369046335645166684, guid: e862a3dbc125f6a479dc758a97999268,
-      type: 3}
-    dropChance: 1.5
-  - lootItem: {fileID: -2957623977586560592, guid: 09e222a729e8d7a46b1ed32960cf9e6e,
-      type: 3}
-    dropChance: 1.5
-  - lootItem: {fileID: -2856840963608659397, guid: 506b460219bf5b24db97b32612acb51c,
+  - name: HRockets Powerup
+    lootItem: {fileID: 7481789463701768704, guid: bbbfc3cfe6944bb4cadd94872c94df49,
       type: 3}
     dropChance: 9
-  - lootItem: {fileID: 8750722719677159592, guid: 5a016be1fe8ea64479b960ba66d5e80e,
+  - name: MLaser Powerup
+    lootItem: {fileID: 1625218228944727905, guid: d44872e141aa7484a8ce2adfdcd8fb86,
       type: 3}
-    dropChance: 8.5
-  - lootItem: {fileID: 8041867047060190925, guid: 344da1b4b981f0442828a9bcd1b5c7a3,
+    dropChance: 7
+  - name: LSaber Powerup
+    lootItem: {fileID: -7642471649942006840, guid: da69c5e66b1dd2941ba313f4c96bc246,
       type: 3}
     dropChance: 9.5
-  - lootItem: {fileID: -8352404726845617390, guid: a8cf40cf136a1904ab8dc7e10093b0ea,
-      type: 3}
-    dropChance: 6.5
-  - lootItem: {fileID: -294417472788152316, guid: f6cc792fe400da64187dce1a17381752,
-      type: 3}
-    dropChance: 6.5
-  - lootItem: {fileID: -3510972991010633183, guid: 78f32229652b5c245b94bb675fb6be7a,
+  - name: Flip Powerup
+    lootItem: {fileID: -794193057557848658, guid: 5924af7ffd96c8147b6d83568c56580e,
       type: 3}
     dropChance: 11
-  - lootItem: {fileID: 4305882262000766416, guid: 783ed3a20f22d5c408b2c7c789cd06e9,
+  - name: GClover Powerup
+    lootItem: {fileID: 7369046335645166684, guid: e862a3dbc125f6a479dc758a97999268,
       type: 3}
-    dropChance: 8
-  - lootItem: {fileID: 7157503050481327636, guid: fef9a70d1e2661246b686c5f3f207fff,
+    dropChance: 2
+  - name: ShadowBT Powerup
+    lootItem: {fileID: -2957623977586560592, guid: 09e222a729e8d7a46b1ed32960cf9e6e,
+      type: 3}
+    dropChance: 2
+  - name: Shadowdash Powerup
+    lootItem: {fileID: -2856840963608659397, guid: 506b460219bf5b24db97b32612acb51c,
+      type: 3}
+    dropChance: 9
+  - name: LClaws Powerup
+    lootItem: {fileID: 8750722719677159592, guid: 5a016be1fe8ea64479b960ba66d5e80e,
+      type: 3}
+    dropChance: 8.5
+  - name: QRockets Powerup
+    lootItem: {fileID: 8041867047060190925, guid: 344da1b4b981f0442828a9bcd1b5c7a3,
       type: 3}
     dropChance: 9.5
-  - lootItem: {fileID: 8237334835763180172, guid: c430f5cd45eed4947ad8424c9ab96449,
+  - name: PRockets Powerup
+    lootItem: {fileID: -8352404726845617390, guid: a8cf40cf136a1904ab8dc7e10093b0ea,
+      type: 3}
+    dropChance: 6.5
+  - name: CStream Powerup
+    lootItem: {fileID: -294417472788152316, guid: f6cc792fe400da64187dce1a17381752,
+      type: 3}
+    dropChance: 6.5
+  - name: Inverter Powerup
+    lootItem: {fileID: -3510972991010633183, guid: 78f32229652b5c245b94bb675fb6be7a,
+      type: 3}
+    dropChance: 11
+  - name: Magnet Powerup
+    lootItem: {fileID: 4305882262000766416, guid: 783ed3a20f22d5c408b2c7c789cd06e9,
+      type: 3}
+    dropChance: 8
+  - name: Scaler Powerup
+    lootItem: {fileID: 7157503050481327636, guid: fef9a70d1e2661246b686c5f3f207fff,
+      type: 3}
+    dropChance: 9.5
+  - name: Matrix Powerup
+    lootItem: {fileID: 8237334835763180172, guid: c430f5cd45eed4947ad8424c9ab96449,
       type: 3}
     dropChance: 7.5
+  - name: Point Multiplier Powerup
+    lootItem: {fileID: 4305882262000766416, guid: 8c7a6bb61db1fe54c8c2e4559b9978fb,
+      type: 3}
+    dropChance: 7
+  - name: Randomizer Powerup
+    lootItem: {fileID: 4305882262000766416, guid: 404504c142e7a4a40805ec056d2a842f,
+      type: 3}
+    dropChance: 10
   itemsPercentage:
-  - 6.21
-  - 4.97
-  - 7.45
-  - 4.97
-  - 4.35
-  - 6.21
-  - 4.04
-  - 5.9
-  - 6.83
-  - 0.93
-  - 0.93
-  - 5.59
-  - 5.28
-  - 5.9
-  - 4.04
-  - 4.04
-  - 6.83
-  - 4.97
-  - 5.9
-  - 4.66
-  sum: 161
+  - name: Amor PowerUp - 5.6% - 10/168.5
+  - name: ArmorU Powerup - 4.48% - 8/170.5
+  - name: Laser2 Powerup - 6.72% - 12/166.5
+  - name: Laser3 PowerUp - 4.48% - 8/170.5
+  - name: Phaser Powerup - 3.92% - 7/171.5
+  - name: HRockets Powerup - 5.04% - 9/169.5
+  - name: MLaser Powerup - 3.92% - 7/171.5
+  - name: LSaber Powerup - 5.32% - 9.5/169
+  - name: Flip Powerup - 6.16% - 11/167.5
+  - name: GClover Powerup - 1.12% - 2/176.5
+  - name: ShadowBT Powerup - 1.12% - 2/176.5
+  - name: Shadowdash Powerup - 5.04% - 9/169.5
+  - name: LClaws Powerup - 4.76% - 8.5/170
+  - name: QRockets Powerup - 5.32% - 9.5/169
+  - name: PRockets Powerup - 3.64% - 6.5/172
+  - name: CStream Powerup - 3.64% - 6.5/172
+  - name: Inverter Powerup - 6.16% - 11/167.5
+  - name: Magnet Powerup - 4.48% - 8/170.5
+  - name: Scaler Powerup - 5.32% - 9.5/169
+  - name: Matrix Powerup - 4.2% - 7.5/171
+  - name: Point Multiplier Powerup - 3.92% - 7/171.5
+  - name: Randomizer Powerup - 5.6% - 10/168.5
+  sum: 178.5

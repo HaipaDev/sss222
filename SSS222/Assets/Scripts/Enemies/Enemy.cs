@@ -159,7 +159,7 @@ public class Enemy : MonoBehaviour{
             }
 
             var LSabername = lsaberPrefab.name; var LSabername1 = lsaberPrefab.name + "(Clone)";
-            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1){ dmg = damageDealer.GetDamageLSaber()*1.5f; PlayClipAt(lsaberHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1){ dmg = damageDealer.GetDamageLSaber()*3f; PlayClipAt(lsaberHitSFX, new Vector2(transform.position.x, transform.position.y)); }
             var LClawsname = lclawsPrefab.name; var LClawsname1 = lclawsPrefab.name + "(Clone)";
             if (other.gameObject.name == LClawsname || other.gameObject.name == LClawsname1){ dmg = damageDealer.GetDamageLClaws(); PlayClipAt(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y)); }
 

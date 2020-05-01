@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DetachFromFollow : MonoBehaviour{
+    [HeaderAttribute("Properties")]
     [SerializeField] float catch_distance=1.5f;
     [SerializeField] public float shake_distance = 0.05f;
     [SerializeField] public int count_max = 3;
     [SerializeField] float fallSpeed = 6f;
     [SerializeField] AudioClip leechAttachSFX;
-    public bool attached = false;
-    public bool detached = false;
+    [HeaderAttribute("Current")]
+    public bool attached;
+    public bool detached;
     public int stage = 0;
     public int count = 0;
     public float dist;
@@ -37,8 +39,7 @@ public class DetachFromFollow : MonoBehaviour{
         }*/
 
         if(attached==true){
-            if (count < count_max)
-            {
+            if (count < count_max){
                 if (follow.selfPos.x > follow.targetPos.x + shake_distance)
                 {
                     if(stage==0)stage = 1;
@@ -55,10 +56,11 @@ public class DetachFromFollow : MonoBehaviour{
                 }
             }else{
                 if(follow.selfPos.x<follow.targetPos.x-shake_distance){
-                    attached = false;
-                    detached = true;
-                    follow.enabled = false;
                     rb.velocity = new Vector2(fallSpeed,-fallSpeed);
+                    follow.enabled = false;
+                    detached = true;
+                    attached = false;
+                    //Destroy(gameObject);
                 }
             }
         }

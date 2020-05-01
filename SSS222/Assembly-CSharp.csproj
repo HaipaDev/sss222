@@ -45,7 +45,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\RandomSound.cs" />
      <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
      <Compile Include="Assets\Scripts\Core\DataStorage.cs" />
@@ -115,6 +114,7 @@
      <Compile Include="Assets\Scripts\UniversalUsage\LootTable.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\ParabolaLR.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\RandomHDir.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\RandomSound.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\Task.cs" />
      <Compile Include="Assets\Scripts\Visuals\BackflameEffect.cs" />
      <Compile Include="Assets\Scripts\Visuals\BackgroundScroller.cs" />

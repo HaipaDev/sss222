@@ -46,12 +46,15 @@ MonoBehaviour:
   cfgLeech: {fileID: 11400000, guid: dc236037e97902b4ea54a36d1885fbea, type: 2}
   cfgHlaser: {fileID: 11400000, guid: 07030a6f28712f64591fc019f8fc58d8, type: 2}
   cfgGoblin: {fileID: 11400000, guid: 58fd68643924fff4a9f07d61d99f38a1, type: 2}
+  spawnLeech: 0
   mSTimeSpawnsLeech: 85
   mETimeSpawnsLeech: 120
   timeSpawnsLeech: 0
+  spawnHLaser: 1
   mSTimeSpawnsHlaser: 30
   mETimeSpawnsHlaser: 60
   timeSpawnsHlaser: 0
+  spawnGoblin: 1
   mSTimeSpawnsGoblin: 40
   mESTimeSpawnsGoblin: 50
   timeSpawnsGoblin: 0

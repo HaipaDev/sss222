@@ -62,10 +62,10 @@ public class Player : MonoBehaviour{
     [SerializeField] public bool shadow = false;
     [SerializeField] public float shadowTime = 10f;
     public float shadowTimer = -4;
-    float dashTime;
     [SerializeField] public float shadowLength=0.33f;
     [SerializeField] public float dashSpeed=10f;
-    [SerializeField] public float startDashTime=0.1f;
+    [SerializeField] public float startDashTime=0.2f;
+    public float dashTime;
     [SerializeField] public bool inverted = false;
     [SerializeField] public float inverterTime=10f;
     public float inverterTimer = 14;
@@ -73,12 +73,15 @@ public class Player : MonoBehaviour{
     [SerializeField] public float magnetTime=15f;
     public float magnetTimer = -4;
     [SerializeField] public bool scaler = false;
-    [SerializeField] public float scalerFreq=0.5f;
+    [SerializeField] public float shipScaleMin=0.45f;
+    [SerializeField] public float shipScaleMax=2.5f;
     [SerializeField] public float scalerTime=15f;
     public float scalerTimer = -4;
     [SerializeField] public bool matrix = false;
     [SerializeField] public float matrixTime=7f;
     public float matrixTimer = -4;
+    [SerializeField] public float pmultiTime=24f;
+    public float pmultiTimer = -4;
     [HeaderAttribute("Energy Costs")]
     [SerializeField] public float laserEn = 2f;
     [SerializeField] public float laser2En = 4f;
@@ -253,15 +256,6 @@ public class Player : MonoBehaviour{
         if(!Input.GetButton("Vertical")){vPressedTime=0;}
         if(!Input.GetButton("Horizontal")&&!Input.GetButton("Vertical")){mPressedTime=0;}
     }
-
-    public float GetAmmo(){return energy;}
-    public float GetFlipTimer(){ return flipTimer; }
-    public float GetGCloverTimer(){ return gcloverTimer; }
-    public float GetShadowTimer(){ return shadowTimer; }
-    public float GetInvertedTimer(){ return inverterTimer; }
-    public float GetMagnetTimer(){ return magnetTimer; }
-    public float GetScalerTimer(){ return scalerTimer; }
-    public float GetMatrixTimer(){ return matrixTimer; }
     
     private void MovePlayer()
     {
@@ -354,6 +348,7 @@ public class Player : MonoBehaviour{
                 if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
             }else{
                 rb.velocity = mousePos * dashSpeed * moveDir;
+                if(new Vector2(transform.position.x,transform.position.y)==mousePos){rb.velocity=Vector2.zero;}
             }
             energy -= shadowEn;
             dashing = true;
@@ -367,7 +362,7 @@ public class Player : MonoBehaviour{
     IEnumerator ShootContinuously(){
         while (true){
             if (Time.timeScale > 0.0001f){
-            if (energy > 0){
+            if (energy>0){
                 if (powerup=="laser"){
                     GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject laserR = Instantiate(laserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -531,7 +526,7 @@ public class Player : MonoBehaviour{
                         yield return new WaitForSeconds(cbulletShootPeriod);
                 }
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
-                else {if(powerup!="lsaberA")powerup = "laser"; shootTimer = 1f; yield return new WaitForSeconds(1f); }
+                else {if(powerup!="lsaberA")/*powerup = "laser";*/ shootTimer = 1f; yield return new WaitForSeconds(1f); }
             }else{ energy = 0; AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); shootTimer = 0f; yield return new WaitForSeconds(1f); }
             }
         }
@@ -614,7 +609,9 @@ public class Player : MonoBehaviour{
             Destroy(GameObject.Find(lsaberName1));
             Destroy(GameObject.Find(lclawsName1));
             moveSpeedCurrent = moveSpeed;
-            powerup = "laser";
+            if(powerup=="lsaberA")powerup="lsaber";
+            if(powerup=="lclawsA")powerup="lclaws";
+            //powerup = "laser";
         }
     }
     #endregion
@@ -637,13 +634,13 @@ public class Player : MonoBehaviour{
         if (shadowTimer <= 0 && shadowTimer > -4) { shadow = false; shadowTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
         if (shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
         else{ dashTime = startDashTime; rb.velocity = Vector2.zero; GetComponent<BackflameEffect>().enabled=true; }
-        if (dashTime <= 0) { rb.velocity = Vector2.zero; dashing = false; }
+        if (dashTime <= 0) { rb.velocity = Vector2.zero; dashing = false; dashTime=-4;}
         else{ dashTime -= Time.deltaTime; }
         if(energy<=0){ shadow = false; }
 
-        if(inverted==true){if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==false)GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=true;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().enabled=true;
+        if(inverted==true){if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==false)GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=true;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().revertMusic=false;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().enabled=true;
         inverterTimer+=Time.deltaTime;}
-        else{if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==true)GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=false;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().enabled=false;}
+        else{if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==true)GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=false;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().revertMusic=true;}
         if(inverterTimer >=10 && inverterTimer<14){inverted=false; inverterTimer=14;}
 
         if(magnetized==true){
@@ -674,8 +671,8 @@ public class Player : MonoBehaviour{
                     if(i>99)i=0;
                 }
 
-                if(scaleUp==false && shipScale>0.45){shipScale-=0.1f;}
-                if(scaleUp==true && shipScale<2){shipScale+=0.1f;}
+                if(scaleUp==false && shipScale>shipScaleMin){shipScale-=0.25f;}
+                if(scaleUp==true && shipScale<shipScaleMax){shipScale+=0.25f;}
                 //if(shipScale<=0.45){scaleUp=true;}
                 //if(shipScale>=1.64){scaleUp=false;}
                 instantiateTimer=instantiateTime;
@@ -703,6 +700,9 @@ public class Player : MonoBehaviour{
             }
         }
         if(matrixTimer <=0 && matrixTimer>-4){gameSession.gameSpeed=1f; matrix=false; matrixTimer=-4;}
+
+        if(pmultiTimer>0){pmultiTimer-=Time.deltaTime;}
+        if(pmultiTimer <=0 && pmultiTimer>-4){gameSession.scoreMulti=1f; pmultiTimer=-4;}
     }
     private void Shadow(){
         if (Time.timeScale > 0.0001f && instantiateTimer<=0)
@@ -723,6 +723,9 @@ public class Player : MonoBehaviour{
             var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
             Destroy(GameObject.Find(lsaberName));
             Destroy(GameObject.Find(lsaberName1));
+            var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
+            Destroy(GameObject.Find(lclawsName));
+            Destroy(GameObject.Find(lclawsName1));
         }
     }
 
@@ -805,4 +808,13 @@ public class Player : MonoBehaviour{
         if (other.gameObject.name == cometName || other.gameObject.name == cometName1) { stay = false; }
         if (stay!=true){if(other.GetComponent<Enemy>().health>0){ other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die();} }
     }*/
+    public float GetAmmo(){return energy;}
+    public float GetFlipTimer(){ return flipTimer; }
+    public float GetGCloverTimer(){ return gcloverTimer; }
+    public float GetShadowTimer(){ return shadowTimer; }
+    public float GetInvertedTimer(){ return inverterTimer; }
+    public float GetMagnetTimer(){ return magnetTimer; }
+    public float GetScalerTimer(){ return scalerTimer; }
+    public float GetMatrixTimer(){ return matrixTimer; }
+    public float GetPMultiTimer(){ return pmultiTimer; }
 }

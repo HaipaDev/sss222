@@ -36,6 +36,7 @@ public class PowerupDisplay : MonoBehaviour{
     [SerializeField] Sprite magnetSprite;
     [SerializeField] Sprite scalerSprite;
     [SerializeField] Sprite matrixSprite;
+    [SerializeField] Sprite pmultiSprite;
 
 
     Color color;
@@ -123,6 +124,10 @@ public class PowerupDisplay : MonoBehaviour{
                             {
                                 if (player.matrix == true){state = "matrix"; }//else { state = ""; }
                             }//else { state = ""; }
+                            if (((displays[iP].GetComponent<PowerupDisplay>().state != "pmulti") && (displays[iM].GetComponent<PowerupDisplay>().state != "pmulti") && displays[iM - 1].GetComponent<PowerupDisplay>().state != "pmulti"))
+                            {
+                                if (player.pmultiTimer > 0){state = "pmulti"; }//else { state = ""; }
+                            }//else { state = ""; }
                         }
                     }
                     //if(player.gclover!=true && player.flip!=true && player.shadow!=true){ state = ""; }
@@ -187,6 +192,14 @@ public class PowerupDisplay : MonoBehaviour{
                             else { TMP.text = value.ToString(); }
 
                             if (player.matrix!= true) state = "";
+                        }else if(state=="pmulti"){
+                            spr.sprite = pmultiSprite;
+                            var value = System.Math.Round(player.GetPMultiTimer(), 1);
+
+                            if (value <= -1) { value = 0; }
+                            else { TMP.text = value.ToString(); }
+
+                            if (player.pmultiTimer <0) state = "";
                         }
                     }
                     //}

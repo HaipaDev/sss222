@@ -4,12 +4,14 @@ using UnityEngine;
 using BayatGames.SaveGameFree;
 public class GameSession : MonoBehaviour{
     public int score = 0;
+    public float scoreMulti = 1f;
+    public int coins = 0;
     public int EVscore = 0;
     public int shopScore = 0;
     public int shopScoreMax = 200;
     public int shopScoreMaxS = 200;
     public int shopScoreMaxE = 450;
-    public int coins = 0;
+    
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
     //public bool moveByMouse = true;
 
@@ -71,9 +73,9 @@ public class GameSession : MonoBehaviour{
     public int GetHighscore(){return FindObjectOfType<SaveSerial>().highscore;}
 
     public void AddToScore(int scoreValue){
-        score += scoreValue;
+        score += Mathf.RoundToInt(scoreValue*scoreMulti);
         EVscore += scoreValue;
-        shopScore += scoreValue;
+        shopScore += Mathf.RoundToInt(scoreValue*scoreMulti);
     }
 
     public void MultiplyScore(float multipl)
