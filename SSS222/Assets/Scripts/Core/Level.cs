@@ -24,16 +24,18 @@ public class Level : MonoBehaviour{
     public void LoadStartMenu(){
         FindObjectOfType<GameSession>().SaveHighscore();
         FindObjectOfType<GameSession>().ResetScore();
+        FindObjectOfType<SaveSerial>().Save();
         SceneManager.LoadScene("Menu");
-        gameSession.gameSpeed=1f;
-        Time.timeScale = 1f;
+        if(SceneManager.GetActiveScene().name=="Menu")FindObjectOfType<GameSession>().gameSpeed=1f;
+        //Time.timeScale = 1f;
+        
         //FindObjectOfType<GameSession>().savableData.Save();
         //FindObjectOfType<SaveSerial>().Save();
     }
     public void LoadGameScene(){
         SceneManager.LoadScene("Game");
         FindObjectOfType<GameSession>().ResetScore();
-        gameSession.gameSpeed=1f;
+        FindObjectOfType<GameSession>().gameSpeed=1f;
         Time.timeScale = 1f;
     }
     public void LoadGamrModeChooseScene(){SceneManager.LoadScene("GameModeChoose");}

@@ -9,8 +9,10 @@ public class PauseMenu : MonoBehaviour{
     public float prevGameSpeed = 1f;
 
     GameSession gameSession;
+    //Shop shop;
     void Start(){
         gameSession = FindObjectOfType<GameSession>();
+        //shop=FindObjectOfType<Shop>();
     }
     void Update(){
         if(gameSession==null)gameSession = FindObjectOfType<GameSession>();
@@ -18,7 +20,7 @@ public class PauseMenu : MonoBehaviour{
             if(GameIsPaused){
                 Resume();
             }else{
-                Pause();
+                if(Shop.shopOpened!=true)Pause();
             }
         }
     }

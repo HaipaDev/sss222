@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 356336301364335483}
   - component: {fileID: 356336301364335482}
+  - component: {fileID: 1964853199674178980}
   m_Layer: 0
   m_Name: Waves
   m_TagString: Untagged
@@ -57,3 +58,42 @@ MonoBehaviour:
   mTimeSpawns: 6
   timeSpawns: 0
   sum: 0
+--- !u!114 &1964853199674178980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356336301364335481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79805f05c491c954caa202141f9e6467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemList:
+  - name: CometsFlyby
+    lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
+    dropChance: 8.5
+  - name: CometStorm
+    lootItem: {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf, type: 2}
+    dropChance: 7
+  - name: BatsFlyby
+    lootItem: {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc, type: 2}
+    dropChance: 9
+  - name: BatV
+    lootItem: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
+    dropChance: 8
+  - name: EnemyShip
+    lootItem: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
+    dropChance: 6.5
+  - name: BatsCluster
+    lootItem: {fileID: 11400000, guid: 2145a8982afb67c4bbfa60857b9f71f9, type: 2}
+    dropChance: 7
+  itemsPercentage:
+  - name: CometsFlyby - 18.48% - 8.5/37.5
+  - name: CometStorm - 15.22% - 7/39
+  - name: BatsFlyby - 19.57% - 9/37
+  - name: BatV - 17.39% - 8/38
+  - name: EnemyShip - 14.13% - 6.5/39.5
+  - name: BatsCluster - 15.22% - 7/39
+  sum: 46

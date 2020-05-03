@@ -307,14 +307,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 569445c5214dff048b7471584b076a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   forThisObject: 1
   playLimitForThis: 1
-  thisSoundLimit: 2
+  thisSoundLimit: 1
   playAtStart: 0
   sounds:
   - {fileID: 8300000, guid: 9c792512a3f294347ad71be681659376, type: 3}

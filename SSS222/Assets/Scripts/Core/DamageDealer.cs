@@ -5,10 +5,10 @@ using UnityEngine;
 public class DamageDealer : MonoBehaviour{
     float dmg = 10;
     float dmgLaser = 5f;
-    float dmgPhaser = 0.1f;
+    float dmgPhaser = 0.12f;
     float dmgHRocket = 13.5f;
     float dmgMiniLaser = 0.32f;
-    float dmgLSaber = 1.55f;
+    float dmgLSaber = 0.425f;
     float dmgLClaws = 26f;
     float dmgShadowBT = 40.5f;
     float dmgQRocket = 14.5f;
@@ -16,13 +16,13 @@ public class DamageDealer : MonoBehaviour{
     float dmgPRocketExpl = 0.5f;
     float dmgCBullet = 1f;
 
-    float dmgComet = 47;
-    float dmgBat = 36;
-    float dmgEnemyShip1 = 80;
-    float dmgSoundwave = 16;
-    float dmgEBt = 24;
+    float dmgComet = 47f;
+    float dmgBat = 36f;
+    float dmgEnemyShip1 = 80f;
+    float dmgSoundwave = 16.5f;
+    float dmgEBt = 24.5f;
     float dmgLeech = 4f;
-    float dmgHLaser = 46f;
+    float dmgHLaser = 90f;
 
     public float GetDamage(){return dmg;}
     public float GetDamageLaser(){return dmgLaser;}

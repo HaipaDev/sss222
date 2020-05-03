@@ -15,6 +15,7 @@ public class SaveSerial : MonoBehaviour{
 	public int highscore;
 	public float[] chameleonColor = new float[3];
 	[HeaderAttribute("SettingsData")]
+	public string gameVersion;
 	public bool moveByMouse;
 	public bool fullscreen;
 	public int quality;
@@ -28,6 +29,7 @@ public class SaveSerial : MonoBehaviour{
 		
 	}public class SettingsData
 	{
+		public string gameVersion;
 		public bool moveByMouse;
 		public bool fullscreen;
 		public int quality;
@@ -53,6 +55,7 @@ public class SaveSerial : MonoBehaviour{
 	public void SaveSettings()
 	{
 		SettingsData data = new SettingsData();
+		data.gameVersion=gameVersion;
 		data.moveByMouse = moveByMouse;
 		data.fullscreen = fullscreen;
 		data.quality = quality;
@@ -73,7 +76,8 @@ public class SaveSerial : MonoBehaviour{
 			SaveGame.Encode = true;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
 			data = SaveGame.Load<PlayerData>(filename);
-			highscore = data.highscore;
+
+			if(data.highscore!=0)highscore = data.highscore;
 			chameleonColor[0] = data.chameleonColor[0];
 			chameleonColor[1] = data.chameleonColor[1];
 			chameleonColor[2] = data.chameleonColor[2];
@@ -87,6 +91,8 @@ public class SaveSerial : MonoBehaviour{
 			SaveGame.Encode = false;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
 			data = SaveGame.Load<SettingsData>(filenameSettings);
+
+			gameVersion=data.gameVersion;
 			moveByMouse = data.moveByMouse;
 			fullscreen = data.fullscreen;
 			quality = data.quality;

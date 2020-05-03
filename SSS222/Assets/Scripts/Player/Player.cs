@@ -19,6 +19,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public string powerup = "laser";
     [SerializeField] public float energy = 80f;
     [SerializeField] public float maxEnergy = 200f;
+    [SerializeField] public bool losePwrupOutOfEn;
     [HeaderAttribute("Weapons")]
     [SerializeField] public GameObject laserPrefab;
     [SerializeField] public GameObject phaserPrefab;
@@ -118,6 +119,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public GameObject gcloverVFX;
     [SerializeField] public GameObject gcloverOVFX;
     [SerializeField] public GameObject lclawsVFX;
+    [SerializeField] public GameObject crystalExplosionVFX;
     //[SerializeField] AudioClip shootLaserSFX;
     [SerializeField] public AudioClip shipHitSFX;
     [SerializeField] public AudioClip explosionSFX;
@@ -133,6 +135,8 @@ public class Player : MonoBehaviour{
     [SerializeField] public AudioClip energyRefillSFX;
     [SerializeField] public AudioClip coinSFX;
     [SerializeField] public AudioClip leechBiteSFX;
+    [SerializeField] public AudioClip shadowdashSFX;
+    [SerializeField] public AudioClip matrixGetSFX;
     [HeaderAttribute("Others")]
     [SerializeField] GameObject gameOverCanvasPrefab;
     [SerializeField] GameObject shadowPrefab;
@@ -353,6 +357,8 @@ public class Player : MonoBehaviour{
             energy -= shadowEn;
             dashing = true;
             shadowed = true;
+            //PlayClipAt(shadowdashSFX, new Vector2(transform.position.x, transform.position.y));
+            AudioSource.PlayClipAtPoint(shadowdashSFX, transform.position);
             dashTime = startDashTime;
             //else{ rb.velocity = Vector2.zero; }
         }//else { dashTime = startDashTime; rb.velocity = Vector2.zero; }
@@ -526,7 +532,7 @@ public class Player : MonoBehaviour{
                         yield return new WaitForSeconds(cbulletShootPeriod);
                 }
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
-                else {if(powerup!="lsaberA")/*powerup = "laser";*/ shootTimer = 1f; yield return new WaitForSeconds(1f); }
+                else {if(powerup!="lsaberA")if(losePwrupOutOfEn){powerup = "laser";} shootTimer = 1f; yield return new WaitForSeconds(1f); }
             }else{ energy = 0; AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); shootTimer = 0f; yield return new WaitForSeconds(1f); }
             }
         }
@@ -591,7 +597,8 @@ public class Player : MonoBehaviour{
                 powerup = "lclawsA";
             }else if (powerup == "lclawsA"){
                 if(Time.timeScale>0.0001f){
-                    //if(lsaberEnTimer<0){energy -= lclaws;lsaberEnTimer=lsaberEnPeriod;}//0.2
+                    //if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
+                    //if(lsaberEnTimer<=0){energy -= lsaberEn*4;lsaberEnTimer=lsaberEnPeriod*9;}//0.2
                     if(GameObject.Find(lclawsName)==null&&GameObject.Find(lclawsName1)==null){powerup="lclaws";}
                 }
             }
@@ -611,7 +618,7 @@ public class Player : MonoBehaviour{
             moveSpeedCurrent = moveSpeed;
             if(powerup=="lsaberA")powerup="lsaber";
             if(powerup=="lclawsA")powerup="lclaws";
-            //powerup = "laser";
+            if(losePwrupOutOfEn)powerup = "laser";
         }
     }
     #endregion
@@ -685,7 +692,7 @@ public class Player : MonoBehaviour{
         
         if(matrix==true){
             if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true){
-                matrixTimer-=Time.deltaTime;
+                matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(moveByMouse==true && dist<1){
@@ -697,6 +704,8 @@ public class Player : MonoBehaviour{
                 }else{
                     gameSession.gameSpeed=1f;
                 }
+            }else{
+                gameSession.gameSpeed=0.0001f;
             }
         }
         if(matrixTimer <=0 && matrixTimer>-4){gameSession.gameSpeed=1f; matrix=false; matrixTimer=-4;}
@@ -745,10 +754,10 @@ public class Player : MonoBehaviour{
                     refilltxtE.SetActive(false);
                     refillCostS=1;
                     refillCostE=1;
-                }else if(refillCount>0 && refillCount<=3){
+                }else if(refillCount>0 && refillCount<=2){
                     refillCostS=1;
                     refillCostE=2;
-                }else if(refillCount>=4){
+                }else if(refillCount>=3 && refillCount<=5){
                     var choose=UnityEngine.Random.Range(1,3);
                     if(choose==1){
                         refillCostS=1;
@@ -761,6 +770,20 @@ public class Player : MonoBehaviour{
                         refilltxtE.SetActive(false);
                         refillCostS=3;
                         refillCostE=3;
+                    }
+                }else if(refillCount>5){
+                    var choose=UnityEngine.Random.Range(1,3);
+                    if(choose==1){
+                        refillCostS=3;
+                        refillCostE=4;
+                    }else if(choose==2){
+                        refillCostS=3;
+                        refillCostE=5;
+                    }if(choose==3){
+                        GameObject.Find("RandomArrows").SetActive(false);
+                        refilltxtE.SetActive(false);
+                        refillCostS=4;
+                        refillCostE=4;
                     }
                 }
                 refillRandomized=true;
@@ -777,6 +800,8 @@ public class Player : MonoBehaviour{
                         gameSession.coins-=refillCost;
                         refillRandomized=false;
                         AudioSource.PlayClipAtPoint(energyRefillSFX, new Vector2(transform.position.x, transform.position.y));
+                        GameObject crystalVFX = Instantiate(crystalExplosionVFX, new Vector2(0, 0), Quaternion.identity);
+                        Destroy(crystalVFX,0.03f);
                     }else{
                         refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCost.ToString();
                         refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text="";

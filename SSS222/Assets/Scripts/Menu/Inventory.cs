@@ -36,7 +36,7 @@ public class Inventory : MonoBehaviour{
     {
         chameleonColor = Color.HSVToRGB(Hslider.value, Sslider.value, Vslider.value);
         chameleonOverlay.color = chameleonColor;
-        SsliderIMG.color = Color.HSVToRGB(Hslider.value,1,1);
+        SsliderIMG.material.SetColor("_Color2", Color.HSVToRGB(Hslider.value,1,1));
         VsliderIMG.color = Color.HSVToRGB(Hslider.value, 1, 1);
         Color.RGBToHSV(chameleonColor, out chameleonColorArr[0], out chameleonColorArr[1], out chameleonColorArr[2]);
     }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class WaveConfig : ScriptableObject{
     [HeaderAttribute("Properties")]
     [SerializeField] public string waveName = "";
-    [SerializeField] public float spawnRate = 10f;
+    //[SerializeField] public float spawnRate = 10f;
     [SerializeField] List<GameObject> enemies;
     [SerializeField] public float timeSpawn = 0.5f;
     [SerializeField] public float timeSpawnWave = 6f;

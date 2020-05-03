@@ -28,5 +28,6 @@ public class InvertAllAudio : MonoBehaviour{
             }
         }
         //else{musicPlayer.GetComponent<AudioSource>().pitch=1;}
+        if(FindObjectOfType<Player>().inverted!=true){this.enabled=false;}
     }
 }

@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 3679422391987501173}
   - component: {fileID: 3679422391987501172}
   - component: {fileID: 3679422391987501168}
+  - component: {fileID: -7122236346257132166}
   - component: {fileID: 1241189996}
   m_Layer: 5
   m_Name: ShopCanvas
@@ -208,6 +209,61 @@ MonoBehaviour:
   noCoinsSFX: {fileID: 8300000, guid: 52a7f58fa80cd6e49aed67e5f20b7593, type: 3}
   buySFX: {fileID: 8300000, guid: 59f756011592c284286b30fac83f4c26, type: 3}
   sum: 0
+--- !u!114 &-7122236346257132166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679422391987501171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fb63aa8935e49b4185b49e97eff9500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemList:
+  - name: 0Minigun
+    lootItem: {fileID: 11400000, guid: 6ec05bf2e77023040a7434c469830641, type: 2}
+    dropChance: 3
+  - name: 1Phaser
+    lootItem: {fileID: 11400000, guid: 3dbde611149621a41921a182d1909a6c, type: 2}
+    dropChance: 4.5
+  - name: 2HRockets
+    lootItem: {fileID: 11400000, guid: a28047dfde9ced14a9903f48debcca04, type: 2}
+    dropChance: 6
+  - name: 3LaserTriple
+    lootItem: {fileID: 11400000, guid: abb4cfc964a457a43966da12baf2d6e1, type: 2}
+    dropChance: 6
+  - name: 4MedkitUltra
+    lootItem: {fileID: 11400000, guid: 165a7c68e9b1f2c47b32f92ac76ac387, type: 2}
+    dropChance: 0
+  - name: 5LSaber
+    lootItem: {fileID: 11400000, guid: b85bbd8627abfd044ba3d84fbb99696a, type: 2}
+    dropChance: 7
+  - name: 6QRockets
+    lootItem: {fileID: 11400000, guid: dd25ef0572237bd4dadb8483a89004df, type: 2}
+    dropChance: 6.5
+  - name: 7PRockets
+    lootItem: {fileID: 11400000, guid: c24afda4a89457e4f9314bf378d20b5d, type: 2}
+    dropChance: 3
+  - name: 8Magnet
+    lootItem: {fileID: 11400000, guid: 6d1914be2a8292b44bfe7829c76f6525, type: 2}
+    dropChance: 7
+  - name: 9Randomizer
+    lootItem: {fileID: 11400000, guid: f9bb167715c7fcc419a9f9aa53b85245, type: 2}
+    dropChance: 6
+  itemsPercentage:
+  - name: 0Minigun - 6.12% - 3/46
+  - name: 1Phaser - 9.18% - 4.5/44.5
+  - name: 2HRockets - 12.24% - 6/43
+  - name: 3LaserTriple - 12.24% - 6/43
+  - name: 4MedkitUltra - 0% - 0/49
+  - name: 5LSaber - 14.29% - 7/42
+  - name: 6QRockets - 13.27% - 6.5/42.5
+  - name: 7PRockets - 6.12% - 3/46
+  - name: 8Magnet - 14.29% - 7/42
+  - name: 9Randomizer - 12.24% - 6/43
+  sum: 49
 --- !u!82 &1241189996
 AudioSource:
   m_ObjectHideFlags: 0
@@ -318,6 +374,7 @@ GameObject:
   - component: {fileID: 6013975899386927789}
   - component: {fileID: 6013975899386927788}
   - component: {fileID: 3604374660596552870}
+  - component: {fileID: 775039833}
   m_Layer: 5
   m_Name: Slot4
   m_TagString: Untagged
@@ -451,6 +508,20 @@ MonoBehaviour:
   ID: 0
   slotText: {fileID: 6013975900946794402}
   shopMenu: {fileID: 3679422391987501168}
+  lootTable: {fileID: 0}
+--- !u!114 &775039833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6013975899386927790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0.5
 --- !u!1 &6013975899487696432
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,6 +608,7 @@ GameObject:
   - component: {fileID: 6013975899518425828}
   - component: {fileID: 6013975899518425831}
   - component: {fileID: 3912464422630751685}
+  - component: {fileID: 376102942}
   m_Layer: 5
   m_Name: Slot1
   m_TagString: Untagged
@@ -670,6 +742,20 @@ MonoBehaviour:
   ID: 0
   slotText: {fileID: 6013975900916326570}
   shopMenu: {fileID: 3679422391987501168}
+  lootTable: {fileID: 0}
+--- !u!114 &376102942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6013975899518425833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0.5
 --- !u!1 &6013975899538651781
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,6 +988,7 @@ GameObject:
   - component: {fileID: 6013975900118945711}
   - component: {fileID: 6013975900118945710}
   - component: {fileID: 6406405220962881024}
+  - component: {fileID: 626296100}
   m_Layer: 5
   m_Name: Slot2
   m_TagString: Untagged
@@ -1035,6 +1122,20 @@ MonoBehaviour:
   ID: 0
   slotText: {fileID: 6013975900434798474}
   shopMenu: {fileID: 3679422391987501168}
+  lootTable: {fileID: 0}
+--- !u!114 &626296100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6013975900118945680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0.5
 --- !u!1 &6013975900434798474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,6 +1304,7 @@ GameObject:
   - component: {fileID: 6013975900818072952}
   - component: {fileID: 6013975900818072955}
   - component: {fileID: 8249889088997001653}
+  - component: {fileID: 422731531}
   m_Layer: 5
   m_Name: Slot3
   m_TagString: Untagged
@@ -1336,6 +1438,20 @@ MonoBehaviour:
   ID: 0
   slotText: {fileID: 6013975901149901241}
   shopMenu: {fileID: 3679422391987501168}
+  lootTable: {fileID: 0}
+--- !u!114 &422731531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6013975900818072957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0.5
 --- !u!1 &6013975900916326570
 GameObject:
   m_ObjectHideFlags: 0

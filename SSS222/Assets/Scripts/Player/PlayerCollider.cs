@@ -153,7 +153,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == flipName || other.gameObject.name == flipName1) { player.flip = true; player.flipTimer = player.flipTime; }
                 
                 var inverterName = inverterPwrupPrefab.name; var inverterName1 = inverterPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == inverterName || other.gameObject.name == inverterName1) { /*player.inverted = true;*/ 
+                if (other.gameObject.name == inverterName || other.gameObject.name == inverterName1) {
                 var tempHP = player.health; var tempEn = player.energy;
                 player.energy=tempHP; player.health=tempEn;
                 player.inverted=true; player.inverterTimer = 0; }
@@ -260,6 +260,9 @@ public class PlayerCollider : MonoBehaviour{
                 else if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1)
                 {
                     PlayClipAt(player.shadowbtPwrupSFX, new Vector2(transform.position.x, transform.position.y));
+                }else if (other.gameObject.name == matrixName || other.gameObject.name == matrixName1)
+                {
+                    PlayClipAt(player.matrixGetSFX, new Vector2(transform.position.x, transform.position.y));
                 }
                 else
                 {
@@ -304,4 +307,5 @@ public class PlayerCollider : MonoBehaviour{
             dmgTimer = dmgFreq;
         }
     }
+    public GameObject GetRandomizerPwrup(){return randomizerPwrupPrefab;}
 }

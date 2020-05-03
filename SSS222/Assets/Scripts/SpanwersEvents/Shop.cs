@@ -17,15 +17,14 @@ public class Shop : MonoBehaviour{
     //public List<Sprite> sprites;
     public float sum;
 
+    LootTableShop lootTable;
     //Player player;
     private void Awake()
     {
-        foreach (ShopSlotID shopSlotID in shopSlotIDs)
-        {
-            sum += shopSlotID.spawnRate;
-        }
+        //foreach (ShopSlotID shopSlotID in shopSlotIDs){sum += shopSlotID.spawnRate;}
     }
     void Start(){
+        lootTable=GetComponent<LootTableShop>();
         //maxID = shopSlotIDs.Count;
         /*slot1 = slotObj[0].GetComponent<ShopSlot>();
         slot2 = slotObj[1].GetComponent<ShopSlot>();
@@ -36,6 +35,7 @@ public class Shop : MonoBehaviour{
 
     void Update(){
         if (shopOpen == true) { OpenShop(); }
+        if (Input.GetKeyDown(KeyCode.Escape)){Resume();}
         //if (player == null) player = FindObjectOfType<Player>();
     }
     public void OpenShop(){
@@ -55,7 +55,7 @@ public class Shop : MonoBehaviour{
     public void RandomizeShop(){
         foreach(ShopSlot slot in slots)
         {
-            slot.ID = GetRandomID().ID;
+            slot.ID = lootTable.GetItem().ID;//GetRandomID().ID;
             slot.ResetState();
         }
         /*slotObj[1].GetComponent<Image>().sprite = sprites[slot2.ID];
@@ -65,7 +65,7 @@ public class Shop : MonoBehaviour{
         slotText[2].GetComponent<TMPro.TextMeshProUGUI>().text = prices[slot3.ID].ToString();
         slotText[3].GetComponent<TMPro.TextMeshProUGUI>().text = prices[slot4.ID].ToString();*/
     }
-    public ShopSlotID GetRandomID(){
+    /*public ShopSlotID GetRandomID(){
         //if (currentWave == null) return 0;
         //else{
             float randomWeight = 0;
@@ -82,5 +82,5 @@ public class Shop : MonoBehaviour{
             }
             return null;
         //}
-    }
+    }*/
 }

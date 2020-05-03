@@ -628,6 +628,31 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3863463034838440321, guid: e59a01e90fe362a4595e25a9c141b432,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863463034838440321, guid: e59a01e90fe362a4595e25a9c141b432,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863463034838440321, guid: e59a01e90fe362a4595e25a9c141b432,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863463034838440321, guid: e59a01e90fe362a4595e25a9c141b432,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863463034838440321, guid: e59a01e90fe362a4595e25a9c141b432,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3931574693867505029, guid: e59a01e90fe362a4595e25a9c141b432,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -681,13 +706,13 @@ PrefabInstance:
     - target: {fileID: 6163632193457159219, guid: e59a01e90fe362a4595e25a9c141b432,
         type: 3}
       propertyPath: m_RaycastTarget
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6163632193457159219, guid: e59a01e90fe362a4595e25a9c141b432,
         type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: bf7a9cc50ed043444827dff4e850c6af, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e59a01e90fe362a4595e25a9c141b432, type: 3}
 --- !u!1001 &5673888052050347140

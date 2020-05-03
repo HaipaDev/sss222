@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using BayatGames.SaveGameFree;
 public class GameSession : MonoBehaviour{
+    [HeaderAttribute("Current Player Values")]
     public int score = 0;
     public float scoreMulti = 1f;
     public int coins = 0;
+    [HeaderAttribute("EVent Score Values")]
     public int EVscore = 0;
     public int shopScore = 0;
     public int shopScoreMax = 200;
     public int shopScoreMaxS = 200;
     public int shopScoreMaxE = 450;
-    
+    [HeaderAttribute("Settings")]
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
+    [HeaderAttribute("Other")]
+    [SerializeField] AudioClip denySFX;
+    //public string gameVersion;
     //public bool moveByMouse = true;
 
     /*public SavableData savableData;
@@ -71,6 +76,7 @@ public class GameSession : MonoBehaviour{
     public int GetEVScore(){return EVscore;}
     public int GetShopScore(){return shopScore; }
     public int GetHighscore(){return FindObjectOfType<SaveSerial>().highscore;}
+    public string GetVersion(){return FindObjectOfType<SaveSerial>().gameVersion;}
 
     public void AddToScore(int scoreValue){
         score += Mathf.RoundToInt(scoreValue*scoreMulti);
@@ -104,6 +110,8 @@ public class GameSession : MonoBehaviour{
         FindObjectOfType<SaveSerial>().masterVolume = FindObjectOfType<SettingsMenu>().masterVolume;
         FindObjectOfType<SaveSerial>().soundVolume = FindObjectOfType<SettingsMenu>().soundVolume;
         FindObjectOfType<SaveSerial>().musicVolume = FindObjectOfType<SettingsMenu>().musicVolume;
+
+        FindObjectOfType<SaveSerial>().SaveSettings();
     }
     public void SaveInventory(){
         FindObjectOfType<SaveSerial>().chameleonColor[0] = FindObjectOfType<Inventory>().chameleonColorArr[0];
@@ -112,4 +120,7 @@ public class GameSession : MonoBehaviour{
     }
     public void Save(){ FindObjectOfType<SaveSerial>().Save(); FindObjectOfType<SaveSerial>().SaveSettings(); }
     public void Load(){ FindObjectOfType<SaveSerial>().Load(); FindObjectOfType<SaveSerial>().LoadSettings(); }
+
+
+    public void PlayDenySFX(){AudioSource.PlayClipAtPoint(denySFX,transform.position);}
 }

@@ -67,9 +67,11 @@ public class GoblinDrop : MonoBehaviour{
     }
 
     private void OnTriggerEnter2D(Collider2D other){
-        if(CompareTag("Powerups")){
+        if(other.CompareTag("Powerups")){
             PlayClipAt(goblinStealSFX,transform.position);
-            var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
+            powerup=other.gameObject;
+            Destroy(other.gameObject);
+            /*var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
             if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { powerup = armorPwrupPrefab; Destroy(other.gameObject); }
             var armorUName = armorUPwrupPrefab.name; var armorUName1 = armorUPwrupPrefab.name + "(Clone)";
             if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { powerup = armorUPwrupPrefab; Destroy(other.gameObject); }
@@ -103,7 +105,7 @@ public class GoblinDrop : MonoBehaviour{
             if (other.gameObject.name == lsaberName || other.gameObject.name == lsaberName1) { powerup = lsaberPwrupPrefab; Destroy(other.gameObject); }
 
             var shadowbtName = shadowBTPwrupPrefab.name; var shadowbtName1 = shadowBTPwrupPrefab.name + "(Clone)";
-            if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { powerup = shadowBTPwrupPrefab; Destroy(other.gameObject); }
+            if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { powerup = shadowBTPwrupPrefab; Destroy(other.gameObject); }*/
         }
     }
 }

@@ -15,6 +15,7 @@ public class Waves : MonoBehaviour
     public float timeSpawns = 0f;
 
     WaveDisplay waveDisplay;
+    LootTableWaves lootTable;
     GameSession gameSession;
     Player player;
 
@@ -22,14 +23,12 @@ public class Waves : MonoBehaviour
 
     private void Awake()
     {
-        foreach (WaveConfig waveConfig in waveConfigs)
-        {
-            sum += waveConfig.spawnRate;
-        }
+        //foreach (WaveConfig waveConfig in waveConfigs){sum += waveConfig.spawnRate;}
     }
     IEnumerator Start()
     {
         waveDisplay = FindObjectOfType<WaveDisplay>();
+        lootTable = FindObjectOfType<LootTableWaves>();
         gameSession = FindObjectOfType<GameSession>();
         player = FindObjectOfType<Player>();
         do
@@ -40,8 +39,12 @@ public class Waves : MonoBehaviour
     }
 
     public WaveConfig GetRandomWave(){
-        if(currentWave==null)return waveConfigs[startingWave];
+        if(currentWave==null)return lootTable.itemList[startingWave].lootItem;
         else{
+            //currentWave=lootTable.GetItem();
+            return lootTable.GetItem();
+        }
+        /*else{
             float randomWeight = 0;
             do
             {
@@ -55,12 +58,12 @@ public class Waves : MonoBehaviour
                 randomWeight -= waveConfig.spawnRate;
             }
             return null;
-        }
+        }*/
     }
     public IEnumerator SpawnWaves()
     {
             if (timeSpawns<=0 && timeSpawns>-4){
-                if (currentWave == null) currentWave=waveConfigs[startingWave];
+                if (currentWave == null) currentWave=lootTable.itemList[startingWave].lootItem;
                 //currentWave = GetRandomWave();
                 yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
                     timeSpawns = -4;

@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Core\Level.cs" />
      <Compile Include="Assets\Scripts\Core\Loader.cs" />
      <Compile Include="Assets\Scripts\Core\MusicPlayer.cs" />
+     <Compile Include="Assets\Scripts\Core\SaveManager.cs" />
      <Compile Include="Assets\Scripts\Core\SaveSerial.cs" />
      <Compile Include="Assets\Scripts\Core\SaveSystem.cs" />
      <Compile Include="Assets\Scripts\Core\Settings.cs" />
@@ -97,6 +98,8 @@
      <Compile Include="Assets\Scripts\Shaders\SimpleBlur.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\DisruptersSpawner.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\EnemySpawnerOld.cs" />
+     <Compile Include="Assets\Scripts\SpanwersEvents\LootTableShop.cs" />
+     <Compile Include="Assets\Scripts\SpanwersEvents\LootTableWaves.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\PowerupsSpawner.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\PowerupWeights.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\Shop.cs" />
@@ -194,6 +197,7 @@
      <Compile Include="Assets\ZExtendableSaveSystem\Example\TransformSaver.cs" />
      <None Include="Assets\Shaders\QuickBlur.shader" />
      <None Include="Assets\ZBayatGames\SaveGameFree\Readme.txt" />
+     <None Include="Assets\Shaders\SpriteGradient.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

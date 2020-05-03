@@ -158,6 +158,7 @@ MonoBehaviour:
   powerup: laser
   energy: 200
   maxEnergy: 200
+  losePwrupOutOfEn: 0
   laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
     type: 3}
   phaserPrefab: {fileID: 5313808222654050488, guid: eeaf92f603acb7940b5e4aaf74fdcded,
@@ -224,7 +225,7 @@ MonoBehaviour:
   scalerTime: 12
   scalerTimer: -4
   matrix: 0
-  matrixTime: 14
+  matrixTime: 24
   matrixTimer: -4
   pmultiTime: 24
   pmultiTimer: -4
@@ -262,6 +263,7 @@ MonoBehaviour:
   gcloverVFX: {fileID: 100000, guid: 93654d0135dbfd741b138964b108e311, type: 3}
   gcloverOVFX: {fileID: 100000, guid: 41fbf007ac904dd48afafa7a6655e3ef, type: 3}
   lclawsVFX: {fileID: 100000, guid: 405398434fd7ed640a8082ddb451bddf, type: 3}
+  crystalExplosionVFX: {fileID: 100000, guid: 6112b0f2cbaee2a4e847d65856edcf6f, type: 3}
   shipHitSFX: {fileID: 8300000, guid: a18b151904914894d8ca0c87023051ad, type: 3}
   explosionSFX: {fileID: 8300000, guid: b2affc4fb28935c4ab45801b98257f10, type: 3}
   deathSFX: {fileID: 8300000, guid: faef65200c0014d4aa2393d42b24c515, type: 3}
@@ -276,6 +278,8 @@ MonoBehaviour:
   energyRefillSFX: {fileID: 8300000, guid: fb4f60f019245994bbe3ef41560a3de3, type: 3}
   coinSFX: {fileID: 8300000, guid: 5e8b43d317853f749b41d6aaf8ed9f55, type: 3}
   leechBiteSFX: {fileID: 8300000, guid: 5198f100b29a378479c77e37079cf250, type: 3}
+  shadowdashSFX: {fileID: 8300000, guid: cdfebb5f0eb0cf74a9691c5e77ebaa17, type: 3}
+  matrixGetSFX: {fileID: 8300000, guid: 567d3ffb9cd479e4280894851fce93c3, type: 3}
   gameOverCanvasPrefab: {fileID: 0}
   shadowPrefab: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699,
     type: 3}

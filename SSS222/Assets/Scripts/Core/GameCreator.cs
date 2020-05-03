@@ -8,12 +8,14 @@ public class GameCreator : MonoBehaviour{
     [SerializeField] GameObject loaderPrefab;
     [SerializeField] GameObject saveSerialPrefab;
     [SerializeField] GameObject gameAssetsPrefab;
+    [SerializeField] GameObject levelPrefab;
     private void Awake()
     {
         if (FindObjectOfType<GameSession>() == null){Instantiate(gameSessionPrefab);}
         //if (FindObjectOfType<Loader>() == null){Instantiate(loaderPrefab);}
         if (FindObjectOfType<SaveSerial>() == null){Instantiate(saveSerialPrefab);}
         if (FindObjectOfType<GameAssets>() == null){Instantiate(gameAssetsPrefab);}
+        if (FindObjectOfType<Level>() == null){Instantiate(levelPrefab);}
         Destroy(gameObject);
     }
 }
