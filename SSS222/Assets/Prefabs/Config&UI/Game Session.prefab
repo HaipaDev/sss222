@@ -46,10 +46,20 @@ MonoBehaviour:
   score: 0
   scoreMulti: 1
   coins: 0
+  cores: 0
+  coresXp: 0
+  coresXpTotal: 0
   EVscore: 0
+  EVscoreMax: 50
   shopScore: 0
   shopScoreMax: 200
   shopScoreMaxS: 200
   shopScoreMaxE: 800
+  xp_forCore: 100
+  xp_wave: 20
+  xp_shop: 10
+  xp_powerup: 3
+  xp_flying: 7
+  flyingTimeReq: 25
   gameSpeed: 1
   denySFX: {fileID: 8300000, guid: 52a7f58fa80cd6e49aed67e5f20b7593, type: 3}

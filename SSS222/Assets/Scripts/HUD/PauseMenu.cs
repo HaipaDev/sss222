@@ -20,7 +20,7 @@ public class PauseMenu : MonoBehaviour{
             if(GameIsPaused){
                 Resume();
             }else{
-                if(Shop.shopOpened!=true)Pause();
+                if(Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true)Pause();
             }
         }
     }
@@ -34,8 +34,9 @@ public class PauseMenu : MonoBehaviour{
         prevGameSpeed = gameSession.gameSpeed;
         pauseMenuUI.SetActive(true);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
-        gameSession.gameSpeed = 0.0001f;
         GameIsPaused = true;
+        gameSession.gameSpeed = 0f;
+        
         //ParticleSystem.Stop();
         //var ptSystems = FindObjectOfType<ParticleSystem>();
         //foreach(ptSystem in ptSystems){ParticleSystem.Pause();}
@@ -45,7 +46,5 @@ public class PauseMenu : MonoBehaviour{
         gameSession.gameSpeed = 1f;
         SceneManager.LoadScene("Menu");
     }
-    public void PreviousGameSpeed(){
-        gameSession.gameSpeed = prevGameSpeed;
-    }
+    public void PreviousGameSpeed(){gameSession.gameSpeed = prevGameSpeed;}
 }

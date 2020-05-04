@@ -70,7 +70,7 @@ public class GoblinDrop : MonoBehaviour{
         if(other.CompareTag("Powerups")){
             PlayClipAt(goblinStealSFX,transform.position);
             powerup=other.gameObject;
-            Destroy(other.gameObject);
+            Destroy(other.gameObject,0.001f);
             /*var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
             if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { powerup = armorPwrupPrefab; Destroy(other.gameObject); }
             var armorUName = armorUPwrupPrefab.name; var armorUName1 = armorUPwrupPrefab.name + "(Clone)";

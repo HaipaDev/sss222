@@ -19,8 +19,8 @@ public class WaveConfig : ScriptableObject{
     [HeaderAttribute("StartToEnd Path")]
     [SerializeField] public bool startToEndPath;
     [SerializeField] public bool between2PtsPath;
-    [SerializeField] GameObject pathStartPrefab;
-    [SerializeField] GameObject pathEndPrefab;
+    [SerializeField] public GameObject pathStartPrefab;
+    [SerializeField] public GameObject pathEndPrefab;
     [HeaderAttribute("Random Paths")]
     [SerializeField] public bool randomPath;
     [SerializeField] public bool randomPathEach;
@@ -29,6 +29,8 @@ public class WaveConfig : ScriptableObject{
     [HeaderAttribute("Other")]
     [SerializeField] public bool shipPlace;
     [SerializeField] public float shipYY;
+    [SerializeField] public bool loopPath;
+    [SerializeField] public GameObject loopPathPrefab;
 
 
     public GameObject GetEnemyPrefab(){ var enIndex = Random.Range(0, enemies.Count); return enemies[enIndex]; }
@@ -84,6 +86,15 @@ public class WaveConfig : ScriptableObject{
     {
         var waveWaypoints = new List<Transform>();
         foreach (Transform child in pathStartPrefab.transform)
+        {
+            waveWaypoints.Add(child);
+        }
+        return waveWaypoints;
+    }
+    public List<Transform> GetWaypointsLoop()
+    {
+        var waveWaypoints = new List<Transform>();
+        foreach (Transform child in loopPathPrefab.transform)
         {
             waveWaypoints.Add(child);
         }

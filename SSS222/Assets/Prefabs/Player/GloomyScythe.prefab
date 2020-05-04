@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4830943442673253679}
   - component: {fileID: -9072771260210855088}
   - component: {fileID: -1996952101110769926}
+  - component: {fileID: 2657704310505367730}
   m_Layer: 8
   m_Name: GloomyScythe
   m_TagString: PlayerWeapons
@@ -310,3 +311,15 @@ MonoBehaviour:
   waitTimer: 0
   scytheFlySFX: {fileID: 8300000, guid: c23309e0609f07a4a912f49e84fbd57d, type: 3}
   vSpeedMax: 9
+--- !u!114 &2657704310505367730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

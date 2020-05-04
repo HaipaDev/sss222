@@ -34,7 +34,7 @@ public class Follow : MonoBehaviour{
         //var tempTarget = GameObject.FindGameObjectWithTag(target.tag);
         if (target!=null){targetObj = GameObject.FindGameObjectWithTag(target.tag); }
         else{targetObj = GameObject.FindGameObjectWithTag(targetTag); }
-        if(followClosestEnemy==true){targetObj=FindClosestEnemy().gameObject;}
+        if(followClosestEnemy==true){if(FindClosestEnemy()!=null)targetObj=FindClosestEnemy().gameObject;}
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -85,6 +85,9 @@ public class Follow : MonoBehaviour{
         KdTree<Enemy> Enemies = new KdTree<Enemy>();
         Enemy[] EnemiesArr;
         EnemiesArr = FindObjectsOfType<Enemy>();
+        foreach(Enemy enemy in EnemiesArr){
+            Enemies.Add(enemy);
+        }
         Enemy closest = Enemies.FindClosest(transform.position);
         return closest;
     }

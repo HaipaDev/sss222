@@ -143,6 +143,8 @@ public class PlayerCollider : MonoBehaviour{
                 var CoinName = CoinPrefab.name; var CoinName1 = CoinPrefab.name + "(Clone)";
                 if (other.gameObject.name == CoinName || other.gameObject.name == CoinName1) { gameSession.coins += 1; }
 
+                if((other.gameObject.name != enBallName && other.gameObject.name != enBallName1) && (other.gameObject.name != CoinName && other.gameObject.name != CoinName1)){
+                    gameSession.AddXP(gameSession.xp_powerup);}//XP For powerup
 
                 var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { if(player.health>(player.maxHP-25)){gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} player.health += player.medkitHpAmnt; player.energy += player.medkitEnergyGet; player.healed = true; }

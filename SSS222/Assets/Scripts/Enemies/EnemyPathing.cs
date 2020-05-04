@@ -7,6 +7,7 @@ public class EnemyPathing : MonoBehaviour{
     List<Transform> waypointsS;
     List<Transform> waypointsE;
     List<Transform> waypointsR;
+    List<Transform> waypointsL;
     public int waypointIndex = 0;
     public int enemyIndex = 0;
 
@@ -27,6 +28,8 @@ public class EnemyPathing : MonoBehaviour{
                 waypointsR = waveConfig.GetWaypointsRandomPathEach();
             }else if (waveConfig.randomPoint == true){
                 waypointsR = waveConfig.GetWaypointsRandomPoint();
+                if(waveConfig.loopPath==true){waypointsL=waveConfig.GetWaypointsLoop();}
+            //}else if(waveConfig.loopPath==true){waypointsL=waveConfig.GetWaypointsLoop();
             }else{
                 waypointsS = waveConfig.GetWaypoints();
             }
@@ -84,9 +87,9 @@ public class EnemyPathing : MonoBehaviour{
                     transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
                     if (transform.position == targetPos)waypointIndex++;
                 }else { Destroy(gameObject); }
-            }else if(waveConfig.randomPoint==true){
-            } else{
-                if(waveConfig.shipPlace==false){
+            }//else if(waveConfig.randomPoint==true){}
+            else{
+                if(waveConfig.shipPlace==false && waveConfig.loopPath!=true){
                     if (waypointIndex < waypointsS.Count)
                     {
                         var targetPos = waypointsS[waypointIndex].transform.position;
@@ -95,6 +98,14 @@ public class EnemyPathing : MonoBehaviour{
                         if (transform.position == targetPos) waypointIndex++;
                     }
                     else { Destroy(gameObject); }
+                }if(waveConfig.loopPath==true){
+                    //if (waypointIndex < waypointsL.Count){
+                        var targetPos = waypointsL[waypointIndex].transform.position;
+                        var movementThisFrame = waveConfig.GetMoveSpeed() * Time.deltaTime;
+                        transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
+                        if (transform.position == targetPos) waypointIndex++;
+                        if(waypointIndex>=waypointsL.Count){waypointIndex=0;}
+                    //}else{waypointIndex=0;}
                 }
             }
         }

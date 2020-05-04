@@ -21,8 +21,16 @@ public class DisruptersSpawner : MonoBehaviour{
     public bool spawnGoblin=true;
     [SerializeField] WaveConfig cfgGoblin;
     [SerializeField] float mSTimeSpawnsGoblin = 40f;
-    [SerializeField] float mESTimeSpawnsGoblin = 50f;
+    [SerializeField] float mETimeSpawnsGoblin = 50f;
     public float timeSpawnsGoblin = 0f;
+    [HeaderAttribute("Healing Drone")]
+    public bool spawnHealDrone=true;
+    [SerializeField] WaveConfig cfgHealDrone;
+    [SerializeField] int mEnemiesCountHealDrone = 50;
+    public int EnemiesCountHealDrone = 0;
+    [SerializeField] float mSTimeSpawnsHealDrone = 40f;
+    [SerializeField] float mETimeSpawnsHealDrone = 50f;
+    public float timeSpawnsHealDrone = 0f;
     //public int waveIndex = 0;
     //WaveConfig currentWave;
     bool looping = true;
@@ -65,7 +73,7 @@ public class DisruptersSpawner : MonoBehaviour{
         player = FindObjectOfType<Player>();
         if(spawnLeech==true)timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech,mETimeSpawnsLeech);
         if(spawnHlaser==true)timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser);
-        if(spawnGoblin==true)timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mESTimeSpawnsGoblin);
+        if(spawnGoblin==true)timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin);
         do
         {
             yield return StartCoroutine(SpawnWaves());
@@ -84,9 +92,9 @@ public class DisruptersSpawner : MonoBehaviour{
         //if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
         //else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/
         //waveIndex = Random.Range(0, waveConfigs.Count); gameSession.EVscore = 0; } }
-        }if(spawnHlaser==true){
+        }
+        if(spawnHlaser==true){
             if (timeSpawnsHlaser <= 0 && timeSpawnsHlaser > -4){
-                //currentWave = cfgHlaser;
                 yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHlaser));
                 timeSpawnsHlaser = -4;
             }
@@ -94,9 +102,17 @@ public class DisruptersSpawner : MonoBehaviour{
         if(spawnGoblin==true){
             if(GameObject.FindGameObjectWithTag("Powerups")!=null){
                 if (timeSpawnsGoblin <= 0 && timeSpawnsGoblin > -4){
-                    //currentWave = cfgGoblin;
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGoblin));
                     timeSpawnsGoblin = -4;
+                }
+            }
+        }
+        if(spawnHealDrone==true){
+            if(EnemiesCountHealDrone>=mEnemiesCountHealDrone||(mEnemiesCountHealDrone==0 && timeSpawnsHealDrone <= 0 && timeSpawnsHealDrone > -4)){
+                if(FindObjectOfType<HealingDrone>()==null){
+                    yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHealDrone));
+                    timeSpawnsHealDrone = -4;
+                    EnemiesCountHealDrone=0;
                 }
             }
         }
@@ -193,7 +209,11 @@ public class DisruptersSpawner : MonoBehaviour{
             }
             if(spawnGoblin==true){
                 if(timeSpawnsGoblin > -0.01f){ timeSpawnsGoblin -= Time.deltaTime; }
-                else if(timeSpawnsGoblin == -4){ timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mESTimeSpawnsGoblin); }
+                else if(timeSpawnsGoblin == -4){ timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin); }
+            }
+            if(spawnHealDrone==true && mEnemiesCountHealDrone!=0){
+                if(timeSpawnsHealDrone > -0.01f){ timeSpawnsHealDrone -= Time.deltaTime; }
+                else if(timeSpawnsHealDrone == -4){ timeSpawnsHealDrone = Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone); }
             }
             /*if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
             else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;

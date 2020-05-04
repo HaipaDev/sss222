@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2349578145357705901}
   - component: {fileID: 7799905236334044251}
   - component: {fileID: -5823106282040684117}
+  - component: {fileID: 879952983271955742}
   m_Layer: 8
   m_Name: QRocket
   m_TagString: PlayerWeapons
@@ -288,10 +289,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a8c4beb6393e8418ea04d76c86dccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPos: {x: 0, y: 0}
   selfPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
   target: {fileID: 0}
   targetTag: Enemy
+  targetObj: {fileID: 0}
   dist: 0
   distReq: 25
   speedFollow: 3.8
@@ -303,7 +305,7 @@ MonoBehaviour:
   followAfterOOR: 0
   dirYYUp: 1
   OOR_YY: 1.5
-  targetObj: {fileID: 0}
+  followClosestEnemy: 0
 --- !u!114 &-5823106282040684117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,3 +323,15 @@ MonoBehaviour:
   xx: 0
   yy: -0.6
   time: 0.3
+--- !u!114 &879952983271955742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

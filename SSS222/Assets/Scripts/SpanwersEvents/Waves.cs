@@ -68,7 +68,7 @@ public class Waves : MonoBehaviour
                 yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
                     timeSpawns = -4;
                 if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
-                else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/ gameSession.EVscore = 0; currentWave=GetRandomWave(); } }//waveIndex = Random.Range(0, waveConfigs.Count);  } }
+                else{}//if(gameSession.EVscore>=gameSession.EVscoreMax){ gameSession.AddXP(gameSession.xp_wave); currentWave=GetRandomWave(); gameSession.EVscore = 0;} }//waveIndex = Random.Range(0, waveConfigs.Count);  } }
             }
     }
 
@@ -161,9 +161,10 @@ public class Waves : MonoBehaviour
             else if (timeSpawns <=0 && timeSpawns > -4) {SpawnAllEnemiesInWave(currentWave); timeSpawns = currentWave.timeSpawnWave; }
 
             if (progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
-            else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
+            else{if (gameSession.EVscore >= gameSession.EVscoreMax) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
                 timeSpawns = 0; currentWave=GetRandomWave();//waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
-                gameSession.EVscore = 0; } }
+                gameSession.EVscore = 0; gameSession.AddXP(gameSession.xp_wave);//XP For Wave
+                } }
             //if (timeSpawns <= 0) {timeSpawns = mTimeSpawns; }
             //Debug.Log(timeSpawns);
         }

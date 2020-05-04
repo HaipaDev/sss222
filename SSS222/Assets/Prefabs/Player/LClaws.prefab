@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5239081426931158637}
   - component: {fileID: 3335024609016532008}
   - component: {fileID: -4609015006554659745}
+  - component: {fileID: -393988683514688926}
   m_Layer: 8
   m_Name: LClaws
   m_TagString: PlayerWeapons
@@ -305,3 +306,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lsaberBlockSFX: {fileID: 8300000, guid: 5b7dcac2e1a96db4a9cb95c20c98022d, type: 3}
+--- !u!114 &-393988683514688926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4755926375889011706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

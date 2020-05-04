@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: dc236037e97902b4ea54a36d1885fbea, type: 2}
+  waveConfig: {fileID: 11400000, guid: 58fd68643924fff4a9f07d61d99f38a1, type: 2}
   waypointIndex: 0
   enemyIndex: 0
 --- !u!114 &182006974740199065
@@ -206,6 +206,7 @@ MonoBehaviour:
   scoreValueStart: 15
   scoreValueEnd: 25
   randomizeWaveDeath: 0
+  flyOff: 0
   explosionVFX: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
   explosionSmallVFX: {fileID: 100000, guid: cdb72e2563af9f44fa5b2ae5464ede19, type: 3}
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}

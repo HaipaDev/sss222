@@ -146,6 +146,7 @@ public class Enemy : MonoBehaviour{
             Destroy(explosion, 0.5f);
             Destroy(gameObject);
             shake.CamShake();
+            gameSession.AddEnemyCount();
         }
     }
     private void DestroyOutside(){

@@ -162,6 +162,8 @@ public class Player : MonoBehaviour{
      float hPressedTime;
      float vPressedTime;
     public float mPressedTime;
+    public float timeFlyingTotal;
+    public float timeFlyingCore;
 
     Rigidbody2D rb;
     GameSession gameSession;
@@ -256,6 +258,7 @@ public class Player : MonoBehaviour{
     void CountTimeMovementPressed(){
         if(Input.GetButton("Horizontal")){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
         if(Input.GetButton("Vertical")){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
+        if(Input.GetButton("Horizontal")||Input.GetButton("Vertical")&&Time.timeScale>0.01f){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;}//Add to total time flying
         if(!Input.GetButton("Horizontal")){hPressedTime=0;}
         if(!Input.GetButton("Vertical")){vPressedTime=0;}
         if(!Input.GetButton("Horizontal")&&!Input.GetButton("Vertical")){mPressedTime=0;}
@@ -292,6 +295,7 @@ public class Player : MonoBehaviour{
     private void MoveWithMouse(){
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dist = Vector2.Distance(mousePos, transform.position);
+        if(dist>0.4f&&Time.timeScale>0.01f){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;}
 
         float step = moveSpeedCurrent * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
@@ -691,7 +695,7 @@ public class Player : MonoBehaviour{
         transform.localScale=new Vector3(shipScale,shipScale,1);
         
         if(matrix==true){
-            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true){
+            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
                 matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
@@ -705,7 +709,7 @@ public class Player : MonoBehaviour{
                     gameSession.gameSpeed=1f;
                 }
             }else{
-                gameSession.gameSpeed=0.0001f;
+                gameSession.gameSpeed=0f;
             }
         }
         if(matrixTimer <=0 && matrixTimer>-4){gameSession.gameSpeed=1f; matrix=false; matrixTimer=-4;}

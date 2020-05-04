@@ -26,8 +26,11 @@ public class ValueDisplay : MonoBehaviour{
         if (value == "score") scoreText.text = gameSession.GetScore().ToString();
         else if (value == "evscore") scoreText.text = gameSession.GetEVScore().ToString();
         else if (value == "coins") scoreText.text = gameSession.GetCoins().ToString();
+        else if (value == "cores") scoreText.text = gameSession.GetCores().ToString();
         else if (value == "highscore") scoreText.text = gameSession.GetHighscore().ToString();
         else if (value == "version") scoreText.text = gameSession.GetVersion();
+        else if (value == "max_hp") scoreText.text = player.maxHP.ToString();
+        else if (value == "max_energy") scoreText.text = player.maxEnergy.ToString();
         /*else if (value == "state"){
             var value = System.Math.Round(player.GetGCloverTimer(),1);
 

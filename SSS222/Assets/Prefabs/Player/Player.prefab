@@ -297,6 +297,8 @@ MonoBehaviour:
   dist: 0
   velocity: {x: 0, y: 0}
   mPressedTime: 0
+  timeFlyingTotal: 0
+  timeFlyingCore: 0
 --- !u!114 &1949430517914965929
 MonoBehaviour:
   m_ObjectHideFlags: 0

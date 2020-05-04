@@ -7,16 +7,29 @@ public class GameSession : MonoBehaviour{
     public int score = 0;
     public float scoreMulti = 1f;
     public int coins = 0;
+    public int cores = 0;
+    public float coresXp = 0f;
+    public float coresXpTotal = 0f;
+    public int enemiesCount = 0;
     [HeaderAttribute("EVent Score Values")]
     public int EVscore = 0;
+    public int EVscoreMax = 50;
     public int shopScore = 0;
     public int shopScoreMax = 200;
     public int shopScoreMaxS = 200;
     public int shopScoreMaxE = 450;
+    [HeaderAttribute("XP Values")]
+    public float xp_forCore=100f;
+    public float xp_wave=20f;
+    public float xp_shop=10f;
+    public float xp_powerup=3f;
+    public float xp_flying=7f;
+    public float flyingTimeReq=25f;
     [HeaderAttribute("Settings")]
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
     [HeaderAttribute("Other")]
-    [SerializeField] AudioClip denySFX;
+    [SerializeField] public AudioClip denySFX;
+    Player player;
     //public string gameVersion;
     //public bool moveByMouse = true;
 
@@ -69,10 +82,19 @@ public class GameSession : MonoBehaviour{
             shopScoreMax = Random.Range(shopScoreMaxS,shopScoreMaxE);
             shopScore = 0;
         }
+
+        if(FindObjectOfType<Player>()!=null){if(FindObjectOfType<Player>().timeFlyingCore>flyingTimeReq){AddXP(xp_flying);FindObjectOfType<Player>().timeFlyingCore=0f;}}
+
+        if(coresXp>=xp_forCore){
+            cores+=1;
+            coresXp=0;
+        }
     }
 
     public int GetScore(){return score;}
     public int GetCoins(){return coins;}
+    public int GetCores(){return cores;}
+    public float GetCoresXP(){return coresXp;}
     public int GetEVScore(){return EVscore;}
     public int GetShopScore(){return shopScore; }
     public int GetHighscore(){return FindObjectOfType<SaveSerial>().highscore;}
@@ -91,6 +113,8 @@ public class GameSession : MonoBehaviour{
     }
 
     public void AddToScoreNoEV(int scoreValue){score += scoreValue;}
+    public void AddXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;}
+    public void AddEnemyCount(){enemiesCount++;FindObjectOfType<DisruptersSpawner>().EnemiesCountHealDrone++;}
 
     public void ResetScore(){
         score=0;

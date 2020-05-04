@@ -42,6 +42,7 @@ public class ShopSlot : MonoBehaviour{
             AudioSource.PlayClipAtPoint(shopMenu.buySFX,player.transform.position);
             //if(ID<=shopMenu.shopSlotIDs.Count){
                 player.energy+=10f;
+                gameSession.AddXP(gameSession.xp_shop);//XP For purchase
                 if(ID!=4 && ID!=8 && ID!=9){
                     player.powerup=lootTable.itemList[ID].lootItem.pwrupName;
                     player.energy += player.pwrupEnergyGet;
