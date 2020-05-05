@@ -11,6 +11,7 @@ public class ValueDisplay : MonoBehaviour{
     Player player;
     [SerializeField] string value = "score";
     [SerializeField] float valueLimitD=-1;
+    [SerializeField] bool changeOnValidate;
 
     // Start is called before the first frame update
     void Start(){
@@ -23,6 +24,14 @@ public class ValueDisplay : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
+        ChangeText();
+    }
+    /*private void OnValidate() {
+        player = FindObjectOfType<Player>();
+        if(changeOnValidate)ChangeText();
+    }*/
+
+    void ChangeText(){
         if (value == "score") scoreText.text = gameSession.GetScore().ToString();
         else if (value == "evscore") scoreText.text = gameSession.GetEVScore().ToString();
         else if (value == "coins") scoreText.text = gameSession.GetCoins().ToString();
@@ -31,6 +40,8 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "version") scoreText.text = gameSession.GetVersion();
         else if (value == "max_hp") scoreText.text = player.maxHP.ToString();
         else if (value == "max_energy") scoreText.text = player.maxEnergy.ToString();
+        else if (value == "hpOffMax") scoreText.text = Mathf.RoundToInt(player.health).ToString()+"/"+player.maxHP.ToString();
+        else if (value == "energyOffMax") scoreText.text = Mathf.RoundToInt(player.energy).ToString()+"/"+player.maxEnergy.ToString();
         /*else if (value == "state"){
             var value = System.Math.Round(player.GetGCloverTimer(),1);
 

@@ -153,12 +153,12 @@ MonoBehaviour:
   lsaberSpeedMulti: 1.25
   moveSpeedCurrent: 0
   padding: 0.55
-  health: 200
-  maxHP: 200
+  health: 150
+  maxHP: 150
   powerup: laser
-  energy: 200
-  maxEnergy: 200
-  losePwrupOutOfEn: 0
+  energy: 180
+  maxEnergy: 180
+  losePwrupOutOfEn: 1
   laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
     type: 3}
   phaserPrefab: {fileID: 5313808222654050488, guid: eeaf92f603acb7940b5e4aaf74fdcded,
@@ -231,9 +231,9 @@ MonoBehaviour:
   pmultiTimer: -4
   laserEn: 1
   laser2En: 2
-  laser3En: 5
+  laser3En: 3
   phaserEn: 3
-  hrocketEn: 3
+  hrocketEn: 3.4
   mlaserEn: 0.075
   lsaberEn: 0.375
   lclawsEn: 6.5

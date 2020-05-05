@@ -166,7 +166,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: a57e44c0ea51cea48a093eb36f690ed7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 45b5d050af163dc439ba8781a7208027, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.165
   m_Pitch: 1
@@ -350,3 +350,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healAmnt: 0.15
   targetObj: {fileID: 0}
+  healSFX: {fileID: 8300000, guid: e4003a11a7fcd69449e49a446177afbc, type: 3}

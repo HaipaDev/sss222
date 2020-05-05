@@ -536,7 +536,7 @@ public class Player : MonoBehaviour{
                         yield return new WaitForSeconds(cbulletShootPeriod);
                 }
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
-                else {if(powerup!="lsaberA")if(losePwrupOutOfEn){powerup = "laser";} shootTimer = 1f; yield return new WaitForSeconds(1f); }
+                else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup = "laser"; shootTimer = 1f; yield return new WaitForSeconds(1f); }
             }else{ energy = 0; AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); shootTimer = 0f; yield return new WaitForSeconds(1f); }
             }
         }

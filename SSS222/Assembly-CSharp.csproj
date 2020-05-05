@@ -47,7 +47,6 @@
   <ItemGroup>
      <Compile Include="Assets\GGEZ\PerfectPixelCamera\Demo\Assets\ZoomDemo.cs" />
      <Compile Include="Assets\GGEZ\PerfectPixelCamera\Scripts\PerfectPixelCamera.cs" />
-     <Compile Include="Assets\HealBullet.cs" />
      <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
      <Compile Include="Assets\Scripts\Core\DataStorage.cs" />
@@ -70,6 +69,7 @@
      <Compile Include="Assets\Scripts\Enemies\EnemyPathingOld.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnShip.cs" />
      <Compile Include="Assets\Scripts\Enemies\GoblinDrop.cs" />
+     <Compile Include="Assets\Scripts\Enemies\HealBullet.cs" />
      <Compile Include="Assets\Scripts\Enemies\HealingDrone.cs" />
      <Compile Include="Assets\Scripts\Enemies\HLaser.cs" />
      <Compile Include="Assets\Scripts\Enemies\HLaserKillThis.cs" />

@@ -15,4 +15,6 @@ public class FallDown : MonoBehaviour{
     void Update(){
         //rb.velocity = new Vector2(0f, -10f);
     }
+
+    public float GetVSpeed(){return vspeed;}
 }

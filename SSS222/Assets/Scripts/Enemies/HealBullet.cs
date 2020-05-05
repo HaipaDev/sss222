@@ -5,6 +5,7 @@ using UnityEngine;
 public class HealBullet : MonoBehaviour{
     public float healAmnt=0.1f;
     [SerializeField]GameObject targetObj;
+    [SerializeField]AudioClip healSFX;
     //[SerializeField] GameObject healParticlePrefab;
     void Start(){
         targetObj=GetComponent<FollowOneObject>().targetObj;
@@ -20,6 +21,7 @@ public class HealBullet : MonoBehaviour{
             targetObj.GetComponent<Enemy>().health+=healAmnt;
             GetComponent<FollowOneObject>().targetObj=null;
             targetObj=null;
+            AudioSource.PlayClipAtPoint(healSFX,transform.position);
         }
     }
 }

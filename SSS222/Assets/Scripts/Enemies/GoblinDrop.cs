@@ -48,7 +48,10 @@ public class GoblinDrop : MonoBehaviour{
     
     public void DropPowerup(){
         if(powerup!=null){
-            Instantiate(powerup,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+            //Instantiate(powerup,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+            powerup.SetActive(true);
+            powerup.transform.position=transform.position;
+            powerup.GetComponent<Rigidbody2D>().velocity = Vector2.down*powerup.GetComponent<FallDown>().GetVSpeed();
         }
         PlayClipAt(goblinDeathSFX, transform.position);
     }
@@ -70,7 +73,8 @@ public class GoblinDrop : MonoBehaviour{
         if(other.CompareTag("Powerups")){
             PlayClipAt(goblinStealSFX,transform.position);
             powerup=other.gameObject;
-            Destroy(other.gameObject,0.001f);
+            powerup.SetActive(false);
+            //Destroy(other.gameObject,0.002f);
             /*var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
             if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { powerup = armorPwrupPrefab; Destroy(other.gameObject); }
             var armorUName = armorUPwrupPrefab.name; var armorUName1 = armorUPwrupPrefab.name + "(Clone)";

@@ -17,7 +17,6 @@ ScriptsOnlyBuild:
     - Enemy
     - EnemyPathing
     - EnemyPathingOld
-    - EnemySpawnerOld
     - EnergyBar
     - FallDown
     - Follow
@@ -263,8 +262,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11302}
     - Class: 114
-      Script: {instanceID: 11326}
-    - Class: 114
       Script: {instanceID: 11334}
     - Class: 114
       Script: {instanceID: 11414}
@@ -291,27 +288,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11742}
     - Class: 114
-      Script: {instanceID: 11764}
+      Script: {instanceID: 11744}
     - Class: 114
-      Script: {instanceID: 11778}
+      Script: {instanceID: 11766}
     - Class: 114
-      Script: {instanceID: 11784}
+      Script: {instanceID: 11780}
     - Class: 114
-      Script: {instanceID: 11794}
+      Script: {instanceID: 11786}
     - Class: 114
-      Script: {instanceID: 11982}
+      Script: {instanceID: 11796}
     - Class: 114
-      Script: {instanceID: 11990}
+      Script: {instanceID: 11812}
     - Class: 114
-      Script: {instanceID: 12056}
+      Script: {instanceID: 11986}
     - Class: 114
-      Script: {instanceID: 12062}
+      Script: {instanceID: 11994}
     - Class: 114
-      Script: {instanceID: 12110}
+      Script: {instanceID: 12060}
     - Class: 114
-      Script: {instanceID: 50258}
+      Script: {instanceID: 12066}
     - Class: 114
-      Script: {instanceID: 70988}
+      Script: {instanceID: 12114}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -400,9 +397,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11630}
     - Class: 114
-      Script: {instanceID: 12062}
+      Script: {instanceID: 12066}
     - Class: 114
-      Script: {instanceID: 12110}
+      Script: {instanceID: 12114}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -493,11 +490,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11630}
     - Class: 114
-      Script: {instanceID: 12062}
+      Script: {instanceID: 12066}
     - Class: 114
-      Script: {instanceID: 12096}
+      Script: {instanceID: 12100}
     - Class: 114
-      Script: {instanceID: 12110}
+      Script: {instanceID: 12114}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -588,11 +585,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11630}
     - Class: 114
-      Script: {instanceID: 11838}
+      Script: {instanceID: 11842}
     - Class: 114
-      Script: {instanceID: 11952}
+      Script: {instanceID: 11956}
     - Class: 114
-      Script: {instanceID: 12062}
+      Script: {instanceID: 12066}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -689,9 +686,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11630}
     - Class: 114
-      Script: {instanceID: 12062}
+      Script: {instanceID: 12066}
     - Class: 114
-      Script: {instanceID: 12110}
+      Script: {instanceID: 12114}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -792,15 +789,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11630}
     - Class: 114
-      Script: {instanceID: 12050}
+      Script: {instanceID: 12054}
     - Class: 114
-      Script: {instanceID: 12062}
+      Script: {instanceID: 12066}
     - Class: 114
-      Script: {instanceID: 12078}
+      Script: {instanceID: 12082}
     - Class: 114
-      Script: {instanceID: 12096}
+      Script: {instanceID: 12100}
     - Class: 114
-      Script: {instanceID: 12110}
+      Script: {instanceID: 12114}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1094,7 +1091,7 @@ ScriptsOnlyBuild:
     className: FollowUI
   - hash:
       serializedVersion: 2
-      Hash: d5e06fd9abd03fde7b5f0baba1da87bb
+      Hash: 087bce2f1b5e731bbc12b5268d29c18f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ValueDisplay
@@ -1442,7 +1439,7 @@ ScriptsOnlyBuild:
     className: TextContainer
   - hash:
       serializedVersion: 2
-      Hash: b46aaf5cd4da086dfe574c89f45a37e1
+      Hash: 6915fd221bca9cab5be6538aa7c34a85
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameSession
@@ -1820,6 +1817,12 @@ ScriptsOnlyBuild:
     className: Benchmark02
   - hash:
       serializedVersion: 2
+      Hash: 35afc3ddecabb648865a1961779abaa5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FollowOneObject
+  - hash:
+      serializedVersion: 2
       Hash: 395ee82466d3e2c99ad5f0f0e92d63e6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1866,6 +1869,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyPathingOld
+  - hash:
+      serializedVersion: 2
+      Hash: 08d4339fe3e4f0dd0cc1deb190251917
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HealBullet
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -2040,18 +2049,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 35afc3ddecabb648865a1961779abaa5
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: FollowOneObject
-  - hash:
-      serializedVersion: 2
-      Hash: c43103adeb76fb80079a2e95bdacec42
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: HealBullet
   platform: 5
   scenePathNames:
   - Assets/Scenes/Loading.unity
@@ -2060,4 +2057,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Game.unity
   - Assets/Scenes/Options.unity
   - Assets/Scenes/Inventory.unity
-  playerPath: C:/HyperGamesDev/SSS222/Versions/Beta 0.3/Test1/SSS222.exe
+  playerPath: C:/HyperGamesDev/SSS222/Versions/Beta 0.3/Test2/SSS222.exe

@@ -28,7 +28,10 @@ public class GameSession : MonoBehaviour{
     [HeaderAttribute("Settings")]
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
     [HeaderAttribute("Other")]
+    public bool cheatmode;
     [SerializeField] public AudioClip denySFX;
+    [SerializeField] public AudioClip lvlUpSFX;
+    
     Player player;
     //public string gameVersion;
     //public bool moveByMouse = true;
@@ -88,7 +91,10 @@ public class GameSession : MonoBehaviour{
         if(coresXp>=xp_forCore){
             cores+=1;
             coresXp=0;
+            AudioSource.PlayClipAtPoint(lvlUpSFX,transform.position);
         }
+
+        CheckCodes();
     }
 
     public int GetScore(){return score;}
@@ -121,6 +127,8 @@ public class GameSession : MonoBehaviour{
         EVscore = 0;
         shopScore = 0;
         coins = 0;
+        coresXp = 0;
+        cores = 0;
     }
     public void SaveHighscore()
     {
@@ -145,6 +153,38 @@ public class GameSession : MonoBehaviour{
     public void Save(){ FindObjectOfType<SaveSerial>().Save(); FindObjectOfType<SaveSerial>().SaveSettings(); }
     public void Load(){ FindObjectOfType<SaveSerial>().Load(); FindObjectOfType<SaveSerial>().LoadSettings(); }
 
+    void CheckCodes(){
+        if(Input.GetKey(KeyCode.Delete)){
+            if(Input.GetKeyDown(KeyCode.Alpha0)){
+                cheatmode=true;
+            }
+        }
+        if(cheatmode==true){
+            if(Input.GetKey(KeyCode.F1)){
+                player=FindObjectOfType<Player>();
+                if(Input.GetKeyDown(KeyCode.Alpha1)){player.health=player.maxHP;}
+                if(Input.GetKeyDown(KeyCode.Alpha2)){player.energy=player.maxEnergy;}
+                if(Input.GetKeyDown(KeyCode.Alpha3)){player.gclover=true;player.gcloverTimer=player.gcloverTime;}
+                if(Input.GetKeyDown(KeyCode.Alpha4)){player.health=0;}
+            }
+            if(Input.GetKey(KeyCode.F2)){
+                if(Input.GetKeyDown(KeyCode.Alpha1)){AddToScoreNoEV(100);}
+                if(Input.GetKeyDown(KeyCode.Alpha2)){AddToScoreNoEV(1000);}
+                if(Input.GetKeyDown(KeyCode.Alpha3)){EVscore=EVscoreMax;}
+                if(Input.GetKeyDown(KeyCode.Alpha4)){shopScore=shopScoreMax;}
+                if(Input.GetKeyDown(KeyCode.Alpha5)){AddXP(100);}
+                if(Input.GetKeyDown(KeyCode.Alpha6)){coins+=100;cores+=100;}
+            }
+            if(Input.GetKey(KeyCode.F3)){
+                player=FindObjectOfType<Player>();
+                if(Input.GetKeyDown(KeyCode.Alpha1)){player.powerup="laser3";}
+                if(Input.GetKeyDown(KeyCode.Alpha2)){player.powerup="mlaser";}
+                if(Input.GetKeyDown(KeyCode.Alpha3)){player.powerup="lsaber";}
+                if(Input.GetKeyDown(KeyCode.Alpha4)){player.powerup="lclaws";}
+                if(Input.GetKeyDown(KeyCode.Alpha5)){player.powerup="cstream";}
+            }
+        }
+    }
 
     public void PlayDenySFX(){AudioSource.PlayClipAtPoint(denySFX,transform.position);}
 }

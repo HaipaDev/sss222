@@ -48,6 +48,6 @@ public class UpgradeMenu : MonoBehaviour{
 
     public void UpgradeFloat(ref float value,float amnt,int cost){if(gameSession.cores>=cost){value+=amnt;gameSession.cores-=cost;}else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}}
     //if(gameSession.cores>=maxHealth_upgradeCost)player.maxHP+=maxHealth_upgradeAmnt;gameSession.cores-=maxHealth_upgradeCost;
-    public void AddMaxHP(){UpgradeFloat(ref player.maxHP,maxHealth_upgradeAmnt,maxHealth_upgradeCost);}
-    public void AddMaxEnergy(){UpgradeFloat(ref player.maxEnergy,maxHealth_upgradeAmnt,maxHealth_upgradeCost);}
+    public void AddMaxHP(){UpgradeFloat(ref player.maxHP,maxHealth_upgradeAmnt,maxHealth_upgradeCost);player.health+=maxHealth_upgradeAmnt*2;}
+    public void AddMaxEnergy(){UpgradeFloat(ref player.maxEnergy,maxHealth_upgradeAmnt,maxHealth_upgradeCost);player.energy+=maxHealth_upgradeAmnt*2;}
 }

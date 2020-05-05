@@ -142,7 +142,7 @@ public class Enemy : MonoBehaviour{
             PlayClipAt(explosionSFX, new Vector2(transform.position.x, transform.position.y));
             
             if(randomizeWaveDeath==true){ gameSession.EVscore = 50; }
-            if (GetComponent<GoblinDrop>() != null) GetComponent<GoblinDrop>().DropPowerup();
+            if (GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup();
             Destroy(explosion, 0.5f);
             Destroy(gameObject);
             shake.CamShake();
@@ -150,7 +150,7 @@ public class Enemy : MonoBehaviour{
         }
     }
     private void DestroyOutside(){
-        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){ if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject); }}
+        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){ if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){Destroy(GetComponent<GoblinDrop>().powerup);}}}
     }
     private void OnTriggerEnter2D(Collider2D other){
         if(!other.CompareTag(tag)){
@@ -175,7 +175,7 @@ public class Enemy : MonoBehaviour{
             }
 
             var LSabername = lsaberPrefab.name; var LSabername1 = lsaberPrefab.name + "(Clone)";
-            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1){ dmg = damageDealer.GetDamageLSaber()*6f; PlayClipAt(lsaberHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1){ dmg = damageDealer.GetDamageLSaber()*9f; PlayClipAt(lsaberHitSFX, new Vector2(transform.position.x, transform.position.y)); }
 
             var LClawsname = lclawsPrefab.name; var LClawsname1 = lclawsPrefab.name + "(Clone)";
             if (other.gameObject.name == LClawsname || other.gameObject.name == LClawsname1){ dmg = damageDealer.GetDamageLSaber()/3; PlayClipAt(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y)); FindObjectOfType<Player>().energy-=1f;}
