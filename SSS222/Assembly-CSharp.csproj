@@ -45,6 +45,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\GGEZ\PerfectPixelCamera\Demo\Assets\ZoomDemo.cs" />
+     <Compile Include="Assets\GGEZ\PerfectPixelCamera\Scripts\PerfectPixelCamera.cs" />
+     <Compile Include="Assets\HealBullet.cs" />
      <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
      <Compile Include="Assets\Scripts\Core\DataStorage.cs" />
@@ -114,6 +117,7 @@
      <Compile Include="Assets\Scripts\UniversalUsage\FallDown.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\Follow.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowMouse.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\FollowOneObject.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowStrict.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowUI.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\IntervalSound.cs" />
@@ -126,9 +130,9 @@
      <Compile Include="Assets\Scripts\Visuals\BackgroundScroller.cs" />
      <Compile Include="Assets\Scripts\Visuals\Glow.cs" />
      <Compile Include="Assets\Scripts\Visuals\Screenflash.cs" />
-     <Compile Include="Assets\Tag_PlayerWeapon.cs" />
      <Compile Include="Assets\Tags\LootItem.cs" />
      <Compile Include="Assets\Tags\Tag_MagnetAffected.cs" />
+     <Compile Include="Assets\Tags\Tag_PlayerWeapon.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -229,6 +233,7 @@
      <None Include="Assets\Scripts\Visuals\Blur.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+     <None Include="Assets\GGEZ\PerfectPixelCamera\README.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

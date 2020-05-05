@@ -37,6 +37,8 @@ public class PlayerCollider : MonoBehaviour{
     [SerializeField] GameObject EBtPrefab;
     [SerializeField] GameObject leechPrefab;
     [SerializeField] GameObject hlaserPrefab;
+    [SerializeField] GameObject goblinPrefab;
+    [SerializeField] GameObject hdronePrefab;
     [HeaderAttribute("Other")]
     [SerializeField] float dmgFreq=0.38f;
     public float dmgTimer;
@@ -91,14 +93,21 @@ public class PlayerCollider : MonoBehaviour{
                 var enShip1Name = enShip1Prefab.name; var enShip1Name1 = enShip1Prefab.name + "(Clone)";
                 if (other.gameObject.name == enShip1Name || other.gameObject.name == enShip1Name1) { dmg = damageDealer.GetDamageEnemyShip1(); en = true; }
 
+                var goblinName = goblinPrefab.name; var goblinName1 = goblinPrefab.name + "(Clone)";
+                if (other.gameObject.name == goblinName || other.gameObject.name == goblinName1) { dmg = damageDealer.GetDamageGoblin(); en = true; }
+                var hdroneName = hdronePrefab.name; var hdroneName1 = hdronePrefab.name + "(Clone)";
+                if (other.gameObject.name == hdroneName || other.gameObject.name == hdroneName1) { dmg = damageDealer.GetDamageHealDrone(); en = true; }
+
+
                 var Sname = soundwavePrefab.name; var Sname1 = soundwavePrefab.name + "(Clone)";
                 if (other.gameObject.name == Sname || other.gameObject.name == Sname1) { dmg = damageDealer.GetDamageSoundwave(); PlayClipAt(player.soundwaveHitSFX, new Vector2(transform.position.x, transform.position.y)); }
                 var EBtname = EBtPrefab.name; var EBtname1 = EBtPrefab.name + "(Clone)";
-                if (other.gameObject.name == EBtname || other.gameObject.name == EBtname1) dmg = damageDealer.GetDamageEBt();
+                if (other.gameObject.name == EBtname || other.gameObject.name == EBtname1) { dmg = damageDealer.GetDamageEBt();}
+
 
                 var leechName = leechPrefab.name; var leechName1 = leechPrefab.name + "(Clone)";
                 if (other.gameObject.name == leechName || other.gameObject.name == leechName1) { en = true;  destroy = false; }
-                
+        
                 var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
                 if (other.gameObject.name == hlaserName || other.gameObject.name == hlaserName1) { destroy = false; }
 

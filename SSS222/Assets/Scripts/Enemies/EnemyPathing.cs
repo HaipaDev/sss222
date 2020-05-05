@@ -99,13 +99,13 @@ public class EnemyPathing : MonoBehaviour{
                     }
                     else { Destroy(gameObject); }
                 }if(waveConfig.loopPath==true){
-                    //if (waypointIndex < waypointsL.Count){
+                    if (waypointIndex < waypointsL.Count){
                         var targetPos = waypointsL[waypointIndex].transform.position;
                         var movementThisFrame = waveConfig.GetMoveSpeed() * Time.deltaTime;
                         transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
                         if (transform.position == targetPos) waypointIndex++;
                         if(waypointIndex>=waypointsL.Count){waypointIndex=0;}
-                    //}else{waypointIndex=0;}
+                    }else{waypointIndex=0;}
                 }
             }
         }

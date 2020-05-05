@@ -43,20 +43,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a145b73fb21b17249b6c916e2f5c01e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cfgLeech: {fileID: 11400000, guid: dc236037e97902b4ea54a36d1885fbea, type: 2}
-  cfgHlaser: {fileID: 11400000, guid: 07030a6f28712f64591fc019f8fc58d8, type: 2}
-  cfgGoblin: {fileID: 11400000, guid: 58fd68643924fff4a9f07d61d99f38a1, type: 2}
   spawnLeech: 0
+  cfgLeech: {fileID: 11400000, guid: dc236037e97902b4ea54a36d1885fbea, type: 2}
   mSTimeSpawnsLeech: 85
   mETimeSpawnsLeech: 120
   timeSpawnsLeech: 0
-  spawnHLaser: 1
+  spawnHlaser: 1
+  cfgHlaser: {fileID: 11400000, guid: 07030a6f28712f64591fc019f8fc58d8, type: 2}
   mSTimeSpawnsHlaser: 30
   mETimeSpawnsHlaser: 60
   timeSpawnsHlaser: 0
   spawnGoblin: 1
+  cfgGoblin: {fileID: 11400000, guid: 58fd68643924fff4a9f07d61d99f38a1, type: 2}
   mSTimeSpawnsGoblin: 40
-  mESTimeSpawnsGoblin: 50
+  mETimeSpawnsGoblin: 50
   timeSpawnsGoblin: 0
-  waveIndex: 0
-  looping: 1
+  spawnHealDrone: 1
+  cfgHealDrone: {fileID: 11400000, guid: e4f58f0551bba5041aad556c8f1a571f, type: 2}
+  mEnemiesCountHealDrone: 50
+  EnemiesCountHealDrone: 0
+  mSTimeSpawnsHealDrone: 40
+  mETimeSpawnsHealDrone: 50
+  timeSpawnsHealDrone: 0

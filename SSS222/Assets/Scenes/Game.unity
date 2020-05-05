@@ -269,44 +269,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f87dc7e0d5691d345a0172eb5a309a59, type: 3}
---- !u!1 &477909241 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3404220589587791351, guid: 32e88db5928663e448b2e684800f6374,
+--- !u!95 &477909242 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 477909242, guid: 32e88db5928663e448b2e684800f6374,
     type: 3}
   m_PrefabInstance: {fileID: 3404220590025262475}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &477909242
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477909241}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3d55fa77b730a8f45b24fff9d29a68a0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &477909243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477909241}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6f308d74a236e745baa8202eaa57105, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bgSprite: {fileID: 1764790085}
 --- !u!4 &643586546 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4079877003467868499, guid: f87dc7e0d5691d345a0172eb5a309a59,
@@ -1502,6 +1470,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Waves
       objectReference: {fileID: 0}
+    - target: {fileID: 356336301364335481, guid: f406453d807c7104bbf48d3e3680ba15,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 356336301364335483, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2480,6 +2453,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 477909243, guid: 32e88db5928663e448b2e684800f6374, type: 3}
+      propertyPath: bgSprite
+      value: 
+      objectReference: {fileID: 1764790085}
     - target: {fileID: 3404220589587791115, guid: 32e88db5928663e448b2e684800f6374,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2534,26 +2511,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3404220589587791348, guid: 32e88db5928663e448b2e684800f6374,
-        type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.2509804
-      objectReference: {fileID: 0}
-    - target: {fileID: 3404220589587791348, guid: 32e88db5928663e448b2e684800f6374,
-        type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3404220589587791348, guid: 32e88db5928663e448b2e684800f6374,
-        type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.2509804
-      objectReference: {fileID: 0}
-    - target: {fileID: 3404220589587791348, guid: 32e88db5928663e448b2e684800f6374,
-        type: 3}
-      propertyPath: m_BackGroundColor.a
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3404220589587791351, guid: 32e88db5928663e448b2e684800f6374,
         type: 3}
@@ -3240,17 +3197,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 471278204608894437, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
-        type: 3}
-      propertyPath: mEnemiesCountHealDrone
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 471278204608894437, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
-        type: 3}
-      propertyPath: cfgHealDrone
-      value: 
-      objectReference: {fileID: 11400000, guid: e4f58f0551bba5041aad556c8f1a571f,
-        type: 2}
     - target: {fileID: 471278204608894438, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
         type: 3}
       propertyPath: m_Name

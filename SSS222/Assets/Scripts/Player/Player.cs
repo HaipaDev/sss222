@@ -805,7 +805,7 @@ public class Player : MonoBehaviour{
                         refillRandomized=false;
                         AudioSource.PlayClipAtPoint(energyRefillSFX, new Vector2(transform.position.x, transform.position.y));
                         GameObject crystalVFX = Instantiate(crystalExplosionVFX, new Vector2(0, 0), Quaternion.identity);
-                        Destroy(crystalVFX,0.03f);
+                        Destroy(crystalVFX,0.1f);
                     }else{
                         refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCost.ToString();
                         refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text="";

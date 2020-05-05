@@ -259,6 +259,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8629e71bfd72e44e87f82ac22b9ce50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healBallPrefab: {fileID: 6041420664094412071, guid: 67fb16cc03140834290bb647770ee0e9,
+    type: 3}
+  shootFrequency: 0.2
+  speedBullet: 4
   distMin: 1.2
   dodgeSpeed: 3
   dodgeTime: 0.5
@@ -268,6 +272,7 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0}
   dist: 0
   closestWeapon: {fileID: 0}
+  closestEnemy: {fileID: 0}
 --- !u!82 &-8825757306841386777
 AudioSource:
   m_ObjectHideFlags: 0
