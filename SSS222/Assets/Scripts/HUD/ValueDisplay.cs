@@ -9,6 +9,7 @@ public class ValueDisplay : MonoBehaviour{
     DataSavable dataSavable;
     SaveSerial saveSerial;
     Player player;
+    UpgradeMenu upgradeMenu;
     [SerializeField] string value = "score";
     [SerializeField] float valueLimitD=-1;
     [SerializeField] bool changeOnValidate;
@@ -20,6 +21,7 @@ public class ValueDisplay : MonoBehaviour{
         saveSerial = FindObjectOfType<SaveSerial>();
         //dataSavable = FindObjectOfType<DataSavable>();
         player = FindObjectOfType<Player>();
+        upgradeMenu = FindObjectOfType<UpgradeMenu>();
     }
 
     // Update is called once per frame
@@ -42,6 +44,14 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "max_energy") scoreText.text = player.maxEnergy.ToString();
         else if (value == "hpOffMax") scoreText.text = Mathf.RoundToInt(player.health).ToString()+"/"+player.maxHP.ToString();
         else if (value == "energyOffMax") scoreText.text = Mathf.RoundToInt(player.energy).ToString()+"/"+player.maxEnergy.ToString();
+
+        else if (value == "lvl_ship") scoreText.text = "Ship Level: "+upgradeMenu.total_UpgradesLvl.ToString();
+        else if (value == "lvl_hp") scoreText.text = "Lvl. "+upgradeMenu.maxHealth_UpgradesLvl.ToString();
+        else if (value == "lvl_energy") scoreText.text = "Lvl. "+upgradeMenu.maxEnergy_UpgradesLvl.ToString();
+
+        else if (value == "maxHealth_upgradeCost") scoreText.text = upgradeMenu.maxHealth_UpgradeCost.ToString();
+        else if (value == "maxEnergy_upgradeCost") scoreText.text = upgradeMenu.maxEnergy_UpgradeCost.ToString();
+        
         /*else if (value == "state"){
             var value = System.Math.Round(player.GetGCloverTimer(),1);
 

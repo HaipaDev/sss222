@@ -12,16 +12,20 @@ public class Enemy : MonoBehaviour{
     [SerializeField] float bulletSpeed = 8f;
     [SerializeField] bool DBullets = false;
     [SerializeField] float bulletDist=0.35f;
-    [SerializeField] float enBallchanceInit = 30f;
-    [SerializeField] float CoinchanceInit = 3f;
-    public float enBallchance;
-    public float Coinchance;
+    [SerializeField] bool randomizeWaveDeath = false;
+    [SerializeField] bool flyOff = false;
+    [HeaderAttribute("Drops & Points")]
     //[SerializeField] int scoreValue = 1;
     [SerializeField] public bool givePts = true;
     [SerializeField] int scoreValueStart = 1;
     [SerializeField] int scoreValueEnd = 10;
-    [SerializeField] bool randomizeWaveDeath = false;
-    [SerializeField] bool flyOff = false;
+    [SerializeField] float enBallchanceInit = 30f;
+    [SerializeField] float CoinchanceInit = 3f;
+    [SerializeField] float powercoreChanceInit = 0f;
+    [HideInInspector] public float enBallchance;
+    [HideInInspector] public float Coinchance;
+    [HideInInspector] public float powercoreChance;
+    
     [HeaderAttribute("Effects")]
     [SerializeField] public GameObject explosionVFX;
     [SerializeField] public GameObject explosionSmallVFX;
@@ -54,6 +58,7 @@ public class Enemy : MonoBehaviour{
     [HeaderAttribute("Drops")]
     [SerializeField] GameObject energyBallPrefab;
     [SerializeField] GameObject coinPrefab;
+    [SerializeField] GameObject powercorePrefab;
     [HeaderAttribute("Others")]
     //[SerializeField] public bool cTagged=false;
     [SerializeField] public bool yeeted=false;
@@ -83,8 +88,9 @@ public class Enemy : MonoBehaviour{
     void Start(){
         enBallchance = Random.Range(0f, 100f);
         Coinchance = Random.Range(0f, 100f);
-        if (enBallchance <= enBallchanceInit){ enBallchance = 1; }
-        if (Coinchance <= CoinchanceInit) { Coinchance = 1; }
+        if (enBallchance <= enBallchanceInit && enBallchanceInit>0){ enBallchance = 1; }
+        if (Coinchance <= CoinchanceInit && CoinchanceInit>0) { Coinchance = 1; }
+        if (powercoreChance <= powercoreChanceInit && powercoreChanceInit>0) { powercoreChance = 1; }
         shotCounter = Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
         myAudioSource = GetComponent<AudioSource>();
         rb=GetComponent<Rigidbody2D>();
@@ -137,6 +143,7 @@ public class Enemy : MonoBehaviour{
                 gameSession.AddToScore(scoreValue);
                 if(enBallchance==1){ Instantiate(energyBallPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
                 if(Coinchance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
+                if(powercoreChance==1){ Instantiate(powercorePrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
             }
             GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
             PlayClipAt(explosionSFX, new Vector2(transform.position.x, transform.position.y));

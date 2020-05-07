@@ -252,18 +252,22 @@ MonoBehaviour:
   - name: 9Randomizer
     lootItem: {fileID: 11400000, guid: f9bb167715c7fcc419a9f9aa53b85245, type: 2}
     dropChance: 6
+  - name: 10PowerCore
+    lootItem: {fileID: 11400000, guid: ca7b448a3f962ed45b97683ad5bdea1e, type: 2}
+    dropChance: 3
   itemsPercentage:
-  - name: 0Minigun - 6.12% - 3/46
-  - name: 1Phaser - 9.18% - 4.5/44.5
-  - name: 2HRockets - 12.24% - 6/43
-  - name: 3LaserTriple - 12.24% - 6/43
-  - name: 4MedkitUltra - 0% - 0/49
-  - name: 5LSaber - 14.29% - 7/42
-  - name: 6QRockets - 13.27% - 6.5/42.5
-  - name: 7PRockets - 6.12% - 3/46
-  - name: 8Magnet - 14.29% - 7/42
-  - name: 9Randomizer - 12.24% - 6/43
-  sum: 49
+  - name: 0Minigun - 5.77% - 3/49
+  - name: 1Phaser - 8.65% - 4.5/47.5
+  - name: 2HRockets - 11.54% - 6/46
+  - name: 3LaserTriple - 11.54% - 6/46
+  - name: 4MedkitUltra - 0% - 0/52
+  - name: 5LSaber - 13.46% - 7/45
+  - name: 6QRockets - 12.5% - 6.5/45.5
+  - name: 7PRockets - 5.77% - 3/49
+  - name: 8Magnet - 13.46% - 7/45
+  - name: 9Randomizer - 11.54% - 6/46
+  - name: 10PowerCore - 5.77% - 3/49
+  sum: 52
 --- !u!82 &1241189996
 AudioSource:
   m_ObjectHideFlags: 0
@@ -521,7 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0.5
+  timer: 1
 --- !u!1 &6013975899487696432
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,7 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0.5
+  timer: 1
 --- !u!1 &6013975899538651781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,7 +1139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0.5
+  timer: 1
 --- !u!1 &6013975900434798474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1451,7 +1455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0.5
+  timer: 1
 --- !u!1 &6013975900916326570
 GameObject:
   m_ObjectHideFlags: 0
@@ -2059,7 +2063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0.5
+  timer: 1
 --- !u!1 &8900824473014886772
 GameObject:
   m_ObjectHideFlags: 0

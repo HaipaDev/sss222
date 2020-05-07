@@ -42,8 +42,9 @@ public class ShopSlot : MonoBehaviour{
             AudioSource.PlayClipAtPoint(shopMenu.buySFX,player.transform.position);
             //if(ID<=shopMenu.shopSlotIDs.Count){
                 player.energy+=10f;
-                gameSession.AddXP(gameSession.xp_shop);//XP For purchase
-                if(ID!=4 && ID!=8 && ID!=9){
+                if(ID!=10)gameSession.AddXP(gameSession.xp_shop);//XP For purchase
+                //if(ID!=4 && ID!=8 && ID!=9 && ID!=10){
+                if(lootTable.itemList[ID].lootItem.pwrupName!=""){
                     player.powerup=lootTable.itemList[ID].lootItem.pwrupName;
                     player.energy += player.pwrupEnergyGet;
                 }else if(ID==4){
@@ -55,6 +56,9 @@ public class ShopSlot : MonoBehaviour{
                     player.magnetTimer=player.magnetTime;
                 }else if(ID==9){
                     Instantiate(player.GetComponent<PlayerCollider>().GetRandomizerPwrup(),player.transform.position,Quaternion.identity);
+                }else if(ID==10){
+                    gameSession.cores++;
+                    AudioSource.PlayClipAtPoint(gameSession.lvlUpSFX,player.transform.position);
                 }
                 /*if (ID == 0) { player.powerup = "mlaser"; player.energy += player.pwrupEnergyGet; }
                 if (ID==1) { player.powerup = "phaser"; player.energy += player.pwrupEnergyGet; }

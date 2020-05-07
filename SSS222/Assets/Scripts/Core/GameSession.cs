@@ -89,7 +89,8 @@ public class GameSession : MonoBehaviour{
         if(FindObjectOfType<Player>()!=null){if(FindObjectOfType<Player>().timeFlyingCore>flyingTimeReq){AddXP(xp_flying);FindObjectOfType<Player>().timeFlyingCore=0f;}}
 
         if(coresXp>=xp_forCore){
-            cores+=1;
+            cores++;
+            //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             coresXp=0;
             AudioSource.PlayClipAtPoint(lvlUpSFX,transform.position);
         }

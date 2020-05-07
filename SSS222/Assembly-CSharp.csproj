@@ -85,12 +85,13 @@
      <Compile Include="Assets\Scripts\HUD\PauseMenu.cs" />
      <Compile Include="Assets\Scripts\HUD\PowerupDisplay.cs" />
      <Compile Include="Assets\Scripts\HUD\ShakeQuicklyUI.cs" />
-     <Compile Include="Assets\Scripts\HUD\UpgradeMenu.cs" />
      <Compile Include="Assets\Scripts\HUD\ValueDisplay.cs" />
      <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
      <Compile Include="Assets\Scripts\Menu\ButtonInterval.cs" />
      <Compile Include="Assets\Scripts\Menu\Inventory.cs" />
      <Compile Include="Assets\Scripts\Menu\SettingsMenu.cs" />
+     <Compile Include="Assets\Scripts\Menu\UpgradeMenu.cs" />
+     <Compile Include="Assets\Scripts\Menu\XPFill.cs" />
      <Compile Include="Assets\Scripts\Player\BounceFromEnemies.cs" />
      <Compile Include="Assets\Scripts\Player\GloomyScythe.cs" />
      <Compile Include="Assets\Scripts\Player\Lightsaber.cs" />
