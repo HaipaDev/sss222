@@ -88,6 +88,7 @@ public class Enemy : MonoBehaviour{
     void Start(){
         enBallchance = Random.Range(0f, 100f);
         Coinchance = Random.Range(0f, 100f);
+        powercoreChance = Random.Range(0f, 100f);
         if (enBallchance <= enBallchanceInit && enBallchanceInit>0){ enBallchance = 1; }
         if (Coinchance <= CoinchanceInit && CoinchanceInit>0) { Coinchance = 1; }
         if (powercoreChance <= powercoreChanceInit && powercoreChanceInit>0) { powercoreChance = 1; }

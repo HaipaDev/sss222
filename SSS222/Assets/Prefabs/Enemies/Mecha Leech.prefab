@@ -54,6 +54,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -196,17 +197,17 @@ MonoBehaviour:
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
+  randomizeWaveDeath: 0
+  flyOff: 0
+  givePts: 1
+  scoreValueStart: 15
+  scoreValueEnd: 25
   enBallchanceInit: 50
   CoinchanceInit: 4
   powercoreChanceInit: 1
   enBallchance: 0
   Coinchance: 0
   powercoreChance: 0
-  givePts: 1
-  scoreValueStart: 15
-  scoreValueEnd: 25
-  randomizeWaveDeath: 0
-  flyOff: 0
   explosionVFX: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
   explosionSmallVFX: {fileID: 100000, guid: cdb72e2563af9f44fa5b2ae5464ede19, type: 3}
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}

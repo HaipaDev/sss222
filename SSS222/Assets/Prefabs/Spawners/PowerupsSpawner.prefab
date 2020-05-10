@@ -93,7 +93,7 @@ MonoBehaviour:
   - name: Laser2 Powerup
     lootItem: {fileID: 8467605574232654556, guid: c16ad10c3be8d894a81ec53963a84d36,
       type: 3}
-    dropChance: 12
+    dropChance: 0
   - name: Laser3 PowerUp
     lootItem: {fileID: -6929926316309368144, guid: 0e2ef393ab2246b4a877082641eb520d,
       type: 3}
@@ -171,26 +171,26 @@ MonoBehaviour:
       type: 3}
     dropChance: 10
   itemsPercentage:
-  - name: Amor PowerUp - 5.81% - 10/162
-  - name: ArmorU Powerup - 4.65% - 8/164
-  - name: Laser2 Powerup - 6.98% - 12/160
-  - name: Laser3 PowerUp - 4.65% - 8/164
-  - name: Phaser Powerup - 4.07% - 7/165
-  - name: HRockets Powerup - 5.23% - 9/163
-  - name: MLaser Powerup - 4.07% - 7/165
-  - name: LSaber Powerup - 5.52% - 9.5/162.5
-  - name: Flip Powerup - 6.4% - 11/161
-  - name: GClover Powerup - 1.16% - 2/170
-  - name: ShadowBT Powerup - 1.16% - 2/170
-  - name: Shadowdash Powerup - 5.23% - 9/163
-  - name: LClaws Powerup - 4.94% - 8.5/163.5
-  - name: QRockets Powerup - 5.52% - 9.5/162.5
-  - name: PRockets Powerup - 0% - 0/172
-  - name: CStream Powerup - 3.78% - 6.5/165.5
-  - name: Inverter Powerup - 6.4% - 11/161
-  - name: Magnet Powerup - 4.65% - 8/164
-  - name: Scaler Powerup - 5.52% - 9.5/162.5
-  - name: Matrix Powerup - 4.36% - 7.5/164.5
-  - name: Point Multiplier Powerup - 4.07% - 7/165
-  - name: Randomizer Powerup - 5.81% - 10/162
-  sum: 172
+  - name: Amor PowerUp - 6.25% - 10/150
+  - name: ArmorU Powerup - 5% - 8/152
+  - name: Laser2 Powerup - 0% - 0/160
+  - name: Laser3 PowerUp - 5% - 8/152
+  - name: Phaser Powerup - 4.38% - 7/153
+  - name: HRockets Powerup - 5.62% - 9/151
+  - name: MLaser Powerup - 4.38% - 7/153
+  - name: LSaber Powerup - 5.94% - 9.5/150.5
+  - name: Flip Powerup - 6.88% - 11/149
+  - name: GClover Powerup - 1.25% - 2/158
+  - name: ShadowBT Powerup - 1.25% - 2/158
+  - name: Shadowdash Powerup - 5.62% - 9/151
+  - name: LClaws Powerup - 5.31% - 8.5/151.5
+  - name: QRockets Powerup - 5.94% - 9.5/150.5
+  - name: PRockets Powerup - 0% - 0/160
+  - name: CStream Powerup - 4.06% - 6.5/153.5
+  - name: Inverter Powerup - 6.88% - 11/149
+  - name: Magnet Powerup - 5% - 8/152
+  - name: Scaler Powerup - 5.94% - 9.5/150.5
+  - name: Matrix Powerup - 4.69% - 7.5/152.5
+  - name: Point Multiplier Powerup - 4.38% - 7/153
+  - name: Randomizer Powerup - 6.25% - 10/150
+  sum: 160

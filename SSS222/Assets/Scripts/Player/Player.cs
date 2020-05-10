@@ -10,8 +10,9 @@ public class Player : MonoBehaviour{
     [SerializeField] bool moveX = true;
     [SerializeField] bool moveY = true;
     [SerializeField] bool moveByMouse = false;
-    [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float lsaberSpeedMulti = 1.25f;
+    [SerializeField] public float moveSpeedInit = 5f;
+    [SerializeField] public float lsaberSpeedMulti = 1.25f;
+    public float moveSpeed = 5f;
     public float moveSpeedCurrent;
     [SerializeField] float padding = 0.1f;
     [SerializeField] public float health = 200f;
@@ -19,7 +20,9 @@ public class Player : MonoBehaviour{
     [SerializeField] public string powerup = "laser";
     [SerializeField] public float energy = 80f;
     [SerializeField] public float maxEnergy = 200f;
+    [SerializeField] public string powerupDefault = "laser";
     [SerializeField] public bool losePwrupOutOfEn;
+    [SerializeField] public bool energyRefillUnlocked;
     [HeaderAttribute("Weapons")]
     [SerializeField] public GameObject laserPrefab;
     [SerializeField] public GameObject phaserPrefab;
@@ -210,6 +213,7 @@ public class Player : MonoBehaviour{
         //settings = FindObjectOfType<Settings>();
         //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
+        moveSpeed = moveSpeedInit;
         moveSpeedCurrent = moveSpeed;
         dashTime = startDashTime;
         moveByMouse = saveSerial.moveByMouse;
@@ -536,7 +540,7 @@ public class Player : MonoBehaviour{
                         yield return new WaitForSeconds(cbulletShootPeriod);
                 }
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
-                else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup = "laser"; shootTimer = 1f; yield return new WaitForSeconds(1f); }
+                else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup = powerupDefault; shootTimer = 1f; yield return new WaitForSeconds(1f); }
             }else{ energy = 0; AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); shootTimer = 0f; yield return new WaitForSeconds(1f); }
             }
         }
@@ -622,7 +626,7 @@ public class Player : MonoBehaviour{
             moveSpeedCurrent = moveSpeed;
             if(powerup=="lsaberA")powerup="lsaber";
             if(powerup=="lclawsA")powerup="lclaws";
-            if(losePwrupOutOfEn)powerup = "laser";
+            if(losePwrupOutOfEn)powerup = powerupDefault;
         }
     }
     #endregion
@@ -744,6 +748,7 @@ public class Player : MonoBehaviour{
 
     private void RefillEnergy(){
         if(energy<=0){
+        if(energyRefillUnlocked==true){
             if(refillDelay>0)refillDelay-=Time.deltaTime;
             if(refillDelay<=0){refillDelay=-4;}
             //refillUI.gameObject.SetActive(true);
@@ -813,6 +818,7 @@ public class Player : MonoBehaviour{
                     refillDelay=1.6f;
                 }
             }
+        }
         }else{
             if(refillUI.gameObject.activeSelf==true)SetActiveAllChildren(refillUI.transform,false);//refillUI.gameObject.SetActive(false);
         }

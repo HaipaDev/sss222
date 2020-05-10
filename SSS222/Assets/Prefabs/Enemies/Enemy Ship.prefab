@@ -53,6 +53,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -189,8 +190,8 @@ MonoBehaviour:
   scoreValueStart: 11
   scoreValueEnd: 15
   enBallchanceInit: 50
-  CoinchanceInit: 10
-  powercoreChanceInit: 5
+  CoinchanceInit: 0
+  powercoreChanceInit: 25
   enBallchance: 0
   Coinchance: 0
   powercoreChance: 0

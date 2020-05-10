@@ -88,7 +88,7 @@ public class PlayerCollider : MonoBehaviour{
                 var dmg = damageDealer.GetDamage();
 
                 var cometName = cometPrefab.name; var cometName1 = cometPrefab.name + "(Clone)";
-                if (other.gameObject.name == cometName || other.gameObject.name == cometName1) { dmg = damageDealer.GetDamageComet(); en = true; }
+                if (other.gameObject.name == cometName || other.gameObject.name == cometName1) { dmg = (float)System.Math.Round(damageDealer.GetDamageComet()*other.transform.localScale.x,1); en = true; }
                 var batName = batPrefab.name; var batName1 = batPrefab.name + "(Clone)";
                 if (other.gameObject.name == batName || other.gameObject.name == batName1) { dmg = damageDealer.GetDamageBat(); en = true; }
                 var enShip1Name = enShip1Prefab.name; var enShip1Name1 = enShip1Prefab.name + "(Clone)";

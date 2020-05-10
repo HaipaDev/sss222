@@ -158,6 +158,7 @@ MonoBehaviour:
   powerup: laser
   energy: 180
   maxEnergy: 180
+  powerupDefault: laser
   losePwrupOutOfEn: 1
   laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
     type: 3}
@@ -230,8 +231,8 @@ MonoBehaviour:
   pmultiTime: 24
   pmultiTimer: -4
   laserEn: 1
-  laser2En: 2
-  laser3En: 3
+  laser2En: 1.5
+  laser3En: 2.5
   phaserEn: 3
   hrocketEn: 3.4
   mlaserEn: 0.075
