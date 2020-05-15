@@ -60,8 +60,7 @@ public class SettingsMenu : MonoBehaviour{
         Screen.fullScreen = isFullscreen;
         fullscreen = isFullscreen;
     }
-    public void SetSteering(bool isMovingByMouse)
-    {
+    public void SetSteering(bool isMovingByMouse){
         moveByMouse = isMovingByMouse;
         //saveSerial.moveByMouse = isMovingByMouse;
     }

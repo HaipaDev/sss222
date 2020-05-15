@@ -103,6 +103,19 @@ public class SaveSerial : MonoBehaviour{
 		}
 		else Debug.Log("Settings file not found in " + Application.persistentDataPath + "/" + filenameSettings);
 	}
+
+	public void Delete()
+	{
+		if (File.Exists(Application.persistentDataPath + "/"+filename)){
+			File.Delete(Application.persistentDataPath + "/"+filename);
+		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
+	}
+	public void ResetSettings()
+	{
+		if (File.Exists(Application.persistentDataPath + "/"+filenameSettings)){
+			File.Delete(Application.persistentDataPath + "/"+filenameSettings);
+		}else Debug.Log("Settings file not found in "+Application.persistentDataPath+"/"+filenameSettings);
+	}
 	#region//Singleton
 	private void Awake()
 	{

@@ -136,7 +136,7 @@ public class Enemy : MonoBehaviour{
             rb.velocity=new Vector2(0,3f);
         }
     }
-
+    
     public void Die(){
         if (health <= 0){
             int scoreValue = Random.Range(scoreValueStart,scoreValueEnd);
@@ -148,14 +148,16 @@ public class Enemy : MonoBehaviour{
             }
             GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
             PlayClipAt(explosionSFX, new Vector2(transform.position.x, transform.position.y));
-            
-            if(randomizeWaveDeath==true){ gameSession.EVscore = 50; }
             if (GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup();
             Destroy(explosion, 0.5f);
             Destroy(gameObject);
             shake.CamShake();
             gameSession.AddEnemyCount();
         }
+    }
+    private void OnDestroy() {
+        if (GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber);
+        if(randomizeWaveDeath==true){ gameSession.EVscore = gameSession.EVscoreMax; }
     }
     private void DestroyOutside(){
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){ if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){Destroy(GetComponent<GoblinDrop>().powerup);}}}

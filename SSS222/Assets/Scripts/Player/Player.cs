@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour{
     #region Vars
@@ -171,6 +172,7 @@ public class Player : MonoBehaviour{
     Rigidbody2D rb;
     GameSession gameSession;
     SaveSerial saveSerial;
+    public Joystick joystick;
     //Settings settings;
     Coroutine shootCoroutine;
     //FollowMouse followMouse;
@@ -210,6 +212,7 @@ public class Player : MonoBehaviour{
         rb = GetComponent<Rigidbody2D>();
         gameSession=FindObjectOfType<GameSession>();
         saveSerial = FindObjectOfType<SaveSerial>();
+        joystick=FindObjectOfType<FloatingJoystick>();
         //settings = FindObjectOfType<Settings>();
         //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
@@ -260,12 +263,21 @@ public class Player : MonoBehaviour{
         /* Perform any instantaneous actions, using Time.fixedDeltaTime where necessary */
     }
     void CountTimeMovementPressed(){
-        if(Input.GetButton("Horizontal")){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
-        if(Input.GetButton("Vertical")){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
-        if(Input.GetButton("Horizontal")||Input.GetButton("Vertical")&&Time.timeScale>0.01f){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;}//Add to total time flying
-        if(!Input.GetButton("Horizontal")){hPressedTime=0;}
-        if(!Input.GetButton("Vertical")){vPressedTime=0;}
-        if(!Input.GetButton("Horizontal")&&!Input.GetButton("Vertical")){mPressedTime=0;}
+        if (Application.platform == RuntimePlatform.Android){
+            if(joystick.Horizontal>0.2f || joystick.Horizontal<-0.2f){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
+            if(joystick.Vertical>0.2f || joystick.Vertical<-0.2f){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
+            if(((joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f)||(joystick.Vertical>0.2f||joystick.Vertical<-0.2f))&&Time.timeScale>0.01f){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;}//Add to total time flying
+            if(joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f){hPressedTime=0;}
+            if(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f){vPressedTime=0;}
+            if((joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f)&&(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f)){mPressedTime=0;}
+        }else{
+            if(Input.GetButton("Horizontal")){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
+            if(Input.GetButton("Vertical")){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
+            if(Input.GetButton("Horizontal")||Input.GetButton("Vertical")&&Time.timeScale>0.01f){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;}//Add to total time flying
+            if(!Input.GetButton("Horizontal")){hPressedTime=0;}
+            if(!Input.GetButton("Vertical")){vPressedTime=0;}
+            if(!Input.GetButton("Horizontal")&&!Input.GetButton("Vertical")){mPressedTime=0;}
+        }
     }
     
     private void MovePlayer()
@@ -283,8 +295,13 @@ public class Player : MonoBehaviour{
             else{ deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
             lastClickTime = Time.time; }
 
-        deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir;
-        deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir;
+        if(Application.platform == RuntimePlatform.Android){
+            deltaX = joystick.Horizontal * Time.deltaTime * moveSpeedCurrent * moveDir;
+            deltaY = joystick.Vertical * Time.deltaTime * moveSpeedCurrent * moveDir;
+        }else{
+            deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir;
+            deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir;
+        }
 
         var newXpos = transform.position.x;
         var newYpos = transform.position.y;
@@ -302,6 +319,8 @@ public class Player : MonoBehaviour{
         if(dist>0.4f&&Time.timeScale>0.01f){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;}
 
         float step = moveSpeedCurrent * Time.deltaTime;
+        //if(FindObjectOfType<ShootButton>()!=null && FindObjectOfType<ShootButton>().pressed==false)transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
+        //else if(FindObjectsOfType<ShootButton>()==null){transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);}
         transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
 
         if(Input.GetButtonDown("Fire2")){
@@ -340,24 +359,41 @@ public class Player : MonoBehaviour{
 
     private void Shoot(){
         if(Time.timeScale>0.0001f){
-            if (Input.GetButtonDown("Fire1")){
-                if(shootTimer<=0f)shootCoroutine = StartCoroutine(ShootContinuously());
-            }if(!Input.GetButton("Fire1")){
-                if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
+            if (Application.platform != RuntimePlatform.Android){
+                if(Input.GetButtonDown("Fire1")){
+                    if(shootTimer<=0f)shootCoroutine = StartCoroutine(ShootContinuously());
+                }if(!Input.GetButton("Fire1")){
+                    if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
+                }
+                /*if (Input.GetButtonUp("Fire1")){
+                    StopCoroutine(shootCoroutine);
+                }*/
             }
-            /*if (Input.GetButtonUp("Fire1")){
-                StopCoroutine(shootCoroutine);
-            }*/
+        }
+    }
+
+    public void ShootButton(bool pressed){
+        if(pressed){
+            if(shootTimer<=0f)shootCoroutine = StartCoroutine(ShootContinuously());
+        }else{
+            if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
         }
     }
     public void DClick(){
         //Debug.Log("DClick");
         if(shadow==true && energy>0){
             if(moveByMouse!=true){
-                if(Input.GetAxisRaw("Vertical")<0) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
-                if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
-                if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
-                if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+                if(Application.platform == RuntimePlatform.Android){
+                    if(joystick.Vertical<-0.2f) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
+                    if(joystick.Vertical>0.2f){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
+                    if(joystick.Horizontal<-0.2f){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
+                    if(joystick.Horizontal>0.2f){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+                }else{
+                    if(Input.GetAxisRaw("Vertical")<0) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
+                    if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
+                    if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
+                    if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+                }
             }else{
                 rb.velocity = mousePos * dashSpeed * moveDir;
                 if(new Vector2(transform.position.x,transform.position.y)==mousePos){rb.velocity=Vector2.zero;}
@@ -373,7 +409,7 @@ public class Player : MonoBehaviour{
         
     }
     #region//Powerups
-    IEnumerator ShootContinuously(){
+    public IEnumerator ShootContinuously(){
         while (true){
             if (Time.timeScale > 0.0001f){
             if (energy>0){
@@ -655,7 +691,7 @@ public class Player : MonoBehaviour{
 
         if(inverted==true){if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==false)GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=true;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().revertMusic=false;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().enabled=true;
         inverterTimer+=Time.deltaTime;}
-        else{if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==true)GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=false;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().revertMusic=true;}
+        else{if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==true){GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=false;}if(GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().revertMusic==false){GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().revertMusic=true;}}
         if(inverterTimer >=10 && inverterTimer<14){inverted=false; inverterTimer=14;}
 
         if(magnetized==true){
@@ -705,9 +741,11 @@ public class Player : MonoBehaviour{
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(moveByMouse==true && dist<1){
                     gameSession.gameSpeed=dist;
-                }else if(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6)||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))){
+                }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,1f);
+                }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
                     gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,1f);
                 }else{
                     gameSession.gameSpeed=1f;

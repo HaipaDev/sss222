@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnShip : MonoBehaviour{
     Vector2 playerPosX;
+    Vector2 playerPos;
     Vector2 posY;
     Vector2 selfPos;
     Transform target;
@@ -11,28 +12,26 @@ public class EnShip : MonoBehaviour{
     [SerializeField] float vspeed = 0.1f;
     [SerializeField] float distY = 1.3f;
     [SerializeField] float distX = 0.3f;
+    [SerializeField] bool getClose = false;
 
     Player player;
-    Enemy enemy;
-    // rb;
+    //Enemy enemy;
+    //Rigidbody2D rb;
     //GameSession gameSession;
-    // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         player = FindObjectOfType<Player>();
-        enemy = GetComponent<Enemy>();
+        //enemy = GetComponent<Enemy>();
         //rb = GetComponent<Rigidbody2D>();
         //gameSession = FindObjectOfType<GameSession>();
 
         posY = new Vector2(transform.position.x, transform.position.y - distY);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update(){
         float stepY = vspeed * Time.deltaTime;
         float stepX = speedFollow * Time.deltaTime;
         playerPosX = new Vector2(player.transform.position.x, transform.position.y);
+        playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
         selfPos = new Vector2(transform.position.x,transform.position.y);
         var dist = Vector2.Distance(playerPosX, selfPos);
 
@@ -47,13 +46,16 @@ public class EnShip : MonoBehaviour{
             }
             else{}*/
             //if (!target) { return; }
-
-            var dir = (playerPosX - selfPos).normalized;
-            selfPos += dir * speedFollow * Time.deltaTime;
-            transform.position = selfPos;
-
+            if(getClose!=true){
+                var dir = (playerPosX - selfPos).normalized;
+                selfPos += dir * speedFollow * Time.deltaTime;
+                transform.position = selfPos;
+            }else{
+                var dir = (playerPos - selfPos).normalized;
+                selfPos += dir * speedFollow * Time.deltaTime;
+                transform.position = selfPos;
+            }
         }
-
         //Debug.Log(stepY);
     }
 }

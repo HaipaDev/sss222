@@ -19,10 +19,11 @@ public class DamageDealer : MonoBehaviour{
     float dmgComet = 47f;
     float dmgBat = 36f;
     float dmgEnemyShip1 = 80f;
-    float dmgGoblin = 16f;
-    float dmgHealDrone = 80f;
+    float dmgEnemySaber = 2.5f;
     float dmgSoundwave = 16.5f;
     float dmgEBt = 24.5f;
+    float dmgGoblin = 16f;
+    float dmgHealDrone = 80f;
     float dmgLeech = 4f;
     float dmgHLaser = 90f;
 
@@ -43,6 +44,7 @@ public class DamageDealer : MonoBehaviour{
     public float GetDamageComet(){return dmgComet;}
     public float GetDamageBat(){return dmgBat;}
     public float GetDamageEnemyShip1(){return dmgEnemyShip1;}
+    public float GetDamageEnSaber(){return dmgEnemySaber;}
     public float GetDamageGoblin(){return dmgGoblin;}
     public float GetDamageHealDrone(){return dmgHealDrone;}
     public float GetDamageLeech(){return dmgLeech; }

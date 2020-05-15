@@ -15159,7 +15159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &930176050443167061
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17112,7 +17112,7 @@ MonoBehaviour:
   defaultPowerup_upgradeCost3: 6
   energyRefill_upgradeCost: 3
   total_UpgradesCount: 0
-  total_UpgradesCountMax: 10
+  total_UpgradesCountMax: 5
   total_UpgradesLvl: 0
   other_UpgradesCountMax: 10
   maxHealth_UpgradesCount: 0

@@ -50,7 +50,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc, type: 2}
   - {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
   - {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
-  startingWave: 0
+  startingWave: 8
   waveIndex: 0
   currentWave: {fileID: 0}
   looping: 1
@@ -89,11 +89,15 @@ MonoBehaviour:
   - name: BatsCluster
     lootItem: {fileID: 11400000, guid: 2145a8982afb67c4bbfa60857b9f71f9, type: 2}
     dropChance: 7
+  - name: EnemySaber
+    lootItem: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d, type: 2}
+    dropChance: 7
   itemsPercentage:
-  - name: CometsFlyby - 18.48% - 8.5/37.5
-  - name: CometStorm - 15.22% - 7/39
-  - name: BatsFlyby - 19.57% - 9/37
-  - name: BatV - 17.39% - 8/38
-  - name: EnemyShip - 14.13% - 6.5/39.5
-  - name: BatsCluster - 15.22% - 7/39
-  sum: 46
+  - name: CometsFlyby - 16.04% - 8.5/44.5
+  - name: CometStorm - 13.21% - 7/46
+  - name: BatsFlyby - 16.98% - 9/44
+  - name: BatV - 15.09% - 8/45
+  - name: EnemyShip - 12.26% - 6.5/46.5
+  - name: BatsCluster - 13.21% - 7/46
+  - name: EnemySaber - 13.21% - 7/46
+  sum: 53

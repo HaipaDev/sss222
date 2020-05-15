@@ -19,7 +19,7 @@ public class InvertAllAudio : MonoBehaviour{
                     var tempAudioTime=sound.GetComponent<AudioSource>().clip.length-0.025f;
                     sound.GetComponent<AudioSource>().pitch=-1;
                     sound.GetComponent<AudioSource>().time=tempAudioTime;
-                //}else{
+                }else{
                     if(revertMusic!=true){
                         musicPlayer=FindObjectOfType<MusicPlayer>();
                         if(musicPlayer.GetComponent<AudioSource>().pitch!=-1)musicPlayer.GetComponent<AudioSource>().pitch=-1;}
@@ -29,7 +29,7 @@ public class InvertAllAudio : MonoBehaviour{
         }
         //else{musicPlayer.GetComponent<AudioSource>().pitch=1;}
         if(FindObjectOfType<Player>()!=null){
-        if(FindObjectOfType<Player>().inverted!=true){this.enabled=false;}
+            if(FindObjectOfType<Player>().inverted!=true){revertMusic=true;this.enabled=false;}
         }else{
             revertMusic=true;
             GetComponent<SpriteRenderer>().enabled=false;

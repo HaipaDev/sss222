@@ -8,8 +8,8 @@ public class FollowStrict : MonoBehaviour{
     [SerializeField] GameObject target;
     [SerializeField] string targetTag;
     //public float dist;
-    [SerializeField] float xx;
-    [SerializeField] float yy;
+    [SerializeField] public float xx;
+    [SerializeField] public float yy;
     //[SerializeField] Quaternion rotation;
 
     //Player player;
@@ -27,6 +27,7 @@ public class FollowStrict : MonoBehaviour{
     // Update is called once per frame
     void Update()
     {
+        if(targetObj==null){Destroy(gameObject);}
         targetPos = new Vector2(targetObj.transform.position.x+xx, targetObj.transform.position.y+yy);
         //selfPos = new Vector2(transform.position.x, transform.position.y);
         //dist=Vector2.Distance(targetPos, selfPos);

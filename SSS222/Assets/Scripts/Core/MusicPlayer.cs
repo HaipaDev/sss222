@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MusicPlayer : MonoBehaviour{
-    // Start is called before the first frame update
     void Awake(){
         SetUpSingleton();
     }
@@ -17,9 +16,7 @@ public class MusicPlayer : MonoBehaviour{
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update(){
         
     }
 }

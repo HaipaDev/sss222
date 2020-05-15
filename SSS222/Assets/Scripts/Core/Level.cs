@@ -33,13 +33,14 @@ public class Level : MonoBehaviour{
     {
         gameSession = FindObjectOfType<GameSession>();
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
-        transitioner=FindObjectOfType<Tag_Transition>().GetComponent<Animator>();
+        //transitioner=FindObjectOfType<Tag_Transition>().GetComponent<Animator>();
     }
 
     public void LoadStartMenu(){
         FindObjectOfType<GameSession>().SaveHighscore();
         FindObjectOfType<GameSession>().ResetScore();
         FindObjectOfType<SaveSerial>().Save();
+        FindObjectOfType<GameSession>().ResetMusicPitch();
         SceneManager.LoadScene("Menu");
         //LoadLevel("Menu");
         if(SceneManager.GetActiveScene().name=="Menu")FindObjectOfType<GameSession>().gameSpeed=1f;
@@ -59,8 +60,10 @@ public class Level : MonoBehaviour{
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
     public void LoadInventoryScene(){SceneManager.LoadScene("Inventory");}
     public void RestartGame(){
+        PauseMenu.GameIsPaused=false;
         FindObjectOfType<GameSession>().SaveHighscore();
         FindObjectOfType<GameSession>().ResetScore();
+        FindObjectOfType<GameSession>().ResetMusicPitch();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gameSession.gameSpeed=1f;
         Time.timeScale = 1f;
@@ -71,6 +74,11 @@ public class Level : MonoBehaviour{
     }
     public void QuitGame(){
         Application.Quit();
+    }
+    public void Restart(){
+        SceneManager.LoadScene("Loading");
+        gameSession.gameSpeed=1f;
+        Time.timeScale = 1f;
     }
 
     void LoadLevel(string sceneName){

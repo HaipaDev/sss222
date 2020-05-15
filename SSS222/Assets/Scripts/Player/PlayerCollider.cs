@@ -34,6 +34,8 @@ public class PlayerCollider : MonoBehaviour{
     [SerializeField] GameObject cometPrefab;
     [SerializeField] GameObject batPrefab;
     [SerializeField] GameObject enShip1Prefab;
+    [SerializeField] GameObject enCombatantPrefab;
+    [SerializeField] GameObject enSaberPrefab;
     [SerializeField] GameObject soundwavePrefab;
     [SerializeField] GameObject EBtPrefab;
     [SerializeField] GameObject leechPrefab;
@@ -93,6 +95,11 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == batName || other.gameObject.name == batName1) { dmg = damageDealer.GetDamageBat(); en = true; }
                 var enShip1Name = enShip1Prefab.name; var enShip1Name1 = enShip1Prefab.name + "(Clone)";
                 if (other.gameObject.name == enShip1Name || other.gameObject.name == enShip1Name1) { dmg = damageDealer.GetDamageEnemyShip1(); en = true; }
+
+                var enCombatantName = enCombatantPrefab.name; var enCombatantName1 = enCombatantPrefab.name + "(Clone)";
+                if (other.gameObject.name == enCombatantName || other.gameObject.name == enCombatantName1) { en = true; destroy=false; }
+                var enSaberName = enSaberPrefab.name; var enSaberName1 = enSaberPrefab.name + "(Clone)";
+                if (other.gameObject.name == enSaberName || other.gameObject.name == enSaberName1) { dmg = damageDealer.GetDamageEnSaber(); en = false; destroy=false; }
 
                 var goblinName = goblinPrefab.name; var goblinName1 = goblinPrefab.name + "(Clone)";
                 if (other.gameObject.name == goblinName || other.gameObject.name == goblinName1) { dmg = damageDealer.GetDamageGoblin(); en = true; }
@@ -307,6 +314,9 @@ public class PlayerCollider : MonoBehaviour{
 
                 var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
                 if (other.gameObject.name == hlaserName || other.gameObject.name == hlaserName1) { dmg = damageDealer.GetDamageHLaser(); }
+
+                var enSaberName = enSaberPrefab.name; var enSaberName1 = enSaberPrefab.name + "(Clone)";
+                if (other.gameObject.name == enSaberName || other.gameObject.name == enSaberName1) { dmg = damageDealer.GetDamageEnSaber(); }
 
                 if (dmgTimer<=0){
                     player.health -= dmg;

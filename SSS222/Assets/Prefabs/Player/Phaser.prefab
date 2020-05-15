@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5381357303093761109}
   - component: {fileID: -1614445912447373513}
   - component: {fileID: 8464121177970184819}
+  - component: {fileID: 1697403453669450582}
   m_Layer: 8
   m_Name: Phaser
   m_TagString: PlayerWeapons
@@ -52,6 +53,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -285,5 +287,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1697403453669450582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7c0a6cd33104f458caa6bbc316b8c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

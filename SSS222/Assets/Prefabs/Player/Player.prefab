@@ -52,6 +52,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -149,8 +150,9 @@ MonoBehaviour:
   moveX: 1
   moveY: 1
   moveByMouse: 1
-  moveSpeed: 5
+  moveSpeedInit: 5
   lsaberSpeedMulti: 1.25
+  moveSpeed: 5
   moveSpeedCurrent: 0
   padding: 0.55
   health: 150
@@ -160,6 +162,7 @@ MonoBehaviour:
   maxEnergy: 180
   powerupDefault: laser
   losePwrupOutOfEn: 1
+  energyRefillUnlocked: 0
   laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
     type: 3}
   phaserPrefab: {fileID: 5313808222654050488, guid: eeaf92f603acb7940b5e4aaf74fdcded,
@@ -234,7 +237,7 @@ MonoBehaviour:
   laser2En: 1.5
   laser3En: 2.5
   phaserEn: 3
-  hrocketEn: 3.4
+  hrocketEn: 2.6
   mlaserEn: 0.075
   lsaberEn: 0.375
   lclawsEn: 6.5
@@ -300,6 +303,7 @@ MonoBehaviour:
   mPressedTime: 0
   timeFlyingTotal: 0
   timeFlyingCore: 0
+  joystick: {fileID: 0}
 --- !u!114 &1949430517914965929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +371,10 @@ MonoBehaviour:
   batPrefab: {fileID: 3147796775416149952, guid: 2c3f94b277a11e0478605915547d8fed,
     type: 3}
   enShip1Prefab: {fileID: 6432250634095115783, guid: 37903edfff6f26349954ed2b719c593a,
+    type: 3}
+  enCombatantPrefab: {fileID: 6432250634095115783, guid: 952ed2444cd0f874592ef3f85ca7a108,
+    type: 3}
+  enSaberPrefab: {fileID: 4755926375889011706, guid: fa37e96c01257824c9c337b429cc5496,
     type: 3}
   soundwavePrefab: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
     type: 3}

@@ -137,14 +137,16 @@ public class GameSession : MonoBehaviour{
         //FindObjectOfType<DataSavable>().highscore = highscore;
     }
     public void SaveSettings(){
-        FindObjectOfType<SaveSerial>().moveByMouse = FindObjectOfType<SettingsMenu>().moveByMouse;
-        FindObjectOfType<SaveSerial>().quality = FindObjectOfType<SettingsMenu>().quality;
-        FindObjectOfType<SaveSerial>().fullscreen = FindObjectOfType<SettingsMenu>().fullscreen;
-        FindObjectOfType<SaveSerial>().masterVolume = FindObjectOfType<SettingsMenu>().masterVolume;
-        FindObjectOfType<SaveSerial>().soundVolume = FindObjectOfType<SettingsMenu>().soundVolume;
-        FindObjectOfType<SaveSerial>().musicVolume = FindObjectOfType<SettingsMenu>().musicVolume;
+        var ss=FindObjectOfType<SaveSerial>();
+        var sm=FindObjectOfType<SettingsMenu>();
+        ss.moveByMouse = sm.moveByMouse;
+        ss.quality = sm.quality;
+        ss.fullscreen = sm.fullscreen;
+        ss.masterVolume = sm.masterVolume;
+        ss.soundVolume = sm.soundVolume;
+        ss.musicVolume = sm.musicVolume;
 
-        FindObjectOfType<SaveSerial>().SaveSettings();
+        ss.SaveSettings();
     }
     public void SaveInventory(){
         FindObjectOfType<SaveSerial>().chameleonColor[0] = FindObjectOfType<Inventory>().chameleonColorArr[0];
@@ -153,6 +155,23 @@ public class GameSession : MonoBehaviour{
     }
     public void Save(){ FindObjectOfType<SaveSerial>().Save(); FindObjectOfType<SaveSerial>().SaveSettings(); }
     public void Load(){ FindObjectOfType<SaveSerial>().Load(); FindObjectOfType<SaveSerial>().LoadSettings(); }
+    public void DeleteAllShowConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((false)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((true)); }
+    public void DeleteAllHideConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((true)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((false)); }
+    public void DeleteAll(){ FindObjectOfType<SaveSerial>().Delete(); ResetSettings(); FindObjectOfType<Level>().Restart(); Destroy(FindObjectOfType<SaveSerial>().gameObject); Destroy(gameObject);}
+    public void ResetSettings(){
+        FindObjectOfType<SaveSerial>().ResetSettings();
+        FindObjectOfType<Level>().RestartScene();
+        FindObjectOfType<SaveSerial>().SaveSettings();
+        /*var s=FindObjectOfType<SettingsMenu>();
+        s.moveByMouse=true;
+        s.quality=4;
+        s.fullscreen=true;
+        s.masterVolume=1;
+        s.soundVolume=1;
+        s.musicVolume=1;*/
+    }public void ResetMusicPitch(){
+        if(FindObjectOfType<MusicPlayer>()!=null)FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;
+    }
 
     void CheckCodes(){
         if(Input.GetKey(KeyCode.Delete)){

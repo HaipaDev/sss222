@@ -205,7 +205,7 @@ public class DisruptersSpawner : MonoBehaviour{
             }
             if(spawnHlaser==true){
                 if(timeSpawnsHlaser>-0.01f){ timeSpawnsHlaser -= Time.deltaTime; }
-                else if(timeSpawnsHlaser == -4){ Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser); }
+                else if(timeSpawnsHlaser == -4){ timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser); }
             }
             if(spawnGoblin==true){
                 if(timeSpawnsGoblin > -0.01f){ timeSpawnsGoblin -= Time.deltaTime; }

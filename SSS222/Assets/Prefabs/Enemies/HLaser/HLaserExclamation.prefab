@@ -47,6 +47,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -196,7 +197,7 @@ MonoBehaviour:
     type: 3}
   hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
     type: 3}
-  timerExcl: 1
-  timerHlaserCharging: 1.12
+  timerExcl: 0.8
+  timerHlaserCharging: 1
   timerHlaser: 3.3
   timer: -4
