@@ -1,0 +1,54 @@
+{
+  "name": "com.unity.remote-config",
+  "displayName": "Remote Config",
+  "version": "1.0.9",
+  "unity": "2018.3",
+  "description": "Remote Config is a cloud service that lets you tune and customize your app over the air without requiring an update to your game.  You can use rules to enable or disable features, change the difficulty of your game or run special events to target specific audiences.  Rules control when updates are applied and to whom, while Unity manages delivery of your game content with minimal performance impact. \n\nRemote Config can be configured via the editor or through our public API’s.  Functionality includes: \n- Release new features without deploying code:\n   - Feature flagging\n   - Staged Rollouts\n   - Kill switch functionality\n   - Start & End Date\n   - Enable & disable rules\n- Personalized real-time segmentation with custom attributes\n   - Custom conditions for applying setting variants\n   - Device, user, game and other arbitrary attributes supporting\n- Reporting\n   - Tracing ID for decorating analytics events",
+  "dependencies": {},
+  "keywords": [
+    "remote",
+    "config",
+    "configuration",
+    "settings",
+    "remote settings",
+    "remote config",
+    "firebase",
+    "staged rollouts",
+    "feature flagging",
+    "roll-out",
+    "adapt",
+    "tune",
+    "tailor",
+    "test",
+    "experiment",
+    "experimentation",
+    "app update",
+    "taget",
+    "targeting",
+    "segment",
+    "segmentation",
+    "segmenting",
+    "override",
+    "rules",
+    "variants",
+    "variation",
+    "parameter",
+    "condtions",
+    "conditional",
+    "continuous delivery",
+    "deploy"
+  ],
+  "repository": {
+    "footprint": "97c24b22908d1b5c520151dbd1ec2c48fc609e1a",
+    "type": "git",
+    "url": "https://github.cds.internal.unity3d.com/unity/com.unity.ai.remote-settings.git",
+    "revision": "ec4c3e29628cb265dbf8f73d5b50970f3150f285"
+  },
+  "samples": [
+    {
+      "displayName": "Example Sample",
+      "description": "Sample contains an empty scene from which the example code in the Documentation can be implemented with",
+      "path": "Samples~/Example"
+    }
+  ]
+}

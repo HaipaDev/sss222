@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cacheType: 2
-  lastUpdatedAtString: 2020-05-10T17:08:02.634+02:00
-  initializedAtString: 2020-05-10T16:07:57.371+02:00
-  localBranches:
-  - name: master
-    tracking: origin/master
+  lastUpdatedAtString: 2020-05-15T15:56:35.388+02:00
+  initializedAtString: 2020-05-15T14:50:33.125+02:00
+  localBranches: []
   remoteBranches:
   - name: origin/HEAD
     tracking: '[None]'
@@ -32,14 +30,8 @@ MonoBehaviour:
     function: 0
     token: 
   localConfigBranches:
-    keys:
-    - master
-    values:
-    - name: master
-      remote:
-        name: origin
-        url: https://github.com/HyperGamesDev/sss222.git
-      trackingBranch: master
+    keys: []
+    values: []
   remoteConfigBranches:
     keys:
     - origin

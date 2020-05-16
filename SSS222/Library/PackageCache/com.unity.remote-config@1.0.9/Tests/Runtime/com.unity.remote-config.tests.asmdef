@@ -1,0 +1,20 @@
+{
+    "name": "Unity.RemoteConfig.Tests",
+    "references": [
+        "Unity.RemoteConfig"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Moq.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+]
+}
