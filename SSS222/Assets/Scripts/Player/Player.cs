@@ -423,6 +423,7 @@ public class Player : MonoBehaviour{
                     laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     energy -= laserEn;
+                    EnergyPopUpHUD(laserEn);
                         shootTimer = laserShootPeriod * 0.75f;
                         yield return new WaitForSeconds(laserShootPeriod*1.7f);
                 }else if(powerup=="laser2"){
@@ -443,6 +444,7 @@ public class Player : MonoBehaviour{
                     laserL2.transform.eulerAngles=new Vector3(0,0,10f);
                     laserR2.transform.eulerAngles=new Vector3(0,0,-10f);
                     energy -= laser2En;
+                    EnergyPopUpHUD(laser2En);
                         shootTimer = laserShootPeriod * 0.75f;
                         yield return new WaitForSeconds(laserShootPeriod);
                 }
@@ -472,6 +474,7 @@ public class Player : MonoBehaviour{
                     laserR2.transform.eulerAngles = new Vector3(0, 0, -8f);
                     laserR3.transform.eulerAngles = new Vector3(0, 0, -13f);
                     energy -= laser3En;
+                    EnergyPopUpHUD(laser3En);
                         shootTimer = laserShootPeriod*0.75f;
                         yield return new WaitForSeconds(laserShootPeriod);
                 }else if (powerup == "phaser"){
@@ -484,6 +487,7 @@ public class Player : MonoBehaviour{
                     phaserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, phaserSpeed);
                     phaserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, phaserSpeed);
                     energy -= phaserEn;
+                    EnergyPopUpHUD(phaserEn);
                         shootTimer = phaserShootPeriod;
                         yield return new WaitForSeconds(phaserShootPeriod);
                 }else if (powerup == "mlaser"){
@@ -498,6 +502,7 @@ public class Player : MonoBehaviour{
                         Rigidbody2D rbR = mlaserR.GetComponent<Rigidbody2D>(); rbR.velocity = new Vector2(rbR.velocity.x, UnityEngine.Random.Range(mlaserSpeedS, mlaserSpeedE));
                         energy -= mlaserEn;
                     }
+                    EnergyPopUpHUD(mlaserEn*mlaserBulletsAmmount);
                     GameObject flareL = Instantiate(flareShootVFX, new Vector2(xxL, yyL - flareShootYY), Quaternion.identity) as GameObject;
                     GameObject flareR = Instantiate(flareShootVFX, new Vector2(xxR, yyR - flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flareL.gameObject, 0.3f);
@@ -512,6 +517,7 @@ public class Player : MonoBehaviour{
                     Destroy(flare.gameObject, 0.3f);
                     hrocket.GetComponent<Rigidbody2D>().velocity = new Vector2(0, hrocketSpeed);
                     energy -= hrocketEn;
+                    EnergyPopUpHUD(hrocketEn);
                         shootTimer = hrocketShootPeriod;
                         yield return new WaitForSeconds(hrocketShootPeriod);
                 }else if (powerup == "shadowbt")
@@ -525,6 +531,7 @@ public class Player : MonoBehaviour{
                     //laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
                     //laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
                     energy -= shadowBTEn;
+                    EnergyPopUpHUD(shadowBTEn);
                         shootTimer = shadowBTShootPeriod;
                         yield return new WaitForSeconds(shadowBTShootPeriod);
                 }else if(powerup=="lclawsA"){
@@ -536,6 +543,7 @@ public class Player : MonoBehaviour{
                             //enemy.health -= FindObjectOfType<DamageDealer>().GetDamageLCLaws();
                         }else{ AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); }
                         energy -= lclawsEn;
+                        EnergyPopUpHUD(lclawsEn);
                             shootTimer = 0.5f;
                             yield return new WaitForSeconds(0.5f);
                 }else if (powerup == "qrockets"){
@@ -548,6 +556,7 @@ public class Player : MonoBehaviour{
                     hrocketL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
                     hrocketR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
                     energy -= qrocketEn;
+                    EnergyPopUpHUD(qrocketEn);
                         shootTimer = qrocketShootPeriod;
                         yield return new WaitForSeconds(qrocketShootPeriod);
                 }else if (powerup == "prockets"){
@@ -562,6 +571,7 @@ public class Player : MonoBehaviour{
                         Rigidbody2D rbR = procketR.GetComponent<Rigidbody2D>(); rbR.velocity = new Vector2(rbR.velocity.x, UnityEngine.Random.Range(procketSpeedS, procketSpeedE));
                         energy -= procketEn;
                     }
+                        EnergyPopUpHUD(procketEn*procketsBulletsAmmount);
                         shootTimer = procketShootPeriod;
                         yield return new WaitForSeconds(procketShootPeriod);
                 }else if (powerup=="cstream"){
@@ -572,6 +582,7 @@ public class Player : MonoBehaviour{
                     Destroy(flare.gameObject, 0.3f);
                     cbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     energy -= cbulletEn;
+                    EnergyPopUpHUD(cbulletEn);
                         shootTimer = cbulletShootPeriod * 0.825f;
                         yield return new WaitForSeconds(cbulletShootPeriod);
                 }
@@ -629,7 +640,7 @@ public class Player : MonoBehaviour{
             }else if (powerup == "lsaberA"){
                 if(Time.timeScale>0.0001f){
                     if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
-                    if(lsaberEnTimer<=0){energy -= lsaberEn;lsaberEnTimer=lsaberEnPeriod;}
+                    if(lsaberEnTimer<=0){energy -= lsaberEn;lsaberEnTimer=lsaberEnPeriod;EnergyPopUpHUD(lsaberEn);}
                     if(GameObject.Find(lsaberName)==null&&GameObject.Find(lsaberName1)==null){powerup="lsaber";}
                 }
             }
@@ -843,6 +854,7 @@ public class Player : MonoBehaviour{
                     var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
                     if(gameSession.coins>refillCost){
                         energy+=refillEnergyAmnt;
+                        EnergyPopUpHUDPlus(refillEnergyAmnt);
                         refillCount++;
                         gameSession.coins-=refillCost;
                         refillRandomized=false;
@@ -862,6 +874,29 @@ public class Player : MonoBehaviour{
         }
         
     }
+    void DMGPopUpHud(float dmg){
+        GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
+        dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
+        dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+dmg.ToString();
+    }void HPPopUpHUD(float dmg){
+        GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
+        dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
+        dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+dmg.ToString();
+    }
+    void EnergyPopUpHUD(float en){
+        GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
+        enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //enpupupHud.GetComponent<Animator>().SetTrigger(0);
+        enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+en.ToString();
+    }void EnergyPopUpHUDPlus(float en){
+        GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
+        enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //enpupupHud.GetComponent<Animator>().SetTrigger(0);
+        enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+en.ToString();
+    }
+
     private void SetActiveAllChildren(Transform transform, bool value)
      {
          foreach (Transform child in transform)

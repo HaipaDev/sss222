@@ -13,13 +13,13 @@ public class FollowStrict : MonoBehaviour{
     //[SerializeField] Quaternion rotation;
 
     //Player player;
-    GameObject targetObj;
+    public GameObject targetObj;
     //Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        if(target!=null){targetObj = GameObject.FindGameObjectWithTag(target.tag); }
+        if(target!=null){if(GameObject.Find(target.name)!=null){targetObj = GameObject.Find(target.name);} else{targetObj=GameObject.Find(target.name+"(Clone)");} }
         else{targetObj = GameObject.FindGameObjectWithTag(targetTag); }
         //rb = GetComponent<Rigidbody2D>();
     }

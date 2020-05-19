@@ -123,7 +123,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.018168807, y: 0.015899897}
+  m_Offset: {x: -0.000005990267, y: -0.020425677}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -134,7 +134,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5926559, y: 1.1007161}
+  m_Size: {x: 0.6725722, y: 0.95541406}
   m_EdgeRadius: 0
 --- !u!114 &2789940452507404222
 MonoBehaviour:
@@ -252,6 +252,8 @@ MonoBehaviour:
   powercorePrefab: {fileID: 1056705403108089519, guid: 0311d6b525027ad43918a62b48acaba8,
     type: 3}
   yeeted: 0
+  dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
+    type: 3}
 --- !u!114 &-7718021567847333411
 MonoBehaviour:
   m_ObjectHideFlags: 0

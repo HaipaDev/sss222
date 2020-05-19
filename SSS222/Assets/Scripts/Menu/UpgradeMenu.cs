@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -51,21 +51,12 @@ public class UpgradeMenu : MonoBehaviour{
                 if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && FindObjectOfType<Player>()!=null)Open();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape) && UpgradeMenuIsOpen)Resume();
 
         LevelEverything();
     }
 
-    public void UpgradeButton(){
-        if(UpgradeMenuIsOpen){
-            Resume();
-        }else{
-            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && FindObjectOfType<Player>()!=null)Open();
-        }
-        //Debug.Log("Shop = "+Shop.shopOpened);Debug.Log("Pause = "+PauseMenu.GameIsPaused);
-        if (Input.GetKeyDown(KeyCode.Escape) && UpgradeMenuIsOpen)Resume();
-    }
     public void Resume(){
-        gameSession = FindObjectOfType<GameSession>();
         upgradeMenuUI.SetActive(false);
         upgradeMenu2UI.SetActive(false);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
@@ -73,17 +64,14 @@ public class UpgradeMenu : MonoBehaviour{
         UpgradeMenuIsOpen = false;
     }
     public void Open(){
-        if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && FindObjectOfType<Player>()!=null){
-            gameSession = FindObjectOfType<GameSession>();
-            prevGameSpeed = gameSession.gameSpeed;
-            upgradeMenuUI.SetActive(true);
-            UpgradeMenuIsOpen = true;
-            GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
-            gameSession.gameSpeed = 0f;
-            //ParticleSystem.Stop();
-            //var ptSystems = FindObjectOfType<ParticleSystem>();
-            //foreach(ptSystem in ptSystems){ParticleSystem.Pause();}
-        }
+        prevGameSpeed = gameSession.gameSpeed;
+        upgradeMenuUI.SetActive(true);
+        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
+        gameSession.gameSpeed = 0f;
+        UpgradeMenuIsOpen = true;
+        //ParticleSystem.Stop();
+        //var ptSystems = FindObjectOfType<ParticleSystem>();
+        //foreach(ptSystem in ptSystems){ParticleSystem.Pause();}
     }
 
     public void PreviousGameSpeed(){gameSession.gameSpeed = prevGameSpeed;}

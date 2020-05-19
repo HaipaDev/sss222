@@ -26,13 +26,13 @@ public class EnCombatant : MonoBehaviour{
 
     Player player;
     //Enemy enemy;
-    //Rigidbody2D rb;
+    Rigidbody2D rb;
     //GameSession gameSession;
     void Start(){
-        if(FindObjectOfType<Tag_EnSaberWeapon>()==null){saber = Instantiate(saberPrefab);}//saber.GetComponent<FollowOneObject>().targetObj=this.gameObject;}
+        if(FindObjectOfType<Tag_EnSaberWeapon>()==null){saber = Instantiate(saberPrefab,transform.position,Quaternion.identity);}//saber.GetComponent<FollowStrict>().targetObj=this.gameObject;}//saber.GetComponent<FollowOneObject>().targetObj=this.gameObject;}
         player = FindObjectOfType<Player>();
         //enemy = GetComponent<Enemy>();
-        //rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         //gameSession = FindObjectOfType<GameSession>();
 
         posY = new Vector2(transform.position.x, transform.position.y - distY);
@@ -62,19 +62,38 @@ public class EnCombatant : MonoBehaviour{
             else{}*/
             //if (!target) { return; }
             //if(selfPos.x>playerPos.x || selfPos.x<playerPos.x){
-            if(distX>0.6f){
-                var dir = (playerPosX - selfPos).normalized;
-                selfPos += dir * speedFollowX * Time.deltaTime;
-                transform.position = selfPos;
+            if(dist>3.5f){
+                if(distX>0.6f){
+                    var dir = (playerPosX - selfPos).normalized;
+                    selfPos += dir * speedFollowX * Time.deltaTime;
+                    transform.position = selfPos;
+                }else{
+                    var dir = (playerPos - selfPos).normalized;
+                    selfPos += dir * speedFollowX * Time.deltaTime;
+                    transform.position = selfPos;
+                }
             }else{
                 /*var dir = (playerPosYDist - selfPos).normalized;
                 selfPos += dir * speedFollow * Time.deltaTime;
                 transform.position = selfPos;*/
-                transform.position=Vector2.MoveTowards(selfPos,playerPosYDist,stepY);
+                if(dist<2f){
+                    var attack=Attack(stepY);
+                    if(attack==null)StartCoroutine(attack);
+                    //transform.position=Vector2.MoveTowards(selfPos,playerPosYDist,stepY*5);
+                }else{
+                    transform.position=Vector2.MoveTowards(selfPos,playerPosYDist,stepY);
+                    //Debug.Log(playerPosYDist);
+                }
             }
         }
         if(selfPos.y>playerPos.y){transform.localRotation=new Quaternion(0,0,0,0);saber.GetComponent<FollowStrict>().yy=-1.12f;dir=-1;}
         else if(selfPos.y<playerPos.y){transform.localRotation=new Quaternion(0,0,180,0);saber.GetComponent<FollowStrict>().yy=1.12f;dir=1;}
         //Debug.Log(stepY);
+        //Debug.Log(dist);
+    }
+    IEnumerator Attack(float stepY){
+        rb.velocity=Vector2.MoveTowards(selfPos,playerPos,stepY*5);
+        yield return new WaitForSeconds(1f);
+        rb.velocity=Vector2.MoveTowards(selfPos,playerPosYDist,stepY);
     }
 }

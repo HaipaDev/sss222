@@ -240,6 +240,8 @@ MonoBehaviour:
   powercorePrefab: {fileID: 1056705403108089519, guid: 0311d6b525027ad43918a62b48acaba8,
     type: 3}
   yeeted: 0
+  dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
+    type: 3}
 --- !u!114 &1234536692577487592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +270,7 @@ MonoBehaviour:
   vspeed: 0.1
   distY: 1.3
   distX: 0.3
+  getClose: 0
 --- !u!82 &8981922279404870772
 AudioSource:
   m_ObjectHideFlags: 0

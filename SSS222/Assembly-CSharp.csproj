@@ -36,18 +36,37 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\CameraPause.cs" />
      <Compile Include="Assets\GGEZ\PerfectPixelCamera\Demo\Assets\ZoomDemo.cs" />
      <Compile Include="Assets\GGEZ\PerfectPixelCamera\Scripts\PerfectPixelCamera.cs" />
+     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
+     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
+     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
+     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
+     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
+     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
+     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
+     <Compile Include="Assets\Prefabs\Menu\OnScreenButtons.cs" />
+     <Compile Include="Assets\Scripts\Android\ShootButton.cs" />
+     <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
      <Compile Include="Assets\Scripts\Core\DataStorage.cs" />
      <Compile Include="Assets\Scripts\Core\GameAssets.cs" />
      <Compile Include="Assets\Scripts\Core\GameCreator.cs" />
+     <Compile Include="Assets\Scripts\Core\GameSession.cs" />
+     <Compile Include="Assets\Scripts\Core\Level.cs" />
+     <Compile Include="Assets\Scripts\Core\Loader.cs" />
+     <Compile Include="Assets\Scripts\Core\MusicPlayer.cs" />
      <Compile Include="Assets\Scripts\Core\SaveManager.cs" />
+     <Compile Include="Assets\Scripts\Core\SaveSerial.cs" />
      <Compile Include="Assets\Scripts\Core\SaveSystem.cs" />
      <Compile Include="Assets\Scripts\Core\Settings.cs" />
      <Compile Include="Assets\Scripts\Core\Shredder.cs" />
      <Compile Include="Assets\Scripts\Core\SoundManager.cs" />
      <Compile Include="Assets\Scripts\Enemies\CometRandomProperties.cs" />
+     <Compile Include="Assets\Scripts\Enemies\EnCombatant.cs" />
+     <Compile Include="Assets\Scripts\Enemies\EnShip.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyCollider.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyPathing.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyPathingOld.cs" />
@@ -63,22 +82,31 @@
      <Compile Include="Assets\Scripts\HUD\Camera\CameraAnim\Shake.cs" />
      <Compile Include="Assets\Scripts\HUD\Camera\CameraScript.cs" />
      <Compile Include="Assets\Scripts\HUD\CoresXPBar.cs" />
+     <Compile Include="Assets\Scripts\HUD\CreateOnUI.cs" />
      <Compile Include="Assets\Scripts\HUD\EnergyBar.cs" />
      <Compile Include="Assets\Scripts\HUD\HPBar.cs" />
+     <Compile Include="Assets\Scripts\HUD\PauseMenu.cs" />
      <Compile Include="Assets\Scripts\HUD\PowerupDisplay.cs" />
      <Compile Include="Assets\Scripts\HUD\ShakeQuicklyUI.cs" />
      <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
      <Compile Include="Assets\Scripts\Menu\ButtonInterval.cs" />
      <Compile Include="Assets\Scripts\Menu\Inventory.cs" />
+     <Compile Include="Assets\Scripts\Menu\SettingsMenu.cs" />
      <Compile Include="Assets\Scripts\Menu\ShipLevelRequired.cs" />
+     <Compile Include="Assets\Scripts\Menu\UpgradeMenu.cs" />
      <Compile Include="Assets\Scripts\Menu\XPFill.cs" />
      <Compile Include="Assets\Scripts\Player\BounceFromEnemies.cs" />
      <Compile Include="Assets\Scripts\Player\GloomyScythe.cs" />
+     <Compile Include="Assets\Scripts\Player\Lightsaber.cs" />
      <Compile Include="Assets\Scripts\Player\PRocketsExplode.cs" />
+     <Compile Include="Assets\Scripts\Player\Player.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerCollider.cs" />
      <Compile Include="Assets\Scripts\Player\ShipSkinManager.cs" />
+     <Compile Include="Assets\Scripts\Shaders\InvertAllAudio.cs" />
      <Compile Include="Assets\Scripts\Shaders\QuickGlow.cs" />
      <Compile Include="Assets\Scripts\Shaders\ReplacementShaderEffect.cs" />
      <Compile Include="Assets\Scripts\Shaders\SimpleBlur.cs" />
+     <Compile Include="Assets\Scripts\SpanwersEvents\DisruptersSpawner.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\EnemySpawnerOld.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\LootTableShop.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\LootTableWaves.cs" />
@@ -89,11 +117,19 @@
      <Compile Include="Assets\Scripts\SpanwersEvents\ShopSlotID.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\WaveConfig.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\Waves.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\AnimOff.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\AnimationOn.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\CreateAsChild.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\DestroyCreateOnCall.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\DestroyOnUpdate.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\DetachFromFollow.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\DisableOnUIOpen.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\EnableDisableObject.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FallDown.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\Follow.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowMouse.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowOneObject.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\FollowStrict.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowUI.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\HoverUIEnable.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\IntervalSound.cs" />
@@ -108,8 +144,13 @@
      <Compile Include="Assets\Scripts\Visuals\Glow.cs" />
      <Compile Include="Assets\Scripts\Visuals\Screenflash.cs" />
      <Compile Include="Assets\Tags\LootItem.cs" />
+     <Compile Include="Assets\Tags\Tag_EnSaberWeapon.cs" />
+     <Compile Include="Assets\Tags\Tag_GameCanvas.cs" />
      <Compile Include="Assets\Tags\Tag_MagnetAffected.cs" />
+     <Compile Include="Assets\Tags\Tag_NotAndroid.cs" />
+     <Compile Include="Assets\Tags\Tag_OnlyAndroid.cs" />
      <Compile Include="Assets\Tags\Tag_PlayerWeapon.cs" />
+     <Compile Include="Assets\Tags\Tag_PlayerWeaponBlockable.cs" />
      <Compile Include="Assets\Tags\Tag_Transition.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -756,29 +797,122 @@
     <Reference Include="Unity.Timeline.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.CacheServer">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Monetization">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Subsystem.Registration">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Subsystem.Registration.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Animation.Runtime">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RemoteConfig.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.RemoteConfig.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.ResourceManager">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AdaptivePerformance">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.AdaptivePerformance.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Addressables.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Animation.Triangle.Runtime">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="PsdPlugin">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RemoteConfig">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.RemoteConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Notifications.iOS">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Notifications.iOS.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.AdaptivePerformance.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.AdaptivePerformance.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Psdimporter.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.001">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Notifications.Android">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Notifications.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mobile.AndroidLogcat.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Runtime">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Animation.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Addressables">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AdaptivePerformance.Samsung.Android">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.AdaptivePerformance.Samsung.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ScriptableBuildPipeline">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.001">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>

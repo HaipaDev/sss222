@@ -29,6 +29,7 @@ public class GameSession : MonoBehaviour{
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
     [HeaderAttribute("Other")]
     public bool cheatmode;
+    public bool dmgPopups=true;
     [SerializeField] public AudioClip denySFX;
     [SerializeField] public AudioClip lvlUpSFX;
     
@@ -111,6 +112,7 @@ public class GameSession : MonoBehaviour{
         score += Mathf.RoundToInt(scoreValue*scoreMulti);
         EVscore += scoreValue;
         shopScore += Mathf.RoundToInt(scoreValue*scoreMulti);
+        ScorePopUpHUD(scoreValue*scoreMulti);
     }
 
     public void MultiplyScore(float multipl)
@@ -119,8 +121,8 @@ public class GameSession : MonoBehaviour{
         score = result;
     }
 
-    public void AddToScoreNoEV(int scoreValue){score += scoreValue;}
-    public void AddXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;}
+    public void AddToScoreNoEV(int scoreValue){score += scoreValue;ScorePopUpHUD(scoreValue);}
+    public void AddXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;XPPopUpHUD(xpValue);}
     public void AddEnemyCount(){enemiesCount++;FindObjectOfType<DisruptersSpawner>().EnemiesCountHealDrone++;}
 
     public void ResetScore(){
@@ -206,5 +208,16 @@ public class GameSession : MonoBehaviour{
         }
     }
 
+    void ScorePopUpHUD(float score){
+        GameObject scpopupHud=GameObject.Find("ScoreDiffParrent");
+        scpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //scpupupHud.GetComponent<Animator>().SetTrigger(0);
+        scpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+score.ToString();
+    }void XPPopUpHUD(float xp){
+        GameObject xppopupHud=GameObject.Find("XPDiffParrent");
+        xppopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //xppopupHud.GetComponent<Animator>().SetTrigger(0);
+        xppopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+xp.ToString();
+    }
     public void PlayDenySFX(){AudioSource.PlayClipAtPoint(denySFX,transform.position);}
 }

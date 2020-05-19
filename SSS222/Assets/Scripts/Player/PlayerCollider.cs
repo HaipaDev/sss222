@@ -43,6 +43,7 @@ public class PlayerCollider : MonoBehaviour{
     [SerializeField] GameObject goblinPrefab;
     [SerializeField] GameObject hdronePrefab;
     [HeaderAttribute("Other")]
+    [SerializeField] GameObject dmgPopupPrefab;
     [SerializeField] float dmgFreq=0.38f;
     public float dmgTimer;
 
@@ -147,15 +148,20 @@ public class PlayerCollider : MonoBehaviour{
                     player.damaged = true;
                     PlayClipAt(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
                 }
-
-                
+                if(gameSession.dmgPopups==true){
+                    GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
+                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
+                    dmgpopup.transform.localScale=new Vector2(2,2);
+                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmg.ToString();
+                }
+                DMGPopUpHud(dmg);
             }
             #endregion
             #region//Powerups
             else if (other.gameObject.CompareTag("Powerups"))
             {
                 var enBallName = enBallPrefab.name; var enBallName1 = enBallPrefab.name + "(Clone)";
-                if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1) { player.energy += player.energyBallGet; }
+                if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1) { player.energy += player.energyBallGet; EnergyPopUpHUDPlus(player.energyBallGet);}
 
                 var CoinName = CoinPrefab.name; var CoinName1 = CoinPrefab.name + "(Clone)";
                 if (other.gameObject.name == CoinName || other.gameObject.name == CoinName1) { gameSession.coins += 1; }
@@ -167,9 +173,17 @@ public class PlayerCollider : MonoBehaviour{
                     gameSession.AddXP(gameSession.xp_powerup);}//XP For powerups
 
                 var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { if(player.health>(player.maxHP-25)){gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} player.health += player.medkitHpAmnt; player.energy += player.medkitEnergyGet; player.healed = true; }
+                if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { if(player.health>(player.maxHP-25)){gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} HPAdd(); player.energy += player.medkitEnergyGet; EnergyPopUpHUDPlus(player.medkitEnergyGet); player.healed = true; }
                 var armorUName = armorUPwrupPrefab.name; var armorUName1 = armorUPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { if (player.health>(player.maxHP-30)) {gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} player.health += player.medkitUHpAmnt; player.energy += player.medkitUEnergyGet; player.healed = true; }
+                if (other.gameObject.name == armorUName || other.gameObject.name == armorUName1) { if (player.health>(player.maxHP-30)) {gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} HPAddU(); player.energy += player.medkitUEnergyGet; EnergyPopUpHUDPlus(player.medkitUEnergyGet); player.healed = true; }
+
+                void HPAdd(){
+                    player.health += player.medkitHpAmnt;
+                    HPPopUpHUD(player.medkitHpAmnt);
+                }void HPAddU(){
+                    player.health += player.medkitUHpAmnt;
+                    HPPopUpHUD(player.medkitUHpAmnt);
+                }
 
                 var flipName = flipPwrupPrefab.name; var flipName1 = flipPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == flipName || other.gameObject.name == flipName1) { player.flip = true; player.flipTimer = player.flipTime; }
@@ -182,16 +196,16 @@ public class PlayerCollider : MonoBehaviour{
 
                 var magnetName = magnetPwrupPrefab.name; var magnetName1 = magnetPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == magnetName || other.gameObject.name == magnetName1) {
-                    if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;}
-                    if(player.magnetized==true){player.energy+=player.enPwrupDuplicate;}
+                    if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
+                    if(player.magnetized==true){EnergyAddDupl();}
                     player.magnetized = true; player.magnetTimer = player.magnetTime; 
                     
                     }
                 
                 var scalerName = scalerPwrupPrefab.name; var scalerName1 = scalerPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == scalerName || other.gameObject.name == scalerName1) {
-                    if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;}
-                    if(player.scaler==true){player.energy+=player.enPwrupDuplicate;}
+                    if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
+                    if(player.scaler==true){EnergyAddDupl();}
                     player.scaler = true; player.scalerTimer = player.scalerTime;
                     }
 
@@ -210,7 +224,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == shadowName || other.gameObject.name == shadowName1)
                 {
                     if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;}
-                    if(player.shadow==true){player.energy+=player.enPwrupDuplicate;}
+                    if(player.shadow==true){player.energy+=player.enPwrupDuplicate;EnergyAddDupl();}
                     player.shadow = true;
                     player.shadowTimer = player.shadowTime;
                     player.shadowed = true;
@@ -231,40 +245,39 @@ public class PlayerCollider : MonoBehaviour{
                     Destroy(other.gameObject,0.01f);
                  }
 
-
                 var laser2Name = laser2PwrupPrefab.name; var laser2Name1 = laser2PwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == laser2Name || other.gameObject.name == laser2Name1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} if(player.powerup=="laser2"){player.energy+=player.enPwrupDuplicate;} player.powerup = "laser2"; }
+                if (other.gameObject.name == laser2Name || other.gameObject.name == laser2Name1) { PowerupCollect("laser2"); }
 
                 var laser3Name = laser3PwrupPrefab.name; var laser3Name1 = laser3PwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == laser3Name || other.gameObject.name == laser3Name1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} if(player.powerup=="laser3"){player.energy+=player.enPwrupDuplicate;} player.powerup = "laser3"; }
+                if (other.gameObject.name == laser3Name || other.gameObject.name == laser3Name1) { PowerupCollect("laser3"); }
 
                 var phaserName = phaserPwrupPrefab.name; var phaserName1 = phaserPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == phaserName || other.gameObject.name == phaserName1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} if(player.powerup=="phaser"){player.energy+=player.enPwrupDuplicate;} player.powerup = "phaser"; }
+                if (other.gameObject.name == phaserName || other.gameObject.name == phaserName1) { PowerupCollect("phaser"); }
 
                 var hrocketName = hrocketPwrupPrefab.name; var hrocketName1 = hrocketPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == hrocketName || other.gameObject.name == hrocketName1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} if(player.powerup=="hrockets"){player.energy+=player.enPwrupDuplicate;} player.powerup = "hrockets"; }
+                if (other.gameObject.name == hrocketName || other.gameObject.name == hrocketName1) { PowerupCollect("hrockets"); }
 
                 var minilaserName = mlaserPwrupPrefab.name; var minilaserName1 = mlaserPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == minilaserName || other.gameObject.name == minilaserName1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} if(player.powerup=="mlaser"){player.energy+=player.enPwrupDuplicate;} player.powerup = "mlaser"; }
+                if (other.gameObject.name == minilaserName || other.gameObject.name == minilaserName1) { PowerupCollect("mlaser"); }
 
                 var lsaberWName1 = player.lsaberPrefab.name;
                 var lclawsWName1 = player.lclawsPrefab.name;
                 var lsaberName = lsaberPwrupPrefab.name; var lsaberName1 = lsaberPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == lsaberName || other.gameObject.name == lsaberName1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} Destroy(GameObject.Find(lclawsWName1)); if(player.powerup=="lsaber"){player.energy+=player.enPwrupDuplicate;} player.powerup = "lsaber";  }
+                if (other.gameObject.name == lsaberName || other.gameObject.name == lsaberName1) { PowerupCollect("lsaber");  }
                 
                 var lclawsName = lclawsPwrupPrefab.name; var lclawsName1 = lclawsPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == lclawsName || other.gameObject.name == lclawsName1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} Destroy(GameObject.Find(lsaberWName1)); if(player.powerup=="lclaws"){player.energy+=player.enPwrupDuplicate;} player.powerup = "lclaws"; }
+                if (other.gameObject.name == lclawsName || other.gameObject.name == lclawsName1) { PowerupCollect("lclaws"); }
 
                 var shadowbtName = shadowBTPwrupPrefab.name; var shadowbtName1 = shadowBTPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} if(player.powerup=="shadowbt"){player.energy+=player.enPwrupDuplicate;} player.powerup = "shadowbt"; }
+                if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { PowerupCollect("shadowbt"); }
 
                 var qrocketName = qrocketPwrupPrefab.name; var qrocketName1 = qrocketPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == qrocketName || other.gameObject.name == qrocketName1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} if(player.powerup=="qrockets"){player.energy+=player.enPwrupDuplicate;} player.powerup = "qrockets"; }
+                if (other.gameObject.name == qrocketName || other.gameObject.name == qrocketName1) { PowerupCollect("qrockets"); }
                 var procketName = procketPwrupPrefab.name; var procketName1 = procketPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == procketName || other.gameObject.name == procketName1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} if(player.powerup=="prockets"){player.energy+=player.enPwrupDuplicate;} player.powerup = "prockets"; }
+                if (other.gameObject.name == procketName || other.gameObject.name == procketName1) { PowerupCollect("prockets"); }
 
                 var cstreamName = cstreamPwrupPrefab.name; var cstreamName1 = cstreamPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == cstreamName || other.gameObject.name == cstreamName1) { if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;} if(player.powerup=="cstream"){player.energy+=player.enPwrupDuplicate;} player.powerup = "cstream"; }
+                if (other.gameObject.name == cstreamName || other.gameObject.name == cstreamName1) { PowerupCollect("cstream"); }
 
 
                 if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1)
@@ -299,6 +312,14 @@ public class PlayerCollider : MonoBehaviour{
             #endregion
         }
     }
+    void PowerupCollect(string name){
+        if(player.energy<=player.enForPwrupRefill){EnergyAdd();} if(player.powerup==name){EnergyAddDupl();} player.powerup = name;
+    }
+    void EnergyAdd(){
+        EnergyAdd();
+    }void EnergyAddDupl(){
+        player.energy += player.enPwrupDuplicate;EnergyPopUpHUDPlus(player.enPwrupDuplicate);
+    }
     private void OnTriggerStay2D(Collider2D other){
         if (!other.CompareTag(tag))
         {
@@ -324,16 +345,48 @@ public class PlayerCollider : MonoBehaviour{
                     if (other.gameObject.name == leechName || other.gameObject.name == leechName1){PlayClipAt(player.leechBiteSFX, new Vector2(transform.position.x, transform.position.y));}
                     //var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                     //Destroy(flare.gameObject, 0.3f);
+                    if(gameSession.dmgPopups==true){
+                        GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
+                        dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
+                        dmgpopup.transform.localScale=new Vector2(2,2);
+                        dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmg.ToString();
+                    }
+                    DMGPopUpHud(dmg);
                     dmgTimer = dmgFreq;
                 }else{ dmgTimer -= Time.deltaTime; }
             }
         }
     }
-    private void OnCollisionExit(Collision other){
+    private void OnTriggerExit2D(Collider2D other){
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet"))
         {
             dmgTimer = dmgFreq;
         }
+        //GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
+        //dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
     }
     public GameObject GetRandomizerPwrup(){return randomizerPwrupPrefab;}
+
+    void DMGPopUpHud(float dmg){
+        GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
+        dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
+        dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+dmg.ToString();
+    }void HPPopUpHUD(float dmg){
+        GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
+        dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
+        dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+dmg.ToString();
+    }
+    void EnergyPopUpHUD(float en){
+        GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
+        enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //enpupupHud.GetComponent<Animator>().SetTrigger(0);
+        enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+en.ToString();
+    }void EnergyPopUpHUDPlus(float en){
+        GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
+        enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //enpupupHud.GetComponent<Animator>().SetTrigger(0);
+        enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+en.ToString();
+    }
 }

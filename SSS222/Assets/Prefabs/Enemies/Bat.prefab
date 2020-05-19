@@ -52,6 +52,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -183,17 +184,17 @@ MonoBehaviour:
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
+  randomizeWaveDeath: 0
+  flyOff: 0
+  givePts: 1
+  scoreValueStart: 4
+  scoreValueEnd: 9
   enBallchanceInit: 22
   CoinchanceInit: 5
   powercoreChanceInit: 0
   enBallchance: 0
   Coinchance: 0
   powercoreChance: 0
-  givePts: 1
-  scoreValueStart: 4
-  scoreValueEnd: 9
-  randomizeWaveDeath: 0
-  flyOff: 0
   explosionVFX: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
   explosionSmallVFX: {fileID: 100000, guid: cdb72e2563af9f44fa5b2ae5464ede19, type: 3}
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
@@ -239,6 +240,8 @@ MonoBehaviour:
   powercorePrefab: {fileID: 1056705403108089519, guid: 0311d6b525027ad43918a62b48acaba8,
     type: 3}
   yeeted: 0
+  dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
+    type: 3}
 --- !u!114 &801518567914847888
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Audio;
 
 public class Enemy : MonoBehaviour{
@@ -62,6 +63,7 @@ public class Enemy : MonoBehaviour{
     [HeaderAttribute("Others")]
     //[SerializeField] public bool cTagged=false;
     [SerializeField] public bool yeeted=false;
+    [SerializeField] public GameObject dmgPopupPrefab;
 
     AudioSource myAudioSource;
     Rigidbody2D rb;
@@ -217,6 +219,10 @@ public class Enemy : MonoBehaviour{
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
             var flare = Instantiate(flareHitVFX, new Vector2(transform.position.x,transform.position.y - 0.5f), Quaternion.identity);
             Destroy(flare.gameObject, 0.3f);
+            if(gameSession.dmgPopups==true){
+                GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,other.transform.position);
+                dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmg.ToString();
+            }
         }else if(other.CompareTag(tag)){
             var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
             if (other.gameObject.name == hlaserName || other.gameObject.name == hlaserName1) { this.givePts = false; this.health = -1; this.Die(); }
@@ -257,6 +263,10 @@ public class Enemy : MonoBehaviour{
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
             var flare = Instantiate(flareHitVFX, new Vector2(transform.position.x, transform.position.y - 0.5f), Quaternion.identity);
             Destroy(flare.gameObject, 0.3f);
+            if(gameSession.dmgPopups==true){
+                GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
+                dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmg.ToString();
+            }
         }
     }
 }
