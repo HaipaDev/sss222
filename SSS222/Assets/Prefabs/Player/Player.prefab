@@ -303,7 +303,17 @@ MonoBehaviour:
   mPressedTime: 0
   timeFlyingTotal: 0
   timeFlyingCore: 0
+  enRegenEnabled: 0
+  timerEnRegen: 0
+  freqEnRegen: 1
+  enRegenAmnt: 2
+  stayingTimer: 0
+  hpRegenEnabled: 0
+  timerHpRegen: 0
+  freqHpRegen: 1
+  hpRegenAmnt: 0.1
   joystick: {fileID: 0}
+  moving: 0
 --- !u!114 &1949430517914965929
 MonoBehaviour:
   m_ObjectHideFlags: 0

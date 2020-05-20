@@ -16,6 +16,10 @@ public class UpgradeMenu : MonoBehaviour{
     public int maxEnergy_UpgradeCost=1;
     public float speed_UpgradeAmnt=0.05f;
     public int speed_UpgradeCost=1;
+    public float hpRegen_UpgradeAmnt=0.2f;
+    public int hpRegen_UpgradeCost=1;
+    public float enRegen_UpgradeAmnt=2f;
+    public int enRegen_UpgradeCost=1;
     public int defaultPowerup_upgradeCost1=1;
     public int defaultPowerup_upgradeCost2=3;
     public int defaultPowerup_upgradeCost3=6;
@@ -34,6 +38,12 @@ public class UpgradeMenu : MonoBehaviour{
     public int speed_UpgradesCount;
     public int speed_UpgradesCountMax=10;
     public int speed_UpgradesLvl=1;
+    public int hpRegen_UpgradesCount;
+    public int hpRegen_UpgradesCountMax=2;
+    public int hpRegen_UpgradesLvl=0;
+    public int enRegen_UpgradesCount;
+    public int enRegen_UpgradesCountMax=2;
+    public int enRegen_UpgradesLvl=0;
     public int defaultPowerup_upgradeCount;
     public int energyRefill_upgraded;
     GameSession gameSession;
@@ -92,12 +102,17 @@ public class UpgradeMenu : MonoBehaviour{
     public void UpgradeFloat(ref float value,float amnt,int cost,bool add,ref float value2,ref int countValue){
         if(gameSession.cores>=cost){value+=amnt;value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;total_UpgradesCount++;GetComponent<AudioSource>().Play();}
         else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
+    }public void UpgradeAfterStartingVal(ref bool valueEnable,ref float value,float startingVal,float secondVal,float amnt,int cost,bool add,ref float value2,ref int countValue,ref int countLvl){
+        if(gameSession.cores>=cost){if(valueEnable!=true){valueEnable=true;}if(value>=secondVal){value+=amnt;}else{if(value==startingVal&&(countValue>0||countLvl>0))value=secondVal;}value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;total_UpgradesCount++;GetComponent<AudioSource>().Play();}
+        else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
     }
     //public void AddFloat(ref float value,float amnt,int cost){if(gameSession.cores>=cost){value+=amnt;}}
     //if(gameSession.cores>=maxHealth_UpgradeCost)player.maxHP+=maxHealth_UpgradeAmnt;gameSession.cores-=maxHealth_UpgradeCost;
     public void AddMaxHP(){UpgradeFloat(ref player.maxHP,maxHealth_UpgradeAmnt,maxHealth_UpgradeCost, true, ref player.health,ref maxHealth_UpgradesCount);}
     public void AddMaxEnergy(){UpgradeFloat(ref player.maxEnergy,maxEnergy_UpgradeAmnt,maxEnergy_UpgradeCost, true, ref player.energy,ref maxEnergy_UpgradesCount);}
     public void AddSpeed(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt,speed_UpgradeCost, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount);}
+    public void AddHpRegen(){UpgradeAfterStartingVal(ref player.hpRegenEnabled,ref player.hpRegenAmnt,0.1f,0.2f,hpRegen_UpgradeAmnt,hpRegen_UpgradeCost, false, ref player.hpRegenAmnt,ref hpRegen_UpgradesCount,ref hpRegen_UpgradesLvl);}
+    public void AddEnRegen(){UpgradeAfterStartingVal(ref player.enRegenEnabled,ref player.enRegenAmnt,0.5f,1f,enRegen_UpgradeAmnt,enRegen_UpgradeCost, false, ref player.enRegenAmnt,ref enRegen_UpgradesCount,ref enRegen_UpgradesLvl);}
 
     public void DefaultPowerupChange(string prevPowerup,string powerup,int cost,bool add,ref float value,float amnt,bool permament,int upgradeXPamnt){
         if(gameSession.cores>=cost && player.powerupDefault==prevPowerup){player.powerupDefault=powerup;if(permament!=true){player.powerup=powerup;}gameSession.cores-=cost;if(add==true){value+=amnt;}defaultPowerup_upgradeCount++;total_UpgradesCount+=upgradeXPamnt;if(permament==true){player.losePwrupOutOfEn=false;}GetComponent<AudioSource>().Play();}
@@ -118,9 +133,15 @@ public class UpgradeMenu : MonoBehaviour{
         if(maxHealth_UpgradesCount>=maxHealth_UpgradesCountMax){maxHealth_UpgradesCount=0;maxHealth_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
         if(maxEnergy_UpgradesCount>=maxEnergy_UpgradesCountMax){maxEnergy_UpgradesCount=0;maxEnergy_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
         if(speed_UpgradesCount>=speed_UpgradesCountMax){speed_UpgradesCount=0;speed_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(hpRegen_UpgradesCount==1 && hpRegen_UpgradesLvl==0){hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(hpRegen_UpgradesCount>=hpRegen_UpgradesCountMax){hpRegen_UpgradesCount=0;hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(enRegen_UpgradesCount==1 && enRegen_UpgradesLvl==0){enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(enRegen_UpgradesCount>=enRegen_UpgradesCountMax){enRegen_UpgradesCount=0;enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
 
         if(maxHealth_UpgradesLvl>0)maxHealth_UpgradeCost=maxHealth_UpgradesLvl;
         if(maxEnergy_UpgradesLvl>0)maxEnergy_UpgradeCost=maxEnergy_UpgradesLvl;
         if(speed_UpgradesLvl>0)speed_UpgradeCost=speed_UpgradesLvl;
+        if(hpRegen_UpgradesLvl>0)hpRegen_UpgradeCost=hpRegen_UpgradesLvl;
+        if(enRegen_UpgradesLvl>0)enRegen_UpgradeCost=enRegen_UpgradesLvl;
     }
 }

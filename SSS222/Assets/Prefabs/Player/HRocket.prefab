@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 7799905236334044251}
   - component: {fileID: -7128104713871850210}
   - component: {fileID: 1804059341044045333}
+  - component: {fileID: 325570832738826552}
   m_Layer: 8
   m_Name: HRocket
   m_TagString: PlayerWeapons
@@ -54,6 +55,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -335,3 +337,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &325570832738826552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
+    type: 3}

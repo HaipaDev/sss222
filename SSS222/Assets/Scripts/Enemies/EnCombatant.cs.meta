@@ -3,7 +3,10 @@ guid: 75ecded6b84710a438b108ec104cc78e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - saberPrefab: {fileID: 4755926375889011706, guid: fa37e96c01257824c9c337b429cc5496,
+      type: 3}
+  - saber: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

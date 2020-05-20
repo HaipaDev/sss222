@@ -316,7 +316,7 @@ public class PlayerCollider : MonoBehaviour{
         if(player.energy<=player.enForPwrupRefill){EnergyAdd();} if(player.powerup==name){EnergyAddDupl();} player.powerup = name;
     }
     void EnergyAdd(){
-        EnergyAdd();
+        player.energy += player.pwrupEnergyGet;EnergyPopUpHUDPlus(player.pwrupEnergyGet);
     }void EnergyAddDupl(){
         player.energy += player.enPwrupDuplicate;EnergyPopUpHUDPlus(player.enPwrupDuplicate);
     }

@@ -168,6 +168,15 @@ public class Player : MonoBehaviour{
     public float mPressedTime;
     public float timeFlyingTotal;
     public float timeFlyingCore;
+    public bool enRegenEnabled;
+    public float timerEnRegen;
+    [SerializeField] public float freqEnRegen=1f;
+    [SerializeField] public float enRegenAmnt=2f;
+    public float stayingTimer;
+    public bool hpRegenEnabled;
+    public float timerHpRegen;
+    [SerializeField] public float freqHpRegen=1f;
+    [SerializeField] public float hpRegenAmnt=0.1f;
 
     Rigidbody2D rb;
     GameSession gameSession;
@@ -184,6 +193,7 @@ public class Player : MonoBehaviour{
 
     bool hasHandledInputThisFrame = false;
     bool scaleUp;
+    public bool moving;
 
     PauseMenu pauseMenu;
     FollowUI refillUI;
@@ -234,6 +244,7 @@ public class Player : MonoBehaviour{
         DrawOtherWeapons();
         Shoot();
         States();
+        Regen();
         Die();
         CountTimeMovementPressed();
         RefillEnergy();
@@ -242,6 +253,8 @@ public class Player : MonoBehaviour{
         shootTimer -= Time.deltaTime;
         instantiateTimer-=Time.deltaTime;
         velocity=rb.velocity;
+        if(moving==false){stayingTimer+=Time.deltaTime;timerHpRegen+=Time.deltaTime;}
+        if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;}
     }
     void FixedUpdate()
     {
@@ -252,6 +265,7 @@ public class Player : MonoBehaviour{
         {
             if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
         }
+        dist = Vector2.Distance(mousePos, transform.position);
     }
     void HandleInput(bool isFixedUpdate)
     {
@@ -266,17 +280,19 @@ public class Player : MonoBehaviour{
         if (Application.platform == RuntimePlatform.Android){
             if(joystick.Horizontal>0.2f || joystick.Horizontal<-0.2f){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(joystick.Vertical>0.2f || joystick.Vertical<-0.2f){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
-            if(((joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f)||(joystick.Vertical>0.2f||joystick.Vertical<-0.2f))&&Time.timeScale>0.01f){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;}//Add to total time flying
+            if(((joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f)||(joystick.Vertical>0.2f||joystick.Vertical<-0.2f))&&Time.timeScale>0.01f){moving=true;}//Add to total time flying
             if(joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f){hPressedTime=0;}
             if(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f){vPressedTime=0;}
-            if((joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f)&&(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f)){mPressedTime=0;}
+            if((joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f)&&(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f)){mPressedTime=0;moving=false;}
         }else{
+        if(moveByMouse!=true){
             if(Input.GetButton("Horizontal")){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(Input.GetButton("Vertical")){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
-            if(Input.GetButton("Horizontal")||Input.GetButton("Vertical")&&Time.timeScale>0.01f){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;}//Add to total time flying
+            if(Input.GetButton("Horizontal")||Input.GetButton("Vertical")&&Time.timeScale>0.01f){moving=true;}//Add to total time flying
             if(!Input.GetButton("Horizontal")){hPressedTime=0;}
             if(!Input.GetButton("Vertical")){vPressedTime=0;}
-            if(!Input.GetButton("Horizontal")&&!Input.GetButton("Vertical")){mPressedTime=0;}
+            if(!Input.GetButton("Horizontal")&&!Input.GetButton("Vertical")){mPressedTime=0;moving=false;}
+        }
         }
     }
     
@@ -315,12 +331,22 @@ public class Player : MonoBehaviour{
 
     private void MoveWithMouse(){
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        dist = Vector2.Distance(mousePos, transform.position);
-        if(dist>0.4f&&Time.timeScale>0.01f){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;}
+        mousePos.x=Mathf.Clamp(mousePos.x, xMin, xMax);
+        mousePos.y=Mathf.Clamp(mousePos.y, yMin, yMax);
+        //dist in FixedUpdate()
+        var distX=Mathf.Abs(mousePos.x-transform.position.x);
+        var distY=Mathf.Abs(mousePos.y-transform.position.y);
+        if((distX>0f||distY>0f)&&(distX<0.35f||distY<0.35f)){dist=0.35f;}
+        //var actualdist = Vector2.Distance(mousePos, transform.position);
+        if(dist>=0.3f&&Time.timeScale>0.01f){moving=true;}
+        if(dist==0f){moving=false;}
+        //var minMoveDist=0f;
+        //if(dist<minMoveDist)dist=0;
 
         float step = moveSpeedCurrent * Time.deltaTime;
         //if(FindObjectOfType<ShootButton>()!=null && FindObjectOfType<ShootButton>().pressed==false)transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
         //else if(FindObjectsOfType<ShootButton>()==null){transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);}
+        //if(dist>minMoveDist)
         transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
 
         if(Input.GetButtonDown("Fire2")){
@@ -335,6 +361,7 @@ public class Player : MonoBehaviour{
         if (moveX == true) newXpos = Mathf.Clamp(transform.position.x, xMin, xMax);
         if (moveY == true) newYpos = Mathf.Clamp(transform.position.y, yMin, yMax);
 
+        //if(dist>minMoveDist)
         transform.position = new Vector2(newXpos, newYpos);
     }
 
@@ -364,6 +391,7 @@ public class Player : MonoBehaviour{
                     if(shootTimer<=0f)shootCoroutine = StartCoroutine(ShootContinuously());
                 }if(!Input.GetButton("Fire1")){
                     if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
+                    if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
                 /*if (Input.GetButtonUp("Fire1")){
                     StopCoroutine(shootCoroutine);
@@ -377,6 +405,7 @@ public class Player : MonoBehaviour{
             if(shootTimer<=0f)shootCoroutine = StartCoroutine(ShootContinuously());
         }else{
             if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
+            if(moving==true)timerEnRegen+=Time.deltaTime;
         }
     }
     public void DClick(){
@@ -778,6 +807,10 @@ public class Player : MonoBehaviour{
             instantiateTimer=instantiateTime;
             //yield return new WaitForSeconds(0.2f);
         }
+    }
+    void Regen(){
+        if(timerHpRegen>=freqHpRegen && hpRegenEnabled==true){health+=hpRegenAmnt;timerHpRegen=0;HPPopUpHUD(hpRegenAmnt);}
+        if(timerEnRegen>=freqEnRegen && enRegenEnabled==true){energy+=enRegenAmnt;timerEnRegen=0;EnergyPopUpHUDPlus(enRegenAmnt);}
     }
     private void Die(){
         if (health <= 0){

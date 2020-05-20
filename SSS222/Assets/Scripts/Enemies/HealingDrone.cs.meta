@@ -3,7 +3,11 @@ guid: d8629e71bfd72e44e87f82ac22b9ce50
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - healBallPrefab: {fileID: 6041420664094412071, guid: 67fb16cc03140834290bb647770ee0e9,
+      type: 3}
+  - closestWeapon: {instanceID: 0}
+  - closestEnemy: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

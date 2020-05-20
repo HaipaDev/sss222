@@ -1139,7 +1139,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 37.5, y: 744}
+  m_AnchoredPosition: {x: -4, y: 744}
   m_SizeDelta: {x: 649.5, y: 74.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7900922387025424974
@@ -2635,7 +2635,7 @@ PrefabInstance:
     - target: {fileID: 1946890824874642383, guid: 0e580bd21695a7341abb27bc29e69e27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 21.7
+      value: -19.80001
       objectReference: {fileID: 0}
     - target: {fileID: 1946890824874642383, guid: 0e580bd21695a7341abb27bc29e69e27,
         type: 3}
@@ -2715,17 +2715,17 @@ PrefabInstance:
     - target: {fileID: 5182857488045705441, guid: 0e580bd21695a7341abb27bc29e69e27,
         type: 3}
       propertyPath: m_fontColorGradient.topRight.r
-      value: 0.7254902
+      value: 0.26486292
       objectReference: {fileID: 0}
     - target: {fileID: 5182857488045705441, guid: 0e580bd21695a7341abb27bc29e69e27,
         type: 3}
       propertyPath: m_fontColorGradient.topRight.g
-      value: 0.85882354
+      value: 0.35922793
       objectReference: {fileID: 0}
     - target: {fileID: 5182857488045705441, guid: 0e580bd21695a7341abb27bc29e69e27,
         type: 3}
       propertyPath: m_fontColorGradient.topRight.b
-      value: 0.8312936
+      value: 0.6037736
       objectReference: {fileID: 0}
     - target: {fileID: 5182857488045705441, guid: 0e580bd21695a7341abb27bc29e69e27,
         type: 3}
@@ -2745,17 +2745,17 @@ PrefabInstance:
     - target: {fileID: 5182857488045705441, guid: 0e580bd21695a7341abb27bc29e69e27,
         type: 3}
       propertyPath: m_fontColorGradient.bottomRight.r
-      value: 0.20218886
+      value: 0.29147384
       objectReference: {fileID: 0}
     - target: {fileID: 5182857488045705441, guid: 0e580bd21695a7341abb27bc29e69e27,
         type: 3}
       propertyPath: m_fontColorGradient.bottomRight.g
-      value: 0.16862747
+      value: 0.4716981
       objectReference: {fileID: 0}
     - target: {fileID: 5182857488045705441, guid: 0e580bd21695a7341abb27bc29e69e27,
         type: 3}
       propertyPath: m_fontColorGradient.bottomRight.b
-      value: 0.49019608
+      value: 0.44035476
       objectReference: {fileID: 0}
     - target: {fileID: 5182857488045705441, guid: 0e580bd21695a7341abb27bc29e69e27,
         type: 3}
@@ -3406,7 +3406,7 @@ PrefabInstance:
     - target: {fileID: 5605292846734648068, guid: 8e894285177aba14fae52134ce043023,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 335.6
+      value: 342
       objectReference: {fileID: 0}
     - target: {fileID: 5605292846734648068, guid: 8e894285177aba14fae52134ce043023,
         type: 3}
