@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 using BayatGames.SaveGameFree;
 public class GameSession : MonoBehaviour{
     [HeaderAttribute("Current Player Values")]
@@ -96,6 +99,14 @@ public class GameSession : MonoBehaviour{
             AudioSource.PlayClipAtPoint(lvlUpSFX,transform.position);
         }
 
+        //Set speed to normal
+        if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
+        (FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().matrix==false)){gameSpeed=1;}
+        if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
+        //if(Shop.shopOpen==false&&Shop.shopOpened==false){gameSpeed=1;}
+        if(FindObjectOfType<Player>()==null){gameSpeed=1;}
+        //
+
         CheckCodes();
     }
 
@@ -173,6 +184,13 @@ public class GameSession : MonoBehaviour{
         s.musicVolume=1;*/
     }public void ResetMusicPitch(){
         if(FindObjectOfType<MusicPlayer>()!=null)FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;
+    }
+
+    void OnApplicationQuit(){
+        /*var skills=player.GetComponent<PlayerSkills>().skills;
+        foreach(SkillSlotID skill in skills){
+            skill.keySet=skillKeyBind.Disabled;
+        }*/
     }
 
     void CheckCodes(){

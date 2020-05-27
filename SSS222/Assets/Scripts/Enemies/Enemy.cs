@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour{
     [SerializeField] GameObject cbulletPrefab;
     [SerializeField] GameObject lclawsPrefab;
     [SerializeField] GameObject lclawsPartPrefab;
+    [SerializeField] GameObject mPulsePrefab;
     [HeaderAttribute("Drops")]
     [SerializeField] GameObject energyBallPrefab;
     [SerializeField] GameObject coinPrefab;
@@ -140,7 +141,7 @@ public class Enemy : MonoBehaviour{
     }
     
     public void Die(){
-        if (health <= 0){
+        if (health <= 0 && health!=-1000){
             int scoreValue = Random.Range(scoreValueStart,scoreValueEnd);
             if(givePts==true){
                 gameSession.AddToScore(scoreValue);
@@ -148,17 +149,17 @@ public class Enemy : MonoBehaviour{
                 if(Coinchance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
                 if(powercoreChance==1){ Instantiate(powercorePrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
             }
-            GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
             PlayClipAt(explosionSFX, new Vector2(transform.position.x, transform.position.y));
-            if (GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup();
-            Destroy(explosion, 0.5f);
-            Destroy(gameObject);
+            if(GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup();
+            if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
+            if(GetComponent<ParticleDelay>()!=null){GetComponent<ParticleDelay>().on=true;health=-1000;Destroy(gameObject,0.05f);}
+            if(GetComponent<ParticleDelay>()==null){GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);Destroy(explosion, 0.5f);Destroy(gameObject,0.01f);}
             shake.CamShake();
             gameSession.AddEnemyCount();
         }
     }
     private void OnDestroy() {
-        if (GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber);
+        if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
         if(randomizeWaveDeath==true){ gameSession.EVscore = gameSession.EVscoreMax; }
     }
     private void DestroyOutside(){

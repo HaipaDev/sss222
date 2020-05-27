@@ -34,7 +34,9 @@ public class Glow : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        
+        if(sizeGlow==-1){
+            sizeGlow=(transform.localScale.x+transform.localScale.y)/2;
+        }
         //else Destroy(glow);
         //if (ps){if (!ps.IsAlive()){ Destroy(gameObject);}}
     }

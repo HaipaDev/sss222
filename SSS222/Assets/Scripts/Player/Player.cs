@@ -194,7 +194,7 @@ public class Player : MonoBehaviour{
     bool hasHandledInputThisFrame = false;
     bool scaleUp;
     public bool moving;
-
+    public float energyUsedCount;
     PauseMenu pauseMenu;
     FollowUI refillUI;
     GameObject refilltxtS;
@@ -202,21 +202,7 @@ public class Player : MonoBehaviour{
     AudioSource myAudioSource;
     AudioMixer mixer;
     string _OutputMixer;
-    #endregion
-
-    AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
-    {
-        GameObject tempGO = new GameObject("TempAudio"); // create the temp object
-        tempGO.transform.position = pos; // set its position
-        AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
-        aSource.clip = clip; // define the clip
-                             // set other aSource properties here, if desired
-        _OutputMixer = "SoundVolume";
-        aSource.outputAudioMixerGroup = myAudioSource.outputAudioMixerGroup;
-        aSource.Play(); // start the sound
-        MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
-        return aSource; // return the AudioSource reference
-    }
+#endregion
 
     void Start(){
         rb = GetComponent<Rigidbody2D>();
@@ -267,6 +253,7 @@ public class Player : MonoBehaviour{
         }
         dist = Vector2.Distance(mousePos, transform.position);
     }
+#region//Movement etc
     void HandleInput(bool isFixedUpdate)
     {
         bool hadAlreadyHandled = hasHandledInputThisFrame;
@@ -428,6 +415,7 @@ public class Player : MonoBehaviour{
                 if(new Vector2(transform.position.x,transform.position.y)==mousePos){rb.velocity=Vector2.zero;}
             }
             energy -= shadowEn;
+            EnergyPopUpHUD(shadowEn);
             dashing = true;
             shadowed = true;
             //PlayClipAt(shadowdashSFX, new Vector2(transform.position.x, transform.position.y));
@@ -437,7 +425,25 @@ public class Player : MonoBehaviour{
         }//else { dashTime = startDashTime; rb.velocity = Vector2.zero; }
         
     }
-    #region//Powerups
+
+    private void Die(){
+        if (health <= 0){
+            GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+            AudioSource.PlayClipAtPoint(deathSFX, new Vector2(transform.position.x, transform.position.y));
+            Destroy(explosion, 0.5f);
+            Destroy(gameObject, 0.05f);
+            gameOverCanvasPrefab.gameObject.SetActive(true);
+            var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
+            Destroy(GameObject.Find(lsaberName));
+            Destroy(GameObject.Find(lsaberName1));
+            var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
+            Destroy(GameObject.Find(lclawsName));
+            Destroy(GameObject.Find(lclawsName1));
+        }
+    }
+#endregion
+
+#region//Powerups
     public IEnumerator ShootContinuously(){
         while (true){
             if (Time.timeScale > 0.0001f){
@@ -453,6 +459,8 @@ public class Player : MonoBehaviour{
                     laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     energy -= laserEn;
                     EnergyPopUpHUD(laserEn);
+                    laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
+                    laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                         shootTimer = laserShootPeriod * 0.75f;
                         yield return new WaitForSeconds(laserShootPeriod*1.7f);
                 }else if(powerup=="laser2"){
@@ -474,6 +482,10 @@ public class Player : MonoBehaviour{
                     laserR2.transform.eulerAngles=new Vector3(0,0,-10f);
                     energy -= laser2En;
                     EnergyPopUpHUD(laser2En);
+                    laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
+                    laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
+                    laserL2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
+                    laserR2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                         shootTimer = laserShootPeriod * 0.75f;
                         yield return new WaitForSeconds(laserShootPeriod);
                 }
@@ -504,6 +516,12 @@ public class Player : MonoBehaviour{
                     laserR3.transform.eulerAngles = new Vector3(0, 0, -13f);
                     energy -= laser3En;
                     EnergyPopUpHUD(laser3En);
+                    laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
+                    laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
+                    laserL2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
+                    laserR2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
+                    laserL3.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
+                    laserR3.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                         shootTimer = laserShootPeriod*0.75f;
                         yield return new WaitForSeconds(laserShootPeriod);
                 }else if (powerup == "phaser"){
@@ -517,6 +535,8 @@ public class Player : MonoBehaviour{
                     phaserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, phaserSpeed);
                     energy -= phaserEn;
                     EnergyPopUpHUD(phaserEn);
+                    phaserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=phaserEn;
+                    phaserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=phaserEn;
                         shootTimer = phaserShootPeriod;
                         yield return new WaitForSeconds(phaserShootPeriod);
                 }else if (powerup == "mlaser"){
@@ -530,6 +550,8 @@ public class Player : MonoBehaviour{
                         Rigidbody2D rbL = mlaserL.GetComponent<Rigidbody2D>(); rbL.velocity = new Vector2(rbL.velocity.x, UnityEngine.Random.Range(mlaserSpeedS, mlaserSpeedE));
                         Rigidbody2D rbR = mlaserR.GetComponent<Rigidbody2D>(); rbR.velocity = new Vector2(rbR.velocity.x, UnityEngine.Random.Range(mlaserSpeedS, mlaserSpeedE));
                         energy -= mlaserEn;
+                        mlaserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=mlaserEn;
+                        mlaserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=mlaserEn;
                     }
                     EnergyPopUpHUD(mlaserEn*mlaserBulletsAmmount);
                     GameObject flareL = Instantiate(flareShootVFX, new Vector2(xxL, yyL - flareShootYY), Quaternion.identity) as GameObject;
@@ -612,6 +634,7 @@ public class Player : MonoBehaviour{
                     cbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     energy -= cbulletEn;
                     EnergyPopUpHUD(cbulletEn);
+                    cbullet.GetComponent<Tag_PlayerWeaponBlockable>().energy=cbulletEn;
                         shootTimer = cbulletShootPeriod * 0.825f;
                         yield return new WaitForSeconds(cbulletShootPeriod);
                 }
@@ -621,36 +644,6 @@ public class Player : MonoBehaviour{
             }
         }
     }
-    public Enemy FindClosestEnemy(){
-        KdTree<Enemy> Enemies = new KdTree<Enemy>();
-        Enemy[] EnemiesArr;
-        EnemiesArr = FindObjectsOfType<Enemy>();
-        foreach(Enemy enemy in EnemiesArr){
-            Enemies.Add(enemy);
-        }
-        Enemy closest = Enemies.FindClosest(transform.position);
-        return closest;
-    }
-    /*public Enemy FindClosestEnemy()
-    {
-        Enemy[] gos;
-        gos = Enemy.FindObjectsOfType<Enemy>();
-        Enemy closest;
-        float distance = 44f;
-        Vector3 position = transform.position;
-        foreach (Enemy go in gos)
-        {
-            Vector3 diff = go.transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
-            {
-                closest = go;
-                distance = curDistance;
-                return closest;
-            }else { return null; }
-        }
-        return null;
-    }*/
     //IEnumerator DrawOtherWeapons(){
     private void DrawOtherWeapons(){
         GameObject lsaber;
@@ -686,11 +679,11 @@ public class Player : MonoBehaviour{
                     if(GameObject.Find(lclawsName)==null&&GameObject.Find(lclawsName1)==null){powerup="lclaws";}
                 }
             }
-            /*if(powerup!="lsaberA"){
+            if(powerup!="lsaberA" && powerup!="lsaber"){
                 Destroy(GameObject.Find(lsaberName1));
-            }if(powerup!="lclawsA"){
+            }if(powerup!="lclawsA" && powerup!="lclaws"){
                 Destroy(GameObject.Find(lclawsName1));
-            }*/
+            }
             if(powerup!="lsaberA"&&powerup!="lclawsA"){
                 Destroy(GameObject.Find(lsaberName1));
                 Destroy(GameObject.Find(lclawsName1));
@@ -705,8 +698,9 @@ public class Player : MonoBehaviour{
             if(losePwrupOutOfEn)powerup = powerupDefault;
         }
     }
-    #endregion
-
+#endregion
+ 
+#region//States
     private void States(){
         if (flip == true) { flipTimer -= Time.deltaTime; moveDir = -1; } else { moveDir = 1; }
         if(flipTimer<= 0 && flipTimer>-4) { flip = false; flipTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
@@ -729,9 +723,10 @@ public class Player : MonoBehaviour{
         else{ dashTime -= Time.deltaTime; }
         if(energy<=0){ shadow = false; }
 
-        if(inverted==true){if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==false)GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=true;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().revertMusic=false;GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().enabled=true;
+        if(inverted==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){
+        FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=false;FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().enabled=true;FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=true;}
         inverterTimer+=Time.deltaTime;}
-        else{if(GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled==true){GameObject.Find("InvertImage").GetComponent<SpriteRenderer>().enabled=false;}if(GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().revertMusic==false){GameObject.Find("InvertImage").GetComponent<InvertAllAudio>().revertMusic=true;}}
+        else{if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==true){FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=false;}if(FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic==false){FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=true;}}
         if(inverterTimer >=10 && inverterTimer<14){inverted=false; inverterTimer=14;}
 
         if(magnetized==true){
@@ -799,6 +794,7 @@ public class Player : MonoBehaviour{
         if(pmultiTimer>0){pmultiTimer-=Time.deltaTime;}
         if(pmultiTimer <=0 && pmultiTimer>-4){gameSession.scoreMulti=1f; pmultiTimer=-4;}
     }
+    
     private void Shadow(){
         if (Time.timeScale > 0.0001f && instantiateTimer<=0)
         {
@@ -812,22 +808,10 @@ public class Player : MonoBehaviour{
         if(timerHpRegen>=freqHpRegen && hpRegenEnabled==true){health+=hpRegenAmnt;timerHpRegen=0;HPPopUpHUD(hpRegenAmnt);}
         if(timerEnRegen>=freqEnRegen && enRegenEnabled==true){energy+=enRegenAmnt;timerEnRegen=0;EnergyPopUpHUDPlus(enRegenAmnt);}
     }
-    private void Die(){
-        if (health <= 0){
-            GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-            AudioSource.PlayClipAtPoint(deathSFX, new Vector2(transform.position.x, transform.position.y));
-            Destroy(explosion, 0.5f);
-            Destroy(gameObject, 0.05f);
-            gameOverCanvasPrefab.gameObject.SetActive(true);
-            var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
-            Destroy(GameObject.Find(lsaberName));
-            Destroy(GameObject.Find(lsaberName1));
-            var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
-            Destroy(GameObject.Find(lclawsName));
-            Destroy(GameObject.Find(lclawsName1));
-        }
-    }
+#endregion
 
+#region//Skills
+    //Skills are in PlayerSkills
     private void RefillEnergy(){
         if(energy<=0){
         if(energyRefillUnlocked==true){
@@ -907,29 +891,79 @@ public class Player : MonoBehaviour{
         }
         
     }
-    void DMGPopUpHud(float dmg){
+#endregion
+
+#region//Pop-Ups
+    public void DMGPopUpHud(float dmg){
         GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
         dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
         dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+dmg.ToString();
-    }void HPPopUpHUD(float dmg){
+    }public void HPPopUpHUD(float dmg){
         GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
         dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
         dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+dmg.ToString();
     }
-    void EnergyPopUpHUD(float en){
+    public void EnergyPopUpHUD(float en){
         GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
         enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+en.ToString();
-    }void EnergyPopUpHUDPlus(float en){
+        energyUsedCount+=en;
+        FindObjectOfType<DisruptersSpawner>().EnergyCountVortexWheel+=en;
+    }public void EnergyPopUpHUDPlus(float en){
         GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
         enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+en.ToString();
     }
+#endregion
 
+#region//Other Functions
+    public Enemy FindClosestEnemy(){
+        KdTree<Enemy> Enemies = new KdTree<Enemy>();
+        Enemy[] EnemiesArr;
+        EnemiesArr = FindObjectsOfType<Enemy>();
+        foreach(Enemy enemy in EnemiesArr){
+            Enemies.Add(enemy);
+        }
+        Enemy closest = Enemies.FindClosest(transform.position);
+        return closest;
+    }
+    /*public Enemy FindClosestEnemy()
+    {
+        Enemy[] gos;
+        gos = Enemy.FindObjectsOfType<Enemy>();
+        Enemy closest;
+        float distance = 44f;
+        Vector3 position = transform.position;
+        foreach (Enemy go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+                return closest;
+            }else { return null; }
+        }
+        return null;
+    }*/
+    AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
+    {
+        GameObject tempGO = new GameObject("TempAudio"); // create the temp object
+        tempGO.transform.position = pos; // set its position
+        AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
+        aSource.clip = clip; // define the clip
+                             // set other aSource properties here, if desired
+        _OutputMixer = "SoundVolume";
+        aSource.outputAudioMixerGroup = myAudioSource.outputAudioMixerGroup;
+        aSource.Play(); // start the sound
+        MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
+        return aSource; // return the AudioSource reference
+    }
     private void SetActiveAllChildren(Transform transform, bool value)
      {
          foreach (Transform child in transform)
@@ -958,4 +992,5 @@ public class Player : MonoBehaviour{
     public float GetScalerTimer(){ return scalerTimer; }
     public float GetMatrixTimer(){ return matrixTimer; }
     public float GetPMultiTimer(){ return pmultiTimer; }
+#endregion
 }

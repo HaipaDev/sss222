@@ -42,8 +42,9 @@ public class PlayerCollider : MonoBehaviour{
     [SerializeField] GameObject hlaserPrefab;
     [SerializeField] GameObject goblinPrefab;
     [SerializeField] GameObject hdronePrefab;
+    [SerializeField] GameObject vortexPrefab;
     [HeaderAttribute("Other")]
-    [SerializeField] GameObject dmgPopupPrefab;
+    [SerializeField] public GameObject dmgPopupPrefab;
     [SerializeField] float dmgFreq=0.38f;
     public float dmgTimer;
 
@@ -106,6 +107,8 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == goblinName || other.gameObject.name == goblinName1) { dmg = damageDealer.GetDamageGoblin(); en = true; }
                 var hdroneName = hdronePrefab.name; var hdroneName1 = hdronePrefab.name + "(Clone)";
                 if (other.gameObject.name == hdroneName || other.gameObject.name == hdroneName1) { dmg = damageDealer.GetDamageHealDrone(); en = true; }
+                var vortexName = vortexPrefab.name; var vortexName1 = vortexPrefab.name + "(Clone)";
+                if (other.gameObject.name == vortexName || other.gameObject.name == vortexName1) { dmg = damageDealer.GetDamageVortex(); en = true; }
 
 
                 var Sname = soundwavePrefab.name; var Sname1 = soundwavePrefab.name + "(Clone)";
@@ -263,10 +266,10 @@ public class PlayerCollider : MonoBehaviour{
                 var lsaberWName1 = player.lsaberPrefab.name;
                 var lclawsWName1 = player.lclawsPrefab.name;
                 var lsaberName = lsaberPwrupPrefab.name; var lsaberName1 = lsaberPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == lsaberName || other.gameObject.name == lsaberName1) { PowerupCollect("lsaber");  }
+                if (other.gameObject.name == lsaberName || other.gameObject.name == lsaberName1) { PowerupCollect("lsaber"); GameObject.Find(lclawsWName1); }
                 
                 var lclawsName = lclawsPwrupPrefab.name; var lclawsName1 = lclawsPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == lclawsName || other.gameObject.name == lclawsName1) { PowerupCollect("lclaws"); }
+                if (other.gameObject.name == lclawsName || other.gameObject.name == lclawsName1) { PowerupCollect("lclaws"); GameObject.Find(lsaberWName1); }
 
                 var shadowbtName = shadowBTPwrupPrefab.name; var shadowbtName1 = shadowBTPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { PowerupCollect("shadowbt"); }
@@ -367,23 +370,23 @@ public class PlayerCollider : MonoBehaviour{
     }
     public GameObject GetRandomizerPwrup(){return randomizerPwrupPrefab;}
 
-    void DMGPopUpHud(float dmg){
+    public void DMGPopUpHud(float dmg){
         GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
         dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
         dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+dmg.ToString();
-    }void HPPopUpHUD(float dmg){
+    }public void HPPopUpHUD(float dmg){
         GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
         dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
         dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+dmg.ToString();
     }
-    void EnergyPopUpHUD(float en){
+    public void EnergyPopUpHUD(float en){
         GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
         enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+en.ToString();
-    }void EnergyPopUpHUDPlus(float en){
+    }public void EnergyPopUpHUDPlus(float en){
         GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
         enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);

@@ -31,6 +31,14 @@ public class DisruptersSpawner : MonoBehaviour{
     [SerializeField] float mSTimeSpawnsHealDrone = 40f;
     [SerializeField] float mETimeSpawnsHealDrone = 50f;
     public float timeSpawnsHealDrone = 0f;
+    [HeaderAttribute("Vortex Wheel")]
+    public bool spawnVortexWheel=true;
+    [SerializeField] WaveConfig cfgVortexWheel;
+    [SerializeField] float mEnergyCountVortexWheel = 200;
+    public float EnergyCountVortexWheel = 0;
+    [SerializeField] float mSTimeSpawnsVortexWheel = 40f;
+    [SerializeField] float mETimeSpawnsVortexWheel = 50f;
+    public float timeSpawnsVortexWheel = 0f;
     //public int waveIndex = 0;
     //WaveConfig currentWave;
     bool looping = true;
@@ -113,6 +121,14 @@ public class DisruptersSpawner : MonoBehaviour{
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHealDrone));
                     timeSpawnsHealDrone = -4;
                     EnemiesCountHealDrone=0;
+                }
+            }
+        }if(spawnVortexWheel==true){
+            if(EnergyCountVortexWheel>=mEnergyCountVortexWheel||(mEnergyCountVortexWheel==0 && timeSpawnsVortexWheel <= 0 && timeSpawnsVortexWheel > -4)){
+                if(FindObjectOfType<VortexWheel>()==null){
+                    yield return StartCoroutine(SpawnAllEnemiesInWave(cfgVortexWheel));
+                    timeSpawnsVortexWheel = -4;
+                    EnergyCountVortexWheel=0;
                 }
             }
         }
@@ -214,6 +230,10 @@ public class DisruptersSpawner : MonoBehaviour{
             if(spawnHealDrone==true && mEnemiesCountHealDrone!=0){
                 if(timeSpawnsHealDrone > -0.01f){ timeSpawnsHealDrone -= Time.deltaTime; }
                 else if(timeSpawnsHealDrone == -4){ timeSpawnsHealDrone = Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone); }
+            }
+            if(spawnVortexWheel==true && mEnergyCountVortexWheel!=0){
+                if(timeSpawnsVortexWheel > -0.01f){ timeSpawnsVortexWheel -= Time.deltaTime; }
+                else if(timeSpawnsVortexWheel == -4){ timeSpawnsVortexWheel = Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel); }
             }
             /*if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
             else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;

@@ -43,6 +43,7 @@ public class Shop : MonoBehaviour{
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         RandomizeShop();
         shopOpen = false;
+        FindObjectOfType<GameSession>().gameSpeed=0;
         shopOpened=true;
     }
     public void Resume()

@@ -26,7 +26,7 @@ public class WaveDisplay : MonoBehaviour{
     // Update is called once per frame
     void Update()
     {
-        waveText.text = waves.GetWaveName().ToString();
+        if(waves!=null)waveText.text = waves.GetWaveName().ToString();
         str = waveText.text;
         if(str!=null && str!=""){ if (timer <= 0) { waveText.enabled = false; curwaveObjText.enabled = false; } }
         else{ waveText.enabled = false; curwaveObjText.enabled = false; }

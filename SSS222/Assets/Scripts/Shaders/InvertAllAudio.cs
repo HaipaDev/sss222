@@ -14,17 +14,24 @@ public class InvertAllAudio : MonoBehaviour{
         //if(invert){
             AudioSource[] sounds=FindObjectsOfType<AudioSource>();
             foreach(AudioSource sound in sounds){
+                if(sound!=null){
+                GameObject snd=sound.gameObject;
                 //if(sound!=musicPlayer){
-                    if(sound.gameObject.name!="MusicPlayer"){
-                    var tempAudioTime=sound.GetComponent<AudioSource>().clip.length-0.025f;
-                    sound.GetComponent<AudioSource>().pitch=-1;
-                    sound.GetComponent<AudioSource>().time=tempAudioTime;
+                if(snd.GetComponent<MusicPlayer>()==null){
+                    //if(sound.GetComponent<AudioSource>()!=null){
+                    //var tempAudioTime=snd.GetComponent<AudioSource>().clip.length-0.025f;
+                    if(revertMusic!=true)snd.GetComponent<AudioSource>().loop=true;
+                    else{snd.GetComponent<AudioSource>().loop=false;}
+                    snd.GetComponent<AudioSource>().pitch=-1;
+                    //snd.GetComponent<AudioSource>().time=tempAudioTime;
+                    //}
                 }else{
                     if(revertMusic!=true){
                         musicPlayer=FindObjectOfType<MusicPlayer>();
                         if(musicPlayer.GetComponent<AudioSource>().pitch!=-1)musicPlayer.GetComponent<AudioSource>().pitch=-1;}
                     //else{musicPlayer=FindObjectOfType<MusicPlayer>();musicPlayer.GetComponent<AudioSource>().pitch=1;}}
-                if(revertMusic==true){musicPlayer=FindObjectOfType<MusicPlayer>();musicPlayer.GetComponent<AudioSource>().pitch=1;this.enabled=false;}
+                if(revertMusic==true){if(FindObjectOfType<MusicPlayer>()!=null){musicPlayer=FindObjectOfType<MusicPlayer>();musicPlayer.GetComponent<AudioSource>().pitch=1;this.enabled=false;}}
+                }
             }
         }
         //else{musicPlayer.GetComponent<AudioSource>().pitch=1;}
