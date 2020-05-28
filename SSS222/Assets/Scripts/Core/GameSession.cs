@@ -155,6 +155,7 @@ public class GameSession : MonoBehaviour{
         ss.moveByMouse = sm.moveByMouse;
         ss.quality = sm.quality;
         ss.fullscreen = sm.fullscreen;
+        ss.pprocessing = sm.pprocessing;
         ss.masterVolume = sm.masterVolume;
         ss.soundVolume = sm.soundVolume;
         ss.musicVolume = sm.musicVolume;

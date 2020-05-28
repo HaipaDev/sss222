@@ -179,6 +179,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public float hpRegenAmnt=0.1f;
 
     Rigidbody2D rb;
+    PlayerSkills pskills;
     GameSession gameSession;
     SaveSerial saveSerial;
     public Joystick joystick;
@@ -206,6 +207,7 @@ public class Player : MonoBehaviour{
 
     void Start(){
         rb = GetComponent<Rigidbody2D>();
+        pskills=GetComponent<PlayerSkills>();
         gameSession=FindObjectOfType<GameSession>();
         saveSerial = FindObjectOfType<SaveSerial>();
         joystick=FindObjectOfType<FloatingJoystick>();
@@ -431,7 +433,8 @@ public class Player : MonoBehaviour{
             GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
             AudioSource.PlayClipAtPoint(deathSFX, new Vector2(transform.position.x, transform.position.y));
             Destroy(explosion, 0.5f);
-            Destroy(gameObject, 0.05f);
+            pskills.DeathSkills();
+            Destroy(gameObject, 0.05f);//Kill player
             gameOverCanvasPrefab.gameObject.SetActive(true);
             var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
             Destroy(GameObject.Find(lsaberName));
@@ -757,8 +760,8 @@ public class Player : MonoBehaviour{
                     if(i>99)i=0;
                 }
 
-                if(scaleUp==false && shipScale>shipScaleMin){shipScale-=0.25f;}
-                if(scaleUp==true && shipScale<shipScaleMax){shipScale+=0.25f;}
+                if(scaleUp==false && shipScale>shipScaleMin){shipScale-=0.25f*Time.deltaTime;}
+                if(scaleUp==true && shipScale<shipScaleMax){shipScale+=0.25f*Time.deltaTime;}
                 //if(shipScale<=0.45){scaleUp=true;}
                 //if(shipScale>=1.64){scaleUp=false;}
                 instantiateTimer=instantiateTime;

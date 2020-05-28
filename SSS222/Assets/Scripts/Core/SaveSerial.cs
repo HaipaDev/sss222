@@ -18,6 +18,7 @@ public class SaveSerial : MonoBehaviour{
 	public string gameVersion;
 	public bool moveByMouse;
 	public bool fullscreen;
+	public bool pprocessing;
 	public int quality;
 	public float masterVolume;
 	public float soundVolume;
@@ -32,6 +33,7 @@ public class SaveSerial : MonoBehaviour{
 		public string gameVersion;
 		public bool moveByMouse;
 		public bool fullscreen;
+		public bool pprocessing;
 		public int quality;
 		public float masterVolume;
 		public float soundVolume;
@@ -58,6 +60,7 @@ public class SaveSerial : MonoBehaviour{
 		data.gameVersion=gameVersion;
 		data.moveByMouse = moveByMouse;
 		data.fullscreen = fullscreen;
+		data.pprocessing = pprocessing;
 		data.quality = quality;
 		data.masterVolume = masterVolume;
 		data.soundVolume = soundVolume;
@@ -95,6 +98,7 @@ public class SaveSerial : MonoBehaviour{
 			gameVersion=data.gameVersion;
 			moveByMouse = data.moveByMouse;
 			fullscreen = data.fullscreen;
+			pprocessing = data.pprocessing;
 			quality = data.quality;
 			masterVolume = data.masterVolume;
 			soundVolume = data.soundVolume;

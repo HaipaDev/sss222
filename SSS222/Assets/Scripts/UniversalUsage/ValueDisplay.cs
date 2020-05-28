@@ -9,6 +9,7 @@ public class ValueDisplay : MonoBehaviour{
     DataSavable dataSavable;
     SaveSerial saveSerial;
     Player player;
+    PlayerSkills pskills;
     UpgradeMenu upgradeMenu;
     [SerializeField] string value = "score";
     [SerializeField] float valueLimitD=-1;
@@ -21,6 +22,7 @@ public class ValueDisplay : MonoBehaviour{
         saveSerial = FindObjectOfType<SaveSerial>();
         //dataSavable = FindObjectOfType<DataSavable>();
         player = FindObjectOfType<Player>();
+        pskills = player.GetComponent<PlayerSkills>();
         upgradeMenu = FindObjectOfType<UpgradeMenu>();
     }
 
@@ -64,6 +66,9 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "defaultPowerup_upgradeCost2") scoreText.text = upgradeMenu.defaultPowerup_upgradeCost2.ToString();
         else if (value == "defaultPowerup_upgradeCost3") scoreText.text = upgradeMenu.defaultPowerup_upgradeCost3.ToString();
         else if (value == "energyRefill_upgradeCost") scoreText.text = upgradeMenu.energyRefill_upgradeCost.ToString();
+
+        else if (value == "cooldownQ") scoreText.text = System.Math.Round(pskills.cooldownQ,0).ToString();
+        else if (value == "cooldownE") scoreText.text = System.Math.Round(pskills.cooldownE,0).ToString();
         
         /*else if (value == "state"){
             var value = System.Math.Round(player.GetGCloverTimer(),1);

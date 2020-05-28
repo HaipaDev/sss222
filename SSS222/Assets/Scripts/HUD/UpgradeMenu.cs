@@ -51,9 +51,11 @@ public class UpgradeMenu : MonoBehaviour{
     public int magneticPulse_upgraded;
     GameSession gameSession;
     Player player;
+    PlayerSkills pskills;
     void Start(){
         gameSession = FindObjectOfType<GameSession>();
         player = FindObjectOfType<Player>();
+        pskills = FindObjectOfType<PlayerSkills>();
     }
     void Update(){
         if(gameSession==null)gameSession = FindObjectOfType<GameSession>();
@@ -111,15 +113,21 @@ public class UpgradeMenu : MonoBehaviour{
         upgradeMenu2UI.SetActive(false);upgradeMenuUI.SetActive(true);
     }
 
-    public void UnlockSkillUni(ref int value,int number,int cost){
-        if(gameSession.cores>=cost && value==0){value=number;gameSession.cores-=cost;GetComponent<AudioSource>().Play();}
+    public void UnlockSkillUni(int ID, ref int value,int number,int cost){
+        if(gameSession.cores>=cost && value==number-1){value=number;gameSession.cores-=cost;GetComponent<AudioSource>().Play();
+        var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
+        for(var i=0;i<skills.Length;i++){if(skills[i]==skillKeyBind.Q && skills[i]!=skillKeyBind.E){skills[ID]=skillKeyBind.E;}}//Set to E if Q is occuppied
+        for(var i=0;i<skills.Length;i++){if(skills[i]!=skillKeyBind.Q){skills[ID]=skillKeyBind.Q;}}//Set to Q by default
+        }
         else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
     }
     public void UnlockSkill(int ID){
-        if(ID==0){UnlockSkillUni(ref magneticPulse_upgraded,1,2);}
+        if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,1,2);}
+
+        
     }
     public void UpgradeSkill(int ID){
-        if(ID==0){UnlockSkillUni(ref magneticPulse_upgraded,2,2);}
+        if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,2,1);}
     }
     public void SetSkillQ(int ID){
         var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
@@ -127,6 +135,7 @@ public class UpgradeMenu : MonoBehaviour{
         //foreach(skillKeyBind skillOther in skills){skillOther=skillKeyBind.Disabled;}
         for(var i=0;i<skills.Length;i++){if(i!=ID){if(skills[i]!=skillKeyBind.E){skills[i]=skillKeyBind.Disabled;}}}
         skills[ID]=skillKeyBind.Q;
+        if(pskills.cooldownE>0 && pskills.cooldownQ==0){pskills.cooldownQ=pskills.cooldownE;}
         /*var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skills;
         foreach(SkillSlotID skillOther in skills){skillOther.keySet=skillKeyBind.Disabled;}
         var skill=skills[ID];
@@ -135,6 +144,7 @@ public class UpgradeMenu : MonoBehaviour{
         var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
         for(var i=0;i<skills.Length;i++){if(i!=ID){if(skills[i]!=skillKeyBind.Q){skills[i]=skillKeyBind.Disabled;}}}
         skills[ID]=skillKeyBind.E;
+        if(pskills.cooldownQ>0 && pskills.cooldownE==0){pskills.cooldownE=pskills.cooldownQ;}
     }
 
     public void UpgradeFloat(ref float value,float amnt,int cost,bool add,ref float value2,ref int countValue){

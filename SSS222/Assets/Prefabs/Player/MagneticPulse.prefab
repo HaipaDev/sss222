@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1582285686359280275}
   - component: {fileID: 1844801458717974007}
-  - component: {fileID: 1585547072156378214}
   - component: {fileID: 5461616768932919024}
+  - component: {fileID: 1585547072156378214}
   - component: {fileID: 8209699668945105969}
   - component: {fileID: 24842559518470676}
   - component: {fileID: 5820739300652673482}
@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 6895824084116310237}
   m_Layer: 8
   m_Name: MagneticPulse
-  m_TagString: PlayerWeapons
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,22 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1585547072156378214
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.33333334
 --- !u!50 &5461616768932919024
 Rigidbody2D:
   serializedVersion: 4
@@ -125,6 +109,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &1585547072156378214
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.33333334
 --- !u!114 &8209699668945105969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   glowVFX: {fileID: 100000, guid: 5aab90c7e334cb64a82648379d3b6177, type: 3}
   colorGlow: {r: 0.10196079, g: 0.16470589, b: 0.64705884, a: 1}
-  sizeGlow: 1
+  sizeGlow: 0.3
   alphaGlow: 0.8
   emissionSpeed: 999
   xx: 0
@@ -278,5 +278,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314add664b9b97d498cded5c365911e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 40
-  limit: 600
+  speed: 2
+  limit: 234

@@ -12,23 +12,25 @@ public class PlayerSkills : MonoBehaviour{
     //int index;
     Player player;
     GameSession gameSession;
+    UpgradeMenu umenu;
     void Start(){
         gameSession=FindObjectOfType<GameSession>();
+        umenu=FindObjectOfType<UpgradeMenu>();
         player=GetComponent<Player>();
     }
 
     void Update(){
-        UseSkills();
+        UseSkills(0);
     }
 
     private void OnValidate() {
         System.Array.Resize(ref skillsBinds, skills.Length);
     }
 
-    public void UseSkills(){
+    public void UseSkills(int key){
         if(cooldownQ>0)cooldownQ-=Time.deltaTime;
         if(cooldownE>0)cooldownE-=Time.deltaTime;
-        if(Input.GetKeyDown(KeyCode.Q)){
+        if(Input.GetKeyDown(KeyCode.Q) || key==1){
             foreach(SkillSlotID skill in skills){
                 var i=skill.ID;
                 //if(skill.keySet==skillKeyBind.Q){
@@ -40,7 +42,7 @@ public class PlayerSkills : MonoBehaviour{
                     //}
                 }
             }
-        }if(Input.GetKeyDown(KeyCode.E)){
+        }if(Input.GetKeyDown(KeyCode.E) || key==2){
             foreach(SkillSlotID skill in skills){
                 var i=skill.ID;
                 //if(skill.keySet==skillKeyBind.E){
@@ -54,6 +56,9 @@ public class PlayerSkills : MonoBehaviour{
             }
         }
     }
+    public void DeathSkills(){
+        if(umenu.magneticPulse_upgraded==2)Skills(skillKeyBind.Disabled,0,0,0);//PostMortem MagneticPulse
+    }
     
     #region//Skills
     public void Skills(skillKeyBind key,int i,float enCost,float cooldown){
@@ -62,6 +67,7 @@ public class PlayerSkills : MonoBehaviour{
             player.EnergyPopUpHUD(enCost);
             if(key==skillKeyBind.Q){cooldownQ=cooldown;}
             if(key==skillKeyBind.E){cooldownE=cooldown;}
+            if(key==skillKeyBind.Disabled){}
             if(i==0){
                 GameObject mPulse=Instantiate(mPulsePrefab, transform.position,Quaternion.identity);
             }

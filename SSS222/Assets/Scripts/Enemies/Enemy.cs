@@ -215,6 +215,10 @@ public class Enemy : MonoBehaviour{
 
             var cBulletname = cbulletPrefab.name; var cBulletname1 = cbulletPrefab.name + "(Clone)";
             if (other.gameObject.name == cBulletname || other.gameObject.name == cBulletname1) { dmg = damageDealer.GetDamageCBullet(); PlayClipAt(cbulletHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            
+            var mPulsename = mPulsePrefab.name; var mPulsename1 = mPulsePrefab.name + "(Clone)";
+            if (other.gameObject.name == mPulsename || other.gameObject.name == mPulsename1) { dmg = damageDealer.GetDamageMPulse(); PlayClipAt(qrocketHitSFX, new Vector2(transform.position.x, transform.position.y));}
+
 
             health -= dmg;
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
@@ -257,6 +261,8 @@ public class Enemy : MonoBehaviour{
             var LClawsname = lclawsPrefab.name; var LClawsname1 = lclawsPrefab.name + "(Clone)";
             if (other.gameObject.name == LClawsname || other.gameObject.name == LClawsname1){ dmg = damageDealer.GetDamageLSaber()/3; FindObjectOfType<Player>().energy-=0.1f;}//PlayClipAt(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y)); }
 
+            var mPulsename = mPulsePrefab.name; var mPulsename1 = mPulsePrefab.name + "(Clone)";
+            if (other.gameObject.name == mPulsename || other.gameObject.name == mPulsename1) { dmg = 0; PlayClipAt(qrocketHitSFX, new Vector2(transform.position.x, transform.position.y));}
 
             health -= dmg;
             //Destroy(other.gameObject, 0.05f);

@@ -11,6 +11,7 @@ public enum skillKeyBind{
 public class SkillSlotID : ScriptableObject{
     [HeaderAttribute("Properties")]
     [SerializeField] public string skillName = "";
+    [SerializeField] public Sprite sprite;
     //[SerializeField] public string pwrupName = "";
     [SerializeField] public int ID;
     [SerializeField] public float enCost;

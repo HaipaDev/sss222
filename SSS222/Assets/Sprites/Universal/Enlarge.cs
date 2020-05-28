@@ -12,7 +12,8 @@ public class Enlarge : MonoBehaviour{
     void Update(){
         if(transform.localScale.x<limit && transform.localScale.y<limit){
             var step=speed*Time.deltaTime;
-            var scale = transform.localScale+=new Vector3(step,step,0);
+            var scaleChange=step+=speed;
+            var scale = transform.localScale+=new Vector3(scaleChange,scaleChange,0);
             transform.localScale=scale;
         }else{
             Destroy(gameObject);

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
 using UnityEngine.Audio;
+using UnityEngine.Rendering.PostProcessing;
 
 public class SettingsMenu : MonoBehaviour{
     //Settings settings;
@@ -11,36 +12,44 @@ public class SettingsMenu : MonoBehaviour{
     SaveSerial saveSerial;
     public int quality;
     public bool fullscreen;
+    public bool pprocessing;
     public bool moveByMouse;
     public float masterVolume;
     public float soundVolume;
     public float musicVolume;
     [SerializeField]GameObject qualityDropdopwn;
     [SerializeField]GameObject fullscreenToggle;
+    [SerializeField]GameObject pprocessingToggle;
     [SerializeField]GameObject steeringToggle;
     [SerializeField]GameObject masterSlider;
     [SerializeField]GameObject soundSlider;
     [SerializeField]GameObject musicSlider;
     [SerializeField]AudioSource audioSource;
+    public AudioMixer audioMixer;
+    [SerializeField]GameObject pprocessingPrefab;
     private void Start(){
         //settings = FindObjectOfType<Settings>();
         gameSession = FindObjectOfType<GameSession>();
         saveSerial = FindObjectOfType<SaveSerial>();
         audioSource = GetComponent<AudioSource>();
-
+        
         /*quality = qualityDropdopwn.GetComponent<Dropdown>().value;
         fullscreen = fullscreenToggle.GetComponent<Toggle>().isOn;
         moveByMouse = steeringToggle.GetComponent<Toggle>().isOn;*/
 
         qualityDropdopwn.GetComponent<Dropdown>().value = saveSerial.quality;
         fullscreenToggle.GetComponent<Toggle>().isOn = saveSerial.fullscreen;
+        pprocessingToggle.GetComponent<Toggle>().isOn = saveSerial.pprocessing;
         steeringToggle.GetComponent<Toggle>().isOn = saveSerial.moveByMouse;
 
         masterSlider.GetComponent<Slider>().value = saveSerial.masterVolume;
         soundSlider.GetComponent<Slider>().value = saveSerial.soundVolume;
         musicSlider.GetComponent<Slider>().value = saveSerial.musicVolume;
     }
-    public AudioMixer audioMixer;
+    private void Update() {
+        if(pprocessing==true && FindObjectOfType<PostProcessVolume>()==null){Instantiate(pprocessingPrefab,Camera.main.transform);}
+        if(pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){Destroy(FindObjectOfType<PostProcessVolume>());}
+    }
     public void SetMasterVolume(float volume){
         audioMixer.SetFloat("MasterVolume", volume);
         masterVolume = volume;
@@ -59,6 +68,11 @@ public class SettingsMenu : MonoBehaviour{
     public void SetFullscreen (bool isFullscreen){
         Screen.fullScreen = isFullscreen;
         fullscreen = isFullscreen;
+    }public void SetPostProcessing (bool isPostprocessed){
+        //gameSession.pprocessing = isPostprocessed;
+        pprocessing = isPostprocessed;
+        if(isPostprocessed==true && FindObjectOfType<PostProcessVolume>()==null){Instantiate(pprocessingPrefab,Camera.main.transform);FindObjectOfType<Level>().RestartScene();}
+        if(isPostprocessed==false && FindObjectOfType<PostProcessVolume>()!=null){Destroy(FindObjectOfType<PostProcessVolume>());}
     }
     public void SetSteering(bool isMovingByMouse){
         moveByMouse = isMovingByMouse;

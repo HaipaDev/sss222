@@ -45,7 +45,6 @@
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
-     <Compile Include="Assets\Prefabs\Menu\OnScreenButtons.cs" />
      <Compile Include="Assets\Scripts\Android\ShootButton.cs" />
      <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
@@ -85,12 +84,15 @@
      <Compile Include="Assets\Scripts\HUD\ColorSkillKey.cs" />
      <Compile Include="Assets\Scripts\HUD\CoresXPBar.cs" />
      <Compile Include="Assets\Scripts\HUD\CreateOnUI.cs" />
+     <Compile Include="Assets\Scripts\HUD\EnableChildOnPlayer.cs" />
      <Compile Include="Assets\Scripts\HUD\EnableChildOnUpgrade.cs" />
      <Compile Include="Assets\Scripts\HUD\EnergyBar.cs" />
      <Compile Include="Assets\Scripts\HUD\HPBar.cs" />
+     <Compile Include="Assets\Scripts\HUD\OnScreenButtons.cs" />
      <Compile Include="Assets\Scripts\HUD\PauseMenu.cs" />
      <Compile Include="Assets\Scripts\HUD\PowerupDisplay.cs" />
      <Compile Include="Assets\Scripts\HUD\ShakeQuicklyUI.cs" />
+     <Compile Include="Assets\Scripts\HUD\SkillButtons.cs" />
      <Compile Include="Assets\Scripts\HUD\UpgradeMenu.cs" />
      <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
      <Compile Include="Assets\Scripts\HUD\XPFill.cs" />
@@ -144,6 +146,7 @@
      <Compile Include="Assets\Scripts\UniversalUsage\ParabolaLR.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\RandomHDir.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\RandomSound.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\Singleton.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\StickTo.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\Task.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\ValueDisplay.cs" />

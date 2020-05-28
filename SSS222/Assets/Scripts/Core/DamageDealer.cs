@@ -15,6 +15,7 @@ public class DamageDealer : MonoBehaviour{
     float dmgPRocket = 0f;
     float dmgPRocketExpl = 0.5f;
     float dmgCBullet = 1f;
+    float dmgMPulse = 130f;
 
     float dmgComet = 47f;
     float dmgBat = 36f;
@@ -40,6 +41,8 @@ public class DamageDealer : MonoBehaviour{
     public float GetDamagePRocket(){return dmgPRocket; }
     public float GetDamagePRocketExpl(){return dmgPRocketExpl; }
     public float GetDamageCBullet(){return dmgCBullet; }
+    
+    public float GetDamageMPulse(){return dmgMPulse; }
 
 
     public float GetDamageComet(){return dmgComet;}

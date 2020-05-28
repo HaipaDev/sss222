@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class GameCreator : MonoBehaviour{
     //Create important managers if they don't exist ;)
@@ -16,6 +17,7 @@ public class GameCreator : MonoBehaviour{
         if (FindObjectOfType<SaveSerial>() == null){Instantiate(saveSerialPrefab);}
         if (FindObjectOfType<GameAssets>() == null){Instantiate(gameAssetsPrefab);}
         if (FindObjectOfType<Level>() == null){Instantiate(levelPrefab);}
+        if (FindObjectOfType<PostProcessVolume>() != null && FindObjectOfType<SaveSerial>().pprocessing!=true){Destroy(FindObjectOfType<PostProcessVolume>());}
         Destroy(gameObject);
     }
 }
