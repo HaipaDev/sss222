@@ -7,16 +7,17 @@ public class XPFill : MonoBehaviour{
     [SerializeField] Sprite emptySprite;
     [SerializeField] Sprite fillSprite;
     [SerializeField] GameObject particlePrefab;
-    bool changed;
+    public bool changed;
     [SerializeField] public string valueName;
     [SerializeField] public int valueReq;
     public int value;
     Image image;
     UpgradeMenu upgradeMenu;
+    //Shake shake;
     void Start(){
         image=GetComponent<Image>();
         upgradeMenu=FindObjectOfType<UpgradeMenu>();
-        //valueReq=
+        //shake = GameObject.FindObjectOfType<Shake>().GetComponent<Shake>();
     }
 
     void Update(){
@@ -24,10 +25,21 @@ public class XPFill : MonoBehaviour{
         if(value>=valueReq){
             if(changed==false){
                 image.sprite=fillSprite;
-                var pt=Instantiate(particlePrefab,transform);
-                Destroy(pt,0.5f);
+                UpgradeParticles();
+                //shake.CamShake();
                 changed=true;
             }
         }else{image.sprite=emptySprite;changed=false;}
+    }
+    public void UpgradeParticles(){
+        var pt=Instantiate(particlePrefab,transform);
+        var ps=pt.GetComponent<ParticleSystem>();
+        var sh=ps.shape;
+        sh.radius*=GetComponent<RectTransform>().sizeDelta.x/160;
+        var pm=ps.main;
+        pm.maxParticles*=Mathf.RoundToInt(GetComponent<RectTransform>().sizeDelta.x/110);
+        var pe=ps.emission;
+        pe.rateOverTime=Mathf.RoundToInt(GetComponent<RectTransform>().sizeDelta.x);
+        Destroy(pt,0.5f);
     }
 }

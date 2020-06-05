@@ -195,20 +195,26 @@ public class UpgradeMenu : MonoBehaviour{
     }
 
     void LevelEverything(){
-        if(total_UpgradesCount>=total_UpgradesCountMax){total_UpgradesCount=total_UpgradesCount-total_UpgradesCountMax-1;total_UpgradesLvl++;}
-        if(maxHealth_UpgradesCount>=maxHealth_UpgradesCountMax){maxHealth_UpgradesCount=0;maxHealth_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        if(maxEnergy_UpgradesCount>=maxEnergy_UpgradesCountMax){maxEnergy_UpgradesCount=0;maxEnergy_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        if(speed_UpgradesCount>=speed_UpgradesCountMax){speed_UpgradesCount=0;speed_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(total_UpgradesCount>=total_UpgradesCountMax){LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=total_UpgradesCount-total_UpgradesCountMax-1;total_UpgradesLvl++;}
+        if(maxHealth_UpgradesCount>=maxHealth_UpgradesCountMax){LastBar(maxHealth_UpgradesCountMax,"maxHealth_UpgradesCount");maxHealth_UpgradesCount=0;maxHealth_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(maxEnergy_UpgradesCount>=maxEnergy_UpgradesCountMax){LastBar(maxEnergy_UpgradesCountMax,"maxEnergy_UpgradesCount");maxEnergy_UpgradesCount=0;maxEnergy_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(speed_UpgradesCount>=speed_UpgradesCountMax){LastBar(speed_UpgradesCountMax,"speed_UpgradesCount");speed_UpgradesCount=0;speed_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
         if(hpRegen_UpgradesCount==1 && hpRegen_UpgradesLvl==0){hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        if(hpRegen_UpgradesCount>=hpRegen_UpgradesCountMax){hpRegen_UpgradesCount=0;hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(hpRegen_UpgradesCount>=hpRegen_UpgradesCountMax){LastBar(hpRegen_UpgradesCountMax,"hpRegen_UpgradesCount");hpRegen_UpgradesCount=0;hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
         if(enRegen_UpgradesCount==1 && enRegen_UpgradesLvl==0){enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        if(enRegen_UpgradesCount>=enRegen_UpgradesCountMax){enRegen_UpgradesCount=0;enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(enRegen_UpgradesCount>=enRegen_UpgradesCountMax){LastBar(enRegen_UpgradesCountMax,"enRegen_UpgradesCount");enRegen_UpgradesCount=0;enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        
 
         if(maxHealth_UpgradesLvl>0)maxHealth_UpgradeCost=maxHealth_UpgradesLvl;
         if(maxEnergy_UpgradesLvl>0)maxEnergy_UpgradeCost=maxEnergy_UpgradesLvl;
         if(speed_UpgradesLvl>0)speed_UpgradeCost=speed_UpgradesLvl;
         if(hpRegen_UpgradesLvl>0)hpRegen_UpgradeCost=hpRegen_UpgradesLvl;
         if(enRegen_UpgradesLvl>0)enRegen_UpgradeCost=enRegen_UpgradesLvl;
+    }
+    void LastBar(int max,string name){
+        foreach(XPFill obj in FindObjectsOfType<XPFill>()){
+            if(obj.valueReq==max&&obj.valueName==name){obj.UpgradeParticles();}
+        }
     }
 
     public void CheatCores(){
