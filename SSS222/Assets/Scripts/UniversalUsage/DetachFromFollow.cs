@@ -22,6 +22,7 @@ public class DetachFromFollow : MonoBehaviour{
     void Start()
     {
         follow = GetComponent<Follow>();
+        //if(follow==null)follow=GetComponent<FollowOneObject>();
         rb = GetComponent<Rigidbody2D>();
     }
 

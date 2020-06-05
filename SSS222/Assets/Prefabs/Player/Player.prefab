@@ -420,11 +420,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skills:
   - {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
-  skillsBinds: 00000000
+  - {fileID: 11400000, guid: d66606c472024f44e8f0f96cdfac0c12, type: 2}
+  skillsBinds: 0000000000000000
   cooldownQ: 0
   cooldownE: 0
+  timerUI: {fileID: 0}
   mPulsePrefab: {fileID: 6041420664094412071, guid: 94f381ce0f5d6bf4eb2a7b0cc13dd5cc,
     type: 3}
+  portalVFX: {fileID: 100000, guid: 1ee2c03a099f4cb4b8f86c863bfedf81, type: 3}
+  portalSFX: {fileID: 8300000, guid: d3275f157cb2cb847b2a31430b0449a1, type: 3}
+  currentSkillID: -1
+  timerTeleport: -4
 --- !u!114 &502397296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,7 +460,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 9702fbb395c910b449526048800ee86e, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.17
   m_Pitch: 1
   Loop: 1

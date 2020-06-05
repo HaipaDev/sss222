@@ -37,6 +37,7 @@ public class GameSession : MonoBehaviour{
     [SerializeField] public AudioClip lvlUpSFX;
     
     Player player;
+    public bool speedChanged;
     //public string gameVersion;
     //public bool moveByMouse = true;
 
@@ -101,13 +102,13 @@ public class GameSession : MonoBehaviour{
 
         //Set speed to normal
         if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
-        (FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().matrix==false)){gameSpeed=1;}
+        (FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().matrix==false)&&speedChanged!=true){gameSpeed=1;}
         if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
         //if(Shop.shopOpen==false&&Shop.shopOpened==false){gameSpeed=1;}
         if(FindObjectOfType<Player>()==null){gameSpeed=1;}
         //
 
-        CheckCodes();
+        CheckCodes(0,0);
     }
 
     public int GetScore(){return score;}
@@ -193,36 +194,39 @@ public class GameSession : MonoBehaviour{
             skill.keySet=skillKeyBind.Disabled;
         }*/
     }
-
-    void CheckCodes(){
-        if(Input.GetKey(KeyCode.Delete)){
-            if(Input.GetKeyDown(KeyCode.Alpha0)){
+    public void CheckCodes(int fkey, int nkey){
+        if(fkey==0&&nkey==0){}
+        if(Input.GetKey(KeyCode.Delete) || fkey==-1){
+            if(Input.GetKeyDown(KeyCode.Alpha0) || nkey==0){
                 cheatmode=true;
+            }if(Input.GetKeyDown(KeyCode.Alpha9) || nkey==9){
+                cheatmode=false;
             }
         }
         if(cheatmode==true){
-            if(Input.GetKey(KeyCode.F1)){
+            if(Input.GetKey(KeyCode.F1) || fkey==1){
                 player=FindObjectOfType<Player>();
-                if(Input.GetKeyDown(KeyCode.Alpha1)){player.health=player.maxHP;}
-                if(Input.GetKeyDown(KeyCode.Alpha2)){player.energy=player.maxEnergy;}
-                if(Input.GetKeyDown(KeyCode.Alpha3)){player.gclover=true;player.gcloverTimer=player.gcloverTime;}
-                if(Input.GetKeyDown(KeyCode.Alpha4)){player.health=0;}
+                if(Input.GetKeyDown(KeyCode.Alpha1) || nkey==1){player.health=player.maxHP;}
+                if(Input.GetKeyDown(KeyCode.Alpha2) || nkey==2){player.energy=player.maxEnergy;}
+                if(Input.GetKeyDown(KeyCode.Alpha3) || nkey==3){player.gclover=true;player.gcloverTimer=player.gcloverTime;}
+                if(Input.GetKeyDown(KeyCode.Alpha4) || nkey==4){player.health=0;}
             }
-            if(Input.GetKey(KeyCode.F2)){
-                if(Input.GetKeyDown(KeyCode.Alpha1)){AddToScoreNoEV(100);}
-                if(Input.GetKeyDown(KeyCode.Alpha2)){AddToScoreNoEV(1000);}
-                if(Input.GetKeyDown(KeyCode.Alpha3)){EVscore=EVscoreMax;}
-                if(Input.GetKeyDown(KeyCode.Alpha4)){shopScore=shopScoreMax;}
-                if(Input.GetKeyDown(KeyCode.Alpha5)){AddXP(100);}
-                if(Input.GetKeyDown(KeyCode.Alpha6)){coins+=100;cores+=100;}
+            if(Input.GetKey(KeyCode.F2) || fkey==2){
+                if(Input.GetKeyDown(KeyCode.Alpha1) || nkey==1){AddToScoreNoEV(100);}
+                if(Input.GetKeyDown(KeyCode.Alpha2) || nkey==2){AddToScoreNoEV(1000);}
+                if(Input.GetKeyDown(KeyCode.Alpha3) || nkey==3){EVscore=EVscoreMax;}
+                if(Input.GetKeyDown(KeyCode.Alpha4) || nkey==4){shopScore=shopScoreMax;}
+                if(Input.GetKeyDown(KeyCode.Alpha5) || nkey==5){AddXP(100);}
+                if(Input.GetKeyDown(KeyCode.Alpha6) || nkey==6){coins+=100;cores+=100;}
+                if(Input.GetKeyDown(KeyCode.Alpha7) || nkey==7){FindObjectOfType<UpgradeMenu>().total_UpgradesLvl+=10;}
             }
-            if(Input.GetKey(KeyCode.F3)){
+            if(Input.GetKey(KeyCode.F3) || fkey==3){
                 player=FindObjectOfType<Player>();
-                if(Input.GetKeyDown(KeyCode.Alpha1)){player.powerup="laser3";}
-                if(Input.GetKeyDown(KeyCode.Alpha2)){player.powerup="mlaser";}
-                if(Input.GetKeyDown(KeyCode.Alpha3)){player.powerup="lsaber";}
-                if(Input.GetKeyDown(KeyCode.Alpha4)){player.powerup="lclaws";}
-                if(Input.GetKeyDown(KeyCode.Alpha5)){player.powerup="cstream";}
+                if(Input.GetKeyDown(KeyCode.Alpha1) || nkey==1){player.powerup="laser3";}
+                if(Input.GetKeyDown(KeyCode.Alpha2) || nkey==2){player.powerup="mlaser";}
+                if(Input.GetKeyDown(KeyCode.Alpha3) || nkey==3){player.powerup="lsaber";}
+                if(Input.GetKeyDown(KeyCode.Alpha4) || nkey==4){player.powerup="lclaws";}
+                if(Input.GetKeyDown(KeyCode.Alpha5) || nkey==5){player.powerup="cstream";}
             }
         }
     }

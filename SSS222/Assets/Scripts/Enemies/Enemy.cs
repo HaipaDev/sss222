@@ -152,8 +152,8 @@ public class Enemy : MonoBehaviour{
             PlayClipAt(explosionSFX, new Vector2(transform.position.x, transform.position.y));
             if(GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup();
             if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
-            if(GetComponent<ParticleDelay>()!=null){GetComponent<ParticleDelay>().on=true;health=-1000;Destroy(gameObject,0.05f);}
-            if(GetComponent<ParticleDelay>()==null){GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);Destroy(explosion, 0.5f);Destroy(gameObject,0.01f);}
+            //if(GetComponent<ParticleDelay>()!=null){GetComponent<ParticleDelay>().on=true;health=-1000;Destroy(gameObject,0.05f);}
+            /*if(GetComponent<ParticleDelay>()==null){*/GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);Destroy(explosion, 0.5f);Destroy(gameObject,0.01f);//}
             shake.CamShake();
             gameSession.AddEnemyCount();
         }

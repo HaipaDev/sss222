@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 143777929}
   - component: {fileID: 143777931}
-  - component: {fileID: 143777930}
   m_Layer: 5
   m_Name: PostprocessingToggle
   m_TagString: Untagged
@@ -98,18 +97,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 1
   m_IsOn: 1
---- !u!114 &143777930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143777928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e4c7953fb875054297d8ab6b50f8b39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &481165444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1752,6 +1739,7 @@ GameObject:
   - component: {fileID: 1181639475157886918}
   - component: {fileID: 1181639475157886913}
   - component: {fileID: 1181639475157886912}
+  - component: {fileID: 2372182898494886455}
   m_Layer: 5
   m_Name: QualityDropdown
   m_TagString: Untagged
@@ -1894,6 +1882,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 1
   m_AlphaFadeSpeed: 0.15
+--- !u!114 &2372182898494886455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181639475157886914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4c7953fb875054297d8ab6b50f8b39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1181639475170102281
 GameObject:
   m_ObjectHideFlags: 0
@@ -5737,7 +5737,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2339174971662630833}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e4c7953fb875054297d8ab6b50f8b39, type: 3}
   m_Name: 

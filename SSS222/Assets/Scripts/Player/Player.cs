@@ -197,7 +197,7 @@ public class Player : MonoBehaviour{
     public bool moving;
     public float energyUsedCount;
     PauseMenu pauseMenu;
-    FollowUI refillUI;
+    GameObject refillUI;
     GameObject refilltxtS;
     GameObject refilltxtE;
     AudioSource myAudioSource;
@@ -219,7 +219,7 @@ public class Player : MonoBehaviour{
         dashTime = startDashTime;
         moveByMouse = saveSerial.moveByMouse;
         pauseMenu=FindObjectOfType<PauseMenu>().GetComponent<PauseMenu>();
-        refillUI=FindObjectOfType<FollowUI>();
+        refillUI=GameObject.Find("RefillUI");
         refilltxtS=GameObject.Find("RefillText1");
         refilltxtE=GameObject.Find("RefillText2");
     }
@@ -786,7 +786,7 @@ public class Player : MonoBehaviour{
                 }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
                     gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,1f);
                 }else{
-                    gameSession.gameSpeed=1f;
+                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=1f;
                 }
             }else{
                 gameSession.gameSpeed=0f;
@@ -968,14 +968,14 @@ public class Player : MonoBehaviour{
         return aSource; // return the AudioSource reference
     }
     private void SetActiveAllChildren(Transform transform, bool value)
-     {
-         foreach (Transform child in transform)
-         {
-             child.gameObject.SetActive(value);
- 
-             SetActiveAllChildren(child, value);
-         }
-     }
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(value);
+
+            SetActiveAllChildren(child, value);
+        }
+    }
     /*private void OnTriggerStay2D(Collider2D other)
     {
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();

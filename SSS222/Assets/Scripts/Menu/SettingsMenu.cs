@@ -71,7 +71,7 @@ public class SettingsMenu : MonoBehaviour{
     }public void SetPostProcessing (bool isPostprocessed){
         //gameSession.pprocessing = isPostprocessed;
         pprocessing = isPostprocessed;
-        if(isPostprocessed==true && FindObjectOfType<PostProcessVolume>()==null){Instantiate(pprocessingPrefab,Camera.main.transform);FindObjectOfType<Level>().RestartScene();}
+        if(isPostprocessed==true && FindObjectOfType<PostProcessVolume>()==null){Instantiate(pprocessingPrefab,Camera.main.transform);}//FindObjectOfType<Level>().RestartScene();}
         if(isPostprocessed==false && FindObjectOfType<PostProcessVolume>()!=null){Destroy(FindObjectOfType<PostProcessVolume>());}
     }
     public void SetSteering(bool isMovingByMouse){

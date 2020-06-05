@@ -26,6 +26,9 @@ public class UpgradeMenu : MonoBehaviour{
     public int defaultPowerup_upgradeCost2=3;
     public int defaultPowerup_upgradeCost3=6;
     public int energyRefill_upgradeCost=3;
+    public int mPulse_upgradeCost=3;
+    public int postMortem_upgradeCost=1;
+    public int teleport_upgradeCost=2;
     [HeaderAttribute("Upgrade Counts")]
     public int total_UpgradesCount;
     public int total_UpgradesCountMax=10;
@@ -49,6 +52,7 @@ public class UpgradeMenu : MonoBehaviour{
     public int defaultPowerup_upgradeCount;
     public int energyRefill_upgraded;
     public int magneticPulse_upgraded;
+    public int teleport_upgraded;
     GameSession gameSession;
     Player player;
     PlayerSkills pskills;
@@ -116,18 +120,20 @@ public class UpgradeMenu : MonoBehaviour{
     public void UnlockSkillUni(int ID, ref int value,int number,int cost){
         if(gameSession.cores>=cost && value==number-1){value=number;gameSession.cores-=cost;GetComponent<AudioSource>().Play();
         var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
-        for(var i=0;i<skills.Length;i++){if(skills[i]==skillKeyBind.Q && skills[i]!=skillKeyBind.E){skills[ID]=skillKeyBind.E;}}//Set to E if Q is occuppied
-        for(var i=0;i<skills.Length;i++){if(skills[i]!=skillKeyBind.Q){skills[ID]=skillKeyBind.Q;}}//Set to Q by default
+        for(var i=0;i<skills.Length;i++){if(i!=ID)if(skills[i]==skillKeyBind.Q && skills[i]!=skillKeyBind.E){skills[ID]=skillKeyBind.E;}}//Set to E if Q is occuppied
+        for(var i=0;i<skills.Length;i++){if(i!=ID)if(skills[i]!=skillKeyBind.Q){skills[ID]=skillKeyBind.Q;}}//Set to Q by default
         }
         else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
     }
     public void UnlockSkill(int ID){
-        if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,1,2);}
+        if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,1,mPulse_upgradeCost);}
+        if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,1,teleport_upgradeCost);}
 
         
     }
     public void UpgradeSkill(int ID){
-        if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,2,1);}
+        if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,2,postMortem_upgradeCost);}
+        if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,2,1);}
     }
     public void SetSkillQ(int ID){
         var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
@@ -135,7 +141,13 @@ public class UpgradeMenu : MonoBehaviour{
         //foreach(skillKeyBind skillOther in skills){skillOther=skillKeyBind.Disabled;}
         for(var i=0;i<skills.Length;i++){if(i!=ID){if(skills[i]!=skillKeyBind.E){skills[i]=skillKeyBind.Disabled;}}}
         skills[ID]=skillKeyBind.Q;
-        if(pskills.cooldownE>0 && pskills.cooldownQ==0){pskills.cooldownQ=pskills.cooldownE;}
+        //if(pskills.cooldownE>0 && pskills.cooldownQ==0){pskills.cooldownQ=pskills.cooldownE;}
+        if(skills[ID]!=skillKeyBind.Q){
+        var Q=pskills.cooldownQ;
+        var E=pskills.cooldownE;
+        pskills.cooldownE=Q;
+        pskills.cooldownQ=E;
+        }
         /*var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skills;
         foreach(SkillSlotID skillOther in skills){skillOther.keySet=skillKeyBind.Disabled;}
         var skill=skills[ID];
@@ -144,7 +156,13 @@ public class UpgradeMenu : MonoBehaviour{
         var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
         for(var i=0;i<skills.Length;i++){if(i!=ID){if(skills[i]!=skillKeyBind.Q){skills[i]=skillKeyBind.Disabled;}}}
         skills[ID]=skillKeyBind.E;
-        if(pskills.cooldownQ>0 && pskills.cooldownE==0){pskills.cooldownE=pskills.cooldownQ;}
+        //if(pskills.cooldownQ>0 && pskills.cooldownE==0){pskills.cooldownE=pskills.cooldownQ;}
+        if(skills[ID]!=skillKeyBind.E){
+        var Q=pskills.cooldownQ;
+        var E=pskills.cooldownE;
+        pskills.cooldownE=Q;
+        pskills.cooldownQ=E;
+        }
     }
 
     public void UpgradeFloat(ref float value,float amnt,int cost,bool add,ref float value2,ref int countValue){
@@ -191,5 +209,15 @@ public class UpgradeMenu : MonoBehaviour{
         if(speed_UpgradesLvl>0)speed_UpgradeCost=speed_UpgradesLvl;
         if(hpRegen_UpgradesLvl>0)hpRegen_UpgradeCost=hpRegen_UpgradesLvl;
         if(enRegen_UpgradesLvl>0)enRegen_UpgradeCost=enRegen_UpgradesLvl;
+    }
+
+    public void CheatCores(){
+        gameSession.CheckCodes(-1,0);
+        gameSession.CheckCodes(2,6);
+        gameSession.CheckCodes(-1,9);
+    }public void CheatLevels(){
+        gameSession.CheckCodes(-1,0);
+        gameSession.CheckCodes(2,7);
+        gameSession.CheckCodes(-1,9);
     }
 }
