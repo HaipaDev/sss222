@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 801518567914847888}
   - component: {fileID: -4076050431880435700}
   - component: {fileID: -7718021567847333411}
-  - component: {fileID: -8825757306841386777}
   m_Layer: 9
   m_Name: Healing Drone
   m_TagString: Enemy
@@ -210,17 +209,6 @@ MonoBehaviour:
   explosionVFX: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
   explosionSmallVFX: {fileID: 100000, guid: cdb72e2563af9f44fa5b2ae5464ede19, type: 3}
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
-  explosionSFX: {fileID: 8300000, guid: b2affc4fb28935c4ab45801b98257f10, type: 3}
-  enemyHitSFX: {fileID: 8300000, guid: 9090e0c353c6e9c4e98999e3b6782f51, type: 3}
-  mlaserHitSFX: {fileID: 8300000, guid: d8035ccb30f74934d8821789b666f065, type: 3}
-  hrocketHitSFX: {fileID: 8300000, guid: d2b91433b51c3af4995a35d24ab8887c, type: 3}
-  phaserHitSFX: {fileID: 8300000, guid: 546b4b23e3b0b674a9584e6b1cd01739, type: 3}
-  lsaberHitSFX: {fileID: 8300000, guid: 31e765c04d8a8c2428de743ff45b3c78, type: 3}
-  lclawsHitSFX: {fileID: 8300000, guid: 45b90e589ddb65a4b9bbd6c71a89ee15, type: 3}
-  shadowbtHitSFX: {fileID: 8300000, guid: 4e17bc3df56973a449da39d8719bc60e, type: 3}
-  qrocketHitSFX: {fileID: 8300000, guid: 06c1a1b5cc5a3a44b855a1f5c4873af9, type: 3}
-  procketHitSFX: {fileID: 8300000, guid: ea3463c0ef5e6e54e8350672e73f600a, type: 3}
-  cbulletHitSFX: {fileID: 8300000, guid: 3041b2799fc1ef4479a66e6a92fb8e8a, type: 3}
   laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
     type: 3}
   mlaserPrefab: {fileID: 6041420664094412071, guid: 293c7e02b2b001849bb8df6402127050,
@@ -282,100 +270,3 @@ MonoBehaviour:
   dist: 0
   closestWeapon: {fileID: 0}
   closestEnemy: {fileID: 0}
---- !u!82 &-8825757306841386777
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147796775416149952}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
-    type: 2}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4

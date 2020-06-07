@@ -9,10 +9,10 @@ public class PlayerSkills : MonoBehaviour{
     public float cooldownE;
     [SerializeField] GameObject timerUI;
     [HeaderAttribute("Prefabs etc")]
-    [SerializeField] GameObject mPulsePrefab;
+    GameObject mPulsePrefab;
     [HeaderAttribute("Effects")]
     [SerializeField] GameObject portalVFX;
-    [SerializeField] AudioClip portalSFX;
+    //[SerializeField] AudioClip portalSFX;
     [HeaderAttribute("Timers etc")]
     public int currentSkillID=-1;
     public float timerTeleport=-4;
@@ -25,6 +25,7 @@ public class PlayerSkills : MonoBehaviour{
         gameSession=FindObjectOfType<GameSession>();
         umenu=FindObjectOfType<UpgradeMenu>();
         player=GetComponent<Player>();
+        mPulsePrefab=GameAssets.instance.Get("MPulse");
     }
 
     void Update(){
@@ -47,7 +48,7 @@ public class PlayerSkills : MonoBehaviour{
                     //if(i==0){
                     if(cooldownQ<=0 && Time.deltaTime>0.0001f){
                         Skills(skillKeyBind.Q,i,skill.enCost,skill.cooldown);
-                    }else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
+                    }else{AudioManager.instance.Play("Deny");}
                     //}
                 }
             }
@@ -59,7 +60,7 @@ public class PlayerSkills : MonoBehaviour{
                     //if(i==0){
                     if(cooldownE<=0 && Time.deltaTime>0.0001f){
                         Skills(skillKeyBind.E,i,skill.enCost,skill.cooldown);
-                    }else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
+                    }else{AudioManager.instance.Play("Deny");}
                     //}
                 }
             }
@@ -97,7 +98,7 @@ public class PlayerSkills : MonoBehaviour{
             if(timerTeleport>0){
                 if(Time.timeScale>0.0001f)timerTeleport-=Time.unscaledDeltaTime;
                 if(Input.GetMouseButtonDown(0)){
-                    AudioSource.PlayClipAtPoint(portalSFX,new Vector2(transform.position.x, transform.position.y));
+                    AudioManager.instance.Play("Portal");
                     GameObject tp1 = Instantiate(portalVFX,transform.position,Quaternion.identity);
                     GameObject tp2 = Instantiate(portalVFX,player.mousePos,Quaternion.identity);
                     var ps1=tp1.GetComponent<ParticleSystem>();var main1=ps1.main;

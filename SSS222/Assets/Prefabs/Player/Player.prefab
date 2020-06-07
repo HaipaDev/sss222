@@ -164,25 +164,9 @@ MonoBehaviour:
   powerupDefault: laser
   losePwrupOutOfEn: 1
   energyRefillUnlocked: 0
-  laserPrefab: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7,
-    type: 3}
-  phaserPrefab: {fileID: 5313808222654050488, guid: eeaf92f603acb7940b5e4aaf74fdcded,
-    type: 3}
-  hrocketPrefab: {fileID: 3039900905274326842, guid: 7ff6c0d23daef534d9bdbc28ea7b0f05,
-    type: 3}
-  mlaserPrefab: {fileID: 6041420664094412071, guid: 293c7e02b2b001849bb8df6402127050,
-    type: 3}
   lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
     type: 3}
   lclawsPrefab: {fileID: 4755926375889011706, guid: b9340c203c57d954687d49864bad3d74,
-    type: 3}
-  shadowBTPrefab: {fileID: 5313808222654050488, guid: 6f86399c48e08bc4c9514b05241611f1,
-    type: 3}
-  qrocketPrefab: {fileID: 3039900905274326842, guid: ee62cdec35026cb41bca88bd2914c697,
-    type: 3}
-  procketPrefab: {fileID: 3039900905274326842, guid: 0b49874a4081de04386a8d1ce4a4fe63,
-    type: 3}
-  cbulletPrefab: {fileID: 6041420664094412071, guid: caecc161b4ab6f041977bf96ceff3dba,
     type: 3}
   laserSpeed: 9
   laserShootPeriod: 0.34
@@ -261,30 +245,11 @@ MonoBehaviour:
   refillDelay: 1.6
   refillCount: 0
   refillRandomized: 0
-  explosionVFX: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
-  flareShootVFX: {fileID: 100000, guid: c151221cd78239d4ba56697f5a78532e, type: 3}
   shadowShootVFX: {fileID: 100000, guid: 096832bfc2651eb4b92bc8012922197b, type: 3}
   gcloverVFX: {fileID: 100000, guid: 93654d0135dbfd741b138964b108e311, type: 3}
   gcloverOVFX: {fileID: 100000, guid: 41fbf007ac904dd48afafa7a6655e3ef, type: 3}
-  lclawsVFX: {fileID: 100000, guid: 405398434fd7ed640a8082ddb451bddf, type: 3}
   crystalExplosionVFX: {fileID: 100000, guid: 6112b0f2cbaee2a4e847d65856edcf6f, type: 3}
-  shipHitSFX: {fileID: 8300000, guid: a18b151904914894d8ca0c87023051ad, type: 3}
-  explosionSFX: {fileID: 8300000, guid: b2affc4fb28935c4ab45801b98257f10, type: 3}
-  deathSFX: {fileID: 8300000, guid: faef65200c0014d4aa2393d42b24c515, type: 3}
-  soundwaveHitSFX: {fileID: 8300000, guid: c589bfb346cbbd8479b5f21c6982cab5, type: 3}
-  powerupSFX: {fileID: 8300000, guid: 6f4738a10b9ca5a40b2aa0cd26efc961, type: 3}
-  powerupOffSFX: {fileID: 8300000, guid: 0c4c5f193cbb0944d9caa06aea88e909, type: 3}
-  gcloverSFX: {fileID: 8300000, guid: 19e93c8854660504dab00b93b9d457aa, type: 3}
-  gcloverOffSFX: {fileID: 8300000, guid: c3f18becb532a2947a5894e7c7975cbd, type: 3}
-  shadowbtPwrupSFX: {fileID: 8300000, guid: 74abe63daa3fee64e9bde8a143a4caa2, type: 3}
-  noEnergySFX: {fileID: 8300000, guid: 1c11946ec7b1172408473ded0c194601, type: 3}
-  energyBallSFX: {fileID: 8300000, guid: dfa68626a29f7f74eb8067935ea8d1b7, type: 3}
-  energyRefillSFX: {fileID: 8300000, guid: fb4f60f019245994bbe3ef41560a3de3, type: 3}
-  coinSFX: {fileID: 8300000, guid: 5e8b43d317853f749b41d6aaf8ed9f55, type: 3}
-  leechBiteSFX: {fileID: 8300000, guid: 5198f100b29a378479c77e37079cf250, type: 3}
-  shadowdashSFX: {fileID: 8300000, guid: cdfebb5f0eb0cf74a9691c5e77ebaa17, type: 3}
-  matrixGetSFX: {fileID: 8300000, guid: 567d3ffb9cd479e4280894851fce93c3, type: 3}
   gameOverCanvasPrefab: {fileID: 0}
   shadowPrefab: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699,
     type: 3}
@@ -328,80 +293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8c9cd822c43524fa7cc236eae2a36c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoinPrefab: {fileID: 1056705403108089519, guid: eebb358fa9ff6af419cd68bd020a4289,
-    type: 3}
-  enBallPrefab: {fileID: 1056705403108089519, guid: b02c0de83bb50b44aadff0efec44e73f,
-    type: 3}
-  powercorePrefab: {fileID: 1056705403108089519, guid: 0311d6b525027ad43918a62b48acaba8,
-    type: 3}
-  armorPwrupPrefab: {fileID: 5649215481239408911, guid: b68538418da2b5943be6fd26f9e0ddec,
-    type: 3}
-  armorUPwrupPrefab: {fileID: 530782707432221319, guid: 79e3a62b1e44c5c42afcffa470e5736a,
-    type: 3}
-  laser2PwrupPrefab: {fileID: 274471404120805607, guid: c16ad10c3be8d894a81ec53963a84d36,
-    type: 3}
-  laser3PwrupPrefab: {fileID: 7318881522084147253, guid: 0e2ef393ab2246b4a877082641eb520d,
-    type: 3}
-  phaserPwrupPrefab: {fileID: 4548736405339070879, guid: 76d0a650fa6095b4d9e2950fb018aeaa,
-    type: 3}
-  hrocketPwrupPrefab: {fileID: 4548736405339070879, guid: bbbfc3cfe6944bb4cadd94872c94df49,
-    type: 3}
-  mlaserPwrupPrefab: {fileID: 4548736405339070879, guid: d44872e141aa7484a8ce2adfdcd8fb86,
-    type: 3}
-  lsaberPwrupPrefab: {fileID: 4548736405339070879, guid: da69c5e66b1dd2941ba313f4c96bc246,
-    type: 3}
-  lclawsPwrupPrefab: {fileID: 4548736405339070879, guid: 5a016be1fe8ea64479b960ba66d5e80e,
-    type: 3}
-  flipPwrupPrefab: {fileID: 4548736405339070879, guid: 5924af7ffd96c8147b6d83568c56580e,
-    type: 3}
-  gcloverPwrupPrefab: {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268,
-    type: 3}
-  shadowPwrupPrefab: {fileID: 4548736405339070879, guid: 506b460219bf5b24db97b32612acb51c,
-    type: 3}
-  shadowBTPwrupPrefab: {fileID: 4548736405339070879, guid: 09e222a729e8d7a46b1ed32960cf9e6e,
-    type: 3}
-  qrocketPwrupPrefab: {fileID: 4548736405339070879, guid: 344da1b4b981f0442828a9bcd1b5c7a3,
-    type: 3}
-  procketPwrupPrefab: {fileID: 4548736405339070879, guid: a8cf40cf136a1904ab8dc7e10093b0ea,
-    type: 3}
-  cstreamPwrupPrefab: {fileID: 4548736405339070879, guid: f6cc792fe400da64187dce1a17381752,
-    type: 3}
-  inverterPwrupPrefab: {fileID: 4548736405339070879, guid: 78f32229652b5c245b94bb675fb6be7a,
-    type: 3}
-  magnetPwrupPrefab: {fileID: 5649215481239408911, guid: 783ed3a20f22d5c408b2c7c789cd06e9,
-    type: 3}
-  scalerPwrupPrefab: {fileID: 4548736405339070879, guid: fef9a70d1e2661246b686c5f3f207fff,
-    type: 3}
-  matrixPwrupPrefab: {fileID: 4548736405339070879, guid: c430f5cd45eed4947ad8424c9ab96449,
-    type: 3}
-  pmultiPwrupPrefab: {fileID: 5649215481239408911, guid: 8c7a6bb61db1fe54c8c2e4559b9978fb,
-    type: 3}
-  randomizerPwrupPrefab: {fileID: 5649215481239408911, guid: 404504c142e7a4a40805ec056d2a842f,
-    type: 3}
-  cometPrefab: {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475,
-    type: 3}
-  batPrefab: {fileID: 3147796775416149952, guid: 2c3f94b277a11e0478605915547d8fed,
-    type: 3}
-  enShip1Prefab: {fileID: 6432250634095115783, guid: 37903edfff6f26349954ed2b719c593a,
-    type: 3}
-  enCombatantPrefab: {fileID: 6432250634095115783, guid: 952ed2444cd0f874592ef3f85ca7a108,
-    type: 3}
-  enSaberPrefab: {fileID: 4755926375889011706, guid: fa37e96c01257824c9c337b429cc5496,
-    type: 3}
-  soundwavePrefab: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
-    type: 3}
-  EBtPrefab: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1,
-    type: 3}
-  leechPrefab: {fileID: 3147796775416149952, guid: c720f3d821454e2429194e37df8ad1a3,
-    type: 3}
-  hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
-    type: 3}
-  goblinPrefab: {fileID: 3147796775416149952, guid: 20b480a5780858d49b689d64ef22c7d4,
-    type: 3}
-  hdronePrefab: {fileID: 3147796775416149952, guid: 38a89c644aa3bd44fb1f343bfe59d2da,
-    type: 3}
-  vortexPrefab: {fileID: 6432250634095115783, guid: 65337b01aa8c2ae48b00d5ce57c38dbe,
-    type: 3}
   dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
     type: 3}
   dmgFreq: 0.38
@@ -425,10 +316,7 @@ MonoBehaviour:
   cooldownQ: 0
   cooldownE: 0
   timerUI: {fileID: 0}
-  mPulsePrefab: {fileID: 6041420664094412071, guid: 94f381ce0f5d6bf4eb2a7b0cc13dd5cc,
-    type: 3}
   portalVFX: {fileID: 100000, guid: 1ee2c03a099f4cb4b8f86c863bfedf81, type: 3}
-  portalSFX: {fileID: 8300000, guid: d3275f157cb2cb847b2a31430b0449a1, type: 3}
   currentSkillID: -1
   timerTeleport: -4
 --- !u!114 &502397296

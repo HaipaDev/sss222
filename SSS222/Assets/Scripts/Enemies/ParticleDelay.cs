@@ -8,7 +8,7 @@ public class ParticleDelay : MonoBehaviour{
     [SerializeField] public float delay=1f;
     [SerializeField] public GameObject prefab;
     [SerializeField] public bool sound=true;
-    [SerializeField] public AudioClip sfx;
+    [SerializeField] public string sfx;
     float timer;
     void Start(){
         timer=delay;
@@ -18,7 +18,7 @@ public class ParticleDelay : MonoBehaviour{
         if(timer<=0 && on==true){
             var part=Instantiate(prefab,transform.position,Quaternion.identity);
             Destroy(part,0.5f);
-            if(sound==true)AudioSource.PlayClipAtPoint(sfx,transform.position);
+            if(sound==true)AudioManager.instance.Play(sfx);
             if(destroy==true)Destroy(gameObject);
         }
     }

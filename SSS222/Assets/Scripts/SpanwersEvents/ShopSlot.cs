@@ -38,8 +38,10 @@ public class ShopSlot : MonoBehaviour{
         if (gameSession.coins >= lootTable.itemList[ID].lootItem.price)
         {
             //gameSession.coins -= shopMenu.shopSlotIDs[ID].price;
+            gameSession.gameSpeed=0.05f;
             gameSession.coins -= lootTable.itemList[ID].lootItem.price;
-            AudioSource.PlayClipAtPoint(shopMenu.buySFX,player.transform.position);
+            //AudioSource.PlayClipAtPoint(shopMenu.buySFX,player.transform.position);
+            AudioManager.instance.Play("Ding");
             //if(ID<=shopMenu.shopSlotIDs.Count){
                 player.energy+=10f;
                 if(ID!=10)gameSession.AddXP(gameSession.xp_shop);//XP For purchase
@@ -58,8 +60,11 @@ public class ShopSlot : MonoBehaviour{
                     Instantiate(player.GetComponent<PlayerCollider>().GetRandomizerPwrup(),player.transform.position,Quaternion.identity);
                 }else if(ID==10){
                     gameSession.cores++;
-                    AudioSource.PlayClipAtPoint(gameSession.lvlUpSFX,player.transform.position);
+                    //AudioSource.PlayClipAtPoint(gameSession.lvlUpSFX,player.transform.position);
+                    AudioManager.instance.Play("LvlUp");
                 }
+
+                gameSession.gameSpeed=0f;
                 /*if (ID == 0) { player.powerup = "mlaser"; player.energy += player.pwrupEnergyGet; }
                 if (ID==1) { player.powerup = "phaser"; player.energy += player.pwrupEnergyGet; }
                 if (ID==2) { player.powerup = "hrockets"; player.energy +=player.pwrupEnergyGet; }
@@ -69,7 +74,10 @@ public class ShopSlot : MonoBehaviour{
             //} else { Debug.LogError("Shop Slot ID out of bounds"); }
         }else{
             //shopMenu.GetComponent<AudioSource>().Play();//PlayClipAtPoint(player.noEnergySFX,transform.position,100);
-            AudioSource.PlayClipAtPoint(shopMenu.noCoinsSFX,player.transform.position);
+            gameSession.gameSpeed=0.001f;
+            //AudioSource.PlayClipAtPoint(shopMenu.noCoinsSFX,player.transform.position);
+            AudioManager.instance.Play("Deny");
+            gameSession.gameSpeed=0f;
         }
     }
 }

@@ -354,7 +354,7 @@ MonoBehaviour:
   enemies: 1
   player: 1
   sound: 1
-  sfx: {fileID: 8300000, guid: a08cd7c3019c6a9488a779f692ebc6b5, type: 3}
+  sfx: LeechAttach
 --- !u!114 &-1806142457920749441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +372,7 @@ MonoBehaviour:
   delay: 1.44
   prefab: {fileID: 100000, guid: 3df3a657179286e47917de0f19bcc71c, type: 3}
   sound: 1
-  sfx: {fileID: 8300000, guid: d2b91433b51c3af4995a35d24ab8887c, type: 3}
+  sfx: HRocketHit
 --- !u!114 &2138168064270286247
 MonoBehaviour:
   m_ObjectHideFlags: 0

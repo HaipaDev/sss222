@@ -10,8 +10,8 @@ public class Shop : MonoBehaviour{
     public ShopSlot[] slots;
     //public GameObject[] slotText;
     public List<ShopSlotID> shopSlotIDs;
-    public AudioClip noCoinsSFX;
-    public AudioClip buySFX;
+    //public AudioClip noCoinsSFX;
+    //public AudioClip buySFX;
     //public List<int> prices;
     //int maxID;
     //public List<Sprite> sprites;

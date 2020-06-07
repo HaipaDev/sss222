@@ -25,16 +25,17 @@ public class Player : MonoBehaviour{
     [SerializeField] public bool losePwrupOutOfEn;
     [SerializeField] public bool energyRefillUnlocked;
     [HeaderAttribute("Weapons")]
-    [SerializeField] public GameObject laserPrefab;
-    [SerializeField] public GameObject phaserPrefab;
-    [SerializeField] public GameObject hrocketPrefab;
-    [SerializeField] public GameObject mlaserPrefab;
-    [SerializeField] public GameObject lsaberPrefab;
-    [SerializeField] public GameObject lclawsPrefab;
-    [SerializeField] public GameObject shadowBTPrefab;
-    [SerializeField] public GameObject qrocketPrefab;
-    [SerializeField] public GameObject procketPrefab;
-    [SerializeField] public GameObject cbulletPrefab;
+    GameObject laserPrefab;
+    GameObject phaserPrefab;
+    GameObject hrocketPrefab;
+    GameObject mlaserPrefab;
+    [HideInInspector]public GameObject lsaberPrefab;
+    [HideInInspector]public GameObject lclawsPrefab;
+    GameObject lclawsVFX;
+    GameObject shadowBTPrefab;
+    GameObject qrocketPrefab;
+    GameObject procketPrefab;
+    GameObject cbulletPrefab;
     [SerializeField] float laserSpeed = 9f;
     [SerializeField] float laserShootPeriod = 0.34f;
     [SerializeField] float phaserSpeed = 10.5f;
@@ -116,14 +117,17 @@ public class Player : MonoBehaviour{
     public float refillCount;
     public bool refillRandomized;
     [HeaderAttribute("Effects")]
-    [SerializeField] public GameObject explosionVFX;
-    [SerializeField] public GameObject flareHitVFX;
-    [SerializeField] public GameObject flareShootVFX;
-    [SerializeField] public GameObject shadowShootVFX;
-    [SerializeField] public GameObject gcloverVFX;
-    [SerializeField] public GameObject gcloverOVFX;
-    [SerializeField] public GameObject lclawsVFX;
-    [SerializeField] public GameObject crystalExplosionVFX;
+    #region//VFX
+    GameObject explosionVFX;
+    public GameObject flareHitVFX;
+    GameObject flareShootVFX;
+    public GameObject shadowShootVFX;
+    public GameObject gcloverVFX;
+    public GameObject gcloverOVFX;
+    public GameObject crystalExplosionVFX;
+    #endregion
+    #region//SFX
+    /*
     //[SerializeField] AudioClip shootLaserSFX;
     [SerializeField] public AudioClip shipHitSFX;
     [SerializeField] public AudioClip explosionSFX;
@@ -141,6 +145,8 @@ public class Player : MonoBehaviour{
     [SerializeField] public AudioClip leechBiteSFX;
     [SerializeField] public AudioClip shadowdashSFX;
     [SerializeField] public AudioClip matrixGetSFX;
+    */
+    #endregion
     [HeaderAttribute("Others")]
     [SerializeField] GameObject gameOverCanvasPrefab;
     [SerializeField] GameObject shadowPrefab;
@@ -200,9 +206,7 @@ public class Player : MonoBehaviour{
     GameObject refillUI;
     GameObject refilltxtS;
     GameObject refilltxtE;
-    AudioSource myAudioSource;
-    AudioMixer mixer;
-    string _OutputMixer;
+    //AudioSource audioSource;
 #endregion
 
     void Start(){
@@ -222,7 +226,31 @@ public class Player : MonoBehaviour{
         refillUI=GameObject.Find("RefillUI");
         refilltxtS=GameObject.Find("RefillText1");
         refilltxtE=GameObject.Find("RefillText2");
+
+        SetPrefabs();
     }
+    void SetPrefabs(){
+        laserPrefab=GameAssets.instance.Get("Laser");
+        mlaserPrefab=GameAssets.instance.Get("MLaser");
+        hrocketPrefab=GameAssets.instance.Get("HRocket");
+        phaserPrefab=GameAssets.instance.Get("Phaser");
+        lsaberPrefab=GameAssets.instance.Get("LSaber");
+        lclawsPrefab=GameAssets.instance.Get("LClaws");
+        lclawsVFX=GameAssets.instance.Get("LClawsVFX");
+        shadowBTPrefab=GameAssets.instance.Get("ShadowBt");
+        qrocketPrefab=GameAssets.instance.Get("QRocket");
+        procketPrefab=GameAssets.instance.Get("PRocket");
+        cbulletPrefab=GameAssets.instance.Get("CBullet");
+
+        explosionVFX=GameAssets.instance.GetVFX("Explosion");
+        flareHitVFX=GameAssets.instance.GetVFX("FlareHit");
+        flareShootVFX=GameAssets.instance.GetVFX("FlareShoot");
+        shadowShootVFX=GameAssets.instance.GetVFX("ShadowTrail");
+        gcloverVFX=GameAssets.instance.GetVFX("GCloverVFX");
+        gcloverOVFX=GameAssets.instance.GetVFX("GCloverOutVFX");
+        crystalExplosionVFX=GameAssets.instance.GetVFX("CExplVFX");
+    }
+
     void Update(){
         HandleInput(false);
         energy = Mathf.Clamp(energy, 0, maxEnergy);
@@ -420,8 +448,8 @@ public class Player : MonoBehaviour{
             EnergyPopUpHUD(shadowEn);
             dashing = true;
             shadowed = true;
-            //PlayClipAt(shadowdashSFX, new Vector2(transform.position.x, transform.position.y));
-            AudioSource.PlayClipAtPoint(shadowdashSFX, transform.position);
+            //AudioSource.PlayClipAtPoint(shadowdashSFX, new Vector2(transform.position.x, transform.position.y));
+            AudioManager.instance.Play("Shadowdash");
             dashTime = startDashTime;
             //else{ rb.velocity = Vector2.zero; }
         }//else { dashTime = startDashTime; rb.velocity = Vector2.zero; }
@@ -430,8 +458,8 @@ public class Player : MonoBehaviour{
 
     private void Die(){
         if (health <= 0){
-            GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-            AudioSource.PlayClipAtPoint(deathSFX, new Vector2(transform.position.x, transform.position.y));
+            GameObject explosion = GameAssets.instance.VFX("Explosion",transform.position);
+            AudioManager.instance.Play("Death");
             Destroy(explosion, 0.5f);
             pskills.DeathSkills();
             Destroy(gameObject, 0.05f);//Kill player
@@ -451,8 +479,9 @@ public class Player : MonoBehaviour{
         while (true){
             if (Time.timeScale > 0.0001f){
             if (energy>0){
+                SetPrefabs();
                 if (powerup=="laser"){
-                    GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject laserL = GameAssets.instance.Make("Laser", new Vector2(transform.position.x - 0.35f, transform.position.y)) as GameObject;
                     GameObject laserR = Instantiate(laserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
                     GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
@@ -595,7 +624,7 @@ public class Player : MonoBehaviour{
                             GameObject clawsPart = Instantiate(lclawsVFX, enemy.transform.position, Quaternion.identity) as GameObject;
                             Destroy(clawsPart, 0.15f);
                             //enemy.health -= FindObjectOfType<DamageDealer>().GetDamageLCLaws();
-                        }else{ AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); }
+                        }else{ AudioManager.instance.Play("NoEnergy"); }
                         energy -= lclawsEn;
                         EnergyPopUpHUD(lclawsEn);
                             shootTimer = 0.5f;
@@ -643,7 +672,7 @@ public class Player : MonoBehaviour{
                 }
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
                 else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup = powerupDefault; shootTimer = 1f; yield return new WaitForSeconds(1f); }
-            }else{ energy = 0; AudioSource.PlayClipAtPoint(noEnergySFX, transform.position); shootTimer = 0f; yield return new WaitForSeconds(1f); }
+            }else{ energy = 0; AudioManager.instance.Play("NoEnergy"); shootTimer = 0f; yield return new WaitForSeconds(1f); }
             }
         }
     }
@@ -706,7 +735,7 @@ public class Player : MonoBehaviour{
 #region//States
     private void States(){
         if (flip == true) { flipTimer -= Time.deltaTime; moveDir = -1; } else { moveDir = 1; }
-        if(flipTimer<= 0 && flipTimer>-4) { flip = false; flipTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
+        if(flipTimer<= 0 && flipTimer>-4) { flip = false; flipTimer = -4; AudioManager.instance.Play("PowerupOff"); }
 
         if (gclover == true) {
             health = maxHP;
@@ -716,10 +745,10 @@ public class Player : MonoBehaviour{
         else{
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover = false;
         }
-        if (gcloverTimer <= 0 && gcloverTimer>-4) { gclover = false; gcloverTimer = -4; AudioSource.PlayClipAtPoint(gcloverOffSFX, new Vector2(transform.position.x, transform.position.y)); }
+        if (gcloverTimer <= 0 && gcloverTimer>-4) { gclover = false; gcloverTimer = -4; AudioManager.instance.Play("GCloverOff"); }
 
         if (shadow == true) { shadowTimer -= Time.deltaTime; }
-        if (shadowTimer <= 0 && shadowTimer > -4) { shadow = false; shadowTimer = -4; AudioSource.PlayClipAtPoint(powerupOffSFX, new Vector2(transform.position.x, transform.position.y)); }
+        if (shadowTimer <= 0 && shadowTimer > -4) { shadow = false; shadowTimer = -4; AudioManager.instance.Play("PowerupOff"); }
         if (shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
         else{ dashTime = startDashTime; rb.velocity = Vector2.zero; GetComponent<BackflameEffect>().enabled=true; }
         if (dashTime <= 0) { rb.velocity = Vector2.zero; dashing = false; dashTime=-4;}
@@ -878,7 +907,7 @@ public class Player : MonoBehaviour{
                         refillCount++;
                         gameSession.coins-=refillCost;
                         refillRandomized=false;
-                        AudioSource.PlayClipAtPoint(energyRefillSFX, new Vector2(transform.position.x, transform.position.y));
+                        AudioManager.instance.Play("EnergyRefill");
                         GameObject crystalVFX = Instantiate(crystalExplosionVFX, new Vector2(0, 0), Quaternion.identity);
                         Destroy(crystalVFX,0.1f);
                     }else{
@@ -954,19 +983,6 @@ public class Player : MonoBehaviour{
         }
         return null;
     }*/
-    AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
-    {
-        GameObject tempGO = new GameObject("TempAudio"); // create the temp object
-        tempGO.transform.position = pos; // set its position
-        AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
-        aSource.clip = clip; // define the clip
-                             // set other aSource properties here, if desired
-        _OutputMixer = "SoundVolume";
-        aSource.outputAudioMixerGroup = myAudioSource.outputAudioMixerGroup;
-        aSource.Play(); // start the sound
-        MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
-        return aSource; // return the AudioSource reference
-    }
     private void SetActiveAllChildren(Transform transform, bool value)
     {
         foreach (Transform child in transform)

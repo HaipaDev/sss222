@@ -46,10 +46,14 @@
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
      <Compile Include="Assets\Scripts\Android\ShootButton.cs" />
+     <Compile Include="Assets\Scripts\Core\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
      <Compile Include="Assets\Scripts\Core\DataStorage.cs" />
+     <Compile Include="Assets\Scripts\Core\GObject.cs" />
+     <Compile Include="Assets\Scripts\Core\GSprite.cs" />
      <Compile Include="Assets\Scripts\Core\GameAssets.cs" />
+     <Compile Include="Assets\Scripts\Core\GameAssetsOld.cs" />
      <Compile Include="Assets\Scripts\Core\GameCreator.cs" />
      <Compile Include="Assets\Scripts\Core\GameSession.cs" />
      <Compile Include="Assets\Scripts\Core\Level.cs" />
@@ -61,7 +65,8 @@
      <Compile Include="Assets\Scripts\Core\Settings.cs" />
      <Compile Include="Assets\Scripts\Core\Shredder.cs" />
      <Compile Include="Assets\Scripts\Core\SkillIcon.cs" />
-     <Compile Include="Assets\Scripts\Core\SoundManager.cs" />
+     <Compile Include="Assets\Scripts\Core\Sound.cs" />
+     <Compile Include="Assets\Scripts\Core\SoundManagerOld.cs" />
      <Compile Include="Assets\Scripts\Enemies\CometRandomProperties.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnCombatant.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnShip.cs" />

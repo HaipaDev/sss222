@@ -5,44 +5,45 @@ using UnityEngine.Audio;
 
 public class PlayerCollider : MonoBehaviour{
     [HeaderAttribute("Powerups")]
-    [SerializeField] GameObject CoinPrefab;
-    [SerializeField] GameObject enBallPrefab;
-    [SerializeField] GameObject powercorePrefab;
-    [SerializeField] GameObject armorPwrupPrefab;
-    [SerializeField] GameObject armorUPwrupPrefab;
-    [SerializeField] GameObject laser2PwrupPrefab;
-    [SerializeField] GameObject laser3PwrupPrefab;
-    [SerializeField] GameObject phaserPwrupPrefab;
-    [SerializeField] GameObject hrocketPwrupPrefab;
-    [SerializeField] GameObject mlaserPwrupPrefab;
-    [SerializeField] GameObject lsaberPwrupPrefab;
-    [SerializeField] GameObject lclawsPwrupPrefab;
-    [SerializeField] GameObject flipPwrupPrefab;
-    [SerializeField] GameObject gcloverPwrupPrefab;
-    [SerializeField] GameObject shadowPwrupPrefab;
-    [SerializeField] GameObject shadowBTPwrupPrefab;
-    [SerializeField] GameObject qrocketPwrupPrefab;
-    [SerializeField] GameObject procketPwrupPrefab;
-    [SerializeField] GameObject cstreamPwrupPrefab;
-    [SerializeField] GameObject inverterPwrupPrefab;
-    [SerializeField] GameObject magnetPwrupPrefab;
-    [SerializeField] GameObject scalerPwrupPrefab;
-    [SerializeField] GameObject matrixPwrupPrefab;
-    [SerializeField] GameObject pmultiPwrupPrefab;
-    [SerializeField] GameObject randomizerPwrupPrefab;
+    GameObject CoinPrefab;
+    GameObject enBallPrefab;
+    GameObject powercorePrefab;
+    GameObject armorPwrupPrefab;
+    GameObject armorUPwrupPrefab;
+    GameObject laser2PwrupPrefab;
+    GameObject laser3PwrupPrefab;
+    GameObject phaserPwrupPrefab;
+    GameObject hrocketPwrupPrefab;
+    GameObject mlaserPwrupPrefab;
+    GameObject lsaberPwrupPrefab;
+    GameObject lclawsPwrupPrefab;
+    GameObject flipPwrupPrefab;
+    GameObject gcloverPwrupPrefab;
+    GameObject shadowPwrupPrefab;
+    GameObject shadowBTPwrupPrefab;
+    GameObject qrocketPwrupPrefab;
+    GameObject procketPwrupPrefab;
+    GameObject cstreamPwrupPrefab;
+    GameObject inverterPwrupPrefab;
+    GameObject magnetPwrupPrefab;
+    GameObject scalerPwrupPrefab;
+    GameObject matrixPwrupPrefab;
+    GameObject pmultiPwrupPrefab;
+    GameObject randomizerPwrupPrefab;
+    #region
     [HeaderAttribute("Damage Dealers")]
-    [SerializeField] GameObject cometPrefab;
-    [SerializeField] GameObject batPrefab;
-    [SerializeField] GameObject enShip1Prefab;
-    [SerializeField] GameObject enCombatantPrefab;
-    [SerializeField] GameObject enSaberPrefab;
-    [SerializeField] GameObject soundwavePrefab;
-    [SerializeField] GameObject EBtPrefab;
-    [SerializeField] GameObject leechPrefab;
-    [SerializeField] GameObject hlaserPrefab;
-    [SerializeField] GameObject goblinPrefab;
-    [SerializeField] GameObject hdronePrefab;
-    [SerializeField] GameObject vortexPrefab;
+    GameObject cometPrefab;
+    GameObject batPrefab;
+    GameObject enShip1Prefab;
+    GameObject enCombatantPrefab;
+    GameObject enSaberPrefab;
+    GameObject soundwavePrefab;
+    GameObject EBtPrefab;
+    GameObject leechPrefab;
+    GameObject hlaserPrefab;
+    GameObject goblinPrefab;
+    GameObject hdronePrefab;
+    GameObject vortexPrefab;
     [HeaderAttribute("Other")]
     [SerializeField] public GameObject dmgPopupPrefab;
     [SerializeField] float dmgFreq=0.38f;
@@ -50,36 +51,60 @@ public class PlayerCollider : MonoBehaviour{
 
     Player player;
     GameSession gameSession;
-    AudioSource myAudioSource;
-    AudioMixer mixer;
-    AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
-    {
-        GameObject tempGO = new GameObject("TempAudio"); // create the temp object
-        tempGO.transform.position = pos; // set its position
-        AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
-        aSource.clip = clip; // define the clip
-                             // set other aSource properties here, if desired
-        _OutputMixer = "SoundVolume";
-        aSource.outputAudioMixerGroup = myAudioSource.outputAudioMixerGroup;
-        aSource.Play(); // start the sound
-        MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
-        return aSource; // return the AudioSource reference
-    }
-    string _OutputMixer;
     // Start is called before the first frame update
+    #endregion
     void Start()
     {
         player = FindObjectOfType<Player>().GetComponent<Player>();
         gameSession = FindObjectOfType<GameSession>();
-        myAudioSource = GetComponent<AudioSource>();
-        mixer = Resources.Load("MainMixer") as AudioMixer;
-        _OutputMixer = "SoundVolume";
-        //GetComponent<AudioSource>().outputAudioMixerGroup = mixer.FindMatchingGroups(_OutputMixer)[0];
+
+        SetPrefabs();
+    }
+
+    void SetPrefabs(){
+        CoinPrefab=GameAssets.instance.Get("Coin");
+        enBallPrefab=GameAssets.instance.Get("EnBall");
+        powercorePrefab=GameAssets.instance.Get("PowerCore");
+        armorPwrupPrefab=GameAssets.instance.Get("ArmorPwrup");
+        armorUPwrupPrefab=GameAssets.instance.Get("ArmorUPwrup");
+        laser2PwrupPrefab=GameAssets.instance.Get("Laser2Pwrup");
+        laser3PwrupPrefab=GameAssets.instance.Get("Laser3Pwrup");
+        phaserPwrupPrefab=GameAssets.instance.Get("PhaserPwrup");
+        hrocketPwrupPrefab=GameAssets.instance.Get("HRocketPwrup");
+        mlaserPwrupPrefab=GameAssets.instance.Get("MLaserPwrup");
+        lsaberPwrupPrefab=GameAssets.instance.Get("LSaberPwrup");
+        lclawsPwrupPrefab=GameAssets.instance.Get("LClawsPwrup");
+        flipPwrupPrefab=GameAssets.instance.Get("FlipPwrup");
+        gcloverPwrupPrefab=GameAssets.instance.Get("GCloverPwrup");
+        shadowPwrupPrefab=GameAssets.instance.Get("ShadowPwrup");
+        shadowBTPwrupPrefab=GameAssets.instance.Get("ShadowBtPwrup");
+        qrocketPwrupPrefab=GameAssets.instance.Get("QRocketPwrup");
+        procketPwrupPrefab=GameAssets.instance.Get("PRocketPwrup");
+        cstreamPwrupPrefab=GameAssets.instance.Get("CStreamPwrup");
+        inverterPwrupPrefab=GameAssets.instance.Get("InverterPwrup");
+        magnetPwrupPrefab=GameAssets.instance.Get("MagnetPwrup");
+        scalerPwrupPrefab=GameAssets.instance.Get("ScalerPwrup");
+        matrixPwrupPrefab=GameAssets.instance.Get("MatrixPwrup");
+        pmultiPwrupPrefab=GameAssets.instance.Get("PMultiPwrup");
+        randomizerPwrupPrefab=GameAssets.instance.Get("RandomizerPwrup");
+
+        cometPrefab=GameAssets.instance.Get("Comet");
+        batPrefab=GameAssets.instance.Get("Bat");
+        soundwavePrefab=GameAssets.instance.Get("Soundwave");
+        enShip1Prefab=GameAssets.instance.Get("EnShip");
+        EBtPrefab=GameAssets.instance.Get("EnBt");
+        enCombatantPrefab=GameAssets.instance.Get("EnComb");
+        enSaberPrefab=GameAssets.instance.Get("EnSaber");
+        leechPrefab=GameAssets.instance.Get("Leech");
+        hlaserPrefab=GameAssets.instance.Get("HLaser");
+        goblinPrefab=GameAssets.instance.Get("Goblin");
+        hdronePrefab=GameAssets.instance.Get("HDrone");
+        vortexPrefab=GameAssets.instance.Get("Vortex");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+        SetPrefabs();
         if (!other.CompareTag(tag))
         {
             #region//Enemies
@@ -112,7 +137,7 @@ public class PlayerCollider : MonoBehaviour{
 
 
                 var Sname = soundwavePrefab.name; var Sname1 = soundwavePrefab.name + "(Clone)";
-                if (other.gameObject.name == Sname || other.gameObject.name == Sname1) { dmg = damageDealer.GetDamageSoundwave(); PlayClipAt(player.soundwaveHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+                if (other.gameObject.name == Sname || other.gameObject.name == Sname1) { dmg = damageDealer.GetDamageSoundwave(); AudioManager.instance.Play("SoundwaveHit"); }
                 var EBtname = EBtPrefab.name; var EBtname1 = EBtPrefab.name + "(Clone)";
                 if (other.gameObject.name == EBtname || other.gameObject.name == EBtname1) { dmg = damageDealer.GetDamageEBt();}
 
@@ -135,7 +160,7 @@ public class PlayerCollider : MonoBehaviour{
                         }
                         else { }
                         player.damaged = true;
-                        PlayClipAt(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
+                        AudioManager.instance.Play("ShipHit");
                         var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                         Destroy(flare.gameObject, 0.3f);
                     }
@@ -149,7 +174,7 @@ public class PlayerCollider : MonoBehaviour{
                 }else{
                     player.health -= dmg;
                     player.damaged = true;
-                    PlayClipAt(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
+                    AudioManager.instance.Play("ShipHit");
                 }
                 if(gameSession.dmgPopups==true){
                     GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
@@ -285,30 +310,30 @@ public class PlayerCollider : MonoBehaviour{
 
                 if (other.gameObject.name == enBallName || other.gameObject.name == enBallName1)
                 {
-                    PlayClipAt(player.energyBallSFX, new Vector2(transform.position.x, transform.position.y));
+                    AudioManager.instance.Play("EnergyBall");
                 }
                 else if (other.gameObject.name == CoinName || other.gameObject.name == CoinName1)
                 {
-                    PlayClipAt(player.coinSFX, new Vector2(transform.position.x, transform.position.y));
+                    AudioManager.instance.Play("Coin");
                 }else if (other.gameObject.name == powercoreName || other.gameObject.name == powercoreName1)
                 {
-                    PlayClipAt(gameSession.lvlUpSFX, new Vector2(transform.position.x, transform.position.y));
+                    AudioManager.instance.Play("LvlUp");
                 }
                 else if (other.gameObject.name == gcloverName || other.gameObject.name == gcloverName1)
                 {
-                    PlayClipAt(player.gcloverSFX, new Vector2(transform.position.x, transform.position.y));
+                    AudioManager.instance.Play("GClover");
                 }
                 else if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1)
                 {
-                    PlayClipAt(player.shadowbtPwrupSFX, new Vector2(transform.position.x, transform.position.y));
+                    AudioManager.instance.Play("ShadowGet");
                 }else if (other.gameObject.name == matrixName || other.gameObject.name == matrixName1)
                 {
-                    PlayClipAt(player.matrixGetSFX, new Vector2(transform.position.x, transform.position.y));
+                    AudioManager.instance.Play("MatrixGet");
                 }
                 else
                 {
                     //SoundManager.PlaySound(SoundManager.Sound.powerupSFX);
-                    PlayClipAt(player.powerupSFX, new Vector2(transform.position.x, transform.position.y));
+                    AudioManager.instance.Play("Powerup");
                 }
                 Destroy(other.gameObject, 0.05f);
             }
@@ -345,7 +370,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (dmgTimer<=0){
                     player.health -= dmg;
                     player.damaged = true;
-                    if (other.gameObject.name == leechName || other.gameObject.name == leechName1){PlayClipAt(player.leechBiteSFX, new Vector2(transform.position.x, transform.position.y));}
+                    if (other.gameObject.name == leechName || other.gameObject.name == leechName1){AudioManager.instance.Play("LeechBite");}
                     //var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                     //Destroy(flare.gameObject, 0.3f);
                     if(gameSession.dmgPopups==true){

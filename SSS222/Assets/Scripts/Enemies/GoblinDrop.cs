@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class GoblinDrop : MonoBehaviour{
-    [SerializeField] AudioClip goblinStealSFX;
-    [SerializeField] AudioClip goblinDeathSFX;
+    //[SerializeField] AudioClip goblinStealSFX;
+    //[SerializeField] AudioClip goblinDeathSFX;
+    public GameObject powerup;
+    /*
     [HeaderAttribute("Powerups")]
     [SerializeField] GameObject CoinPrefab;
     [SerializeField] GameObject enBallPrefab;
@@ -21,21 +23,17 @@ public class GoblinDrop : MonoBehaviour{
     [SerializeField] GameObject gcloverPwrupPrefab;
     [SerializeField] GameObject shadowPwrupPrefab;
     [SerializeField] GameObject shadowBTPwrupPrefab;
-    public GameObject powerup;
+    */
 
     Enemy enemy;
     Rigidbody2D rb;
     AudioSource myAudioSource;
-    AudioMixer mixer;
-    string _OutputMixer;
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Enemy>();
         rb = GetComponent<Rigidbody2D>();
         myAudioSource = GetComponent<AudioSource>();
-        mixer = Resources.Load("MainMixer") as AudioMixer;
-        _OutputMixer = "SoundVolume";
     }
 
     // Update is called once per frame
@@ -53,25 +51,12 @@ public class GoblinDrop : MonoBehaviour{
             powerup.transform.position=transform.position;
             powerup.GetComponent<Rigidbody2D>().velocity = Vector2.down*powerup.GetComponent<FallDown>().GetVSpeed();
         }
-        PlayClipAt(goblinDeathSFX, transform.position);
-    }
-    AudioSource PlayClipAt(AudioClip clip, Vector2 pos)
-    {
-        GameObject tempGO = new GameObject("TempAudio"); // create the temp object
-        tempGO.transform.position = pos; // set its position
-        AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
-        aSource.clip = clip; // define the clip
-                             // set other aSource properties here, if desired
-        _OutputMixer = "SoundVolume";
-        aSource.outputAudioMixerGroup = myAudioSource.outputAudioMixerGroup;
-        aSource.Play(); // start the sound
-        MonoBehaviour.Destroy(tempGO, aSource.clip.length); // destroy object after clip duration (this will not account for whether it is set to loop)
-        return aSource; // return the AudioSource reference
+        AudioManager.instance.Play("GoblinDeath");
     }
 
     private void OnTriggerEnter2D(Collider2D other){
         if(other.CompareTag("Powerups")){
-            PlayClipAt(goblinStealSFX,transform.position);
+            AudioManager.instance.Play("GoblinSteal");
             powerup=other.gameObject;
             powerup.SetActive(false);
             //Destroy(other.gameObject,0.002f);

@@ -77,7 +77,7 @@ public class GameSession : MonoBehaviour{
     private void Update()
     {
         Time.timeScale = gameSpeed;
-        if(shopScore>=shopScoreMax)
+        if(shopScore>=shopScoreMax && coins>0)
         {
             Shop.shopOpen = true;
             Enemy[] enemies = FindObjectsOfType<Enemy>();

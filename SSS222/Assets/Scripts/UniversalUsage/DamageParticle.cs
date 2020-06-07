@@ -24,7 +24,7 @@ public class DamageParticle : MonoBehaviour{
             var player=other.GetComponent<Player>();
             player.health-=dmgPlayer;
             player.damaged = true;
-            AudioSource.PlayClipAtPoint(player.shipHitSFX, new Vector2(transform.position.x, transform.position.y));
+            AudioManager.instance.Play("ShipHit");
             if(FindObjectOfType<GameSession>().dmgPopups==true){
                 GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(other.GetComponent<PlayerCollider>().dmgPopupPrefab,transform.position);
                 dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;

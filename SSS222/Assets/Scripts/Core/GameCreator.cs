@@ -10,6 +10,7 @@ public class GameCreator : MonoBehaviour{
     [SerializeField] GameObject saveSerialPrefab;
     [SerializeField] GameObject gameAssetsPrefab;
     [SerializeField] GameObject levelPrefab;
+    [SerializeField] GameObject audioManagerPrefab;
     private void Awake()
     {
         if (FindObjectOfType<GameSession>() == null){Instantiate(gameSessionPrefab);}
@@ -17,6 +18,7 @@ public class GameCreator : MonoBehaviour{
         if (FindObjectOfType<SaveSerial>() == null){Instantiate(saveSerialPrefab);}
         if (FindObjectOfType<GameAssets>() == null){Instantiate(gameAssetsPrefab);}
         if (FindObjectOfType<Level>() == null){Instantiate(levelPrefab);}
+        if (FindObjectOfType<AudioManager>() == null){Instantiate(audioManagerPrefab);}
         if (FindObjectOfType<PostProcessVolume>() != null && FindObjectOfType<SaveSerial>().pprocessing!=true){Destroy(FindObjectOfType<PostProcessVolume>());}
         Destroy(gameObject);
     }

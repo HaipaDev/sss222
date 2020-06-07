@@ -6,7 +6,7 @@ public class StickTo : MonoBehaviour{
     [SerializeField] bool enemies=true;
     [SerializeField] bool player=true;
     [SerializeField] bool sound=true;
-    [SerializeField] AudioClip sfx;
+    [SerializeField] string sfx;
     void Start(){
         
     }
@@ -19,7 +19,7 @@ public class StickTo : MonoBehaviour{
             GetComponent<FollowOneObject>().targetObj=other.gameObject;
             GetComponent<Rigidbody2D>().velocity=Vector2.zero;
             if(GetComponent<ParticleDelay>()!=null){GetComponent<ParticleDelay>().on=true;}
-            if(sound==true){AudioSource.PlayClipAtPoint(sfx,transform.position);sound=false;}
+            if(sound==true){AudioManager.instance.Play(sfx);}
         }
     }
 }

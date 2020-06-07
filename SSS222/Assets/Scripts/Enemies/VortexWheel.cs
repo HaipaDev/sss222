@@ -72,7 +72,7 @@ public class VortexWheel : MonoBehaviour{
         timer=-5;
         GetComponent<CircleCollider2D>().enabled=false;
         spr=sprites[7];
-        AudioSource.PlayClipAtPoint(dieSFX,transform.position);
+        AudioManager.instance.Play("VortexDie");
         yield return new WaitForSeconds(1.65f);
         if(GetComponent<ParticleDelay>()!=null)GetComponent<ParticleDelay>().on=true;
         var enemy=GetComponent<Enemy>();enemy.health=-1;enemy.Die();
@@ -81,7 +81,7 @@ public class VortexWheel : MonoBehaviour{
     IEnumerator Shoot(){
         timer=-5;
         spr=sprites[5];
-        AudioSource.PlayClipAtPoint(chargeSFX,transform.position);
+        AudioManager.instance.Play("VortexCharge");
         var angle=0;
         //if(angle<360)angle+=15;
         for(var i=angle;i<360;i+=15){

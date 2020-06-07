@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Lightsaber : MonoBehaviour{
-    [SerializeField] AudioClip lsaberBlockSFX;
     [SerializeField] bool enemy=false;
     Player player;
     EnCombatant enCombatant;
@@ -35,7 +34,7 @@ public class Lightsaber : MonoBehaviour{
                     Destroy(other.gameObject, 0.05f);
                     //else { if (other.GetComponent<Enemy>().health > -1) { other.GetComponent<Enemy>().givePts = false; other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die(); } }
 
-                    AudioSource.PlayClipAtPoint(lsaberBlockSFX, new Vector2(transform.position.x, transform.position.y));
+                    AudioManager.instance.Play("LSaberBlock");
                     //var flare = Instantiate(flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                     //Destroy(flare.gameObject, 0.3f);
                 }
@@ -43,9 +42,9 @@ public class Lightsaber : MonoBehaviour{
                 if (other.gameObject.CompareTag("PlayerWeapons")){
                     if(other.GetComponent<Tag_PlayerWeaponBlockable>()!=null){
                         Destroy(other.gameObject, 0.05f);
-                        AudioSource.PlayClipAtPoint(lsaberBlockSFX, new Vector2(transform.position.x, transform.position.y));
+                        AudioManager.instance.Play("LSaberBlockEnemy");
                     }if(other.GetComponent<Lightsaber>()!=null){
-                        AudioSource.PlayClipAtPoint(lsaberBlockSFX, new Vector2(transform.position.x, transform.position.y));
+                        AudioManager.instance.Play("LSaberBlockEnemy");
                     }
                 }
             }
