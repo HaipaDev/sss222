@@ -8,16 +8,18 @@ public class EnergyBar : MonoBehaviour{
     float playerMaxEnergy;
     // Start is called before the first frame update
     void Start(){
-    player = FindObjectOfType<Player>();
+        player = FindObjectOfType<Player>();
         playerMaxEnergy = player.GetComponent<Player>().maxEnergy;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(player!=null){
         playerEnergy = player.GetComponent<Player>().energy;
         playerMaxEnergy = player.GetComponent<Player>().maxEnergy;
         transform.localScale = new Vector2(playerEnergy / playerMaxEnergy, 1);
+        }
     }
 }
 

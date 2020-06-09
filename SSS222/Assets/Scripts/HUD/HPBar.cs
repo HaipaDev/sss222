@@ -18,10 +18,12 @@ public class HPBar : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
+        if(player!=null){
         playerHP = player.GetComponent<Player>().health;
         playerMaxHP = player.GetComponent<Player>().maxHP;
         transform.localScale = new Vector2(playerHP / playerMaxHP, 1);
         if(gclover==true){ GetComponent<SpriteRenderer>().sprite = HPBarGold; }
         else{ GetComponent<SpriteRenderer>().sprite = HPBarNormal; }
+        }
     }
 }

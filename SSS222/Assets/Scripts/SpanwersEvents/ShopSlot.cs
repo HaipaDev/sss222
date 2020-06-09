@@ -10,12 +10,14 @@ public class ShopSlot : MonoBehaviour{
     public LootTableShop lootTable;
     Player player;
     GameSession gameSession;
+    GameObject shopVFX;
     void Start()
     {
         if (player == null) player = FindObjectOfType<Player>();
         if (shopMenu == null) shopMenu = FindObjectOfType<Shop>();
         if (lootTable == null) lootTable = FindObjectOfType<LootTableShop>();
         if (gameSession == null) gameSession = FindObjectOfType<GameSession>();
+        shopVFX=GameAssets.instance.GetVFX("ShopVFX");
     }
 
     void Update()
@@ -32,14 +34,22 @@ public class ShopSlot : MonoBehaviour{
         GetComponent<Image>().sprite = lootTable.itemList[ID].lootItem.sprite;
         slotText.GetComponent<TMPro.TextMeshProUGUI>().text = lootTable.itemList[ID].lootItem.price.ToString();
     }
-    public void Buy()
-    {
+    public void Buy(){
         //if (gameSession.coins >= shopMenu.shopSlotIDs[ID].price)
-        if (gameSession.coins >= lootTable.itemList[ID].lootItem.price)
-        {
+        if (gameSession.coins >= lootTable.itemList[ID].lootItem.price){
             //gameSession.coins -= shopMenu.shopSlotIDs[ID].price;
             gameSession.gameSpeed=0.05f;
-            gameSession.coins -= lootTable.itemList[ID].lootItem.price;
+            var price = lootTable.itemList[ID].lootItem.price;
+            gameSession.coins-=price;
+
+            shopVFX=GameAssets.instance.GetVFX("ShopVFX");
+            var pos=transform;
+            foreach(Transform child in transform){if(GetComponent<TMPro.TextMeshProUGUI>()!=null){pos=child.transform;}}
+            var pt=Instantiate(shopVFX, pos);
+            var ps=pt.GetComponent<ParticleSystem>();
+            var pm=ps.main;pm.maxParticles=price;
+            //var pe=ps.emission;pe.rateOverTime=Mathf.RoundToInt(price);
+            Destroy(pt,0.4f);
             //AudioSource.PlayClipAtPoint(shopMenu.buySFX,player.transform.position);
             AudioManager.instance.Play("Ding");
             //if(ID<=shopMenu.shopSlotIDs.Count){
@@ -54,10 +64,9 @@ public class ShopSlot : MonoBehaviour{
                     player.health += player.medkitUHpAmnt;
                     player.energy += player.medkitUEnergyGet;
                 }else if(ID==8){
-                    player.magnetized=true;
-                    player.magnetTimer=player.magnetTime;
+                    player.SetStatus("magnet");
                 }else if(ID==9){
-                    Instantiate(player.GetComponent<PlayerCollider>().GetRandomizerPwrup(),player.transform.position,Quaternion.identity);
+                    Instantiate(GameAssets.instance.Get("RandomizerPwrup"),player.transform.position,Quaternion.identity);
                 }else if(ID==10){
                     gameSession.cores++;
                     //AudioSource.PlayClipAtPoint(gameSession.lvlUpSFX,player.transform.position);

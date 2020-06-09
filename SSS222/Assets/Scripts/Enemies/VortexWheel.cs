@@ -15,7 +15,7 @@ public class VortexWheel : MonoBehaviour{
     [SerializeField] AudioClip dieSFX;
     Sprite spr;
     void Start(){
-        
+        spr=GetComponent<SpriteRenderer>().sprite;
     }
 
     void Update(){

@@ -36,7 +36,7 @@ public class InvertAllAudio : MonoBehaviour{
         }
         //else{musicPlayer.GetComponent<AudioSource>().pitch=1;}
         if(FindObjectOfType<Player>()!=null){
-            if(FindObjectOfType<Player>().inverted!=true){revertMusic=true;this.enabled=false;}
+            if(FindObjectOfType<Player>().inverter!=true){revertMusic=true;this.enabled=false;}
         }else{
             revertMusic=true;
             GetComponent<SpriteRenderer>().enabled=false;

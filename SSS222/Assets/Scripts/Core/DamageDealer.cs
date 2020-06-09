@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageDealer : MonoBehaviour{
-    float dmg = 10;
+    public static DamageDealer instance;
+    float dmg = 5;
     float dmgLaser = 5f;
-    float dmgPhaser = 0.12f;
+    float dmgPhaser = 0.5f;
     float dmgHRocket = 13.5f;
     float dmgMiniLaser = 0.32f;
     float dmgLSaber = 0.86f;
-    float dmgLClaws = 0.1f;
+    float dmgLClaws = 7f;
     float dmgShadowBT = 40.5f;
     float dmgQRocket = 14.5f;
     float dmgPRocket = 0f;
     float dmgPRocketExpl = 0.5f;
-    float dmgCBullet = 1f;
+    float dmgCBullet = 2f;
     float dmgMPulse = 130f;
 
     float dmgComet = 47f;

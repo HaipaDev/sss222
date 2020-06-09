@@ -22,7 +22,7 @@ public class ValueDisplay : MonoBehaviour{
         saveSerial = FindObjectOfType<SaveSerial>();
         //dataSavable = FindObjectOfType<DataSavable>();
         player = FindObjectOfType<Player>();
-        pskills = player.GetComponent<PlayerSkills>();
+        pskills = FindObjectOfType<PlayerSkills>();
         upgradeMenu = FindObjectOfType<UpgradeMenu>();
     }
 

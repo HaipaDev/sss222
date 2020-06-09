@@ -13,6 +13,8 @@ public class Loader : MonoBehaviour{
     private void Load()
     {
         //FindObjectOfType<GameSession>().savableData.Load();
+        if(Application.platform == RuntimePlatform.Android){FindObjectOfType<SaveSerial>().pprocessing=false;FindObjectOfType<SaveSerial>().scbuttons=true;}
+        else{FindObjectOfType<SaveSerial>().pprocessing=true;FindObjectOfType<SaveSerial>().scbuttons=false;}
         FindObjectOfType<SaveSerial>().Load();
         FindObjectOfType<SaveSerial>().LoadSettings();
         if (Application.platform != RuntimePlatform.Android){Screen.fullScreen = FindObjectOfType<SaveSerial>().fullscreen;
@@ -44,14 +46,11 @@ public class Loader : MonoBehaviour{
         #endif
 
         #if UNITY_STANDALONE_WIN
-         
             Application.targetFrameRate = 60;
             QualitySettings.vSyncCount = 1;
             //QualitySettings.SetQualityLevel(4);
-         
         #endif
     }
-    // Update is called once per frame
     void Update()
     {
         Load();

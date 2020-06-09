@@ -141,7 +141,7 @@ MonoBehaviour:
   - name: LClaws
     gobj: {fileID: 4755926375889011706, guid: b9340c203c57d954687d49864bad3d74, type: 3}
   - name: LClawsVFX
-    gobj: {fileID: 4755926375889011706, guid: b9340c203c57d954687d49864bad3d74, type: 3}
+    gobj: {fileID: 100000, guid: 405398434fd7ed640a8082ddb451bddf, type: 3}
   - name: CBullet
     gobj: {fileID: 6041420664094412071, guid: caecc161b4ab6f041977bf96ceff3dba, type: 3}
   - name: ShadowBt
@@ -165,4 +165,52 @@ MonoBehaviour:
     gobj: {fileID: 100000, guid: 096832bfc2651eb4b92bc8012922197b, type: 3}
   - name: CExplVFX
     gobj: {fileID: 100000, guid: 6112b0f2cbaee2a4e847d65856edcf6f, type: 3}
-  sprites: []
+  - name: ShopVFX
+    gobj: {fileID: 100000, guid: 35ccc4700eeeef8478e15d16ff7eed67, type: 3}
+  sprites:
+  - name: armorPwrup
+    spr: {fileID: 21300000, guid: 0aec6e8aedd36884fb81df377f1676ba, type: 3}
+  - name: armorUPwrup
+    spr: {fileID: 21300000, guid: 5be7a6153213a854daafc61bf3be8881, type: 3}
+  - name: laser2Pwrup
+    spr: {fileID: 21300000, guid: 4543454d50bcc2f4c95426146e30e17d, type: 3}
+  - name: laser3Pwrup
+    spr: {fileID: 21300000, guid: 40273a285fbc90640907afae766f3be3, type: 3}
+  - name: mlaserPwrup
+    spr: {fileID: 21300000, guid: 85c5aff371e073c47b08b82ad1fcd93e, type: 3}
+  - name: phaserPwrup
+    spr: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
+  - name: lsaberPwrup
+    spr: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
+  - name: lclawsPwrup
+    spr: {fileID: 21300000, guid: d085fee23f98a5d418173c6592b41386, type: 3}
+  - name: hrocketPwrup
+    spr: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
+  - name: qrocketPwrup
+    spr: {fileID: 21300000, guid: fabeb4d4156d3a84aa62d1c293181fdd, type: 3}
+  - name: procketPwrup
+    spr: {fileID: 21300000, guid: bb6c28deb89eb754d8a9803f346b36ed, type: 3}
+  - name: cstreamPwrup
+    spr: {fileID: 21300000, guid: d17bb3acdc1c8d244981169a1e5d576a, type: 3}
+  - name: inverterPwrup
+    spr: {fileID: 21300000, guid: ed66cb09e656ff247a82fdb938609f5c, type: 3}
+  - name: matrixPwrup
+    spr: {fileID: 21300000, guid: 64ad941f72f49634fa97d0f2a0a476bd, type: 3}
+  - name: magnetPwrup
+    spr: {fileID: 21300000, guid: e8f4be55fc1a9b24ab5c29d18aa10df3, type: 3}
+  - name: flipPwrup
+    spr: {fileID: 21300000, guid: d71f113542d501e44ab50fae24095acb, type: 3}
+  - name: randomizerPwrup
+    spr: {fileID: 21300000, guid: ca9238cb4e309f94b9185d00dade4e4f, type: 3}
+  - name: pmultiPwrup
+    spr: {fileID: 21300000, guid: 7e9e5fcb143743546b7fedea72703174, type: 3}
+  - name: scalerPwrup
+    spr: {fileID: 21300000, guid: 440d31dada2aa9b48ab82322529da17c, type: 3}
+  - name: gcloverPwrup
+    spr: {fileID: 21300000, guid: 63a2647ea2885b44bab05e7cb94c0c90, type: 3}
+  - name: shadowbtPwrup
+    spr: {fileID: 21300000, guid: 692a8ad24f832a547a376f4d7a93d022, type: 3}
+  - name: shadowPwrup
+    spr: {fileID: 21300000, guid: 7d2dfbf4cfecaea469f79f936b00f154, type: 3}
+  - name: laser
+    spr: {fileID: 21300000, guid: 21535f4e423e0194a829b85e44f114e6, type: 3}

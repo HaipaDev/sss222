@@ -27,9 +27,11 @@ public class FollowUI : MonoBehaviour{
     // Update is called once per frame
     void Update()
     {
+        if(targetObj!=null){
         targetPos = new Vector2(targetObj.transform.position.x+xx, targetObj.transform.position.y+yy);
         //selfPos = new Vector2(transform.position.x, transform.position.y);
         //dist=Vector2.Distance(targetPos, selfPos);
         transform.position = Camera.main.WorldToScreenPoint(targetPos);
+        }
     }
 }

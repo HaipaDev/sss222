@@ -410,6 +410,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: hpRegen_UpgradesCount
   valueReq: 10
   value: 0
@@ -736,6 +737,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: teleport_upgraded
   valueReq: 2
   value: 0
@@ -1543,6 +1545,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: hpRegen_UpgradesCount
   valueReq: 2
   value: 0
@@ -1829,6 +1832,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: hpRegen_UpgradesCount
   valueReq: 6
   value: 0
@@ -2786,6 +2790,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: hpRegen_UpgradesCount
   valueReq: 8
   value: 0
@@ -3673,6 +3678,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: hpRegen_UpgradesCount
   valueReq: 7
   value: 0
@@ -7144,6 +7150,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: hpRegen_UpgradesCount
   valueReq: 5
   value: 0
@@ -9239,6 +9246,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: hpRegen_UpgradesCount
   valueReq: 3
   value: 0
@@ -9704,6 +9712,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: hpRegen_UpgradesCount
   valueReq: 9
   value: 0
@@ -14468,6 +14477,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: hpRegen_UpgradesCount
   valueReq: 1
   value: 0
@@ -14651,6 +14661,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: hpRegen_UpgradesCount
   valueReq: 4
   value: 0
@@ -16637,6 +16648,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: speed_UpgradesCount
   valueReq: 2
   value: 0
@@ -17878,8 +17890,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 232.80006, y: 28.859993}
-  m_SizeDelta: {x: 466, y: 116.5}
+  m_AnchoredPosition: {x: 29.724, y: 28.859993}
+  m_SizeDelta: {x: 59.93187, y: 116.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1728024871113885129
 CanvasRenderer:
@@ -17975,7 +17987,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 400.01727, w: 37.093544}
+  m_margin: {x: 0, y: 0, z: -64.90138, w: 37.093544}
   m_textInfo:
     textComponent: {fileID: 1623240056700989963}
     characterCount: 1
@@ -18337,6 +18349,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: speed_UpgradesCount
   valueReq: 1
   value: 0
@@ -18828,6 +18841,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: speed_UpgradesCount
   valueReq: 7
   value: 0
@@ -18921,6 +18935,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: speed_UpgradesCount
   valueReq: 5
   value: 0
@@ -19602,6 +19617,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: speed_UpgradesCount
   valueReq: 9
   value: 0
@@ -19991,6 +20007,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: speed_UpgradesCount
   valueReq: 4
   value: 0
@@ -21360,6 +21377,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: speed_UpgradesCount
   valueReq: 10
   value: 0
@@ -22008,6 +22026,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: speed_UpgradesCount
   valueReq: 3
   value: 0
@@ -22258,6 +22277,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: speed_UpgradesCount
   valueReq: 6
   value: 0
@@ -24883,7 +24903,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2300591828853938435
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27298,6 +27318,7 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: 6d02f219334f9504c9345144c138bcd4, type: 3}
   particlePrefab: {fileID: 0}
+  changed: 0
   valueName: speed_UpgradesCount
   valueReq: 8
   value: 0

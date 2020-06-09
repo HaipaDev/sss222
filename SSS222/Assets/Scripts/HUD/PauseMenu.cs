@@ -22,6 +22,8 @@ public class PauseMenu : MonoBehaviour{
             }else{
                 if(Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true)Pause();
             }
+        }if(Input.GetKeyDown(KeyCode.R)){
+            
         }
     }
     public void Resume(){

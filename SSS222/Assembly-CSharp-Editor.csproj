@@ -44,6 +44,24 @@
      <Compile Include="Assets\Joystick Pack\Scripts\Editor\VariableJoystickEditor.cs" />
      <Compile Include="Assets\Weighted Random Numbers\Scripts\Editor\RandomDistributionEditor.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Editor\Tests\SaveGameTests.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\AccordionElementEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\BezierLineRendererEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\BoxSliderEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\CUIBezierCurveEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\CUIGraphicEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\CUIImageEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\CUITextEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\CanvasGroupActivator.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\ColorPickerPresetsEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\NonDrawingGraphicEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\ReadOnlyDrawer.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\ScrollPositionControllerEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\TextPicEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\TextPicIconEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\TextPicIconListCopier.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\TextPicRenameEditor.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\UIExtensionsMenuOptions.cs" />
+     <Compile Include="Assets\unity-ui-extensions\Editor\uGUITools.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

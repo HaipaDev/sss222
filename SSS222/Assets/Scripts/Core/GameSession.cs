@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using BayatGames.SaveGameFree;
 public class GameSession : MonoBehaviour{
+    public static GameSession instance;
     [HeaderAttribute("Current Player Values")]
     public int score = 0;
     public float scoreMulti = 1f;
@@ -33,8 +34,6 @@ public class GameSession : MonoBehaviour{
     [HeaderAttribute("Other")]
     public bool cheatmode;
     public bool dmgPopups=true;
-    [SerializeField] public AudioClip denySFX;
-    [SerializeField] public AudioClip lvlUpSFX;
     
     Player player;
     public bool speedChanged;
@@ -97,7 +96,7 @@ public class GameSession : MonoBehaviour{
             cores++;
             //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             coresXp=0;
-            AudioSource.PlayClipAtPoint(lvlUpSFX,transform.position);
+            AudioManager.instance.Play("LvlUp");
         }
 
         //Set speed to normal
@@ -242,5 +241,5 @@ public class GameSession : MonoBehaviour{
         //xppopupHud.GetComponent<Animator>().SetTrigger(0);
         xppopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+xp.ToString();
     }
-    public void PlayDenySFX(){AudioSource.PlayClipAtPoint(denySFX,transform.position);}
+    //public void PlayDenySFX(){AudioManager.instance.Play("Deny");}
 }

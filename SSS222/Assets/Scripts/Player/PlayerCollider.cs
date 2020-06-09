@@ -214,33 +214,36 @@ public class PlayerCollider : MonoBehaviour{
                 }
 
                 var flipName = flipPwrupPrefab.name; var flipName1 = flipPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == flipName || other.gameObject.name == flipName1) { player.flip = true; player.flipTimer = player.flipTime; }
+                if (other.gameObject.name == flipName || other.gameObject.name == flipName1) {
+                    if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
+                    if(player.flip==true){EnergyAddDupl();}
+                    player.SetStatus("flip"); 
+                }
                 
                 var inverterName = inverterPwrupPrefab.name; var inverterName1 = inverterPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == inverterName || other.gameObject.name == inverterName1) {
                 var tempHP = player.health; var tempEn = player.energy;
                 player.energy=tempHP; player.health=tempEn;
-                player.inverted=true; player.inverterTimer = 0; }
+                player.SetStatus("inverter"); player.inverterTimer = 0; }
 
                 var magnetName = magnetPwrupPrefab.name; var magnetName1 = magnetPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == magnetName || other.gameObject.name == magnetName1) {
                     if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
-                    if(player.magnetized==true){EnergyAddDupl();}
-                    player.magnetized = true; player.magnetTimer = player.magnetTime; 
-                    
+                    if(player.magnet==true){EnergyAddDupl();}
+                    player.SetStatus("magnet");
                     }
                 
                 var scalerName = scalerPwrupPrefab.name; var scalerName1 = scalerPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == scalerName || other.gameObject.name == scalerName1) {
                     if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
                     if(player.scaler==true){EnergyAddDupl();}
-                    player.scaler = true; player.scalerTimer = player.scalerTime;
+                    player.SetStatus("scaler");
                     }
 
                 var gcloverName = gcloverPwrupPrefab.name; var gcloverName1 = gcloverPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == gcloverName || other.gameObject.name == gcloverName1)
                 {
-                    player.gclover = true; player.gcloverTimer = player.gcloverTime;
+                    player.SetStatus("gclover");
                     gameSession.MultiplyScore(1.25f);
                     player.energy = player.maxEnergy;
                     //GameObject gcloverexVFX = Instantiate(gcloverVFX, new Vector2(0, 0), Quaternion.identity);
@@ -253,8 +256,7 @@ public class PlayerCollider : MonoBehaviour{
                 {
                     if(player.energy<=player.enForPwrupRefill){player.energy += player.pwrupEnergyGet;}
                     if(player.shadow==true){player.energy+=player.enPwrupDuplicate;EnergyAddDupl();}
-                    player.shadow = true;
-                    player.shadowTimer = player.shadowTime;
+                    player.SetStatus("shadow");
                     player.shadowed = true;
                     //GameObject gcloverexVFX = Instantiate(gcloverVFX, new Vector2(0, 0), Quaternion.identity);
                     //GameObject gcloverexOVFX = Instantiate(shadowEVFX, new Vector2(0, 0), Quaternion.identity);
@@ -262,9 +264,9 @@ public class PlayerCollider : MonoBehaviour{
                     //Destroy(gcloverexOVFX, 1f);
                 }
                 var matrixName = matrixPwrupPrefab.name; var matrixName1 = matrixPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == matrixName || other.gameObject.name == matrixName1) { player.matrix = true; player.matrixTimer = player.matrixTime; }
+                if (other.gameObject.name == matrixName || other.gameObject.name == matrixName1) { player.SetStatus("matrix"); }
                 var pmultiName = pmultiPwrupPrefab.name; var pmultiName1 = pmultiPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == pmultiName || other.gameObject.name == pmultiName1) { if(player.pmultiTimer<0){player.pmultiTimer=0;}player.pmultiTimer += player.pmultiTime; gameSession.scoreMulti=2f;}
+                if (other.gameObject.name == pmultiName || other.gameObject.name == pmultiName1) { player.SetStatus("pmulti");if(player.pmultiTimer<0){player.pmultiTimer=0;}player.pmultiTimer += player.pmultiTime; gameSession.scoreMulti=2f;}
                 
                 var randomizerName = randomizerPwrupPrefab.name; var randomizerName1 = randomizerPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == randomizerName || other.gameObject.name == randomizerName1) { 
@@ -283,7 +285,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == phaserName || other.gameObject.name == phaserName1) { PowerupCollect("phaser"); }
 
                 var hrocketName = hrocketPwrupPrefab.name; var hrocketName1 = hrocketPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == hrocketName || other.gameObject.name == hrocketName1) { PowerupCollect("hrockets"); }
+                if (other.gameObject.name == hrocketName || other.gameObject.name == hrocketName1) { PowerupCollect("hrocket"); }
 
                 var minilaserName = mlaserPwrupPrefab.name; var minilaserName1 = mlaserPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == minilaserName || other.gameObject.name == minilaserName1) { PowerupCollect("mlaser"); }
@@ -300,9 +302,9 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { PowerupCollect("shadowbt"); }
 
                 var qrocketName = qrocketPwrupPrefab.name; var qrocketName1 = qrocketPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == qrocketName || other.gameObject.name == qrocketName1) { PowerupCollect("qrockets"); }
+                if (other.gameObject.name == qrocketName || other.gameObject.name == qrocketName1) { PowerupCollect("qrocket"); }
                 var procketName = procketPwrupPrefab.name; var procketName1 = procketPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name == procketName || other.gameObject.name == procketName1) { PowerupCollect("prockets"); }
+                if (other.gameObject.name == procketName || other.gameObject.name == procketName1) { PowerupCollect("procket"); }
 
                 var cstreamName = cstreamPwrupPrefab.name; var cstreamName1 = cstreamPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name == cstreamName || other.gameObject.name == cstreamName1) { PowerupCollect("cstream"); }

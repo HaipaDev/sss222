@@ -9,11 +9,11 @@ public class SkillIcon : MonoBehaviour{
     SkillSlotID[] skills;
     Sprite sprite;
     void Start(){
-        skills=FindObjectOfType<PlayerSkills>().GetComponent<PlayerSkills>().skills;
+        skills=FindObjectOfType<PlayerSkills>().skills;
     }
     void Update(){
         ID=parent.GetComponent<SkillButtons>().ID;
-        sprite=skills[ID].sprite;
+        if(ID!=-1)sprite=skills[ID].sprite;
         GetComponent<Image>().sprite=sprite;
     }
 }

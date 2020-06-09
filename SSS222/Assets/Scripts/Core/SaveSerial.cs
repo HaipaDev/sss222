@@ -19,6 +19,7 @@ public class SaveSerial : MonoBehaviour{
 	public bool moveByMouse;
 	public bool fullscreen;
 	public bool pprocessing;
+	public bool scbuttons;
 	public int quality;
 	public float masterVolume;
 	public float soundVolume;
@@ -34,6 +35,7 @@ public class SaveSerial : MonoBehaviour{
 		public bool moveByMouse;
 		public bool fullscreen;
 		public bool pprocessing;
+		public bool scbuttons;
 		public int quality;
 		public float masterVolume;
 		public float soundVolume;
@@ -61,6 +63,7 @@ public class SaveSerial : MonoBehaviour{
 		data.moveByMouse = moveByMouse;
 		data.fullscreen = fullscreen;
 		data.pprocessing = pprocessing;
+		data.scbuttons = scbuttons;
 		data.quality = quality;
 		data.masterVolume = masterVolume;
 		data.soundVolume = soundVolume;
@@ -99,6 +102,7 @@ public class SaveSerial : MonoBehaviour{
 			moveByMouse = data.moveByMouse;
 			fullscreen = data.fullscreen;
 			pprocessing = data.pprocessing;
+			scbuttons = data.scbuttons;
 			quality = data.quality;
 			masterVolume = data.masterVolume;
 			soundVolume = data.soundVolume;

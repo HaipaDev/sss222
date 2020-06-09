@@ -72,10 +72,10 @@ public class Player : MonoBehaviour{
     [SerializeField] public float dashSpeed=10f;
     [SerializeField] public float startDashTime=0.2f;
     public float dashTime;
-    [SerializeField] public bool inverted = false;
+    [SerializeField] public bool inverter = false;
     [SerializeField] public float inverterTime=10f;
     public float inverterTimer = 14;
-    [SerializeField] public bool magnetized = false;
+    [SerializeField] public bool magnet = false;
     [SerializeField] public float magnetTime=15f;
     public float magnetTimer = -4;
     [SerializeField] public bool scaler = false;
@@ -489,8 +489,7 @@ public class Player : MonoBehaviour{
                     Destroy(flareR.gameObject, 0.3f);
                     laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    energy -= laserEn;
-                    EnergyPopUpHUD(laserEn);
+                    AddSubEnergy(laserEn,false);
                     laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                     laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                         shootTimer = laserShootPeriod * 0.75f;
@@ -512,8 +511,7 @@ public class Player : MonoBehaviour{
                     laserR2.GetComponent<IntervalSound>().interval = 0.03f;
                     laserL2.transform.eulerAngles=new Vector3(0,0,10f);
                     laserR2.transform.eulerAngles=new Vector3(0,0,-10f);
-                    energy -= laser2En;
-                    EnergyPopUpHUD(laser2En);
+                    AddSubEnergy(laser2En,false);
                     laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                     laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                     laserL2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
@@ -546,8 +544,7 @@ public class Player : MonoBehaviour{
                     laserL3.transform.eulerAngles = new Vector3(0, 0, 13f);
                     laserR2.transform.eulerAngles = new Vector3(0, 0, -8f);
                     laserR3.transform.eulerAngles = new Vector3(0, 0, -13f);
-                    energy -= laser3En;
-                    EnergyPopUpHUD(laser3En);
+                    AddSubEnergy(laser3En,false);
                     laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                     laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                     laserL2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
@@ -565,8 +562,7 @@ public class Player : MonoBehaviour{
                     Destroy(flareR.gameObject, 0.3f);
                     phaserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, phaserSpeed);
                     phaserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, phaserSpeed);
-                    energy -= phaserEn;
-                    EnergyPopUpHUD(phaserEn);
+                    AddSubEnergy(phaserEn,false);
                     phaserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=phaserEn;
                     phaserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=phaserEn;
                         shootTimer = phaserShootPeriod;
@@ -581,26 +577,26 @@ public class Player : MonoBehaviour{
                         GameObject mlaserR = Instantiate(mlaserPrefab, new Vector2(xxR, yyR), Quaternion.identity) as GameObject;
                         Rigidbody2D rbL = mlaserL.GetComponent<Rigidbody2D>(); rbL.velocity = new Vector2(rbL.velocity.x, UnityEngine.Random.Range(mlaserSpeedS, mlaserSpeedE));
                         Rigidbody2D rbR = mlaserR.GetComponent<Rigidbody2D>(); rbR.velocity = new Vector2(rbR.velocity.x, UnityEngine.Random.Range(mlaserSpeedS, mlaserSpeedE));
-                        energy -= mlaserEn;
+                        //AddSubEnergy(mlaserEn,false);
                         mlaserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=mlaserEn;
                         mlaserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=mlaserEn;
                     }
-                    EnergyPopUpHUD(mlaserEn*mlaserBulletsAmmount);
+                    AddSubEnergy(mlaserEn*mlaserBulletsAmmount,false);
+                    //EnergyPopUpHUD(mlaserEn*mlaserBulletsAmmount);
                     GameObject flareL = Instantiate(flareShootVFX, new Vector2(xxL, yyL - flareShootYY), Quaternion.identity) as GameObject;
                     GameObject flareR = Instantiate(flareShootVFX, new Vector2(xxR, yyR - flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flareL.gameObject, 0.3f);
                     Destroy(flareR.gameObject, 0.3f);
                         shootTimer = mlaserShootPeriod;
                         yield return new WaitForSeconds(mlaserShootPeriod);
-                }else if (powerup == "hrockets"){
+                }else if (powerup == "hrocket"){
                     var xx = transform.position.x - 0.35f;
                     if (UnityEngine.Random.Range(0f,1f)>0.5f){ xx = transform.position.x + 0.35f; }
                     GameObject hrocket = Instantiate(hrocketPrefab, new Vector2(xx, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject flare = Instantiate(flareShootVFX, new Vector2(xx, transform.position.y+flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flare.gameObject, 0.3f);
                     hrocket.GetComponent<Rigidbody2D>().velocity = new Vector2(0, hrocketSpeed);
-                    energy -= hrocketEn;
-                    EnergyPopUpHUD(hrocketEn);
+                    AddSubEnergy(hrocketEn,false);
                         shootTimer = hrocketShootPeriod;
                         yield return new WaitForSeconds(hrocketShootPeriod);
                 }else if (powerup == "shadowbt")
@@ -613,8 +609,7 @@ public class Player : MonoBehaviour{
                     Destroy(flareR.gameObject, 0.3f);
                     //laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
                     //laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
-                    energy -= shadowBTEn;
-                    EnergyPopUpHUD(shadowBTEn);
+                    AddSubEnergy(shadowBTEn,false);
                         shootTimer = shadowBTShootPeriod;
                         yield return new WaitForSeconds(shadowBTShootPeriod);
                 }else if(powerup=="lclawsA"){
@@ -625,11 +620,10 @@ public class Player : MonoBehaviour{
                             Destroy(clawsPart, 0.15f);
                             //enemy.health -= FindObjectOfType<DamageDealer>().GetDamageLCLaws();
                         }else{ AudioManager.instance.Play("NoEnergy"); }
-                        energy -= lclawsEn;
-                        EnergyPopUpHUD(lclawsEn);
+                        AddSubEnergy(lclawsEn,false);
                             shootTimer = 0.5f;
                             yield return new WaitForSeconds(0.5f);
-                }else if (powerup == "qrockets"){
+                }else if (powerup == "qrocket"){
                     GameObject hrocketL = Instantiate(qrocketPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject hrocketR = Instantiate(qrocketPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
@@ -638,11 +632,10 @@ public class Player : MonoBehaviour{
                     Destroy(flareR.gameObject, 0.3f);
                     hrocketL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
                     hrocketR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
-                    energy -= qrocketEn;
-                    EnergyPopUpHUD(qrocketEn);
+                    AddSubEnergy(qrocketEn,false);
                         shootTimer = qrocketShootPeriod;
                         yield return new WaitForSeconds(qrocketShootPeriod);
-                }else if (powerup == "prockets"){
+                }else if (powerup == "procket"){
                     var xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); var xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
                     var yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); var yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
                     for (var i=0; i<procketsBulletsAmmount; i++){
@@ -652,9 +645,10 @@ public class Player : MonoBehaviour{
                         GameObject procketR = Instantiate(procketPrefab, new Vector2(xxR, yyR), Quaternion.identity) as GameObject;
                         Rigidbody2D rbL = procketL.GetComponent<Rigidbody2D>(); rbL.velocity = new Vector2(rbL.velocity.x, UnityEngine.Random.Range(procketSpeedS, procketSpeedE));
                         Rigidbody2D rbR = procketR.GetComponent<Rigidbody2D>(); rbR.velocity = new Vector2(rbR.velocity.x, UnityEngine.Random.Range(procketSpeedS, procketSpeedE));
-                        energy -= procketEn;
+                        //AddSubEnergy(procketEn,false);
                     }
-                        EnergyPopUpHUD(procketEn*procketsBulletsAmmount);
+                        AddSubEnergy(procketEn*procketsBulletsAmmount,false);
+                        //EnergyPopUpHUD(procketEn*procketsBulletsAmmount);
                         shootTimer = procketShootPeriod;
                         yield return new WaitForSeconds(procketShootPeriod);
                 }else if (powerup=="cstream"){
@@ -664,8 +658,7 @@ public class Player : MonoBehaviour{
                     GameObject flare = Instantiate(flareShootVFX, new Vector2(xx, transform.position.y+flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flare.gameObject, 0.3f);
                     cbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    energy -= cbulletEn;
-                    EnergyPopUpHUD(cbulletEn);
+                    AddSubEnergy(cbulletEn,false);
                     cbullet.GetComponent<Tag_PlayerWeaponBlockable>().energy=cbulletEn;
                         shootTimer = cbulletShootPeriod * 0.825f;
                         yield return new WaitForSeconds(cbulletShootPeriod);
@@ -694,7 +687,7 @@ public class Player : MonoBehaviour{
             }else if (powerup == "lsaberA"){
                 if(Time.timeScale>0.0001f){
                     if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
-                    if(lsaberEnTimer<=0){energy -= lsaberEn;lsaberEnTimer=lsaberEnPeriod;EnergyPopUpHUD(lsaberEn);}
+                    if(lsaberEnTimer<=0){lsaberEnTimer=lsaberEnPeriod;AddSubEnergy(lsaberEn,false);}
                     if(GameObject.Find(lsaberName)==null&&GameObject.Find(lsaberName1)==null){powerup="lsaber";}
                 }
             }
@@ -735,7 +728,7 @@ public class Player : MonoBehaviour{
 #region//States
     private void States(){
         if (flip == true) { flipTimer -= Time.deltaTime; moveDir = -1; } else { moveDir = 1; }
-        if(flipTimer<= 0 && flipTimer>-4) { flip = false; flipTimer = -4; AudioManager.instance.Play("PowerupOff"); }
+        if(flipTimer<= 0 && flipTimer>-4) { ResetStatus("flip"); AudioManager.instance.Play("PowerupOff"); }
 
         if (gclover == true) {
             health = maxHP;
@@ -745,23 +738,23 @@ public class Player : MonoBehaviour{
         else{
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover = false;
         }
-        if (gcloverTimer <= 0 && gcloverTimer>-4) { gclover = false; gcloverTimer = -4; AudioManager.instance.Play("GCloverOff"); }
+        if (gcloverTimer <= 0 && gcloverTimer>-4) { ResetStatus("gclover"); AudioManager.instance.Play("GCloverOff"); }
 
         if (shadow == true) { shadowTimer -= Time.deltaTime; }
-        if (shadowTimer <= 0 && shadowTimer > -4) { shadow = false; shadowTimer = -4; AudioManager.instance.Play("PowerupOff"); }
+        if (shadowTimer <= 0 && shadowTimer > -4) { ResetStatus("shadow"); AudioManager.instance.Play("PowerupOff"); }
         if (shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
         else{ dashTime = startDashTime; rb.velocity = Vector2.zero; GetComponent<BackflameEffect>().enabled=true; }
         if (dashTime <= 0) { rb.velocity = Vector2.zero; dashing = false; dashTime=-4;}
         else{ dashTime -= Time.deltaTime; }
         if(energy<=0){ shadow = false; }
 
-        if(inverted==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){
+        if(inverter==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){
         FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=false;FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().enabled=true;FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=true;}
         inverterTimer+=Time.deltaTime;}
         else{if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==true){FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=false;}if(FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic==false){FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=true;}}
-        if(inverterTimer >=10 && inverterTimer<14){inverted=false; inverterTimer=14;}
+        if(inverterTimer >=10 && inverterTimer<14){ResetStatus("inverter"); inverterTimer=14;}
 
-        if(magnetized==true){
+        if(magnet==true){
             if(FindObjectsOfType<Tag_MagnetAffected>()!=null){
                 magnetTimer-=Time.deltaTime;
                 Tag_MagnetAffected[] objs = FindObjectsOfType<Tag_MagnetAffected>();
@@ -778,27 +771,27 @@ public class Player : MonoBehaviour{
                 }
             }
         }
-        if(magnetTimer <=0 && magnetTimer>-4){magnetized=false; magnetTimer=-4;}
+        if(magnetTimer <=0 && magnetTimer>-4){ResetStatus("magnet");}
         
         if(scaler==true){
             var i=0;
             scalerTimer-=Time.deltaTime;
-            if(Time.timeScale>0.0001f && instantiateTimer<=0){
+            if(Time.timeScale>0.0001f){// && instantiateTimer<=0){
                 for(i=0; i<100; i++){
                     if(UnityEngine.Random.Range(0,100)>50){scaleUp=true;}else{scaleUp=false;}
                     if(i>99)i=0;
                 }
 
-                if(scaleUp==false && shipScale>shipScaleMin){shipScale-=0.25f*Time.deltaTime;}
-                if(scaleUp==true && shipScale<shipScaleMax){shipScale+=0.25f*Time.deltaTime;}
+                if(scaleUp==false && shipScale>shipScaleMin){shipScale-=2f*Time.deltaTime;}
+                if(scaleUp==true && shipScale<shipScaleMax){shipScale+=2f*Time.deltaTime;}
                 //if(shipScale<=0.45){scaleUp=true;}
                 //if(shipScale>=1.64){scaleUp=false;}
-                instantiateTimer=instantiateTime;
+                //instantiateTimer=instantiateTime;
             }
         }else{
             shipScale=1;
         }
-        if(scalerTimer <=0 && scalerTimer>-4){scaler=false; scalerTimer=-4;}
+        if(scalerTimer <=0 && scalerTimer>-4){ResetStatus("scaler");}
         transform.localScale=new Vector3(shipScale,shipScale,1);
         
         if(matrix==true){
@@ -821,16 +814,17 @@ public class Player : MonoBehaviour{
                 gameSession.gameSpeed=0f;
             }
         }
-        if(matrixTimer <=0 && matrixTimer>-4){gameSession.gameSpeed=1f; matrix=false; matrixTimer=-4;}
+        if(matrixTimer <=0 && matrixTimer>-4){gameSession.gameSpeed=1f; ResetStatus("matrix");}
 
         if(pmultiTimer>0){pmultiTimer-=Time.deltaTime;}
-        if(pmultiTimer <=0 && pmultiTimer>-4){gameSession.scoreMulti=1f; pmultiTimer=-4;}
+        if(pmultiTimer <=0 && pmultiTimer>-4){gameSession.scoreMulti=1f; ResetStatus("pmulti");}
     }
     
     private void Shadow(){
         if (Time.timeScale > 0.0001f && instantiateTimer<=0)
         {
             GameObject shadow = Instantiate(shadowPrefab,new Vector2(transform.position.x,transform.position.y), Quaternion.identity);
+            shadow.transform.localScale=new Vector3(shipScale,shipScale,1);
             Destroy(shadow.gameObject, shadowLength);
             instantiateTimer=instantiateTime;
             //yield return new WaitForSeconds(0.2f);
@@ -953,6 +947,45 @@ public class Player : MonoBehaviour{
 #endregion
 
 #region//Other Functions
+    public string status1="";
+    public string status2="";
+    public string status3="";
+    public string statusc="";
+    public void SetStatus(string status){
+        statusc=status;
+        //var v = this.GetType().GetProperty(status);
+        if(this.GetType().GetField(status)!=null)this.GetType().GetField(status).SetValue(this,true);
+        var i=this.GetType().GetField(status+"Time").GetValue(this);
+        this.GetType().GetField((status+"Timer")).SetValue(this,i);
+        //v.SetValue(this,true,null);
+        //((dynamic)this).status=true;
+	    //this.GetType().GetProperty(status+"Timer").SetValue(this,status+"Time");
+        SortStatuses();
+    }public void ResetStatus(string status){
+        if(this.GetType().GetField(status)!=null)this.GetType().GetField(status).SetValue(this,false);
+        this.GetType().GetField((status+"Timer")).SetValue(this,-4);
+        if(status1==status){status1="";}
+        if(status2==status){status2="";}
+        if(status3==status){status3="";}
+        ResortStatuses();
+    }void SortStatuses(){
+        if(status1==""){status1=statusc;statusc="";}
+        if(status2=="" && status1!=""){status2=statusc;statusc="";}
+        if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
+    }void ResortStatuses(){
+        if(status1=="" && status2!=""){status1=status2;status2="";}
+        if(status2=="" && status3!=""){status2=status3;status3="";}
+        //if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
+    }
+    void AddSubEnergy(float value,bool add){
+        if(inverter!=true){
+            if(add){energy+=value;EnergyPopUpHUDPlus(value);}
+            else{energy-=value;EnergyPopUpHUD(value);}
+        }else{
+            if(add){energy-=value;EnergyPopUpHUD(value);}
+            else{energy+=value;EnergyPopUpHUDPlus(value);}
+        }
+    }
     public Enemy FindClosestEnemy(){
         KdTree<Enemy> Enemies = new KdTree<Enemy>();
         Enemy[] EnemiesArr;
@@ -1006,7 +1039,7 @@ public class Player : MonoBehaviour{
     public float GetFlipTimer(){ return flipTimer; }
     public float GetGCloverTimer(){ return gcloverTimer; }
     public float GetShadowTimer(){ return shadowTimer; }
-    public float GetInvertedTimer(){ return inverterTimer; }
+    public float GetInverterTimer(){ return inverterTimer; }
     public float GetMagnetTimer(){ return magnetTimer; }
     public float GetScalerTimer(){ return scalerTimer; }
     public float GetMatrixTimer(){ return matrixTimer; }

@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ColorSkillKey : MonoBehaviour{
-    [SerializeField] int ID;
-    [SerializeField] skillKeyBind key;
+    [SerializeField] public int ID;
+    [SerializeField] public skillKeyBind key;
     Player player;
     SkillSlotID[] skills;
     skillKeyBind[] skillsBinds;
     Color color;
     Image spr;
     TMPro.TextMeshProUGUI txt;
+    public bool on;
     void Start(){
         player=FindObjectOfType<Player>();
         skills=player.GetComponent<PlayerSkills>().skills;
@@ -21,8 +22,8 @@ public class ColorSkillKey : MonoBehaviour{
     }
 
     void Update(){
-        if(skillsBinds[ID]==key){color=Color.green;}
-        else{color=Color.white;}
+        if(skillsBinds[ID]==key){color=Color.green;on=true;}
+        else{color=Color.white;on=false;}
         spr.color=color;
         txt.color=color;
     }

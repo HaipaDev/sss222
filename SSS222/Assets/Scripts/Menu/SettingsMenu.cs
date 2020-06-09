@@ -13,6 +13,7 @@ public class SettingsMenu : MonoBehaviour{
     public int quality;
     public bool fullscreen;
     public bool pprocessing;
+    public bool scbuttons;
     public bool moveByMouse;
     public float masterVolume;
     public float soundVolume;
@@ -20,6 +21,7 @@ public class SettingsMenu : MonoBehaviour{
     [SerializeField]GameObject qualityDropdopwn;
     [SerializeField]GameObject fullscreenToggle;
     [SerializeField]GameObject pprocessingToggle;
+    [SerializeField]GameObject scbuttonsToggle;
     [SerializeField]GameObject steeringToggle;
     [SerializeField]GameObject masterSlider;
     [SerializeField]GameObject soundSlider;
@@ -40,6 +42,7 @@ public class SettingsMenu : MonoBehaviour{
         qualityDropdopwn.GetComponent<Dropdown>().value = saveSerial.quality;
         fullscreenToggle.GetComponent<Toggle>().isOn = saveSerial.fullscreen;
         pprocessingToggle.GetComponent<Toggle>().isOn = saveSerial.pprocessing;
+        scbuttonsToggle.GetComponent<Toggle>().isOn = saveSerial.scbuttons;
         steeringToggle.GetComponent<Toggle>().isOn = saveSerial.moveByMouse;
 
         masterSlider.GetComponent<Slider>().value = saveSerial.masterVolume;
@@ -73,6 +76,8 @@ public class SettingsMenu : MonoBehaviour{
         pprocessing = isPostprocessed;
         if(isPostprocessed==true && FindObjectOfType<PostProcessVolume>()==null){Instantiate(pprocessingPrefab,Camera.main.transform);}//FindObjectOfType<Level>().RestartScene();}
         if(isPostprocessed==false && FindObjectOfType<PostProcessVolume>()!=null){Destroy(FindObjectOfType<PostProcessVolume>());}
+    }public void SetOnScreenButtons (bool onscbuttons){
+        scbuttons = onscbuttons;
     }
     public void SetSteering(bool isMovingByMouse){
         moveByMouse = isMovingByMouse;

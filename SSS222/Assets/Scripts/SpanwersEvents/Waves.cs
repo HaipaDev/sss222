@@ -159,7 +159,7 @@ public class Waves : MonoBehaviour
             if (timeSpawns > -0.01) { timeSpawns -= Time.deltaTime; }
             else if (timeSpawns == -4) { timeSpawns = currentWave.timeSpawnWave; }
             else if (timeSpawns <=0 && timeSpawns > -4) {SpawnAllEnemiesInWave(currentWave); timeSpawns = currentWave.timeSpawnWave; }
-
+        }
             if (progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
             else{if (gameSession.EVscore >= gameSession.EVscoreMax) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
                 timeSpawns = 0; currentWave=GetRandomWave();//waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
@@ -167,6 +167,6 @@ public class Waves : MonoBehaviour
                 } }
             //if (timeSpawns <= 0) {timeSpawns = mTimeSpawns; }
             //Debug.Log(timeSpawns);
-        }
+        //}
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4546529352650547399}
   - component: {fileID: 4546529352650547392}
   - component: {fileID: 8713774842259422738}
+  - component: {fileID: 4887282828838490148}
   - component: {fileID: 153409864}
   - component: {fileID: 4546529352650547398}
   - component: {fileID: 1949430517914965929}
@@ -96,7 +97,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4546529352650547393}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -115,6 +116,43 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.93658954, y: 1}
   m_EdgeRadius: 0
+--- !u!60 &4887282828838490148
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4546529352650547393}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.06743863, y: 0.49397564}
+      - {x: -0.24425587, y: 0.2577324}
+      - {x: -0.4569773, y: 0.24031305}
+      - {x: -0.46390197, y: -0.15751266}
+      - {x: -0.40028816, y: -0.3779521}
+      - {x: -0.2933275, y: -0.4829893}
+      - {x: 0.26843077, y: -0.4807167}
+      - {x: 0.37882024, y: -0.41263056}
+      - {x: 0.4655807, y: -0.146873}
+      - {x: 0.45552695, y: 0.237926}
+      - {x: 0.22216767, y: 0.2662506}
+      - {x: 0.064086586, y: 0.50085783}
 --- !u!50 &153409864
 Rigidbody2D:
   serializedVersion: 4
@@ -155,7 +193,7 @@ MonoBehaviour:
   lsaberSpeedMulti: 1.25
   moveSpeed: 5
   moveSpeedCurrent: 0
-  padding: 0.55
+  padding: 0.45
   health: 150
   maxHP: 150
   powerup: laser
@@ -196,17 +234,17 @@ MonoBehaviour:
   gcloverTime: 8
   gcloverTimer: -4
   shadow: 0
-  shadowTime: 9
+  shadowTime: 11
   shadowTimer: -4
   shadowLength: 0.2
   dashSpeed: 24
   startDashTime: 0.1
   dashTime: 0
-  inverted: 0
+  inverter: 0
   inverterTime: 10
   inverterTimer: -4
-  magnetized: 0
-  magnetTime: 25
+  magnet: 0
+  magnetTime: 40
   magnetTimer: -4
   scaler: 0
   shipScaleMin: 0.45
@@ -214,12 +252,12 @@ MonoBehaviour:
   scalerTime: 12
   scalerTimer: -4
   matrix: 0
-  matrixTime: 24
+  matrixTime: 33
   matrixTimer: -4
   pmultiTime: 24
   pmultiTimer: -4
-  laserEn: 1
-  laser2En: 1.5
+  laserEn: 0.3
+  laser2En: 1.25
   laser3En: 2.5
   phaserEn: 3
   hrocketEn: 2.6
@@ -230,7 +268,7 @@ MonoBehaviour:
   shadowBTEn: 10
   qrocketEn: 5.5
   procketEn: 1
-  cbulletEn: 2
+  cbulletEn: 1.3
   energyBallGet: 9
   medkitEnergyGet: 26
   medkitUEnergyGet: 40
@@ -281,6 +319,10 @@ MonoBehaviour:
   joystick: {fileID: 0}
   moving: 0
   energyUsedCount: 0
+  status1: 
+  status2: 
+  status3: 
+  statusc: 
 --- !u!114 &1949430517914965929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,7 +385,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4546529352650547393}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
     type: 2}

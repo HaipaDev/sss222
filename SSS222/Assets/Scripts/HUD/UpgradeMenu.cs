@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UpgradeMenu : MonoBehaviour{
     public static bool UpgradeMenuIsOpen = false;
@@ -104,13 +105,13 @@ public class UpgradeMenu : MonoBehaviour{
         if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
     }
     public void OpenSkillsPrev(){
-        if(skills2Menu.activeSelf==true)skills1Menu.SetActive(true);
-        skills2Menu.SetActive(false);
         if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
+        if(skills2Menu.activeSelf==true){skills1Menu.SetActive(true);skills2Menu.SetActive(false);}
+        else if(skills1Menu.activeSelf==true&&skills2Menu.activeSelf==false){skills2Menu.SetActive(true);skills1Menu.SetActive(false);}
     }public void OpenSkillsNext(){
-        if(skills1Menu.activeSelf==true)skills2Menu.SetActive(true);
-        skills1Menu.SetActive(false);
         if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
+        if(skills1Menu.activeSelf==true){skills2Menu.SetActive(true);skills1Menu.SetActive(false);}
+        else if(skills2Menu.activeSelf==true&&skills1Menu.activeSelf==false){skills1Menu.SetActive(true);skills2Menu.SetActive(false);}
     }
     public void Back(){
         statsMenu.SetActive(false);skillsMenu.SetActive(false);
@@ -123,7 +124,7 @@ public class UpgradeMenu : MonoBehaviour{
         for(var i=0;i<skills.Length;i++){if(i!=ID)if(skills[i]==skillKeyBind.Q && skills[i]!=skillKeyBind.E){skills[ID]=skillKeyBind.E;}}//Set to E if Q is occuppied
         for(var i=0;i<skills.Length;i++){if(i!=ID)if(skills[i]!=skillKeyBind.Q){skills[ID]=skillKeyBind.Q;}}//Set to Q by default
         }
-        else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
+        else{AudioManager.instance.Play("Deny");}
     }
     public void UnlockSkill(int ID){
         if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,1,mPulse_upgradeCost);}
@@ -140,14 +141,37 @@ public class UpgradeMenu : MonoBehaviour{
 
         //foreach(skillKeyBind skillOther in skills){skillOther=skillKeyBind.Disabled;}
         for(var i=0;i<skills.Length;i++){if(i!=ID){if(skills[i]!=skillKeyBind.E){skills[i]=skillKeyBind.Disabled;}}}
-        skills[ID]=skillKeyBind.Q;
+        //skills[ID]=skillKeyBind.Q;
         //if(pskills.cooldownE>0 && pskills.cooldownQ==0){pskills.cooldownQ=pskills.cooldownE;}
-        if(skills[ID]!=skillKeyBind.Q){
-        var Q=pskills.cooldownQ;
-        var E=pskills.cooldownE;
-        pskills.cooldownE=Q;
-        pskills.cooldownQ=E;
+        //if(skills[ID]!=skillKeyBind.Q){
+        /*var k=EventSystem.current.currentSelectedGameObject.GetComponent<ColorSkillKey>();
+        if(k.ID!=ID&&skills[ID]!=skillKeyBind.Q){
+            var Q=pskills.cooldownQ;
+            var E=pskills.cooldownE;
+            pskills.cooldownE=Q;
+            pskills.cooldownQ=E;
+        }*/
+        var ii=0;
+        foreach(ColorSkillKey k in FindObjectsOfType<ColorSkillKey>()){
+            if(k.ID==ID&&k.on==false){
+                if(ii<2)ii++;
+            }
         }
+        if(ii==2){
+            if(skills[ID]!=skillKeyBind.Q){
+                var Q=pskills.cooldownQ;
+                var E=pskills.cooldownE;
+                pskills.cooldownE=Q;
+                pskills.cooldownQ=E;
+                }
+        }
+        /*if(skills[ID]!=skillKeyBind.E){
+            var Q=pskills.cooldownQ;
+            var E=pskills.cooldownE;
+            pskills.cooldownE=Q;
+            pskills.cooldownQ=E;
+        }*/
+        skills[ID]=skillKeyBind.Q;
         /*var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skills;
         foreach(SkillSlotID skillOther in skills){skillOther.keySet=skillKeyBind.Disabled;}
         var skill=skills[ID];
@@ -155,22 +179,29 @@ public class UpgradeMenu : MonoBehaviour{
     }public void SetSkillE(int ID){
         var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
         for(var i=0;i<skills.Length;i++){if(i!=ID){if(skills[i]!=skillKeyBind.Q){skills[i]=skillKeyBind.Disabled;}}}
-        skills[ID]=skillKeyBind.E;
-        //if(pskills.cooldownQ>0 && pskills.cooldownE==0){pskills.cooldownE=pskills.cooldownQ;}
-        if(skills[ID]!=skillKeyBind.E){
-        var Q=pskills.cooldownQ;
-        var E=pskills.cooldownE;
-        pskills.cooldownE=Q;
-        pskills.cooldownQ=E;
+        var ii=0;
+        foreach(ColorSkillKey k in FindObjectsOfType<ColorSkillKey>()){
+            if(k.ID==ID&&k.on==false){
+                if(ii<2)ii++;
+            }
         }
+        if(ii==2){
+            if(skills[ID]!=skillKeyBind.E){
+                var Q=pskills.cooldownQ;
+                var E=pskills.cooldownE;
+                pskills.cooldownE=Q;
+                pskills.cooldownQ=E;
+            }
+        }
+        skills[ID]=skillKeyBind.E;
     }
 
     public void UpgradeFloat(ref float value,float amnt,int cost,bool add,ref float value2,ref int countValue){
         if(gameSession.cores>=cost){value+=amnt;value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;total_UpgradesCount++;GetComponent<AudioSource>().Play();}
-        else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
+        else{AudioManager.instance.Play("Deny");}
     }public void UpgradeAfterStartingVal(ref bool valueEnable,ref float value,float startingVal,float secondVal,float amnt,int cost,bool add,ref float value2,ref int countValue,ref int countLvl){
         if(gameSession.cores>=cost){if(valueEnable!=true){valueEnable=true;}if(value>=secondVal){value+=amnt;}else{if(value==startingVal&&(countValue>0||countLvl>0))value=secondVal;}value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;total_UpgradesCount++;GetComponent<AudioSource>().Play();}
-        else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
+        else{AudioManager.instance.Play("Deny");}
     }
     //public void AddFloat(ref float value,float amnt,int cost){if(gameSession.cores>=cost){value+=amnt;}}
     //if(gameSession.cores>=maxHealth_UpgradeCost)player.maxHP+=maxHealth_UpgradeAmnt;gameSession.cores-=maxHealth_UpgradeCost;
@@ -182,7 +213,7 @@ public class UpgradeMenu : MonoBehaviour{
 
     public void DefaultPowerupChange(string prevPowerup,string powerup,int cost,bool add,ref float value,float amnt,bool permament,int upgradeXPamnt){
         if(gameSession.cores>=cost && player.powerupDefault==prevPowerup){player.powerupDefault=powerup;if(permament!=true){player.powerup=powerup;}gameSession.cores-=cost;if(add==true){value+=amnt;}defaultPowerup_upgradeCount++;total_UpgradesCount+=upgradeXPamnt;if(permament==true){player.losePwrupOutOfEn=false;}GetComponent<AudioSource>().Play();}
-        else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
+        else{AudioManager.instance.Play("Deny");}
     }
     //public void DefaultPowerupL2(){if(gameSession.cores>powerupDefaultL2_UpgradeCost){player.powerupDefault="laser2";gameSession.cores-=powerupDefaultL2_UpgradeCost;total_UpgradesCount++;}else{GetComponent<AudioSource>().Play();}}
     public void DefaultPowerupL2(){DefaultPowerupChange("laser","laser2",defaultPowerup_upgradeCost1,true,ref player.energy,100,false,0);}//defaultPowerup_upgradeCost1+1);}
@@ -191,7 +222,7 @@ public class UpgradeMenu : MonoBehaviour{
 
     public void UnlockEnergyRefill(){
         if(gameSession.cores>=energyRefill_upgradeCost && energyRefill_upgraded!=1){player.energyRefillUnlocked=true;gameSession.cores-=energyRefill_upgradeCost;energyRefill_upgraded=1;/*total_UpgradesCount+=energyRefill_upgradeCost;*/GetComponent<AudioSource>().Play();}
-        else{AudioSource.PlayClipAtPoint(gameSession.denySFX,transform.position);}
+        else{AudioManager.instance.Play("Deny");}
     }
 
     void LevelEverything(){
