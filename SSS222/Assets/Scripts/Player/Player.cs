@@ -190,7 +190,7 @@ public class Player : MonoBehaviour{
     SaveSerial saveSerial;
     public Joystick joystick;
     //Settings settings;
-    Coroutine shootCoroutine;
+    IEnumerator shootCoroutine;
     //FollowMouse followMouse;
 
     float xMin;
@@ -271,16 +271,18 @@ public class Player : MonoBehaviour{
         velocity=rb.velocity;
         if(moving==false){stayingTimer+=Time.deltaTime;timerHpRegen+=Time.deltaTime;}
         if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;}
+        
+        //Debug.Log(shootTimer);
+        //Debug.LogWarning(shootCoroutine);
     }
     void FixedUpdate()
     {
         // If we're first at-bat, handle the input immediately and mark it already-handled.
         HandleInput(true);
         //MovePlayer();
-        if (!Input.GetButton("Fire1"))
-        {
+        /*if (!Input.GetButton("Fire1")){
             if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
-        }
+        }*/
         dist = Vector2.Distance(mousePos, transform.position);
     }
 #region//Movement etc
@@ -405,9 +407,13 @@ public class Player : MonoBehaviour{
         if(Time.timeScale>0.0001f){
             if (Application.platform != RuntimePlatform.Android){
                 if(Input.GetButtonDown("Fire1")){
-                    if(shootTimer<=0f)shootCoroutine = StartCoroutine(ShootContinuously());
-                }if(!Input.GetButton("Fire1")){
-                    if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
+                    if(shootCoroutine!=null){return;}
+                    else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                }if(!Input.GetButton("Fire1")||shootTimer<-1f){
+                    if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
+                    shootCoroutine=null;
+                    //if(shootCoroutine!=null){
+                        //StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());StopCoroutine("ShootContinuously");//}
                     if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
                 /*if (Input.GetButtonUp("Fire1")){
@@ -419,9 +425,9 @@ public class Player : MonoBehaviour{
 
     public void ShootButton(bool pressed){
         if(pressed){
-            if(shootTimer<=0f)shootCoroutine = StartCoroutine(ShootContinuously());
-        }else{
-            if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
+            if(shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+        }else if(pressed==false||shootTimer<-1f){
+            if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());StopCoroutine("ShootContinuously");}
             if(moving==true)timerEnRegen+=Time.deltaTime;
         }
     }
@@ -475,11 +481,12 @@ public class Player : MonoBehaviour{
 #endregion
 
 #region//Powerups
+bool stopped=false;
     public IEnumerator ShootContinuously(){
         while (true){
             if (Time.timeScale > 0.0001f){
             if (energy>0){
-                SetPrefabs();
+                //SetPrefabs();
                 if (powerup=="laser"){
                     GameObject laserL = GameAssets.instance.Make("Laser", new Vector2(transform.position.x - 0.35f, transform.position.y)) as GameObject;
                     GameObject laserR = Instantiate(laserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -493,7 +500,10 @@ public class Player : MonoBehaviour{
                     laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                     laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                         shootTimer = laserShootPeriod * 0.75f;
+                        stopped=false;
                         yield return new WaitForSeconds(laserShootPeriod*1.7f);
+                        stopped=true;
+                        //shootCoroutine=null;
                 }else if(powerup=="laser2"){
                     GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject laserL2 = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.4f, transform.position.y), Quaternion.identity) as GameObject;
@@ -518,6 +528,7 @@ public class Player : MonoBehaviour{
                     laserR2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                         shootTimer = laserShootPeriod * 0.75f;
                         yield return new WaitForSeconds(laserShootPeriod);
+                        //shootCoroutine=null;
                 }
                 else if (powerup == "laser3"){
                     GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.3f, transform.position.y), Quaternion.identity) as GameObject;
@@ -553,6 +564,7 @@ public class Player : MonoBehaviour{
                     laserR3.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                         shootTimer = laserShootPeriod*0.75f;
                         yield return new WaitForSeconds(laserShootPeriod);
+                        //shootCoroutine=null;
                 }else if (powerup == "phaser"){
                     GameObject phaserL = Instantiate(phaserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject phaserR = Instantiate(phaserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -567,6 +579,7 @@ public class Player : MonoBehaviour{
                     phaserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=phaserEn;
                         shootTimer = phaserShootPeriod;
                         yield return new WaitForSeconds(phaserShootPeriod);
+                        //shootCoroutine=null;
                 }else if (powerup == "mlaser"){
                     var xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); var xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
                     var yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); var yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
@@ -589,6 +602,7 @@ public class Player : MonoBehaviour{
                     Destroy(flareR.gameObject, 0.3f);
                         shootTimer = mlaserShootPeriod;
                         yield return new WaitForSeconds(mlaserShootPeriod);
+                        //shootCoroutine=null;
                 }else if (powerup == "hrocket"){
                     var xx = transform.position.x - 0.35f;
                     if (UnityEngine.Random.Range(0f,1f)>0.5f){ xx = transform.position.x + 0.35f; }
@@ -599,6 +613,7 @@ public class Player : MonoBehaviour{
                     AddSubEnergy(hrocketEn,false);
                         shootTimer = hrocketShootPeriod;
                         yield return new WaitForSeconds(hrocketShootPeriod);
+                        //shootCoroutine=null;
                 }else if (powerup == "shadowbt")
                 {
                     GameObject laserL = Instantiate(shadowBTPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -612,6 +627,7 @@ public class Player : MonoBehaviour{
                     AddSubEnergy(shadowBTEn,false);
                         shootTimer = shadowBTShootPeriod;
                         yield return new WaitForSeconds(shadowBTShootPeriod);
+                        //shootCoroutine=null;
                 }else if(powerup=="lclawsA"){
                         var enemy = FindClosestEnemy();
                         if(enemy!=null){
@@ -623,6 +639,7 @@ public class Player : MonoBehaviour{
                         AddSubEnergy(lclawsEn,false);
                             shootTimer = 0.5f;
                             yield return new WaitForSeconds(0.5f);
+                            //shootCoroutine=null;
                 }else if (powerup == "qrocket"){
                     GameObject hrocketL = Instantiate(qrocketPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject hrocketR = Instantiate(qrocketPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -635,6 +652,7 @@ public class Player : MonoBehaviour{
                     AddSubEnergy(qrocketEn,false);
                         shootTimer = qrocketShootPeriod;
                         yield return new WaitForSeconds(qrocketShootPeriod);
+                        //shootCoroutine=null;
                 }else if (powerup == "procket"){
                     var xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); var xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
                     var yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); var yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
@@ -651,6 +669,7 @@ public class Player : MonoBehaviour{
                         //EnergyPopUpHUD(procketEn*procketsBulletsAmmount);
                         shootTimer = procketShootPeriod;
                         yield return new WaitForSeconds(procketShootPeriod);
+                        //shootCoroutine=null;
                 }else if (powerup=="cstream"){
                     var xx = transform.position.x - 0.35f;
                     if (UnityEngine.Random.Range(0f,1f)>0.5f){ xx = transform.position.x + 0.35f; }
@@ -662,6 +681,7 @@ public class Player : MonoBehaviour{
                     cbullet.GetComponent<Tag_PlayerWeaponBlockable>().energy=cbulletEn;
                         shootTimer = cbulletShootPeriod * 0.825f;
                         yield return new WaitForSeconds(cbulletShootPeriod);
+                        //shootCoroutine=null;
                 }
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
                 else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup = powerupDefault; shootTimer = 1f; yield return new WaitForSeconds(1f); }
@@ -669,7 +689,17 @@ public class Player : MonoBehaviour{
             }
         }
     }
-    //IEnumerator DrawOtherWeapons(){
+    /*void SetShootTimer(){
+        if(powerup=="laser"||powerup=="laser2"||powerup=="laser3")shootTimer=laserShootPeriod * 0.75f;
+        if(powerup=="mlaser")shootTimer = mlaserShootPeriod;
+        if(powerup=="phaser")shootTimer = phaserShootPeriod;
+        if(powerup=="hrocket")shootTimer = hrocketShootPeriod;
+        if(powerup=="procket")shootTimer = procketShootPeriod;
+        if(powerup=="qrocket")shootTimer = qrocketShootPeriod;
+        if(powerup=="cstream")shootTimer = cbulletShootPeriod*0.825f;
+        if(powerup=="shadowbt")shootTimer = shadowBTShootPeriod;
+        if(powerup=="lclawsA")shootTimer = 0.5f;
+    }*/
     private void DrawOtherWeapons(){
         GameObject lsaber;
         GameObject lclaws;
@@ -751,7 +781,8 @@ public class Player : MonoBehaviour{
         if(inverter==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){
         FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=false;FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().enabled=true;FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=true;}
         inverterTimer+=Time.deltaTime;}
-        else{if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==true){FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=false;}if(FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic==false){FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=true;}}
+        else{if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==true){FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=false;}if(FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic==false){FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=true;}
+        if(FindObjectOfType<MusicPlayer>()!=null&&FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch==-1){FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;}}
         if(inverterTimer >=10 && inverterTimer<14){ResetStatus("inverter"); inverterTimer=14;}
 
         if(magnet==true){

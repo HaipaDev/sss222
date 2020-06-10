@@ -11,11 +11,11 @@ public class VortexWheel : MonoBehaviour{
     [SerializeField] public float chargeMultip=0.8f;
     [SerializeField] public float chargeMultipS=1.3f;
     [SerializeField] Sprite[] sprites;
-    [SerializeField] AudioClip chargeSFX;
-    [SerializeField] AudioClip dieSFX;
+    float timeToDie;
     Sprite spr;
     void Start(){
         spr=GetComponent<SpriteRenderer>().sprite;
+        timeToDie=UnityEngine.Random.Range(8f,13f);
     }
 
     void Update(){
@@ -58,7 +58,7 @@ public class VortexWheel : MonoBehaviour{
         //if(timer>0)
         if(timer>-4)timer+=Time.deltaTime;
         //if(timer<=0 && timer>-4){StartCoroutine(Die());}
-        if(timer>6f){StartCoroutine(Die());}
+        if(timer>timeToDie){StartCoroutine(Die());}
         
         if(timer<=0 && timer>-4){StartCoroutine(Shoot());}
         if(timer<=1 && timer>0)spr=sprites[4];

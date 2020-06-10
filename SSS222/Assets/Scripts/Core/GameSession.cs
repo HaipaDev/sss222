@@ -92,8 +92,10 @@ public class GameSession : MonoBehaviour{
 
         if(FindObjectOfType<Player>()!=null){if(FindObjectOfType<Player>().timeFlyingCore>flyingTimeReq){AddXP(xp_flying);FindObjectOfType<Player>().timeFlyingCore=0f;}}
 
+        Mathf.Clamp(coresXp,0,xp_forCore);
         if(coresXp>=xp_forCore){
             cores++;
+            FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             coresXp=0;
             AudioManager.instance.Play("LvlUp");
@@ -105,7 +107,41 @@ public class GameSession : MonoBehaviour{
         if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
         //if(Shop.shopOpen==false&&Shop.shopOpened==false){gameSpeed=1;}
         if(FindObjectOfType<Player>()==null){gameSpeed=1;}
-        //
+        
+        //Restart with R or Space/Resume with Space
+        if((GameObject.Find("GameOverCanvas")!=null&&GameObject.Find("GameOverCanvas").activeSelf==true)&&(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.R))
+        ||(PauseMenu.GameIsPaused==true&&Input.GetKeyDown(KeyCode.R))){
+            FindObjectOfType<Level>().RestartGame();}
+        else if(PauseMenu.GameIsPaused==true&&Input.GetKeyDown(KeyCode.Space)){FindObjectOfType<PauseMenu>().Resume();}
+
+        //var inv=false;
+        if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().inverter==true)){
+            //inv=true;
+            //FindObjectOfType<Player>().inverter=false;
+            foreach(AudioSource sound in FindObjectsOfType<AudioSource>()){
+                if(sound!=null){
+                    GameObject snd=sound.gameObject;
+                    //if(sound!=musicPlayer){
+                    if(snd.GetComponent<MusicPlayer>()==null){
+                        //sound.pitch=1;
+                        sound.Stop();
+                    }
+                }
+            }
+        }/*else if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
+        FindObjectOfType<Player>()!=null&&inv==true){FindObjectOfType<Player>().inverter=true;}*/
+        if(FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().inverter==false){
+            foreach(AudioSource sound in FindObjectsOfType<AudioSource>()){
+                if(sound!=null){
+                    GameObject snd=sound.gameObject;
+                    //if(sound!=musicPlayer){
+                    if(snd.GetComponent<MusicPlayer>()==null){
+                        if(sound.pitch==-1)sound.pitch=1;
+                        if(sound.loop==true)sound.loop=false;
+                    }
+                }
+            }
+        }
 
         CheckCodes(0,0);
     }

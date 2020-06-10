@@ -617,7 +617,7 @@ MonoBehaviour:
   qualityDropdopwn: {fileID: 1181639475157886914}
   fullscreenToggle: {fileID: 1181639476760603157}
   pprocessingToggle: {fileID: 143777928}
-  scbuttonsToggle: {fileID: 0}
+  scbuttonsToggle: {fileID: 8372865784298855898}
   steeringToggle: {fileID: 1181639475364587625}
   masterSlider: {fileID: 1181639476618103131}
   soundSlider: {fileID: 1181639476509085756}
@@ -7271,7 +7271,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3929669227129117239}
   - component: {fileID: 1742156595318732259}
-  - component: {fileID: 2161902728949448646}
   m_Layer: 5
   m_Name: OnScreenButtonsToggle
   m_TagString: Untagged
@@ -7359,18 +7358,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 1
   m_IsOn: 1
---- !u!114 &2161902728949448646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8372865784298855898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e4c7953fb875054297d8ab6b50f8b39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8678237542257307114
 GameObject:
   m_ObjectHideFlags: 0
@@ -7407,7 +7394,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 58}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9036281126744804313

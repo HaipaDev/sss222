@@ -197,10 +197,10 @@ public class UpgradeMenu : MonoBehaviour{
     }
 
     public void UpgradeFloat(ref float value,float amnt,int cost,bool add,ref float value2,ref int countValue){
-        if(gameSession.cores>=cost){value+=amnt;value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;total_UpgradesCount++;GetComponent<AudioSource>().Play();}
+        if(gameSession.cores>=cost){value+=amnt;value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;/*total_UpgradesCount++;*/GetComponent<AudioSource>().Play();}
         else{AudioManager.instance.Play("Deny");}
     }public void UpgradeAfterStartingVal(ref bool valueEnable,ref float value,float startingVal,float secondVal,float amnt,int cost,bool add,ref float value2,ref int countValue,ref int countLvl){
-        if(gameSession.cores>=cost){if(valueEnable!=true){valueEnable=true;}if(value>=secondVal){value+=amnt;}else{if(value==startingVal&&(countValue>0||countLvl>0))value=secondVal;}value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;total_UpgradesCount++;GetComponent<AudioSource>().Play();}
+        if(gameSession.cores>=cost){if(valueEnable!=true){valueEnable=true;}if(value>=secondVal){value+=amnt;}else{if(value==startingVal&&(countValue>0||countLvl>0))value=secondVal;}value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;/*total_UpgradesCount++;*/GetComponent<AudioSource>().Play();}
         else{AudioManager.instance.Play("Deny");}
     }
     //public void AddFloat(ref float value,float amnt,int cost){if(gameSession.cores>=cost){value+=amnt;}}
@@ -212,7 +212,7 @@ public class UpgradeMenu : MonoBehaviour{
     public void AddEnRegen(){UpgradeAfterStartingVal(ref player.enRegenEnabled,ref player.enRegenAmnt,0.5f,1f,enRegen_UpgradeAmnt,enRegen_UpgradeCost, false, ref player.enRegenAmnt,ref enRegen_UpgradesCount,ref enRegen_UpgradesLvl);}
 
     public void DefaultPowerupChange(string prevPowerup,string powerup,int cost,bool add,ref float value,float amnt,bool permament,int upgradeXPamnt){
-        if(gameSession.cores>=cost && player.powerupDefault==prevPowerup){player.powerupDefault=powerup;if(permament!=true){player.powerup=powerup;}gameSession.cores-=cost;if(add==true){value+=amnt;}defaultPowerup_upgradeCount++;total_UpgradesCount+=upgradeXPamnt;if(permament==true){player.losePwrupOutOfEn=false;}GetComponent<AudioSource>().Play();}
+        if(gameSession.cores>=cost && player.powerupDefault==prevPowerup){player.powerupDefault=powerup;if(permament!=true){player.powerup=powerup;}gameSession.cores-=cost;if(add==true){value+=amnt;}defaultPowerup_upgradeCount++;/*total_UpgradesCount+=upgradeXPamnt;*/if(permament==true){player.losePwrupOutOfEn=false;}GetComponent<AudioSource>().Play();}
         else{AudioManager.instance.Play("Deny");}
     }
     //public void DefaultPowerupL2(){if(gameSession.cores>powerupDefaultL2_UpgradeCost){player.powerupDefault="laser2";gameSession.cores-=powerupDefaultL2_UpgradeCost;total_UpgradesCount++;}else{GetComponent<AudioSource>().Play();}}
