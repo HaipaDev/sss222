@@ -258,7 +258,7 @@ public class Player : MonoBehaviour{
         //PlayerBFlame();
         //if(powerup=="lsaber"||powerup=="lclaws")StartCoroutine(DrawOtherWeapons());
         DrawOtherWeapons();
-        Shoot();
+        if(GetComponent<PlayerSkills>().timerTeleport==-4)Shoot();
         States();
         Regen();
         Die();
@@ -425,9 +425,11 @@ public class Player : MonoBehaviour{
 
     public void ShootButton(bool pressed){
         if(pressed){
-            if(shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+            if(shootCoroutine!=null){return;}
+            else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
         }else if(pressed==false||shootTimer<-1f){
-            if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());StopCoroutine("ShootContinuously");}
+            if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
+            shootCoroutine=null;
             if(moving==true)timerEnRegen+=Time.deltaTime;
         }
     }

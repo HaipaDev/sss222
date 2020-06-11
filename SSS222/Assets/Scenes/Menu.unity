@@ -781,6 +781,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_text
+      value: 0.3 - 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_wordSpacing
+      value: -51.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_characterSpacing
+      value: -15.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6550043192902283618, guid: c3243b564edf95f46895bf4210dd31a4,
         type: 3}
       propertyPath: m_Name

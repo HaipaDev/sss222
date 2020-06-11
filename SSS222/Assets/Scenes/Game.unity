@@ -448,41 +448,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1955137468278647860}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1099518731
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1099518732}
-  m_Layer: 5
-  m_Name: LvlBar5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1099518732
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099518731}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1787316760}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1117112156 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2725712946868866621, guid: 3fcaf365c5e1d1a45adb3f83965c778b,
@@ -866,34 +831,6 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 523227925064442453}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1787316759 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 488557680821197121, guid: 96d69890f517e4c48943f992c4f243a5,
-    type: 3}
-  m_PrefabInstance: {fileID: 5451999036799992160}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1787316760 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 488557680821197122, guid: 96d69890f517e4c48943f992c4f243a5,
-    type: 3}
-  m_PrefabInstance: {fileID: 5451999036799992160}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1787316761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787316759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a62dc2d9032c274ba48a3144d61a83e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabs:
-  - {fileID: 0}
-  ID: 0
-  created: 1
 --- !u!4 &1867014637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4252214824665209171, guid: 0baa1a904ba0680498aca236c3a4ac93,
@@ -2476,13 +2413,8 @@ PrefabInstance:
       objectReference: {fileID: 1764790085}
     - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
-      propertyPath: padding
-      value: 0.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
-        type: 3}
       propertyPath: powerup
-      value: phaser
+      value: shadowbt
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547399, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
@@ -2634,21 +2566,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 488557680821197121, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_Name
-      value: LvlBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 930176050443167062, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1734775013695012803, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3055374916924061258, guid: 96d69890f517e4c48943f992c4f243a5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2758,11 +2675,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UpgradeCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 5451999036647300188, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96d69890f517e4c48943f992c4f243a5, type: 3}

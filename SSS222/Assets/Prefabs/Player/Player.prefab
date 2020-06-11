@@ -259,11 +259,11 @@ MonoBehaviour:
   laserEn: 0.3
   laser2En: 1.25
   laser3En: 2.5
-  phaserEn: 3
+  phaserEn: 1.5
   hrocketEn: 2.6
   mlaserEn: 0.075
   lsaberEn: 0.375
-  lclawsEn: 6.5
+  lclawsEn: 6.3
   shadowEn: 5
   shadowBTEn: 10
   qrocketEn: 5.5
@@ -374,10 +374,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 100000, guid: 081b45b1b47b4094f818a7a47a0c69b6, type: 3}
-  twice: 1
   xx: 0
   yy: -0.6
   time: 0.3
+  stayStill: 0
 --- !u!82 &1143734159
 AudioSource:
   m_ObjectHideFlags: 0

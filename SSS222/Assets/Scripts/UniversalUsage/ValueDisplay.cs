@@ -11,7 +11,7 @@ public class ValueDisplay : MonoBehaviour{
     Player player;
     PlayerSkills pskills;
     UpgradeMenu upgradeMenu;
-    [SerializeField] string value = "score";
+    [SerializeField] public string value = "score";
     [SerializeField] float valueLimitD=-1;
     [SerializeField] bool changeOnValidate;
 

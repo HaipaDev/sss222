@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class BackflameEffect : MonoBehaviour{
     [SerializeField] public GameObject part;
-    [SerializeField] bool twice=true;
+    //[SerializeField] bool twice=true;
     [SerializeField] float xx = 0f;
     [SerializeField] float yy = -0.6f;
     [SerializeField] float time = 0.3f;
+    [SerializeField] bool stayStill=true;
+    GameObject BFlame;
     /*void Start()
     {
         xx = transform.position.x + xx;
@@ -18,9 +20,14 @@ public class BackflameEffect : MonoBehaviour{
         if(Time.timeScale>0.0001f){
             var xxx = transform.position.x + xx;
             var yyy = transform.position.y + yy;
-            GameObject BFlame = Instantiate(part, new Vector3(xxx, yyy, transform.position.z - 0.01f), Quaternion.identity);
-            Destroy(BFlame, time);
-            if (twice == true) { GameObject BFlame2 = Instantiate(part, new Vector3(xxx, yyy, transform.position.z - 0.01f), Quaternion.identity); Destroy(BFlame2, time); }
+            if(BFlame==null){
+            BFlame = Instantiate(part, transform);
+            BFlame.transform.position=new Vector3(xxx, yyy, transform.position.z - 0.01f);
+            if(stayStill==true)BFlame.transform.rotation = Quaternion.Euler(0,0,0);
+            BFlame.GetComponent<ParticleSystem>().Play();
+            }
+            //Destroy(BFlame, time);
+            //if (twice == true) { GameObject BFlame2 = Instantiate(part, new Vector3(xxx, yyy, transform.position.z - 0.01f), Quaternion.identity); Destroy(BFlame2, time); }
         }
     }
 }

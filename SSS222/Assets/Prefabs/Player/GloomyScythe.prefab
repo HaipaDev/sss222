@@ -54,6 +54,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -162,8 +163,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   glowVFX: {fileID: 4825125176181819323, guid: 88961786c52cb5146bb7b41417f996bf, type: 3}
   colorGlow: {r: 0, g: 0, b: 0, a: 1}
-  sizeGlow: 4
-  alphaGlow: 0.55
+  sizeGlow: 3.5
+  alphaGlow: 0.25
   emissionSpeed: 7.63
   xx: 0
   yy: 0
@@ -290,10 +291,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 100000, guid: 096832bfc2651eb4b92bc8012922197b, type: 3}
-  twice: 0
   xx: 0
   yy: -0.6
   time: 0.2
+  stayStill: 1
 --- !u!114 &-1996952101110769926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7002f9888ce4624091c238eff4da6cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 130
+  rotationSpeed: 360
   waitTime: 0.65
   waitTimer: 0
   scytheFlySFX: {fileID: 8300000, guid: c23309e0609f07a4a912f49e84fbd57d, type: 3}

@@ -11,11 +11,11 @@ public class XPFill : MonoBehaviour{
     [SerializeField] public string valueName;
     [SerializeField] public int valueReq;
     public int value;
-    Image image;
+    Image img;
     UpgradeMenu upgradeMenu;
     //Shake shake;
     void Start(){
-        image=GetComponent<Image>();
+        img=GetComponent<Image>();
         upgradeMenu=FindObjectOfType<UpgradeMenu>();
         //shake = GameObject.FindObjectOfType<Shake>().GetComponent<Shake>();
     }
@@ -24,12 +24,12 @@ public class XPFill : MonoBehaviour{
         value=(int)upgradeMenu.GetType().GetField(valueName).GetValue(upgradeMenu);
         if(value>=valueReq){
             if(changed==false){
-                image.sprite=fillSprite;
+                img.sprite=fillSprite;
                 UpgradeParticles();
                 //shake.CamShake();
                 changed=true;
             }
-        }else{image.sprite=emptySprite;changed=false;}
+        }else{img.sprite=emptySprite;changed=false;}
     }
     public void UpgradeParticles(){
         var pt=Instantiate(particlePrefab,transform);

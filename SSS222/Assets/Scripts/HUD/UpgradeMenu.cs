@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class UpgradeMenu : MonoBehaviour{
@@ -11,6 +12,7 @@ public class UpgradeMenu : MonoBehaviour{
     public GameObject skillsMenu;
     public GameObject skills1Menu;
     public GameObject skills2Menu;
+    public XPBars lvlbar;
     public float prevGameSpeed = 1f;
     [HeaderAttribute("Upgrade Values")]
     public float maxHealth_UpgradeAmnt=5f;
@@ -57,6 +59,7 @@ public class UpgradeMenu : MonoBehaviour{
     GameSession gameSession;
     Player player;
     PlayerSkills pskills;
+    IEnumerator co;
     void Start(){
         gameSession = FindObjectOfType<GameSession>();
         player = FindObjectOfType<Player>();
@@ -103,6 +106,7 @@ public class UpgradeMenu : MonoBehaviour{
     public void OpenSkills(){upgradeMenu2UI.SetActive(true);//upgradeMenuUI.SetActive(false);
         //statsMenu.SetActive(false);
         if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
+        if(skills1Menu.activeSelf==false&&skills2Menu.activeSelf==false){skills1Menu.SetActive(true);}
     }
     public void OpenSkillsPrev(){
         if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
@@ -196,18 +200,20 @@ public class UpgradeMenu : MonoBehaviour{
         skills[ID]=skillKeyBind.E;
     }
 
-    public void UpgradeFloat(ref float value,float amnt,int cost,bool add,ref float value2,ref int countValue){
-        if(gameSession.cores>=cost){value+=amnt;value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;/*total_UpgradesCount++;*/GetComponent<AudioSource>().Play();}
-        else{AudioManager.instance.Play("Deny");}
+    public void UpgradeFloat(ref float value,float amnt,int cost,bool add,ref float value2,ref int countValue, ref int countLvl){
+        if(gameSession.cores>=cost&&countLvl<=total_UpgradesLvl){value+=amnt;value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;/*total_UpgradesCount++;*/
+        GetComponent<AudioSource>().Play();}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=new Color(79,169,107); go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=new Color(49,188,80);}
+        else{AudioManager.instance.Play("Deny");}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=Color.red; go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;}
     }public void UpgradeAfterStartingVal(ref bool valueEnable,ref float value,float startingVal,float secondVal,float amnt,int cost,bool add,ref float value2,ref int countValue,ref int countLvl){
-        if(gameSession.cores>=cost){if(valueEnable!=true){valueEnable=true;}if(value>=secondVal){value+=amnt;}else{if(value==startingVal&&(countValue>0||countLvl>0))value=secondVal;}value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;/*total_UpgradesCount++;*/GetComponent<AudioSource>().Play();}
-        else{AudioManager.instance.Play("Deny");}
+        if(gameSession.cores>=cost&&countLvl<=total_UpgradesLvl&&total_UpgradesLvl>0){if(valueEnable!=true){valueEnable=true;}if(value>=secondVal){value+=amnt;}else{if(value==startingVal&&(countValue>0||countLvl>0))value=secondVal;}value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;/*total_UpgradesCount++;*/
+        GetComponent<AudioSource>().Play();}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=new Color(79,169,107); go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=new Color(49,188,80);}
+        else{AudioManager.instance.Play("Deny");}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=Color.red; go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;}
     }
     //public void AddFloat(ref float value,float amnt,int cost){if(gameSession.cores>=cost){value+=amnt;}}
     //if(gameSession.cores>=maxHealth_UpgradeCost)player.maxHP+=maxHealth_UpgradeAmnt;gameSession.cores-=maxHealth_UpgradeCost;
-    public void AddMaxHP(){UpgradeFloat(ref player.maxHP,maxHealth_UpgradeAmnt,maxHealth_UpgradeCost, true, ref player.health,ref maxHealth_UpgradesCount);}
-    public void AddMaxEnergy(){UpgradeFloat(ref player.maxEnergy,maxEnergy_UpgradeAmnt,maxEnergy_UpgradeCost, true, ref player.energy,ref maxEnergy_UpgradesCount);}
-    public void AddSpeed(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt,speed_UpgradeCost, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount);}
+    public void AddMaxHP(){UpgradeFloat(ref player.maxHP,maxHealth_UpgradeAmnt,maxHealth_UpgradeCost, true, ref player.health,ref maxHealth_UpgradesCount, ref maxHealth_UpgradesLvl);}
+    public void AddMaxEnergy(){UpgradeFloat(ref player.maxEnergy,maxEnergy_UpgradeAmnt,maxEnergy_UpgradeCost, true, ref player.energy,ref maxEnergy_UpgradesCount, ref maxEnergy_UpgradesLvl);}
+    public void AddSpeed(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt,speed_UpgradeCost, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount, ref speed_UpgradesLvl);}
     public void AddHpRegen(){UpgradeAfterStartingVal(ref player.hpRegenEnabled,ref player.hpRegenAmnt,0.1f,0.2f,hpRegen_UpgradeAmnt,hpRegen_UpgradeCost, false, ref player.hpRegenAmnt,ref hpRegen_UpgradesCount,ref hpRegen_UpgradesLvl);}
     public void AddEnRegen(){UpgradeAfterStartingVal(ref player.enRegenEnabled,ref player.enRegenAmnt,0.5f,1f,enRegen_UpgradeAmnt,enRegen_UpgradeCost, false, ref player.enRegenAmnt,ref enRegen_UpgradesCount,ref enRegen_UpgradesLvl);}
 
@@ -226,7 +232,37 @@ public class UpgradeMenu : MonoBehaviour{
     }
 
     void LevelEverything(){
-        if(total_UpgradesCount>=total_UpgradesCountMax){LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=total_UpgradesCount-total_UpgradesCountMax-1;total_UpgradesLvl++;}
+        if(total_UpgradesCount>=total_UpgradesCountMax){LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=Mathf.Clamp(total_UpgradesCount-total_UpgradesCountMax,0,99);total_UpgradesLvl++;}
+        var on=false;
+        if(upgradeMenuUI.activeSelf==true)on=true;
+        if(total_UpgradesLvl==0){
+            total_UpgradesCountMax=1;//1 for Lvl 0
+            if(lvlbar.ID!=1){
+                if(co==null&&on==true)co=ChangeLvlBar(1);StartCoroutine(co);
+                }
+        }else if(total_UpgradesLvl<=2 && total_UpgradesLvl>0){
+            total_UpgradesCountMax=2;//2 for Lvl 1-2
+            if(lvlbar.ID!=2){
+                if(co==null&&on==true)co=ChangeLvlBar(2);StartCoroutine(co);
+                }
+        }else if(total_UpgradesLvl<5&&total_UpgradesLvl>2){
+            total_UpgradesCountMax=total_UpgradesLvl;
+            if(lvlbar.ID!=total_UpgradesLvl){
+                if(co==null&&on==true)co=ChangeLvlBar(total_UpgradesLvl);StartCoroutine(co);
+                }
+        }else if(total_UpgradesLvl>=5&&total_UpgradesLvl<10){
+            total_UpgradesCountMax=5;//5-9 is 5 XP
+            if(lvlbar.ID!=5){
+                if(co==null&&on==true)co=ChangeLvlBar(5);StartCoroutine(co);
+                }
+        }else if(total_UpgradesLvl>=10){
+            total_UpgradesCountMax=10;//10 or above is 10 XP
+            if(lvlbar.ID!=6){
+                if(co==null&&on==true)co=ChangeLvlBar(6);StartCoroutine(co);
+                }
+        }
+        if(lvlbar.current==null)lvlbar.created=2;
+
         if(maxHealth_UpgradesCount>=maxHealth_UpgradesCountMax){LastBar(maxHealth_UpgradesCountMax,"maxHealth_UpgradesCount");maxHealth_UpgradesCount=0;maxHealth_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
         if(maxEnergy_UpgradesCount>=maxEnergy_UpgradesCountMax){LastBar(maxEnergy_UpgradesCountMax,"maxEnergy_UpgradesCount");maxEnergy_UpgradesCount=0;maxEnergy_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
         if(speed_UpgradesCount>=speed_UpgradesCountMax){LastBar(speed_UpgradesCountMax,"speed_UpgradesCount");speed_UpgradesCount=0;speed_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
@@ -247,14 +283,24 @@ public class UpgradeMenu : MonoBehaviour{
             if(obj.valueReq==max&&obj.valueName==name){obj.UpgradeParticles();}
         }
     }
+    IEnumerator ChangeLvlBar(int ID){
+        lvlbar.ID=ID;
+        lvlbar.created=1;
+        yield return new WaitForSecondsRealtime(0.1f);
+        lvlbar.created=2;
+        co=null;
+        yield break;
+    }
 
     public void CheatCores(){
         gameSession.CheckCodes(-1,0);
         gameSession.CheckCodes(2,6);
-        gameSession.CheckCodes(-1,9);
+        //gameSession.CheckCodes(-1,9);
     }public void CheatLevels(){
         gameSession.CheckCodes(-1,0);
         gameSession.CheckCodes(2,7);
-        gameSession.CheckCodes(-1,9);
+        //gameSession.CheckCodes(-1,9);
+    }public void CheatXP(){
+        gameSession.coresXp=gameSession.xp_forCore;
     }
 }
