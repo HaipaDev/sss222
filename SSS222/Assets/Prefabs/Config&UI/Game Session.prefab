@@ -59,10 +59,12 @@ MonoBehaviour:
   shopScoreMaxE: 800
   xp_forCore: 100
   xp_wave: 20
-  xp_shop: 10
-  xp_powerup: -5
+  xp_shop: 0
+  xp_powerup: 1
   xp_flying: 7
   flyingTimeReq: 25
+  xp_staying: -5
+  stayingTimeReq: 4
   gameSpeed: 1
   cheatmode: 1
   dmgPopups: 1

@@ -29,6 +29,8 @@ public class GameSession : MonoBehaviour{
     public float xp_powerup=3f;
     public float xp_flying=7f;
     public float flyingTimeReq=25f;
+    public float xp_staying=-5f;
+    public float stayingTimeReq=4f;
     [HeaderAttribute("Settings")]
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
     [HeaderAttribute("Other")]
@@ -78,27 +80,33 @@ public class GameSession : MonoBehaviour{
         Time.timeScale = gameSpeed;
         if(shopScore>=shopScoreMax && coins>0)
         {
-            Shop.shopOpen = true;
-            Enemy[] enemies = FindObjectsOfType<Enemy>();
-            foreach(Enemy enemy in enemies){
+            Shop.instance.SpawnCargo();
+            /*Shop.shopOpen = true;
+            foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
                 enemy.givePts = false;
                 enemy.health = -1;
                 enemy.Die();
             }
-            gameSpeed = 0f;
+            gameSpeed = 0f;*/
             shopScoreMax = Random.Range(shopScoreMaxS,shopScoreMaxE);
             shopScore = 0;
         }
 
-        if(FindObjectOfType<Player>()!=null){if(FindObjectOfType<Player>().timeFlyingCore>flyingTimeReq){AddXP(xp_flying);FindObjectOfType<Player>().timeFlyingCore=0f;}}
+        if(FindObjectOfType<Player>()!=null){
+            if(FindObjectOfType<Player>().timeFlyingCore>flyingTimeReq){AddXP(xp_flying);FindObjectOfType<Player>().timeFlyingCore=0f;}
+            if(FindObjectOfType<Player>().stayingTimerCore>stayingTimeReq){SubXP(xp_staying);FindObjectOfType<Player>().stayingTimerCore=0f;}
+        }
 
         Mathf.Clamp(coresXp,0,xp_forCore);
+        if(coresXpTotal<0)coresXpTotal=0;
         if(coresXp>=xp_forCore){
-            cores++;
+            //cores++;
+            GameAssets.instance.Make("PowerCore",new Vector2(Random.Range(-3.5f, 3.5f),7.4f));
             FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             coresXp=0;
-            AudioManager.instance.Play("LvlUp");
+            //AudioManager.instance.Play("LvlUp");
+            AudioManager.instance.Play("LvlUp2");
         }
 
         //Set speed to normal
@@ -170,7 +178,15 @@ public class GameSession : MonoBehaviour{
 
     public void AddToScoreNoEV(int scoreValue){score += scoreValue;ScorePopUpHUD(scoreValue);}
     public void AddXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;XPPopUpHUD(xpValue);}
-    public void AddEnemyCount(){enemiesCount++;FindObjectOfType<DisruptersSpawner>().EnemiesCountHealDrone++;}
+    public void SubXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;XPSubPopUpHUD(xpValue);}
+    public void AddEnemyCount(){enemiesCount++;FindObjectOfType<DisruptersSpawner>().EnemiesCountHealDrone++;
+    var ps=FindObjectsOfType<PowerupsSpawner>();
+    foreach(PowerupsSpawner p in ps){
+        if(p.enemiesCountReq!=-1){
+            p.enemiesCount++;
+        }    
+    }
+    }
 
     public void ResetScore(){
         score=0;
@@ -191,6 +207,7 @@ public class GameSession : MonoBehaviour{
         ss.moveByMouse = sm.moveByMouse;
         ss.quality = sm.quality;
         ss.fullscreen = sm.fullscreen;
+        ss.scbuttons = sm.scbuttons;
         ss.pprocessing = sm.pprocessing;
         ss.masterVolume = sm.masterVolume;
         ss.soundVolume = sm.soundVolume;
@@ -250,7 +267,7 @@ public class GameSession : MonoBehaviour{
                 if(Input.GetKeyDown(KeyCode.Alpha1) || nkey==1){AddToScoreNoEV(100);}
                 if(Input.GetKeyDown(KeyCode.Alpha2) || nkey==2){AddToScoreNoEV(1000);}
                 if(Input.GetKeyDown(KeyCode.Alpha3) || nkey==3){EVscore=EVscoreMax;}
-                if(Input.GetKeyDown(KeyCode.Alpha4) || nkey==4){shopScore=shopScoreMax;}
+                if(Input.GetKeyDown(KeyCode.Alpha4) || nkey==4){coins+=1;shopScore=shopScoreMax;}
                 if(Input.GetKeyDown(KeyCode.Alpha5) || nkey==5){AddXP(100);}
                 if(Input.GetKeyDown(KeyCode.Alpha6) || nkey==6){coins+=100;cores+=100;}
                 if(Input.GetKeyDown(KeyCode.Alpha7) || nkey==7){FindObjectOfType<UpgradeMenu>().total_UpgradesLvl+=10;}
@@ -276,6 +293,11 @@ public class GameSession : MonoBehaviour{
         xppopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //xppopupHud.GetComponent<Animator>().SetTrigger(0);
         xppopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+xp.ToString();
+    }void XPSubPopUpHUD(float xp){
+        GameObject xppopupHud=GameObject.Find("XPDiffParrent");
+        xppopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //xppopupHud.GetComponent<Animator>().SetTrigger(0);
+        xppopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+Mathf.Abs(xp).ToString();
     }
     //public void PlayDenySFX(){AudioManager.instance.Play("Deny");}
 }

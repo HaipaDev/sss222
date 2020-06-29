@@ -16,6 +16,7 @@ public class DamageDealer : MonoBehaviour{
     float dmgPRocket = 0f;
     float dmgPRocketExpl = 0.5f;
     float dmgCBullet = 2f;
+    //PLaser damage is inside the obj
     float dmgMPulse = 130f;
 
     float dmgComet = 47f;

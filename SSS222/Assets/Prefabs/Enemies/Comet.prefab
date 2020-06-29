@@ -217,6 +217,7 @@ MonoBehaviour:
   xx: 0
   yy: 0.4
   time: 0.4
+  stayStill: 1
 --- !u!114 &1490166543656379823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,7 +242,7 @@ MonoBehaviour:
   lunarCometChance: 10
   lunarHealthMulti: 2.5
   lunarSpeedMulti: 0.415
-  lunarPart: {fileID: 100000, guid: 6a9f1cf68d74a5148be7c5f2784dbc38, type: 3}
+  lunarPart: {fileID: 100000, guid: 3d92ff3b8ca41e040a35a255a84248e0, type: 3}
 --- !u!82 &1306324344444208931
 AudioSource:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class ValueDisplay : MonoBehaviour{
     Player player;
     PlayerSkills pskills;
     UpgradeMenu upgradeMenu;
+    Shop shopMenu;
     [SerializeField] public string value = "score";
     [SerializeField] float valueLimitD=-1;
     [SerializeField] bool changeOnValidate;
@@ -24,6 +25,7 @@ public class ValueDisplay : MonoBehaviour{
         player = FindObjectOfType<Player>();
         pskills = FindObjectOfType<PlayerSkills>();
         upgradeMenu = FindObjectOfType<UpgradeMenu>();
+        shopMenu = FindObjectOfType<Shop>();
     }
 
     // Update is called once per frame
@@ -50,6 +52,8 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "hpRegen") if(player.hpRegenEnabled==true){scoreText.text = player.hpRegenAmnt.ToString();}else{scoreText.text="0";}
         else if (value == "enRegen") if(player.enRegenEnabled==true){scoreText.text = player.enRegenAmnt.ToString();}else{scoreText.text="0";}
 
+        else if (value == "purchases") scoreText.text = "Reputation: "+shopMenu.purchases.ToString();
+        else if (value == "reputation") scoreText.text = "Reputation: "+shopMenu.reputation.ToString();
         else if (value == "lvl_ship") scoreText.text = "Ship Level: "+upgradeMenu.total_UpgradesLvl.ToString();
         else if (value == "lvl_hp") scoreText.text = "Lvl. "+upgradeMenu.maxHealth_UpgradesLvl.ToString();
         else if (value == "lvl_energy") scoreText.text = "Lvl. "+upgradeMenu.maxEnergy_UpgradesLvl.ToString();

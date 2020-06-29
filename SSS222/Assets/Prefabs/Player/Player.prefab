@@ -199,6 +199,14 @@ MonoBehaviour:
   powerup: laser
   energy: 180
   maxEnergy: 180
+  overheatTimer: -4
+  overheatTimerMax: 8.66
+  overheatDmg: 10
+  overheatCdTimer: 0
+  overheatCooldown: 0.65
+  overheated: 0
+  overheatedTime: 3
+  overheatedTimer: -4
   powerupDefault: laser
   losePwrupOutOfEn: 1
   energyRefillUnlocked: 0
@@ -227,6 +235,8 @@ MonoBehaviour:
   procketsBulletsAmmount: 10
   cbulletSpeed: 8.25
   cbulletShootPeriod: 0.15
+  plaserSpeed: 9.75
+  plaserShootPeriod: 0.75
   flip: 0
   flipTime: 8.5
   flipTimer: -4
@@ -256,22 +266,27 @@ MonoBehaviour:
   matrixTimer: -4
   pmultiTime: 24
   pmultiTimer: -4
+  accel: 0
+  accelTime: 16
+  accelTimer: -4
   laserEn: 0.3
   laser2En: 1.25
   laser3En: 2.5
   phaserEn: 1.5
-  hrocketEn: 2.6
   mlaserEn: 0.075
   lsaberEn: 0.375
   lclawsEn: 6.3
   shadowEn: 5
   shadowBTEn: 10
-  qrocketEn: 5.5
-  procketEn: 1
   cbulletEn: 1.3
+  plaserEn: 5.6
+  hrocketEn: 0.88
+  qrocketEn: 2.23
+  procketEn: 0.86
+  procketOh: 0.49
   energyBallGet: 9
-  medkitEnergyGet: 26
-  medkitUEnergyGet: 40
+  medkitEnergyGet: 40
+  medkitUEnergyGet: 26
   medkitHpAmnt: 25
   medkitUHpAmnt: 62
   pwrupEnergyGet: 36
@@ -284,14 +299,10 @@ MonoBehaviour:
   refillCount: 0
   refillRandomized: 0
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
-  shadowShootVFX: {fileID: 100000, guid: 096832bfc2651eb4b92bc8012922197b, type: 3}
-  gcloverVFX: {fileID: 100000, guid: 93654d0135dbfd741b138964b108e311, type: 3}
   gcloverOVFX: {fileID: 100000, guid: 41fbf007ac904dd48afafa7a6655e3ef, type: 3}
-  crystalExplosionVFX: {fileID: 100000, guid: 6112b0f2cbaee2a4e847d65856edcf6f, type: 3}
   gameOverCanvasPrefab: {fileID: 0}
   shadowPrefab: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699,
     type: 3}
-  flareShootYY: 0.2
   bgSprite: {fileID: 0}
   damaged: 0
   healed: 0
@@ -311,7 +322,9 @@ MonoBehaviour:
   timerEnRegen: 0
   freqEnRegen: 1
   enRegenAmnt: 0.5
+  energyForRegen: 10
   stayingTimer: 0
+  stayingTimerCore: 0
   hpRegenEnabled: 0
   timerHpRegen: 0
   freqHpRegen: 1

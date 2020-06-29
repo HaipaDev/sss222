@@ -16,7 +16,7 @@ public class PowerupDisplay : MonoBehaviour{
     [SerializeField] GameObject display2;*/
     //[SerializeField] GameObject display3;
     TMPro.TextMeshProUGUI TMP;
-    [HeaderAttribute("Sprites")]
+    /*[HeaderAttribute("Sprites")]
     [SerializeField] Sprite laserSprite;
     [SerializeField] Sprite laser2Sprite;
     [SerializeField] Sprite laser3Sprite;
@@ -37,7 +37,7 @@ public class PowerupDisplay : MonoBehaviour{
     [SerializeField] Sprite magnetSprite;
     [SerializeField] Sprite scalerSprite;
     [SerializeField] Sprite matrixSprite;
-    [SerializeField] Sprite pmultiSprite;
+    [SerializeField] Sprite pmultiSprite;*/
 
 
     Color color;

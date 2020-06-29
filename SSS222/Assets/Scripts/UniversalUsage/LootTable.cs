@@ -22,6 +22,7 @@ public class LootTable : MonoBehaviour{
     [SerializeField] ItemPercentage[] itemsPercentage;
     [HideInInspector] ItemPercentage[] itemsPercentage2;
     public float sum;
+    [Range(0,1)]public int restart;
     
     private void Awake(){
         /*itemTable = new Dictionary<LootItem, float>();
@@ -37,6 +38,12 @@ public class LootTable : MonoBehaviour{
             itemTable.Add(entry.lootItem, entry.dropChance);
         }*/
         SumUp();
+        if(restart==1){
+            foreach(LootTableEntry entry in itemList){
+                entry.dropChance=0;
+            }
+            restart=0;
+        }
     }
     public LootItem GetItem(){
         float randomWeight = 0;

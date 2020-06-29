@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopSlot : MonoBehaviour{
-    public int ID;
+    [HideInInspector]public int ID;
+    [HideInInspector]public int price;
     public GameObject slotText;
-    public Shop shopMenu;
-    public LootTableShop lootTable;
+    Shop shopMenu;
+    LootTableShop lootTable;
     Player player;
     GameSession gameSession;
     GameObject shopVFX;
+    UpgradeMenu umenu;
     void Start()
     {
         if (player == null) player = FindObjectOfType<Player>();
@@ -26,20 +28,26 @@ public class ShopSlot : MonoBehaviour{
         if (shopMenu == null) shopMenu = FindObjectOfType<Shop>();
         if (lootTable == null) lootTable = FindObjectOfType<LootTableShop>();
         if (gameSession == null) gameSession = FindObjectOfType<GameSession>();
+        if (umenu == null) umenu = FindObjectOfType<UpgradeMenu>();
     }
     public void ResetState()
     {
         //GetComponent<Image>().sprite = shopMenu.shopSlotIDs[ID].sprite;
         //slotText.GetComponent<TMPro.TextMeshProUGUI>().text = shopMenu.shopSlotIDs[ID].price.ToString();
         GetComponent<Image>().sprite = lootTable.itemList[ID].lootItem.sprite;
-        slotText.GetComponent<TMPro.TextMeshProUGUI>().text = lootTable.itemList[ID].lootItem.price.ToString();
+        //transform.localScale = new Vector3(lootTable.itemList[ID].lootItem.scaleX,lootTable.itemList[ID].lootItem.scaleY,1);
+        var rt=GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(300*lootTable.itemList[ID].lootItem.scaleX, 300*lootTable.itemList[ID].lootItem.scaleY);
+        if(lootTable.itemList[ID].lootItem.price!=-1){price=lootTable.itemList[ID].lootItem.price;}
+        else{price=Random.Range(lootTable.itemList[ID].lootItem.priceS,lootTable.itemList[ID].lootItem.priceE);}
+        slotText.GetComponent<TMPro.TextMeshProUGUI>().text = price.ToString();
     }
     public void Buy(){
         //if (gameSession.coins >= shopMenu.shopSlotIDs[ID].price)
-        if (gameSession.coins >= lootTable.itemList[ID].lootItem.price){
+        if (gameSession.coins >= price){
             //gameSession.coins -= shopMenu.shopSlotIDs[ID].price;
             gameSession.gameSpeed=0.05f;
-            var price = lootTable.itemList[ID].lootItem.price;
+            //var price = lootTable.itemList[ID].lootItem.price;
             gameSession.coins-=price;
 
             shopVFX=GameAssets.instance.GetVFX("ShopVFX");
@@ -55,6 +63,7 @@ public class ShopSlot : MonoBehaviour{
             //if(ID<=shopMenu.shopSlotIDs.Count){
                 player.energy+=10f;
                 if(ID!=10)gameSession.AddXP(gameSession.xp_shop);//XP For purchase
+                shopMenu.Purchase();
                 //if(ID!=4 && ID!=8 && ID!=9 && ID!=10){
                 if(lootTable.itemList[ID].lootItem.pwrupName!=""){
                     player.powerup=lootTable.itemList[ID].lootItem.pwrupName;
@@ -69,6 +78,10 @@ public class ShopSlot : MonoBehaviour{
                     Instantiate(GameAssets.instance.Get("RandomizerPwrup"),player.transform.position,Quaternion.identity);
                 }else if(ID==10){
                     gameSession.cores++;
+                    //AudioSource.PlayClipAtPoint(gameSession.lvlUpSFX,player.transform.position);
+                    AudioManager.instance.Play("LvlUp");
+                }else if(ID==11){
+                    umenu.AddSpeedBypass();
                     //AudioSource.PlayClipAtPoint(gameSession.lvlUpSFX,player.transform.position);
                     AudioManager.instance.Play("LvlUp");
                 }

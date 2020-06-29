@@ -73,7 +73,7 @@ public class PlayerSkills : MonoBehaviour{
     #region//Skills
     public void Skills(skillKeyBind key,int i,float enCost,float cooldown){
         if(player.energy>=enCost){
-            player.energy-=enCost;
+            player.AddSubEnergy(enCost,false);
             player.EnergyPopUpHUD(enCost);
             if(key==skillKeyBind.Q){cooldownQ=cooldown;}
             if(key==skillKeyBind.E){cooldownE=cooldown;}

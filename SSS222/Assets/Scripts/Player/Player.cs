@@ -21,6 +21,14 @@ public class Player : MonoBehaviour{
     [SerializeField] public string powerup = "laser";
     [SerializeField] public float energy = 80f;
     [SerializeField] public float maxEnergy = 200f;
+    [SerializeField] public float overheatTimer = -4f;
+    [SerializeField] public float overheatTimerMax = 3f;
+    [SerializeField] public float overheatDmg = 10f;
+    [SerializeField] public float overheatCdTimer;
+    public float overheatCooldown = 1.5f;
+    [SerializeField] public bool overheated;
+    [SerializeField] public float overheatedTime=3;
+    public float overheatedTimer;
     [SerializeField] public string powerupDefault = "laser";
     [SerializeField] public bool losePwrupOutOfEn;
     [SerializeField] public bool energyRefillUnlocked;
@@ -36,6 +44,7 @@ public class Player : MonoBehaviour{
     GameObject qrocketPrefab;
     GameObject procketPrefab;
     GameObject cbulletPrefab;
+    GameObject plaserPrefab;
     [SerializeField] float laserSpeed = 9f;
     [SerializeField] float laserShootPeriod = 0.34f;
     [SerializeField] float phaserSpeed = 10.5f;
@@ -57,60 +66,70 @@ public class Player : MonoBehaviour{
     [SerializeField] int procketsBulletsAmmount = 10;
     [SerializeField] float cbulletSpeed = 8.25f;
     [SerializeField] float cbulletShootPeriod = 0.15f;
+    [SerializeField] float plaserSpeed = 9.5f;
+    [SerializeField] float plaserShootPeriod = 0.7f;
 
     [HeaderAttribute("States")]
     [SerializeField] public bool flip = false;
     [SerializeField] public float flipTime = 7f;
-    public float flipTimer=-4;
+    [HideInInspector]public float flipTimer=-4;
     [SerializeField] public bool gclover = false;
     [SerializeField] public float gcloverTime = 6f;
-    public float gcloverTimer =-4;
+    [HideInInspector]public float gcloverTimer =-4;
     [SerializeField] public bool shadow = false;
     [SerializeField] public float shadowTime = 10f;
-    public float shadowTimer = -4;
+    [HideInInspector]public float shadowTimer = -4;
     [SerializeField] public float shadowLength=0.33f;
     [SerializeField] public float dashSpeed=10f;
     [SerializeField] public float startDashTime=0.2f;
-    public float dashTime;
+    [HideInInspector]public float dashTime;
     [SerializeField] public bool inverter = false;
     [SerializeField] public float inverterTime=10f;
-    public float inverterTimer = 14;
+    [HideInInspector]public float inverterTimer = 14;
     [SerializeField] public bool magnet = false;
     [SerializeField] public float magnetTime=15f;
-    public float magnetTimer = -4;
+    [HideInInspector]public float magnetTimer = -4;
     [SerializeField] public bool scaler = false;
     [SerializeField] public float shipScaleMin=0.45f;
     [SerializeField] public float shipScaleMax=2.5f;
     [SerializeField] public float scalerTime=15f;
-    public float scalerTimer = -4;
+    [HideInInspector]public float scalerTimer = -4;
     [SerializeField] public bool matrix = false;
     [SerializeField] public float matrixTime=7f;
-    public float matrixTimer = -4;
+    [HideInInspector]public float matrixTimer = -4;
     [SerializeField] public float pmultiTime=24f;
-    public float pmultiTimer = -4;
+    [HideInInspector]public float pmultiTimer = -4;
+    [SerializeField] public bool accel = false;
+    [SerializeField] public float accelTime=7f;
+    [HideInInspector]public float accelTimer = -4;
     [HeaderAttribute("Energy Costs")]
-    [SerializeField] public float laserEn = 2f;
-    [SerializeField] public float laser2En = 4f;
-    [SerializeField] public float laser3En = 6f;
-    [SerializeField] public float phaserEn = 3f;
-    [SerializeField] public float hrocketEn = 5f;
-    [SerializeField] public float mlaserEn = 0.225f;
-    [SerializeField] public float lsaberEn = 0.11f;
-    [SerializeField] public float lclawsEn = 0.2f;
-    [SerializeField] public float shadowEn = 3.5f;
+    //Weapons
+    [SerializeField] public float laserEn = 0.3f;
+    [SerializeField] public float laser2En = 1.25f;
+    [SerializeField] public float laser3En = 2.5f;
+    [SerializeField] public float phaserEn = 1.5f;
+    [SerializeField] public float mlaserEn = 0.075f;
+    [SerializeField] public float lsaberEn = 0.375f;
+    [SerializeField] public float lclawsEn = 6.3f;
+    [SerializeField] public float shadowEn = 5f;
     [SerializeField] public float shadowBTEn = 10f;
-    [SerializeField] public float qrocketEn = 5.5f;
-    [SerializeField] public float procketEn = 0.24f;
-    [SerializeField] public float cbulletEn = 3f;
-    [SerializeField] public float energyBallGet = 6f;
+    [SerializeField] public float cbulletEn = 1.3f;
+    [SerializeField] public float plaserEn = 7f;
+    //Rockets
+    [SerializeField] public float hrocketEn = 0.2f;//2.6
+    [SerializeField] public float qrocketEn = 0.8f;//5.5
+    [SerializeField] public float procketEn = 0.86f;//0.26
+    [SerializeField] public float procketOh = 0.09f;
+    //Collectibles
+    [SerializeField] public float energyBallGet = 9f;
     [SerializeField] public float medkitEnergyGet = 26f;
-    [SerializeField] public float medkitUEnergyGet = 30f;
+    [SerializeField] public float medkitUEnergyGet = 40f;
     [SerializeField] public float medkitHpAmnt = 25f;
-    [SerializeField] public float medkitUHpAmnt = 58f;
-    [SerializeField] public float pwrupEnergyGet = 48f;
+    [SerializeField] public float medkitUHpAmnt = 62f;
+    [SerializeField] public float pwrupEnergyGet = 36f;
     [SerializeField] public float enForPwrupRefill = 25f;
-    [SerializeField] public float enPwrupDuplicate = 40f;
-    public float refillEnergyAmnt=140f;
+    [SerializeField] public float enPwrupDuplicate = 42f;
+    public float refillEnergyAmnt=110f;
     public int refillCostS=1;
     public int refillCostE=2;
     public float refillDelay=1.6f;
@@ -121,10 +140,10 @@ public class Player : MonoBehaviour{
     GameObject explosionVFX;
     public GameObject flareHitVFX;
     GameObject flareShootVFX;
-    public GameObject shadowShootVFX;
-    public GameObject gcloverVFX;
+    GameObject shadowShootVFX;
+    GameObject gcloverVFX;
     public GameObject gcloverOVFX;
-    public GameObject crystalExplosionVFX;
+    GameObject crystalExplosionVFX;
     #endregion
     #region//SFX
     /*
@@ -150,25 +169,25 @@ public class Player : MonoBehaviour{
     [HeaderAttribute("Others")]
     [SerializeField] GameObject gameOverCanvasPrefab;
     [SerializeField] GameObject shadowPrefab;
-    [SerializeField] float flareShootYY = 0.2f;
+    [SerializeField] const float flareShootYY = 0.2f;
     [SerializeField] public MeshRenderer bgSprite;
     int moveDir = 1;
     const float DCLICK_TIME = 0.2f;
     float lastClickTime;
     int dashDirX;
     int dashDirY;
-    public bool damaged = false;
-    public bool healed = false;
-    public bool shadowed = false;
-    public bool dashing = false;
-    public float shootTimer = 0f;
-    public float instantiateTime = 0.025f;
-    public float instantiateTimer = 0f;
+    [HideInInspector]public bool damaged = false;
+    [HideInInspector]public bool healed = false;
+    [HideInInspector]public bool shadowed = false;
+    [HideInInspector]public bool dashing = false;
+    [HideInInspector]public float shootTimer = 0f;
+    [HideInInspector]public float instantiateTime = 0.025f;
+    [HideInInspector]public float instantiateTimer = 0f;
     float lsaberEnTimer;
-    public Vector2 mousePos;
-    public float shipScale=1f;
-    public float dist;
-    public Vector2 velocity;
+    [HideInInspector]public Vector2 mousePos;
+    [HideInInspector]public float shipScale=1f;
+    [HideInInspector]public float dist;
+    [HideInInspector]public Vector2 velocity;
      float hPressedTime;
      float vPressedTime;
     public float mPressedTime;
@@ -178,7 +197,9 @@ public class Player : MonoBehaviour{
     public float timerEnRegen;
     [SerializeField] public float freqEnRegen=1f;
     [SerializeField] public float enRegenAmnt=2f;
+    [SerializeField] public float energyForRegen=10f;
     public float stayingTimer;
+    public float stayingTimerCore;
     public bool hpRegenEnabled;
     public float timerHpRegen;
     [SerializeField] public float freqHpRegen=1f;
@@ -241,6 +262,7 @@ public class Player : MonoBehaviour{
         qrocketPrefab=GameAssets.instance.Get("QRocket");
         procketPrefab=GameAssets.instance.Get("PRocket");
         cbulletPrefab=GameAssets.instance.Get("CBullet");
+        plaserPrefab=GameAssets.instance.Get("PLaser");
 
         explosionVFX=GameAssets.instance.GetVFX("Explosion");
         flareHitVFX=GameAssets.instance.GetVFX("FlareHit");
@@ -264,14 +286,27 @@ public class Player : MonoBehaviour{
         Die();
         CountTimeMovementPressed();
         RefillEnergy();
-        if(moveByMouse!=true){ MovePlayer(); }//followMouse.enabled = false; }
-        else{ MoveWithMouse(); }// followMouse.enabled = true; }
+        if(moveX!=false&&moveY!=false){
+            if(moveByMouse!=true){ MovePlayer(); }//followMouse.enabled = false; }
+            else{ MoveWithMouse(); }// followMouse.enabled = true; }
+        }
         shootTimer -= Time.deltaTime;
         instantiateTimer-=Time.deltaTime;
         velocity=rb.velocity;
-        if(moving==false){stayingTimer+=Time.deltaTime;timerHpRegen+=Time.deltaTime;}
-        if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;}
+        if(moving==false){stayingTimer+=Time.deltaTime;stayingTimerCore+=Time.deltaTime;timerHpRegen+=Time.deltaTime;}
+        if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;stayingTimerCore=0;}
         
+        if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
+        if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
+        if(overheatTimer>=overheatTimerMax&&overheated!=true){health-=overheatDmg;DMGPopUpHud(overheatDmg);damaged=true;AudioManager.instance.Play("Overheat");
+        overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
+        if(overheated==true&&overheatedTimer>0){overheatedTimer-=Time.deltaTime;
+            GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+            GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+            Destroy(flareL.gameObject, 0.04f);
+            Destroy(flareR.gameObject, 0.04f);
+            }
+        if(overheatedTimer<=0){overheated=false;}
         //Debug.Log(shootTimer);
         //Debug.LogWarning(shootCoroutine);
     }
@@ -364,7 +399,7 @@ public class Player : MonoBehaviour{
 
         float step = moveSpeedCurrent * Time.deltaTime;
         //if(FindObjectOfType<ShootButton>()!=null && FindObjectOfType<ShootButton>().pressed==false)transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
-        //else if(FindObjectsOfType<ShootButton>()==null){transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);}
+        //else if(FindObjectsOfType<ShootButton>()==null){transform.position = Vector2.MoveTowardqs(transform.position, mousePos*moveDir, step);}
         //if(dist>minMoveDist)
         transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
 
@@ -486,8 +521,9 @@ public class Player : MonoBehaviour{
 bool stopped=false;
     public IEnumerator ShootContinuously(){
         while (true){
-            if (Time.timeScale > 0.0001f){
-            if (energy>0){
+        if (Time.timeScale > 0.0001f){
+        if (energy>0){
+            if(overheated!=true){
                 //SetPrefabs();
                 if (powerup=="laser"){
                     GameObject laserL = GameAssets.instance.Make("Laser", new Vector2(transform.position.x - 0.35f, transform.position.y)) as GameObject;
@@ -517,8 +553,8 @@ bool stopped=false;
                     Destroy(flareR.gameObject, 0.3f);
                     laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    laserL2.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.5f, laserSpeed);
-                    laserR2.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.5f, laserSpeed);
+                    laserL2.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.55f, laserSpeed);
+                    laserR2.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.55f, laserSpeed);
                     laserL2.GetComponent<IntervalSound>().interval = 0.03f;
                     laserR2.GetComponent<IntervalSound>().interval = 0.03f;
                     laserL2.transform.eulerAngles=new Vector3(0,0,10f);
@@ -545,10 +581,10 @@ bool stopped=false;
                     Destroy(flareR.gameObject, 0.3f);
                     laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    laserL2.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.45f, laserSpeed);
-                    laserL3.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.55f, laserSpeed);
-                    laserR2.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.45f, laserSpeed);
-                    laserR3.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.55f, laserSpeed);
+                    laserL2.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.55f, laserSpeed);
+                    laserL3.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.65f, laserSpeed);
+                    laserR2.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.55f, laserSpeed);
+                    laserR3.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.65f, laserSpeed);
                     laserL2.GetComponent<IntervalSound>().interval = 0.03f;
                     laserL3.GetComponent<IntervalSound>().interval = 0.06f;
                     laserR2.GetComponent<IntervalSound>().interval = 0.03f;
@@ -602,9 +638,11 @@ bool stopped=false;
                     GameObject flareR = Instantiate(flareShootVFX, new Vector2(xxR, yyR - flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flareL.gameObject, 0.3f);
                     Destroy(flareR.gameObject, 0.3f);
+                    Recoil(7f,0.15f);
                         shootTimer = mlaserShootPeriod;
                         yield return new WaitForSeconds(mlaserShootPeriod);
                         //shootCoroutine=null;
+                //Rockets
                 }else if (powerup == "hrocket"){
                     var xx = transform.position.x - 0.35f;
                     if (UnityEngine.Random.Range(0f,1f)>0.5f){ xx = transform.position.x + 0.35f; }
@@ -612,36 +650,11 @@ bool stopped=false;
                     GameObject flare = Instantiate(flareShootVFX, new Vector2(xx, transform.position.y+flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flare.gameObject, 0.3f);
                     hrocket.GetComponent<Rigidbody2D>().velocity = new Vector2(0, hrocketSpeed);
-                    AddSubEnergy(hrocketEn,false);
+                    //AddSubEnergy(hrocketEn,false);
+                    Overheat(hrocketEn,true);
                         shootTimer = hrocketShootPeriod;
                         yield return new WaitForSeconds(hrocketShootPeriod);
                         //shootCoroutine=null;
-                }else if (powerup == "shadowbt")
-                {
-                    GameObject laserL = Instantiate(shadowBTPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserR = Instantiate(shadowBTPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject flareL = Instantiate(shadowShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    GameObject flareR = Instantiate(shadowShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flareL.gameObject, 0.3f);
-                    Destroy(flareR.gameObject, 0.3f);
-                    //laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
-                    //laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
-                    AddSubEnergy(shadowBTEn,false);
-                        shootTimer = shadowBTShootPeriod;
-                        yield return new WaitForSeconds(shadowBTShootPeriod);
-                        //shootCoroutine=null;
-                }else if(powerup=="lclawsA"){
-                        var enemy = FindClosestEnemy();
-                        if(enemy!=null){
-                            //AudioSource.PlayClipAtPoint(enemy.lsaberHitSFX, transform.position);
-                            GameObject clawsPart = Instantiate(lclawsVFX, enemy.transform.position, Quaternion.identity) as GameObject;
-                            Destroy(clawsPart, 0.15f);
-                            //enemy.health -= FindObjectOfType<DamageDealer>().GetDamageLCLaws();
-                        }else{ AudioManager.instance.Play("NoEnergy"); }
-                        AddSubEnergy(lclawsEn,false);
-                            shootTimer = 0.5f;
-                            yield return new WaitForSeconds(0.5f);
-                            //shootCoroutine=null;
                 }else if (powerup == "qrocket"){
                     GameObject hrocketL = Instantiate(qrocketPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject hrocketR = Instantiate(qrocketPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -651,7 +664,8 @@ bool stopped=false;
                     Destroy(flareR.gameObject, 0.3f);
                     hrocketL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
                     hrocketR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
-                    AddSubEnergy(qrocketEn,false);
+                    //AddSubEnergy(qrocketEn,false);
+                    Overheat(qrocketEn,true);
                         shootTimer = qrocketShootPeriod;
                         yield return new WaitForSeconds(qrocketShootPeriod);
                         //shootCoroutine=null;
@@ -668,9 +682,22 @@ bool stopped=false;
                         //AddSubEnergy(procketEn,false);
                     }
                         AddSubEnergy(procketEn*procketsBulletsAmmount,false);
+                        Overheat(procketOh*procketsBulletsAmmount,true);
                         //EnergyPopUpHUD(procketEn*procketsBulletsAmmount);
                         shootTimer = procketShootPeriod;
                         yield return new WaitForSeconds(procketShootPeriod);
+                        //shootCoroutine=null;
+                }else if(powerup=="lclawsA"){
+                    var enemy = FindClosestEnemy();
+                    if(enemy!=null){
+                        //AudioSource.PlayClipAtPoint(enemy.lsaberHitSFX, transform.position);
+                        GameObject clawsPart = Instantiate(lclawsVFX, enemy.transform.position, Quaternion.identity) as GameObject;
+                        Destroy(clawsPart, 0.15f);
+                        //enemy.health -= FindObjectOfType<DamageDealer>().GetDamageLCLaws();
+                    }else{ AudioManager.instance.Play("NoEnergy"); }
+                    AddSubEnergy(lclawsEn,false);
+                        shootTimer = 0.5f;
+                        yield return new WaitForSeconds(0.5f);
                         //shootCoroutine=null;
                 }else if (powerup=="cstream"){
                     var xx = transform.position.x - 0.35f;
@@ -684,11 +711,61 @@ bool stopped=false;
                         shootTimer = cbulletShootPeriod * 0.825f;
                         yield return new WaitForSeconds(cbulletShootPeriod);
                         //shootCoroutine=null;
-                }
+                }else if (powerup == "shadowbt"){
+                    GameObject laserL = Instantiate(shadowBTPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject laserR = Instantiate(shadowBTPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject flareL = Instantiate(shadowShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                    GameObject flareR = Instantiate(shadowShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                    Destroy(flareL.gameObject, 0.3f);
+                    Destroy(flareR.gameObject, 0.3f);
+                    //laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
+                    //laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
+                    AddSubEnergy(shadowBTEn,false);
+                        shootTimer = shadowBTShootPeriod;
+                        yield return new WaitForSeconds(shadowBTShootPeriod);
+                        //shootCoroutine=null;
+                }else if (powerup == "plaser"){
+                    float xx=0.2f;
+                    GameObject laserL = Instantiate(plaserPrefab, new Vector2(transform.position.x - 0.3f+xx, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject laserL2 = Instantiate(plaserPrefab, new Vector2(transform.position.x - 0.36f+xx, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject laserL3 = Instantiate(plaserPrefab, new Vector2(transform.position.x - 0.43f+xx, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject laserR = Instantiate(plaserPrefab, new Vector2(transform.position.x + 0.3f-xx, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject laserR2 = Instantiate(plaserPrefab, new Vector2(transform.position.x + 0.36f-xx, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject laserR3 = Instantiate(plaserPrefab, new Vector2(transform.position.x + 0.43f-xx, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                    GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                    Destroy(flareL.gameObject, 0.3f);
+                    Destroy(flareR.gameObject, 0.3f);
+                    laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, plaserSpeed);
+                    laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, plaserSpeed);
+                    laserL2.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.45f, plaserSpeed);
+                    laserL3.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.55f, plaserSpeed);
+                    laserR2.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.45f, plaserSpeed);
+                    laserR3.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.55f, plaserSpeed);
+                    laserL2.GetComponent<IntervalSound>().interval = 0.03f;
+                    laserL3.GetComponent<IntervalSound>().interval = 0.06f;
+                    laserR2.GetComponent<IntervalSound>().interval = 0.03f;
+                    laserR3.GetComponent<IntervalSound>().interval = 0.06f;
+                    laserL2.transform.eulerAngles = new Vector3(0, 0, 8f);
+                    laserL3.transform.eulerAngles = new Vector3(0, 0, 13f);
+                    laserR2.transform.eulerAngles = new Vector3(0, 0, -8f);
+                    laserR3.transform.eulerAngles = new Vector3(0, 0, -13f);
+                    AddSubEnergy(plaserEn,false);
+                    Recoil(10f,0.2f);
+                        shootTimer = plaserShootPeriod*0.75f;
+                        yield return new WaitForSeconds(plaserShootPeriod);
+                        //shootCoroutine=null;
+                }else {if(powerup!="lsaberA" && powerup!="lclawsA" &&powerup!="cstream"&&powerup!="shadowbt")/*if(losePwrupOutOfEn)*/powerup = powerupDefault; shootTimer = 1f; yield return new WaitForSeconds(1f); }
+            }/*if(overheatedTimer==-4){
+                //yield break;}
+                //if(powerup!="lclawsA"&&powerup!="cstream"&&powerup!="shadowbt"){}
+                
+                else if(powerup!="lsaberA" && powerup!="lclawsA" &&powerup!="cstream"&&powerup!="shadowbt"){yield break;}
+            }*/
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
-                else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup = powerupDefault; shootTimer = 1f; yield return new WaitForSeconds(1f); }
-            }else{ energy = 0; AudioManager.instance.Play("NoEnergy"); shootTimer = 0f; yield return new WaitForSeconds(1f); }
-            }
+                //else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup = powerupDefault; shootTimer = 1f; yield return new WaitForSeconds(1f); }
+        }else{ energy = 0; AudioManager.instance.Play("NoEnergy"); shootTimer = 0f; yield return new WaitForSeconds(1f); }
+        }
         }
     }
     /*void SetShootTimer(){
@@ -775,8 +852,8 @@ bool stopped=false;
         if (shadow == true) { shadowTimer -= Time.deltaTime; }
         if (shadowTimer <= 0 && shadowTimer > -4) { ResetStatus("shadow"); AudioManager.instance.Play("PowerupOff"); }
         if (shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
-        else{ dashTime = startDashTime; rb.velocity = Vector2.zero; GetComponent<BackflameEffect>().enabled=true; }
-        if (dashTime <= 0) { rb.velocity = Vector2.zero; dashing = false; dashTime=-4;}
+        else{ dashTime = startDashTime; GetComponent<BackflameEffect>().enabled=true; }
+        if (dashTime <= 0&&dashTime!=-4) { rb.velocity = Vector2.zero; dashing = false; dashTime=-4;}
         else{ dashTime -= Time.deltaTime; }
         if(energy<=0){ shadow = false; }
 
@@ -827,7 +904,7 @@ bool stopped=false;
         if(scalerTimer <=0 && scalerTimer>-4){ResetStatus("scaler");}
         transform.localScale=new Vector3(shipScale,shipScale,1);
         
-        if(matrix==true){
+        if(matrix==true&&accel==false){
             if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
                 matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
@@ -851,6 +928,50 @@ bool stopped=false;
 
         if(pmultiTimer>0){pmultiTimer-=Time.deltaTime;}
         if(pmultiTimer <=0 && pmultiTimer>-4){gameSession.scoreMulti=1f; ResetStatus("pmulti");}
+
+        if(accel==true&&matrix==false){
+            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
+                accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
+                //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
+                //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
+                if(moveByMouse==true && dist>0.35){
+                    gameSession.gameSpeed=dist+(1-0.35f);
+                }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                    
+                    //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,1f,2f);
+                }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,1f,2f);
+                }else{
+                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=1f;
+                }
+            }else{
+                gameSession.gameSpeed=0f;
+            }
+        }
+        if(accelTimer <=0 && accelTimer>-4){gameSession.gameSpeed=1f; ResetStatus("accel");}
+
+        if(accel==true&&matrix==true){
+            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
+                accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
+                matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
+                //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
+                //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
+                if(moveByMouse==true){
+                    gameSession.gameSpeed=dist;
+                }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                    
+                    //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,2f);
+                }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,2f);
+                }else{
+                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=1f;
+                }
+            }else{
+                gameSession.gameSpeed=0f;
+            }
+        }
     }
     
     private void Shadow(){
@@ -865,7 +986,17 @@ bool stopped=false;
     }
     void Regen(){
         if(timerHpRegen>=freqHpRegen && hpRegenEnabled==true){health+=hpRegenAmnt;timerHpRegen=0;HPPopUpHUD(hpRegenAmnt);}
-        if(timerEnRegen>=freqEnRegen && enRegenEnabled==true){energy+=enRegenAmnt;timerEnRegen=0;EnergyPopUpHUDPlus(enRegenAmnt);}
+        if(timerEnRegen>=freqEnRegen && enRegenEnabled==true && energy>energyForRegen){energy+=enRegenAmnt;timerEnRegen=0;EnergyPopUpHUDPlus(enRegenAmnt);}
+    }
+    void Recoil(float strength, float time){
+        //rb.velocity = Vector2.down*strength;
+        //Debug.Log(rb.velocity);
+        StartCoroutine(RecoilI(strength,time));
+    }
+    IEnumerator RecoilI(float strength,float time){
+        rb.velocity = Vector2.down*strength;
+        yield return new WaitForSeconds(time);
+        rb.velocity=Vector2.zero;
     }
 #endregion
 
@@ -970,7 +1101,6 @@ bool stopped=false;
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+en.ToString();
         energyUsedCount+=en;
-        FindObjectOfType<DisruptersSpawner>().EnergyCountVortexWheel+=en;
     }public void EnergyPopUpHUDPlus(float en){
         GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
         enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
@@ -1002,23 +1132,39 @@ bool stopped=false;
         if(status3==status){status3="";}
         ResortStatuses();
     }void SortStatuses(){
-        if(status1==""){status1=statusc;statusc="";}
-        if(status2=="" && status1!=""){status2=statusc;statusc="";}
-        if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
+        if(status1!=statusc&&status2!=statusc&&status3!=statusc){
+            if(status1==""){status1=statusc;statusc="";}
+            if(status2=="" && status1!=""){status2=statusc;statusc="";}
+            if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
+        }
     }void ResortStatuses(){
         if(status1=="" && status2!=""){status1=status2;status2="";}
         if(status2=="" && status3!=""){status2=status3;status3="";}
         //if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
     }
-    void AddSubEnergy(float value,bool add){
+
+
+    public void AddSubEnergy(float value,bool add){
         if(inverter!=true){
-            if(add){energy+=value;EnergyPopUpHUDPlus(value);}
-            else{energy-=value;EnergyPopUpHUD(value);}
+            if(add){energy+=value;EnergyPopUpHUDPlus(value);FindObjectOfType<DisruptersSpawner>().EnergyCountVortexWheel+=value;}
+            else{energy-=value;EnergyPopUpHUD(value);FindObjectOfType<DisruptersSpawner>().EnergyCountVortexWheel-=value;}
         }else{
-            if(add){energy-=value;EnergyPopUpHUD(value);}
-            else{energy+=value;EnergyPopUpHUDPlus(value);}
+            if(add){energy-=value;EnergyPopUpHUD(value);FindObjectOfType<DisruptersSpawner>().EnergyCountVortexWheel-=value;}
+            else{energy+=value;EnergyPopUpHUDPlus(value);FindObjectOfType<DisruptersSpawner>().EnergyCountVortexWheel+=value;}
+        }
+    }public void Overheat(float value,bool add){
+        if(overheated!=true){
+            if(inverter!=true){
+                if(add){if(overheatTimer==-4){overheatTimer=0;}overheatTimer+=value;overheatCdTimer=overheatCooldown;}
+                else{overheatTimer-=value;}
+            }else{
+                if(add){overheatTimer-=value;overheatCdTimer=overheatCooldown;}
+                else{if(overheatTimer==-4){overheatTimer=0;}overheatTimer+=value;}
+            }
         }
     }
+
+
     public Enemy FindClosestEnemy(){
         KdTree<Enemy> Enemies = new KdTree<Enemy>();
         Enemy[] EnemiesArr;

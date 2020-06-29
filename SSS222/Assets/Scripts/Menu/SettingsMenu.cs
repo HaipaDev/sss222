@@ -78,6 +78,7 @@ public class SettingsMenu : MonoBehaviour{
         if(isPostprocessed==false && FindObjectOfType<PostProcessVolume>()!=null){Destroy(FindObjectOfType<PostProcessVolume>());}
     }public void SetOnScreenButtons (bool onscbuttons){
         scbuttons = onscbuttons;
+        if(onscbuttons){Debug.Log(scbuttons);scbuttons=true;}
     }
     public void SetSteering(bool isMovingByMouse){
         moveByMouse = isMovingByMouse;

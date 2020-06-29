@@ -214,6 +214,7 @@ public class DisruptersSpawner : MonoBehaviour{
     // Update is called once per frame
     void Update()
     {
+        Mathf.Clamp(EnergyCountVortexWheel,0,mEnergyCountVortexWheel);
         if(Time.timeScale>0.0001f){
             if(spawnLeech==true){
                 if(timeSpawnsLeech>-0.01f){timeSpawnsLeech -= Time.deltaTime; }

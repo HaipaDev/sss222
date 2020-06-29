@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: 7PRockets
   m_EditorClassIdentifier: 
   itemName: Plasma Rockets
-  pwrupName: prockets
+  pwrupName: procket
   ID: 7
-  price: 7
+  price: -1
+  priceS: 36
+  priceE: 45
   sprite: {fileID: 21300000, guid: bb6c28deb89eb754d8a9803f346b36ed, type: 3}
+  scaleX: 1
+  scaleY: 1

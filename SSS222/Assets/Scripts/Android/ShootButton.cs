@@ -20,10 +20,12 @@ public class ShootButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 //timer=FindObjectOfType<Player>().shootTimer;
                 timer=cooldown;
             }else{
-                FindObjectOfType<Player>().ShootButton(false);
+                //
                 timerHold-=Time.deltaTime;
                 if(timerHold>timeHold && timer>0){timer=0;}
             }
+        }else{
+            FindObjectOfType<Player>().ShootButton(false);
         }
         //if (Input.GetMouseButtonUp(0)){FindObjectOfType<Player>().ShootButton(false);pressed=false;}
     }

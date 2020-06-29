@@ -32,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5649215481239408911}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0510743, y: -1.3108506, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -52,6 +52,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemList:
-  - name: Amor PowerUp
+  - name: Armor PowerUp
     lootItem: {fileID: -6559572297083776647, guid: b68538418da2b5943be6fd26f9e0ddec,
       type: 3}
     dropChance: 5
@@ -216,7 +217,7 @@ MonoBehaviour:
       type: 3}
     dropChance: 8
   itemsPercentage:
-  - name: Amor PowerUp - 4.69% - 5/101.5
+  - name: Armor PowerUp - 4.69% - 5/101.5
   - name: ArmorU Powerup - 6.57% - 7/99.5
   - name: Laser2 Powerup - 6.57% - 7/99.5
   - name: Laser3 PowerUp - 7.51% - 8/98.5
@@ -234,6 +235,7 @@ MonoBehaviour:
   - name: Matrix Powerup - 6.57% - 7/99.5
   - name: LClaws Powerup - 7.51% - 8/98.5
   sum: 106.5
+  restart: 0
 --- !u!114 &6905334083320018934
 MonoBehaviour:
   m_ObjectHideFlags: 0

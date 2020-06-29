@@ -29,7 +29,8 @@ public class EnCombatant : MonoBehaviour{
     Rigidbody2D rb;
     //GameSession gameSession;
     void Start(){
-        if(FindObjectOfType<Tag_EnSaberWeapon>()==null){saber = Instantiate(saberPrefab,transform.position,Quaternion.identity);}//saber.GetComponent<FollowStrict>().targetObj=this.gameObject;}//saber.GetComponent<FollowOneObject>().targetObj=this.gameObject;}
+        //if(FindObjectOfType<Tag_EnSaberWeapon>()==null){saber = Instantiate(saberPrefab,transform.position,Quaternion.identity);}//saber.GetComponent<FollowStrict>().targetObj=this.gameObject;}//saber.GetComponent<FollowOneObject>().targetObj=this.gameObject;}
+        saber=gameObject.transform.GetChild(0).gameObject;
         player = FindObjectOfType<Player>();
         //enemy = GetComponent<Enemy>();
         rb = GetComponent<Rigidbody2D>();

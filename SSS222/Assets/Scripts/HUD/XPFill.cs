@@ -8,20 +8,24 @@ public class XPFill : MonoBehaviour{
     [SerializeField] Sprite fillSprite;
     [SerializeField] GameObject particlePrefab;
     public bool changed;
+    public bool shop;
     [SerializeField] public string valueName;
     [SerializeField] public int valueReq;
     public int value;
     Image img;
     UpgradeMenu upgradeMenu;
+    Shop shopMenu;
     //Shake shake;
     void Start(){
         img=GetComponent<Image>();
         upgradeMenu=FindObjectOfType<UpgradeMenu>();
+        if(shop==true)shopMenu=FindObjectOfType<Shop>();
         //shake = GameObject.FindObjectOfType<Shake>().GetComponent<Shake>();
     }
 
     void Update(){
-        value=(int)upgradeMenu.GetType().GetField(valueName).GetValue(upgradeMenu);
+        if(shop!=true)value=(int)upgradeMenu.GetType().GetField(valueName).GetValue(upgradeMenu);
+        else value=(int)shopMenu.GetType().GetField(valueName).GetValue(shopMenu);
         if(value>=valueReq){
             if(changed==false){
                 img.sprite=fillSprite;

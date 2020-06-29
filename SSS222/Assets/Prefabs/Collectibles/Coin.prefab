@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1529301144}
   - component: {fileID: 3676386598028052292}
   - component: {fileID: 972416664606367055}
+  - component: {fileID: 7333537673251837494}
   m_Layer: 9
   m_Name: Coin
   m_TagString: Powerups
@@ -208,3 +209,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
     type: 3}
+--- !u!114 &7333537673251837494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056705403108089519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a8a043bf0580d84eb18491853285d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amnt: 0
+  amntS: 1
+  amntE: 12

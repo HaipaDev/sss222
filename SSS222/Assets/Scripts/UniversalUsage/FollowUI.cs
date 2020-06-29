@@ -5,6 +5,7 @@ using UnityEngine;
 public class FollowUI : MonoBehaviour{
     Vector2 targetPos;
     //new Vector2 selfPos;
+    //[SerializeField] GameObject targetOne;
     [SerializeField] GameObject target;
     [SerializeField] string targetTag;
     //public float dist;
@@ -13,14 +14,16 @@ public class FollowUI : MonoBehaviour{
     //[SerializeField] Quaternion rotation;
 
     //Player player;
-    GameObject targetObj;
+    public GameObject targetObj;
     //Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        if(target!=null){targetObj = GameObject.FindGameObjectWithTag(target.tag); }
-        else{targetObj = GameObject.FindGameObjectWithTag(targetTag); }
+        if(targetObj==null){
+            if(target!=null){targetObj = GameObject.FindGameObjectWithTag(target.tag); }
+            else{if(targetTag!="")targetObj = GameObject.FindGameObjectWithTag(targetTag); }
+        }
         //rb = GetComponent<Rigidbody2D>();
     }
 

@@ -46,6 +46,7 @@
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
      <Compile Include="Assets\Scripts\Android\ShootButton.cs" />
+     <Compile Include="Assets\Scripts\CargoShip.cs" />
      <Compile Include="Assets\Scripts\Core\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Core\DamageDealer.cs" />
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
@@ -104,6 +105,7 @@
      <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
      <Compile Include="Assets\Scripts\HUD\XPBars.cs" />
      <Compile Include="Assets\Scripts\HUD\XPFill.cs" />
+     <Compile Include="Assets\Scripts\LCrystalDrop.cs" />
      <Compile Include="Assets\Scripts\Menu\ButtonInterval.cs" />
      <Compile Include="Assets\Scripts\Menu\Inventory.cs" />
      <Compile Include="Assets\Scripts\Menu\SettingsMenu.cs" />
@@ -135,6 +137,7 @@
      <Compile Include="Assets\Scripts\UniversalUsage\AnimOff.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\AnimationOn.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\CreateAsChild.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\DamageOverDist.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\DamageParticle.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\DestroyCreateOnCall.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\DestroyOnUpdate.cs" />

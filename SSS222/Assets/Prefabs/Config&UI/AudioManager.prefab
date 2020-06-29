@@ -397,3 +397,39 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: Overheat
+    clip: {fileID: 8300000, guid: 5f725a352fd458c4e9b1a86d2a531e8b, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: LvlUp2
+    clip: {fileID: 8300000, guid: e329319501a448643bb4ef6394bb7da3, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: CargoHit
+    clip: {fileID: 8300000, guid: a18b151904914894d8ca0c87023051ad, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 0.15
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: PLaserHit
+    clip: {fileID: 8300000, guid: 5816058e1691f8e418f2a2be1e219e15, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

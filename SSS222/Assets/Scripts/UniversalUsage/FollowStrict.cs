@@ -19,8 +19,10 @@ public class FollowStrict : MonoBehaviour{
     // Start is called before the first frame update
     void Start()
     {
-        if(target!=null){if(GameObject.Find(target.name)!=null){targetObj = GameObject.Find(target.name);} else{targetObj=GameObject.Find(target.name+"(Clone)");} }
-        else{targetObj = GameObject.FindGameObjectWithTag(targetTag); }
+        if(targetObj==null){
+            if(target!=null){if(GameObject.Find(target.name)!=null){targetObj = GameObject.Find(target.name);} else{targetObj=GameObject.Find(target.name+"(Clone)");} }
+            else{if(targetTag!="")targetObj = GameObject.FindGameObjectWithTag(targetTag); }
+        }
         //rb = GetComponent<Rigidbody2D>();
     }
 
