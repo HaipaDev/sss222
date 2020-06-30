@@ -45,6 +45,8 @@
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
+     <Compile Include="Assets\LvlTree.cs" />
+     <Compile Include="Assets\LvlTreeList.cs" />
      <Compile Include="Assets\Scripts\Android\ShootButton.cs" />
      <Compile Include="Assets\Scripts\CargoShip.cs" />
      <Compile Include="Assets\Scripts\Core\AudioManager.cs" />
@@ -124,8 +126,10 @@
      <Compile Include="Assets\Scripts\Shaders\SimpleBlur.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\DisruptersSpawner.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\EnemySpawnerOld.cs" />
+     <Compile Include="Assets\Scripts\SpanwersEvents\LootTablePowerups.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\LootTableShop.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\LootTableWaves.cs" />
+     <Compile Include="Assets\Scripts\SpanwersEvents\PowerupItem.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\PowerupWeights.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\PowerupsSpawner.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\Shop.cs" />

@@ -38,6 +38,7 @@ public class Shop : MonoBehaviour{
     void Start(){
         lootTable=GetComponent<LootTableShop>();
         SetSlots();
+        Resume();
         //maxID = shopSlotIDs.Count;
         /*slot1 = slotObj[0].GetComponent<ShopSlot>();
         slot2 = slotObj[1].GetComponent<ShopSlot>();

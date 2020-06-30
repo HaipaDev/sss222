@@ -6,9 +6,11 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class UpgradeMenu : MonoBehaviour{
+    public static UpgradeMenu instance;
     public static bool UpgradeMenuIsOpen = false;
     public GameObject upgradeMenuUI;
     public GameObject upgradeMenu2UI;
+    public GameObject lvltreeUI;
     public GameObject statsMenu;
     public GameObject skillsMenu;
     public GameObject skills1Menu;
@@ -66,9 +68,11 @@ public class UpgradeMenu : MonoBehaviour{
     int lvlcr;
 
     void Start(){
+        instance=this;
         gameSession = FindObjectOfType<GameSession>();
         player = FindObjectOfType<Player>();
         pskills = FindObjectOfType<PlayerSkills>();
+        Resume();
     }
     void Update(){
         if(gameSession==null)gameSession = FindObjectOfType<GameSession>();
@@ -87,6 +91,7 @@ public class UpgradeMenu : MonoBehaviour{
     public void Resume(){
         upgradeMenuUI.SetActive(false);
         upgradeMenu2UI.SetActive(false);
+        lvltreeUI.SetActive(false);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         gameSession.gameSpeed = prevGameSpeed;
         UpgradeMenuIsOpen = false;
@@ -108,7 +113,7 @@ public class UpgradeMenu : MonoBehaviour{
         //skillsMenu.SetActive(false);
         if(skillsMenu.activeSelf!=true)statsMenu.SetActive(true);
     }
-    public void OpenSkills(){upgradeMenu2UI.SetActive(true);//upgradeMenuUI.SetActive(false);
+    public void OpenSkills(){//upgradeMenuUI.SetActive(false);
         //statsMenu.SetActive(false);
         if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
         if(skills1Menu.activeSelf==false&&skills2Menu.activeSelf==false){skills1Menu.SetActive(true);}
@@ -121,10 +126,14 @@ public class UpgradeMenu : MonoBehaviour{
         if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
         if(skills1Menu.activeSelf==true){skills2Menu.SetActive(true);skills1Menu.SetActive(false);}
         else if(skills2Menu.activeSelf==true&&skills1Menu.activeSelf==false){skills1Menu.SetActive(true);skills2Menu.SetActive(false);}
+    }public void OpenLvlTree(){
+        upgradeMenuUI.SetActive(false);
+        lvltreeUI.SetActive(true);
     }
     public void Back(){
         statsMenu.SetActive(false);skillsMenu.SetActive(false);
-        upgradeMenu2UI.SetActive(false);upgradeMenuUI.SetActive(true);
+        upgradeMenu2UI.SetActive(false);lvltreeUI.SetActive(false);
+        upgradeMenuUI.SetActive(true);
     }
 
     public void UnlockSkillUni(int ID, ref int value,int number,int cost){

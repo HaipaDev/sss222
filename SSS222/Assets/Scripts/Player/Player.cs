@@ -209,6 +209,7 @@ public class Player : MonoBehaviour{
     PlayerSkills pskills;
     GameSession gameSession;
     SaveSerial saveSerial;
+    Shake shake;
     public Joystick joystick;
     //Settings settings;
     IEnumerator shootCoroutine;
@@ -235,6 +236,7 @@ public class Player : MonoBehaviour{
         pskills=GetComponent<PlayerSkills>();
         gameSession=FindObjectOfType<GameSession>();
         saveSerial = FindObjectOfType<SaveSerial>();
+        shake = GameObject.FindObjectOfType<Shake>();
         joystick=FindObjectOfType<FloatingJoystick>();
         //settings = FindObjectOfType<Settings>();
         //followMouse = GetComponent<FollowMouse>();
@@ -994,6 +996,7 @@ bool stopped=false;
         StartCoroutine(RecoilI(strength,time));
     }
     IEnumerator RecoilI(float strength,float time){
+        shake.CamShake(0.1f,1/(time*4));
         rb.velocity = Vector2.down*strength;
         yield return new WaitForSeconds(time);
         rb.velocity=Vector2.zero;

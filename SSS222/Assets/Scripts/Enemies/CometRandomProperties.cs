@@ -36,7 +36,7 @@ public class CometRandomProperties : MonoBehaviour{
         if(chance < lunarCometChance){
             spriteIndex = Random.Range(0,spritesLunar.Length); spriteRenderer.sprite = spritesLunar[spriteIndex];
             bFlame.part = lunarPart;
-            var sizeA = Random.Range(1.9f, 2.55f);
+            var sizeA = Random.Range(0.88f, 1.55f);
             transform.localScale = new Vector2(sizeA, sizeA);
 
             enemy.health *= lunarHealthMulti;
