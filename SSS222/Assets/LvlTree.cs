@@ -14,6 +14,7 @@ public class LvlTree : MonoBehaviour{
     [SerializeField] UnityEngine.Object[] powerups;
     [SerializeField] GameObject[] powerupsItems;
     [SerializeField] List<int> levels;
+    int maxHSlots=13;
     void Awake(){
         for(var i=0; i<levels.Count; i++){
             Array.Resize(ref lists,levels.Count);
@@ -26,10 +27,27 @@ public class LvlTree : MonoBehaviour{
             foreach(PowerupItem powerup in powerups){
                 p++;
                 if(levels[i]==powerup.levelReq){
+                    //for(var a=0;a<20;a++){//test make 20x more
                     GameObject go2=Instantiate(gridElement,go.transform.GetChild(0));
                     go2.name=powerup.name;
                     go2.GetComponent<Image>().sprite=powerupsItems[p].GetComponent<SpriteRenderer>().sprite;
                     go.GetComponent<LvlTreeList>().elements.Add(go2);
+                    //}
+                    #region LvlTreeList AutoScale
+                    /*
+                    //}
+                    //if(go.GetComponent<LvlTreeList>().elements.Count>maxHSlots){
+                    //for(var lp=0;lp<4;lp++){
+                    //for(var ll=0;ll<maxHSlots;ll++){
+                        var l=1;//20>13 l=1+1=2 // 40>13 l=3+1
+                        if(go.GetComponent<LvlTreeList>().elements.Count>maxHSlots){l=(int)System.Math.Truncate((decimal)go.GetComponent<LvlTreeList>().elements.Count/maxHSlots)+1;}
+                        RectTransform rt = go.GetComponent<RectTransform>();
+                        rt.sizeDelta = new Vector2(rt.sizeDelta.x, rt.sizeDelta.y*l);
+                    //}
+                    //}
+                    //}
+                    */
+                    #endregion
                 }
             }
             lists[i]=go;

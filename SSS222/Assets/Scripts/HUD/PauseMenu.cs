@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour{
     //Shop shop;
     void Start(){
         gameSession = FindObjectOfType<GameSession>();
+        Resume();
         //shop=FindObjectOfType<Shop>();
     }
     void Update(){
