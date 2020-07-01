@@ -45,7 +45,7 @@ public class LootTablePowerups : MonoBehaviour{
         SumUp();
     }
     void Update(){
-        //currentLvl=UpgradeMenu.instance.total_UpgradesLvl;
+        currentLvl=UpgradeMenu.instance.total_UpgradesLvl;
         SumUpAfter();
     }
     public PowerupItem GetItem(){
@@ -94,7 +94,13 @@ public class LootTablePowerups : MonoBehaviour{
                 //itemsPercentage.Join();
                 //ItemPercentage itemsPercentage= new ItemPercentage();
                 //itemsPercentage[i].itemPercentage=value;
-                itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
+                string r="";
+                if(entry.rarity==rarityPowerup.Legendary){}r="|L";
+                if(entry.rarity==rarityPowerup.Rare){r="|R";}
+                if(entry.rarity==rarityPowerup.Common){r="c";}
+                
+                
+                itemsPercentage[i].name=entry.name+"("+entry.levelReq+r+")"+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
                 //foreach(ItemPercentage item in itemsPercentage){item.name=entry.name;item.itemPercentage=value;}
             //}
             //}

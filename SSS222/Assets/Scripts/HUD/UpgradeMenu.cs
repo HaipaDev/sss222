@@ -109,11 +109,11 @@ public class UpgradeMenu : MonoBehaviour{
 
     public void PreviousGameSpeed(){gameSession.gameSpeed = prevGameSpeed;}
 
-    public void OpenStats(){upgradeMenu2UI.SetActive(true);//upgradeMenuUI.SetActive(false);
+    public void OpenStats(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
         //skillsMenu.SetActive(false);
         if(skillsMenu.activeSelf!=true)statsMenu.SetActive(true);
     }
-    public void OpenSkills(){//upgradeMenuUI.SetActive(false);
+    public void OpenSkills(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
         //statsMenu.SetActive(false);
         if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
         if(skills1Menu.activeSelf==false&&skills2Menu.activeSelf==false){skills1Menu.SetActive(true);}

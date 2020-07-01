@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
+  m_Name: MatrixPowerup
+  m_EditorClassIdentifier: 
+  name: Matrix
+  item: {fileID: 4548736405339070879, guid: c430f5cd45eed4947ad8424c9ab96449, type: 3}
+  dropChance: 4
+  rarity: 0
+  levelReq: 1

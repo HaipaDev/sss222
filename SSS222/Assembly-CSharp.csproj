@@ -45,8 +45,6 @@
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
-     <Compile Include="Assets\LvlTree.cs" />
-     <Compile Include="Assets\LvlTreeList.cs" />
      <Compile Include="Assets\Scripts\Android\ShootButton.cs" />
      <Compile Include="Assets\Scripts\CargoShip.cs" />
      <Compile Include="Assets\Scripts\Core\AudioManager.cs" />
@@ -108,6 +106,8 @@
      <Compile Include="Assets\Scripts\HUD\XPBars.cs" />
      <Compile Include="Assets\Scripts\HUD\XPFill.cs" />
      <Compile Include="Assets\Scripts\LCrystalDrop.cs" />
+     <Compile Include="Assets\Scripts\LvlTree.cs" />
+     <Compile Include="Assets\Scripts\LvlTreeList.cs" />
      <Compile Include="Assets\Scripts\Menu\ButtonInterval.cs" />
      <Compile Include="Assets\Scripts\Menu\Inventory.cs" />
      <Compile Include="Assets\Scripts\Menu\SettingsMenu.cs" />

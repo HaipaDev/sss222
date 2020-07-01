@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
+  m_Name: FlipPowerup
+  m_EditorClassIdentifier: 
+  name: Flip
+  item: {fileID: 4548736405339070879, guid: 5924af7ffd96c8147b6d83568c56580e, type: 3}
+  dropChance: 6
+  rarity: 0
+  levelReq: 0
