@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PowerupDisplay : MonoBehaviour{
     Player player;
     string pwrup;
-    SpriteRenderer spr;
-    [SerializeField] int number;
+    Image spr;
+    [SerializeField] public int number;
     float value;
     [SerializeField] bool powerups = true;
     [SerializeField] GameObject textObj;
@@ -41,21 +42,29 @@ public class PowerupDisplay : MonoBehaviour{
 
 
     Color color;
+    Color color2;
     Sprite sprite;
+    Image bg;
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<Player>();
         pwrup = player.powerup;
-        spr = GetComponent<SpriteRenderer>();
+        spr = GetComponent<Image>();
+        if(powerups!=true){
+        if(textObj!=null)TMP=textObj.GetComponent<TMPro.TextMeshProUGUI>();
+        else{textObj=transform.GetComponentInChildren<TMPro.TextMeshProUGUI>().gameObject;TMP=textObj.GetComponent<TMPro.TextMeshProUGUI>();}
+        bg=transform.GetChild(0).GetComponent<Image>();
+        }
         color = spr.color;
-        if (textObj!=null)TMP=textObj.GetComponent<TMPro.TextMeshProUGUI>();
+        if(bg!=null)color2 = bg.color;
     }
 
     // Update is called once per frame
     void Update()
     {
         spr.color = color;
+        if(bg!=null)bg.color = color2;
 
         if (powerups==true){
             if(player!=null){
@@ -81,22 +90,28 @@ public class PowerupDisplay : MonoBehaviour{
                 else { spr.sprite = laserSprite; }*/
             }
         }else{
-            if(number==1){state=player.status1;}
+            if(player.statuses.Count>number){if(player.statuses[number]!=""){state=player.statuses[number];}else state="";
+            }else state="";
+            /*if(number==1){state=player.status1;}
             if(number==2){state=player.status2;}
-            if(number==3){state=player.status3;}
+            if(number==3){state=player.status3;}*/
             //var s=this.GetType().GetField(state+"Sprite").SetValue(this,false);
             //spr.sprite=s;
             if (state == "" || state == null){
-                color.a = 0f;
-                TMP.text = "";
+                Destroy(gameObject);
+                /*color.a = 0f;
+                color2.a = 0f;
+                TMP.text = "";*/
             }else{
                 color.a = 1f;
+                color2.a = 130/255f;
                 /*var sprr=this.GetType().GetField(state+"Sprite").GetValue(this);
                 this.GetType().GetField("sprite").SetValue(this,sprr);
                 spr.sprite=sprite;*/
                 spr.sprite=GameAssets.instance.Spr(state+"Pwrup");
                 var timer=player.GetType().GetField(state+"Timer").GetValue(player);
-                value=(float)System.Math.Round((float)timer, 1);
+                if((float)timer<10f)value=(float)System.Math.Round((float)timer, 1);
+                else{value=(float)Mathf.RoundToInt((float)timer);}
                 //var value=System.Math.Round(timer, 1);
 
                 if (value <= -1) { value = 0; }

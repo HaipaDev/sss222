@@ -446,12 +446,12 @@ GameObject:
   - component: {fileID: 1612795732}
   - component: {fileID: 1612795731}
   m_Layer: 0
-  m_Name: State Display3
+  m_Name: State Display2
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1612795730
 Transform:
   m_ObjectHideFlags: 0
@@ -528,30 +528,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025fcca457df8f64ea416b16e9fc9acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  number: 3
+  number: 2
   powerups: 0
   textObj: {fileID: 527702708902214227}
   state: 
-  laserSprite: {fileID: 21300000, guid: 21535f4e423e0194a829b85e44f114e6, type: 3}
-  laser2Sprite: {fileID: 21300000, guid: 4543454d50bcc2f4c95426146e30e17d, type: 3}
-  laser3Sprite: {fileID: 21300000, guid: 40273a285fbc90640907afae766f3be3, type: 3}
-  mlaserSprite: {fileID: 21300000, guid: 85c5aff371e073c47b08b82ad1fcd93e, type: 3}
-  lsaberSprite: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
-  hrocketsSprite: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
-  phaserSprite: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
-  shadowbtSprite: {fileID: 21300000, guid: 692a8ad24f832a547a376f4d7a93d022, type: 3}
-  lclawsSprite: {fileID: 21300000, guid: d085fee23f98a5d418173c6592b41386, type: 3}
-  qrocketsSprite: {fileID: 21300000, guid: fabeb4d4156d3a84aa62d1c293181fdd, type: 3}
-  procketsSprite: {fileID: 21300000, guid: bb6c28deb89eb754d8a9803f346b36ed, type: 3}
-  cstreamSprite: {fileID: 21300000, guid: d17bb3acdc1c8d244981169a1e5d576a, type: 3}
-  flipSprite: {fileID: 21300000, guid: d71f113542d501e44ab50fae24095acb, type: 3}
-  gcloverSprite: {fileID: 21300000, guid: 63a2647ea2885b44bab05e7cb94c0c90, type: 3}
-  shadowSprite: {fileID: 21300000, guid: 7d2dfbf4cfecaea469f79f936b00f154, type: 3}
-  inverterSprite: {fileID: 21300000, guid: ed66cb09e656ff247a82fdb938609f5c, type: 3}
-  magnetSprite: {fileID: 21300000, guid: e8f4be55fc1a9b24ab5c29d18aa10df3, type: 3}
-  scalerSprite: {fileID: 21300000, guid: 440d31dada2aa9b48ab82322529da17c, type: 3}
-  matrixSprite: {fileID: 21300000, guid: 64ad941f72f49634fa97d0f2a0a476bd, type: 3}
-  pmultiSprite: {fileID: 21300000, guid: 7e9e5fcb143743546b7fedea72703174, type: 3}
 --- !u!1 &1905528757
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,12 +544,12 @@ GameObject:
   - component: {fileID: 1905528760}
   - component: {fileID: 1905528759}
   m_Layer: 0
-  m_Name: State Display2
+  m_Name: State Display1
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1905528758
 Transform:
   m_ObjectHideFlags: 0
@@ -646,30 +626,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025fcca457df8f64ea416b16e9fc9acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  number: 2
+  number: 1
   powerups: 0
   textObj: {fileID: 527702709054571349}
   state: 
-  laserSprite: {fileID: 21300000, guid: 21535f4e423e0194a829b85e44f114e6, type: 3}
-  laser2Sprite: {fileID: 21300000, guid: 4543454d50bcc2f4c95426146e30e17d, type: 3}
-  laser3Sprite: {fileID: 21300000, guid: 40273a285fbc90640907afae766f3be3, type: 3}
-  mlaserSprite: {fileID: 21300000, guid: 85c5aff371e073c47b08b82ad1fcd93e, type: 3}
-  lsaberSprite: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
-  hrocketsSprite: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
-  phaserSprite: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
-  shadowbtSprite: {fileID: 21300000, guid: 692a8ad24f832a547a376f4d7a93d022, type: 3}
-  lclawsSprite: {fileID: 21300000, guid: d085fee23f98a5d418173c6592b41386, type: 3}
-  qrocketsSprite: {fileID: 21300000, guid: fabeb4d4156d3a84aa62d1c293181fdd, type: 3}
-  procketsSprite: {fileID: 21300000, guid: bb6c28deb89eb754d8a9803f346b36ed, type: 3}
-  cstreamSprite: {fileID: 21300000, guid: d17bb3acdc1c8d244981169a1e5d576a, type: 3}
-  flipSprite: {fileID: 21300000, guid: d71f113542d501e44ab50fae24095acb, type: 3}
-  gcloverSprite: {fileID: 21300000, guid: 63a2647ea2885b44bab05e7cb94c0c90, type: 3}
-  shadowSprite: {fileID: 21300000, guid: 7d2dfbf4cfecaea469f79f936b00f154, type: 3}
-  inverterSprite: {fileID: 21300000, guid: ed66cb09e656ff247a82fdb938609f5c, type: 3}
-  magnetSprite: {fileID: 21300000, guid: e8f4be55fc1a9b24ab5c29d18aa10df3, type: 3}
-  scalerSprite: {fileID: 21300000, guid: 440d31dada2aa9b48ab82322529da17c, type: 3}
-  matrixSprite: {fileID: 21300000, guid: 64ad941f72f49634fa97d0f2a0a476bd, type: 3}
-  pmultiSprite: {fileID: 21300000, guid: 7e9e5fcb143743546b7fedea72703174, type: 3}
 --- !u!1 &441193942597892296
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,12 +941,12 @@ GameObject:
   - component: {fileID: 8247946698351837230}
   - component: {fileID: 5737131252607191162}
   m_Layer: 0
-  m_Name: State Display1
+  m_Name: State Display0
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3993610126469021285
 Transform:
   m_ObjectHideFlags: 0
@@ -1063,30 +1023,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025fcca457df8f64ea416b16e9fc9acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  number: 1
+  number: 0
   powerups: 0
   textObj: {fileID: 5250774223762745326}
   state: 
-  laserSprite: {fileID: 21300000, guid: 21535f4e423e0194a829b85e44f114e6, type: 3}
-  laser2Sprite: {fileID: 21300000, guid: 4543454d50bcc2f4c95426146e30e17d, type: 3}
-  laser3Sprite: {fileID: 21300000, guid: 40273a285fbc90640907afae766f3be3, type: 3}
-  mlaserSprite: {fileID: 21300000, guid: 85c5aff371e073c47b08b82ad1fcd93e, type: 3}
-  lsaberSprite: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
-  hrocketsSprite: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
-  phaserSprite: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
-  shadowbtSprite: {fileID: 21300000, guid: 692a8ad24f832a547a376f4d7a93d022, type: 3}
-  lclawsSprite: {fileID: 21300000, guid: d085fee23f98a5d418173c6592b41386, type: 3}
-  qrocketsSprite: {fileID: 21300000, guid: fabeb4d4156d3a84aa62d1c293181fdd, type: 3}
-  procketsSprite: {fileID: 21300000, guid: bb6c28deb89eb754d8a9803f346b36ed, type: 3}
-  cstreamSprite: {fileID: 21300000, guid: d17bb3acdc1c8d244981169a1e5d576a, type: 3}
-  flipSprite: {fileID: 21300000, guid: d71f113542d501e44ab50fae24095acb, type: 3}
-  gcloverSprite: {fileID: 21300000, guid: 63a2647ea2885b44bab05e7cb94c0c90, type: 3}
-  shadowSprite: {fileID: 21300000, guid: 7d2dfbf4cfecaea469f79f936b00f154, type: 3}
-  inverterSprite: {fileID: 21300000, guid: ed66cb09e656ff247a82fdb938609f5c, type: 3}
-  magnetSprite: {fileID: 21300000, guid: e8f4be55fc1a9b24ab5c29d18aa10df3, type: 3}
-  scalerSprite: {fileID: 21300000, guid: 440d31dada2aa9b48ab82322529da17c, type: 3}
-  matrixSprite: {fileID: 21300000, guid: 64ad941f72f49634fa97d0f2a0a476bd, type: 3}
-  pmultiSprite: {fileID: 21300000, guid: 7e9e5fcb143743546b7fedea72703174, type: 3}
 --- !u!1 &5802341655381487775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,7 +1044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5383634961654351510
 Transform:
   m_ObjectHideFlags: 0
@@ -1185,26 +1125,6 @@ MonoBehaviour:
   powerups: 1
   textObj: {fileID: 0}
   state: 
-  laserSprite: {fileID: 21300000, guid: 21535f4e423e0194a829b85e44f114e6, type: 3}
-  laser2Sprite: {fileID: 21300000, guid: 4543454d50bcc2f4c95426146e30e17d, type: 3}
-  laser3Sprite: {fileID: 21300000, guid: 40273a285fbc90640907afae766f3be3, type: 3}
-  mlaserSprite: {fileID: 21300000, guid: 85c5aff371e073c47b08b82ad1fcd93e, type: 3}
-  lsaberSprite: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
-  hrocketsSprite: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
-  phaserSprite: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
-  shadowbtSprite: {fileID: 21300000, guid: 692a8ad24f832a547a376f4d7a93d022, type: 3}
-  lclawsSprite: {fileID: 21300000, guid: d085fee23f98a5d418173c6592b41386, type: 3}
-  qrocketsSprite: {fileID: 21300000, guid: fabeb4d4156d3a84aa62d1c293181fdd, type: 3}
-  procketsSprite: {fileID: 21300000, guid: bb6c28deb89eb754d8a9803f346b36ed, type: 3}
-  cstreamSprite: {fileID: 21300000, guid: d17bb3acdc1c8d244981169a1e5d576a, type: 3}
-  flipSprite: {fileID: 21300000, guid: d71f113542d501e44ab50fae24095acb, type: 3}
-  gcloverSprite: {fileID: 21300000, guid: 63a2647ea2885b44bab05e7cb94c0c90, type: 3}
-  shadowSprite: {fileID: 21300000, guid: 7d2dfbf4cfecaea469f79f936b00f154, type: 3}
-  inverterSprite: {fileID: 21300000, guid: ed66cb09e656ff247a82fdb938609f5c, type: 3}
-  magnetSprite: {fileID: 21300000, guid: e8f4be55fc1a9b24ab5c29d18aa10df3, type: 3}
-  scalerSprite: {fileID: 21300000, guid: 440d31dada2aa9b48ab82322529da17c, type: 3}
-  matrixSprite: {fileID: 21300000, guid: 64ad941f72f49634fa97d0f2a0a476bd, type: 3}
-  pmultiSprite: {fileID: 21300000, guid: 7e9e5fcb143743546b7fedea72703174, type: 3}
 --- !u!1 &7693692202627220166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,16 +1213,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6644735265139863176}
     m_Modifications:
-    - target: {fileID: 1377877411804869007, guid: cb589810bddf2054fb5df3ff39ad5292,
-        type: 3}
-      propertyPath: ID
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2389002541165373696, guid: cb589810bddf2054fb5df3ff39ad5292,
-        type: 3}
-      propertyPath: ID
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 2614155989906725882, guid: cb589810bddf2054fb5df3ff39ad5292,
         type: 3}
       propertyPath: m_Name

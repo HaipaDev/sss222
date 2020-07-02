@@ -229,6 +229,7 @@ public class Player : MonoBehaviour{
     GameObject refilltxtS;
     GameObject refilltxtE;
     //AudioSource audioSource;
+    //Statuses are down there
 #endregion
 
     void Start(){
@@ -1113,9 +1114,7 @@ bool stopped=false;
 #endregion
 
 #region//Other Functions
-    public string status1="";
-    public string status2="";
-    public string status3="";
+    public List<string> statuses;
     public string statusc="";
     public void SetStatus(string status){
         statusc=status;
@@ -1126,24 +1125,41 @@ bool stopped=false;
         //v.SetValue(this,true,null);
         //((dynamic)this).status=true;
 	    //this.GetType().GetProperty(status+"Timer").SetValue(this,status+"Time");
+        ResizeStatuses();
         SortStatuses();
     }public void ResetStatus(string status){
         if(this.GetType().GetField(status)!=null)this.GetType().GetField(status).SetValue(this,false);
         this.GetType().GetField((status+"Timer")).SetValue(this,-4);
-        if(status1==status){status1="";}
-        if(status2==status){status2="";}
-        if(status3==status){status3="";}
+        for(var i=0;i<statuses.Count;i++){
+            if(statuses[i]==status){statuses[i]="";}
+        }
         ResortStatuses();
     }void SortStatuses(){
-        if(status1!=statusc&&status2!=statusc&&status3!=statusc){
-            if(status1==""){status1=statusc;statusc="";}
-            if(status2=="" && status1!=""){status2=statusc;statusc="";}
-            if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
+        //ResizeStatuses();
+        //Array.Resize(ref statuses,statuses.Length+1);
+        //for(var i=0;i<statuses.Count;i++){
+        //if(statuses[i]!=statusc){
+        if(!statuses.Contains(statusc)){
+            statuses.Add(statusc);statusc="";
+            //if(i>0&&statuses[i]!=""){statuses.Add(statusc);statusc="";}
+            //if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
+        //}
         }
     }void ResortStatuses(){
-        if(status1=="" && status2!=""){status1=status2;status2="";}
-        if(status2=="" && status3!=""){status2=status3;status3="";}
-        //if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
+        for(var i=0;i<statuses.Count-1;i++){
+            if(i>-1&&i<statuses.Count){
+                if(statuses[i]=="" && statuses[i+1]!=""){statuses[i]=statuses[i+1];statuses[i+1]="";statuses.Remove(statuses[i+1]);}
+                //if(status2=="" && status3!=""){status2=status3;status3="";}
+                //if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
+            }
+        }
+        ResizeStatuses();
+    }void ResizeStatuses(){
+        //int notEmpty=0;
+        foreach(string status in statuses){
+            if(status=="")statuses.Remove(status);//notEmpty++;
+        }
+        //Array.Resize(ref statuses,notEmpty);
     }
 
 
