@@ -15,7 +15,15 @@ MonoBehaviour:
   itemName: Phaser
   pwrupName: phaser
   ID: 1
+  dropChance:
+  - 1
+  - 2
+  - 3.5
+  - 4
+  - 4.5
   price: -1
   priceS: 22
   priceE: 25
   sprite: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
+  scaleX: 1
+  scaleY: 1

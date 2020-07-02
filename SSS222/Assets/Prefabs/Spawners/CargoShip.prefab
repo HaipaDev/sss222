@@ -480,6 +480,7 @@ MonoBehaviour:
   repMinus: 2
   speed: 2
   tagged: 0
+  visited: 0
 --- !u!1 &8300030818994398507
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +509,7 @@ RectTransform:
   m_GameObject: {fileID: 8300030818994398507}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 8481442159754853418}
   m_RootOrder: 0
@@ -560,10 +561,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 0.99215686, g: 0.6117647, b: 0.9843137, a: 1}
-    topRight: {r: 0.32941177, g: 0.84313726, b: 0.44705883, a: 1}
-    bottomLeft: {r: 0.32872015, g: 0.8396226, b: 0.44336402, a: 0.98039216}
-    bottomRight: {r: 0.99215686, g: 0.6117647, b: 0.9843137, a: 1}
+    topLeft: {r: 0.6117647, g: 0.63466567, b: 0.99215686, a: 1}
+    topRight: {r: 0.32941175, g: 0.5278407, b: 0.84313726, a: 1}
+    bottomLeft: {r: 0.3294118, g: 0.8392157, b: 0.66202086, a: 0.98039216}
+    bottomRight: {r: 0.8195236, g: 0.6117647, b: 0.99215686, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -582,7 +583,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_textAlignment: 258
-  m_characterSpacing: -21
+  m_characterSpacing: -20
   m_wordSpacing: 0
   m_lineSpacing: -25
   m_lineSpacingMax: 0
@@ -653,5 +654,5 @@ MonoBehaviour:
   target: {fileID: 0}
   targetTag: 
   xx: 0
-  yy: 1
+  yy: 0.85
   targetObj: {fileID: 4546529352650547393}

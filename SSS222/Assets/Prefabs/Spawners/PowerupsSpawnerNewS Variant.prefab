@@ -1,0 +1,356 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1329091881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4324624737203472284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a2dcdd07bf355f4bbfb092c01cafa4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemList:
+  - {fileID: 11400000, guid: d1939f2a5efe96042842032862cdf62e, type: 2}
+  - {fileID: 11400000, guid: 8ee29e2bede3b904bb2b52557eb0f6b9, type: 2}
+  - {fileID: 11400000, guid: 2650301666c6e9d4b8719cd07986fecb, type: 2}
+  - {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
+  - {fileID: 11400000, guid: f6a560a419dccd647bb79ae520e69ddf, type: 2}
+  - {fileID: 11400000, guid: 836e8441bd1a4e1468be0e689364fb14, type: 2}
+  - {fileID: 11400000, guid: 6878a416f2285834c9af2732b5242ce0, type: 2}
+  - {fileID: 11400000, guid: 9000ede4635f82647a1cd13010567e48, type: 2}
+  - {fileID: 11400000, guid: 1f5c3c97f5d9e164dafb8aac25017596, type: 2}
+  - {fileID: 11400000, guid: 8645c7606471be849bbf4044ff5ceec1, type: 2}
+  - {fileID: 11400000, guid: c9d54cc47e5cf20499998336988ca3ff, type: 2}
+  - {fileID: 11400000, guid: 9b409de821cfef24e850bac7ad821f16, type: 2}
+  currentLvl: 0
+  dropList:
+  - 3.5
+  - 3
+  - 1.75
+  - 6
+  - 0.3
+  - 6
+  - 5
+  - 4
+  - 2
+  - 6
+  - 5
+  - 5
+  itemsPercentage:
+  - name: Accelerator(1c) - 7.36% - 3.5/44.05
+  - name: Armor(0c) - 6.31% - 3/44.55
+  - name: ArmorU(1|R) - 3.68% - 1.75/45.8
+  - name: Flip(0c) - 12.62% - 6/41.55
+  - name: GCLover(1|L) - 0.63% - 0.3/47.25
+  - name: Inverter(0c) - 12.62% - 6/41.55
+  - name: Magnet(0c) - 10.52% - 5/42.55
+  - name: Matrix(1c) - 8.41% - 4/43.55
+  - name: PointMulti(3|R) - 4.21% - 2/45.55
+  - name: Randomizer(0c) - 12.62% - 6/41.55
+  - name: Scaler(0c) - 10.52% - 5/42.55
+  - name: Shadowdash(1|R) - 10.52% - 5/42.55
+  sum: 47.55
+--- !u!1001 &689098690796156996
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.size
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.size
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[0].name
+      value: Armor PowerUp - 5.93% - 3/47.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[1].name
+      value: ArmorU Powerup - 3.46% - 1.75/48.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[2].name
+      value: Laser2 Powerup - 3.96% - 2/48.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[3].name
+      value: Laser3 PowerUp - 0% - 0/50.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[4].name
+      value: Phaser Powerup - 0% - 0/50.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[5].name
+      value: HRockets Powerup - 0% - 0/50.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[6].name
+      value: MLaser Powerup - 0% - 0/50.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[7].name
+      value: LSaber Powerup - 3.96% - 2/48.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[8].name
+      value: Flip Powerup - 11.87% - 6/44.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[9].name
+      value: GClover Powerup - 0.59% - 0.3/50.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[10].name
+      value: ShadowBT Powerup - 0% - 0/50.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[11].name
+      value: Shadowdash Powerup - 9.89% - 5/45.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[12].name
+      value: LClaws Powerup - 0% - 0/50.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[13].name
+      value: QRockets Powerup - 0% - 0/50.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[14].name
+      value: PRockets Powerup - 0% - 0/50.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[15].name
+      value: CStream Powerup - 0% - 0/50.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[16].name
+      value: Inverter Powerup - 11.87% - 6/44.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[17].name
+      value: Magnet Powerup - 11.87% - 6/44.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[18].name
+      value: Scaler Powerup - 9.89% - 5/45.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[19].name
+      value: Matrix Powerup - 7.91% - 4/46.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[20].name
+      value: Point Multiplier Powerup - 3.96% - 2/48.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[21].name
+      value: Randomizer Powerup - 7.91% - 4/46.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[0].dropChance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[1].dropChance
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[3].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[4].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[5].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[6].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[7].dropChance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[8].dropChance
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[9].dropChance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[10].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[11].dropChance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[12].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[13].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[15].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[16].dropChance
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[17].dropChance
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[18].dropChance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[19].dropChance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[20].dropChance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[21].dropChance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: sum
+      value: 50.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[2].dropChance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[22].name
+      value: Accelerator Powerup
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[22].lootItem
+      value: 
+      objectReference: {fileID: 8237334835763180172, guid: dda1ecc50ae47e64e9c03569ad675be7,
+        type: 3}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemList.Array.data[22].dropChance
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+      propertyPath: itemsPercentage.Array.data[22].name
+      value: Accelerator Powerup - 6.92% - 3.5/47.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: mTimePowerupSpawns
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: mTimePowerupSpawnsE
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: mTimePowerupSpawnsS
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: firstSpawn
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860724879463956440, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_Name
+      value: PowerupsSpawnerNewS
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860724879463956440, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985188867064137226, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
+--- !u!1 &4324624737203472284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3860724879463956440, guid: c65d768f3c3f0f84da827b9eb6a21670,
+    type: 3}
+  m_PrefabInstance: {fileID: 689098690796156996}
+  m_PrefabAsset: {fileID: 0}

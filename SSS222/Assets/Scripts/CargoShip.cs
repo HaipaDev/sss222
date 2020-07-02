@@ -9,24 +9,25 @@ public class CargoShip : MonoBehaviour{
     public bool visited;
     void Start(){
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, -speed);
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(false);
     }
     void Update(){
-        
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.CompareTag("Player")){
+        if(other.CompareTag("Player")&&visited==false){
             Shop.shopOpen=true;
             visited=true;
-            GetComponent<Collider2D>().enabled=false;
+            tagged=true;
+            GetComponentInChildren<TMPro.TextMeshProUGUI>().enabled=false;
         }if(other.CompareTag("PlayerWeapons")){
             Destroy(other.gameObject);
             if(tagged==false){Shop.instance.RepMinus(repMinus);tagged=true;AudioManager.instance.Play("CargoHit");gameObject.transform.GetChild(0).gameObject.SetActive(true);}
-        }
+        }if(other.GetComponent<Shredder>()!=null){Destroy(gameObject);}
     }
     private void OnDestroy() {
-        if(visited!=true){
+        if(visited==false&&Shop.instance.subbed==false){
             Shop.instance.purchasedNotTimes++;
+            Shop.instance.subbed=true;
         }
     }
 }

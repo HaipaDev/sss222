@@ -8,16 +8,17 @@ public class ShopSlot : MonoBehaviour{
     [HideInInspector]public int price;
     public GameObject slotText;
     Shop shopMenu;
-    LootTableShop lootTable;
+    LootTableShop2 lootTable;
     Player player;
     GameSession gameSession;
     GameObject shopVFX;
     UpgradeMenu umenu;
+    ShopSlotID item;
     void Start()
     {
         if (player == null) player = FindObjectOfType<Player>();
         if (shopMenu == null) shopMenu = FindObjectOfType<Shop>();
-        if (lootTable == null) lootTable = FindObjectOfType<LootTableShop>();
+        if (lootTable == null) lootTable = Shop.instance.lootTable;
         if (gameSession == null) gameSession = FindObjectOfType<GameSession>();
         shopVFX=GameAssets.instance.GetVFX("ShopVFX");
     }
@@ -26,7 +27,7 @@ public class ShopSlot : MonoBehaviour{
     {
         if (player == null) player = FindObjectOfType<Player>();
         if (shopMenu == null) shopMenu = FindObjectOfType<Shop>();
-        if (lootTable == null) lootTable = FindObjectOfType<LootTableShop>();
+        if (lootTable == null) lootTable = Shop.instance.lootTable;
         if (gameSession == null) gameSession = FindObjectOfType<GameSession>();
         if (umenu == null) umenu = FindObjectOfType<UpgradeMenu>();
     }
@@ -34,12 +35,13 @@ public class ShopSlot : MonoBehaviour{
     {
         //GetComponent<Image>().sprite = shopMenu.shopSlotIDs[ID].sprite;
         //slotText.GetComponent<TMPro.TextMeshProUGUI>().text = shopMenu.shopSlotIDs[ID].price.ToString();
-        GetComponent<Image>().sprite = lootTable.itemList[ID].lootItem.sprite;
+        if(ID!=-1)item=(ShopSlotID)lootTable.itemList[ID];
+        GetComponent<Image>().sprite = item.sprite;
         //transform.localScale = new Vector3(lootTable.itemList[ID].lootItem.scaleX,lootTable.itemList[ID].lootItem.scaleY,1);
         var rt=GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(300*lootTable.itemList[ID].lootItem.scaleX, 300*lootTable.itemList[ID].lootItem.scaleY);
-        if(lootTable.itemList[ID].lootItem.price!=-1){price=lootTable.itemList[ID].lootItem.price;}
-        else{price=Random.Range(lootTable.itemList[ID].lootItem.priceS,lootTable.itemList[ID].lootItem.priceE);}
+        rt.sizeDelta = new Vector2(300*item.scaleX, 300*item.scaleY);
+        if(item.price!=-1){price=item.price;}
+        else{price=Random.Range(item.priceS,item.priceE);}
         slotText.GetComponent<TMPro.TextMeshProUGUI>().text = price.ToString();
     }
     public void Buy(){
@@ -47,7 +49,7 @@ public class ShopSlot : MonoBehaviour{
         if (gameSession.coins >= price){
             //gameSession.coins -= shopMenu.shopSlotIDs[ID].price;
             gameSession.gameSpeed=0.05f;
-            //var price = lootTable.itemList[ID].lootItem.price;
+            //var price = item.lootItem.price;
             gameSession.coins-=price;
 
             shopVFX=GameAssets.instance.GetVFX("ShopVFX");
@@ -65,8 +67,9 @@ public class ShopSlot : MonoBehaviour{
                 if(ID!=10)gameSession.AddXP(gameSession.xp_shop);//XP For purchase
                 shopMenu.Purchase();
                 //if(ID!=4 && ID!=8 && ID!=9 && ID!=10){
-                if(lootTable.itemList[ID].lootItem.pwrupName!=""){
-                    player.powerup=lootTable.itemList[ID].lootItem.pwrupName;
+                if(ID!=-1){
+                if(item.pwrupName!=""){
+                    player.powerup=item.pwrupName;
                     player.energy += player.pwrupEnergyGet;
                 }else if(ID==4){
                     if (player.health>(player.maxHP-30)) { gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP-player.health)*2); }
@@ -84,7 +87,12 @@ public class ShopSlot : MonoBehaviour{
                     umenu.AddSpeedBypass();
                     //AudioSource.PlayClipAtPoint(gameSession.lvlUpSFX,player.transform.position);
                     AudioManager.instance.Play("LvlUp");
+                }else if(ID==12){
+                    player.health += 12;
+                }else if(ID==13){
+                    player.energy += 20;
                 }
+                }else{ResetState();}
 
                 gameSession.gameSpeed=0f;
                 /*if (ID == 0) { player.powerup = "mlaser"; player.energy += player.pwrupEnergyGet; }

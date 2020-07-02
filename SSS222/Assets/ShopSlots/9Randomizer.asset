@@ -15,7 +15,15 @@ MonoBehaviour:
   itemName: Randomizer
   pwrupName: 
   ID: 9
+  dropChance:
+  - 6.5
+  - 6
+  - 5.5
+  - 5
+  - 5
   price: -1
   priceS: 9
   priceE: 17
   sprite: {fileID: 21300000, guid: ca9238cb4e309f94b9185d00dade4e4f, type: 3}
+  scaleX: 1
+  scaleY: 1

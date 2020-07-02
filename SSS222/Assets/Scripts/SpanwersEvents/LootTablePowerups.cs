@@ -43,6 +43,7 @@ public class LootTablePowerups : MonoBehaviour{
             itemTable.Add(entry.lootItem, entry.dropChance);
         }*/
         SumUp();
+        SumUpAfter();
     }
     void Update(){
         currentLvl=UpgradeMenu.instance.total_UpgradesLvl;

@@ -15,7 +15,15 @@ MonoBehaviour:
   itemName: Lightsaber
   pwrupName: lsaber
   ID: 5
+  dropChance:
+  - 7
+  - 6
+  - 5.3
+  - 4
+  - 3
   price: -1
   priceS: 8
   priceE: 12
   sprite: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
+  scaleX: 1
+  scaleY: 1

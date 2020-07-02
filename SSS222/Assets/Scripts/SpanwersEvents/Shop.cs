@@ -22,13 +22,14 @@ public class Shop : MonoBehaviour{
     //public List<Sprite> sprites;
     public int purchases;
     public bool purchased;
+    public bool subbed;
     public int purchasedNotTimes;
     //public int purchasesCurrent;
     public int reputation;
     public int reputationSlot;
     public float sum;
 
-    LootTableShop lootTable;
+    public LootTableShop2 lootTable;
     //Player player;
     private void Awake()
     {
@@ -36,9 +37,9 @@ public class Shop : MonoBehaviour{
         instance=this;
     }
     void Start(){
-        lootTable=GetComponent<LootTableShop>();
+        lootTable=GetComponent<LootTableShop2>();
         SetSlots();
-        Resume();
+        shopMenuUI.SetActive(false);
         //maxID = shopSlotIDs.Count;
         /*slot1 = slotObj[0].GetComponent<ShopSlot>();
         slot2 = slotObj[1].GetComponent<ShopSlot>();
@@ -72,8 +73,9 @@ public class Shop : MonoBehaviour{
     }
     public void Resume(){
         //if(purchasesCurrent==purchases){purchasedNotTimes++;}
-        if(purchased==false){purchasedNotTimes++;}
-        if(purchasedNotTimes==2){RepMinus(2);purchasedNotTimes=0;}
+        if(purchased==false&&subbed==false){purchasedNotTimes++;}
+        subbed=false;
+        if(purchasedNotTimes==2){RepMinus(1);purchasedNotTimes=0;}
         shopMenuUI.SetActive(false);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         shopOpened=false;

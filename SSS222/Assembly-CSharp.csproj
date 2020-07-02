@@ -101,6 +101,7 @@
      <Compile Include="Assets\Scripts\HUD\ShakeQuicklyUI.cs" />
      <Compile Include="Assets\Scripts\HUD\SkillButtons.cs" />
      <Compile Include="Assets\Scripts\HUD\StatButtonColor.cs" />
+     <Compile Include="Assets\Scripts\HUD\StateDisplayTable.cs" />
      <Compile Include="Assets\Scripts\HUD\UpgradeMenu.cs" />
      <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
      <Compile Include="Assets\Scripts\HUD\XPBars.cs" />
@@ -128,6 +129,7 @@
      <Compile Include="Assets\Scripts\SpanwersEvents\EnemySpawnerOld.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\LootTablePowerups.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\LootTableShop.cs" />
+     <Compile Include="Assets\Scripts\SpanwersEvents\LootTableShop2.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\LootTableWaves.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\PowerupItem.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\PowerupWeights.cs" />
@@ -171,7 +173,6 @@
      <Compile Include="Assets\Scripts\Visuals\Glow.cs" />
      <Compile Include="Assets\Scripts\Visuals\PlayParticle.cs" />
      <Compile Include="Assets\Scripts\Visuals\Screenflash.cs" />
-     <Compile Include="Assets\StateDisplayTable.cs" />
      <Compile Include="Assets\Tags\LootItem.cs" />
      <Compile Include="Assets\Tags\Tag_EnSaberWeapon.cs" />
      <Compile Include="Assets\Tags\Tag_GameCanvas.cs" />

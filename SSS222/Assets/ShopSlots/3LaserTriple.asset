@@ -15,7 +15,15 @@ MonoBehaviour:
   itemName: Laser Triple
   pwrupName: laser3
   ID: 3
+  dropChance:
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
   price: -1
   priceS: 10
   priceE: 24
   sprite: {fileID: 21300000, guid: 40273a285fbc90640907afae766f3be3, type: 3}
+  scaleX: 1
+  scaleY: 1
