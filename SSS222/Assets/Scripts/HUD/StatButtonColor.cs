@@ -27,6 +27,7 @@ public class StatButtonColor : MonoBehaviour{
         if((bt!=null&&bt.gameObject.name=="ButtonSpeed")||(txt!=null&&txt.GetComponent<ValueDisplay>().value=="lvl_speed")){valueName="speed_UpgradesLvl";}
         if((bt!=null&&bt.gameObject.name=="ButtonHpReg")||(txt!=null&&txt.GetComponent<ValueDisplay>().value=="lvl_hpRegen")){valueName="hpRegen_UpgradesLvl";}
         if((bt!=null&&bt.gameObject.name=="ButtonEnReg")||(txt!=null&&txt.GetComponent<ValueDisplay>().value=="lvl_enRegen")){valueName="enRegen_UpgradesLvl";}
+        if((bt!=null&&bt.gameObject.name=="ButtonLuck")||(txt!=null&&txt.GetComponent<ValueDisplay>().value=="lvl_luck")){valueName="luck_UpgradesLvl";}
 
         if(valueName!=null)value=(int)upgradeMenu.GetType().GetField(valueName).GetValue(upgradeMenu);
         else{Debug.LogError(gameObject+"Value name empty");}

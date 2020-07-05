@@ -9,6 +9,7 @@ public class Shop : MonoBehaviour{
     public static bool shopOpened;
     public GameObject shopMenuUI;
     public GameObject[] slotsChoose;
+    public int[] slotUnlock=new int[4];
     public int currentSlotID;
     public GameObject currentSlot;
     public ShopSlot[] slots;
@@ -117,17 +118,18 @@ public class Shop : MonoBehaviour{
     }
     void LevelRep(){
         var bar=GetComponentInChildren<XPBars>();
-        if(currentSlotID==1&&reputationSlot==1){var xp=2;currentSlotID=xp;bar.ID=xp;if(bar.current==null){bar.Recreate();}RandomizeShopDelay();reputationSlot=0;}
-        if(currentSlotID==2&&reputationSlot==2){var xp=3;currentSlotID=xp;bar.ID=xp;if(bar.current==null){bar.Recreate();}RandomizeShopDelay();reputationSlot=0;}
-        if(currentSlotID==3&&reputationSlot==3){var xp=4;currentSlotID=xp;bar.ID=xp;if(bar.current==null){bar.Recreate();}RandomizeShopDelay();reputationSlot=0;}
-        if(currentSlotID==4&&reputationSlot==4){var xp=5;currentSlotID=xp;bar.ID=xp;if(bar.current==null){bar.Recreate();}RandomizeShopDelay();reputationSlot=0;}
-        if(currentSlotID==5&&reputationSlot==5){var xp=6;currentSlotID=xp;bar.ID=xp;bar.created=1;RandomizeShopDelay();reputationSlot=0;}
+        if(currentSlotID==1&&reputationSlot<slotUnlock[0]){bar.ID=slotUnlock[0];if(bar.current==null){bar.Recreate();}}
+        if(currentSlotID==1&&reputationSlot==slotUnlock[0]){var xp=slotUnlock[1];currentSlotID=2;bar.ID=xp;if(bar.current==null){bar.Recreate();}RandomizeShopDelay();reputationSlot=0;}
+        if(currentSlotID==2&&reputationSlot==slotUnlock[1]){var xp=slotUnlock[2];currentSlotID=3;bar.ID=xp;if(bar.current==null){bar.Recreate();}RandomizeShopDelay();reputationSlot=0;}
+        if(currentSlotID==3&&reputationSlot==slotUnlock[2]){var xp=slotUnlock[3];currentSlotID=4;bar.ID=xp;if(bar.current==null){bar.Recreate();}RandomizeShopDelay();reputationSlot=0;}
+        if(currentSlotID==4&&reputationSlot==slotUnlock[3]){var xp=slotUnlock[4];currentSlotID=5;bar.ID=xp;if(bar.current==null){bar.Recreate();}RandomizeShopDelay();reputationSlot=0;}
+        if(currentSlotID==5&&reputationSlot==slotUnlock[4]){currentSlotID=6;bar.created=1;RandomizeShopDelay();reputationSlot=0;}
 
-        if(currentSlotID==6&&reputationSlot<0&&shopOpened==true){var xp=5;currentSlotID=xp;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=xp-FindObjectOfType<CargoShip>().repMinus;}
-        if(currentSlotID==5&&reputationSlot<0&&shopOpened==true){var xp=4;currentSlotID=xp;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=xp-FindObjectOfType<CargoShip>().repMinus;}
-        if(currentSlotID==4&&reputationSlot<0&&shopOpened==true){var xp=3;currentSlotID=xp;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=xp-FindObjectOfType<CargoShip>().repMinus;}
-        if(currentSlotID==3&&reputationSlot<0&&shopOpened==true){var xp=2;currentSlotID=xp;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=xp-FindObjectOfType<CargoShip>().repMinus;}
-        if(currentSlotID==2&&reputationSlot<0&&shopOpened==true){var xp=1;currentSlotID=xp;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=xp-FindObjectOfType<CargoShip>().repMinus-1;}
+        if(currentSlotID==6&&reputationSlot<0&&shopOpened==true){var xp=slotUnlock[4];currentSlotID=5;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=slotUnlock[0]-FindObjectOfType<CargoShip>().repMinus;}
+        if(currentSlotID==5&&reputationSlot<0&&shopOpened==true){var xp=slotUnlock[3];currentSlotID=4;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=slotUnlock[1]-FindObjectOfType<CargoShip>().repMinus;}
+        if(currentSlotID==4&&reputationSlot<0&&shopOpened==true){var xp=slotUnlock[2];currentSlotID=3;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=slotUnlock[2]-FindObjectOfType<CargoShip>().repMinus;}
+        if(currentSlotID==3&&reputationSlot<0&&shopOpened==true){var xp=slotUnlock[1];currentSlotID=2;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=slotUnlock[3]-FindObjectOfType<CargoShip>().repMinus;}
+        if(currentSlotID==2&&reputationSlot<0&&shopOpened==true){var xp=slotUnlock[0];currentSlotID=1;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=slotUnlock[4]-FindObjectOfType<CargoShip>().repMinus-1;}
     }
     public void Purchase(){
         purchases+=1;

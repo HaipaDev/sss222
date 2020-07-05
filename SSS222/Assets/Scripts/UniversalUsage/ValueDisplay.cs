@@ -51,6 +51,8 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "speed") scoreText.text = (player.moveSpeed-(player.moveSpeedInit-1)).ToString();
         else if (value == "hpRegen") if(player.hpRegenEnabled==true){scoreText.text = player.hpRegenAmnt.ToString();}else{scoreText.text="0";}
         else if (value == "enRegen") if(player.enRegenEnabled==true){scoreText.text = player.enRegenAmnt.ToString();}else{scoreText.text="0";}
+        else if (value == "scoreMulti") scoreText.text = gameSession.scoreMulti.ToString();
+        else if (value == "luck") scoreText.text = gameSession.luckMulti.ToString();
 
         else if (value == "purchases") scoreText.text = "Reputation: "+shopMenu.purchases.ToString();
         else if (value == "reputation") scoreText.text = "Reputation: "+shopMenu.reputation.ToString();
@@ -60,12 +62,14 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "lvl_speed") scoreText.text = "Lvl. "+upgradeMenu.speed_UpgradesLvl.ToString();
         else if (value == "lvl_hpRegen") scoreText.text = "Lvl. "+upgradeMenu.hpRegen_UpgradesLvl.ToString();
         else if (value == "lvl_enRegen") scoreText.text = "Lvl. "+upgradeMenu.enRegen_UpgradesLvl.ToString();
+        else if (value == "lvl_luck") scoreText.text = "Lvl. "+upgradeMenu.luck_UpgradesLvl.ToString();
 
         else if (value == "maxHealth_upgradeCost") scoreText.text = upgradeMenu.maxHealth_UpgradeCost.ToString();
         else if (value == "maxEnergy_upgradeCost") scoreText.text = upgradeMenu.maxEnergy_UpgradeCost.ToString();
         else if (value == "speed_upgradeCost") scoreText.text = upgradeMenu.speed_UpgradeCost.ToString();
         else if (value == "hpRegen_upgradeCost") scoreText.text = upgradeMenu.hpRegen_UpgradeCost.ToString();
         else if (value == "enRegen_upgradeCost") scoreText.text = upgradeMenu.enRegen_UpgradeCost.ToString();
+        else if (value == "luck_upgradeCost") scoreText.text = upgradeMenu.luck_UpgradeCost.ToString();
         else if (value == "defaultPowerup_upgradeCost1") scoreText.text = upgradeMenu.defaultPowerup_upgradeCost1.ToString();
         else if (value == "defaultPowerup_upgradeCost2") scoreText.text = upgradeMenu.defaultPowerup_upgradeCost2.ToString();
         else if (value == "defaultPowerup_upgradeCost3") scoreText.text = upgradeMenu.defaultPowerup_upgradeCost3.ToString();

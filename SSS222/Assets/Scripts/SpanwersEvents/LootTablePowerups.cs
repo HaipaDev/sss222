@@ -28,7 +28,7 @@ public class LootTablePowerups : MonoBehaviour{
     [SerializeField] ItemPercentagePowerup[] itemsPercentage;
     //[HideInInspector] ItemPercentagePowerup[] itemsPercentage2;
     public float sum;
-    
+    GameSession gameSession;
     private void Awake(){
         /*itemTable = new Dictionary<LootItem, float>();
         foreach(LootTableEntry entry in itemList){
@@ -36,6 +36,9 @@ public class LootTablePowerups : MonoBehaviour{
         }*/
         //foreach(float dropChance in itemTable.Values){sum+=dropChance;}
         SumUp();
+    }
+    private void Start() {
+        gameSession=FindObjectOfType<GameSession>();
     }
     void OnValidate(){
         /*itemTable = new Dictionary<LootItem, float>();
@@ -115,7 +118,9 @@ public class LootTablePowerups : MonoBehaviour{
             if(currentLvl<entry.levelReq){
                 dropList[i]=0;
             }else{
-                dropList[i]=entry.dropChance;
+                if(entry.rarity==rarityPowerup.Common)dropList[i]=entry.dropChance;
+                else if(entry.rarity==rarityPowerup.Rare)dropList[i]=entry.dropChance*gameSession.rarePwrupMulti;
+                else if(entry.rarity==rarityPowerup.Legendary)dropList[i]=entry.dropChance*gameSession.legendPwrupMulti;
                 //System.Array.Resize(ref itemsPercentage, itemList.Count);
             }
             //System.Array.Resize(ref itemsPercentage, itemList.Count);

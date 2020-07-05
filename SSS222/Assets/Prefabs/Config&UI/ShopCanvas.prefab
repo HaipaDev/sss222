@@ -3795,6 +3795,7 @@ MonoBehaviour:
   - {fileID: 658107870913713829}
   - {fileID: 7303499457297056523}
   - {fileID: 4498202424365555987}
+  slotUnlock: 0200000003000000040000000500000006000000
   currentSlotID: 1
   currentSlot: {fileID: 0}
   slots: []
@@ -3806,6 +3807,7 @@ MonoBehaviour:
   reputation: 0
   reputationSlot: 0
   sum: 0
+  lootTable: {fileID: 0}
 --- !u!114 &-7122236346257132166
 MonoBehaviour:
   m_ObjectHideFlags: 0

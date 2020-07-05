@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   scoreMulti: 1
+  luckMulti: 1
   coins: 0
   cores: 0
   coresXp: 0
@@ -65,6 +66,16 @@ MonoBehaviour:
   flyingTimeReq: 25
   xp_staying: -5
   stayingTimeReq: 4
+  enballDropMulti: 1
+  enballMultiAmnt: 0.07
+  coinDropMulti: 1
+  coinMultiAmnt: 0.08
+  coreDropMulti: 1
+  coreMultiAmnt: 0.04
+  rarePwrupMulti: 1
+  rareMultiAmnt: 0.075
+  legendPwrupMulti: 1
+  legendMultiAmnt: 0.04
   gameSpeed: 1
   cheatmode: 1
   dmgPopups: 1

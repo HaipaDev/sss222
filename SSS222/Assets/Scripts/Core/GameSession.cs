@@ -10,6 +10,7 @@ public class GameSession : MonoBehaviour{
     [HeaderAttribute("Current Player Values")]
     public int score = 0;
     public float scoreMulti = 1f;
+    public float luckMulti = 1f;
     public int coins = 0;
     public int cores = 0;
     public float coresXp = 0f;
@@ -31,6 +32,17 @@ public class GameSession : MonoBehaviour{
     public float flyingTimeReq=25f;
     public float xp_staying=-5f;
     public float stayingTimeReq=4f;
+    [HeaderAttribute("Luck Multiplier Values")]
+    public float enballDropMulti=1;
+    public float coinDropMulti=1;
+    public float coreDropMulti=1;
+    public float rarePwrupMulti=1;
+    public float legendPwrupMulti=1;
+    public float enballMultiAmnt=0.15f;
+    public float coinMultiAmnt=0.12f;
+    public float coreMultiAmnt=0.08f;
+    public float rareMultiAmnt=0.075f;
+    public float legendMultiAmnt=0.01f;
     [HeaderAttribute("Settings")]
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
     [HeaderAttribute("Other")]
@@ -151,6 +163,8 @@ public class GameSession : MonoBehaviour{
             }
         }
 
+        CalculateLuck();
+
         CheckCodes(0,0);
     }
 
@@ -245,6 +259,16 @@ public class GameSession : MonoBehaviour{
         foreach(SkillSlotID skill in skills){
             skill.keySet=skillKeyBind.Disabled;
         }*/
+    }
+    void CalculateLuck(){
+        //ref float multiAmnt = ref enballMultiAmnt;
+        //1+(0.08*((1.05-1)/0.05))
+        enballDropMulti=1+(enballMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+        //multiAmnt = ref coinMultiAmnt;
+        coinDropMulti=1+(coinMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+        coreDropMulti=1+(coreMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+        rarePwrupMulti=1+(rareMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+        legendPwrupMulti=1+(legendMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
     }
     public void CheckCodes(int fkey, int nkey){
         if(fkey==0&&nkey==0){}

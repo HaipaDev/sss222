@@ -2895,31 +2895,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 56208185252951280, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 56208185252951280, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1291324903093023113, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1618462405806779064, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_Elasticity
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1618462405806779064, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_ScrollSensitivity
-      value: 60
-      objectReference: {fileID: 0}
     - target: {fileID: 3055374916924061258, guid: 96d69890f517e4c48943f992c4f243a5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3029,41 +3004,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UpgradeCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 4037868114075013756, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6616655021038108953, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6616655021038108953, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6616655021038108953, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6616655021038108953, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7358063856762285840, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8298194740339059911, guid: 96d69890f517e4c48943f992c4f243a5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96d69890f517e4c48943f992c4f243a5, type: 3}

@@ -28,6 +28,8 @@ public class UpgradeMenu : MonoBehaviour{
     public int hpRegen_UpgradeCost=1;
     public float enRegen_UpgradeAmnt=2f;
     public int enRegen_UpgradeCost=1;
+    public float luck_UpgradeAmnt=0.05f;
+    public int luck_UpgradeCost=1;
     public int defaultPowerup_upgradeCost1=1;
     public int defaultPowerup_upgradeCost2=3;
     public int defaultPowerup_upgradeCost3=6;
@@ -55,6 +57,9 @@ public class UpgradeMenu : MonoBehaviour{
     public int enRegen_UpgradesCount;
     public int enRegen_UpgradesCountMax=2;
     public int enRegen_UpgradesLvl=0;
+    public int luck_UpgradesCount;
+    public int luck_UpgradesCountMax=5;
+    public int luck_UpgradesLvl=1;
     public int defaultPowerup_upgradeCount;
     public int energyRefill_upgraded;
     public int magneticPulse_upgraded;
@@ -231,6 +236,7 @@ public class UpgradeMenu : MonoBehaviour{
     public void AddSpeedBypass(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt/2,0, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount, ref speed_UpgradesLvl,true);}
     public void AddHpRegen(){UpgradeAfterStartingVal(ref player.hpRegenEnabled,ref player.hpRegenAmnt,0.1f,0.2f,hpRegen_UpgradeAmnt,hpRegen_UpgradeCost, false, ref player.hpRegenAmnt,ref hpRegen_UpgradesCount,ref hpRegen_UpgradesLvl,false);}
     public void AddEnRegen(){UpgradeAfterStartingVal(ref player.enRegenEnabled,ref player.enRegenAmnt,0.5f,1f,enRegen_UpgradeAmnt,enRegen_UpgradeCost, false, ref player.enRegenAmnt,ref enRegen_UpgradesCount,ref enRegen_UpgradesLvl,false);}
+    public void AddLuck(){UpgradeFloat(ref gameSession.luckMulti,luck_UpgradeAmnt,luck_UpgradeCost, false, ref gameSession.luckMulti,ref luck_UpgradesCount, ref luck_UpgradesLvl,false);}
 
     public void DefaultPowerupChange(string prevPowerup,string powerup,int cost,bool add,ref float value,float amnt,bool permament,int upgradeXPamnt){
         if(gameSession.cores>=cost && player.powerupDefault==prevPowerup){player.powerupDefault=powerup;if(permament!=true){player.powerup=powerup;}gameSession.cores-=cost;if(add==true){value+=amnt;}defaultPowerup_upgradeCount++;/*total_UpgradesCount+=upgradeXPamnt;*/if(permament==true){player.losePwrupOutOfEn=false;}GetComponent<AudioSource>().Play();}
@@ -307,13 +313,15 @@ public class UpgradeMenu : MonoBehaviour{
         if(hpRegen_UpgradesCount>=hpRegen_UpgradesCountMax){LastBar(hpRegen_UpgradesCountMax,"hpRegen_UpgradesCount");hpRegen_UpgradesCount=0;hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
         /**/if(enRegen_UpgradesCount==1 && enRegen_UpgradesLvl==0){enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
         if(enRegen_UpgradesCount>=enRegen_UpgradesCountMax){LastBar(enRegen_UpgradesCountMax,"enRegen_UpgradesCount");enRegen_UpgradesCount=0;enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        
+        if(luck_UpgradesCount>=luck_UpgradesCountMax){LastBar(luck_UpgradesCountMax,"luck_UpgradesCount");luck_UpgradesCount=0;luck_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+
 
         if(maxHealth_UpgradesLvl>0)maxHealth_UpgradeCost=maxHealth_UpgradesLvl;
         if(maxEnergy_UpgradesLvl>0)maxEnergy_UpgradeCost=maxEnergy_UpgradesLvl;
         if(speed_UpgradesLvl>0)speed_UpgradeCost=speed_UpgradesLvl;
         if(hpRegen_UpgradesLvl>0)hpRegen_UpgradeCost=hpRegen_UpgradesLvl;
         if(enRegen_UpgradesLvl>0)enRegen_UpgradeCost=enRegen_UpgradesLvl;
+        if(luck_UpgradesLvl>0)luck_UpgradeCost=luck_UpgradesLvl;
     }
     void LastBar(int max,string name){
         foreach(XPFill obj in FindObjectsOfType<XPFill>()){
