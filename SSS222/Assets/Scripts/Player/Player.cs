@@ -1021,38 +1021,38 @@ bool stopped=false;
                     GameObject.Find("RandomArrows").SetActive(false);
                     //GameObject.Find("HUD 9:16/Game Canvas/RefillUI/RandomArrows").SetActive(false);
                     refilltxtE.SetActive(false);
-                    refillCostS=1;
-                    refillCostE=1;
+                    refillCostS=5;
+                    refillCostE=10;
                 }else if(refillCount>0 && refillCount<=2){
-                    refillCostS=1;
-                    refillCostE=2;
+                    refillCostS=8;
+                    refillCostE=13;
                 }else if(refillCount>=3 && refillCount<=5){
                     var choose=UnityEngine.Random.Range(1,3);
                     if(choose==1){
-                        refillCostS=1;
-                        refillCostE=3;
+                        refillCostS=8;
+                        refillCostE=15;
                     }else if(choose==2){
-                        refillCostS=2;
-                        refillCostE=4;
+                        refillCostS=16;
+                        refillCostE=19;
                     }if(choose==3){
                         GameObject.Find("RandomArrows").SetActive(false);
                         refilltxtE.SetActive(false);
-                        refillCostS=3;
-                        refillCostE=3;
+                        refillCostS=20;
+                        refillCostE=22;
                     }
                 }else if(refillCount>5){
                     var choose=UnityEngine.Random.Range(1,3);
                     if(choose==1){
-                        refillCostS=3;
-                        refillCostE=4;
+                        refillCostS=19;
+                        refillCostE=23;
                     }else if(choose==2){
-                        refillCostS=3;
-                        refillCostE=5;
+                        refillCostS=24;
+                        refillCostE=26;
                     }if(choose==3){
                         GameObject.Find("RandomArrows").SetActive(false);
                         refilltxtE.SetActive(false);
-                        refillCostS=4;
-                        refillCostE=4;
+                        refillCostS=27;
+                        refillCostE=30;
                     }
                 }
                 refillRandomized=true;

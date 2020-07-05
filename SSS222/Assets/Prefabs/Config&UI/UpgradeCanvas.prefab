@@ -13391,7 +13391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b49163d5326f942bba584de186f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: lvl_speed
+  value: lvl_luck
   valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &7505075958281441905
@@ -13650,7 +13650,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 0.860215, z: 1}
   m_Children:
   - {fileID: 488557680561297787}
-  - {fileID: 2761614815512585682}
+  - {fileID: 6292784554846551691}
   m_Father: {fileID: 930176050443167061}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13681,7 +13681,7 @@ MonoBehaviour:
   ID: 1
   valueName: total_UpgradesCount
   shop: 0
-  current: {fileID: 2761614815512585685}
+  current: {fileID: 6292784554846552027}
   created: 3
 --- !u!1 &583004070718610629
 GameObject:
@@ -27677,13 +27677,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10c3b40b5d5b06445a55453c02d117f3, type: 3}
---- !u!1 &2761614815512585685 stripped
+--- !u!1 &6292784554846552027 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8144562277117598384, guid: 10c3b40b5d5b06445a55453c02d117f3,
     type: 3}
   m_PrefabInstance: {fileID: 6292784554846551909}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &2761614815512585682 stripped
+--- !u!224 &6292784554846551691 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8144562277117598391, guid: 10c3b40b5d5b06445a55453c02d117f3,
     type: 3}

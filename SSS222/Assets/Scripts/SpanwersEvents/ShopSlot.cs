@@ -90,7 +90,7 @@ public class ShopSlot : MonoBehaviour{
                 }else if(ID==12){
                     player.health += 12;
                 }else if(ID==13){
-                    player.energy += 20;
+                    player.energy += 24;
                 }
                 }else{ResetState();}
 
