@@ -199,6 +199,9 @@ MonoBehaviour:
   powerup: laser
   energy: 180
   maxEnergy: 180
+  powerupDefault: laser
+  losePwrupOutOfEn: 1
+  energyRefillUnlocked: 0
   overheatTimer: -4
   overheatTimerMax: 8.66
   overheatDmg: 10
@@ -207,9 +210,15 @@ MonoBehaviour:
   overheated: 0
   overheatedTime: 3
   overheatedTimer: -4
-  powerupDefault: laser
-  losePwrupOutOfEn: 1
-  energyRefillUnlocked: 0
+  enRegenEnabled: 0
+  timerEnRegen: 0
+  freqEnRegen: 1
+  enRegenAmnt: 0.5
+  energyForRegen: 10
+  hpRegenEnabled: 0
+  timerHpRegen: 0
+  freqHpRegen: 1
+  hpRegenAmnt: 0.1
   lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
     type: 3}
   lclawsPrefab: {fileID: 4755926375889011706, guid: b9340c203c57d954687d49864bad3d74,
@@ -237,38 +246,52 @@ MonoBehaviour:
   cbulletShootPeriod: 0.15
   plaserSpeed: 9.75
   plaserShootPeriod: 0.75
+  statuses: []
+  statusc: 
   flip: 0
-  flipTime: 8.5
   flipTimer: -4
   gclover: 0
-  gcloverTime: 8
   gcloverTimer: -4
   shadow: 0
-  shadowTime: 11
   shadowTimer: -4
+  dashTime: 0
+  inverter: 0
+  inverterTimer: -4
+  magnet: 0
+  magnetTimer: -4
+  matrix: 0
+  matrixTimer: -4
+  scaler: 0
+  scalerTimer: -4
+  pmultiTimer: -4
+  accel: 0
+  accelTimer: -4
+  onfire: 0
+  onfireTimer: -4
+  decay: 0
+  decayTimer: -4
+  electrc: 0
+  electrcTimer: -4
+  frozen: 0
+  frozenTimer: -4
+  flipTime: 8.5
+  gcloverTime: 8
+  shadowTime: 11
   shadowLength: 0.2
   dashSpeed: 24
   startDashTime: 0.1
-  dashTime: 0
-  inverter: 0
   inverterTime: 10
-  inverterTimer: -4
-  magnet: 0
   magnetTime: 40
-  magnetTimer: -4
-  scaler: 0
+  scalerTime: 12
   shipScaleMin: 0.45
   shipScaleMax: 2.5
-  scalerTime: 12
-  scalerTimer: -4
-  matrix: 0
   matrixTime: 33
-  matrixTimer: -4
   pmultiTime: 24
-  pmultiTimer: -4
-  accel: 0
   accelTime: 16
-  accelTimer: -4
+  onfireTickrate: 0.38
+  onfireDmg: 1
+  decayTickrate: 0.5
+  decayDmg: 0.5
   laserEn: 0.3
   laser2En: 1.25
   laser3En: 2.5
@@ -280,8 +303,8 @@ MonoBehaviour:
   shadowBTEn: 10
   cbulletEn: 1.3
   plaserEn: 5.6
-  hrocketEn: 0.88
-  qrocketEn: 2.23
+  hrocketOh: 0.9
+  qrocketOh: 2.23
   procketEn: 0.86
   procketOh: 0.49
   energyBallGet: 9
@@ -308,34 +331,23 @@ MonoBehaviour:
   healed: 0
   shadowed: 0
   dashing: 0
+  flamed: 0
+  electricified: 0
   shootTimer: 0
   instantiateTime: 0.025
   instantiateTimer: 0
   mousePos: {x: 0, y: 0}
-  shipScale: 1
   dist: 0
   velocity: {x: 0, y: 0}
+  shipScale: 1
   mPressedTime: 0
   timeFlyingTotal: 0
   timeFlyingCore: 0
-  enRegenEnabled: 0
-  timerEnRegen: 0
-  freqEnRegen: 1
-  enRegenAmnt: 0.5
-  energyForRegen: 10
   stayingTimer: 0
   stayingTimerCore: 0
-  hpRegenEnabled: 0
-  timerHpRegen: 0
-  freqHpRegen: 1
-  hpRegenAmnt: 0.1
   joystick: {fileID: 0}
   moving: 0
   energyUsedCount: 0
-  status1: 
-  status2: 
-  status3: 
-  statusc: 
 --- !u!114 &1949430517914965929
 MonoBehaviour:
   m_ObjectHideFlags: 0

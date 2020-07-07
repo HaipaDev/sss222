@@ -175,7 +175,7 @@ public class Enemy : MonoBehaviour{
                 if(Coinchance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
                 if(powercoreChance==1){ Instantiate(powercorePrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
                 gameSession.AddEnemyCount();
-                if(xpAmnt>0){gameSession.AddXP(xpAmnt);}else if(xpAmnt<0){gameSession.SubXP(xpAmnt);}
+                gameSession.AddXP(xpAmnt);
                 givePts=false;
             }
             AudioManager.instance.Play("Explosion");
@@ -227,7 +227,7 @@ public class Enemy : MonoBehaviour{
             if (other.gameObject.name.Contains(LClawsPartname)){ dmg = damageDealer.GetDamageLClaws(); AudioManager.instance.Play("LClawsHit"); }
 
             var shadowbtName = shadowbtPrefab.name;
-            if (other.gameObject.name.Contains(shadowbtName)) { dmg = damageDealer.GetDamageShadowBT(); AudioManager.instance.Play("ShadowHit"); FindObjectOfType<Player>().health-=1; FindObjectOfType<Player>().DMGPopUpHud(1);}
+            if (other.gameObject.name.Contains(shadowbtName)) { dmg = damageDealer.GetDamageShadowBT(); AudioManager.instance.Play("ShadowHit"); FindObjectOfType<Player>().health-=1; FindObjectOfType<Player>().DMGPopUpHUD(1);}
             
             var cBulletname = cbulletPrefab.name;
             if (other.gameObject.name.Contains(cBulletname)) { dmg = damageDealer.GetDamageCBullet(); AudioManager.instance.Play("CStreamHit");}
@@ -315,7 +315,7 @@ public class Enemy : MonoBehaviour{
             var mPulsename = mPulsePrefab.name; var mPulsename1 = mPulsePrefab.name + "(Clone)";
             if (other.gameObject.name == mPulsename || other.gameObject.name == mPulsename1) { dmg = 0; AudioManager.instance.Play("PRocketHit");}
 
-            health -= dmg;
+            health -= dmg*player.dmgMulti;
             //Destroy(other.gameObject, 0.05f);
 
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));

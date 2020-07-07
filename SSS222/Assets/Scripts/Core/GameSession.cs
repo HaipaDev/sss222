@@ -106,7 +106,7 @@ public class GameSession : MonoBehaviour{
 
         if(FindObjectOfType<Player>()!=null){
             if(FindObjectOfType<Player>().timeFlyingCore>flyingTimeReq){AddXP(xp_flying);FindObjectOfType<Player>().timeFlyingCore=0f;}
-            if(FindObjectOfType<Player>().stayingTimerCore>stayingTimeReq){SubXP(xp_staying);FindObjectOfType<Player>().stayingTimerCore=0f;}
+            if(FindObjectOfType<Player>().stayingTimerCore>stayingTimeReq){AddXP(xp_staying);FindObjectOfType<Player>().stayingTimerCore=0f;}
         }
 
         Mathf.Clamp(coresXp,0,xp_forCore);
@@ -191,8 +191,7 @@ public class GameSession : MonoBehaviour{
     }
 
     public void AddToScoreNoEV(int scoreValue){score += scoreValue;ScorePopUpHUD(scoreValue);}
-    public void AddXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;XPPopUpHUD(xpValue);}
-    public void SubXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;XPSubPopUpHUD(xpValue);}
+    public void AddXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;if(xpValue>0){XPPopUpHUD(xpValue);}else if(xpValue<0){XPSubPopUpHUD(xpValue);}}
     public void AddEnemyCount(){enemiesCount++;FindObjectOfType<DisruptersSpawner>().EnemiesCountHealDrone++;
     var ps=FindObjectsOfType<PowerupsSpawner>();
     foreach(PowerupsSpawner p in ps){

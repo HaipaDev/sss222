@@ -156,15 +156,13 @@ public class PlayerCollider : MonoBehaviour{
                 {
                     if (player.dashing == false)
                     {
-                        player.health -= dmg;
+                        player.Damage(dmg,dmgType.normal);
                         if (destroy == true)
                         {
                             if (en != true) { Destroy(other.gameObject, 0.05f); }
                             else { other.GetComponent<Enemy>().givePts = false; other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die(); }
                         }
                         else { }
-                        player.damaged = true;
-                        AudioManager.instance.Play("ShipHit");
                         var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                         Destroy(flare.gameObject, 0.3f);
                     }
@@ -176,9 +174,7 @@ public class PlayerCollider : MonoBehaviour{
                         //}else{ }
                     }
                 }else{
-                    player.health -= dmg;
-                    player.damaged = true;
-                    AudioManager.instance.Play("ShipHit");
+                    player.Damage(dmg,dmgType.normal);
                 }
                 if(gameSession.dmgPopups==true){
                     GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
@@ -186,14 +182,14 @@ public class PlayerCollider : MonoBehaviour{
                     dmgpopup.transform.localScale=new Vector2(2,2);
                     dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmg.ToString();
                 }
-                DMGPopUpHud(dmg);
+                //DMGPopUpHud(dmg);
             }
             #endregion
             #region//Powerups
             else if (other.gameObject.CompareTag("Powerups"))
             {
                 var enBallName = enBallPrefab.name;
-                if (other.gameObject.name.Contains(enBallName)) { player.AddSubEnergy(player.energyBallGet,true); EnergyPopUpHUDPlus(player.energyBallGet);}
+                if (other.gameObject.name.Contains(enBallName)) { player.AddSubEnergy(player.energyBallGet,true);}
 
                 var CoinName = CoinPrefab.name;
                 if (other.gameObject.name.Contains(CoinName)) { gameSession.coins+=other.GetComponent<LCrystalDrop>().amnt;}//gameSession.coins += 1; }
@@ -205,16 +201,18 @@ public class PlayerCollider : MonoBehaviour{
                     gameSession.AddXP(gameSession.xp_powerup);}//XP For powerups
 
                 var armorName = armorPwrupPrefab.name;
-                if (other.gameObject.name.Contains(armorName)) { if(player.health>(player.maxHP-25)){gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} HPAdd(); player.AddSubEnergy(player.medkitEnergyGet,true); EnergyPopUpHUDPlus(player.medkitEnergyGet); player.healed = true; }
+                if (other.gameObject.name.Contains(armorName)) { if(player.health>(player.maxHP-25)){gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} HPAdd(); player.AddSubEnergy(player.medkitEnergyGet,true); }//EnergyPopUpHUDPlus(player.medkitEnergyGet); player.healed = true; }
                 var armorUName = armorUPwrupPrefab.name;
-                if (other.gameObject.name.Contains(armorUName)) { if (player.health>(player.maxHP-30)) {gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} HPAddU(); player.AddSubEnergy(player.medkitUEnergyGet,true); EnergyPopUpHUDPlus(player.medkitUEnergyGet); player.healed = true; }
+                if (other.gameObject.name.Contains(armorUName)) { if (player.health>(player.maxHP-30)) {gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} HPAddU(); player.AddSubEnergy(player.medkitUEnergyGet,true); }//EnergyPopUpHUDPlus(player.medkitUEnergyGet); player.healed = true; }
 
                 void HPAdd(){
-                    player.health += player.medkitHpAmnt;
-                    HPPopUpHUD(player.medkitHpAmnt);
+                    player.Damage(player.medkitHpAmnt,dmgType.heal);
+                    //player.health += player.medkitHpAmnt;
+                    //HPPopUpHUD(player.medkitHpAmnt);
                 }void HPAddU(){
-                    player.health += player.medkitUHpAmnt;
-                    HPPopUpHUD(player.medkitUHpAmnt);
+                    player.Damage(player.medkitUHpAmnt,dmgType.heal);
+                    //player.health += player.medkitUHpAmnt;
+                    //HPPopUpHUD(player.medkitUHpAmnt);
                 }
 
                 var flipName = flipPwrupPrefab.name;
@@ -354,9 +352,9 @@ public class PlayerCollider : MonoBehaviour{
         if(player.energy<=player.enForPwrupRefill){EnergyAdd();} if(player.powerup==name){EnergyAddDupl();} player.powerup = name;
     }
     void EnergyAdd(){
-        player.AddSubEnergy(player.pwrupEnergyGet,true);EnergyPopUpHUDPlus(player.pwrupEnergyGet);
+        player.AddSubEnergy(player.pwrupEnergyGet,true);//EnergyPopUpHUDPlus(player.pwrupEnergyGet);
     }void EnergyAddDupl(){
-        player.AddSubEnergy(player.enPwrupDuplicate,true);EnergyPopUpHUDPlus(player.enPwrupDuplicate);
+        player.AddSubEnergy(player.enPwrupDuplicate,true);//EnergyPopUpHUDPlus(player.enPwrupDuplicate);
     }
     private void OnTriggerStay2D(Collider2D other){
         if (!other.CompareTag(tag))
@@ -378,8 +376,6 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name == enSaberName || other.gameObject.name == enSaberName1) { dmg = damageDealer.GetDamageEnSaber(); }
 
                 if (dmgTimer<=0){
-                    player.health -= dmg;
-                    player.damaged = true;
                     if (other.gameObject.name == leechName || other.gameObject.name == leechName1){AudioManager.instance.Play("LeechBite");}
                     //var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                     //Destroy(flare.gameObject, 0.3f);
@@ -389,7 +385,7 @@ public class PlayerCollider : MonoBehaviour{
                         dmgpopup.transform.localScale=new Vector2(2,2);
                         dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmg.ToString();
                     }
-                    DMGPopUpHud(dmg);
+                    player.Damage(dmg,dmgType.silent);
                     dmgTimer = dmgFreq;
                 }else{ dmgTimer -= Time.deltaTime; }
             }
@@ -405,7 +401,7 @@ public class PlayerCollider : MonoBehaviour{
     }
     public GameObject GetRandomizerPwrup(){return randomizerPwrupPrefab;}
 
-    public void DMGPopUpHud(float dmg){
+    /*public void DMGPopUpHud(float dmg){
         GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
         dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
@@ -426,5 +422,5 @@ public class PlayerCollider : MonoBehaviour{
         enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+en.ToString();
-    }
+    }*/
 }

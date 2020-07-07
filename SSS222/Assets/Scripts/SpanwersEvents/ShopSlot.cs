@@ -51,6 +51,7 @@ public class ShopSlot : MonoBehaviour{
             gameSession.gameSpeed=0.05f;
             //var price = item.lootItem.price;
             gameSession.coins-=price;
+            shopMenu.purchasedNotTimes=0;
 
             shopVFX=GameAssets.instance.GetVFX("ShopVFX");
             var pos=transform;
@@ -63,7 +64,7 @@ public class ShopSlot : MonoBehaviour{
             //AudioSource.PlayClipAtPoint(shopMenu.buySFX,player.transform.position);
             AudioManager.instance.Play("Ding");
             //if(ID<=shopMenu.shopSlotIDs.Count){
-                player.energy+=10f;
+                //player.energy+=10f;
                 if(ID!=10)gameSession.AddXP(gameSession.xp_shop);//XP For purchase
                 shopMenu.Purchase();
                 //if(ID!=4 && ID!=8 && ID!=9 && ID!=10){

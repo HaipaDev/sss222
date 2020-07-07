@@ -13,12 +13,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cacheType: 6
-  lastUpdatedAtString: 2020-07-05T18:29:53.358+02:00
-  initializedAtString: 2020-07-05T17:23:20.682+02:00
+  lastUpdatedAtString: 2020-07-07T19:44:02.321+02:00
+  initializedAtString: 2020-07-07T16:16:36.597+02:00
   entries:
-  - path: SSS222\Assets\Prefabs\Config&UI\UpgradeCanvas.prefab
-    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Prefabs\Config&UI\UpgradeCanvas.prefab
-    projectPath: Assets\Prefabs\Config&UI\UpgradeCanvas.prefab
+  - path: SSS222\Assets\Prefabs\Config&UI\GameAssets.prefab
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Prefabs\Config&UI\GameAssets.prefab
+    projectPath: Assets\Prefabs\Config&UI\GameAssets.prefab
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: SSS222\Assets\Prefabs\Config&UI\HUD.prefab
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Prefabs\Config&UI\HUD.prefab
+    projectPath: Assets\Prefabs\Config&UI\HUD.prefab
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: SSS222\Assets\Prefabs\Particles\Explosions\ExplosionDmgSmallBluVFX.prefab
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Prefabs\Particles\Explosions\ExplosionDmgSmallBluVFX.prefab
+    projectPath: Assets\Prefabs\Particles\Explosions\ExplosionDmgSmallBluVFX.prefab
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: SSS222\Assets\Prefabs\Player\Player.prefab
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Prefabs\Player\Player.prefab
+    projectPath: Assets\Prefabs\Player\Player.prefab
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
@@ -28,9 +46,27 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
+  - path: SSS222\Assets\Scripts\Core\GameSession.cs
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Scripts\Core\GameSession.cs
+    projectPath: Assets\Scripts\Core\GameSession.cs
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: SSS222\Assets\Scripts\Enemies\Enemy.cs
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Scripts\Enemies\Enemy.cs
+    projectPath: Assets\Scripts\Enemies\Enemy.cs
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
   - path: SSS222\Assets\Scripts\Player\Player.cs
     fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Scripts\Player\Player.cs
     projectPath: Assets\Scripts\Player\Player.cs
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: SSS222\Assets\Scripts\Player\PlayerCollider.cs
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Scripts\Player\PlayerCollider.cs
+    projectPath: Assets\Scripts\Player\PlayerCollider.cs
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
@@ -40,39 +76,81 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
-  - path: SSS222\Assets\ShopSlots\12MicroMedkit.asset
-    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\ShopSlots\12MicroMedkit.asset
-    projectPath: Assets\ShopSlots\12MicroMedkit.asset
+  - path: SSS222\Assets\Scripts\UniversalUsage\DamageParticle.cs
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Scripts\UniversalUsage\DamageParticle.cs
+    projectPath: Assets\Scripts\UniversalUsage\DamageParticle.cs
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
-  - path: SSS222\Assets\ShopSlots\13MicroBattery.asset
-    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\ShopSlots\13MicroBattery.asset
-    projectPath: Assets\ShopSlots\13MicroBattery.asset
+  - path: SSS222\Assets\Scripts\Visuals\Screenflash.cs
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Scripts\Visuals\Screenflash.cs
+    projectPath: Assets\Scripts\Visuals\Screenflash.cs
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
-  - path: SSS222\Assets\Sprites\Collectibles\Battery.png
-    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Battery.png
-    projectPath: Assets\Sprites\Collectibles\Battery.png
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses.meta
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses.meta
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses.meta
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Assets\Sprites\Collectibles\Battery.png.meta
-    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Battery.png.meta
-    projectPath: Assets\Sprites\Collectibles\Battery.png.meta
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup2.png
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup2.png
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup2.png
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Assets\Sprites\Collectibles\Wrenchv2.png
-    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Wrenchv2.png
-    projectPath: Assets\Sprites\Collectibles\Wrenchv2.png
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup2.png.meta
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup2.png.meta
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup2.png.meta
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Assets\Sprites\Collectibles\Wrenchv2.png.meta
-    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Wrenchv2.png.meta
-    projectPath: Assets\Sprites\Collectibles\Wrenchv2.png.meta
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup3.png
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup3.png
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup3.png
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup3.png.meta
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup3.png.meta
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses\DecayPowerup3.png.meta
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\ElectrocutedPowerup.png
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\ElectrocutedPowerup.png
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses\ElectrocutedPowerup.png
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\ElectrocutedPowerup.png.meta
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\ElectrocutedPowerup.png.meta
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses\ElectrocutedPowerup.png.meta
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup.png
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup.png
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup.png
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup.png.meta
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup.png.meta
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup.png.meta
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup2.png
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup2.png
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup2.png
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup2.png.meta
+    fullPath: C:\Unity Projects\SSS222\SSS222\Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup2.png.meta
+    projectPath: Assets\Sprites\Collectibles\Powerups\Statuses\FirePowerup2.png.meta
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
@@ -82,9 +160,39 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
+  - path: SSS222\Library\Artifacts\01\010810ab7467ef1b73b436681a6d9b6e
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\01\010810ab7467ef1b73b436681a6d9b6e
+    projectPath: Library\Artifacts\01\010810ab7467ef1b73b436681a6d9b6e
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\04\0484af2a909b266d7abda741b63004b1
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\04\0484af2a909b266d7abda741b63004b1
+    projectPath: Library\Artifacts\04\0484af2a909b266d7abda741b63004b1
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
   - path: SSS222\Library\Artifacts\06\068beaf771fb0d93894e6be6c59878a5
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\06\068beaf771fb0d93894e6be6c59878a5
     projectPath: Library\Artifacts\06\068beaf771fb0d93894e6be6c59878a5
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\0d\0da3d27555cca25d671138325292afbf
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\0d\0da3d27555cca25d671138325292afbf
+    projectPath: Library\Artifacts\0d\0da3d27555cca25d671138325292afbf
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\11\112101e06bfac527ae2433a7c938de27
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\11\112101e06bfac527ae2433a7c938de27
+    projectPath: Library\Artifacts\11\112101e06bfac527ae2433a7c938de27
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\12\12cf34430986344ef43e3f049332cec4
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\12\12cf34430986344ef43e3f049332cec4
+    projectPath: Library\Artifacts\12\12cf34430986344ef43e3f049332cec4
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
@@ -92,176 +200,362 @@ MonoBehaviour:
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\15\1522ca1eb3c5e4a60c7e17513ce1122c
     projectPath: Library\Artifacts\15\1522ca1eb3c5e4a60c7e17513ce1122c
     originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Library\Artifacts\2b\2bf8b75866ffb9cfae228cbd89d5bad6
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\2b\2bf8b75866ffb9cfae228cbd89d5bad6
-    projectPath: Library\Artifacts\2b\2bf8b75866ffb9cfae228cbd89d5bad6
-    originalPath: 
     indexStatus: 0
     workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\21\214c398516f1b0af96c6befa5c8483ad
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\21\214c398516f1b0af96c6befa5c8483ad
+    projectPath: Library\Artifacts\21\214c398516f1b0af96c6befa5c8483ad
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\22\22920e71752bf549cbb8a6d2345419a6
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\22\22920e71752bf549cbb8a6d2345419a6
+    projectPath: Library\Artifacts\22\22920e71752bf549cbb8a6d2345419a6
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\23\23bf56263c27dc680fe1af404969eea5
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\23\23bf56263c27dc680fe1af404969eea5
+    projectPath: Library\Artifacts\23\23bf56263c27dc680fe1af404969eea5
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\27\27c356b901a57dfe58b75ea843ab21b4
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\27\27c356b901a57dfe58b75ea843ab21b4
+    projectPath: Library\Artifacts\27\27c356b901a57dfe58b75ea843ab21b4
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\2f\2f0afdb7accf6aa937e580825249efd7
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\2f\2f0afdb7accf6aa937e580825249efd7
+    projectPath: Library\Artifacts\2f\2f0afdb7accf6aa937e580825249efd7
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
   - path: SSS222\Library\Artifacts\31\3195056bdde40566d41b69eeef2d2c88
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\31\3195056bdde40566d41b69eeef2d2c88
     projectPath: Library\Artifacts\31\3195056bdde40566d41b69eeef2d2c88
     originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
+    indexStatus: 0
+    workTreeStatus: 5
   - path: SSS222\Library\Artifacts\33\3391a917e7402c760ee7fe992280fc74
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\33\3391a917e7402c760ee7fe992280fc74
     projectPath: Library\Artifacts\33\3391a917e7402c760ee7fe992280fc74
     originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Library\Artifacts\3c\3cd89e7fe6e6db4fca1c9a2c34190a4d
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\3c\3cd89e7fe6e6db4fca1c9a2c34190a4d
-    projectPath: Library\Artifacts\3c\3cd89e7fe6e6db4fca1c9a2c34190a4d
-    originalPath: 
     indexStatus: 0
     workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\44\4489b06cc462a27518246a4e5702b63d
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\44\4489b06cc462a27518246a4e5702b63d
-    projectPath: Library\Artifacts\44\4489b06cc462a27518246a4e5702b63d
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\45\45204e6356c83ef5e135d55bb75433aa
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\45\45204e6356c83ef5e135d55bb75433aa
-    projectPath: Library\Artifacts\45\45204e6356c83ef5e135d55bb75433aa
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\5d\5dac9351c2615267d5d8ec7dcf4ac604
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\5d\5dac9351c2615267d5d8ec7dcf4ac604
-    projectPath: Library\Artifacts\5d\5dac9351c2615267d5d8ec7dcf4ac604
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\5e\5ea5278a5d0ec5d1dc54122d1beff05c
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\5e\5ea5278a5d0ec5d1dc54122d1beff05c
-    projectPath: Library\Artifacts\5e\5ea5278a5d0ec5d1dc54122d1beff05c
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\71\718f421a8bbaa7d93c5ea3f6a7dd6541
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\71\718f421a8bbaa7d93c5ea3f6a7dd6541
-    projectPath: Library\Artifacts\71\718f421a8bbaa7d93c5ea3f6a7dd6541
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\86\86e9ca77b2fd2e85bcca6fe88b3aee04
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\86\86e9ca77b2fd2e85bcca6fe88b3aee04
-    projectPath: Library\Artifacts\86\86e9ca77b2fd2e85bcca6fe88b3aee04
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\88\88dca2f6ca59470041149f9c7ff96568
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\88\88dca2f6ca59470041149f9c7ff96568
-    projectPath: Library\Artifacts\88\88dca2f6ca59470041149f9c7ff96568
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\8c\8c97208addc460745cf5597359cb4c0d
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\8c\8c97208addc460745cf5597359cb4c0d
-    projectPath: Library\Artifacts\8c\8c97208addc460745cf5597359cb4c0d
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\a8\a84f4e268ccfd3d43fa2407464c5101a
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\a8\a84f4e268ccfd3d43fa2407464c5101a
-    projectPath: Library\Artifacts\a8\a84f4e268ccfd3d43fa2407464c5101a
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\bc\bcdbbcbfd4e2690161942c92a4f917d2
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\bc\bcdbbcbfd4e2690161942c92a4f917d2
-    projectPath: Library\Artifacts\bc\bcdbbcbfd4e2690161942c92a4f917d2
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\c0\c006ad91438a6a146bc8f9a13994fbea
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\c0\c006ad91438a6a146bc8f9a13994fbea
-    projectPath: Library\Artifacts\c0\c006ad91438a6a146bc8f9a13994fbea
+  - path: SSS222\Library\Artifacts\3b\3b00b3695608d8d3b176efc4551ac385
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\3b\3b00b3695608d8d3b176efc4551ac385
+    projectPath: Library\Artifacts\3b\3b00b3695608d8d3b176efc4551ac385
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Library\Artifacts\c5\c568461a5ec86d63994e447ed93b3937
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\c5\c568461a5ec86d63994e447ed93b3937
-    projectPath: Library\Artifacts\c5\c568461a5ec86d63994e447ed93b3937
+  - path: SSS222\Library\Artifacts\40\40fa346317524bf8b152c0c3fae453d7
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\40\40fa346317524bf8b152c0c3fae453d7
+    projectPath: Library\Artifacts\40\40fa346317524bf8b152c0c3fae453d7
     originalPath: 
     indexStatus: 0
     workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\41\41330e04fd48375274d584d95a69698a
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\41\41330e04fd48375274d584d95a69698a
+    projectPath: Library\Artifacts\41\41330e04fd48375274d584d95a69698a
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\41\41e919bbdd21a9199545868cb46fb124
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\41\41e919bbdd21a9199545868cb46fb124
+    projectPath: Library\Artifacts\41\41e919bbdd21a9199545868cb46fb124
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\46\46838675faabc8e81995926eb538a363
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\46\46838675faabc8e81995926eb538a363
+    projectPath: Library\Artifacts\46\46838675faabc8e81995926eb538a363
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\4c\4ce03a7252fcec1f60baf524c888a03c
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\4c\4ce03a7252fcec1f60baf524c888a03c
+    projectPath: Library\Artifacts\4c\4ce03a7252fcec1f60baf524c888a03c
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\51\51a3e025c0d83c0e0f8dee2ce6cc4df0
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\51\51a3e025c0d83c0e0f8dee2ce6cc4df0
+    projectPath: Library\Artifacts\51\51a3e025c0d83c0e0f8dee2ce6cc4df0
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\52\5287c045471b1819477056a163b62768
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\52\5287c045471b1819477056a163b62768
+    projectPath: Library\Artifacts\52\5287c045471b1819477056a163b62768
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\5d\5d7d0388fc7cfe8d1454c5a35dd8d962
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\5d\5d7d0388fc7cfe8d1454c5a35dd8d962
+    projectPath: Library\Artifacts\5d\5d7d0388fc7cfe8d1454c5a35dd8d962
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\5f\5f014a1b8a8c6d8f63eeb28e353d0a0c
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\5f\5f014a1b8a8c6d8f63eeb28e353d0a0c
+    projectPath: Library\Artifacts\5f\5f014a1b8a8c6d8f63eeb28e353d0a0c
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\64\646ff0c89f56c82b28a24aa91efa7c01
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\64\646ff0c89f56c82b28a24aa91efa7c01
+    projectPath: Library\Artifacts\64\646ff0c89f56c82b28a24aa91efa7c01
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\68\682504f8f11972e3864bf33873876446
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\68\682504f8f11972e3864bf33873876446
+    projectPath: Library\Artifacts\68\682504f8f11972e3864bf33873876446
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\6f\6f0abf0c39284106199adbeeb095e1a4
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\6f\6f0abf0c39284106199adbeeb095e1a4
+    projectPath: Library\Artifacts\6f\6f0abf0c39284106199adbeeb095e1a4
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\7e\7e5a66065e520a8f892661ec63e4f6f5
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\7e\7e5a66065e520a8f892661ec63e4f6f5
+    projectPath: Library\Artifacts\7e\7e5a66065e520a8f892661ec63e4f6f5
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\80\800af9731f2ed84ca9785a7c17dd68b0
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\80\800af9731f2ed84ca9785a7c17dd68b0
+    projectPath: Library\Artifacts\80\800af9731f2ed84ca9785a7c17dd68b0
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\82\82bd83a52a39f8339508e7eb79457c99
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\82\82bd83a52a39f8339508e7eb79457c99
+    projectPath: Library\Artifacts\82\82bd83a52a39f8339508e7eb79457c99
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\87\871d6c0fdb9ac6f9255ea38259a5e6be
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\87\871d6c0fdb9ac6f9255ea38259a5e6be
+    projectPath: Library\Artifacts\87\871d6c0fdb9ac6f9255ea38259a5e6be
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\92\92a51cb9edfe80e07d1dcf99fe43a6b5
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\92\92a51cb9edfe80e07d1dcf99fe43a6b5
+    projectPath: Library\Artifacts\92\92a51cb9edfe80e07d1dcf99fe43a6b5
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\9b\9b55b074e96f0da4007db2ced88935bc
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\9b\9b55b074e96f0da4007db2ced88935bc
+    projectPath: Library\Artifacts\9b\9b55b074e96f0da4007db2ced88935bc
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\9d\9d686cf3c1273c85d6aece2105382089
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\9d\9d686cf3c1273c85d6aece2105382089
+    projectPath: Library\Artifacts\9d\9d686cf3c1273c85d6aece2105382089
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\9d\9da0347ed47852bd9dc3f90f996e4518
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\9d\9da0347ed47852bd9dc3f90f996e4518
+    projectPath: Library\Artifacts\9d\9da0347ed47852bd9dc3f90f996e4518
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\a4\a4e63f9c92c102674cd1d340bfd53618
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\a4\a4e63f9c92c102674cd1d340bfd53618
+    projectPath: Library\Artifacts\a4\a4e63f9c92c102674cd1d340bfd53618
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\a7\a756c36cb990b17c2a6ad8156be284fa
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\a7\a756c36cb990b17c2a6ad8156be284fa
+    projectPath: Library\Artifacts\a7\a756c36cb990b17c2a6ad8156be284fa
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\a9\a985ba33b84f868753eaa29afdaa32bf
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\a9\a985ba33b84f868753eaa29afdaa32bf
+    projectPath: Library\Artifacts\a9\a985ba33b84f868753eaa29afdaa32bf
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\aa\aa7de82c46b9e9bbe71a74c5c0b5d166
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\aa\aa7de82c46b9e9bbe71a74c5c0b5d166
+    projectPath: Library\Artifacts\aa\aa7de82c46b9e9bbe71a74c5c0b5d166
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\ab\abc8486d82dc3d5076dbebc438ba47f6
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\ab\abc8486d82dc3d5076dbebc438ba47f6
+    projectPath: Library\Artifacts\ab\abc8486d82dc3d5076dbebc438ba47f6
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\b1\b1423e20c248b4bbb53cd7563b9a02e3
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\b1\b1423e20c248b4bbb53cd7563b9a02e3
+    projectPath: Library\Artifacts\b1\b1423e20c248b4bbb53cd7563b9a02e3
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\b4\b411115f739ae22273014c96754426ab
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\b4\b411115f739ae22273014c96754426ab
+    projectPath: Library\Artifacts\b4\b411115f739ae22273014c96754426ab
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\ba\ba392ead1451c0440cb936005f704730
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\ba\ba392ead1451c0440cb936005f704730
+    projectPath: Library\Artifacts\ba\ba392ead1451c0440cb936005f704730
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\bb\bbe85b63cd9d9512d061a8a89ed65225
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\bb\bbe85b63cd9d9512d061a8a89ed65225
+    projectPath: Library\Artifacts\bb\bbe85b63cd9d9512d061a8a89ed65225
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\bc\bc39c528c70e50dab77b97f16de798d7
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\bc\bc39c528c70e50dab77b97f16de798d7
+    projectPath: Library\Artifacts\bc\bc39c528c70e50dab77b97f16de798d7
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
   - path: SSS222\Library\Artifacts\c5\c5b39226e63dc545ecd2dfe09a3364b5
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\c5\c5b39226e63dc545ecd2dfe09a3364b5
     projectPath: Library\Artifacts\c5\c5b39226e63dc545ecd2dfe09a3364b5
     originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
+    indexStatus: 0
+    workTreeStatus: 5
   - path: SSS222\Library\Artifacts\c6\c621348fa9ab715d21f5d7fddf679018
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\c6\c621348fa9ab715d21f5d7fddf679018
     projectPath: Library\Artifacts\c6\c621348fa9ab715d21f5d7fddf679018
     originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\c6\c623ee2f14c4e484a92af92784972da4
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\c6\c623ee2f14c4e484a92af92784972da4
+    projectPath: Library\Artifacts\c6\c623ee2f14c4e484a92af92784972da4
+    originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Library\Artifacts\ca\caae3ddd81c0a7ec4638fa00d7a90bc5
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\ca\caae3ddd81c0a7ec4638fa00d7a90bc5
-    projectPath: Library\Artifacts\ca\caae3ddd81c0a7ec4638fa00d7a90bc5
+  - path: SSS222\Library\Artifacts\c8\c841ac78dd5a4a09984c3421e86e6ede
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\c8\c841ac78dd5a4a09984c3421e86e6ede
+    projectPath: Library\Artifacts\c8\c841ac78dd5a4a09984c3421e86e6ede
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\c8\c89fe445726dfd31377557e05e022cb9
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\c8\c89fe445726dfd31377557e05e022cb9
+    projectPath: Library\Artifacts\c8\c89fe445726dfd31377557e05e022cb9
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\cb\cb183277e117adf809e5cf83772f550e
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\cb\cb183277e117adf809e5cf83772f550e
+    projectPath: Library\Artifacts\cb\cb183277e117adf809e5cf83772f550e
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\cc\cc1561d6ac774ec85cda944485fc0633
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\cc\cc1561d6ac774ec85cda944485fc0633
+    projectPath: Library\Artifacts\cc\cc1561d6ac774ec85cda944485fc0633
     originalPath: 
     indexStatus: 0
     workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\cc\cc57def10d7e582a7693fe796072fc85
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\cc\cc57def10d7e582a7693fe796072fc85
+    projectPath: Library\Artifacts\cc\cc57def10d7e582a7693fe796072fc85
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\cd\cd992d05eafd05a27d2d27b7cbff5f2e
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\cd\cd992d05eafd05a27d2d27b7cbff5f2e
+    projectPath: Library\Artifacts\cd\cd992d05eafd05a27d2d27b7cbff5f2e
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\cf\cf2d4913edf489a037f9966fa8f9ec70
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\cf\cf2d4913edf489a037f9966fa8f9ec70
+    projectPath: Library\Artifacts\cf\cf2d4913edf489a037f9966fa8f9ec70
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
   - path: SSS222\Library\Artifacts\d2\d2ddfb1ec197c2e34cc02cf51f46cef6
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\d2\d2ddfb1ec197c2e34cc02cf51f46cef6
     projectPath: Library\Artifacts\d2\d2ddfb1ec197c2e34cc02cf51f46cef6
     originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Library\Artifacts\d2\d2fe59276f41a8adb56c39923c8bc71c
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\d2\d2fe59276f41a8adb56c39923c8bc71c
-    projectPath: Library\Artifacts\d2\d2fe59276f41a8adb56c39923c8bc71c
-    originalPath: 
     indexStatus: 0
     workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\d6\d61b630c3ce482258a3cbc0813c6ecd4
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\d6\d61b630c3ce482258a3cbc0813c6ecd4
-    projectPath: Library\Artifacts\d6\d61b630c3ce482258a3cbc0813c6ecd4
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: SSS222\Library\Artifacts\d9\d910817b85e34b20cd4936f33afda20f
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\d9\d910817b85e34b20cd4936f33afda20f
-    projectPath: Library\Artifacts\d9\d910817b85e34b20cd4936f33afda20f
+  - path: SSS222\Library\Artifacts\d3\d3acbaa1ecef0175e38f36a32457c0f1
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\d3\d3acbaa1ecef0175e38f36a32457c0f1
+    projectPath: Library\Artifacts\d3\d3acbaa1ecef0175e38f36a32457c0f1
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Library\Artifacts\d9\d9b2c51a45eebb9a047a15492dedc531
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\d9\d9b2c51a45eebb9a047a15492dedc531
-    projectPath: Library\Artifacts\d9\d9b2c51a45eebb9a047a15492dedc531
+  - path: SSS222\Library\Artifacts\db\db89095702cc7411d93681f9aa4d869e
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\db\db89095702cc7411d93681f9aa4d869e
+    projectPath: Library\Artifacts\db\db89095702cc7411d93681f9aa4d869e
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\dc\dc3f39ea4b39ea8998df1943c6ddca1c
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\dc\dc3f39ea4b39ea8998df1943c6ddca1c
+    projectPath: Library\Artifacts\dc\dc3f39ea4b39ea8998df1943c6ddca1c
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: SSS222\Library\Artifacts\e4\e4d4330f2e2da3674e72581d9f0154bf
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\e4\e4d4330f2e2da3674e72581d9f0154bf
+    projectPath: Library\Artifacts\e4\e4d4330f2e2da3674e72581d9f0154bf
     originalPath: 
     indexStatus: 0
     workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\e5\e53625ea37fcdca261e183afaaa5e278
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\e5\e53625ea37fcdca261e183afaaa5e278
+    projectPath: Library\Artifacts\e5\e53625ea37fcdca261e183afaaa5e278
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
   - path: SSS222\Library\Artifacts\e5\e5a80c4c0d8e9a80bb23d9baced1aff7
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\e5\e5a80c4c0d8e9a80bb23d9baced1aff7
     projectPath: Library\Artifacts\e5\e5a80c4c0d8e9a80bb23d9baced1aff7
     originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Library\Artifacts\e9\e9a61203569ae75ef52f476dffcdf802
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\e9\e9a61203569ae75ef52f476dffcdf802
-    projectPath: Library\Artifacts\e9\e9a61203569ae75ef52f476dffcdf802
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: SSS222\Library\Artifacts\f2\f213f987807a668ee6a85d8c80c82cf2
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\f2\f213f987807a668ee6a85d8c80c82cf2
+    projectPath: Library\Artifacts\f2\f213f987807a668ee6a85d8c80c82cf2
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Library\Artifacts\ec\ec8532a77f02d3d558b0b17b9a7db896
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\ec\ec8532a77f02d3d558b0b17b9a7db896
-    projectPath: Library\Artifacts\ec\ec8532a77f02d3d558b0b17b9a7db896
+  - path: SSS222\Library\Artifacts\f4\f4fba82689dddec42f432dc7c4730827
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\f4\f4fba82689dddec42f432dc7c4730827
+    projectPath: Library\Artifacts\f4\f4fba82689dddec42f432dc7c4730827
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Library\Artifacts\ff\ff620927e0906d3297d393dafe28b04e
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\ff\ff620927e0906d3297d393dafe28b04e
-    projectPath: Library\Artifacts\ff\ff620927e0906d3297d393dafe28b04e
+  - path: SSS222\Library\Artifacts\f7\f75613ee277fb90098aa5223d1384b8f
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\Artifacts\f7\f75613ee277fb90098aa5223d1384b8f
+    projectPath: Library\Artifacts\f7\f75613ee277fb90098aa5223d1384b8f
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
+  - path: SSS222\Library\CurrentLayout-default.dwlt
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\CurrentLayout-default.dwlt
+    projectPath: Library\CurrentLayout-default.dwlt
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
   - path: SSS222\Library\EditorInstance.json
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\EditorInstance.json
     projectPath: Library\EditorInstance.json
@@ -304,6 +598,12 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
+  - path: SSS222\Library\InspectorExpandedItems.asset
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\InspectorExpandedItems.asset
+    projectPath: Library\InspectorExpandedItems.asset
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
   - path: SSS222\Library\LastBuild.buildreport
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\LastBuild.buildreport
     projectPath: Library\LastBuild.buildreport
@@ -316,15 +616,21 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
-  - path: SSS222\Library\PlayerDataCache\Win64\Data\globalgamemanagers.assets
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\globalgamemanagers.assets
-    projectPath: Library\PlayerDataCache\Win64\Data\globalgamemanagers.assets
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
   - path: SSS222\Library\PlayerDataCache\Win64\Data\level0
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\level0
     projectPath: Library\PlayerDataCache\Win64\Data\level0
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: SSS222\Library\PlayerDataCache\Win64\Data\level1
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\level1
+    projectPath: Library\PlayerDataCache\Win64\Data\level1
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: SSS222\Library\PlayerDataCache\Win64\Data\level2
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\level2
+    projectPath: Library\PlayerDataCache\Win64\Data\level2
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
@@ -337,6 +643,12 @@ MonoBehaviour:
   - path: SSS222\Library\PlayerDataCache\Win64\Data\level4
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\level4
     projectPath: Library\PlayerDataCache\Win64\Data\level4
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: SSS222\Library\PlayerDataCache\Win64\Data\level5
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\level5
+    projectPath: Library\PlayerDataCache\Win64\Data\level5
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
@@ -454,33 +766,15 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
+  - path: SSS222\Library\PlayerDataCache\Win64\Data\sharedassets0.assets
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\sharedassets0.assets
+    projectPath: Library\PlayerDataCache\Win64\Data\sharedassets0.assets
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
   - path: SSS222\Library\PlayerDataCache\Win64\Data\sharedassets1.assets
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\sharedassets1.assets
     projectPath: Library\PlayerDataCache\Win64\Data\sharedassets1.assets
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
-  - path: SSS222\Library\PlayerDataCache\Win64\Data\sharedassets3.assets
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\sharedassets3.assets
-    projectPath: Library\PlayerDataCache\Win64\Data\sharedassets3.assets
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
-  - path: SSS222\Library\PlayerDataCache\Win64\Data\sharedassets3.assets.resS
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\sharedassets3.assets.resS
-    projectPath: Library\PlayerDataCache\Win64\Data\sharedassets3.assets.resS
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
-  - path: SSS222\Library\PlayerDataCache\Win64\Data\sharedassets4.assets
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\Data\sharedassets4.assets
-    projectPath: Library\PlayerDataCache\Win64\Data\sharedassets4.assets
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
-  - path: SSS222\Library\PlayerDataCache\Win64\ScriptsOnlyCache.yaml
-    fullPath: C:\Unity Projects\SSS222\SSS222\Library\PlayerDataCache\Win64\ScriptsOnlyCache.yaml
-    projectPath: Library\PlayerDataCache\Win64\ScriptsOnlyCache.yaml
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
@@ -514,15 +808,33 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
+  - path: SSS222\Library\StateCache\Hierarchy\06f462-2c3f94b277a11e0478.json
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\StateCache\Hierarchy\06f462-2c3f94b277a11e0478.json
+    projectPath: Library\StateCache\Hierarchy\06f462-2c3f94b277a11e0478.json
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
   - path: SSS222\Library\StateCache\Hierarchy\06f462-mainStage.json
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\StateCache\Hierarchy\06f462-mainStage.json
     projectPath: Library\StateCache\Hierarchy\06f462-mainStage.json
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
+  - path: SSS222\Library\StateCache\SceneView\4b51fd-2c3f94b277a11e0478.json
+    fullPath: C:\Unity Projects\SSS222\SSS222\Library\StateCache\SceneView\4b51fd-2c3f94b277a11e0478.json
+    projectPath: Library\StateCache\SceneView\4b51fd-2c3f94b277a11e0478.json
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
   - path: SSS222\Library\StateCache\SceneView\4b51fd-mainStage.json
     fullPath: C:\Unity Projects\SSS222\SSS222\Library\StateCache\SceneView\4b51fd-mainStage.json
     projectPath: Library\StateCache\SceneView\4b51fd-mainStage.json
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: SSS222\ProjectSettings\TimeManager.asset
+    fullPath: C:\Unity Projects\SSS222\SSS222\ProjectSettings\TimeManager.asset
+    projectPath: ProjectSettings\TimeManager.asset
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
@@ -532,405 +844,129 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\tempFile.res
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\tempFile.res
-    projectPath: Temp\tempFile.res
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\tempFile.resG
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\tempFile.resG
-    projectPath: Temp\tempFile.resG
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
   - path: SSS222\Temp\UnityLockfile
     fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityLockfile
     projectPath: Temp\UnityLockfile
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-05ff33d39b68f7e4bb3a40e7cb78434d
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-05ff33d39b68f7e4bb3a40e7cb78434d
-    projectPath: Temp\UnityTempFile-05ff33d39b68f7e4bb3a40e7cb78434d
+  - path: SSS222\Temp\UnityTempFile-05e9062829a3fbb49b2ad6ead26a87a2
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-05e9062829a3fbb49b2ad6ead26a87a2
+    projectPath: Temp\UnityTempFile-05e9062829a3fbb49b2ad6ead26a87a2
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-06d3c5030c09fca4ea5823f7cb93bdce
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-06d3c5030c09fca4ea5823f7cb93bdce
-    projectPath: Temp\UnityTempFile-06d3c5030c09fca4ea5823f7cb93bdce
+  - path: SSS222\Temp\UnityTempFile-110cba96c3572364db67ac1cb3bc68c2
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-110cba96c3572364db67ac1cb3bc68c2
+    projectPath: Temp\UnityTempFile-110cba96c3572364db67ac1cb3bc68c2
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-0a5644f1a233ea945af1c398874b0aea
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-0a5644f1a233ea945af1c398874b0aea
-    projectPath: Temp\UnityTempFile-0a5644f1a233ea945af1c398874b0aea
+  - path: SSS222\Temp\UnityTempFile-16e988b2bd2fee449b663780d56e8c26
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-16e988b2bd2fee449b663780d56e8c26
+    projectPath: Temp\UnityTempFile-16e988b2bd2fee449b663780d56e8c26
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-108d17a9bb3d74b4597e8d443d3a34f7
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-108d17a9bb3d74b4597e8d443d3a34f7
-    projectPath: Temp\UnityTempFile-108d17a9bb3d74b4597e8d443d3a34f7
+  - path: SSS222\Temp\UnityTempFile-183b6465609d16547b4a09139419dfa7
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-183b6465609d16547b4a09139419dfa7
+    projectPath: Temp\UnityTempFile-183b6465609d16547b4a09139419dfa7
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-1212675bccbdc6c43a6662861bfd187f
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-1212675bccbdc6c43a6662861bfd187f
-    projectPath: Temp\UnityTempFile-1212675bccbdc6c43a6662861bfd187f
+  - path: SSS222\Temp\UnityTempFile-231ec608290a92d4ba983ad2fa80bd0d
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-231ec608290a92d4ba983ad2fa80bd0d
+    projectPath: Temp\UnityTempFile-231ec608290a92d4ba983ad2fa80bd0d
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-13d7f423199595040802d2051ac54d86
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-13d7f423199595040802d2051ac54d86
-    projectPath: Temp\UnityTempFile-13d7f423199595040802d2051ac54d86
+  - path: SSS222\Temp\UnityTempFile-40d7de6d9e75c31448d49fc40166d043
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-40d7de6d9e75c31448d49fc40166d043
+    projectPath: Temp\UnityTempFile-40d7de6d9e75c31448d49fc40166d043
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-1610e94f3a3371242abefaf91659a926
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-1610e94f3a3371242abefaf91659a926
-    projectPath: Temp\UnityTempFile-1610e94f3a3371242abefaf91659a926
+  - path: SSS222\Temp\UnityTempFile-40fd1ff91d91677409aac2b221cdc374
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-40fd1ff91d91677409aac2b221cdc374
+    projectPath: Temp\UnityTempFile-40fd1ff91d91677409aac2b221cdc374
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-16267ab825dc4a648918ac3f29d63b65
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-16267ab825dc4a648918ac3f29d63b65
-    projectPath: Temp\UnityTempFile-16267ab825dc4a648918ac3f29d63b65
+  - path: SSS222\Temp\UnityTempFile-53b4f163063bb854580c95871b447c56
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-53b4f163063bb854580c95871b447c56
+    projectPath: Temp\UnityTempFile-53b4f163063bb854580c95871b447c56
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-1c817803b3767a84fb7d0e12c51b38ac
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-1c817803b3767a84fb7d0e12c51b38ac
-    projectPath: Temp\UnityTempFile-1c817803b3767a84fb7d0e12c51b38ac
+  - path: SSS222\Temp\UnityTempFile-6392323d5c1b3d648a362326d64aceb2
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-6392323d5c1b3d648a362326d64aceb2
+    projectPath: Temp\UnityTempFile-6392323d5c1b3d648a362326d64aceb2
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-1ef179c50cacac34d8481cb9e1f6c5cf
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-1ef179c50cacac34d8481cb9e1f6c5cf
-    projectPath: Temp\UnityTempFile-1ef179c50cacac34d8481cb9e1f6c5cf
+  - path: SSS222\Temp\UnityTempFile-6ad7f23b4c11a4041b810cfe368913bf
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-6ad7f23b4c11a4041b810cfe368913bf
+    projectPath: Temp\UnityTempFile-6ad7f23b4c11a4041b810cfe368913bf
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-21457c14fe8f74a46a588e2f8c702f65
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-21457c14fe8f74a46a588e2f8c702f65
-    projectPath: Temp\UnityTempFile-21457c14fe8f74a46a588e2f8c702f65
+  - path: SSS222\Temp\UnityTempFile-6b1d72bc037ddef4d96fd86e5600ecdf
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-6b1d72bc037ddef4d96fd86e5600ecdf
+    projectPath: Temp\UnityTempFile-6b1d72bc037ddef4d96fd86e5600ecdf
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-26025653e07b32b4f959f7a3c6b74991
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-26025653e07b32b4f959f7a3c6b74991
-    projectPath: Temp\UnityTempFile-26025653e07b32b4f959f7a3c6b74991
+  - path: SSS222\Temp\UnityTempFile-7591950db725a044791aff5f819d55b9
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-7591950db725a044791aff5f819d55b9
+    projectPath: Temp\UnityTempFile-7591950db725a044791aff5f819d55b9
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-2d49e853eb39071438cc93e6a4b122b5
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-2d49e853eb39071438cc93e6a4b122b5
-    projectPath: Temp\UnityTempFile-2d49e853eb39071438cc93e6a4b122b5
+  - path: SSS222\Temp\UnityTempFile-79ecdb33b81edee499af1d8549e0fe05
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-79ecdb33b81edee499af1d8549e0fe05
+    projectPath: Temp\UnityTempFile-79ecdb33b81edee499af1d8549e0fe05
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-3ff9841cba5b5704fa220fb49330c19c
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-3ff9841cba5b5704fa220fb49330c19c
-    projectPath: Temp\UnityTempFile-3ff9841cba5b5704fa220fb49330c19c
+  - path: SSS222\Temp\UnityTempFile-89aae4be99e3c9a4f8a26c222db7a3f9
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-89aae4be99e3c9a4f8a26c222db7a3f9
+    projectPath: Temp\UnityTempFile-89aae4be99e3c9a4f8a26c222db7a3f9
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-4563e5bf1ac32444eac7911f020074cd
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-4563e5bf1ac32444eac7911f020074cd
-    projectPath: Temp\UnityTempFile-4563e5bf1ac32444eac7911f020074cd
+  - path: SSS222\Temp\UnityTempFile-8ba7a81c2233f5549a74172594d02c19
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-8ba7a81c2233f5549a74172594d02c19
+    projectPath: Temp\UnityTempFile-8ba7a81c2233f5549a74172594d02c19
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-47520dd088ebc63469f4b3fbaeca8803
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-47520dd088ebc63469f4b3fbaeca8803
-    projectPath: Temp\UnityTempFile-47520dd088ebc63469f4b3fbaeca8803
+  - path: SSS222\Temp\UnityTempFile-95999e8c797b80c4f8aed0290057e684
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-95999e8c797b80c4f8aed0290057e684
+    projectPath: Temp\UnityTempFile-95999e8c797b80c4f8aed0290057e684
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-52c7cfb8194462c47a0fc37189519dd7
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-52c7cfb8194462c47a0fc37189519dd7
-    projectPath: Temp\UnityTempFile-52c7cfb8194462c47a0fc37189519dd7
+  - path: SSS222\Temp\UnityTempFile-a0813e40b03ed574b8f4d9c51ff08c77
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-a0813e40b03ed574b8f4d9c51ff08c77
+    projectPath: Temp\UnityTempFile-a0813e40b03ed574b8f4d9c51ff08c77
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-531e74a63231e7346bcd663ea82e2bfc
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-531e74a63231e7346bcd663ea82e2bfc
-    projectPath: Temp\UnityTempFile-531e74a63231e7346bcd663ea82e2bfc
+  - path: SSS222\Temp\UnityTempFile-e66c2278df711d14e81d78d36721c3ff
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-e66c2278df711d14e81d78d36721c3ff
+    projectPath: Temp\UnityTempFile-e66c2278df711d14e81d78d36721c3ff
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-5e1d69b0208509045a180c33981da582
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-5e1d69b0208509045a180c33981da582
-    projectPath: Temp\UnityTempFile-5e1d69b0208509045a180c33981da582
+  - path: SSS222\Temp\UnityTempFile-eaf51e5eb710a2942a22ac2bd10bd767
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-eaf51e5eb710a2942a22ac2bd10bd767
+    projectPath: Temp\UnityTempFile-eaf51e5eb710a2942a22ac2bd10bd767
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-6027542e0e5ee0d44ae5b8e98f885ad0
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-6027542e0e5ee0d44ae5b8e98f885ad0
-    projectPath: Temp\UnityTempFile-6027542e0e5ee0d44ae5b8e98f885ad0
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-6227bf9a6e030594987c3e16114d150e
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-6227bf9a6e030594987c3e16114d150e
-    projectPath: Temp\UnityTempFile-6227bf9a6e030594987c3e16114d150e
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-64bb337efab99b44c9d75e3de393afd1
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-64bb337efab99b44c9d75e3de393afd1
-    projectPath: Temp\UnityTempFile-64bb337efab99b44c9d75e3de393afd1
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-6eb37e40c1e5f694eab1f79c0edf8e2d
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-6eb37e40c1e5f694eab1f79c0edf8e2d
-    projectPath: Temp\UnityTempFile-6eb37e40c1e5f694eab1f79c0edf8e2d
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-6f01ff3bbf0577247a0a2f320ec4565f
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-6f01ff3bbf0577247a0a2f320ec4565f
-    projectPath: Temp\UnityTempFile-6f01ff3bbf0577247a0a2f320ec4565f
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-71fd252c22686454b901bcc14826e178
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-71fd252c22686454b901bcc14826e178
-    projectPath: Temp\UnityTempFile-71fd252c22686454b901bcc14826e178
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-74b4576e0c1fb7847b1caacad5847e76
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-74b4576e0c1fb7847b1caacad5847e76
-    projectPath: Temp\UnityTempFile-74b4576e0c1fb7847b1caacad5847e76
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-787b64a120a47d3438bca4ce5811aa04
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-787b64a120a47d3438bca4ce5811aa04
-    projectPath: Temp\UnityTempFile-787b64a120a47d3438bca4ce5811aa04
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-7d3618725487572459e813a2a21be4f4
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-7d3618725487572459e813a2a21be4f4
-    projectPath: Temp\UnityTempFile-7d3618725487572459e813a2a21be4f4
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-8cbfa7c043cd2604786c566e5b8c7fc3
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-8cbfa7c043cd2604786c566e5b8c7fc3
-    projectPath: Temp\UnityTempFile-8cbfa7c043cd2604786c566e5b8c7fc3
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-8d77ab2869983ed4aae2e47d0cf8071b
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-8d77ab2869983ed4aae2e47d0cf8071b
-    projectPath: Temp\UnityTempFile-8d77ab2869983ed4aae2e47d0cf8071b
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-90a9d90369179484684ce619961aea71
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-90a9d90369179484684ce619961aea71
-    projectPath: Temp\UnityTempFile-90a9d90369179484684ce619961aea71
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-90b3794e1622fce4c8f64e91b3e2df83
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-90b3794e1622fce4c8f64e91b3e2df83
-    projectPath: Temp\UnityTempFile-90b3794e1622fce4c8f64e91b3e2df83
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-9456fd13a07da2d47b5820586054c2fb
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-9456fd13a07da2d47b5820586054c2fb
-    projectPath: Temp\UnityTempFile-9456fd13a07da2d47b5820586054c2fb
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-9bdaba2cef6e320439090c1dc10174f5
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-9bdaba2cef6e320439090c1dc10174f5
-    projectPath: Temp\UnityTempFile-9bdaba2cef6e320439090c1dc10174f5
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-9d4b68680a62f094db1afc93bca232e0
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-9d4b68680a62f094db1afc93bca232e0
-    projectPath: Temp\UnityTempFile-9d4b68680a62f094db1afc93bca232e0
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-9f582a78f9169d1438b71679f71b5fd3
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-9f582a78f9169d1438b71679f71b5fd3
-    projectPath: Temp\UnityTempFile-9f582a78f9169d1438b71679f71b5fd3
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-9f997736d8f7f6744bf16f86ae0e2d55
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-9f997736d8f7f6744bf16f86ae0e2d55
-    projectPath: Temp\UnityTempFile-9f997736d8f7f6744bf16f86ae0e2d55
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-a0b2966bbc9243e4b855e777cfbe96d3
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-a0b2966bbc9243e4b855e777cfbe96d3
-    projectPath: Temp\UnityTempFile-a0b2966bbc9243e4b855e777cfbe96d3
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-a3269af227bf6894ca79a730ca0d5fcf
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-a3269af227bf6894ca79a730ca0d5fcf
-    projectPath: Temp\UnityTempFile-a3269af227bf6894ca79a730ca0d5fcf
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-a9f1b655916dbad41bed51bee9850d5f
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-a9f1b655916dbad41bed51bee9850d5f
-    projectPath: Temp\UnityTempFile-a9f1b655916dbad41bed51bee9850d5f
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-ab4b7e91f2e452141a1205d92c2d355a
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-ab4b7e91f2e452141a1205d92c2d355a
-    projectPath: Temp\UnityTempFile-ab4b7e91f2e452141a1205d92c2d355a
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-ac714b53f4e85cb4da96e5306b999607
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-ac714b53f4e85cb4da96e5306b999607
-    projectPath: Temp\UnityTempFile-ac714b53f4e85cb4da96e5306b999607
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-ad8e6acdf670ac1488ae88afc8b47d8d
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-ad8e6acdf670ac1488ae88afc8b47d8d
-    projectPath: Temp\UnityTempFile-ad8e6acdf670ac1488ae88afc8b47d8d
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-afb0b5bb43cea4747a458b0b77ddd954
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-afb0b5bb43cea4747a458b0b77ddd954
-    projectPath: Temp\UnityTempFile-afb0b5bb43cea4747a458b0b77ddd954
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-b0c4906ac2679834c9fdf0eaed546237
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-b0c4906ac2679834c9fdf0eaed546237
-    projectPath: Temp\UnityTempFile-b0c4906ac2679834c9fdf0eaed546237
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-b3b9e716a103a3c4fa0c4dd0cc4467ed
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-b3b9e716a103a3c4fa0c4dd0cc4467ed
-    projectPath: Temp\UnityTempFile-b3b9e716a103a3c4fa0c4dd0cc4467ed
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-b590799acf3b540488f21f24fd0153ce
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-b590799acf3b540488f21f24fd0153ce
-    projectPath: Temp\UnityTempFile-b590799acf3b540488f21f24fd0153ce
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-ba1ef7b0955f01c47b08dae7e79db66e
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-ba1ef7b0955f01c47b08dae7e79db66e
-    projectPath: Temp\UnityTempFile-ba1ef7b0955f01c47b08dae7e79db66e
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-c0dc3a1daba6f21479d1b01ce0746a56
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-c0dc3a1daba6f21479d1b01ce0746a56
-    projectPath: Temp\UnityTempFile-c0dc3a1daba6f21479d1b01ce0746a56
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-c27fa4263a181e347826176102897e6c
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-c27fa4263a181e347826176102897e6c
-    projectPath: Temp\UnityTempFile-c27fa4263a181e347826176102897e6c
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-c73a7142c33b2ce458f976a0d76d83ef
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-c73a7142c33b2ce458f976a0d76d83ef
-    projectPath: Temp\UnityTempFile-c73a7142c33b2ce458f976a0d76d83ef
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-cc86702add3c60c468a9950add39777b
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-cc86702add3c60c468a9950add39777b
-    projectPath: Temp\UnityTempFile-cc86702add3c60c468a9950add39777b
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-d216497a778a5ed478ae2a5c050e2b10
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-d216497a778a5ed478ae2a5c050e2b10
-    projectPath: Temp\UnityTempFile-d216497a778a5ed478ae2a5c050e2b10
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-d900053942c7b5641b36272af0ac6782
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-d900053942c7b5641b36272af0ac6782
-    projectPath: Temp\UnityTempFile-d900053942c7b5641b36272af0ac6782
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-dc54beaeb7af7f24588a8fb9cd1f9529
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-dc54beaeb7af7f24588a8fb9cd1f9529
-    projectPath: Temp\UnityTempFile-dc54beaeb7af7f24588a8fb9cd1f9529
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-e0186211f4cd7394f9f93133d14bd3ca
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-e0186211f4cd7394f9f93133d14bd3ca
-    projectPath: Temp\UnityTempFile-e0186211f4cd7394f9f93133d14bd3ca
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-e1b20f15bb619014f838fcc17a187872
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-e1b20f15bb619014f838fcc17a187872
-    projectPath: Temp\UnityTempFile-e1b20f15bb619014f838fcc17a187872
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-e532d314aa1e84a4b92e6fac2976c904
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-e532d314aa1e84a4b92e6fac2976c904
-    projectPath: Temp\UnityTempFile-e532d314aa1e84a4b92e6fac2976c904
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-e78dde6b57d1e514aba7d09cd6a2b129
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-e78dde6b57d1e514aba7d09cd6a2b129
-    projectPath: Temp\UnityTempFile-e78dde6b57d1e514aba7d09cd6a2b129
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-eb5747eadb8892346ae54b422371e10f
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-eb5747eadb8892346ae54b422371e10f
-    projectPath: Temp\UnityTempFile-eb5747eadb8892346ae54b422371e10f
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-ebf0ef9f915ca6047b4c161027bf385d
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-ebf0ef9f915ca6047b4c161027bf385d
-    projectPath: Temp\UnityTempFile-ebf0ef9f915ca6047b4c161027bf385d
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-f19f540fd7b257d4fa1f6a7740a1318b
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-f19f540fd7b257d4fa1f6a7740a1318b
-    projectPath: Temp\UnityTempFile-f19f540fd7b257d4fa1f6a7740a1318b
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-f9b096940eb5db6488273abf69468d24
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-f9b096940eb5db6488273abf69468d24
-    projectPath: Temp\UnityTempFile-f9b096940eb5db6488273abf69468d24
-    originalPath: 
-    indexStatus: 1
-    workTreeStatus: 1
-  - path: SSS222\Temp\UnityTempFile-fc2a506c24be5b349995727bc4e47bfb
-    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-fc2a506c24be5b349995727bc4e47bfb
-    projectPath: Temp\UnityTempFile-fc2a506c24be5b349995727bc4e47bfb
+  - path: SSS222\Temp\UnityTempFile-f352ea0c65f77f249800e82c47170352
+    fullPath: C:\Unity Projects\SSS222\SSS222\Temp\UnityTempFile-f352ea0c65f77f249800e82c47170352
+    projectPath: Temp\UnityTempFile-f352ea0c65f77f249800e82c47170352
     originalPath: 
     indexStatus: 1
     workTreeStatus: 1

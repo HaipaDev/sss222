@@ -10,6 +10,8 @@ public class Screenflash : MonoBehaviour{
     [SerializeField] float healedFlashSpeed;
     [SerializeField] Color shadowFlashColor;
     [SerializeField] float shadowFlashSpeed;
+    [SerializeField] Color flameFlashColor;
+    [SerializeField] float flameFlashSpeed;
     Player player;
     Image image;
     // Start is called before the first frame update
@@ -26,8 +28,11 @@ public class Screenflash : MonoBehaviour{
         else { image.color = Color.Lerp(image.color, Color.clear, healedFlashSpeed * Time.deltaTime); }
         if (player.shadowed==true){image.color = shadowFlashColor;}
         else { image.color = Color.Lerp(image.color, Color.clear, shadowFlashSpeed * Time.deltaTime); }
+        if (player.flamed==true){image.color = flameFlashColor;}
+        else { image.color = Color.Lerp(image.color, Color.clear, flameFlashSpeed * Time.deltaTime); }
         player.damaged = false;
         player.healed = false;
         player.shadowed = false;
+        player.flamed = false;
     }
 }

@@ -1213,6 +1213,102 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6644735265139863176}
     m_Modifications:
+    - target: {fileID: 901172614, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 337
+      objectReference: {fileID: 0}
+    - target: {fileID: 901172615, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_text
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 901172615, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_fontSize
+      value: 95.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 901172615, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 901172615, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 901172615, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_textAlignment
+      value: 258
+      objectReference: {fileID: 0}
+    - target: {fileID: 901172615, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_margin.x
+      value: 33.898464
+      objectReference: {fileID: 0}
+    - target: {fileID: 901172615, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_margin.z
+      value: 296.6111
+      objectReference: {fileID: 0}
+    - target: {fileID: 901172615, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 951876628, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -109
+      objectReference: {fileID: 0}
+    - target: {fileID: 1195664777, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 86
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: healFlashColor.a
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: healedFlashSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: flameFlashColor.r
+      value: 0.92156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: flameFlashColor.g
+      value: 0.3452724
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: flameFlashColor.a
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: flameFlashSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990238224, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 113.000015
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990238225, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_text
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990238225, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990238225, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990238225, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_textAlignment
+      value: 258
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990238225, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_margin.z
+      value: 310.17072
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990238225, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2614155989906725882, guid: cb589810bddf2054fb5df3ff39ad5292,
         type: 3}
       propertyPath: m_Name
