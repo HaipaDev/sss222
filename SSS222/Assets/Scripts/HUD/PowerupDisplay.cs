@@ -72,8 +72,8 @@ public class PowerupDisplay : MonoBehaviour{
                 /*var sprr=this.GetType().GetField(pwrup+"Sprite").GetValue(this);
                 this.GetType().GetField("sprite").SetValue(this,sprr);
                 spr.sprite=sprite;*/
-                if(pwrup!="laser"&&pwrup!="lsaberA"&&pwrup!="lclawsA")spr.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");
-                else if(pwrup=="laser")spr.sprite=GameAssets.instance.Spr("laser");
+                if(/*pwrup!="laser"&&*/pwrup!="lsaberA"&&pwrup!="lclawsA")spr.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");
+                //else if(pwrup=="laser")spr.sprite=GameAssets.instance.Spr("laser");
                 else if(pwrup=="lsaberA")spr.sprite=GameAssets.instance.Spr("lsaberPwrup");
                 else if(pwrup=="lclawsA")spr.sprite=GameAssets.instance.Spr("lclawsPwrup");
                 /*if (pwrup=="laser2"){ spr.sprite = laser2Sprite; }

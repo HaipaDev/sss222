@@ -219,6 +219,8 @@ MonoBehaviour:
   timerHpRegen: 0
   freqHpRegen: 1
   hpRegenAmnt: 0.1
+  armorMulti: 1
+  dmgMulti: 1
   lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
     type: 3}
   lclawsPrefab: {fileID: 4755926375889011706, guid: b9340c203c57d954687d49864bad3d74,
@@ -268,12 +270,31 @@ MonoBehaviour:
   accelTimer: -4
   onfire: 0
   onfireTimer: -4
+  onfireTime: -4
   decay: 0
   decayTimer: -4
+  decayTime: -4
   electrc: 0
   electrcTimer: -4
+  electrcTime: -4
   frozen: 0
   frozenTimer: -4
+  frozenTime: -4
+  armored: 0
+  armoredTimer: -4
+  armoredTime: -4
+  fragile: 0
+  fragileTimer: -4
+  fragileTime: -4
+  power: 0
+  powerTimer: -4
+  powerTime: -4
+  weakns: 0
+  weaknsTimer: -4
+  weaknsTime: -4
+  hacked: 0
+  hackedTimer: -4
+  hackedTime: -4
   flipTime: 8.5
   gcloverTime: 8
   shadowTime: 11
@@ -292,6 +313,10 @@ MonoBehaviour:
   onfireDmg: 1
   decayTickrate: 0.5
   decayDmg: 0.5
+  armoredMulti: 2
+  fragileMulti: 0.7
+  powerMulti: 1.6
+  weaknsMulti: 0.66
   laserEn: 0.3
   laser2En: 1.25
   laser3En: 2.5

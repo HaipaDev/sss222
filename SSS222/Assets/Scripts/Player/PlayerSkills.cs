@@ -38,6 +38,7 @@ public class PlayerSkills : MonoBehaviour{
     }
 
     public void UseSkills(int key){
+    if(player.hacked!=true){
         if(cooldownQ>0)cooldownQ-=Time.deltaTime;
         if(cooldownE>0)cooldownE-=Time.deltaTime;
         if(Input.GetKeyDown(KeyCode.Q) || key==1){
@@ -65,6 +66,7 @@ public class PlayerSkills : MonoBehaviour{
                 }
             }
         }
+    }
     }
     public void DeathSkills(){
         if(umenu.magneticPulse_upgraded==2)Skills(skillKeyBind.Disabled,0,0,0);//PostMortem MagneticPulse

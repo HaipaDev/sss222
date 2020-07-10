@@ -227,7 +227,7 @@ public class Enemy : MonoBehaviour{
             if (other.gameObject.name.Contains(LClawsPartname)){ dmg = damageDealer.GetDamageLClaws(); AudioManager.instance.Play("LClawsHit"); }
 
             var shadowbtName = shadowbtPrefab.name;
-            if (other.gameObject.name.Contains(shadowbtName)) { dmg = damageDealer.GetDamageShadowBT(); AudioManager.instance.Play("ShadowHit"); FindObjectOfType<Player>().health-=1; FindObjectOfType<Player>().DMGPopUpHUD(1);}
+            if (other.gameObject.name.Contains(shadowbtName)) { dmg = damageDealer.GetDamageShadowBT(); FindObjectOfType<Player>().Damage(1,dmgType.shadow);}
             
             var cBulletname = cbulletPrefab.name;
             if (other.gameObject.name.Contains(cBulletname)) { dmg = damageDealer.GetDamageCBullet(); AudioManager.instance.Play("CStreamHit");}
@@ -255,6 +255,7 @@ public class Enemy : MonoBehaviour{
                     dmg/=3;
                 }
             }
+            dmg*=player.dmgMulti;
             health -= dmg;
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
             var flare = Instantiate(flareHitVFX, new Vector2(transform.position.x,transform.position.y - 0.5f), Quaternion.identity);
@@ -315,7 +316,8 @@ public class Enemy : MonoBehaviour{
             var mPulsename = mPulsePrefab.name; var mPulsename1 = mPulsePrefab.name + "(Clone)";
             if (other.gameObject.name == mPulsename || other.gameObject.name == mPulsename1) { dmg = 0; AudioManager.instance.Play("PRocketHit");}
 
-            health -= dmg*player.dmgMulti;
+            dmg*=player.dmgMulti;
+            health -= dmg;
             //Destroy(other.gameObject, 0.05f);
 
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));

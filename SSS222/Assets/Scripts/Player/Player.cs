@@ -5,15 +5,6 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public enum dmgType{
-    normal,
-    silent,
-    flame,
-    shadow,
-    decay,
-    electr,
-    heal
-}
 public class Player : MonoBehaviour{
     #region Vars
     [HeaderAttribute("Player")]
@@ -127,6 +118,24 @@ public class Player : MonoBehaviour{
     [SerializeField] public bool frozen = false;
     public float frozenTimer = -4;
     [HideInInspector]public float frozenTime = -4;
+    [SerializeField] public bool armored = false;
+    public float armoredTimer = -4;
+    [HideInInspector]public float armoredTime = -4;
+    [SerializeField] public bool fragile = false;
+    public float fragileTimer = -4;
+    [HideInInspector]public float fragileTime = -4;
+    [SerializeField] public bool power = false;
+    public float powerTimer = -4;
+    [HideInInspector]public float powerTime = -4;
+    [SerializeField] public bool weakns = false;
+    public float weaknsTimer = -4;
+    [HideInInspector]public float weaknsTime = -4;
+    [SerializeField] public bool hacked = false;
+    public float hackedTimer = -4;
+    [HideInInspector]public float hackedTime = -4;
+    [SerializeField] public bool blind = false;
+    public float blindTimer = -4;
+    [HideInInspector]public float blindTime = -4;
     [HeaderAttribute("State Defaults")]
     [SerializeField] public float flipTime = 7f;
     [SerializeField] public float gcloverTime = 6f;
@@ -146,6 +155,10 @@ public class Player : MonoBehaviour{
     [SerializeField]public float onfireDmg = 1f;
     [SerializeField]public float decayTickrate = 0.5f;
     [SerializeField]public float decayDmg = 0.5f;
+    [SerializeField]public float armoredMulti = 2f;
+    [SerializeField]public float fragileMulti = 0.7f;
+    [SerializeField]public float powerMulti = 1.6f;
+    [SerializeField]public float weaknsMulti = 0.66f;
     [HeaderAttribute("Energy Costs")]
     //Weapons
     [SerializeField] public float laserEn = 0.3f;
@@ -1015,6 +1028,16 @@ bool stopped=false;
         if(decayTimer>0){decayTimer-=Time.deltaTime;}else{ResetStatus("decay");}
         if(electrcTimer>0){electrcTimer-=Time.deltaTime;}else{ResetStatus("electrc");}
         if(frozenTimer>0){frozenTimer-=Time.deltaTime;}else{ResetStatus("frozen");}
+        if(armoredTimer>0){armoredTimer-=Time.deltaTime;}else{ResetStatus("armored");}
+        if(fragileTimer>0){fragileTimer-=Time.deltaTime;}else{ResetStatus("fragile");}
+        if(powerTimer>0){powerTimer-=Time.deltaTime;}else{ResetStatus("power");}
+        if(weaknsTimer>0){weaknsTimer-=Time.deltaTime;}else{ResetStatus("weakns");}
+        if(hackedTimer>0){hackedTimer-=Time.deltaTime;}else{ResetStatus("hacked");}
+        if(blindTimer>0){blindTimer-=Time.deltaTime;}else{ResetStatus("blind");}
+        if(armored==true&&fragile!=true){armorMulti=armoredMulti;}else if(fragile==true&&armored!=true){armorMulti=fragileMulti;}
+        if((armored!=true&&fragile!=true)||(armored==true&&fragile==true)){armorMulti=1;}
+        if(power==true&&weakns!=true){dmgMulti=powerMulti;}else if(weakns==true&&power!=true){dmgMulti=weaknsMulti;}
+        if((power!=true&&weakns!=true)||(power==true&&weakns==true)){dmgMulti=1;}
     }
     
     private void Shadow(){
@@ -1075,12 +1098,32 @@ bool stopped=false;
         frozenTime=duration;
         SetStatus("frozen");
     }
+    public void Armor(float duration){
+        armoredTime=duration;
+        SetStatus("armored");
+    }
+    public void Fragile(float duration){
+        fragileTime=duration;
+        SetStatus("fragile");
+    }public void Power(float duration){
+        powerTime=duration;
+        SetStatus("power");
+    }public void Weakns(float duration){
+        weaknsTime=duration;
+        SetStatus("weakns");
+    }public void Hack(float duration){
+        hackedTime=duration;
+        SetStatus("hacked");
+    }public void Blind(float duration){
+        blindTime=duration;
+        SetStatus("blind");
+    }
 #endregion
 
 #region//Skills
     //Skills are in PlayerSkills
     private void RefillEnergy(){
-        if(energy<=0){
+        if(energy<=0&&hacked!=true){
         if(energyRefillUnlocked==true){
             if(refillDelay>0)refillDelay-=Time.deltaTime;
             if(refillDelay<=0){refillDelay=-4;}
@@ -1238,14 +1281,14 @@ bool stopped=false;
     }
 
     public void Damage(float dmg, dmgType type){
-        health-=dmg*armorMulti;
+        health-=dmg/armorMulti;
         if(type!=dmgType.heal)DMGPopUpHUD(-dmg);
         if(type==dmgType.silent){damaged=true;}
         if(type==dmgType.normal){damaged=true;AudioManager.instance.Play("ShipHit");}
         if(type==dmgType.flame){flamed=true;AudioManager.instance.Play("Overheat");}
-        if(type==dmgType.decay){}
-        if(type==dmgType.electr){Electrc(4f);}//electricified=true;AudioManager.instance.Play("Electric");}
-        if(type==dmgType.shadow){shadowed=true;}
+        if(type==dmgType.decay){damaged=true;AudioManager.instance.Play("LeechBite");}
+        if(type==dmgType.electr){electricified=true;Electrc(4f);}//electricified=true;AudioManager.instance.Play("Electric");}
+        if(type==dmgType.shadow){shadowed=true;AudioManager.instance.Play("ShadowHit");}
         if(type==dmgType.heal){healed=true;DMGPopUpHUD(dmg);}
     }
     public void AddSubEnergy(float value,bool add){

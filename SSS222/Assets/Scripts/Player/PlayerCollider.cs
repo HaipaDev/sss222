@@ -306,7 +306,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name.Contains(shadowbtName)) { PowerupCollect("shadowbt"); }
 
                 var qrocketName = qrocketPwrupPrefab.name; var qrocketName1 = qrocketPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(qrocketName)) { PowerupCollect("qrocket"); }
+                if (other.gameObject.name.Contains(qrocketName)) { PowerupCollect("qrocket"); player.Hack(10);}
                 var procketName = procketPwrupPrefab.name; var procketName1 = procketPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(procketName)) { PowerupCollect("procket"); }
 

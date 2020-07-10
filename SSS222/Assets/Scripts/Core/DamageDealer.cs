@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum dmgType{
+    normal,
+    silent,
+    flame,
+    shadow,
+    decay,
+    electr,
+    heal
+}
 public class DamageDealer : MonoBehaviour{
     public static DamageDealer instance;
     float dmg = 5;
