@@ -111,6 +111,7 @@ public class PlayerCollider : MonoBehaviour{
         SetPrefabs();
         if (!other.CompareTag(tag))
         {
+            if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);player.Damage(1f,dmgType.silent);}
             #region//Enemies
             if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet"))
             {
@@ -359,36 +360,37 @@ public class PlayerCollider : MonoBehaviour{
     private void OnTriggerStay2D(Collider2D other){
         if (!other.CompareTag(tag))
         {
-            if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet"))
-            {
-                DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
-                if (!damageDealer) { return; }
-                //bool en = false;
-                var dmg = damageDealer.GetDamage();
+        if (dmgTimer<=0){
+            DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
+            if (!damageDealer) { return; }
+            //bool en = false;
+            var dmg = damageDealer.GetDamage();
+            if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=1;}
+            var leechName=leechPrefab.name;
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet")){
+            
+            leechName = leechPrefab.name; var leechName1 = leechPrefab.name + "(Clone)";
+            if (other.gameObject.name.Contains(leechName)) { dmg = damageDealer.GetDamageLeech(); AudioManager.instance.Play("LeechBite");}
 
-                var leechName = leechPrefab.name; var leechName1 = leechPrefab.name + "(Clone)";
-                if (other.gameObject.name == leechName || other.gameObject.name == leechName1) { dmg = damageDealer.GetDamageLeech(); }
+            var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
+            if (other.gameObject.name.Contains(hlaserName)) { dmg = damageDealer.GetDamageHLaser(); }
 
-                var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
-                if (other.gameObject.name == hlaserName || other.gameObject.name == hlaserName1) { dmg = damageDealer.GetDamageHLaser(); }
-
-                var enSaberName = enSaberPrefab.name; var enSaberName1 = enSaberPrefab.name + "(Clone)";
-                if (other.gameObject.name == enSaberName || other.gameObject.name == enSaberName1) { dmg = damageDealer.GetDamageEnSaber(); }
-
-                if (dmgTimer<=0){
-                    if (other.gameObject.name == leechName || other.gameObject.name == leechName1){AudioManager.instance.Play("LeechBite");}
-                    //var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
-                    //Destroy(flare.gameObject, 0.3f);
-                    if(gameSession.dmgPopups==true){
-                        GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
-                        dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
-                        dmgpopup.transform.localScale=new Vector2(2,2);
-                        dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmg.ToString();
-                    }
-                    player.Damage(dmg,dmgType.silent);
-                    dmgTimer = dmgFreq;
-                }else{ dmgTimer -= Time.deltaTime; }
+            var enSaberName = enSaberPrefab.name; var enSaberName1 = enSaberPrefab.name + "(Clone)";
+            if (other.gameObject.name.Contains(enSaberName)) { dmg = damageDealer.GetDamageEnSaber(); }
             }
+        //if (dmgTimer<=0){
+                //if (other.gameObject.name.Contains(leechName)){}
+                //var flare = Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
+                //Destroy(flare.gameObject, 0.3f);
+                if(gameSession.dmgPopups==true){
+                    GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
+                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
+                    dmgpopup.transform.localScale=new Vector2(2,2);
+                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmg.ToString();
+                }
+                player.Damage(dmg,dmgType.silent);
+                dmgTimer = dmgFreq;
+            }else{ dmgTimer -= Time.deltaTime; }
         }
     }
     private void OnTriggerExit2D(Collider2D other){

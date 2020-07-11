@@ -193,7 +193,7 @@ MonoBehaviour:
   lsaberSpeedMulti: 1.25
   moveSpeed: 5
   moveSpeedCurrent: 0
-  padding: 0.45
+  padding: -0.125
   health: 150
   maxHP: 150
   powerup: laser
@@ -295,6 +295,9 @@ MonoBehaviour:
   hacked: 0
   hackedTimer: -4
   hackedTime: -4
+  blind: 0
+  blindTimer: -4
+  blindTime: -4
   flipTime: 8.5
   gcloverTime: 8
   shadowTime: 11

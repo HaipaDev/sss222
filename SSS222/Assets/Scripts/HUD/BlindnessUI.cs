@@ -10,7 +10,7 @@ public class BlindnessUI : MonoBehaviour{
     }
 
     void Update(){
-        on=FindObjectOfType<Player>().blind;
+        if(FindObjectOfType<Player>()!=null)on=FindObjectOfType<Player>().blind;
         GetComponent<Image>().enabled=on;
     }
 }

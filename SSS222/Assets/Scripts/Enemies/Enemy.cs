@@ -194,7 +194,7 @@ public class Enemy : MonoBehaviour{
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){Destroy(GetComponent<GoblinDrop>().powerup);}}}
     }
     private void OnTriggerEnter2D(Collider2D other){
-        if(!other.CompareTag(tag)){
+        if(!other.CompareTag(tag)&&other.GetComponent<Tag_OutsideZone>()==null){
             DamageDealer damageDealer=other.gameObject.GetComponent<DamageDealer>();
             if(!damageDealer){ return; }
             var dmg = damageDealer.GetDamage();
@@ -287,7 +287,7 @@ public class Enemy : MonoBehaviour{
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!other.CompareTag(tag))
+        if (!other.CompareTag(tag)&&other.GetComponent<Tag_OutsideZone>()==null)
         {
             DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
             if (!damageDealer) { return; }
