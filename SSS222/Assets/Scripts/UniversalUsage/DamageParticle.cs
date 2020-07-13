@@ -9,7 +9,7 @@ public class DamageParticle : MonoBehaviour{
     [SerializeField] dmgType dmgType=dmgType.normal;
     [SerializeField] float dmgPlayer=16;
     void Start(){
-        Destroy(gameObject,0.07f);
+        //Destroy(gameObject,0.07f);
     }
     void Update(){
         
@@ -21,6 +21,7 @@ public class DamageParticle : MonoBehaviour{
             if(enemy.health<=dmgEnemy)enemy.givePts=false;
             enemy.health-=dmgEnemy;
             GetComponent<Collider2D>().enabled=false;
+            Destroy(gameObject);
         }else if(other.gameObject.CompareTag("Player")&&player==true){
             var player=other.GetComponent<Player>();
             player.Damage(dmgPlayer,dmgType);
@@ -32,6 +33,7 @@ public class DamageParticle : MonoBehaviour{
             }
             //player.DMGPopUpHUD(dmgPlayer);
             GetComponent<Collider2D>().enabled=false;
+            Destroy(gameObject);
         }
     }
 }

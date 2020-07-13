@@ -183,12 +183,15 @@ MonoBehaviour:
   enBallchanceInit: 32
   CoinchanceInit: 2
   powercoreChanceInit: 0
+  xpAmnt: 0
   enBallchance: 0
   Coinchance: 0
   powercoreChance: 0
   yeeted: 0
   dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
     type: 3}
+  dmgCounted: 0
+  dmgCount: 0
 --- !u!114 &801518567914847888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +221,7 @@ MonoBehaviour:
   yy: 0.4
   time: 0.4
   stayStill: 1
+  BFlame: {fileID: 0}
 --- !u!114 &1490166543656379823
 MonoBehaviour:
   m_ObjectHideFlags: 0

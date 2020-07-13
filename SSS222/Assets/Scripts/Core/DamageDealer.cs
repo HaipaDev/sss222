@@ -14,6 +14,7 @@ public enum dmgType{
 public class DamageDealer : MonoBehaviour{
     public static DamageDealer instance;
     float dmg = 5;
+    float dmgZone = 2;
     float dmgLaser = 5f;
     float dmgPhaser = 0.5f;
     float dmgHRocket = 13.5f;
@@ -28,49 +29,49 @@ public class DamageDealer : MonoBehaviour{
     //PLaser damage is inside the obj
     float dmgMPulse = 130f;
 
-    float dmgComet = 47f;
+    float dmgComet = 10f;
     float dmgBat = 36f;
-    float dmgEnemyShip1 = 80f;
-    float dmgEnemySaber = 2.5f;
     float dmgSoundwave = 16.5f;
+    float dmgEnemyShip1 = 80f;
     float dmgEBt = 24.5f;
+    float dmgEnemySaber = 2.5f;    
     float dmgGoblin = 16f;
     float dmgHealDrone = 75f;
     float dmgVortex = 70f;
     float dmgLeech = 4f;
     float dmgHLaser = 90f;
+    float dmgStinger = 33.3f;
 
-    public float GetDamage(){return dmg;}
-    public float GetDamageLaser(){return dmgLaser;}
-    public float GetDamagePhaser(){return dmgPhaser;}
-    public float GetDamageHRocket(){return dmgHRocket; }
-    public float GetDamageMiniLaser(){return dmgMiniLaser; }
-    public float GetDamageLSaber(){return dmgLSaber; }
-    public float GetDamageLClaws(){return dmgLClaws; }
-    public float GetDamageShadowBT(){return dmgShadowBT; }
-    public float GetDamageQRocket(){return dmgQRocket; }
-    public float GetDamagePRocket(){return dmgPRocket; }
-    public float GetDamagePRocketExpl(){return dmgPRocketExpl; }
-    public float GetDamageCBullet(){return dmgCBullet; }
+    public float GetDmg(){return dmg;}
+    public float GetDmgZone(){return dmgZone;}
+
+    public float GetDmgLaser(){return dmgLaser;}
+    public float GetDmgPhaser(){return dmgPhaser;}
+    public float GetDmgHRocket(){return dmgHRocket; }
+    public float GetDmgMiniLaser(){return dmgMiniLaser; }
+    public float GetDmgLSaber(){return dmgLSaber; }
+    public float GetDmgLClaws(){return dmgLClaws; }
+    public float GetDmgShadowBT(){return dmgShadowBT; }
+    public float GetDmgQRocket(){return dmgQRocket; }
+    public float GetDmgPRocket(){return dmgPRocket; }
+    public float GetDmgPRocketExpl(){return dmgPRocketExpl; }
+    public float GetDmgCBullet(){return dmgCBullet; }
     
-    public float GetDamageMPulse(){return dmgMPulse; }
+    public float GetDmgMPulse(){return dmgMPulse; }
 
 
-    public float GetDamageComet(){return dmgComet;}
-    public float GetDamageBat(){return dmgBat;}
-    public float GetDamageEnemyShip1(){return dmgEnemyShip1;}
-    public float GetDamageEnSaber(){return dmgEnemySaber;}
-    public float GetDamageGoblin(){return dmgGoblin;}
-    public float GetDamageHealDrone(){return dmgHealDrone;}
-    public float GetDamageVortex(){return dmgVortex;}
-    public float GetDamageLeech(){return dmgLeech; }
-    public float GetDamageHLaser(){return dmgHLaser; }
-    
-
-    public float GetDamageSoundwave(){return dmgSoundwave;}
-    public float GetDamageEBt(){return dmgEBt;}
-
-    
+    public float GetDmgComet(){return dmgComet;}
+    public float GetDmgBat(){return dmgBat;}
+public float GetDmgSoundwave(){return dmgSoundwave;}
+    public float GetDmgEnemyShip1(){return dmgEnemyShip1;}
+    public float GetDmgEBt(){return dmgEBt;}
+    public float GetDmgEnSaber(){return dmgEnemySaber;}
+    public float GetDmgGoblin(){return dmgGoblin;}
+    public float GetDmgHealDrone(){return dmgHealDrone;}
+    public float GetDmgVortex(){return dmgVortex;}
+    public float GetDmgLeech(){return dmgLeech; }
+    public float GetDmgHLaser(){return dmgHLaser; }
+    public float GetDmgStinger(){return dmgStinger; } 
 
     public void Hit(){
         Destroy(gameObject);

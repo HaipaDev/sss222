@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a14c5dde1fe9e4aaf080d5453ad783, type: 3}
+  m_Name: StingerFlingers
+  m_EditorClassIdentifier: 
+  waveName: Stinger Flingers
+  enemies:
+  - {fileID: 3147796775416149952, guid: c31c411963e27fc478dcb01fbf72292a, type: 3}
+  timeSpawn: 0.1
+  timeSpawnWave: 3.23
+  spawnRandomFactor: 0
+  numberOfEnemies: 5
+  moveSpeed: 1.45
+  randomSpeed: 1
+  moveSpeedS: 3.55
+  moveSpeedE: 4.9
+  startToEndPath: 0
+  between2PtsPath: 0
+  pathStartPrefab: {fileID: 0}
+  pathEndPrefab: {fileID: 0}
+  randomPath: 0
+  randomPathEach: 0
+  randomPoint: 1
+  pathsRandom:
+  - {fileID: 887107107128442422, guid: 686abfac1a5bb4e439793ee318eafe04, type: 3}
+  shipPlace: 0
+  shipYY: 0
+  loopPath: 0
+  loopPathPrefab: {fileID: 0}

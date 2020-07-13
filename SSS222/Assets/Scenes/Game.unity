@@ -868,10 +868,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Waves
       objectReference: {fileID: 0}
-    - target: {fileID: 356336301364335481, guid: f406453d807c7104bbf48d3e3680ba15,
+    - target: {fileID: 356336301364335482, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: startingWave
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 356336301364335483, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
@@ -930,38 +930,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1964853199674178980, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
-      propertyPath: itemsPercentage.Array.data[0].name
-      value: CometsFlyby - 16.11% - 8.5/44.25
+      propertyPath: itemList.Array.size
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1964853199674178980, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
-      propertyPath: itemsPercentage.Array.data[1].name
-      value: CometStorm - 13.27% - 7/45.75
+      propertyPath: itemList.Array.data[7].name
+      value: StingerFlingers
       objectReference: {fileID: 0}
     - target: {fileID: 1964853199674178980, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
-      propertyPath: itemsPercentage.Array.data[2].name
-      value: BatsFlyby - 17.06% - 9/43.75
+      propertyPath: itemList.Array.data[7].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a,
+        type: 2}
+    - target: {fileID: 1964853199674178980, guid: f406453d807c7104bbf48d3e3680ba15,
+        type: 3}
+      propertyPath: itemList.Array.data[7].dropChance
+      value: 6.8
       objectReference: {fileID: 0}
     - target: {fileID: 1964853199674178980, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
-      propertyPath: itemsPercentage.Array.data[3].name
-      value: BatV - 15.17% - 8/44.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 1964853199674178980, guid: f406453d807c7104bbf48d3e3680ba15,
-        type: 3}
-      propertyPath: itemsPercentage.Array.data[4].name
-      value: EnemyShip - 12.32% - 6.5/46.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1964853199674178980, guid: f406453d807c7104bbf48d3e3680ba15,
-        type: 3}
-      propertyPath: itemsPercentage.Array.data[5].name
-      value: BatsCluster - 13.27% - 7/45.75
+      propertyPath: itemList.Array.data[6].dropChance
+      value: 6.25
       objectReference: {fileID: 0}
     - target: {fileID: 1964853199674178980, guid: f406453d807c7104bbf48d3e3680ba15,
         type: 3}
       propertyPath: itemsPercentage.Array.data[6].name
-      value: EnemyCombatant - 12.8% - 6.75/46
+      value: EnemyCombatant - 11.85% - 6.25/46.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f406453d807c7104bbf48d3e3680ba15, type: 3}
@@ -2418,6 +2414,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OutsideZone
       objectReference: {fileID: 0}
+    - target: {fileID: 3938964661001370557, guid: aac0a738f576f074ca9c5f762c0b86c7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.53
+      objectReference: {fileID: 0}
     - target: {fileID: 6777835646587142782, guid: aac0a738f576f074ca9c5f762c0b86c7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3473,6 +3474,11 @@ PrefabInstance:
       propertyPath: shadowFlashSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 527702708498457700, guid: db6f21db03d81e24fa8a1e4230da0599,
+        type: 3}
+      propertyPath: electrcFlashColor.a
+      value: 0.5882353
+      objectReference: {fileID: 0}
     - target: {fileID: 527702708708106402, guid: db6f21db03d81e24fa8a1e4230da0599,
         type: 3}
       propertyPath: m_IsActive
@@ -3481,6 +3487,11 @@ PrefabInstance:
     - target: {fileID: 527702708708106406, guid: db6f21db03d81e24fa8a1e4230da0599,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1800704977936329559, guid: db6f21db03d81e24fa8a1e4230da0599,
+        type: 3}
+      propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4912173674846370992, guid: db6f21db03d81e24fa8a1e4230da0599,

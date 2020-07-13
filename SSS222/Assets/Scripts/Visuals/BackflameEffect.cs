@@ -9,7 +9,7 @@ public class BackflameEffect : MonoBehaviour{
     [SerializeField] float yy = -0.6f;
     [SerializeField] float time = 0.3f;
     [SerializeField] bool stayStill=true;
-    GameObject BFlame;
+    [SerializeField]GameObject BFlame;
     /*void Start()
     {
         xx = transform.position.x + xx;
@@ -17,7 +17,7 @@ public class BackflameEffect : MonoBehaviour{
     }*/
     // Update is called once per frame
     void Update(){
-        if(Time.timeScale>0.0001f){
+        //if(Time.timeScale>0.0001f){
             var xxx = transform.position.x + xx;
             var yyy = transform.position.y + yy;
             if(BFlame==null){
@@ -28,6 +28,6 @@ public class BackflameEffect : MonoBehaviour{
             }
             //Destroy(BFlame, time);
             //if (twice == true) { GameObject BFlame2 = Instantiate(part, new Vector3(xxx, yyy, transform.position.z - 0.01f), Quaternion.identity); Destroy(BFlame2, time); }
-        }
+        //}
     }
 }

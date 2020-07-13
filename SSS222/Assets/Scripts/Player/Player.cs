@@ -11,11 +11,12 @@ public class Player : MonoBehaviour{
     [SerializeField] bool moveX = true;
     [SerializeField] bool moveY = true;
     [SerializeField] bool moveByMouse = false;
+    [SerializeField] float paddingX = -0.125f;
+    [SerializeField] float paddingY = 0.45f;
     [SerializeField] public float moveSpeedInit = 5f;
     [SerializeField] public float lsaberSpeedMulti = 1.25f;
     public float moveSpeed = 5f;
     public float moveSpeedCurrent;
-    [SerializeField] float padding = 0.1f;
     [SerializeField] public float health = 200f;
     [SerializeField] public float maxHP = 200f;
     [SerializeField] public string powerup = "laser";
@@ -483,10 +484,10 @@ public class Player : MonoBehaviour{
         yMin = -bgSprite.bounds.size.y + padding;
         yMax = bgSprite.bounds.size.y - padding;*/
 
-        xMin = -3.87f + padding;
-        xMax = 3.87f - padding;
-        yMin = -6.95f + padding;
-        yMax = 7f - padding;
+        xMin = -3.87f + paddingX;
+        xMax = 3.87f - paddingX;
+        yMin = -6.95f + paddingY;
+        yMax = 7f - paddingY;
     }
 
     private void Shoot(){
@@ -1108,7 +1109,7 @@ bool stopped=false;
     }public void Power(float duration){
         powerTime=duration;
         SetStatus("power");
-    }public void Weakns(float duration){
+    }public void Weaken(float duration){
         weaknsTime=duration;
         SetStatus("weakns");
     }public void Hack(float duration){
@@ -1223,7 +1224,7 @@ bool stopped=false;
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(en<0)symbol="-";
-        enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+en.ToString();
+        enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(en).ToString();
         energyUsedCount+=en;
     }/*public void EnergyPopUpHUDPlus(float en){
         GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
@@ -1282,14 +1283,14 @@ bool stopped=false;
 
     public void Damage(float dmg, dmgType type){
         health-=dmg/armorMulti;
-        if(type!=dmgType.heal)DMGPopUpHUD(-dmg);
+        if(type!=dmgType.heal)if(dmg!=0)DMGPopUpHUD(-dmg);
         if(type==dmgType.silent){damaged=true;}
         if(type==dmgType.normal){damaged=true;AudioManager.instance.Play("ShipHit");}
         if(type==dmgType.flame){flamed=true;AudioManager.instance.Play("Overheat");}
         if(type==dmgType.decay){damaged=true;AudioManager.instance.Play("LeechBite");}
         if(type==dmgType.electr){electricified=true;Electrc(4f);}//electricified=true;AudioManager.instance.Play("Electric");}
         if(type==dmgType.shadow){shadowed=true;AudioManager.instance.Play("ShadowHit");}
-        if(type==dmgType.heal){healed=true;DMGPopUpHUD(dmg);}
+        if(type==dmgType.heal){healed=true;if(dmg!=0)DMGPopUpHUD(dmg);}
     }
     public void AddSubEnergy(float value,bool add){
         if(inverter!=true){

@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: -477606771839660972}
   - component: {fileID: -1806142457920749441}
   - component: {fileID: 2138168064270286247}
+  - component: {fileID: -3239145941982759924}
   m_Layer: 0
   m_Name: StickBomb
   m_TagString: EnemyBullet
@@ -36,7 +37,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6041420664094412071}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5306678, y: -5.66347, z: 0}
+  m_LocalPosition: {x: 1.5306678, y: -5.66347, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -395,3 +396,15 @@ MonoBehaviour:
   stage: 0
   count: 0
   dist: 0
+--- !u!114 &-3239145941982759924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

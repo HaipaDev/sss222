@@ -1,5 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
+    Assembly-CSharp-Editor.dll:
+    - CustomEditorBase
     Assembly-CSharp.dll:
     - AmmoDisplay
     - AnimOff
@@ -124,9 +126,11 @@ ScriptsOnlyBuild:
     - XPFill
     GitHub.Unity.45.dll:
     - GitHub.Unity.ApplicationCache
+    - GitHub.Unity.BranchesCache
     - GitHub.Unity.EnvironmentCache
     - GitHub.Unity.GitAheadBehindCache
     - GitHub.Unity.GitLocksCache
+    - GitHub.Unity.GitLogCache
     - GitHub.Unity.GitStatusCache
     - GitHub.Unity.RepositoryInfoCache
     Unity.2D.Animation.Editor.dll:
@@ -167,8 +171,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -2460,7 +2466,7 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: 8e5fe9eb5fd4823ae2938c01b0324d64
+      Hash: a1c03e7a85e09ad034e24e045d4c87bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -2664,7 +2670,7 @@ ScriptsOnlyBuild:
     className: UIVerticalScroller
   - hash:
       serializedVersion: 2
-      Hash: ab50dcf6c3819cdb6e01246e0e356601
+      Hash: 635039d3df293431408ed29e0d992330
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BackflameEffect

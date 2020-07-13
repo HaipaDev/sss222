@@ -197,10 +197,10 @@ public class Enemy : MonoBehaviour{
         if(!other.CompareTag(tag)&&other.GetComponent<Tag_OutsideZone>()==null){
             DamageDealer damageDealer=other.gameObject.GetComponent<DamageDealer>();
             if(!damageDealer){ return; }
-            var dmg = damageDealer.GetDamage();
+            var dmg = damageDealer.GetDmg();
 
             var Lname = laserPrefab.name;
-            if (other.gameObject.name.Contains(Lname)) { dmg = damageDealer.GetDamageLaser(); Destroy(other.gameObject); AudioManager.instance.Play("EnemyHit"); }
+            if (other.gameObject.name.Contains(Lname)) { dmg = damageDealer.GetDmgLaser(); Destroy(other.gameObject); AudioManager.instance.Play("EnemyHit"); }
             
             var MLname = mlaserPrefab.name;
             if (other.gameObject.name.Contains(MLname)){ 
@@ -208,36 +208,36 @@ public class Enemy : MonoBehaviour{
                 /*var mlaserHitSound = other.GetComponent<RandomSound>().sound;
                 if(other.GetComponent<RandomSound>().playLimitForThis==true){mlaserHitSound=other.GetComponent<RandomSound>().sound2;}
                 AudioSource.PlayClipAtPoint(mlaserHitSound, new Vector2(transform.position.x, transform.position.y));*/
-                dmg = damageDealer.GetDamageMiniLaser(); Destroy(other.gameObject);}
+                dmg = damageDealer.GetDmgMiniLaser(); Destroy(other.gameObject);}
             
             var HRname = hrocketPrefab.name;
-            if (other.gameObject.name.Contains(HRname)) { dmg = damageDealer.GetDamageHRocket(); Destroy(other.gameObject); AudioManager.instance.Play("HRocketHit");
+            if (other.gameObject.name.Contains(HRname)) { dmg = damageDealer.GetDmgHRocket(); Destroy(other.gameObject); AudioManager.instance.Play("HRocketHit");
                 var explosionSmall = Instantiate(explosionSmallVFX, new Vector2(transform.position.x, transform.position.y - 0.5f), Quaternion.identity); Destroy(explosionSmall.gameObject, 0.3f);
             }
 
             var LSabername = lsaberPrefab.name;
-            if (other.gameObject.name.Contains(LSabername)){ dmg = (float)System.Math.Round(damageDealer.GetDamageLSaber()*9f,2); AudioManager.instance.Play("LSaberHit"); }
+            if (other.gameObject.name.Contains(LSabername)){ dmg = (float)System.Math.Round(damageDealer.GetDmgLSaber()*9f,2); AudioManager.instance.Play("LSaberHit"); }
 
             //var Pname = phaserPrefab.name; var Pname1 = phaserPrefab.name + "(Clone)";
             //if (other.gameObject.name != Pname && other.gameObject.name != Pname1){dmg=0;}
 
             var LClawsname = lclawsPrefab.name;
-            if (other.gameObject.name.Contains(LClawsname)){ dmg = (float)System.Math.Round(damageDealer.GetDamageLSaber()/3,2); AudioManager.instance.Play("LClawsHit"); FindObjectOfType<Player>().energy-=1f;}
+            if (other.gameObject.name.Contains(LClawsname)){ dmg = (float)System.Math.Round(damageDealer.GetDmgLSaber()/3,2); AudioManager.instance.Play("LClawsHit"); FindObjectOfType<Player>().energy-=1f;}
             var LClawsPartname = lclawsPartPrefab.name;
-            if (other.gameObject.name.Contains(LClawsPartname)){ dmg = damageDealer.GetDamageLClaws(); AudioManager.instance.Play("LClawsHit"); }
+            if (other.gameObject.name.Contains(LClawsPartname)){ dmg = damageDealer.GetDmgLClaws(); AudioManager.instance.Play("LClawsHit"); }
 
             var shadowbtName = shadowbtPrefab.name;
-            if (other.gameObject.name.Contains(shadowbtName)) { dmg = damageDealer.GetDamageShadowBT(); FindObjectOfType<Player>().Damage(1,dmgType.shadow);}
+            if (other.gameObject.name.Contains(shadowbtName)) { dmg = damageDealer.GetDmgShadowBT(); FindObjectOfType<Player>().Damage(1,dmgType.shadow);}
             
             var cBulletname = cbulletPrefab.name;
-            if (other.gameObject.name.Contains(cBulletname)) { dmg = damageDealer.GetDamageCBullet(); AudioManager.instance.Play("CStreamHit");}
+            if (other.gameObject.name.Contains(cBulletname)) { dmg = damageDealer.GetDmgCBullet(); AudioManager.instance.Play("CStreamHit");}
 
             var QRname = qrocketPrefab.name;
-            if (other.gameObject.name.Contains(QRname)) { dmg = damageDealer.GetDamageQRocket(); Destroy(other.gameObject); AudioManager.instance.Play("QRocketHit");
+            if (other.gameObject.name.Contains(QRname)) { dmg = damageDealer.GetDmgQRocket(); Destroy(other.gameObject); AudioManager.instance.Play("QRocketHit");
                 var explosionSmall = Instantiate(explosionSmallVFX, new Vector2(transform.position.x, transform.position.y - 0.5f), Quaternion.identity); Destroy(explosionSmall.gameObject, 0.3f);
             }
             var PRname = procketPrefab.name;
-            if (other.gameObject.name.Contains(PRname)) { dmg = damageDealer.GetDamagePRocket(); //AudioSource.PlayClipAtPoint(hrocketHitSFX, new Vector2(transform.position.x, transform.position.y));
+            if (other.gameObject.name.Contains(PRname)) { dmg = damageDealer.GetDmgPRocket(); //AudioSource.PlayClipAtPoint(hrocketHitSFX, new Vector2(transform.position.x, transform.position.y));
                 //var explosionSmall = Instantiate(explosionSmallVFX, new Vector2(transform.position.x, transform.position.y - 0.5f), Quaternion.identity); Destroy(explosionSmall.gameObject, 0.3f);
             }var PLname = plaserPrefab.name;
             if (other.gameObject.name.Contains(PLname)) { dmg = other.GetComponent<DamageOverDist>().dmg; Destroy(other.gameObject); AudioManager.instance.Play("PLaserHit");//AudioSource.PlayClipAtPoint(hrocketHitSFX, new Vector2(transform.position.x, transform.position.y));
@@ -245,10 +245,10 @@ public class Enemy : MonoBehaviour{
             }
 
             var PRExplname = procketExplPrefab.name;
-            if (other.gameObject.name.Contains(PRExplname)) { dmg = damageDealer.GetDamagePRocketExpl(); GetComponent<Rigidbody2D>().velocity = Vector2.up*6f; yeeted=true; }// AudioSource.PlayClipAtPoint(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            if (other.gameObject.name.Contains(PRExplname)) { dmg = damageDealer.GetDmgPRocketExpl(); GetComponent<Rigidbody2D>().velocity = Vector2.up*6f; yeeted=true; }// AudioSource.PlayClipAtPoint(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
             
             var mPulsename = mPulsePrefab.name;
-            if (other.gameObject.name.Contains(mPulsename)) { dmg = damageDealer.GetDamageMPulse(); AudioManager.instance.Play("MLaserHit");}
+            if (other.gameObject.name.Contains(mPulsename)) { dmg = damageDealer.GetDmgMPulse(); AudioManager.instance.Play("MLaserHit");}
 
             if(GetComponent<VortexWheel>()!=null){
                 if(!other.gameObject.name.Contains(HRname)&&!other.gameObject.name.Contains(QRname)){
@@ -291,27 +291,27 @@ public class Enemy : MonoBehaviour{
         {
             DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
             if (!damageDealer) { return; }
-            float dmg = damageDealer.GetDamage();
+            float dmg = damageDealer.GetDmg();
 
             var Pname = phaserPrefab.name; var Pname1 = phaserPrefab.name + "(Clone)";
-            if (other.gameObject.name == Pname || other.gameObject.name == Pname1) {dmg = damageDealer.GetDamagePhaser(); AudioManager.instance.Play("PhaserHit"); }
+            if (other.gameObject.name == Pname || other.gameObject.name == Pname1) {dmg = damageDealer.GetDmgPhaser(); AudioManager.instance.Play("PhaserHit"); }
             //else { dmg = 0; }
 
             var LSabername = lsaberPrefab.name; var LSabername1 = lsaberPrefab.name + "(Clone)";
-            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1) { dmg = damageDealer.GetDamageLSaber(); AudioManager.instance.Play("EnemyHit"); }
+            if (other.gameObject.name == LSabername || other.gameObject.name == LSabername1) { dmg = damageDealer.GetDmgLSaber(); AudioManager.instance.Play("EnemyHit"); }
             //else { dmg = 0; }
             
 
             var PRExplname = procketExplPrefab.name; var PRExplname1 = procketExplPrefab.name + "(Clone)";
-            if (other.gameObject.name == PRExplname || other.gameObject.name == PRExplname1) { dmg = damageDealer.GetDamagePRocketExpl(); }//AudioSource.PlayClipAtPoint(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            if (other.gameObject.name == PRExplname || other.gameObject.name == PRExplname1) { dmg = damageDealer.GetDmgPRocketExpl(); }//AudioSource.PlayClipAtPoint(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
             //else {dmg=0;}
 
             var cBulletname = cbulletPrefab.name; var cBulletname1 = cbulletPrefab.name + "(Clone)";
-            if (other.gameObject.name == cBulletname || other.gameObject.name == cBulletname1) { dmg = damageDealer.GetDamageCBullet(); AudioManager.instance.Play("CStreamHit");}
+            if (other.gameObject.name == cBulletname || other.gameObject.name == cBulletname1) { dmg = damageDealer.GetDmgCBullet(); AudioManager.instance.Play("CStreamHit");}
             //else {dmg=0;}
 
             var LClawsname = lclawsPrefab.name; var LClawsname1 = lclawsPrefab.name + "(Clone)";
-            if (other.gameObject.name == LClawsname || other.gameObject.name == LClawsname1){ dmg = (float)System.Math.Round(damageDealer.GetDamageLSaber()/3,2); FindObjectOfType<Player>().energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y)); }
+            if (other.gameObject.name == LClawsname || other.gameObject.name == LClawsname1){ dmg = (float)System.Math.Round(damageDealer.GetDmgLSaber()/3,2); FindObjectOfType<Player>().energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y)); }
 
             var mPulsename = mPulsePrefab.name; var mPulsename1 = mPulsePrefab.name + "(Clone)";
             if (other.gameObject.name == mPulsename || other.gameObject.name == mPulsename1) { dmg = 0; AudioManager.instance.Play("PRocketHit");}
