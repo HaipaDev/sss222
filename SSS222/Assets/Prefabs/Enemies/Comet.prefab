@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 83a11dbcdb4e2bc45bba9a5b6663bd12, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 99983d2108c82d9488eb046ba733b402, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -235,14 +235,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: 83a11dbcdb4e2bc45bba9a5b6663bd12, type: 3}
-  - {fileID: 21300000, guid: b57d5e7c33b22bd4b99ee96d045e2a63, type: 3}
-  - {fileID: 21300000, guid: 7dc41b98726bb674386b70fc108f0bdd, type: 3}
-  - {fileID: 21300000, guid: 722eee9e0c2a33a41aceb17e3c0dfc73, type: 3}
-  - {fileID: 21300000, guid: e9c78b39a1ab1ee4eb2adeeab363c9ec, type: 3}
+  - {fileID: 21300000, guid: 99983d2108c82d9488eb046ba733b402, type: 3}
+  - {fileID: 21300000, guid: 9a41682c86a2e8646ab244683f0ab5e5, type: 3}
+  - {fileID: 21300000, guid: 934315a3b0cb1ac4ea7e145834d70dc7, type: 3}
+  - {fileID: 21300000, guid: a6f4957e5f138db408124ac4b05f0c0e, type: 3}
   spritesLunar:
-  - {fileID: 21300000, guid: f5ef5126c9811944294362c47b069d3a, type: 3}
-  - {fileID: 21300000, guid: c047f9347fd470346bc3fff60d9db0c5, type: 3}
+  - {fileID: 21300000, guid: d77e60d2555e3794bb7b3751fc12984a, type: 3}
+  - {fileID: 21300000, guid: 9707760d56d495d49ad28413a26f324c, type: 3}
   lunarCometChance: 10
   lunarHealthMulti: 2.5
   lunarSpeedMulti: 0.415
@@ -258,15 +257,15 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
     type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 35697724e1f8e2941a8dfff4d622e76c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 140
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

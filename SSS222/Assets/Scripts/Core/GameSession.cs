@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using BayatGames.SaveGameFree;
+using UnityEngine.Rendering.PostProcessing;
 public class GameSession : MonoBehaviour{
     public static GameSession instance;
     [HeaderAttribute("Current Player Values")]
@@ -45,12 +46,14 @@ public class GameSession : MonoBehaviour{
     public float legendMultiAmnt=0.01f;
     [HeaderAttribute("Settings")]
     [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
+    public bool speedChanged;
     [HeaderAttribute("Other")]
     public bool cheatmode;
     public bool dmgPopups=true;
+    [SerializeField]float restartTimer=-4;
     
     Player player;
-    public bool speedChanged;
+    PostProcessVolume postProcessVolume;
     //public string gameVersion;
     //public bool moveByMouse = true;
 
@@ -129,10 +132,15 @@ public class GameSession : MonoBehaviour{
         if(FindObjectOfType<Player>()==null){gameSpeed=1;}
         
         //Restart with R or Space/Resume with Space
-        if((GameObject.Find("GameOverCanvas")!=null&&GameObject.Find("GameOverCanvas").activeSelf==true)&&(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.R))
-        ||(PauseMenu.GameIsPaused==true&&Input.GetKeyDown(KeyCode.R))){
-            FindObjectOfType<Level>().RestartGame();}
+        if(SceneManager.GetActiveScene().name=="Game"){
+        if((GameObject.Find("GameOverCanvas")==null||GameObject.Find("GameOverCanvas").activeSelf==false)&&PauseMenu.GameIsPaused==false){restartTimer=-4;}
+        if(PauseMenu.GameIsPaused==true){if(restartTimer==-4)restartTimer=0.5f;}
+        if(GameObject.Find("GameOverCanvas")!=null&&GameObject.Find("GameOverCanvas").activeSelf==true){if(restartTimer==-4)restartTimer=1f;}
         else if(PauseMenu.GameIsPaused==true&&Input.GetKeyDown(KeyCode.Space)){FindObjectOfType<PauseMenu>().Resume();}
+        if(restartTimer>0)restartTimer-=Time.unscaledDeltaTime;
+        if(restartTimer<=0&&restartTimer!=-4){if(Input.GetKeyDown(KeyCode.R)||(GameObject.Find("GameOverCanvas")!=null&&GameObject.Find("GameOverCanvas").activeSelf==true&&Input.GetKeyDown(KeyCode.Space))){FindObjectOfType<Level>().RestartGame();restartTimer=-4;}}
+        if(GameObject.Find("GameOverCanvas")!=null&&GameObject.Find("GameOverCanvas").activeSelf==true&&Input.GetKeyDown(KeyCode.Escape)){FindObjectOfType<Level>().LoadStartMenu();}
+        }
 
         //var inv=false;
         if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().inverter==true)){
@@ -162,6 +170,12 @@ public class GameSession : MonoBehaviour{
                 }
             }
         }
+
+        //Postprocessing
+        postProcessVolume=FindObjectOfType<PostProcessVolume>();
+        //if(SaveSerial.instance.pprocessing==true && postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
+        if(SaveSerial.instance.pprocessing==true && postProcessVolume!=null){postProcessVolume.GetComponent<PostProcessVolume>().enabled=true;}
+        if(SaveSerial.instance.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
 
         CalculateLuck();
 

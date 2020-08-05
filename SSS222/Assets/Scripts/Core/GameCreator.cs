@@ -19,7 +19,7 @@ public class GameCreator : MonoBehaviour{
         if (FindObjectOfType<GameAssets>() == null){Instantiate(gameAssetsPrefab);}
         if (FindObjectOfType<Level>() == null){Instantiate(levelPrefab);}
         if (FindObjectOfType<AudioManager>() == null){Instantiate(audioManagerPrefab);}
-        if (FindObjectOfType<PostProcessVolume>() != null && FindObjectOfType<SaveSerial>().pprocessing!=true){Destroy(FindObjectOfType<PostProcessVolume>());}
+        if (FindObjectOfType<PostProcessVolume>() != null && FindObjectOfType<SaveSerial>().pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
         Destroy(gameObject);
     }
 }

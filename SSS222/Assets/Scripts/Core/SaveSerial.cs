@@ -9,6 +9,7 @@ using BayatGames.SaveGameFree.Encoders;
 using BayatGames.SaveGameFree.Serializers;
 
 public class SaveSerial : MonoBehaviour{
+	public static SaveSerial instance;
 	[SerializeField] string filename = "playerData";
 	[SerializeField] string filenameSettings = "gameSettings.cfg";
 	[HeaderAttribute("PlayerData")]
@@ -41,7 +42,6 @@ public class SaveSerial : MonoBehaviour{
 		public float soundVolume;
 		public float musicVolume;
 	}
-
 	public void Save()
 	{
 		PlayerData data = new PlayerData();
@@ -128,6 +128,7 @@ public class SaveSerial : MonoBehaviour{
 	private void Awake()
 	{
 		SetUpSingleton();
+		instance=this;
 	}
 	private void SetUpSingleton()
 	{

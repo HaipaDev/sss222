@@ -117,6 +117,7 @@ public class Shop : MonoBehaviour{
         foreach(GameObject slot in slotsChoose){if(slot!=currentSlot){slot.SetActive(false);}else{slot.SetActive(true);}}
     }
     void LevelRep(){
+        if(GetComponentInChildren<XPBars>()!=null){
         var bar=GetComponentInChildren<XPBars>();
         if(currentSlotID==1&&reputationSlot<slotUnlock[0]){bar.ID=slotUnlock[0];if(bar.current==null){bar.Recreate();}}
         if(currentSlotID==1&&reputationSlot==slotUnlock[0]){var xp=slotUnlock[1];currentSlotID=2;bar.ID=xp;if(bar.current==null){bar.Recreate();}RandomizeShopDelay();reputationSlot=0;}
@@ -130,6 +131,7 @@ public class Shop : MonoBehaviour{
         if(currentSlotID==4&&reputationSlot<0&&shopOpened==true){var xp=slotUnlock[2];currentSlotID=3;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=slotUnlock[2]-FindObjectOfType<CargoShip>().repMinus;}
         if(currentSlotID==3&&reputationSlot<0&&shopOpened==true){var xp=slotUnlock[1];currentSlotID=2;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=slotUnlock[3]-FindObjectOfType<CargoShip>().repMinus;}
         if(currentSlotID==2&&reputationSlot<0&&shopOpened==true){var xp=slotUnlock[0];currentSlotID=1;bar.ID=xp;if(bar.current==null){bar.Recreate();}reputationSlot=slotUnlock[4]-FindObjectOfType<CargoShip>().repMinus-1;}
+        }
     }
     public void Purchase(){
         purchases+=1;

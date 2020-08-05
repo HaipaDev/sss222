@@ -35,7 +35,7 @@ public class GameAssets : MonoBehaviour{
         GameObject objref = Instantiate(gobj,pos,Quaternion.identity);
         return objref;
 	}
-    public GameObject VFX(string obj, Vector2 pos)
+    public GameObject VFX(string obj, Vector2 pos, float duration)
 	{
 		GObject o = Array.Find(vfx, item => item.name == obj);
         GameObject gobj=o.gobj;
@@ -45,6 +45,7 @@ public class GameAssets : MonoBehaviour{
 			return null;
 		}
         GameObject objref = Instantiate(gobj,pos,Quaternion.identity);
+		Destroy(objref,duration);
         return objref;
 	}
     public GameObject Get(string obj)

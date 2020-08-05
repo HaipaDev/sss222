@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LaunchRadialBullets : MonoBehaviour {
-	[SerializeField] int numberOfProjectiles;
+	[SerializeField] int numberOfProjectiles=4;
 	[SerializeField] float radius=5;
 	[SerializeField] float moveSpeed=5;
 	//[SerializeField] bool rotate;

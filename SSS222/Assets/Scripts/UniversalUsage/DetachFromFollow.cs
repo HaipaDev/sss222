@@ -35,7 +35,8 @@ public class DetachFromFollow : MonoBehaviour{
                 AudioSource.PlayClipAtPoint(leechAttachSFX, new Vector2(transform.position.x, transform.position.y));
                 attached = true;
             }
-        }/*else{
+        }else{attached=false;}
+        /*else{
             if(attached==false){ }
         }*/
 

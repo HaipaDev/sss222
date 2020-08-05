@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7ebf289a99896f343aad150ee91c120e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 40f2dc524d630924491ca3d1aa85e6d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -214,6 +214,8 @@ MonoBehaviour:
   yeeted: 0
   dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
     type: 3}
+  dmgCounted: 0
+  dmgCount: 0
 --- !u!114 &7191012222464984588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +297,7 @@ MonoBehaviour:
   yy: -0.3
   time: 0.3
   stayStill: 1
+  BFlame: {fileID: 0}
 --- !u!82 &-8825757306841386777
 AudioSource:
   m_ObjectHideFlags: 0

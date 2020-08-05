@@ -58,7 +58,7 @@ public class PlayerCollider : MonoBehaviour{
     #endregion
     void Start()
     {
-        player = FindObjectOfType<Player>().GetComponent<Player>();
+        player = FindObjectOfType<Player>();
         gameSession = FindObjectOfType<GameSession>();
 
         SetPrefabs();
@@ -113,7 +113,7 @@ public class PlayerCollider : MonoBehaviour{
         SetPrefabs();
         if (!other.CompareTag(tag))
         {
-            DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
+            DamageDealer damageDealer = other.GetComponent<DamageDealer>();
             if (!damageDealer) { /*return;*/ }
 
             if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);player.Damage(damageDealer.GetDmgZone(),dmgType.silent);}
@@ -370,7 +370,7 @@ public class PlayerCollider : MonoBehaviour{
         if (!other.CompareTag(tag))
         {
         if (dmgTimer<=0){
-            DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
+            DamageDealer damageDealer = other.GetComponent<DamageDealer>();
             if (!damageDealer) { /*return;*/ }
             //bool en = false;
             float dmg = 0;

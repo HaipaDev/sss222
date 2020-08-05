@@ -293,7 +293,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 82ad97190dc486e45b01f538350f2544, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d3c6432fb3453954fb19e3bd285c35f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -368,6 +368,7 @@ MonoBehaviour:
   yy: 0.6
   time: 0.3
   stayStill: 0
+  BFlame: {fileID: 0}
 --- !u!82 &1143734159
 AudioSource:
   m_ObjectHideFlags: 0

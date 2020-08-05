@@ -63,16 +63,17 @@ public class LootTableWaves : MonoBehaviour{
         //itemsPercentage = new ItemPercentage[itemList.Count];
         var i=-1;
         foreach(LootTableEntryWaves entry in itemList){
+            i++;
             entry.name=entry.lootItem.name;
             itemTable.Add(entry.lootItem, (float)entry.dropChance);
             var value=System.Convert.ToSingle(System.Math.Round((entry.dropChance/sum*100),2));
             //itemsPercentage.Add(value);
             //for(var i=0; i<itemTable.Count; i++){
-                i++;
+                //i++;
                 //itemsPercentage.Join();
                 //ItemPercentage itemsPercentage= new ItemPercentage();
                 //itemsPercentage[i].itemPercentage=value;
-                itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+entry.dropChance+"/"+(sum-entry.dropChance);
+                if(i>=0&&i<itemsPercentage.Length)itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+entry.dropChance+"/"+(sum-entry.dropChance);
                 //foreach(ItemPercentage item in itemsPercentage){item.name=entry.name;item.itemPercentage=value;}
             //}
         }

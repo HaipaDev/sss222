@@ -1323,17 +1323,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6050e2d5de785ce4d931e4dbdbf2d755, type: 3}
   m_Name: ChromaticAberration
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
   spectralLut:
-    overrideState: 1
+    overrideState: 0
     value: {fileID: 0}
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0.135
+    value: 0.1
   fastMode:
     overrideState: 0
     value: 0
@@ -1383,7 +1383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1392,7 +1392,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.97
+    value: 2.13
   color:
     overrideState: 1
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -1410,7 +1410,7 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 3.1
+    value: 5.71
   directLightingStrength:
     overrideState: 0
     value: 0
@@ -1491,7 +1491,7 @@ MonoBehaviour:
     value: 5.4
   threshold:
     overrideState: 1
-    value: 1.06
+    value: 0.76
   softKnee:
     overrideState: 1
     value: 0.401
@@ -1511,7 +1511,7 @@ MonoBehaviour:
     overrideState: 1
     value: 0
   dirtTexture:
-    overrideState: 0
+    overrideState: 1
     value: {fileID: 0}
     defaultState: 1
   dirtIntensity:

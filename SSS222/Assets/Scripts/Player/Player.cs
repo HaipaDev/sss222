@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour{
     //[SerializeField] public float hpForRegen=0f;
     [SerializeField] public float armorMulti = 1f;
     [SerializeField] public float dmgMulti = 1f;
+    [SerializeField] public float shipScaleDefault=1f;
     #region//Weapon Prefabs
     GameObject laserPrefab;
     GameObject phaserPrefab;
@@ -95,7 +97,7 @@ public class Player : MonoBehaviour{
     public float gcloverTimer =-4;
     [SerializeField] public bool shadow = false;
     public float shadowTimer = -4;
-    [HideInInspector]public float dashTime;
+    public float dashTime;
     [SerializeField] public bool inverter = false;
     public float inverterTimer = 14;
     [SerializeField] public bool magnet = false;
@@ -245,6 +247,7 @@ public class Player : MonoBehaviour{
     [HideInInspector]public float instantiateTimer = 0f;
     float lsaberEnTimer;
     [HideInInspector]public Vector2 mousePos;
+    [HideInInspector]public Vector2 mouseDir;
     [SerializeField]public float dist;
     [HideInInspector]public Vector2 velocity;
     [HideInInspector]public float shipScale=1f;
@@ -279,6 +282,11 @@ public class Player : MonoBehaviour{
     bool scaleUp;
     public bool moving;
     public float energyUsedCount;
+
+    bool moveXwas;
+    bool moveYwas;
+    public RaycastHit2D[] shadowRaycast=new RaycastHit2D[4];
+    ContactFilter2D filter2D;
 #endregion
 
     void Start(){
@@ -301,6 +309,17 @@ public class Player : MonoBehaviour{
         refilltxtE=GameObject.Find("RefillText2");
 
         SetPrefabs();
+        moveXwas=moveX;
+        moveYwas=moveY;
+
+        //Create a contactFilter configuration for the rays to check if the player is grounded
+        filter2D = new ContactFilter2D
+        {
+        //Ignore trigger colliders
+        useTriggers = false,
+        //Use a layer mask
+        useLayerMask = true
+        };
     }
     void SetPrefabs(){
         laserPrefab=GameAssets.instance.Get("Laser");
@@ -345,14 +364,14 @@ public class Player : MonoBehaviour{
         shootTimer -= Time.deltaTime;
         instantiateTimer-=Time.deltaTime;
         velocity=rb.velocity;
-        if(moving==false){stayingTimer+=Time.deltaTime;stayingTimerCore+=Time.deltaTime;timerHpRegen+=Time.deltaTime;}
+        if(moving==false){stayingTimer+=Time.deltaTime;stayingTimerCore+=Time.deltaTime;if(hpRegenEnabled)timerHpRegen+=Time.deltaTime;}
         if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;stayingTimerCore=0;}
         
         if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
         if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
         if(overheatTimer>=overheatTimerMax&&overheated!=true){OnFire(3.8f);//health-=overheatDmg;DMGPopUpHUD(overheatDmg);OnFire(3.8f);damaged=true;AudioManager.instance.Play("Overheat");
         overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
-        if(overheated==true&&overheatedTimer>0){overheatedTimer-=Time.deltaTime;
+        if(overheated==true&&overheatedTimer>0&&Time.timeScale>0.0001f){overheatedTimer-=Time.deltaTime;
             GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
             GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
             Destroy(flareL.gameObject, 0.04f);
@@ -437,6 +456,7 @@ public class Player : MonoBehaviour{
 
     private void MoveWithMouse(){
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseDir = mousePos - (Vector2)transform.position;
         mousePos.x=Mathf.Clamp(mousePos.x, xMin, xMax);
         mousePos.y=Mathf.Clamp(mousePos.y, yMin, yMax);
         //dist in FixedUpdate()
@@ -453,19 +473,23 @@ public class Player : MonoBehaviour{
         //if(FindObjectOfType<ShootButton>()!=null && FindObjectOfType<ShootButton>().pressed==false)transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
         //else if(FindObjectsOfType<ShootButton>()==null){transform.position = Vector2.MoveTowardqs(transform.position, mousePos*moveDir, step);}
         //if(dist>minMoveDist)
-        transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
+        if (moveX && moveY)transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
+        if (moveX && !moveY)transform.position = Vector2.MoveTowards(transform.position, new Vector2(mousePos.x,transform.position.y)*moveDir, step);
+        if (!moveX && moveY)transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x,mousePos.y)*moveDir, step);
 
         if(Input.GetButtonDown("Fire2")){
+            //moveXwas=moveX;moveX=false;
+            //moveYwas=moveY;moveY=false;
             float timeSinceLastClick = Time.time - lastClickTime;
             if (timeSinceLastClick <= DCLICK_TIME){DClick(); }
-            else{ lastClickTime = Time.time; }
+            else{ lastClickTime = Time.time; }//moveX=moveXwas;moveY=moveYwas;}
         }
 
         var newXpos = transform.position.x;
         var newYpos = transform.position.y;
 
-        if (moveX == true) newXpos = Mathf.Clamp(transform.position.x, xMin, xMax);
-        if (moveY == true) newYpos = Mathf.Clamp(transform.position.y, yMin, yMax);
+        newXpos = Mathf.Clamp(transform.position.x, xMin, xMax);
+        newYpos = Mathf.Clamp(transform.position.y, yMin, yMax);
 
         //if(dist>minMoveDist)
         transform.position = new Vector2(newXpos, newYpos);
@@ -501,7 +525,7 @@ public class Player : MonoBehaviour{
                     shootCoroutine=null;
                     //if(shootCoroutine!=null){
                         //StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());StopCoroutine("ShootContinuously");//}
-                    if(moving==true)timerEnRegen+=Time.deltaTime;
+                    if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
                 }
                 /*if (Input.GetButtonUp("Fire1")){
                     StopCoroutine(shootCoroutine);
@@ -536,8 +560,47 @@ public class Player : MonoBehaviour{
                     if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
                 }
             }else{
-                rb.velocity = mousePos * dashSpeed * moveDir;
-                if(new Vector2(transform.position.x,transform.position.y)==mousePos){rb.velocity=Vector2.zero;}
+                /*Vector2 difference = mousePos - (Vector2)transform.position;
+                difference = difference.normalized;
+                float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+                Vector3 dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.right;
+
+                rb.velocity = Vector2.zero;
+                dir = new Vector2(mousePos.x, mousePos.y); // remember that mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                transform.position += dir; // the only thing to change is this cause you need to move for an equal ammount of units each time you attack
+                */
+                //rb.velocity = mousePos * dashSpeed * moveDir;
+                float maxDist=10;
+                /*
+                shadowRaycast=Physics2D.RaycastAll(transform.position,mousePos,maxDist).ToList();
+                //Ray2D shadowRaycast=new Ray2D(transform.position,mousePos);
+                Debug.DrawRay(transform.position,shadowRaycast[shadowRaycast.Count-1].point,Color.green,0.5f);
+                if(Vector2.Distance(transform.position,mousePos)<=maxDist)transform.position=mousePos;
+                */
+                /*
+                Ray2D ray = new Ray2D(transform.position, mousePos);
+                shadowRaycast = Physics2D.RaycastAll(ray.origin, ray.direction, maxDist).ToList();
+                Debug.Log(shadowRaycast.Count);
+                foreach(RaycastHit2D hit in shadowRaycast){Debug.DrawRay(transform.position,hit.point,Color.green,0.5f);if(hit.collider!=null&&hit.collider.CompareTag("Enemy")){hit.collider.GetComponent<Enemy>().Die();}}
+                */
+                int totalObjectsHit = Physics2D.RaycastNonAlloc(transform.position, mousePos, shadowRaycast, maxDist);
+ 
+                //Iterate the objects hit by the laser
+                for (int i = 0; i < totalObjectsHit; i++)
+                {
+                    RaycastHit2D hit = shadowRaycast[i];
+                    Debug.DrawRay(transform.position,hit.point,Color.green,0.5f);
+                    //Do something
+                    if (hit.collider != null&&hit.collider.CompareTag("Enemy"))
+                    {
+                        hit.collider.GetComponent<Enemy>().Die();
+                    }
+                }
+
+                var posRaycast = Physics2D.Raycast(transform.position, mousePos, maxDist);
+                transform.position=posRaycast.point;
+
+                //if(new Vector2(transform.position.x,transform.position.y)==mousePos){rb.velocity=Vector2.zero;}
             }
             energy -= shadowEn;
             EnergyPopUpHUD(shadowEn);
@@ -553,7 +616,7 @@ public class Player : MonoBehaviour{
 
     private void Die(){
         if (health <= 0){
-            GameObject explosion = GameAssets.instance.VFX("Explosion",transform.position);
+            GameObject explosion = GameAssets.instance.VFX("Explosion",transform.position,0.5f);
             AudioManager.instance.Play("Death");
             Destroy(explosion, 0.5f);
             pskills.DeathSkills();
@@ -589,7 +652,7 @@ bool stopped=false;
                     AddSubEnergy(laserEn,false);
                     laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
                     laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn;
-                        shootTimer = laserShootPeriod * 0.75f;
+                        shootTimer = laserShootPeriod * 0.65f;
                         stopped=false;
                         yield return new WaitForSeconds(laserShootPeriod*1.7f);
                         stopped=true;
@@ -904,9 +967,9 @@ bool stopped=false;
         if (shadow == true) { shadowTimer -= Time.deltaTime; }
         if (shadowTimer <= 0 && shadowTimer > -4) { ResetStatus("shadow"); AudioManager.instance.Play("PowerupOff"); }
         if (shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
-        else{ dashTime = startDashTime; GetComponent<BackflameEffect>().enabled=true; }
-        if (dashTime <= 0&&dashTime!=-4) { rb.velocity = Vector2.zero; dashing = false; dashTime=-4;}
-        else{ dashTime -= Time.deltaTime; }
+        else{ dashTime = -4; GetComponent<BackflameEffect>().enabled=true; }
+        if (shadow==true&&dashTime <= 0&&dashTime!=-4) { rb.velocity = Vector2.zero; dashing = false; /*moveX=moveXwas;moveY=moveYwas;*/ dashTime=-4;}
+        else{ dashTime -= Time.deltaTime; if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);}
         if(energy<=0){ shadow = false; }
 
         if(inverter==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){
@@ -951,7 +1014,7 @@ bool stopped=false;
                 //instantiateTimer=instantiateTime;
             }
         }else{
-            shipScale=1;
+            shipScale=shipScaleDefault;
         }
         if(scalerTimer <=0 && scalerTimer>-4){ResetStatus("scaler");}
         transform.localScale=new Vector3(shipScale,shipScale,1);
@@ -1282,15 +1345,14 @@ bool stopped=false;
     }
 
     public void Damage(float dmg, dmgType type){
-        health-=dmg/armorMulti;
-        if(type!=dmgType.heal)if(dmg!=0)DMGPopUpHUD(-dmg);
+        if(type!=dmgType.heal)if(dmg!=0){health-=dmg/armorMulti;DMGPopUpHUD(-dmg);}
         if(type==dmgType.silent){damaged=true;}
         if(type==dmgType.normal){damaged=true;AudioManager.instance.Play("ShipHit");}
         if(type==dmgType.flame){flamed=true;AudioManager.instance.Play("Overheat");}
         if(type==dmgType.decay){damaged=true;AudioManager.instance.Play("LeechBite");}
         if(type==dmgType.electr){electricified=true;Electrc(4f);}//electricified=true;AudioManager.instance.Play("Electric");}
         if(type==dmgType.shadow){shadowed=true;AudioManager.instance.Play("ShadowHit");}
-        if(type==dmgType.heal){healed=true;if(dmg!=0)DMGPopUpHUD(dmg);}
+        if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;DMGPopUpHUD(dmg);}}
     }
     public void AddSubEnergy(float value,bool add){
         if(inverter!=true){

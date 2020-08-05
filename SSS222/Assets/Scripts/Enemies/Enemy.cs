@@ -139,15 +139,26 @@ public class Enemy : MonoBehaviour{
         Die();
         DestroyOutside();
         DispDmgCountUp();
+        //Rotate if Stinger
+        if(gameObject.name.Contains("Stinger")){
+        if(Time.timeScale>0.0001f){
+        if(FindObjectOfType<Player>()!=null){
+            if(transform.position.x-FindObjectOfType<Player>().transform.position.x<0.2f){
+            if(transform.position.y-FindObjectOfType<Player>().transform.position.y<3){
+                //transform.rotation=new Quaternion(0,0,180,0);
+                if(transform.rotation.z<179){transform.rotation=new Quaternion(0,0,transform.rotation.z+30*Time.timeScale,0);}
+                if(transform.rotation.z>=179/*||(transform.rotation.z>-150&&transform.rotation.z<0)*/){transform.rotation=new Quaternion(0,0,180,0);}
+            }}
+        }}}
     }
     
     private void Shoot(){
         shotCounter -= Time.deltaTime;
         if(shotCounter<=0f){
+        if(GetComponent<LaunchRadialBullets>()==null){
             if(DBullets!=true){
                 var bt=Instantiate(bullet, transform.position,Quaternion.identity) as GameObject;
                 bt.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -bulletSpeed);
-                shotCounter = Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
             }else{
                 var pos1 = new Vector2(transform.position.x+bulletDist,transform.position.y);
                 var bt1 = Instantiate(bullet, pos1, Quaternion.identity) as GameObject;
@@ -155,8 +166,11 @@ public class Enemy : MonoBehaviour{
                 var pos2 = new Vector2(transform.position.x - bulletDist, transform.position.y);
                 var bt2 = Instantiate(bullet, pos2, Quaternion.identity) as GameObject;
                 bt2.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -bulletSpeed);
-                shotCounter = Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
             }
+        }else{
+            GetComponent<LaunchRadialBullets>().Shoot();
+        }
+        shotCounter = Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
         }
     }
     private void FlyOff(){
@@ -194,8 +208,9 @@ public class Enemy : MonoBehaviour{
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){Destroy(GetComponent<GoblinDrop>().powerup);}}}
     }
     private void OnTriggerEnter2D(Collider2D other){
-        if(!other.CompareTag(tag)&&other.GetComponent<Tag_OutsideZone>()==null){
-            DamageDealer damageDealer=other.gameObject.GetComponent<DamageDealer>();
+        //if(FindObjectOfType<Player>().shadowRaycast[FindObjectOfType<Player>().shadowRaycast.FindIndex(FindObjectOfType<Player>().shadowRaycast.Count,(x) => x == this)]==this){Die();}
+        if(!other.CompareTag(tag)&&!other.CompareTag("EnemyBullet")&&other.GetComponent<Tag_OutsideZone>()==null){
+            DamageDealer damageDealer=other.GetComponent<DamageDealer>();
             if(!damageDealer){ return; }
             var dmg = damageDealer.GetDmg();
 
@@ -289,7 +304,7 @@ public class Enemy : MonoBehaviour{
     {
         if (!other.CompareTag(tag)&&other.GetComponent<Tag_OutsideZone>()==null)
         {
-            DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
+            DamageDealer damageDealer = other.GetComponent<DamageDealer>();
             if (!damageDealer) { return; }
             float dmg = damageDealer.GetDmg();
 

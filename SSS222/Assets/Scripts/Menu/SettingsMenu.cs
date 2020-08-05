@@ -29,6 +29,7 @@ public class SettingsMenu : MonoBehaviour{
     [SerializeField]AudioSource audioSource;
     public AudioMixer audioMixer;
     [SerializeField]GameObject pprocessingPrefab;
+    public PostProcessVolume postProcessVolume;
     private void Start(){
         //settings = FindObjectOfType<Settings>();
         gameSession = FindObjectOfType<GameSession>();
@@ -50,8 +51,10 @@ public class SettingsMenu : MonoBehaviour{
         musicSlider.GetComponent<Slider>().value = saveSerial.musicVolume;
     }
     private void Update() {
-        if(pprocessing==true && FindObjectOfType<PostProcessVolume>()==null){Instantiate(pprocessingPrefab,Camera.main.transform);}
-        if(pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){Destroy(FindObjectOfType<PostProcessVolume>());}
+        postProcessVolume=FindObjectOfType<PostProcessVolume>();
+        if(pprocessing==true && postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
+        if(pprocessing==true && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume.enabled=true;}
+        if(pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
     }
     public void SetMasterVolume(float volume){
         audioMixer.SetFloat("MasterVolume", volume);
@@ -74,11 +77,12 @@ public class SettingsMenu : MonoBehaviour{
     }public void SetPostProcessing (bool isPostprocessed){
         //gameSession.pprocessing = isPostprocessed;
         pprocessing = isPostprocessed;
-        if(isPostprocessed==true && FindObjectOfType<PostProcessVolume>()==null){Instantiate(pprocessingPrefab,Camera.main.transform);}//FindObjectOfType<Level>().RestartScene();}
-        if(isPostprocessed==false && FindObjectOfType<PostProcessVolume>()!=null){Destroy(FindObjectOfType<PostProcessVolume>());}
+        if(isPostprocessed==true && postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}//FindObjectOfType<Level>().RestartScene();}
+        if(isPostprocessed==true && postProcessVolume!=null){postProcessVolume.enabled=true;}
+        if(isPostprocessed==false && FindObjectOfType<PostProcessVolume>()!=null){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
     }public void SetOnScreenButtons (bool onscbuttons){
         scbuttons = onscbuttons;
-        if(onscbuttons){Debug.Log(scbuttons);scbuttons=true;}
+        //if(onscbuttons){Debug.Log(scbuttons);scbuttons=true;}
     }
     public void SetSteering(bool isMovingByMouse){
         moveByMouse = isMovingByMouse;

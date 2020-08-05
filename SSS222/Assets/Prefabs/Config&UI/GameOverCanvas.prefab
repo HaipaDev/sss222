@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 432586328013598658}
   - component: {fileID: 432586328013598659}
   - component: {fileID: 432586328013598660}
+  - component: {fileID: 432586329327304547}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -741,6 +742,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+--- !u!114 &432586329327304547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432586328013598662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 1
 --- !u!1 &432586328101456321
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,6 +980,7 @@ GameObject:
   - component: {fileID: 432586328243124057}
   - component: {fileID: 432586328243124058}
   - component: {fileID: 432586328243124059}
+  - component: {fileID: 432586329327304546}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -1097,6 +1112,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+--- !u!114 &432586329327304546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432586328243124061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe51ff56068908d48ab5400d9862f970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 1
 --- !u!1 &2044199700624404123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,12 +1138,12 @@ GameObject:
   - component: {fileID: 2044199700624404121}
   - component: {fileID: 432586327679484680}
   m_Layer: 5
-  m_Name: GameOver Canvas
+  m_Name: GameOverCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2044199700624404127
 RectTransform:
   m_ObjectHideFlags: 0

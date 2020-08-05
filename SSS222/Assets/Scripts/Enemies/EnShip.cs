@@ -28,6 +28,7 @@ public class EnShip : MonoBehaviour{
     }
 
     void Update(){
+        if(player!=null){
         float stepY = vspeed * Time.deltaTime;
         float stepX = speedFollow * Time.deltaTime;
         playerPosX = new Vector2(player.transform.position.x, transform.position.y);
@@ -57,5 +58,6 @@ public class EnShip : MonoBehaviour{
             }
         }
         //Debug.Log(stepY);
+        }
     }
 }

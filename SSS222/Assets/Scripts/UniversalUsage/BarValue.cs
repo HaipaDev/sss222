@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public enum barType{
+    HorizontalR,
+    HorizontalL,
+    VerticalU,
+    VerticalD,
+    Fill
+}
+public class BarValue : MonoBehaviour{
+    [SerializeField] barType barType=barType.HorizontalR;
+    [SerializeField] string valueName;
+    [SerializeField] float value;
+    //[SerializeField] string maxValueName;
+    [SerializeField] float maxValue;
+    void Start(){
+
+    }
+
+    void Update(){
+        if(valueName.Contains("health")){value=FindObjectOfType<Player>().health;maxValue=FindObjectOfType<Player>().maxHP;}
+        if(valueName.Contains("energy")){value=FindObjectOfType<Player>().energy;maxValue=FindObjectOfType<Player>().maxEnergy;}
+        if(valueName.Contains("xp")){value=FindObjectOfType<GameSession>().coresXp;maxValue=FindObjectOfType<GameSession>().xp_forCore;}
+
+        if(barType==barType.HorizontalR){transform.localScale=new Vector2(value/maxValue,1);}
+        if(barType==barType.HorizontalL){transform.localScale=new Vector2(-(value/maxValue),1);}
+        if(barType==barType.VerticalU){transform.localScale=new Vector2(1,-(value/maxValue));}
+        if(barType==barType.VerticalD){transform.localScale=new Vector2(1,value/maxValue);}
+        if(barType==barType.Fill){GetComponent<Image>().fillAmount=value/maxValue;}
+    }
+}

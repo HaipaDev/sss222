@@ -90,98 +90,33 @@ public class PowerupDisplay : MonoBehaviour{
                 else { spr.sprite = laserSprite; }*/
             }
         }else{
-            if(player.statuses.Count>number){if(player.statuses[number]!=""){state=player.statuses[number];}else state="";
-            }else state="";
-            /*if(number==1){state=player.status1;}
-            if(number==2){state=player.status2;}
-            if(number==3){state=player.status3;}*/
-            //var s=this.GetType().GetField(state+"Sprite").SetValue(this,false);
-            //spr.sprite=s;
-            if (state == "" || state == null){
-                Destroy(gameObject);
-                /*color.a = 0f;
-                color2.a = 0f;
-                TMP.text = "";*/
-            }else{
-                color.a = 1f;
-                color2.a = 130/255f;
-                /*var sprr=this.GetType().GetField(state+"Sprite").GetValue(this);
-                this.GetType().GetField("sprite").SetValue(this,sprr);
-                spr.sprite=sprite;*/
-                spr.sprite=GameAssets.instance.Spr(state+"Pwrup");
-                var timer=player.GetType().GetField(state+"Timer").GetValue(player);
-                if((float)timer<10f)value=(float)System.Math.Round((float)timer, 1);
-                else{value=(float)Mathf.RoundToInt((float)timer);}
-                //var value=System.Math.Round(timer, 1);
-
-                if (value <= -1) { value = 0; }
-                else { TMP.text = value.ToString(); }
-
-                /*if (state=="gclover"){
-                    spr.sprite = gcloverSprite;
-                    var value = System.Math.Round(player.GetGCloverTimer(), 1);
+            if(player!=null){
+                if(player.statuses.Count>number){if(player.statuses[number]!=""){state=player.statuses[number];}else state="";}else state="";
+                /*if(number==1){state=player.status1;}
+                if(number==2){state=player.status2;}
+                if(number==3){state=player.status3;}*/
+                //var s=this.GetType().GetField(state+"Sprite").SetValue(this,false);
+                //spr.sprite=s;
+                if (state == "" || state == null){
+                    Destroy(gameObject);
+                    /*color.a = 0f;
+                    color2.a = 0f;
+                    TMP.text = "";*/
+                }else{
+                    color.a = 1f;
+                    color2.a = 130/255f;
+                    /*var sprr=this.GetType().GetField(state+"Sprite").GetValue(this);
+                    this.GetType().GetField("sprite").SetValue(this,sprr);
+                    spr.sprite=sprite;*/
+                    spr.sprite=GameAssets.instance.Spr(state+"Pwrup");
+                    var timer=player.GetType().GetField(state+"Timer").GetValue(player);
+                    if((float)timer<10f)value=(float)System.Math.Round((float)timer, 1);
+                    else{value=(float)Mathf.RoundToInt((float)timer);}
+                    //var value=System.Math.Round(timer, 1);
 
                     if (value <= -1) { value = 0; }
                     else { TMP.text = value.ToString(); }
-
-                    if (player.gclover != true) state = "";
-                }else if(state=="flip"){
-                    spr.sprite = flipSprite;
-                    var value = System.Math.Round(player.GetFlipTimer(), 1);
-
-                    if (value <= -1) { value = 0; }
-                    else { TMP.text = value.ToString(); }
-
-                    if (player.flip != true) state = "";
-                }else if(state=="shadow"){
-                    spr.sprite = shadowSprite;
-                    var value = System.Math.Round(player.GetShadowTimer(), 1);
-
-                    if (value <= -1) { value = 0; }
-                    else { TMP.text = value.ToString(); }
-
-                    if (player.shadow != true) state = "";
-                }else if(state=="inverter"){
-                    spr.sprite = inverterSprite;
-                    var value = System.Math.Round(player.GetInverterTimer(), 1);
-
-                    if (value <= -1) { value = 0; }
-                    else { TMP.text = value.ToString(); }
-
-                    if (player.inverter!= true) state = "";
-                }else if(state=="magnet"){
-                    spr.sprite = magnetSprite;
-                    var value = System.Math.Round(player.GetMagnetTimer(), 1);
-
-                    if (value <= -1) { value = 0; }
-                    else { TMP.text = value.ToString(); }
-
-                    if (player.magnet!= true) state = "";
-                }else if(state=="scaler"){
-                    spr.sprite = scalerSprite;
-                    var value = System.Math.Round(player.GetScalerTimer(), 1);
-
-                    if (value <= -1) { value = 0; }
-                    else { TMP.text = value.ToString(); }
-
-                    if (player.scaler!= true) state = "";
-                }else if(state=="matrix"){
-                    spr.sprite = matrixSprite;
-                    var value = System.Math.Round(player.GetMatrixTimer(), 1);
-
-                    if (value <= -1) { value = 0; }
-                    else { TMP.text = value.ToString(); }
-
-                    if (player.matrix!= true) state = "";
-                }else if(state=="pmulti"){
-                    spr.sprite = pmultiSprite;
-                    var value = System.Math.Round(player.GetPMultiTimer(), 1);
-
-                    if (value <= -1) { value = 0; }
-                    else { TMP.text = value.ToString(); }
-
-                    if (player.pmultiTimer <0) state = "";
-                }*/
+                }
             }
             #region//Old system
             /*
