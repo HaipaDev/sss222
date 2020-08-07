@@ -124,20 +124,25 @@ public class Player : MonoBehaviour{
     [SerializeField] public bool armored = false;
     public float armoredTimer = -4;
     [HideInInspector]public float armoredTime = -4;
+    [HideInInspector]public float armoredStrength=1;
     [SerializeField] public bool fragile = false;
     public float fragileTimer = -4;
     [HideInInspector]public float fragileTime = -4;
+    [HideInInspector]public float fragileStrength=1;
     [SerializeField] public bool power = false;
     public float powerTimer = -4;
     [HideInInspector]public float powerTime = -4;
+    [HideInInspector]public float powerStrength=1;
     [SerializeField] public bool weakns = false;
     public float weaknsTimer = -4;
     [HideInInspector]public float weaknsTime = -4;
+    [HideInInspector]public float weaknsStrength=1;
     [SerializeField] public bool hacked = false;
     public float hackedTimer = -4;
     [HideInInspector]public float hackedTime = -4;
     [SerializeField] public bool blind = false;
     public float blindTimer = -4;
+    [HideInInspector]public float blindStrenght;
     [HideInInspector]public float blindTime = -4;
     [HeaderAttribute("State Defaults")]
     [SerializeField] public float flipTime = 7f;
@@ -234,6 +239,7 @@ public class Player : MonoBehaviour{
     int moveDir = 1;
     const float DCLICK_TIME = 0.2f;
     float lastClickTime;
+    int dashDir=0;
     int dashDirX;
     int dashDirY;
     [HideInInspector]public bool damaged = false;
@@ -369,7 +375,7 @@ public class Player : MonoBehaviour{
         
         if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
         if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
-        if(overheatTimer>=overheatTimerMax&&overheated!=true){OnFire(3.8f);//health-=overheatDmg;DMGPopUpHUD(overheatDmg);OnFire(3.8f);damaged=true;AudioManager.instance.Play("Overheat");
+        if(overheatTimer>=overheatTimerMax&&overheated!=true){OnFire(3.8f,1);//health-=overheatDmg;DMGPopUpHUD(overheatDmg);OnFire(3.8f);damaged=true;AudioManager.instance.Play("Overheat");
         overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
         if(overheated==true&&overheatedTimer>0&&Time.timeScale>0.0001f){overheatedTimer-=Time.deltaTime;
             GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
@@ -427,12 +433,12 @@ public class Player : MonoBehaviour{
         var deltaY=0f;
         if (Input.GetButtonDown("Horizontal")){
             float timeSinceLastClick = Time.time - lastClickTime;
-            if (timeSinceLastClick <= DCLICK_TIME) { DClick(); deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir; }
+            if (timeSinceLastClick <= DCLICK_TIME&&(dashDir==0||(dashDir<-1||dashDir>1))) {dashDir=(int)Input.GetAxisRaw("Horizontal")*2; Debug.Log(dashDir); DClick(dashDir); Debug.Log(dashDir); deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir; }
             else{ deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir; }
             lastClickTime = Time.time;  }
         if(Input.GetButtonDown("Vertical")){
             float timeSinceLastClick = Time.time - lastClickTime;
-            if(timeSinceLastClick<=DCLICK_TIME){ DClick(); deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
+            if(timeSinceLastClick<=DCLICK_TIME&&(dashDir==0||((dashDir<0&&dashDir>-2)||(dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical"); Debug.Log(dashDir); DClick(dashDir); Debug.Log(dashDir); deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
             else{ deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
             lastClickTime = Time.time; }
 
@@ -452,6 +458,7 @@ public class Player : MonoBehaviour{
         transform.position = new Vector2(newXpos,newYpos);
         //Debug.Log(timeSinceLastClick);
         //Debug.Log(dashTime);
+        
     }
 
     private void MoveWithMouse(){
@@ -481,7 +488,7 @@ public class Player : MonoBehaviour{
             //moveXwas=moveX;moveX=false;
             //moveYwas=moveY;moveY=false;
             float timeSinceLastClick = Time.time - lastClickTime;
-            if (timeSinceLastClick <= DCLICK_TIME){DClick(); }
+            if (timeSinceLastClick <= DCLICK_TIME){DClick(0); }
             else{ lastClickTime = Time.time; }//moveX=moveXwas;moveY=moveYwas;}
         }
 
@@ -544,11 +551,16 @@ public class Player : MonoBehaviour{
             if(moving==true)timerEnRegen+=Time.deltaTime;
         }
     }
-    public void DClick(){
+    public void DClick(int dir){
         //Debug.Log("DClick");
         if(shadow==true && energy>0){
             if(moveByMouse!=true){
-                if(Application.platform == RuntimePlatform.Android){
+                if(dir<0&&dir>-2) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
+                if(dir>0&&dir<2){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
+                if(dir<-1){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
+                if(dir>1){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+                dashDir=0;
+                /*if(Application.platform == RuntimePlatform.Android){
                     if(joystick.Vertical<-0.2f) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
                     if(joystick.Vertical>0.2f){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
                     if(joystick.Horizontal<-0.2f){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
@@ -558,7 +570,7 @@ public class Player : MonoBehaviour{
                     if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
                     if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
                     if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
-                }
+                }*/
             }else{
                 /*Vector2 difference = mousePos - (Vector2)transform.position;
                 difference = difference.normalized;
@@ -570,7 +582,9 @@ public class Player : MonoBehaviour{
                 transform.position += dir; // the only thing to change is this cause you need to move for an equal ammount of units each time you attack
                 */
                 //rb.velocity = mousePos * dashSpeed * moveDir;
-                float maxDist=10;
+                //if(new Vector2(transform.position.x,transform.position.y)==mousePos){rb.velocity=Vector2.zero;}
+                #region//Failed attempts of RayCasting
+                //float maxDist=10;
                 /*
                 shadowRaycast=Physics2D.RaycastAll(transform.position,mousePos,maxDist).ToList();
                 //Ray2D shadowRaycast=new Ray2D(transform.position,mousePos);
@@ -583,7 +597,9 @@ public class Player : MonoBehaviour{
                 Debug.Log(shadowRaycast.Count);
                 foreach(RaycastHit2D hit in shadowRaycast){Debug.DrawRay(transform.position,hit.point,Color.green,0.5f);if(hit.collider!=null&&hit.collider.CompareTag("Enemy")){hit.collider.GetComponent<Enemy>().Die();}}
                 */
+                /*
                 int totalObjectsHit = Physics2D.RaycastNonAlloc(transform.position, mousePos, shadowRaycast, maxDist);
+                Debug.Log("Rays:"+totalObjectsHit);
  
                 //Iterate the objects hit by the laser
                 for (int i = 0; i < totalObjectsHit; i++)
@@ -596,14 +612,25 @@ public class Player : MonoBehaviour{
                         hit.collider.GetComponent<Enemy>().Die();
                     }
                 }
-
                 var posRaycast = Physics2D.Raycast(transform.position, mousePos, maxDist);
                 transform.position=posRaycast.point;
-
-                //if(new Vector2(transform.position.x,transform.position.y)==mousePos){rb.velocity=Vector2.zero;}
+                */
+                /*
+                Ray2D ray = new Ray2D(transform.position, mousePos);
+                Debug.DrawRay(transform.position,mousePos, Color.red, 0.5f);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, mousePos);
+                Debug.Log("Hits: "+hits.Length);
+                foreach (RaycastHit2D hit in hits) {
+                    Debug.DrawRay(transform.position,hit.point, Color.red, 0.5f);
+                    if(hit.collider.CompareTag("Enemy")){Debug.Log("Enemy Hit");hit.collider.gameObject.GetComponent<Enemy>().Die();}
+                }
+                //transform.position=ray.GetPoint(maxDist);
+                */
+                #endregion
+                //transform.position=Vector2.MoveTowards(transform.position,mousePos,300*Time.deltaTime);
             }
             energy -= shadowEn;
-            EnergyPopUpHUD(shadowEn);
+            EnergyPopUpHUD(-shadowEn);
             dashing = true;
             shadowed = true;
             //AudioSource.PlayClipAtPoint(shadowdashSFX, new Vector2(transform.position.x, transform.position.y));
@@ -969,7 +996,7 @@ bool stopped=false;
         if (shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
         else{ dashTime = -4; GetComponent<BackflameEffect>().enabled=true; }
         if (shadow==true&&dashTime <= 0&&dashTime!=-4) { rb.velocity = Vector2.zero; dashing = false; /*moveX=moveXwas;moveY=moveYwas;*/ dashTime=-4;}
-        else{ dashTime -= Time.deltaTime; if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);}
+        else{ dashTime -= Time.deltaTime; if(dashTime>0&&moveByMouse){var step=150*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,mousePos,step);}/*if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);*/}
         if(energy<=0){ shadow = false; }
 
         if(inverter==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){
@@ -1098,9 +1125,9 @@ bool stopped=false;
         if(weaknsTimer>0){weaknsTimer-=Time.deltaTime;}else{ResetStatus("weakns");}
         if(hackedTimer>0){hackedTimer-=Time.deltaTime;}else{ResetStatus("hacked");}
         if(blindTimer>0){blindTimer-=Time.deltaTime;}else{ResetStatus("blind");}
-        if(armored==true&&fragile!=true){armorMulti=armoredMulti;}else if(fragile==true&&armored!=true){armorMulti=fragileMulti;}
+        if(armored==true&&fragile!=true){armorMulti=armoredMulti*armoredStrength;}else if(fragile==true&&armored!=true){armorMulti=fragileMulti/fragileStrength;}
         if((armored!=true&&fragile!=true)||(armored==true&&fragile==true)){armorMulti=1;}
-        if(power==true&&weakns!=true){dmgMulti=powerMulti;}else if(weakns==true&&power!=true){dmgMulti=weaknsMulti;}
+        if(power==true&&weakns!=true){dmgMulti=powerMulti*powerStrength;}else if(weakns==true&&power!=true){dmgMulti=weaknsMulti/weaknsStrength;}
         if((power!=true&&weakns!=true)||(power==true&&weakns==true)){dmgMulti=1;}
     }
     
@@ -1130,27 +1157,27 @@ bool stopped=false;
         rb.velocity=Vector2.zero;
     }
     
-    public void OnFire(float duration){
+    public void OnFire(float duration,float strength){
         onfireTime=duration;
         SetStatus("onfire");
-        StartCoroutine(OnFireI());
+        StartCoroutine(OnFireI(strength));
     }
-    IEnumerator OnFireI(){
+    IEnumerator OnFireI(float strength){
     while(true){
        if(onfire==true){
-           Damage(onfireDmg,dmgType.flame);
+           Damage(onfireDmg*strength,dmgType.flame);
            yield return new WaitForSeconds(onfireTickrate);
        }else{yield break;}
     }}
-    public void Decay(float duration){
+    public void Decay(float duration,float strength){
         decayTime=duration;
         SetStatus("decay");
-        StartCoroutine(DecayI());
+        StartCoroutine(DecayI(strength));
     }
-    IEnumerator DecayI(){
+    IEnumerator DecayI(float strength){
     while(true){
        if(decay==true){
-           Damage(decayDmg,dmgType.decay);
+           Damage(decayDmg*strength,dmgType.decay);
            yield return new WaitForSeconds(decayTickrate);
        }else{yield break;}
     }}
@@ -1162,24 +1189,29 @@ bool stopped=false;
         frozenTime=duration;
         SetStatus("frozen");
     }
-    public void Armor(float duration){
+    public void Armor(float duration,float strength){
         armoredTime=duration;
+        armoredStrength=strength;
         SetStatus("armored");
     }
-    public void Fragile(float duration){
+    public void Fragile(float duration,float strength){
         fragileTime=duration;
+        fragileStrength=strength;
         SetStatus("fragile");
-    }public void Power(float duration){
+    }public void Power(float duration,float strength){
         powerTime=duration;
+        powerStrength=strength;
         SetStatus("power");
-    }public void Weaken(float duration){
+    }public void Weaken(float duration,float strength){
         weaknsTime=duration;
+        weaknsStrength=strength;
         SetStatus("weakns");
     }public void Hack(float duration){
         hackedTime=duration;
         SetStatus("hacked");
-    }public void Blind(float duration){
+    }public void Blind(float duration,float strength){
         blindTime=duration;
+        blindStrenght=strength;
         SetStatus("blind");
     }
 #endregion
@@ -1345,7 +1377,7 @@ bool stopped=false;
     }
 
     public void Damage(float dmg, dmgType type){
-        if(type!=dmgType.heal)if(dmg!=0){health-=dmg/armorMulti;DMGPopUpHUD(-dmg);}
+        if(type!=dmgType.heal)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;DMGPopUpHUD(-dmgTot);}
         if(type==dmgType.silent){damaged=true;}
         if(type==dmgType.normal){damaged=true;AudioManager.instance.Play("ShipHit");}
         if(type==dmgType.flame){flamed=true;AudioManager.instance.Play("Overheat");}

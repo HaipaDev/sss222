@@ -14,7 +14,7 @@ public class CometRandomProperties : MonoBehaviour{
     Enemy enemy;
     BackflameEffect bFlame;
     Rigidbody2D rb;
-    float rotationSpeed;
+    //float rotationSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,10 +44,10 @@ public class CometRandomProperties : MonoBehaviour{
             enemy.Coinchance = 1;
             rb.velocity *= lunarSpeedMulti;
         }
-        rotationSpeed=Random.Range(2,8);
+        //rotationSpeed=Random.Range(2,8);
     }
 
     void Update(){
-        transform.Rotate(new Vector3(0,0,rotationSpeed));
+        //transform.Rotate(new Vector3(0,0,rotationSpeed));
     }
 }

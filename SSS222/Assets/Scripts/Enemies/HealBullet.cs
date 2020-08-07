@@ -12,16 +12,18 @@ public class HealBullet : MonoBehaviour{
     }
 
     void Update(){
-        
+        targetObj=GetComponent<FollowOneObject>().targetObj;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         //if(other==targetObj){
-        if(targetObj.GetComponent<HealingDrone>()!=null || other.GetComponent<HealingDrone>()==null){
-            targetObj.GetComponent<Enemy>().health+=healAmnt;
-            GetComponent<FollowOneObject>().targetObj=null;
-            targetObj=null;
-            AudioManager.instance.Play("Heal");
+        if(targetObj!=null){
+            if(targetObj.GetComponent<HealingDrone>()!=null || other.GetComponent<HealingDrone>()==null){
+                targetObj.GetComponent<Enemy>().health+=healAmnt;
+                GetComponent<FollowOneObject>().targetObj=null;
+                targetObj=null;
+                AudioManager.instance.Play("Heal");
+            }
         }
     }
 }

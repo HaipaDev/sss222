@@ -41,6 +41,7 @@ public class DamageDealer : MonoBehaviour{
     float dmgLeech = 4f;
     float dmgHLaser = 90f;
     float dmgStinger = 33.3f;
+    float dmgGoblinBt = 7f;
 
     public float GetDmg(){return dmg;}
     public float GetDmgZone(){return dmgZone;}
@@ -62,7 +63,7 @@ public class DamageDealer : MonoBehaviour{
 
     public float GetDmgComet(){return dmgComet;}
     public float GetDmgBat(){return dmgBat;}
-public float GetDmgSoundwave(){return dmgSoundwave;}
+    public float GetDmgSoundwave(){return dmgSoundwave;}
     public float GetDmgEnemyShip1(){return dmgEnemyShip1;}
     public float GetDmgEBt(){return dmgEBt;}
     public float GetDmgEnSaber(){return dmgEnemySaber;}
@@ -72,6 +73,7 @@ public float GetDmgSoundwave(){return dmgSoundwave;}
     public float GetDmgLeech(){return dmgLeech; }
     public float GetDmgHLaser(){return dmgHLaser; }
     public float GetDmgStinger(){return dmgStinger; } 
+    public float GetDmgGoblinBt(){return dmgGoblinBt; } 
 
     public void Hit(){
         Destroy(gameObject);

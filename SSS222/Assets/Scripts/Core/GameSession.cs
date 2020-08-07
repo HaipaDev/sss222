@@ -222,6 +222,11 @@ public class GameSession : MonoBehaviour{
         coins = 0;
         coresXp = 0;
         cores = 0;
+        enballDropMulti=1;
+        coinDropMulti=1;
+        coreDropMulti=1;
+        rarePwrupMulti=1;
+        legendPwrupMulti=1;
     }
     public void SaveHighscore()
     {
@@ -282,6 +287,12 @@ public class GameSession : MonoBehaviour{
         coreDropMulti=1+(coreMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
         rarePwrupMulti=1+(rareMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
         legendPwrupMulti=1+(legendMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+
+        if(enballDropMulti>3)enballMultiAmnt=0.003f;
+        if(coinDropMulti>3)coinMultiAmnt=0.004f;
+        if(coreDropMulti>2)coreMultiAmnt=0.002f;
+        if(rarePwrupMulti>3)rareMultiAmnt=0.0002f;
+        if(legendPwrupMulti>3)legendMultiAmnt=0.01f;
     }
     public void CheckCodes(int fkey, int nkey){
         if(fkey==0&&nkey==0){}
@@ -308,6 +319,8 @@ public class GameSession : MonoBehaviour{
                 if(Input.GetKeyDown(KeyCode.Alpha5) || nkey==5){AddXP(100);}
                 if(Input.GetKeyDown(KeyCode.Alpha6) || nkey==6){coins+=100;cores+=100;}
                 if(Input.GetKeyDown(KeyCode.Alpha7) || nkey==7){FindObjectOfType<UpgradeMenu>().total_UpgradesLvl+=10;}
+                if(Input.GetKeyDown(KeyCode.Alpha8) || nkey==8){foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())ps.timer=0.01f;}
+                if(Input.GetKeyDown(KeyCode.Alpha9) || nkey==9){foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())ps.enemiesCount=100;}
             }
             if(Input.GetKey(KeyCode.F3) || fkey==3){
                 player=FindObjectOfType<Player>();

@@ -47,6 +47,7 @@ public class PlayerCollider : MonoBehaviour{
     GameObject hdronePrefab;
     GameObject vortexPrefab;
     GameObject stingerPrefab;
+    GameObject goblinbtPrefab;
     [HeaderAttribute("Other")]
     [SerializeField] public GameObject dmgPopupPrefab;
     [SerializeField] float dmgFreq=0.38f;
@@ -106,6 +107,7 @@ public class PlayerCollider : MonoBehaviour{
         hdronePrefab=GameAssets.instance.Get("HDrone");
         vortexPrefab=GameAssets.instance.Get("Vortex");
         stingerPrefab=GameAssets.instance.Get("Stinger");
+        goblinbtPrefab=GameAssets.instance.Get("GoblinBt");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -126,10 +128,16 @@ public class PlayerCollider : MonoBehaviour{
 
                 var cometName = cometPrefab.name; var cometName1 = cometPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(cometName)) { dmg = (float)System.Math.Round(damageDealer.GetDmgComet()*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1); en = true; }
+
                 var batName = batPrefab.name; var batName1 = batPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(batName)) { dmg = damageDealer.GetDmgBat(); en = true; }
+                var Sname = soundwavePrefab.name; var Sname1 = soundwavePrefab.name + "(Clone)";
+                if (other.gameObject.name.Contains(Sname)) { dmg = damageDealer.GetDmgSoundwave(); AudioManager.instance.Play("SoundwaveHit"); }
+
                 var enShip1Name = enShip1Prefab.name; var enShip1Name1 = enShip1Prefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(enShip1Name)) { dmg = damageDealer.GetDmgEnemyShip1(); en = true; }
+                var EBtname = EBtPrefab.name; var EBtname1 = EBtPrefab.name + "(Clone)";
+                if (other.gameObject.name.Contains(EBtname)) { dmg = damageDealer.GetDmgEBt();}
 
                 var enCombatantName = enCombatantPrefab.name; var enCombatantName1 = enCombatantPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(enCombatantName)) { en = true; destroy=false; }
@@ -147,20 +155,16 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains("StickBomb")) { dmg=0; en = false; destroy=false; }
 
                 var stingerName = stingerPrefab.name; var stingerName1 = stingerPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(stingerName)) { dmg = damageDealer.GetDmgStinger(); player.Weaken(20); en = true; }
-
-
-                var Sname = soundwavePrefab.name; var Sname1 = soundwavePrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(Sname)) { dmg = damageDealer.GetDmgSoundwave(); AudioManager.instance.Play("SoundwaveHit"); }
-                var EBtname = EBtPrefab.name; var EBtname1 = EBtPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(EBtname)) { dmg = damageDealer.GetDmgEBt();}
-
+                if (other.gameObject.name.Contains(stingerName)) { dmg = damageDealer.GetDmgStinger(); player.Weaken(20,1); en = true; }
 
                 var leechName = leechPrefab.name; var leechName1 = leechPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(leechName)) { en = true;  destroy = false; }
         
                 var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(hlaserName)) { destroy = false; }
+
+                var goblinbtName = goblinbtPrefab.name; var goblinbtName1 = goblinbtPrefab.name + "(Clone)";
+                if (other.gameObject.name.Contains(goblinbtName)) { dmg=damageDealer.GetDmgGoblinBt(); /*player.Blind(3,2);*/player.Fragile(6,0.8f); player.Hack(5); AudioManager.instance.Play("GoblinBtHit");}
 
                 if (!other.gameObject.name.Contains(hlaserName))
                 {
@@ -190,7 +194,7 @@ public class PlayerCollider : MonoBehaviour{
                     GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
                     dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
                     dmgpopup.transform.localScale=new Vector2(2,2);
-                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmg.ToString();
+                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg/player.armorMulti,2).ToString();
                 }
                 //DMGPopUpHud(dmg);
             }
@@ -397,7 +401,7 @@ public class PlayerCollider : MonoBehaviour{
                     GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
                     dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
                     dmgpopup.transform.localScale=new Vector2(2,2);
-                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmg.ToString();
+                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg/player.armorMulti,2).ToString();
                 }
                 if(dmg!=0)player.Damage(dmg,dmgType.silent);
                 dmgTimer = dmgFreq;

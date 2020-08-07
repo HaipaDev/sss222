@@ -433,3 +433,39 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: GoblinConfused
+    clip: {fileID: 8300000, guid: a3f9006245acd6e4ba06782850b699d7, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 0.85
+    pitchVariance: 0.04
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: GoblinTransform
+    clip: {fileID: 8300000, guid: 957f22833bc1be44094ed7061a9dde2f, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: GoblinBtHit
+    clip: {fileID: 8300000, guid: ddc45b09349da4743be1fb106c5cb53d, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: GoblinDeathTransf
+    clip: {fileID: 8300000, guid: cb33116551f413e46a03d2fdcc2b6636, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

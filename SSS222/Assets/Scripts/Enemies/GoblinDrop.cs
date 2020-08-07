@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class GoblinDrop : MonoBehaviour{
+    [SerializeField] Sprite bossSprite;
+    [SerializeField] float bossHp;
     //[SerializeField] AudioClip goblinStealSFX;
     //[SerializeField] AudioClip goblinDeathSFX;
-    public GameObject powerup;
+    public List<GameObject> powerup;
     /*
     [HeaderAttribute("Powerups")]
     [SerializeField] GameObject CoinPrefab;
@@ -28,12 +30,22 @@ public class GoblinDrop : MonoBehaviour{
     Enemy enemy;
     Rigidbody2D rb;
     AudioSource myAudioSource;
+    GameObject questionMarkObj;
+    bool confused=false;
+    bool bossForm=false;
+    float yMax=6.6f;
+    float yMin=-4.1f;
+    float vspeed=0.09f;
+    bool moveDown;
+    Vector2 pos;
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Enemy>();
         rb = GetComponent<Rigidbody2D>();
         myAudioSource = GetComponent<AudioSource>();
+        questionMarkObj=transform.GetChild(0).gameObject;
+        questionMarkObj.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,23 +54,54 @@ public class GoblinDrop : MonoBehaviour{
         if (powerup != null){
             rb.velocity = new Vector2(Random.Range(2.5f,3f),Random.Range(2.5f,3f));
         }
+        if(bossForm)BossAI();
     }
     
     public void DropPowerup(){
-        if(powerup!=null){
-            //Instantiate(powerup,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
-            powerup.SetActive(true);
-            powerup.transform.position=transform.position;
-            powerup.GetComponent<Rigidbody2D>().velocity = Vector2.down*powerup.GetComponent<FallDown>().GetVSpeed();
+        if(powerup.Count>0){
+        foreach(GameObject pwrup in powerup){
+            if(pwrup!=null){
+                //Instantiate(powerup,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+                pwrup.SetActive(true);
+                pwrup.transform.position=transform.position;
+                if(GetComponent<FallDown>()!=null)pwrup.GetComponent<Rigidbody2D>().velocity = Vector2.down*pwrup.GetComponent<FallDown>().GetVSpeed();
+            }
         }
-        AudioManager.instance.Play("GoblinDeath");
+        }
+        if(bossForm!=true)AudioManager.instance.Play("GoblinDeath");
+        else AudioManager.instance.Play("GoblinDeathTransf");
     }
 
     private void OnTriggerEnter2D(Collider2D other){
-        if(other.CompareTag("Powerups")){
-            AudioManager.instance.Play("GoblinSteal");
-            powerup=other.gameObject;
-            powerup.SetActive(false);
+        if(bossForm!=true){
+            if(other.CompareTag("Powerups")&&(!other.gameObject.name.Contains("EnergyBall")&&!other.gameObject.name.Contains("Coin")&&!other.gameObject.name.Contains("Powercore"))){
+                AudioManager.instance.Play("GoblinSteal");
+                powerup.Add(other.gameObject);
+                other.gameObject.SetActive(false);
+                questionMarkObj.SetActive(false);
+                confused=false;
+            }else if(other.gameObject.name.Contains("EnergyBall")||other.gameObject.name.Contains("Coin")){
+                if(confused==false){
+                    AudioManager.instance.Play("GoblinConfused");
+                    questionMarkObj.SetActive(true);
+                    confused=true;
+                }
+            }else if(other.gameObject.name.Contains("Powercore")){//Transform
+                AudioManager.instance.Play("GoblinTransform");
+                powerup.Add(other.gameObject);
+                other.gameObject.SetActive(false);
+                GetComponent<Follow>().enabled=false;
+                GetComponent<BackflameEffect>().enabled=false;
+                if(transform.GetChild(1)!=false)Destroy(transform.GetChild(1).gameObject);
+                GetComponent<SpriteRenderer>().sprite=bossSprite;
+                GetComponent<Enemy>().shooting=true;
+                GetComponent<Enemy>().health=bossHp;
+                bossForm=true;
+                pos.x=transform.position.x;
+                transform.rotation=new Quaternion(0,0,0,0);
+            }
+        }
+        #region//Old
             //Destroy(other.gameObject,0.002f);
             /*var armorName = armorPwrupPrefab.name; var armorName1 = armorPwrupPrefab.name + "(Clone)";
             if (other.gameObject.name == armorName || other.gameObject.name == armorName1) { powerup = armorPwrupPrefab; Destroy(other.gameObject); }
@@ -95,6 +138,17 @@ public class GoblinDrop : MonoBehaviour{
 
             var shadowbtName = shadowBTPwrupPrefab.name; var shadowbtName1 = shadowBTPwrupPrefab.name + "(Clone)";
             if (other.gameObject.name == shadowbtName || other.gameObject.name == shadowbtName1) { powerup = shadowBTPwrupPrefab; Destroy(other.gameObject); }*/
+        //}
+        #endregion
+    }
+    void BossAI(){
+        if(Time.timeScale>0.0001){
+            float curSpeed=vspeed*Time.timeScale;
+            if(!moveDown&&pos.y<yMax)pos.y+=curSpeed;
+            if(pos.y>=yMax)moveDown=true;
+            if(moveDown)pos.y-=curSpeed;
+            if(pos.y<=yMin)moveDown=false;
+            transform.position=pos;
         }
     }
 }

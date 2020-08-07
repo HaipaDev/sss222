@@ -8,10 +8,10 @@ public class Enemy : MonoBehaviour{
     [HeaderAttribute("Enemy")]
     [SerializeField] public float health = 100f;
     float shotCounter;
-    [SerializeField] bool shooting = false;
+    [SerializeField] public bool shooting = false;
     [SerializeField] float minTimeBtwnShots=0.2f;
     [SerializeField] float maxTimeBtwnShots=1f;
-    [SerializeField] GameObject bullet;
+    [SerializeField] public GameObject bullet;
     [SerializeField] float bulletSpeed = 8f;
     [SerializeField] bool DBullets = false;
     [SerializeField] float bulletDist=0.35f;
@@ -205,7 +205,7 @@ public class Enemy : MonoBehaviour{
         if(randomizeWaveDeath==true){ gameSession.EVscore = gameSession.EVscoreMax; }
     }
     private void DestroyOutside(){
-        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){Destroy(GetComponent<GoblinDrop>().powerup);}}}
+        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){foreach(GameObject obj in GetComponent<GoblinDrop>().powerup)Destroy(obj);}}}
     }
     private void OnTriggerEnter2D(Collider2D other){
         //if(FindObjectOfType<Player>().shadowRaycast[FindObjectOfType<Player>().shadowRaycast.FindIndex(FindObjectOfType<Player>().shadowRaycast.Count,(x) => x == this)]==this){Die();}
@@ -213,6 +213,8 @@ public class Enemy : MonoBehaviour{
             DamageDealer damageDealer=other.GetComponent<DamageDealer>();
             if(!damageDealer){ return; }
             var dmg = damageDealer.GetDmg();
+
+            if(other.GetComponent<Player>()!=null){if(other.GetComponent<Player>().dashing==true){Die();}}
 
             var Lname = laserPrefab.name;
             if (other.gameObject.name.Contains(Lname)) { dmg = damageDealer.GetDmgLaser(); Destroy(other.gameObject); AudioManager.instance.Play("EnemyHit"); }

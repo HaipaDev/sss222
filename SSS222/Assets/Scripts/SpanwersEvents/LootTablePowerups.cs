@@ -104,13 +104,39 @@ public class LootTablePowerups : MonoBehaviour{
                 if(entry.rarity==rarityPowerup.Common){r="c";}
                 
                 
-                if(i>=0&&i<itemsPercentage.Length)itemsPercentage[i].name=entry.name+"("+entry.levelReq+r+")"+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
+                itemsPercentage[i].name=entry.name+"("+entry.levelReq+r+")"+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
                 //foreach(ItemPercentage item in itemsPercentage){item.name=entry.name;item.itemPercentage=value;}
             //}
             //}
         }
         sum=dropList.Sum();
     }
+    /*void SumUpAfter(){
+        int i=0;
+        foreach(PowerupItem entry in itemList){
+            if(i>=0&&i<dropList.Count){
+                if(currentLvl<entry.levelReq){
+                    dropList[i]=0;
+                }else{
+                    if(entry.rarity==rarityPowerup.Common)dropList[i]=entry.dropChance;
+                    else if(entry.rarity==rarityPowerup.Rare)
+                    dropList[i]=
+                    entry.dropChance*
+                    Mathf.Clamp(GameSession.instance.rarePwrupMulti,0,5f);
+                    else if(entry.rarity==rarityPowerup.Legendary)
+                    dropList[i]=
+                    entry.dropChance*
+                    GameSession.instance.legendPwrupMulti;
+                    //System.Array.Resize(ref itemsPercentage, itemList.Count);
+                }
+                //System.Array.Resize(ref itemsPercentage, itemList.Count);
+                var value=System.Convert.ToSingle(System.Math.Round((dropList[i]/sum*100),2));
+                itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
+            }
+            i++;
+        }
+        sum=dropList.Sum();
+    }*/
     void SumUpAfter(){
         var i=-1;
         foreach(PowerupItem entry in itemList){
@@ -119,15 +145,13 @@ public class LootTablePowerups : MonoBehaviour{
                 dropList[i]=0;
             }else{
                 if(entry.rarity==rarityPowerup.Common)dropList[i]=entry.dropChance;
-                else if(entry.rarity==rarityPowerup.Rare)dropList[i]=entry.dropChance*
-                GameSession.instance.rarePwrupMulti;
-                else if(entry.rarity==rarityPowerup.Legendary)dropList[i]=entry.dropChance*
-                GameSession.instance.legendPwrupMulti;
+                else if(entry.rarity==rarityPowerup.Rare)dropList[i]=entry.dropChance*gameSession.rarePwrupMulti;
+                else if(entry.rarity==rarityPowerup.Legendary)dropList[i]=entry.dropChance*gameSession.legendPwrupMulti;
                 //System.Array.Resize(ref itemsPercentage, itemList.Count);
             }
             //System.Array.Resize(ref itemsPercentage, itemList.Count);
             var value=System.Convert.ToSingle(System.Math.Round((dropList[i]/sum*100),2));
-            if(i>=0&&i<itemsPercentage.Length)itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
+            itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
         }
         sum=dropList.Sum();
     }
