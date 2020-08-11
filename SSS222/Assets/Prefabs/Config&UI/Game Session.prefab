@@ -53,7 +53,7 @@ MonoBehaviour:
   coresXpTotal: 0
   enemiesCount: 0
   EVscore: 0
-  EVscoreMax: 20
+  EVscoreMax: 30
   shopScore: 0
   shopScoreMax: 250
   shopScoreMaxS: 200
@@ -67,19 +67,20 @@ MonoBehaviour:
   xp_staying: -5
   stayingTimeReq: 4
   enballDropMulti: 1
-  enballMultiAmnt: 0.07
   coinDropMulti: 1
-  coinMultiAmnt: 0.08
   coreDropMulti: 1
-  coreMultiAmnt: 0.04
   rarePwrupMulti: 1
-  rareMultiAmnt: 0.075
   legendPwrupMulti: 1
+  enballMultiAmnt: 0.07
+  coinMultiAmnt: 0.08
+  coreMultiAmnt: 0.04
+  rareMultiAmnt: 0.075
   legendMultiAmnt: 0.04
   gameSpeed: 1
+  speedChanged: 0
   cheatmode: 1
   dmgPopups: 1
-  speedChanged: 0
+  restartTimer: -4
 --- !u!82 &4215481038911001461
 AudioSource:
   m_ObjectHideFlags: 0

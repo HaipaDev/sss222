@@ -25,7 +25,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public float maxEnergy = 200f;
     [SerializeField] public string powerupDefault = "laser";
     [SerializeField] public bool losePwrupOutOfEn;
-    [SerializeField] public bool energyRefillUnlocked;
+    [SerializeField] public int energyRefillUnlocked;
 
     [SerializeField] public float overheatTimer = -4f;
     [SerializeField] public float overheatTimerMax = 3f;
@@ -317,15 +317,6 @@ public class Player : MonoBehaviour{
         SetPrefabs();
         moveXwas=moveX;
         moveYwas=moveY;
-
-        //Create a contactFilter configuration for the rays to check if the player is grounded
-        filter2D = new ContactFilter2D
-        {
-        //Ignore trigger colliders
-        useTriggers = false,
-        //Use a layer mask
-        useLayerMask = true
-        };
     }
     void SetPrefabs(){
         laserPrefab=GameAssets.instance.Get("Laser");
@@ -926,6 +917,7 @@ bool stopped=false;
         GameObject lclaws;
         var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
         var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
+        var cargoDist=2.8f;
         if (energy > 0){
             //yield return new WaitForSeconds(lsaberEnPeriod);
             if (powerup == "lsaber"){
@@ -936,7 +928,7 @@ bool stopped=false;
                 lsaberEnTimer=lsaberEnPeriod;
                 powerup = "lsaberA";
             }else if (powerup == "lsaberA"){
-                if(Time.timeScale>0.0001f){
+                if(Time.timeScale>0.0001f&&(FindObjectOfType<CargoShip>()==null||(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)>cargoDist))){
                     if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
                     if(lsaberEnTimer<=0){lsaberEnTimer=lsaberEnPeriod;AddSubEnergy(lsaberEn,false);}
                     if(GameObject.Find(lsaberName)==null&&GameObject.Find(lsaberName1)==null){powerup="lsaber";}
@@ -949,12 +941,13 @@ bool stopped=false;
                 moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
                 powerup = "lclawsA";
             }else if (powerup == "lclawsA"){
-                if(Time.timeScale>0.0001f){
+                if(Time.timeScale>0.0001f&&(FindObjectOfType<CargoShip>()==null||(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)>cargoDist))){
                     //if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
                     //if(lsaberEnTimer<=0){energy -= lsaberEn*4;lsaberEnTimer=lsaberEnPeriod*9;}//0.2
                     if(GameObject.Find(lclawsName)==null&&GameObject.Find(lclawsName1)==null){powerup="lclaws";}
                 }
             }
+            
             if(powerup!="lsaberA" && powerup!="lsaber"){
                 Destroy(GameObject.Find(lsaberName1));
             }if(powerup!="lclawsA" && powerup!="lclaws"){
@@ -972,6 +965,12 @@ bool stopped=false;
             if(powerup=="lsaberA")powerup="lsaber";
             if(powerup=="lclawsA")powerup="lclaws";
             if(losePwrupOutOfEn)powerup = powerupDefault;
+        }
+        if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
+            if(GameObject.Find(lsaberName)!=null)Destroy(GameObject.Find(lsaberName));
+            if(GameObject.Find(lsaberName1)!=null)Destroy(GameObject.Find(lsaberName1));
+            if(GameObject.Find(lclawsName)!=null)Destroy(GameObject.Find(lclawsName));
+            if(GameObject.Find(lclawsName1)!=null)Destroy(GameObject.Find(lclawsName1));
         }
     }
 #endregion
@@ -1115,20 +1114,21 @@ bool stopped=false;
             }
         }
 
-        if(onfireTimer>0){onfireTimer-=Time.deltaTime;}else{ResetStatus("onfire");}
-        if(decayTimer>0){decayTimer-=Time.deltaTime;}else{ResetStatus("decay");}
-        if(electrcTimer>0){electrcTimer-=Time.deltaTime;}else{ResetStatus("electrc");}
-        if(frozenTimer>0){frozenTimer-=Time.deltaTime;}else{ResetStatus("frozen");}
-        if(armoredTimer>0){armoredTimer-=Time.deltaTime;}else{ResetStatus("armored");}
-        if(fragileTimer>0){fragileTimer-=Time.deltaTime;}else{ResetStatus("fragile");}
-        if(powerTimer>0){powerTimer-=Time.deltaTime;}else{ResetStatus("power");}
-        if(weaknsTimer>0){weaknsTimer-=Time.deltaTime;}else{ResetStatus("weakns");}
-        if(hackedTimer>0){hackedTimer-=Time.deltaTime;}else{ResetStatus("hacked");}
-        if(blindTimer>0){blindTimer-=Time.deltaTime;}else{ResetStatus("blind");}
+        if(onfireTimer>0){onfireTimer-=Time.deltaTime*(1+dist);}else{if(onfireTimer>-4)ResetStatus("onfire");}
+        if(decayTimer>0){decayTimer-=Time.deltaTime;}else{if(decayTimer>-4)ResetStatus("decay");}
+        if(electrcTimer>0){electrcTimer-=Time.deltaTime;}else{if(electrcTimer>-4)ResetStatus("electrc");}
+        if(frozenTimer>0){frozenTimer-=Time.deltaTime;}else{if(frozenTimer>-4)ResetStatus("frozen");}
+        if(armoredTimer>0){armoredTimer-=Time.deltaTime;}else{if(armoredTimer>-4)ResetStatus("armored");}
+        if(fragileTimer>0){fragileTimer-=Time.deltaTime;}else{if(fragileTimer>-4)ResetStatus("fragile");}
+        if(powerTimer>0){powerTimer-=Time.deltaTime;}else{if(powerTimer>-4)ResetStatus("power");}
+        if(weaknsTimer>0){weaknsTimer-=Time.deltaTime;}else{if(weaknsTimer>-4)ResetStatus("weakns");}
+        if(hackedTimer>0){hackedTimer-=Time.deltaTime;}else{if(hackedTimer>-4)ResetStatus("hacked");}
+        if(blindTimer>0){blindTimer-=Time.deltaTime;}else{if(blindTimer>-4)ResetStatus("blind");}
         if(armored==true&&fragile!=true){armorMulti=armoredMulti*armoredStrength;}else if(fragile==true&&armored!=true){armorMulti=fragileMulti/fragileStrength;}
         if((armored!=true&&fragile!=true)||(armored==true&&fragile==true)){armorMulti=1;}
         if(power==true&&weakns!=true){dmgMulti=powerMulti*powerStrength;}else if(weakns==true&&power!=true){dmgMulti=weaknsMulti/weaknsStrength;}
         if((power!=true&&weakns!=true)||(power==true&&weakns==true)){dmgMulti=1;}
+        if(onfire){if(frozen){ResetStatus("frozen");/*Damage(1,dmgType.silent);*/}}
     }
     
     private void Shadow(){
@@ -1220,60 +1220,91 @@ bool stopped=false;
     //Skills are in PlayerSkills
     private void RefillEnergy(){
         if(energy<=0&&hacked!=true){
-        if(energyRefillUnlocked==true){
-            if(refillDelay>0)refillDelay-=Time.deltaTime;
-            if(refillDelay<=0){refillDelay=-4;}
-            //refillUI.gameObject.SetActive(true);
-
-            if(refillRandomized==false){
+            if(energyRefillUnlocked==1){
+                if(refillDelay>0)refillDelay-=Time.deltaTime;
+                if(refillDelay<=0){refillDelay=-4;}
                 SetActiveAllChildren(refillUI.transform,true);
-                //refilltxtS=GameObject.Find("RefillText1");
-                //refilltxtE=GameObject.Find("RefillText2");
-                if(refillCount==0){
-                    GameObject.Find("RandomArrows").SetActive(false);
-                    //GameObject.Find("HUD 9:16/Game Canvas/RefillUI/RandomArrows").SetActive(false);
-                    refilltxtE.SetActive(false);
-                    refillCostS=5;
-                    refillCostE=10;
-                }else if(refillCount>0 && refillCount<=2){
-                    refillCostS=8;
-                    refillCostE=13;
-                }else if(refillCount>=3 && refillCount<=5){
-                    var choose=UnityEngine.Random.Range(1,3);
-                    if(choose==1){
-                        refillCostS=8;
-                        refillCostE=15;
-                    }else if(choose==2){
-                        refillCostS=16;
-                        refillCostE=19;
-                    }if(choose==3){
-                        GameObject.Find("RandomArrows").SetActive(false);
-                        refilltxtE.SetActive(false);
-                        refillCostS=20;
-                        refillCostE=22;
-                    }
-                }else if(refillCount>5){
-                    var choose=UnityEngine.Random.Range(1,3);
-                    if(choose==1){
-                        refillCostS=19;
-                        refillCostE=23;
-                    }else if(choose==2){
-                        refillCostS=24;
-                        refillCostE=26;
-                    }if(choose==3){
-                        GameObject.Find("RandomArrows").SetActive(false);
-                        refilltxtE.SetActive(false);
-                        refillCostS=27;
-                        refillCostE=30;
-                    }
-                }
-                refillRandomized=true;
-            }
 
-            refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostS.ToString();
-            refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostE.ToString();
-            if(Input.GetButtonDown("Fire1")){
-                if(refillDelay==-4){
+                refillCostS=1;
+                refillCostE=3;
+
+                //refillRandomized=true;
+                refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostS.ToString();
+                refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostE.ToString();
+                if(Input.GetButtonDown("Fire1")&&refillDelay==-4){
+                    var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
+                    if(gameSession.coins>refillCost){
+                        energy+=refillEnergyAmnt*0.75f;
+                        Fragile(20,0.75f);
+                        Damage(5,dmgType.normal);
+                        EnergyPopUpHUD(refillEnergyAmnt);
+                        //refillCount++;
+                        gameSession.coins-=refillCost;
+                        refillRandomized=false;
+                        AudioManager.instance.Play("EnergyRefill");
+                        GameObject crystalVFX = Instantiate(crystalExplosionVFX, new Vector2(0, 0), Quaternion.identity);
+                        Destroy(crystalVFX,0.1f);
+                    }else{
+                        refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCost.ToString();
+                        refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text="";
+                    }
+                    refillDelay=1.6f;
+                }
+            }else if(energyRefillUnlocked==2){
+                if(refillDelay>0)refillDelay-=Time.deltaTime;
+                if(refillDelay<=0){refillDelay=-4;}
+                //refillUI.gameObject.SetActive(true);
+                //refilltxtE.SetActive(false);
+                //refillCostS=1;
+                //refillCostE=2;
+                if(refillRandomized==false){
+                    SetActiveAllChildren(refillUI.transform,true);
+                    //refilltxtS=GameObject.Find("RefillText1");
+                    //refilltxtE=GameObject.Find("RefillText2");
+                    if(refillCount==0){
+                        ////GameObject.Find("HUD 9:16/Game Canvas/RefillUI/RandomArrows").SetActive(false);\
+                        //GameObject.Find("RandomArrows").SetActive(false);
+                        //refilltxtE.SetActive(false);
+                        refillCostS=5;
+                        refillCostE=10;
+                    }else if(refillCount>0 && refillCount<=2){
+                        refillCostS=8;
+                        refillCostE=13;
+                    }else if(refillCount>=3 && refillCount<=5){
+                        var choose=UnityEngine.Random.Range(1,3);
+                        if(choose==1){
+                            refillCostS=8;
+                            refillCostE=15;
+                        }else if(choose==2){
+                            refillCostS=16;
+                            refillCostE=19;
+                        }if(choose==3){
+                            //GameObject.Find("RandomArrows").SetActive(false);
+                            //refilltxtE.SetActive(false);
+                            refillCostS=20;
+                            refillCostE=22;
+                        }
+                    }else if(refillCount>5){
+                        var choose=UnityEngine.Random.Range(1,3);
+                        if(choose==1){
+                            refillCostS=19;
+                            refillCostE=23;
+                        }else if(choose==2){
+                            refillCostS=24;
+                            refillCostE=26;
+                        }if(choose==3){
+                            //GameObject.Find("RandomArrows").SetActive(false);
+                            //refilltxtE.SetActive(false);
+                            refillCostS=27;
+                            refillCostE=30;
+                        }
+                    }
+                    refillRandomized=true;
+                }
+
+                refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostS.ToString();
+                refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostE.ToString();
+                if(Input.GetButtonDown("Fire1")&&refillDelay==-4){
                     var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
                     if(gameSession.coins>refillCost){
                         energy+=refillEnergyAmnt;
@@ -1291,11 +1322,7 @@ bool stopped=false;
                     refillDelay=1.6f;
                 }
             }
-        }
-        }else{
-            if(refillUI.gameObject.activeSelf==true)SetActiveAllChildren(refillUI.transform,false);//refillUI.gameObject.SetActive(false);
-        }
-        
+        }else{if(refillUI.gameObject.activeSelf==true)SetActiveAllChildren(refillUI.transform,false);/*refillUI.gameObject.SetActive(false);*/}
     }
 #endregion
 

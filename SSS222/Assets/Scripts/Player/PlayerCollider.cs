@@ -320,7 +320,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name.Contains(shadowbtName)) { PowerupCollect("shadowbt"); }
 
                 var qrocketName = qrocketPwrupPrefab.name; var qrocketName1 = qrocketPwrupPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(qrocketName)) { PowerupCollect("qrocket"); player.Hack(10);}
+                if (other.gameObject.name.Contains(qrocketName)) { PowerupCollect("qrocket"); }
                 var procketName = procketPwrupPrefab.name; var procketName1 = procketPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(procketName)) { PowerupCollect("procket"); }
 
@@ -328,6 +328,29 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name.Contains(cstreamName)) { PowerupCollect("cstream"); }
                 var plaserName = plaserPwrupPrefab.name; var plaserName1 = plaserPwrupPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(plaserName)) { PowerupCollect("plaser"); }
+
+                var laser1Name = GameAssets.instance.Get("Laser1Pwrup").name;
+                if (other.gameObject.name.Contains(laser1Name)) { PowerupCollect("laser"); }
+                var fireName = GameAssets.instance.Get("FirePwrup").name;
+                if (other.gameObject.name.Contains(fireName)) { player.OnFire(10,1); }
+                var decayName = GameAssets.instance.Get("DecayPwrup").name;
+                if (other.gameObject.name.Contains(decayName)) { player.Decay(10,1); }
+                var blindName = GameAssets.instance.Get("BlindPwrup").name;
+                if (other.gameObject.name.Contains(blindName)) { player.Blind(10,4); }
+                var electrcName = GameAssets.instance.Get("ElectrcPwrup").name;
+                if (other.gameObject.name.Contains(electrcName)) { player.Electrc(10); }
+                var frozenName = GameAssets.instance.Get("FrozenPwrup").name;
+                if (other.gameObject.name.Contains(frozenName)) { player.Freeze(10); }
+                var fragileName = GameAssets.instance.Get("FragilePwrup").name;
+                if (other.gameObject.name.Contains(fragileName)) { player.Fragile(10,1); }
+                var armoredName = GameAssets.instance.Get("ArmoredPwrup").name;
+                if (other.gameObject.name.Contains(armoredName)) { player.Armor(10,1); }
+                var poweredName = GameAssets.instance.Get("PowerPwrup").name;
+                if (other.gameObject.name.Contains(poweredName)) { player.Power(10,1); }
+                var weaknsName = GameAssets.instance.Get("WeaknsPwrup").name;
+                if (other.gameObject.name.Contains(weaknsName)) { player.Weaken(10,1); }
+                var hackedName = GameAssets.instance.Get("HackedPwrup").name;
+                if (other.gameObject.name.Contains(hackedName)) { player.Hack(10); }
 
 
                 if (other.gameObject.name.Contains(enBallName))

@@ -34,6 +34,7 @@ public class UpgradeMenu : MonoBehaviour{
     public int defaultPowerup_upgradeCost2=3;
     public int defaultPowerup_upgradeCost3=6;
     public int energyRefill_upgradeCost=3;
+    public int energyRefill_upgradeCost2=3;
     public int mPulse_upgradeCost=3;
     public int postMortem_upgradeCost=1;
     public int teleport_upgradeCost=2;
@@ -248,7 +249,10 @@ public class UpgradeMenu : MonoBehaviour{
     public void DefaultPowerupPerma(){DefaultPowerupChange("laser3","perma",defaultPowerup_upgradeCost3,true,ref player.energy,130,true,0);}//defaultPowerup_upgradeCost3);}
 
     public void UnlockEnergyRefill(){
-        if(gameSession.cores>=energyRefill_upgradeCost && energyRefill_upgraded!=1){player.energyRefillUnlocked=true;gameSession.cores-=energyRefill_upgradeCost;energyRefill_upgraded=1;/*total_UpgradesCount+=energyRefill_upgradeCost;*/GetComponent<AudioSource>().Play();}
+        if(gameSession.cores>=energyRefill_upgradeCost && energyRefill_upgraded!=1){player.energyRefillUnlocked=1;gameSession.cores-=energyRefill_upgradeCost;energyRefill_upgraded=1;/*total_UpgradesCount+=energyRefill_upgradeCost;*/GetComponent<AudioSource>().Play();}
+        else{AudioManager.instance.Play("Deny");}
+    }public void UnlockEnergyRefill2(){
+        if(gameSession.cores>=energyRefill_upgradeCost2 && energyRefill_upgraded==1){player.energyRefillUnlocked=2;gameSession.cores-=energyRefill_upgradeCost;energyRefill_upgraded=2;/*total_UpgradesCount+=energyRefill_upgradeCost;*/GetComponent<AudioSource>().Play();}
         else{AudioManager.instance.Play("Deny");}
     }
 

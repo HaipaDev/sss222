@@ -57,19 +57,21 @@ public class GoblinDrop : MonoBehaviour{
         if(bossForm)BossAI();
     }
     
-    public void DropPowerup(){
+    public void DropPowerup(bool sound){
         if(powerup.Count>0){
         foreach(GameObject pwrup in powerup){
             if(pwrup!=null){
                 //Instantiate(powerup,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
                 pwrup.SetActive(true);
                 pwrup.transform.position=transform.position;
-                if(GetComponent<FallDown>()!=null)pwrup.GetComponent<Rigidbody2D>().velocity = Vector2.down*pwrup.GetComponent<FallDown>().GetVSpeed();
+                if(pwrup.GetComponent<FallDown>()!=null)pwrup.GetComponent<Rigidbody2D>().velocity = Vector2.down*pwrup.GetComponent<FallDown>().GetVSpeed();
             }
         }
         }
+        if(sound){
         if(bossForm!=true)AudioManager.instance.Play("GoblinDeath");
         else AudioManager.instance.Play("GoblinDeathTransf");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other){
@@ -97,6 +99,8 @@ public class GoblinDrop : MonoBehaviour{
                 GetComponent<Enemy>().shooting=true;
                 GetComponent<Enemy>().health=bossHp;
                 bossForm=true;
+                questionMarkObj.SetActive(false);
+                confused=false;
                 pos.x=transform.position.x;
                 transform.rotation=new Quaternion(0,0,0,0);
             }

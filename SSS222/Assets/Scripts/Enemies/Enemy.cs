@@ -193,7 +193,7 @@ public class Enemy : MonoBehaviour{
                 givePts=false;
             }
             AudioManager.instance.Play("Explosion");
-            if(GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup();
+            if(GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup(true);
             if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
             //if(GetComponent<ParticleDelay>()!=null){GetComponent<ParticleDelay>().on=true;health=-1000;Destroy(gameObject,0.05f);}
             /*if(GetComponent<ParticleDelay>()==null){*/GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);Destroy(explosion, 0.5f);Destroy(gameObject,0.01f);//}
@@ -201,11 +201,12 @@ public class Enemy : MonoBehaviour{
         }
     }
     private void OnDestroy() {
+        if(GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup(false);
         if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
         if(randomizeWaveDeath==true){ gameSession.EVscore = gameSession.EVscoreMax; }
     }
     private void DestroyOutside(){
-        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){foreach(GameObject obj in GetComponent<GoblinDrop>().powerup)Destroy(obj);}}}
+        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){foreach(GameObject obj in GetComponent<GoblinDrop>().powerup)Destroy(obj);/*obj.SetActive(true);*/}}}
     }
     private void OnTriggerEnter2D(Collider2D other){
         //if(FindObjectOfType<Player>().shadowRaycast[FindObjectOfType<Player>().shadowRaycast.FindIndex(FindObjectOfType<Player>().shadowRaycast.Count,(x) => x == this)]==this){Die();}

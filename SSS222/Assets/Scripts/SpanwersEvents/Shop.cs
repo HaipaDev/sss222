@@ -14,6 +14,7 @@ public class Shop : MonoBehaviour{
     public GameObject currentSlot;
     public ShopSlot[] slots;
     public GameObject cargoPrefab;
+    public float shopTimeMax=10f;
     //public GameObject[] slotText;
     //public List<ShopSlotID> shopSlotIDs;
     //public AudioClip noCoinsSFX;
@@ -29,7 +30,7 @@ public class Shop : MonoBehaviour{
     public int reputation;
     public int reputationSlot;
     public float sum;
-
+    public float shopTimer=-4;
     public LootTableShop2 lootTable;
     //Player player;
     private void Awake()
@@ -41,6 +42,7 @@ public class Shop : MonoBehaviour{
         lootTable=GetComponent<LootTableShop2>();
         SetSlots();
         shopMenuUI.SetActive(false);
+        shopTimer=shopTimeMax;
         //maxID = shopSlotIDs.Count;
         /*slot1 = slotObj[0].GetComponent<ShopSlot>();
         slot2 = slotObj[1].GetComponent<ShopSlot>();
@@ -55,6 +57,8 @@ public class Shop : MonoBehaviour{
         SetSlots();
         //if (player == null) player = FindObjectOfType<Player>();
         LevelRep();
+        if(shopOpened&&shopTimer>0){shopTimer-=Time.unscaledDeltaTime;}
+        if(shopTimer<=0&&shopTimer!=-4){Resume();}
     }
     public void SpawnCargo(){
         float xx=3.45f;
@@ -71,9 +75,11 @@ public class Shop : MonoBehaviour{
         shopOpen = false;
         FindObjectOfType<GameSession>().gameSpeed=0;
         shopOpened=true;
+        shopTimer=shopTimeMax;
     }
     public void Resume(){
         //if(purchasesCurrent==purchases){purchasedNotTimes++;}
+        shopTimer=-4;
         if(purchased==false&&subbed==false){purchasedNotTimes++;}
         subbed=false;
         if(purchasedNotTimes==2){RepMinus(1);purchasedNotTimes=0;}

@@ -32,6 +32,7 @@ public class Level : MonoBehaviour{
     void Update()
     {
         gameSession = FindObjectOfType<GameSession>();
+        CheckESC();
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
         //transitioner=FindObjectOfType<Tag_Transition>().GetComponent<Animator>();
     }
@@ -59,6 +60,8 @@ public class Level : MonoBehaviour{
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("GameModeChoose");}
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
     public void LoadInventoryScene(){SceneManager.LoadScene("Inventory");}
+    public void LoadCreditsScene(){SceneManager.LoadScene("Credits");}
+    public void LoadWebsite(string url){Application.OpenURL(url);}
     public void RestartGame(){
         PauseMenu.GameIsPaused=false;
         FindObjectOfType<GameSession>().SaveHighscore();
@@ -79,6 +82,21 @@ public class Level : MonoBehaviour{
         SceneManager.LoadScene("Loading");
         gameSession.gameSpeed=1f;
         Time.timeScale = 1f;
+    }
+    void CheckESC(){
+    if(Input.GetKeyDown(KeyCode.Escape)){
+            var scene=SceneManager.GetActiveScene().name;
+            if(scene=="GameModeChoose"||scene=="Inventory"||scene=="Credits"){
+                LoadStartMenu();
+            }if(scene=="Options"){
+                if(GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.activeSelf==true){
+                    GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive(false);
+                    GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive(true);
+                }else{
+                    LoadStartMenu(); 
+                }
+            }
+    }
     }
 
     void LoadLevel(string sceneName){

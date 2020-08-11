@@ -180,6 +180,7 @@ public class GameSession : MonoBehaviour{
         CalculateLuck();
 
         CheckCodes(0,0);
+        if(gameSpeed<0){gameSpeed=0;}
     }
 
     public int GetScore(){return score;}
@@ -281,18 +282,31 @@ public class GameSession : MonoBehaviour{
     void CalculateLuck(){
         //ref float multiAmnt = ref enballMultiAmnt;
         //1+(0.08*((1.05-1)/0.05))
-        enballDropMulti=1+(enballMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
-        //multiAmnt = ref coinMultiAmnt;
-        coinDropMulti=1+(coinMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
-        coreDropMulti=1+(coreMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
-        rarePwrupMulti=1+(rareMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
-        legendPwrupMulti=1+(legendMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+        if(luckMulti<2.5f){
+            enballDropMulti=1+(enballMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+            //multiAmnt = ref coinMultiAmnt;
+            coinDropMulti=1+(coinMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+            coreDropMulti=1+(coreMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+            rarePwrupMulti=1+(rareMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+            legendPwrupMulti=1+(legendMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+        }else{
+            var enballMultiAmntS=0.003f;
+            var coinMultiAmntS=0.004f;
+            var coreMultiAmntS=0.002f;
+            var rareMultiAmntS=0.0002f;
+            var legendMultiAmntS=0.02f;
+            enballDropMulti=Mathf.Clamp(1+(enballMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+enballMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
+            coinDropMulti=Mathf.Clamp(1+(coinMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+coinMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
+            coreDropMulti=Mathf.Clamp(1+(coreMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,2)+coreMultiAmntS*((luckMulti-2)/UpgradeMenu.instance.luck_UpgradeAmnt);
+            rarePwrupMulti=Mathf.Clamp(1+(rareMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+rareMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
+            legendPwrupMulti=Mathf.Clamp(1+(legendMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+legendMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
+        }
 
-        if(enballDropMulti>3)enballMultiAmnt=0.003f;
-        if(coinDropMulti>3)coinMultiAmnt=0.004f;
-        if(coreDropMulti>2)coreMultiAmnt=0.002f;
-        if(rarePwrupMulti>3)rareMultiAmnt=0.0002f;
-        if(legendPwrupMulti>3)legendMultiAmnt=0.01f;
+        /*if(enballDropMulti>3){enballMultiAmnt=0.003f;}
+        if(coinDropMulti>3){coinMultiAmnt=0.004f;}
+        if(coreDropMulti>2){coreMultiAmnt=0.002f;}
+        if(rarePwrupMulti>3){rareMultiAmnt=0.0002f;}
+        if(legendPwrupMulti>3){legendMultiAmnt=0.01f;}*/
     }
     public void CheckCodes(int fkey, int nkey){
         if(fkey==0&&nkey==0){}
