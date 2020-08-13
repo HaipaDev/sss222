@@ -39,6 +39,14 @@ public class DisruptersSpawner : MonoBehaviour{
     [SerializeField] float mSTimeSpawnsVortexWheel = 40f;
     [SerializeField] float mETimeSpawnsVortexWheel = 50f;
     public float timeSpawnsVortexWheel = 0f;
+    [HeaderAttribute("Glare Devil")]
+    public bool spawnGlareDevil=true;
+    [SerializeField] WaveConfig cfgGlareDevil;
+    [SerializeField] float mEnergyCountGlareDevil = 20;
+    public float EnergyCountGlareDevil = 0;
+    [SerializeField] float mSTimeSpawnsGlareDevil = 40f;
+    [SerializeField] float mETimeSpawnsGlareDevil = 50f;
+    public float timeSpawnsGlareDevil = 0f;
     //public int waveIndex = 0;
     //WaveConfig currentWave;
     bool looping = true;
@@ -82,6 +90,9 @@ public class DisruptersSpawner : MonoBehaviour{
         if(spawnLeech==true)timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech,mETimeSpawnsLeech);
         if(spawnHlaser==true)timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser);
         if(spawnGoblin==true)timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin);
+        if(spawnHealDrone==true)if(mEnemiesCountHealDrone==-1)timeSpawnsHealDrone = Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone);
+        if(spawnVortexWheel==true)if(EnergyCountVortexWheel==-1)timeSpawnsVortexWheel = Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel);
+        if(spawnGlareDevil==true)if(EnergyCountGlareDevil==-1)timeSpawnsGlareDevil = Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil);
         do
         {
             yield return StartCoroutine(SpawnWaves());
@@ -129,6 +140,14 @@ public class DisruptersSpawner : MonoBehaviour{
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgVortexWheel));
                     timeSpawnsVortexWheel = -4;
                     EnergyCountVortexWheel=0;
+                }
+            }
+        }if(spawnGlareDevil==true){
+            if(EnergyCountGlareDevil>=mEnergyCountGlareDevil||(mEnergyCountGlareDevil==0 && timeSpawnsGlareDevil <= 0 && timeSpawnsGlareDevil > -4)){
+                if(FindObjectOfType<GlareDevil>()==null){
+                    yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGlareDevil));
+                    timeSpawnsGlareDevil = -4;
+                    EnergyCountGlareDevil=0;
                 }
             }
         }
@@ -235,6 +254,10 @@ public class DisruptersSpawner : MonoBehaviour{
             if(spawnVortexWheel==true && mEnergyCountVortexWheel!=0){
                 if(timeSpawnsVortexWheel > -0.01f){ timeSpawnsVortexWheel -= Time.deltaTime; }
                 else if(timeSpawnsVortexWheel == -4){ timeSpawnsVortexWheel = Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel); }
+            }
+            if(spawnGlareDevil==true && mEnergyCountGlareDevil!=0){
+                if(timeSpawnsGlareDevil > -0.01f){ timeSpawnsGlareDevil -= Time.deltaTime; }
+                else if(timeSpawnsGlareDevil == -4){ timeSpawnsGlareDevil = Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil); }
             }
             /*if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
             else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;

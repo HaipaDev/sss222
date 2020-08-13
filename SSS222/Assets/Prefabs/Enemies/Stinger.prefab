@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1660825313398597713}
   - component: {fileID: 8262457775497264122}
   - component: {fileID: 6361041040622666652}
-  - component: {fileID: 182006974740199065}
   - component: {fileID: -4076050431880435700}
   - component: {fileID: 801518567914847888}
   - component: {fileID: 2836206252358398912}
@@ -53,6 +52,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -147,22 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
+  waveConfig: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
   waypointIndex: 0
   enemyIndex: 0
---- !u!114 &182006974740199065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147796775416149952}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2486cc6ddf1c22b45b8cdaca6a0a3ef0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: baf393c6655072441888a4b372a234eb, type: 2}
 --- !u!114 &-4076050431880435700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +178,7 @@ MonoBehaviour:
   enBallchanceInit: 10
   CoinchanceInit: 0
   powercoreChanceInit: 1
-  xpAmnt: 0.5
+  xpAmnt: 1.5
   enBallchance: 0
   Coinchance: 0
   powercoreChance: 0

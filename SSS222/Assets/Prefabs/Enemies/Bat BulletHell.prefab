@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 2836206252358398912}
   - component: {fileID: -942159007773227235}
   m_Layer: 9
-  m_Name: Stinger BulletHell
+  m_Name: Bat BulletHell
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,6 +54,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -193,7 +194,7 @@ MonoBehaviour:
   enBallchanceInit: 10
   CoinchanceInit: 0
   powercoreChanceInit: 1
-  xpAmnt: 0.5
+  xpAmnt: 0
   enBallchance: 0
   Coinchance: 0
   powercoreChance: 0

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a14c5dde1fe9e4aaf080d5453ad783, type: 3}
+  m_Name: GlareDevil
+  m_EditorClassIdentifier: 
+  waveName: Glare Devil
+  enemies:
+  - {fileID: 3147796775416149952, guid: 92194164acca2da419099a7a32b0924b, type: 3}
+  timeSpawn: 0
+  timeSpawnWave: -4
+  spawnRandomFactor: 0
+  numberOfEnemies: 1
+  moveSpeed: 2
+  randomSpeed: 0
+  moveSpeedS: 0
+  moveSpeedE: 0
+  startToEndPath: 0
+  between2PtsPath: 0
+  pathStartPrefab: {fileID: 0}
+  pathEndPrefab: {fileID: 0}
+  randomPath: 0
+  randomPathEach: 0
+  randomPoint: 1
+  pathsRandom:
+  - {fileID: 8208501240122099510, guid: 1fbc6c007726b8d44a202066bc8ec67b, type: 3}
+  shipPlace: 0
+  shipYY: 0
+  loopPath: 1
+  loopPathPrefab: {fileID: 487614370575032915, guid: ca3033287e590d342a08fba6475c39f0,
+    type: 3}

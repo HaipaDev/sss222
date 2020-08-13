@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPathing : MonoBehaviour{
-    [SerializeField] WaveConfig waveConfig;
+    [SerializeField] public WaveConfig waveConfig;
     List<Transform> waypointsS;
     List<Transform> waypointsE;
     List<Transform> waypointsR;
-    List<Transform> waypointsL;
+    public List<Transform> waypointsL;
     public int waypointIndex = 0;
     public int enemyIndex = 0;
 
@@ -35,6 +35,7 @@ public class EnemyPathing : MonoBehaviour{
                     waypointsS = waveConfig.GetWaypoints();
                 }
             }
+            if(waveConfig.loopPath!=true){
             if (waveConfig.randomPath == true || waveConfig.randomPathEach==true || waveConfig.randomPoint==true){ transform.position = waypointsR[waypointIndex].transform.position; 
                 if(waveConfig.randomPoint==true && (waveConfig.GetMoveSpeed()!=0 || waveConfig.randomSpeed==true)){
                     if(waveConfig.randomSpeed==false){rb.velocity = new Vector2(0f, -waveConfig.GetMoveSpeed()); }
@@ -52,6 +53,7 @@ public class EnemyPathing : MonoBehaviour{
                 else { rb.velocity = new Vector2(0f, Random.Range(-waveConfig.GetMoveSpeedS(), -waveConfig.GetMoveSpeedE())); }
             }
             else { transform.position = waypointsS[waypointIndex].transform.position; }
+            }
         }
     }
 
@@ -72,8 +74,8 @@ public class EnemyPathing : MonoBehaviour{
             if (transform.position!= waypointsE[waypointIndex].transform.position)
             {
                 var targetPos = waypointsE[waypointIndex].transform.position;
-                var movementThisFrame = waveConfig.GetMoveSpeed() * Time.deltaTime;
-                transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
+                var step = waveConfig.GetMoveSpeed() * Time.deltaTime;
+                transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
                 //if (transform.position == targetPos)waypointIndex++;
             }
             else{ Destroy(gameObject); }
@@ -86,26 +88,27 @@ public class EnemyPathing : MonoBehaviour{
                 if (waypointIndex < waypointsR.Count)
                 {
                     var targetPos = waypointsR[waypointIndex].transform.position;
-                    var movementThisFrame = waveConfig.GetMoveSpeed() * Time.deltaTime;
-                    transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
+                    var step = waveConfig.GetMoveSpeed() * Time.deltaTime;
+                    transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
                     if (transform.position == targetPos)waypointIndex++;
                 }else { Destroy(gameObject); }
             }//else if(waveConfig.randomPoint==true){}
             else{
-                if(waveConfig.shipPlace==false && waveConfig.loopPath!=true){
+                if(waveConfig.shipPlace==false && waveConfig.loopPath==false){
                     if (waypointIndex < waypointsS.Count)
                     {
                         var targetPos = waypointsS[waypointIndex].transform.position;
-                        var movementThisFrame = waveConfig.GetMoveSpeed() * Time.deltaTime;
-                        transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
+                        var step = waveConfig.GetMoveSpeed() * Time.deltaTime;
+                        transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
                         if (transform.position == targetPos) waypointIndex++;
                     }
                     else { Destroy(gameObject); }
                 }if(waveConfig.loopPath==true){
                     if (waypointIndex < waypointsL.Count){
                         var targetPos = waypointsL[waypointIndex].transform.position;
-                        var movementThisFrame = waveConfig.GetMoveSpeed() * Time.deltaTime;
-                        transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
+                        var step = waveConfig.GetMoveSpeed() * Time.deltaTime;
+                        transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
+                        //GetComponent<Enemy>().curSpeed=step;
                         if (transform.position == targetPos) waypointIndex++;
                         if(waypointIndex>=waypointsL.Count){waypointIndex=0;}
                     }else{waypointIndex=0;}

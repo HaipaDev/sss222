@@ -57,6 +57,7 @@ public class VortexWheel : MonoBehaviour{
         if(Time.timeScale>0.0001f)chargeEnergy+=0.01f;
         //if(timer>0)
         if(timer>-4)timer+=Time.deltaTime;
+        if(timer<-4)timer=-4;
         //if(timer<=0 && timer>-4){StartCoroutine(Die());}
         if(timer>timeToDie){StartCoroutine(Die());}
         

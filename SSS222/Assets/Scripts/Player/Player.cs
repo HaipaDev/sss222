@@ -256,7 +256,8 @@ public class Player : MonoBehaviour{
     [HideInInspector]public Vector2 mouseDir;
     [SerializeField]public float dist;
     [HideInInspector]public Vector2 velocity;
-    [HideInInspector]public float shipScale=1f;
+    public float shipScale=1f;
+    float defaultShipScale=1f;
     float hPressedTime;
     float vPressedTime;
     public float mPressedTime;
@@ -293,6 +294,9 @@ public class Player : MonoBehaviour{
     bool moveYwas;
     public RaycastHit2D[] shadowRaycast=new RaycastHit2D[4];
     ContactFilter2D filter2D;
+    const float mouseShadowSpeed=150;
+    bool dashed;
+    public Vector2 tpPos;
 #endregion
 
     void Start(){
@@ -309,6 +313,9 @@ public class Player : MonoBehaviour{
         moveSpeedCurrent = moveSpeed;
         dashTime = startDashTime;
         moveByMouse = saveSerial.moveByMouse;
+        defaultShipScale=shipScale;
+        shipScaleMin*=defaultShipScale;
+        shipScaleMax*=defaultShipScale;
         pauseMenu=FindObjectOfType<PauseMenu>();
         refillUI=GameObject.Find("RefillUI");
         refilltxtS=GameObject.Find("RefillText1");
@@ -377,6 +384,7 @@ public class Player : MonoBehaviour{
         if(overheatedTimer<=0){overheated=false;}
         //Debug.Log(shootTimer);
         //Debug.LogWarning(shootCoroutine);
+        if(Application.platform==RuntimePlatform.Android)mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
     }
     void FixedUpdate()
     {
@@ -433,7 +441,7 @@ public class Player : MonoBehaviour{
             else{ deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
             lastClickTime = Time.time; }
 
-        if(Application.platform == RuntimePlatform.Android){
+        if(Application.platform==RuntimePlatform.Android){
             deltaX = joystick.Horizontal * Time.deltaTime * moveSpeedCurrent * moveDir;
             deltaY = joystick.Vertical * Time.deltaTime * moveSpeedCurrent * moveDir;
         }else{
@@ -542,83 +550,98 @@ public class Player : MonoBehaviour{
             if(moving==true)timerEnRegen+=Time.deltaTime;
         }
     }
+    public void ShadowButton(Vector2 pos){
+        //if(pressed){
+            tpPos=pos;
+            DClick(0);
+            //float timeSinceLastClick = Time.time - lastClickTime;
+            //if (timeSinceLastClick <= DCLICK_TIME){DClick(0); }
+            //else{ lastClickTime = Time.time; }
+        //}
+    }
     public void DClick(int dir){
         //Debug.Log("DClick");
         if(shadow==true && energy>0){
-            if(moveByMouse!=true){
-                if(dir<0&&dir>-2) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
-                if(dir>0&&dir<2){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
-                if(dir<-1){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
-                if(dir>1){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
-                dashDir=0;
-                /*if(Application.platform == RuntimePlatform.Android){
-                    if(joystick.Vertical<-0.2f) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
-                    if(joystick.Vertical>0.2f){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
-                    if(joystick.Horizontal<-0.2f){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
-                    if(joystick.Horizontal>0.2f){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+            if(Application.platform!=RuntimePlatform.Android){
+                if(moveByMouse!=true){
+                    if(dir<0&&dir>-2) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
+                    if(dir>0&&dir<2){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
+                    if(dir<-1){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
+                    if(dir>1){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+                    dashDir=0;
+                    /*if(Application.platform == RuntimePlatform.Android){
+                        if(joystick.Vertical<-0.2f) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
+                        if(joystick.Vertical>0.2f){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
+                        if(joystick.Horizontal<-0.2f){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
+                        if(joystick.Horizontal>0.2f){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+                    }else{
+                        if(Input.GetAxisRaw("Vertical")<0) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
+                        if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
+                        if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
+                        if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
+                    }*/
                 }else{
-                    if(Input.GetAxisRaw("Vertical")<0) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
-                    if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
-                    if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
-                    if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
-                }*/
-            }else{
-                /*Vector2 difference = mousePos - (Vector2)transform.position;
-                difference = difference.normalized;
-                float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-                Vector3 dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.right;
+                    tpPos=mousePos;
+                    dashed=true;
+                    /*Vector2 difference = mousePos - (Vector2)transform.position;
+                    difference = difference.normalized;
+                    float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+                    Vector3 dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.right;
 
-                rb.velocity = Vector2.zero;
-                dir = new Vector2(mousePos.x, mousePos.y); // remember that mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                transform.position += dir; // the only thing to change is this cause you need to move for an equal ammount of units each time you attack
-                */
-                //rb.velocity = mousePos * dashSpeed * moveDir;
-                //if(new Vector2(transform.position.x,transform.position.y)==mousePos){rb.velocity=Vector2.zero;}
-                #region//Failed attempts of RayCasting
-                //float maxDist=10;
-                /*
-                shadowRaycast=Physics2D.RaycastAll(transform.position,mousePos,maxDist).ToList();
-                //Ray2D shadowRaycast=new Ray2D(transform.position,mousePos);
-                Debug.DrawRay(transform.position,shadowRaycast[shadowRaycast.Count-1].point,Color.green,0.5f);
-                if(Vector2.Distance(transform.position,mousePos)<=maxDist)transform.position=mousePos;
-                */
-                /*
-                Ray2D ray = new Ray2D(transform.position, mousePos);
-                shadowRaycast = Physics2D.RaycastAll(ray.origin, ray.direction, maxDist).ToList();
-                Debug.Log(shadowRaycast.Count);
-                foreach(RaycastHit2D hit in shadowRaycast){Debug.DrawRay(transform.position,hit.point,Color.green,0.5f);if(hit.collider!=null&&hit.collider.CompareTag("Enemy")){hit.collider.GetComponent<Enemy>().Die();}}
-                */
-                /*
-                int totalObjectsHit = Physics2D.RaycastNonAlloc(transform.position, mousePos, shadowRaycast, maxDist);
-                Debug.Log("Rays:"+totalObjectsHit);
- 
-                //Iterate the objects hit by the laser
-                for (int i = 0; i < totalObjectsHit; i++)
-                {
-                    RaycastHit2D hit = shadowRaycast[i];
-                    Debug.DrawRay(transform.position,hit.point,Color.green,0.5f);
-                    //Do something
-                    if (hit.collider != null&&hit.collider.CompareTag("Enemy"))
+                    rb.velocity = Vector2.zero;
+                    dir = new Vector2(mousePos.x, mousePos.y); // remember that mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    transform.position += dir; // the only thing to change is this cause you need to move for an equal ammount of units each time you attack
+                    */
+                    //rb.velocity = mousePos * dashSpeed * moveDir;
+                    //if(new Vector2(transform.position.x,transform.position.y)==mousePos){rb.velocity=Vector2.zero;}
+                    #region//Failed attempts of RayCasting
+                    //float maxDist=10;
+                    /*
+                    shadowRaycast=Physics2D.RaycastAll(transform.position,mousePos,maxDist).ToList();
+                    //Ray2D shadowRaycast=new Ray2D(transform.position,mousePos);
+                    Debug.DrawRay(transform.position,shadowRaycast[shadowRaycast.Count-1].point,Color.green,0.5f);
+                    if(Vector2.Distance(transform.position,mousePos)<=maxDist)transform.position=mousePos;
+                    */
+                    /*
+                    Ray2D ray = new Ray2D(transform.position, mousePos);
+                    shadowRaycast = Physics2D.RaycastAll(ray.origin, ray.direction, maxDist).ToList();
+                    Debug.Log(shadowRaycast.Count);
+                    foreach(RaycastHit2D hit in shadowRaycast){Debug.DrawRay(transform.position,hit.point,Color.green,0.5f);if(hit.collider!=null&&hit.collider.CompareTag("Enemy")){hit.collider.GetComponent<Enemy>().Die();}}
+                    */
+                    /*
+                    int totalObjectsHit = Physics2D.RaycastNonAlloc(transform.position, mousePos, shadowRaycast, maxDist);
+                    Debug.Log("Rays:"+totalObjectsHit);
+    
+                    //Iterate the objects hit by the laser
+                    for (int i = 0; i < totalObjectsHit; i++)
                     {
-                        hit.collider.GetComponent<Enemy>().Die();
+                        RaycastHit2D hit = shadowRaycast[i];
+                        Debug.DrawRay(transform.position,hit.point,Color.green,0.5f);
+                        //Do something
+                        if (hit.collider != null&&hit.collider.CompareTag("Enemy"))
+                        {
+                            hit.collider.GetComponent<Enemy>().Die();
+                        }
                     }
+                    var posRaycast = Physics2D.Raycast(transform.position, mousePos, maxDist);
+                    transform.position=posRaycast.point;
+                    */
+                    /*
+                    Ray2D ray = new Ray2D(transform.position, mousePos);
+                    Debug.DrawRay(transform.position,mousePos, Color.red, 0.5f);
+                    RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, mousePos);
+                    Debug.Log("Hits: "+hits.Length);
+                    foreach (RaycastHit2D hit in hits) {
+                        Debug.DrawRay(transform.position,hit.point, Color.red, 0.5f);
+                        if(hit.collider.CompareTag("Enemy")){Debug.Log("Enemy Hit");hit.collider.gameObject.GetComponent<Enemy>().Die();}
+                    }
+                    //transform.position=ray.GetPoint(maxDist);
+                    */
+                    #endregion
+                    //transform.position=Vector2.MoveTowards(transform.position,mousePos,300*Time.deltaTime);
                 }
-                var posRaycast = Physics2D.Raycast(transform.position, mousePos, maxDist);
-                transform.position=posRaycast.point;
-                */
-                /*
-                Ray2D ray = new Ray2D(transform.position, mousePos);
-                Debug.DrawRay(transform.position,mousePos, Color.red, 0.5f);
-                RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, mousePos);
-                Debug.Log("Hits: "+hits.Length);
-                foreach (RaycastHit2D hit in hits) {
-                    Debug.DrawRay(transform.position,hit.point, Color.red, 0.5f);
-                    if(hit.collider.CompareTag("Enemy")){Debug.Log("Enemy Hit");hit.collider.gameObject.GetComponent<Enemy>().Die();}
-                }
-                //transform.position=ray.GetPoint(maxDist);
-                */
-                #endregion
-                //transform.position=Vector2.MoveTowards(transform.position,mousePos,300*Time.deltaTime);
+            }else{
+                dashed=true;
             }
             energy -= shadowEn;
             EnergyPopUpHUD(-shadowEn);
@@ -995,7 +1018,7 @@ bool stopped=false;
         if (shadow==true){ Shadow(); GetComponent<BackflameEffect>().enabled = false; }
         else{ dashTime = -4; GetComponent<BackflameEffect>().enabled=true; }
         if (shadow==true&&dashTime <= 0&&dashTime!=-4) { rb.velocity = Vector2.zero; dashing = false; /*moveX=moveXwas;moveY=moveYwas;*/ dashTime=-4;}
-        else{ dashTime -= Time.deltaTime; if(dashTime>0&&moveByMouse){var step=150*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,mousePos,step);}/*if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);*/}
+        else{ dashTime -= Time.deltaTime; if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}/*if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);*/}
         if(energy<=0){ shadow = false; }
 
         if(inverter==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){

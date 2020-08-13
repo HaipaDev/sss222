@@ -35,7 +35,7 @@ Transform:
   m_GameObject: {fileID: 4546529352650547393}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.36, y: -6.24, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.89, y: 0.89, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -55,6 +55,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f2d5522a48697ed46a9815b37512e5ab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -189,11 +190,12 @@ MonoBehaviour:
   moveX: 1
   moveY: 1
   moveByMouse: 1
+  paddingX: -0.125
+  paddingY: 0.45
   moveSpeedInit: 5
   lsaberSpeedMulti: 1.25
   moveSpeed: 5
   moveSpeedCurrent: 0
-  padding: -0.125
   health: 150
   maxHP: 150
   powerup: laser
@@ -221,6 +223,7 @@ MonoBehaviour:
   hpRegenAmnt: 0.1
   armorMulti: 1
   dmgMulti: 1
+  shipScaleDefault: 0.89
   lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
     type: 3}
   lclawsPrefab: {fileID: 4755926375889011706, guid: b9340c203c57d954687d49864bad3d74,
@@ -283,27 +286,32 @@ MonoBehaviour:
   armored: 0
   armoredTimer: -4
   armoredTime: -4
+  armoredStrength: 1
   fragile: 0
   fragileTimer: -4
   fragileTime: -4
+  fragileStrength: 1
   power: 0
   powerTimer: -4
   powerTime: -4
+  powerStrength: 1
   weakns: 0
   weaknsTimer: -4
   weaknsTime: -4
+  weaknsStrength: 1
   hacked: 0
   hackedTimer: -4
   hackedTime: -4
   blind: 0
   blindTimer: -4
+  blindStrenght: 0
   blindTime: -4
   flipTime: 8.5
   gcloverTime: 8
-  shadowTime: 11
+  shadowTime: 12
   shadowLength: 0.2
-  dashSpeed: 24
-  startDashTime: 0.1
+  dashSpeed: 20
+  startDashTime: 0.08
   inverterTime: 10
   magnetTime: 40
   scalerTime: 12
@@ -332,7 +340,7 @@ MonoBehaviour:
   cbulletEn: 1.3
   plaserEn: 5.6
   hrocketOh: 0.9
-  qrocketOh: 2.23
+  qrocketOh: 1.63
   procketEn: 0.86
   procketOh: 0.49
   energyBallGet: 9
@@ -365,9 +373,10 @@ MonoBehaviour:
   instantiateTime: 0.025
   instantiateTimer: 0
   mousePos: {x: 0, y: 0}
+  mouseDir: {x: 0, y: 0}
   dist: 0
   velocity: {x: 0, y: 0}
-  shipScale: 1
+  shipScale: 0.89
   mPressedTime: 0
   timeFlyingTotal: 0
   timeFlyingCore: 0
@@ -431,6 +440,7 @@ MonoBehaviour:
   yy: -0.6
   time: 0.3
   stayStill: 0
+  BFlame: {fileID: 0}
 --- !u!82 &1143734159
 AudioSource:
   m_ObjectHideFlags: 0
@@ -540,7 +550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e1bc0376da4f34bb96c9aab489ea09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinID: 0
+  skinID: 2
   addOverlay: 0
   overlayPrefab: {fileID: 4881046078246147718, guid: ecc7f2d405fb33542808b48eca5c3d11,
     type: 3}
@@ -548,3 +558,4 @@ MonoBehaviour:
   chameleonOvColor: {r: 1, g: 1, b: 1, a: 1}
   skins:
   - {fileID: 21300000, guid: b1685888490527541a7b090feb214592, type: 3}
+  - {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}

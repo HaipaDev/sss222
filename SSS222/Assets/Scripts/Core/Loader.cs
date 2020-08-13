@@ -17,7 +17,7 @@ public class Loader : MonoBehaviour{
         else{FindObjectOfType<SaveSerial>().pprocessing=true;FindObjectOfType<SaveSerial>().scbuttons=false;}
         FindObjectOfType<SaveSerial>().Load();
         FindObjectOfType<SaveSerial>().LoadSettings();
-        if (Application.platform != RuntimePlatform.Android){Screen.fullScreen = FindObjectOfType<SaveSerial>().fullscreen;
+        if (Application.platform != RuntimePlatform.Android){Screen.fullScreen = FindObjectOfType<SaveSerial>().fullscreen;if(SaveSerial.instance.fullscreen)Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);
         QualitySettings.SetQualityLevel(FindObjectOfType<SaveSerial>().quality);}
         if (Application.platform == RuntimePlatform.Android)FindObjectOfType<SaveSerial>().moveByMouse=false;
         audioMixer.SetFloat("MasterVolume", FindObjectOfType<SaveSerial>().masterVolume);

@@ -75,8 +75,9 @@ public class Enemy : MonoBehaviour{
     #endregion
     [HeaderAttribute("Others")]
     //[SerializeField] public bool cTagged=false;
+    //[SerializeField] public float curSpeed;
     [SerializeField] public bool yeeted=false;
-    [SerializeField] public GameObject dmgPopupPrefab;
+    [HideInInspector] public GameObject dmgPopupPrefab;
     public bool dmgCounted;
     public float dmgCount;
     GameObject dmgCountPopup;
@@ -132,6 +133,8 @@ public class Enemy : MonoBehaviour{
         explosionVFX=GameAssets.instance.GetVFX("Explosion");
         flareHitVFX=GameAssets.instance.GetVFX("FlareHit");
         explosionSmallVFX=GameAssets.instance.GetVFX("ExplosionSmall");
+
+        dmgPopupPrefab=GameAssets.instance.GetVFX("DMGPopup");
     }
     void Update(){
         if (shooting){Shoot();}

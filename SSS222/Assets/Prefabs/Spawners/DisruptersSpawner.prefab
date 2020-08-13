@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a145b73fb21b17249b6c916e2f5c01e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnLeech: 0
+  spawnLeech: 1
   cfgLeech: {fileID: 11400000, guid: dc236037e97902b4ea54a36d1885fbea, type: 2}
   mSTimeSpawnsLeech: 85
   mETimeSpawnsLeech: 120
@@ -72,3 +72,10 @@ MonoBehaviour:
   mSTimeSpawnsVortexWheel: 40
   mETimeSpawnsVortexWheel: 50
   timeSpawnsVortexWheel: 0
+  spawnGlareDevil: 1
+  cfgGlareDevil: {fileID: 11400000, guid: cfcec9cd9f6628042b19807cd904b132, type: 2}
+  mEnergyCountGlareDevil: 40
+  EnergyCountGlareDevil: 0
+  mSTimeSpawnsGlareDevil: 40
+  mETimeSpawnsGlareDevil: 50
+  timeSpawnsGlareDevil: 0

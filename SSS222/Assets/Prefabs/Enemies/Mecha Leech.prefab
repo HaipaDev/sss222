@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6008482910573145807}
   - component: {fileID: 2504153875300975561}
   - component: {fileID: 6361041040622666652}
-  - component: {fileID: 182006974740199065}
   - component: {fileID: 801518567914847888}
   - component: {fileID: -4076050431880435700}
   - component: {fileID: 7191012222464984588}
@@ -55,6 +54,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -150,21 +150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveConfig: {fileID: 11400000, guid: dc236037e97902b4ea54a36d1885fbea, type: 2}
+  waypointsL: []
   waypointIndex: 0
   enemyIndex: 0
---- !u!114 &182006974740199065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147796775416149952}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2486cc6ddf1c22b45b8cdaca6a0a3ef0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: baf393c6655072441888a4b372a234eb, type: 2}
 --- !u!114 &801518567914847888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,7 +192,7 @@ MonoBehaviour:
   scoreValueEnd: 25
   enBallchanceInit: 50
   CoinchanceInit: 4
-  powercoreChanceInit: 1
+  powercoreChanceInit: 13
   xpAmnt: 4
   enBallchance: 0
   Coinchance: 0
@@ -257,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catch_distance: 1.5
   shake_distance: 0.05
-  count_max: 1
+  count_max: 3
   fallSpeed: 6
   leechAttachSFX: {fileID: 8300000, guid: a08cd7c3019c6a9488a779f692ebc6b5, type: 3}
   attached: 0

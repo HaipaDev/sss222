@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -8877390503615581744}
   - component: {fileID: -5681426745929949356}
   - component: {fileID: -3061252192134034468}
-  - component: {fileID: -8307802846795326177}
   - component: {fileID: 3322887099283394469}
   - component: {fileID: 1234536692577487592}
   - component: {fileID: 3809616233582520859}
@@ -55,6 +54,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -143,19 +143,6 @@ MonoBehaviour:
   waveConfig: {fileID: 11400000, guid: d3645a391c2cd6942953c457b255cdcb, type: 2}
   waypointIndex: 0
   enemyIndex: 0
---- !u!114 &-8307802846795326177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6432250634095115783}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2486cc6ddf1c22b45b8cdaca6a0a3ef0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: 547aee8c719631a4f939f28f24b6b21a, type: 2}
 --- !u!114 &3322887099283394469
 MonoBehaviour:
   m_ObjectHideFlags: 0

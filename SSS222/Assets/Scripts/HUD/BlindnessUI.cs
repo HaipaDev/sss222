@@ -13,6 +13,7 @@ public class BlindnessUI : MonoBehaviour{
     void Update(){
         if(FindObjectOfType<Player>()!=null){on=FindObjectOfType<Player>().blind;scale=7-FindObjectOfType<Player>().blindStrenght;}
         GetComponent<Image>().enabled=on;
+        transform.parent.GetComponent<Image>().enabled=on;
         GetComponent<RectTransform>().localScale=new Vector2(scale,scale);
     }
 }

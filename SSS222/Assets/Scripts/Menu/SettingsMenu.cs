@@ -74,6 +74,7 @@ public class SettingsMenu : MonoBehaviour{
     public void SetFullscreen (bool isFullscreen){
         Screen.fullScreen = isFullscreen;
         fullscreen = isFullscreen;
+        Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,isFullscreen,60);
     }public void SetPostProcessing (bool isPostprocessed){
         //gameSession.pprocessing = isPostprocessed;
         pprocessing = isPostprocessed;

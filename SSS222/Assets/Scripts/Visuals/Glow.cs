@@ -40,4 +40,6 @@ public class Glow : MonoBehaviour{
         //else Destroy(glow);
         //if (ps){if (!ps.IsAlive()){ Destroy(gameObject);}}
     }
+    public float GetXX(){return xx;}
+    public float GetYY(){return yy;}
 }

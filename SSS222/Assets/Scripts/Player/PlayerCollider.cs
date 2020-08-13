@@ -48,6 +48,7 @@ public class PlayerCollider : MonoBehaviour{
     GameObject vortexPrefab;
     GameObject stingerPrefab;
     GameObject goblinbtPrefab;
+    GameObject glaredevPrefab;
     [HeaderAttribute("Other")]
     [SerializeField] public GameObject dmgPopupPrefab;
     [SerializeField] float dmgFreq=0.38f;
@@ -108,6 +109,7 @@ public class PlayerCollider : MonoBehaviour{
         vortexPrefab=GameAssets.instance.Get("Vortex");
         stingerPrefab=GameAssets.instance.Get("Stinger");
         goblinbtPrefab=GameAssets.instance.Get("GoblinBt");
+        glaredevPrefab=GameAssets.instance.Get("GlareDevil");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -165,6 +167,9 @@ public class PlayerCollider : MonoBehaviour{
 
                 var goblinbtName = goblinbtPrefab.name; var goblinbtName1 = goblinbtPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(goblinbtName)) { dmg=damageDealer.GetDmgGoblinBt(); /*player.Blind(3,2);*/player.Fragile(6,0.8f); player.Hack(5); AudioManager.instance.Play("GoblinBtHit");}
+                
+                var glaredevName = glaredevPrefab.name; var glaredevName1 = glaredevPrefab.name + "(Clone)";
+                if (other.gameObject.name.Contains(glaredevName)) { en=true; dmg=damageDealer.GetDmgGoblin(); player.Fragile(1.5f,2f); player.Weaken(1.5f,2f); }
 
                 if (!other.gameObject.name.Contains(hlaserName))
                 {

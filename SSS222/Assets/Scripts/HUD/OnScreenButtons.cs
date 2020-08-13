@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class OnScreenButtons : MonoBehaviour{
     void Start(){
-        if(FindObjectOfType<SaveSerial>().scbuttons==false){
+        if(SaveSerial.instance.scbuttons==false){
             /*foreach(Transform child in transform){
                 if(child.GetComponent<Button>()!=null){
                     child.GetComponent<Button>().enabled=false;
@@ -22,11 +22,16 @@ public class OnScreenButtons : MonoBehaviour{
                 bt.enabled=false;
                 bt.GetComponent<Image>().enabled=false;
             }
+        }else{
+            foreach(Button bt in GetComponentsInChildren<Button>()){
+                bt.enabled=true;
+                bt.GetComponent<Image>().enabled=true;
+            }
         }
     }
 
     void Update(){
-        if(FindObjectOfType<SaveSerial>().scbuttons==false){
+        if(SaveSerial.instance.scbuttons==false){
             /*foreach(Transform child in transform){
                 if(child.GetComponent<Button>()!=null){
                     if(child.GetComponent<Button>().enabled==true)child.GetComponent<Button>().enabled=false;
@@ -42,6 +47,11 @@ public class OnScreenButtons : MonoBehaviour{
             foreach(Button bt in GetComponentsInChildren<Button>()){
                 bt.enabled=false;
                 bt.GetComponent<Image>().enabled=false;
+            }
+        }else{
+            foreach(Button bt in GetComponentsInChildren<Button>()){
+                bt.enabled=true;
+                bt.GetComponent<Image>().enabled=true;
             }
         }
     }

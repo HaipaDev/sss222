@@ -181,6 +181,7 @@ public class GameSession : MonoBehaviour{
 
         CheckCodes(0,0);
         if(gameSpeed<0){gameSpeed=0;}
+        //if(SaveSerial.instance.fullscreen){Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);}
     }
 
     public int GetScore(){return score;}
