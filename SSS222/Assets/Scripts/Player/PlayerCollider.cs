@@ -175,7 +175,8 @@ public class PlayerCollider : MonoBehaviour{
                 {
                     if (player.dashing == false)
                     {
-                        if(dmg!=0)player.Damage(dmg,dmgType.normal);
+                        if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);}
+                        //else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
                         if (destroy == true)
                         {
                             if (en != true) { Destroy(other.gameObject, 0.05f); }
@@ -193,9 +194,10 @@ public class PlayerCollider : MonoBehaviour{
                         //}else{ }
                     }
                 }else{
-                    if(dmg!=0)player.Damage(dmg,dmgType.normal);
+                    if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);}
+                    //else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
                 }
-                if(gameSession.dmgPopups==true&&dmg!=0){
+                if(gameSession.dmgPopups==true&&dmg!=0&&!player.gclover){
                     GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
                     dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
                     dmgpopup.transform.localScale=new Vector2(2,2);
@@ -356,6 +358,8 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name.Contains(weaknsName)) { player.Weaken(10,1); }
                 var hackedName = GameAssets.instance.Get("HackedPwrup").name;
                 if (other.gameObject.name.Contains(hackedName)) { player.Hack(10); }
+                var infenName = GameAssets.instance.Get("InfEnergyPwrup").name;
+                if (other.gameObject.name.Contains(infenName)) { player.InfEnergy(10); }
 
 
                 if (other.gameObject.name.Contains(enBallName))
@@ -379,6 +383,9 @@ public class PlayerCollider : MonoBehaviour{
                 }else if (other.gameObject.name.Contains(matrixName))
                 {
                     AudioManager.instance.Play("MatrixGet");
+                }else if (other.gameObject.name.Contains(accelName))
+                {
+                    AudioManager.instance.Play("AccelGet");
                 }
                 else
                 {

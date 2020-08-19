@@ -192,12 +192,13 @@ public class Enemy : MonoBehaviour{
                 if(Coinchance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
                 if(powercoreChance==1){ Instantiate(powercorePrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
                 gameSession.AddEnemyCount();
-                gameSession.AddXP(xpAmnt);
+                if(xpAmnt!=0)gameSession.AddXP(xpAmnt);
                 givePts=false;
             }
             AudioManager.instance.Play("Explosion");
             if(GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup(true);
             if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
+            if(GetComponent<HealingDrone>()!=null)GameAssets.instance.Make("ArmorPwrup",transform.position);
             //if(GetComponent<ParticleDelay>()!=null){GetComponent<ParticleDelay>().on=true;health=-1000;Destroy(gameObject,0.05f);}
             /*if(GetComponent<ParticleDelay>()==null){*/GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);Destroy(explosion, 0.5f);Destroy(gameObject,0.01f);//}
             shake.CamShake(2,1);

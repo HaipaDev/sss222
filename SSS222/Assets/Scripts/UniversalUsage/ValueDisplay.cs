@@ -76,6 +76,8 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "energyRefill_upgradeCost") scoreText.text = upgradeMenu.energyRefill_upgradeCost.ToString();
         else if (value == "mPulse_upgradeCost") scoreText.text = upgradeMenu.mPulse_upgradeCost.ToString();
         else if (value == "postMortem_upgradeCost") scoreText.text = upgradeMenu.postMortem_upgradeCost.ToString();
+        else if (value == "teleport_upgradeCost") scoreText.text = upgradeMenu.teleport_upgradeCost.ToString();
+        else if (value == "overhaul_upgradeCost") scoreText.text = upgradeMenu.overhaul_upgradeCost.ToString();
 
         else if (value == "cooldownQ") scoreText.text = System.Math.Round(pskills.cooldownQ,0).ToString();
         else if (value == "cooldownE") scoreText.text = System.Math.Round(pskills.cooldownE,0).ToString();

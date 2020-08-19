@@ -469,3 +469,39 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: AccelGet
+    clip: {fileID: 8300000, guid: 810bdce2448e54543bb038d6496326ef, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: GCloverHit
+    clip: {fileID: 8300000, guid: cd9edd0d40b02fc4688513f6713329ea, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Decay
+    clip: {fileID: 8300000, guid: 27d7e5177f00b424bbab3934d49e0cfb, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Overhaul
+    clip: {fileID: 8300000, guid: 1e359d252515a3c49bb8454f8c55ed01, type: 3}
+    volume: 0.4
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.05
+    loop: 1
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

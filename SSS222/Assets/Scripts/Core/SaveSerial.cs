@@ -14,6 +14,7 @@ public class SaveSerial : MonoBehaviour{
 	[SerializeField] string filenameSettings = "gameSettings.cfg";
 	[HeaderAttribute("PlayerData")]
 	public int highscore;
+	public int skinID;
 	public float[] chameleonColor = new float[3];
 	[HeaderAttribute("SettingsData")]
 	public string gameVersion;
@@ -28,6 +29,7 @@ public class SaveSerial : MonoBehaviour{
 	public class PlayerData
 	{
 		public int highscore;
+		public int skinID;
 		public float[] chameleonColor=new float[3];
 		
 	}public class SettingsData
@@ -46,6 +48,7 @@ public class SaveSerial : MonoBehaviour{
 	{
 		PlayerData data = new PlayerData();
 		data.highscore = highscore;
+		data.skinID = skinID;
 		data.chameleonColor[0] = chameleonColor[0];
 		data.chameleonColor[1] = chameleonColor[1];
 		data.chameleonColor[2] = chameleonColor[2];
@@ -84,6 +87,7 @@ public class SaveSerial : MonoBehaviour{
 			data = SaveGame.Load<PlayerData>(filename);
 
 			if(data.highscore!=0)highscore = data.highscore;
+			skinID = data.skinID;
 			chameleonColor[0] = data.chameleonColor[0];
 			chameleonColor[1] = data.chameleonColor[1];
 			chameleonColor[2] = data.chameleonColor[2];

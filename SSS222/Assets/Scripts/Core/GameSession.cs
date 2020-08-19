@@ -77,6 +77,7 @@ public class GameSession : MonoBehaviour{
 
     private void Awake(){
         SetUpSingleton();
+        instance=this;
     }
     private void SetUpSingleton(){
         int numberOfObj = FindObjectsOfType<GameSession>().Length;
@@ -109,10 +110,10 @@ public class GameSession : MonoBehaviour{
 
         if(FindObjectOfType<Player>()!=null){
             if(FindObjectOfType<Player>().timeFlyingCore>flyingTimeReq){AddXP(xp_flying);FindObjectOfType<Player>().timeFlyingCore=0f;}
-            if(FindObjectOfType<Player>().stayingTimerCore>stayingTimeReq){AddXP(xp_staying);FindObjectOfType<Player>().stayingTimerCore=0f;}
+            if(FindObjectOfType<Player>().stayingTimerCore>stayingTimeReq){if(coresXp>-xp_staying)AddXP(xp_staying);FindObjectOfType<Player>().stayingTimerCore=0f;}
         }
 
-        Mathf.Clamp(coresXp,0,xp_forCore);
+        coresXp=Mathf.Clamp(coresXp,0,xp_forCore);
         if(coresXpTotal<0)coresXpTotal=0;
         if(coresXp>=xp_forCore){
             //cores++;
@@ -177,7 +178,7 @@ public class GameSession : MonoBehaviour{
         if(SaveSerial.instance.pprocessing==true && postProcessVolume!=null){postProcessVolume.GetComponent<PostProcessVolume>().enabled=true;}
         if(SaveSerial.instance.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
 
-        CalculateLuck();
+        if(UpgradeMenu.instance!=null)CalculateLuck();
 
         CheckCodes(0,0);
         if(gameSpeed<0){gameSpeed=0;}
@@ -207,7 +208,7 @@ public class GameSession : MonoBehaviour{
     }
 
     public void AddToScoreNoEV(int scoreValue){score += scoreValue;ScorePopUpHUD(scoreValue);}
-    public void AddXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;if(xpValue>0){XPPopUpHUD(xpValue);}else if(xpValue<0){XPSubPopUpHUD(xpValue);}}
+    public void AddXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;XPPopUpHUD(xpValue);}
     public void AddEnemyCount(){enemiesCount++;FindObjectOfType<DisruptersSpawner>().EnemiesCountHealDrone++;
     var ps=FindObjectsOfType<PowerupsSpawner>();
     foreach(PowerupsSpawner p in ps){
@@ -250,6 +251,7 @@ public class GameSession : MonoBehaviour{
         ss.SaveSettings();
     }
     public void SaveInventory(){
+        FindObjectOfType<SaveSerial>().skinID = FindObjectOfType<Inventory>().skinID;
         FindObjectOfType<SaveSerial>().chameleonColor[0] = FindObjectOfType<Inventory>().chameleonColorArr[0];
         FindObjectOfType<SaveSerial>().chameleonColor[1] = FindObjectOfType<Inventory>().chameleonColorArr[1];
         FindObjectOfType<SaveSerial>().chameleonColor[2] = FindObjectOfType<Inventory>().chameleonColorArr[2];
@@ -348,21 +350,20 @@ public class GameSession : MonoBehaviour{
         }
     }
 
-    void ScorePopUpHUD(float score){
+    public void ScorePopUpHUD(float score){
         GameObject scpopupHud=GameObject.Find("ScoreDiffParrent");
         scpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //scpupupHud.GetComponent<Animator>().SetTrigger(0);
-        scpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+score.ToString();
-    }void XPPopUpHUD(float xp){
+        string symbol="+";
+        if(score<0)symbol="-";
+        scpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(score).ToString();
+    }public void XPPopUpHUD(float xp){
         GameObject xppopupHud=GameObject.Find("XPDiffParrent");
         xppopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //xppopupHud.GetComponent<Animator>().SetTrigger(0);
-        xppopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+xp.ToString();
-    }void XPSubPopUpHUD(float xp){
-        GameObject xppopupHud=GameObject.Find("XPDiffParrent");
-        xppopupHud.GetComponent<AnimationOn>().AnimationSet(true);
-        //xppopupHud.GetComponent<Animator>().SetTrigger(0);
-        xppopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="-"+Mathf.Abs(xp).ToString();
+        string symbol="+";
+        if(xp<0)symbol="-";
+        xppopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(xp).ToString();
     }
     //public void PlayDenySFX(){AudioManager.instance.Play("Deny");}
 }

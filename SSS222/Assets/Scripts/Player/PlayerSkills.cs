@@ -10,12 +10,14 @@ public class PlayerSkills : MonoBehaviour{
     [SerializeField] GameObject timerUI;
     [HeaderAttribute("Prefabs etc")]
     GameObject mPulsePrefab;
-    [HeaderAttribute("Effects")]
     [SerializeField] GameObject portalVFX;
     //[SerializeField] AudioClip portalSFX;
     [HeaderAttribute("Timers etc")]
     public int currentSkillID=-1;
     public float timerTeleport=-4;
+    public float timerOverhaul=-4;
+    public float timeOverhaul=10;
+    //[SerializeField] AudioSource overhaulAudio;
     
     //References
     Player player;
@@ -74,9 +76,9 @@ public class PlayerSkills : MonoBehaviour{
     
     #region//Skills
     public void Skills(skillKeyBind key,int i,float enCost,float cooldown){
-        if(player.energy>=enCost){
+        if(i!=2){
+        if(player.energy>0){
             player.AddSubEnergy(enCost,false);
-            player.EnergyPopUpHUD(enCost);
             if(key==skillKeyBind.Q){cooldownQ=cooldown;}
             if(key==skillKeyBind.E){cooldownE=cooldown;}
             if(key==skillKeyBind.Disabled){}
@@ -88,11 +90,28 @@ public class PlayerSkills : MonoBehaviour{
                 SetActiveAllChildren(timerUI.transform,true);
                 currentSkillID=i;
             }
+        }else{AudioManager.instance.Play("Deny");}
+        }else if(i==2){
+        if(gameSession.coresXp>0){
+                if(key==skillKeyBind.Q){cooldownQ=cooldown;}
+                if(key==skillKeyBind.E){cooldownE=cooldown;}
+                if(key==skillKeyBind.Disabled){}
+                var ratio=(gameSession.coresXp/gameSession.xp_forCore);
+                gameSession.XPPopUpHUD(-gameSession.coresXp);
+                player.InfEnergy(ratio*33);
+                player.Power(16,Mathf.Clamp(3f*ratio,1.1f,2.2f));
+                timerOverhaul=timeOverhaul;
+                gameSession.coresXp=0;
+                AudioManager.instance.Play("Overhaul");
+                AudioManager.instance.GetSource("Overhaul").loop=true;
+                //if(overhaulAudio==null){overhaulAudio=gameObject.AddComponent(typeof(AudioSource)) as AudioSource;}
+                //if(overhaulAudio!=null){overhaulAudio.clip=AudioManager.instance.Get("Overhaul");overhaulAudio.loop=true;overhaulAudio.Play();}
         }
+        }else{AudioManager.instance.Play("Deny");}
     }
 
     public void SkillsUpdate(){
-        if(currentSkillID==-1){
+        if(currentSkillID!=1){
             SetActiveAllChildren(timerUI.transform,false);
         }
         if(currentSkillID==1){
@@ -116,6 +135,10 @@ public class PlayerSkills : MonoBehaviour{
                 gameSession.speedChanged=false;gameSession.gameSpeed=1f;timerTeleport=-4;currentSkillID=-1;
             }
         }
+        if(timerOverhaul>0&&player.infEnergy){
+            timerOverhaul-=Time.deltaTime;
+        }if((timerOverhaul<0&&timerOverhaul!=-4)&&player.infEnergy){player.Overhaul();timerOverhaul=timeOverhaul;}
+        if(!player.infEnergy&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}//Destroy(overhaulAudio);}
     }
     #endregion
 

@@ -38,6 +38,7 @@ public class UpgradeMenu : MonoBehaviour{
     public int mPulse_upgradeCost=3;
     public int postMortem_upgradeCost=1;
     public int teleport_upgradeCost=2;
+    public int overhaul_upgradeCost=3;
     [HeaderAttribute("Upgrade Counts")]
     public int total_UpgradesCount;
     public int total_UpgradesCountMax=10;
@@ -65,6 +66,7 @@ public class UpgradeMenu : MonoBehaviour{
     public int energyRefill_upgraded;
     public int magneticPulse_upgraded;
     public int teleport_upgraded;
+    public int overhaul_upgraded;
     GameSession gameSession;
     Player player;
     PlayerSkills pskills;
@@ -153,6 +155,7 @@ public class UpgradeMenu : MonoBehaviour{
     public void UnlockSkill(int ID){
         if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,1,mPulse_upgradeCost);}
         if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,1,teleport_upgradeCost);}
+        if(ID==2){UnlockSkillUni(ID,ref overhaul_upgraded,1,overhaul_upgradeCost);}
 
         
     }

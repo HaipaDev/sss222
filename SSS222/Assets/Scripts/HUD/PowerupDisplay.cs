@@ -110,8 +110,8 @@ public class PowerupDisplay : MonoBehaviour{
                     spr.sprite=sprite;*/
                     spr.sprite=GameAssets.instance.Spr(state+"Pwrup");
                     var timer=player.GetType().GetField(state+"Timer").GetValue(player);
-                    if((float)timer<10f&&(float)timer>=0)value=(float)System.Math.Round((float)timer, 1);
-                    else if((float)timer>10f){value=(float)Mathf.RoundToInt((float)timer);}
+                    if((float)timer<10f&&(float)timer>=0){value=(float)System.Math.Round((float)timer, 1);TMP.characterSpacing=-25f;}
+                    else if((float)timer>10f){value=(float)Mathf.RoundToInt((float)timer);TMP.characterSpacing=0f;}
                     else if((float)timer==-5){value=-5;}
                     //var value=System.Math.Round(timer, 1);
 

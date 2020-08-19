@@ -81,9 +81,7 @@ public class EnemyPathing : MonoBehaviour{
             else{ Destroy(gameObject); }
         }else if(waveConfig.between2PtsPath==true){
             if(transform.position.y<-7.5f){ Destroy(gameObject); }
-        }
-        else
-        {
+        }else{
             if(waveConfig.randomPath==true || waveConfig.randomPathEach==true){
                 if (waypointIndex < waypointsR.Count)
                 {

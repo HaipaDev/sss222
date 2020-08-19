@@ -190,7 +190,7 @@ MonoBehaviour:
   moveX: 1
   moveY: 1
   moveByMouse: 1
-  paddingX: -0.125
+  paddingX: 0.15
   paddingY: 0.45
   moveSpeedInit: 5
   lsaberSpeedMulti: 1.25
@@ -223,6 +223,7 @@ MonoBehaviour:
   hpRegenAmnt: 0.1
   armorMulti: 1
   dmgMulti: 1
+  shootMulti: 1
   shipScaleDefault: 0.89
   lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
     type: 3}
@@ -306,6 +307,10 @@ MonoBehaviour:
   blindTimer: -4
   blindStrenght: 0
   blindTime: -4
+  infEnergy: 0
+  infEnergyTimer: -4
+  infPrevEnergy: 0
+  infEnergyTime: -4
   flipTime: 8.5
   gcloverTime: 8
   shadowTime: 12
@@ -385,6 +390,7 @@ MonoBehaviour:
   joystick: {fileID: 0}
   moving: 0
   energyUsedCount: 0
+  tpPos: {x: 0, y: 0}
 --- !u!114 &1949430517914965929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,13 +422,16 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
   - {fileID: 11400000, guid: d66606c472024f44e8f0f96cdfac0c12, type: 2}
-  skillsBinds: 0000000000000000
+  - {fileID: 11400000, guid: e134429416de4d7479afc43faf800246, type: 2}
+  skillsBinds: 000000000000000000000000
   cooldownQ: 0
   cooldownE: 0
   timerUI: {fileID: 0}
   portalVFX: {fileID: 100000, guid: 1ee2c03a099f4cb4b8f86c863bfedf81, type: 3}
   currentSkillID: -1
   timerTeleport: -4
+  timerOverhaul: -4
+  timeOverhaul: 10
 --- !u!114 &502397296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,12 +559,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e1bc0376da4f34bb96c9aab489ea09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinID: 2
+  skinID: 0
   addOverlay: 0
+  skins: []
+  overlays: []
   overlayPrefab: {fileID: 4881046078246147718, guid: ecc7f2d405fb33542808b48eca5c3d11,
     type: 3}
-  chameleonOverlay: {fileID: 21300000, guid: 5210dd1cd47a95b4da714af8ef21499b, type: 3}
+  chameleonOverlayID: 0
   chameleonOvColor: {r: 1, g: 1, b: 1, a: 1}
-  skins:
-  - {fileID: 21300000, guid: b1685888490527541a7b090feb214592, type: 3}
-  - {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}

@@ -8,6 +8,7 @@ public class LootTableEntryWaves{
     [HideInInspector]public string name;
     public WaveConfig lootItem;
     public float dropChance=0f;
+    public float levelReq=0f;
 
 }
 [System.Serializable]
@@ -19,8 +20,10 @@ public class LootTableWaves : MonoBehaviour{
     [SerializeField]
     public List<LootTableEntryWaves> itemList;
     private Dictionary<WaveConfig, float> itemTable;
+    [SerializeField] int currentLvl;
+    [SerializeField] List<float> dropList;
     [SerializeField] ItemPercentageWaves[] itemsPercentage;
-    [HideInInspector] ItemPercentageWaves[] itemsPercentage2;
+    //[HideInInspector] ItemPercentageWaves[] itemsPercentage2;
     public float sum;
     
     private void Awake(){
@@ -38,6 +41,9 @@ public class LootTableWaves : MonoBehaviour{
         }*/
         SumUp();
     }
+    private void Update() {
+        currentLvl=UpgradeMenu.instance.total_UpgradesLvl;
+    }
     public WaveConfig GetItem(){
         float randomWeight = 0;
         do
@@ -46,9 +52,11 @@ public class LootTableWaves : MonoBehaviour{
             if (sum == 0) return null;
             randomWeight = Random.Range(0, sum);
         } while (randomWeight == sum);
+        var i=-1;
         foreach(LootTableEntryWaves entry in itemList){
-            if(randomWeight<entry.dropChance) return entry.lootItem;
-            randomWeight-=entry.dropChance;
+            i++;
+            if(randomWeight<dropList[i]) return entry.lootItem;
+            randomWeight-=dropList[i];
         }
         /*foreach (LootItem item in items)
         {
@@ -59,21 +67,25 @@ public class LootTableWaves : MonoBehaviour{
     }
     void SumUp(){
         //foreach(float dropChance in itemTable.Values){sum+=dropChance;};
+        dropList.Clear();
         itemTable = new Dictionary<WaveConfig, float>();
         //itemsPercentage = new ItemPercentage[itemList.Count];
         var i=-1;
         foreach(LootTableEntryWaves entry in itemList){
             i++;
+            dropList.Add(entry.dropChance);
+            if(currentLvl<entry.levelReq)dropList[i]=0;
             entry.name=entry.lootItem.name;
-            itemTable.Add(entry.lootItem, (float)entry.dropChance);
-            var value=System.Convert.ToSingle(System.Math.Round((entry.dropChance/sum*100),2));
+            itemTable.Add(entry.lootItem, (float)dropList[i]);
+            var value=System.Convert.ToSingle(System.Math.Round((dropList[i]/sum*100),2));
             //itemsPercentage.Add(value);
             //for(var i=0; i<itemTable.Count; i++){
                 //i++;
                 //itemsPercentage.Join();
                 //ItemPercentage itemsPercentage= new ItemPercentage();
                 //itemsPercentage[i].itemPercentage=value;
-                if(i>=0&&i<itemsPercentage.Length)itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+entry.dropChance+"/"+(sum-entry.dropChance);
+                
+                if(i>=0&&i<itemsPercentage.Length)itemsPercentage[i].name=entry.name+"("+entry.levelReq+")"+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
                 //foreach(ItemPercentage item in itemsPercentage){item.name=entry.name;item.itemPercentage=value;}
             //}
         }

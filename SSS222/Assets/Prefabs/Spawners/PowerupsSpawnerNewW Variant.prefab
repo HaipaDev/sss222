@@ -24,7 +24,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
   - {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
   - {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
-  currentLvl: 0
+  currentLvl: 6
+  dropSetList:
+  - 1.75
+  - 3
+  - 4
+  - 3.15
+  - 1.5
+  - 5
+  - 2
+  - 2.5
+  - 3
+  - 3
+  - 0.05
+  lvlList: 0300000001000000000000000200000002000000000000000200000001000000020000000200000001000000
   dropList:
   - 1.75
   - 3
@@ -332,7 +345,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
 --- !u!1 &699913372788697835 stripped
 GameObject:

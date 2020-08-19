@@ -53,6 +53,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -187,7 +188,7 @@ MonoBehaviour:
   - name: PRockets Powerup
     lootItem: {fileID: -8352404726845617390, guid: a8cf40cf136a1904ab8dc7e10093b0ea,
       type: 3}
-    dropChance: 5.5
+    dropChance: 3
   - name: Scaler Powerup
     lootItem: {fileID: 7157503050481327636, guid: fef9a70d1e2661246b686c5f3f207fff,
       type: 3}
@@ -203,38 +204,46 @@ MonoBehaviour:
   - name: GClover Powerup
     lootItem: {fileID: 7369046335645166684, guid: e862a3dbc125f6a479dc758a97999268,
       type: 3}
-    dropChance: 2
+    dropChance: 1.4
   - name: ShadowBT Powerup
     lootItem: {fileID: -2957623977586560592, guid: 09e222a729e8d7a46b1ed32960cf9e6e,
       type: 3}
-    dropChance: 2
-  - name: Matrix Powerup
-    lootItem: {fileID: 8237334835763180172, guid: c430f5cd45eed4947ad8424c9ab96449,
+    dropChance: 1
+  - name: Scaler Powerup
+    lootItem: {fileID: 7157503050481327636, guid: fef9a70d1e2661246b686c5f3f207fff,
       type: 3}
     dropChance: 7
   - name: LClaws Powerup
-    lootItem: {fileID: 8750722719677159592, guid: 5a016be1fe8ea64479b960ba66d5e80e,
+    lootItem: {fileID: 8237334835763180172, guid: dda1ecc50ae47e64e9c03569ad675be7,
+      type: 3}
+    dropChance: 8
+  - name: LClaws Powerup
+    lootItem: {fileID: -794193057557848658, guid: 5924af7ffd96c8147b6d83568c56580e,
+      type: 3}
+    dropChance: 8
+  - name: LClaws Powerup
+    lootItem: {fileID: 4305882262000766416, guid: 783ed3a20f22d5c408b2c7c789cd06e9,
       type: 3}
     dropChance: 8
   itemsPercentage:
-  - name: Armor PowerUp - 4.69% - 5/101.5
-  - name: ArmorU Powerup - 6.57% - 7/99.5
-  - name: Laser2 Powerup - 6.57% - 7/99.5
-  - name: Laser3 PowerUp - 7.51% - 8/98.5
-  - name: LSaber Powerup - 8.45% - 9/97.5
-  - name: HRockets Powerup - 8.45% - 9/97.5
-  - name: MLaser Powerup - 5.63% - 6/100.5
-  - name: Phaser Powerup - 5.63% - 6/100.5
-  - name: QRockets Powerup - 7.51% - 8/98.5
-  - name: PRockets Powerup - 5.16% - 5.5/101
-  - name: Scaler Powerup - 3.76% - 4/102.5
-  - name: Shadowdash Powerup - 6.57% - 7/99.5
-  - name: CStream Powerup - 5.63% - 6/100.5
-  - name: GClover Powerup - 1.88% - 2/104.5
-  - name: ShadowBT Powerup - 1.88% - 2/104.5
-  - name: Matrix Powerup - 6.57% - 7/99.5
-  - name: LClaws Powerup - 7.51% - 8/98.5
-  sum: 106.5
+  - name: Armor PowerUp - 4.81% - 5/99
+  - name: ArmorU Powerup - 6.73% - 7/97
+  - name: Laser2 Powerup - 6.73% - 7/97
+  - name: Laser3 PowerUp - 7.69% - 8/96
+  - name: LSaber Powerup - 8.65% - 9/95
+  - name: HRockets Powerup - 8.65% - 9/95
+  - name: MLaser Powerup - 5.77% - 6/98
+  - name: Phaser Powerup - 5.77% - 6/98
+  - name: QRockets Powerup - 7.69% - 8/96
+  - name: PRockets Powerup - 2.88% - 3/101
+  - name: Scaler Powerup - 3.85% - 4/100
+  - name: Shadowdash Powerup - 6.73% - 7/97
+  - name: CStream Powerup - 5.77% - 6/98
+  - name: GClover Powerup - 1.35% - 1.4/102.6
+  - name: ShadowBT Powerup - 0.96% - 1/103
+  - name: Matrix Powerup - 6.73% - 7/97
+  - name: LClaws Powerup - 7.69% - 8/96
+  sum: 104
   restart: 0
 --- !u!114 &6905334083320018934
 MonoBehaviour:

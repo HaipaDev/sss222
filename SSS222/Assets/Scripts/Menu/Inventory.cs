@@ -1,26 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour{
-    [SerializeField] UnityEngine.UI.Slider Hslider;
-    [SerializeField] UnityEngine.UI.Slider Sslider;
-    [SerializeField] UnityEngine.UI.Slider Vslider;
-    [SerializeField] UnityEngine.UI.Image SsliderIMG;
-    [SerializeField] UnityEngine.UI.Image VsliderIMG;
-    [SerializeField] UnityEngine.UI.Image chameleonOverlay;
+    [SerializeField] public int skinID=0;
+    [SerializeField] Sprite[] skins;
+    [SerializeField] Sprite[] overlays;
+    [HeaderAttribute("Objects")]
+    [SerializeField] Image skin;
+    [SerializeField] Image skinOverlay;
+
+    [SerializeField] GameObject sliders;
+    [SerializeField] Slider Hslider;
+    [SerializeField] Slider Sslider;
+    [SerializeField] Slider Vslider;
+    [SerializeField] Image SsliderIMG;
+    [SerializeField] Image VsliderIMG;
+    [HeaderAttribute("Properties")]
+    public int chameleonOverlayID;
     public Color chameleonColor;
     public float[] chameleonColorArr = new float[3];
 
     SaveSerial saveSerial;
-    public void Start()
+    void Start()
     {
+        //if(skinID<1){skinID=1;}
+        skins=FindObjectOfType<GameAssets>().skins;
+        overlays=FindObjectOfType<GameAssets>().skinOverlays;
         saveSerial = FindObjectOfType<SaveSerial>();
+        skinID=saveSerial.skinID;
         chameleonColorArr[0] = saveSerial.chameleonColor[0];
         chameleonColorArr[1] = saveSerial.chameleonColor[1];
         chameleonColorArr[2] = saveSerial.chameleonColor[2];
+        
         chameleonColor = Color.HSVToRGB(chameleonColorArr[0], chameleonColorArr[1], chameleonColorArr[2]);
-        chameleonOverlay.color = chameleonColor;
+        skinOverlay.color = chameleonColor;
         //float H;float S=1; float V=1;
         //Color.RGBToHSV(chameleonColor,out H,out S,out V);
         Hslider.value = chameleonColorArr[0];
@@ -35,9 +50,33 @@ public class Inventory : MonoBehaviour{
     public void ValueChangeCheck()
     {
         chameleonColor = Color.HSVToRGB(Hslider.value, Sslider.value, Vslider.value);
-        chameleonOverlay.color = chameleonColor;
+        skinOverlay.color = chameleonColor;
         SsliderIMG.material.SetColor("_Color2", Color.HSVToRGB(Hslider.value,1,1));
         VsliderIMG.color = Color.HSVToRGB(Hslider.value, 1, 1);
         Color.RGBToHSV(chameleonColor, out chameleonColorArr[0], out chameleonColorArr[1], out chameleonColorArr[2]);
+    }
+    void Update() {
+        if (skinID==1){
+            foreach(Transform go in sliders.transform){go.gameObject.SetActive(true);}
+            skinOverlay.gameObject.SetActive(true);
+            skin.sprite=skins[skinID];
+            skinOverlay.sprite = overlays[chameleonOverlayID];
+            //chameleonOvColor.a = chameleonOvAlpha;
+            skinOverlay.color = chameleonColor;
+        }
+        else{
+            skin.sprite=skins[skinID];
+            foreach(Transform go in sliders.transform){if(go.gameObject.activeSelf==true)go.gameObject.SetActive(false);}
+            skinOverlay.gameObject.SetActive(false);
+        }
+    }
+    public void ChangeSkin(int ID){
+        skinID=ID;
+    }public void NextSkin(){
+        if(skinID<skins.Length-1){skinID++;return;}
+        if(skinID==skins.Length-1)skinID=0;
+    }public void PrevSkin(){
+        if(skinID>0){skinID--;return;}
+        if(skinID==0)skinID=skins.Length-1;
     }
 }

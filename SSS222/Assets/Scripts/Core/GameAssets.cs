@@ -9,6 +9,8 @@ public class GameAssets : MonoBehaviour{
 	public GObject[] objects;
 	public GObject[] vfx;
 	public GSprite[] sprites;
+	public Sprite[] skins;
+	public Sprite[] skinOverlays;
     
     void Awake()
 	{
@@ -76,9 +78,31 @@ public class GameAssets : MonoBehaviour{
         Sprite gs=s.spr;
 		if (s == null)
 		{
-			Debug.LogWarning("Object: " + name + " not found!");
+			Debug.LogWarning("Sprite: " + name + " not found!");
 			return null;
 		}
         return gs;
+	}public Sprite GetSkin(int i)
+	{
+		//GSprite s = Array.Find(skins, item => item.name == spr);
+        //Sprite gs=s.spr;
+		Sprite s=skins[i];
+		if (s == null)
+		{
+			Debug.LogWarning("Skin: " + i + " not found!");
+			return null;
+		}
+        return s;
+	}public Sprite GetOverlay(int i)
+	{
+		//GSprite s = Array.Find(skins, item => item.name == spr);
+        //Sprite gs=s.spr;
+		Sprite s=skinOverlays[i];
+		if (s == null)
+		{
+			Debug.LogWarning("Overlay: " + i + " not found!");
+			return null;
+		}
+        return s;
 	}
 }

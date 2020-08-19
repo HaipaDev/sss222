@@ -25,7 +25,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8645c7606471be849bbf4044ff5ceec1, type: 2}
   - {fileID: 11400000, guid: c9d54cc47e5cf20499998336988ca3ff, type: 2}
   - {fileID: 11400000, guid: 9b409de821cfef24e850bac7ad821f16, type: 2}
-  currentLvl: 0
+  currentLvl: 99
+  dropSetList:
+  - 3.5
+  - 3
+  - 1.75
+  - 6
+  - 0.3
+  - 6
+  - 5
+  - 4
+  - 2
+  - 6
+  - 5
+  - 3
+  lvlList: 010000000000000001000000000000000100000000000000000000000100000003000000000000000000000001000000
   dropList:
   - 3.5
   - 3
@@ -38,21 +52,21 @@ MonoBehaviour:
   - 2
   - 6
   - 5
-  - 5
+  - 3
   itemsPercentage:
-  - name: Accelerator(1c) - 7.36% - 3.5/44.05
-  - name: Armor(0c) - 6.31% - 3/44.55
-  - name: ArmorU(1|R) - 3.68% - 1.75/45.8
-  - name: Flip(0c) - 12.62% - 6/41.55
-  - name: GCLover(1|L) - 0.63% - 0.3/47.25
-  - name: Inverter(0c) - 12.62% - 6/41.55
-  - name: Magnet(0c) - 10.52% - 5/42.55
-  - name: Matrix(1c) - 8.41% - 4/43.55
-  - name: PointMulti(3|R) - 4.21% - 2/45.55
-  - name: Randomizer(0c) - 12.62% - 6/41.55
-  - name: Scaler(0c) - 10.52% - 5/42.55
-  - name: Shadowdash(1|R) - 10.52% - 5/42.55
-  sum: 47.55
+  - name: Accelerator - 7.68% - 3.5/42.05
+  - name: Armor - 6.59% - 3/42.55
+  - name: ArmorU(1|R) - 3.84% - 1.75/43.8
+  - name: Flip(0c) - 13.17% - 6/39.55
+  - name: GCLover(1|L) - 0.66% - 0.3/45.25
+  - name: Inverter(0c) - 13.17% - 6/39.55
+  - name: Magnet(0|R) - 10.98% - 5/40.55
+  - name: Matrix(1c) - 8.78% - 4/41.55
+  - name: PointMulti(3|R) - 4.39% - 2/43.55
+  - name: Randomizer(0c) - 13.17% - 6/39.55
+  - name: Scaler(0c) - 10.98% - 5/40.55
+  - name: Shadowdash(1c) - 6.59% - 3/42.55
+  sum: 45.55
 --- !u!1001 &689098690796156996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -346,7 +360,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1427136848, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c65d768f3c3f0f84da827b9eb6a21670, type: 3}
 --- !u!1 &4324624737203472284 stripped
 GameObject:
