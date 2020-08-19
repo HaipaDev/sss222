@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Visuals\PlayParticle.cs" />
      <Compile Include="Assets\Scripts\Enemies\CometRandomProperties.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\IntervalSound.cs" />
+     <Compile Include="Assets\Scripts\HUD\EnergyUI.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\FancyScrollView\03_InfiniteScroll\Example03ScrollView.cs" />
      <Compile Include="Assets\Scripts\Functions\MathParabola.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\ShaderEffects\UILinearDodgeEffect.cs" />
@@ -439,6 +440,7 @@
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
      <Compile Include="Assets\Scripts\Core\SoundManagerOld.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\MenuExample\Scripts\Menus\OptionsMenu.cs" />
+     <Compile Include="Assets\Scripts\Core\GameRules.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Utilities\UI_TweenScale.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\DisableOnUIOpen.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\ColorPicker\Events\HSVChangedEvent.cs" />
@@ -449,8 +451,6 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Primitives\DiamondGraph.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIMultiplyEffect.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\FancyScrollView\01_Basic\Example01CellDto.cs" />
-     <Compile Include="Assets\Scripts\Core\GameRules.cs" />
-     <Compile Include="Assets\Scripts\HUD\EnergyUI.cs" />
      <None Include="Assets\unity-ui-extensions\Resources\Shaders\UIAdditive.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
