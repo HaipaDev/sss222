@@ -3,14 +3,17 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[System.Serializable]
-/*public class LootTableEntryPowerup{
+[System.Serializable]
+public class LootTableEntryPowerup{
     [HideInInspector]public string name;
-    [SerializeField]public PowerupItem lootItem;
+    public PowerupItem lootItem;
+    public rarityPowerup rarity;
+    public float dropChance=0f;
+    public float levelReq=0f;
     //[HideInInspector]public float dropChance=0f;
 }
 //[System.Serializable]
-public class LootTableDropPowerup{
+/*public class LootTableDropPowerup{
     [HideInInspector]public string name;
     [SerializeField]public float dropChance=0f;
 }*/
@@ -20,11 +23,10 @@ public class ItemPercentagePowerup{
     //[SerializeField]public float itemPercentage;
 }
 public class LootTablePowerups : MonoBehaviour{
-    [SerializeField]
-    public List<PowerupItem> itemList;
+    [SerializeField]public List<LootTableEntryPowerup> itemList;
     public int currentLvl;
-    public float[] dropSetList;
-    public int[] lvlList;
+    //public float[] dropSetList;
+    //public int[] lvlList;
 
     public List<float> dropList;
     private Dictionary<PowerupItem, float> itemTable;
@@ -39,6 +41,31 @@ public class LootTablePowerups : MonoBehaviour{
         }*/
         //foreach(float dropChance in itemTable.Values){sum+=dropChance;}
         SumUp();
+        StartCoroutine(SetValues());
+    }
+    private IEnumerator SetValues(){
+        //Set values
+        yield return new WaitForSeconds(0.1f);
+        var i=GameRules.instance;
+        if(i!=null){
+            var ps=GetComponent<PowerupsSpawner>();
+            if(ps.spawnerType==spawnerType.powerupStatus){
+                itemList=i.pwrupStatusList;
+                ps.mTimePowerupSpawns=i.mTimePowerupStatusSpawns;
+                ps.mTimePowerupSpawnsS=i.mTimePowerupStatusSpawnsS;
+                ps.mTimePowerupSpawnsE=i.mTimePowerupStatusSpawnsE;
+                ps.firstSpawn=i.firstPowerupStatusSpawn;
+                ps.enemiesCountReq=i.enemiesPowerupStatusCountReq;
+            }
+            if(ps.spawnerType==spawnerType.powerupWeapon){
+                itemList=i.pwrupWeaponList;
+                ps.mTimePowerupSpawns=i.mTimePowerupWeaponsSpawns;
+                ps.mTimePowerupSpawnsS=i.mTimePowerupWeaponsSpawnsS;
+                ps.mTimePowerupSpawnsE=i.mTimePowerupWeaponsSpawnsE;
+                ps.firstSpawn=i.firstPowerupWeaponsSpawn;
+                ps.enemiesCountReq=i.enemiesPowerupWeaponsCountReq;
+            }
+        }
     }
     private void Start() {
         gameSession=FindObjectOfType<GameSession>();
@@ -53,6 +80,7 @@ public class LootTablePowerups : MonoBehaviour{
     }
     void Update(){
         currentLvl=UpgradeMenu.instance.total_UpgradesLvl;
+        SumUp();
         SumUpAfter();
     }
     public PowerupItem GetItem(){
@@ -64,10 +92,10 @@ public class LootTablePowerups : MonoBehaviour{
             randomWeight = Random.Range(0, sum);
         } while (randomWeight == sum);
         var i=-1;
-        foreach(PowerupItem entry in itemList){
+        foreach(LootTableEntryPowerup entry in itemList){
             i++;
             //foreach(float drop in dropList){
-                if(randomWeight<dropList[i]) return entry;
+                if(randomWeight<dropList[i]) return entry.lootItem;
                 randomWeight-=dropList[i];
             //}
         }
@@ -86,13 +114,19 @@ public class LootTablePowerups : MonoBehaviour{
         //itemsPercentage = new ItemPercentage[itemList.Count];
         var i=-1;
         System.Array.Resize(ref itemsPercentage, itemList.Count);
-        System.Array.Resize(ref dropSetList, itemList.Count);
-        System.Array.Resize(ref lvlList, itemList.Count);
-        foreach(PowerupItem entry in itemList){
+        //System.Array.Resize(ref dropSetList, itemList.Count);
+        //System.Array.Resize(ref lvlList, itemList.Count);
+        foreach(LootTableEntryPowerup entry in itemList){
             i++;
             //dropSetList[i]=entry.dropChance;
             //lvlList[i]=entry.levelReq;
-            dropList.Add(dropSetList[i]);
+            /*
+            entry.name=entry.lootItem.name;
+            entry.rarity=entry.lootItem.rarity;
+            entry.dropChance=entry.lootItem.dropChance;
+            entry.levelReq=entry.lootItem.levelReq;
+            */
+            dropList.Add(entry.dropChance);
             //dropList.Add(entry.dropChance);
             //foreach(float drop in dropList){
             //itemTable.Add(entry, (float)dropList[i]);
@@ -111,7 +145,7 @@ public class LootTablePowerups : MonoBehaviour{
                 if(entry.rarity==rarityPowerup.Common){r="c";}
                 
                 
-                itemsPercentage[i].name=entry.name+"("+lvlList[i]+r+")"+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
+                itemsPercentage[i].name=entry.name+"("+entry.levelReq+r+")"+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
                 //foreach(ItemPercentage item in itemsPercentage){item.name=entry.name;item.itemPercentage=value;}
             //}
             //}
@@ -146,14 +180,14 @@ public class LootTablePowerups : MonoBehaviour{
     }*/
     void SumUpAfter(){
         var i=-1;
-        foreach(PowerupItem entry in itemList){
+        foreach(LootTableEntryPowerup entry in itemList){
             i++;
-            if(currentLvl<lvlList[i]){
+            if(currentLvl<entry.levelReq){
                 dropList[i]=0;
             }else{
-                if(entry.rarity==rarityPowerup.Common)dropList[i]=dropSetList[i];
-                else if(entry.rarity==rarityPowerup.Rare)dropList[i]=dropSetList[i]*gameSession.rarePwrupMulti;
-                else if(entry.rarity==rarityPowerup.Legendary)dropList[i]=dropSetList[i]*gameSession.legendPwrupMulti;
+                if(entry.rarity==rarityPowerup.Common)dropList[i]=entry.dropChance;
+                else if(entry.rarity==rarityPowerup.Rare)dropList[i]=entry.dropChance*gameSession.rarePwrupMulti;
+                else if(entry.rarity==rarityPowerup.Legendary)dropList[i]=entry.dropChance*gameSession.legendPwrupMulti;
                 //System.Array.Resize(ref itemsPercentage, itemList.Count);
             }
             //System.Array.Resize(ref itemsPercentage, itemList.Count);

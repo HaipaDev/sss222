@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class PlayerCollider : MonoBehaviour{
-    [HeaderAttribute("Powerups")]
+    [Header("Powerups")]
     GameObject CoinPrefab;
     GameObject enBallPrefab;
     GameObject powercorePrefab;
@@ -33,7 +33,7 @@ public class PlayerCollider : MonoBehaviour{
     GameObject acceleratorPwrupPrefab;
     GameObject plaserPwrupPrefab;
     #region
-    [HeaderAttribute("Damage Dealers")]
+    [Header("Damage Dealers")]
     GameObject cometPrefab;
     GameObject batPrefab;
     GameObject enShip1Prefab;
@@ -49,7 +49,7 @@ public class PlayerCollider : MonoBehaviour{
     GameObject stingerPrefab;
     GameObject goblinbtPrefab;
     GameObject glaredevPrefab;
-    [HeaderAttribute("Other")]
+    [Header("Other")]
     [SerializeField] public GameObject dmgPopupPrefab;
     [SerializeField] float dmgFreq=0.38f;
     public float dmgTimer;
@@ -244,9 +244,11 @@ public class PlayerCollider : MonoBehaviour{
                 }
                 
                 var inverterName = inverterPwrupPrefab.name;
-                if (other.gameObject.name.Contains(inverterName)) {
-                var tempHP = player.health; var tempEn = player.energy;
-                player.energy=tempHP; player.health=tempEn;
+                if (other.gameObject.name.Contains(inverterName)){
+                if(player.energyOn){
+                    var tempHP = player.health; var tempEn = player.energy;
+                    player.energy=tempHP; player.health=tempEn;
+                }
                 player.SetStatus("inverter"); player.inverterTimer = 0; }
 
                 var magnetName = magnetPwrupPrefab.name;
@@ -398,7 +400,7 @@ public class PlayerCollider : MonoBehaviour{
         }
     }
     void PowerupCollect(string name){
-        if(player.energy<=player.enForPwrupRefill){EnergyAdd();} if(player.powerup==name){EnergyAddDupl();} player.powerup = name;
+        if(player.energy<=player.enForPwrupRefill){EnergyAdd();} if(player.powerup==name){EnergyAddDupl();} player.SetPowerup(name);
     }
     void EnergyAdd(){
         player.AddSubEnergy(player.pwrupEnergyGet,true);//EnergyPopUpHUDPlus(player.pwrupEnergyGet);

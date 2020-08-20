@@ -13,31 +13,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemList:
-  - {fileID: 11400000, guid: 9a4e80f1fa79ea547a89f82e21045b39, type: 2}
-  - {fileID: 11400000, guid: f75229abe571c5f4780d84f66fa08b5b, type: 2}
-  - {fileID: 11400000, guid: 1368b36bec2ccca4e97ab92bed99ea99, type: 2}
-  - {fileID: 11400000, guid: 6682bf37c4b0a37459f807e12dd59d27, type: 2}
-  - {fileID: 11400000, guid: 48ec4756caf9fcb4fab471d62d339935, type: 2}
-  - {fileID: 11400000, guid: 58529076849c1924e91e0633da503bfc, type: 2}
-  - {fileID: 11400000, guid: e2b5a8667474ac54a8705649fcad7ee5, type: 2}
-  - {fileID: 11400000, guid: 96f99f90403e530478f4d3e9bd04b50f, type: 2}
-  - {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
-  - {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
-  - {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
-  currentLvl: 6
-  dropSetList:
-  - 1.75
-  - 3
-  - 4
-  - 3.15
-  - 1.5
-  - 5
-  - 2
-  - 2.5
-  - 3
-  - 3
-  - 0.05
-  lvlList: 0300000001000000000000000200000002000000000000000200000001000000020000000200000001000000
+  - name: CStream
+    lootItem: {fileID: 11400000, guid: 9a4e80f1fa79ea547a89f82e21045b39, type: 2}
+    rarity: 1
+    dropChance: 1.75
+    levelReq: 3
+  - name: HRockets
+    lootItem: {fileID: 11400000, guid: f75229abe571c5f4780d84f66fa08b5b, type: 2}
+    rarity: 0
+    dropChance: 3
+    levelReq: 1
+  - name: Laser2
+    lootItem: {fileID: 11400000, guid: 1368b36bec2ccca4e97ab92bed99ea99, type: 2}
+    rarity: 0
+    dropChance: 4
+    levelReq: 0
+  - name: Laser3
+    lootItem: {fileID: 11400000, guid: 6682bf37c4b0a37459f807e12dd59d27, type: 2}
+    rarity: 1
+    dropChance: 3.15
+    levelReq: 2
+  - name: LClaws
+    lootItem: {fileID: 11400000, guid: 48ec4756caf9fcb4fab471d62d339935, type: 2}
+    rarity: 1
+    dropChance: 1.5
+    levelReq: 2
+  - name: LSaber
+    lootItem: {fileID: 11400000, guid: 58529076849c1924e91e0633da503bfc, type: 2}
+    rarity: 0
+    dropChance: 5
+    levelReq: 0
+  - name: MLaser
+    lootItem: {fileID: 11400000, guid: e2b5a8667474ac54a8705649fcad7ee5, type: 2}
+    rarity: 1
+    dropChance: 2
+    levelReq: 2
+  - name: Phaser
+    lootItem: {fileID: 11400000, guid: 96f99f90403e530478f4d3e9bd04b50f, type: 2}
+    rarity: 1
+    dropChance: 2.5
+    levelReq: 1
+  - name: PLaser
+    lootItem: {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
+    rarity: 1
+    dropChance: 3
+    levelReq: 2
+  - name: QRockets
+    lootItem: {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
+    rarity: 0
+    dropChance: 3
+    levelReq: 2
+  - name: ShadowBT
+    lootItem: {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
+    rarity: 2
+    dropChance: 0.05
+    levelReq: 1
+  currentLvl: 99
   dropList:
   - 1.75
   - 3
@@ -279,6 +310,11 @@ PrefabInstance:
         type: 3}
       propertyPath: timer
       value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 884923418037271656, guid: c65d768f3c3f0f84da827b9eb6a21670,
+        type: 3}
+      propertyPath: spawnerType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3860724879463956440, guid: c65d768f3c3f0f84da827b9eb6a21670,
         type: 3}

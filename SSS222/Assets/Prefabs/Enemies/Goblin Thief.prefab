@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveConfig: {fileID: 11400000, guid: 58fd68643924fff4a9f07d61d99f38a1, type: 2}
+  waypointsL: []
   waypointIndex: 0
   enemyIndex: 0
 --- !u!114 &801518567914847888
@@ -179,6 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Goblin Thief
   health: 16
   shooting: 0
   minTimeBtwnShots: 1.8
@@ -192,12 +194,12 @@ MonoBehaviour:
   givePts: 1
   scoreValueStart: 15
   scoreValueEnd: 25
-  enBallchanceInit: 40
-  CoinchanceInit: 0
+  enBallChanceInit: 30
+  coinChanceInit: 3
   powercoreChanceInit: 10
   xpAmnt: 2
-  enBallchance: 0
-  Coinchance: 0
+  enBallChance: 0
+  coinChance: 0
   powercoreChance: 0
   yeeted: 0
   dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,

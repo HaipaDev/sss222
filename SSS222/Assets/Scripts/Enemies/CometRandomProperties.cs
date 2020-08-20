@@ -18,6 +18,7 @@ public class CometRandomProperties : MonoBehaviour{
     // Start is called before the first frame update
     void Start()
     {
+        if(!GameSession.instance.shopOn){Destroy(this);}
         bFlame = GetComponent<BackflameEffect>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -41,7 +42,7 @@ public class CometRandomProperties : MonoBehaviour{
             transform.localScale = new Vector2(sizeA, sizeA);
 
             enemy.health *= lunarHealthMulti;
-            enemy.Coinchance = 1;
+            if(GameSession.instance.shopOn)enemy.coinChance = 1;
             rb.velocity *= lunarSpeedMulti;
         }
         //rotationSpeed=Random.Range(2,8);

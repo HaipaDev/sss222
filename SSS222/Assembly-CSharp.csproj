@@ -42,6 +42,7 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Layout\ScrollSnapScrollbarHelper.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\RescalingPanels\ResizePanel.cs" />
      <Compile Include="Assets\Scripts\Core\SaveManager.cs" />
+     <Compile Include="Assets\Scripts\HUD\UpgradeUI_Destroy.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\FancyScrollView\03_InfiniteScroll\Example03CellDto.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Encoders\ISaveGameEncoder.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\FancyScrollView\02_CellEventHandling\Example02ScrollViewCell.cs" />
@@ -59,7 +60,7 @@
      <Compile Include="Assets\Scripts\Visuals\PlayParticle.cs" />
      <Compile Include="Assets\Scripts\Enemies\CometRandomProperties.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\IntervalSound.cs" />
-     <Compile Include="Assets\Scripts\HUD\EnergyUI.cs" />
+     <Compile Include="Assets\Scripts\HUD\EnergyUI_Destroy.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\FancyScrollView\03_InfiniteScroll\Example03ScrollView.cs" />
      <Compile Include="Assets\Scripts\Functions\MathParabola.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\ShaderEffects\UILinearDodgeEffect.cs" />
@@ -171,6 +172,7 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Layout\UIVerticalScroller.cs" />
      <Compile Include="Assets\Scripts\Visuals\BackflameEffect.cs" />
      <Compile Include="Assets\Scripts\Shaders\InvertAllAudio.cs" />
+     <Compile Include="Assets\Scripts\HUD\MatchUI.cs" />
      <Compile Include="Assets\Scripts\HUD\EnableChildOnPlayer.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Utilities\CableCurve.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\Shop.cs" />
@@ -323,6 +325,7 @@
      <Compile Include="Assets\unity-ui-extensions\Examples\UICircleProgress\UICircleChangeDensity.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\CurlyUI\CUIMisc.cs" />
      <Compile Include="Assets\Scripts\LCrystalDrop.cs" />
+     <Compile Include="Assets\Scripts\HUD\XpUI_Destroy.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Serializers\SaveGameBinarySerializer.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\UILineRenderer\LineRendererOrbitList.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Layout\TableLayoutGroup.cs" />
@@ -379,6 +382,7 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\Stepper.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowOneObject.cs" />
      <Compile Include="Assets\Scripts\HUD\WaveDisplay.cs" />
+     <Compile Include="Assets\Scripts\HUD\ShopUI_Destroy.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\ComboBox\DropDownListItem.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
      <Compile Include="Assets\Scripts\HUD\XPBars.cs" />
@@ -451,6 +455,7 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Primitives\DiamondGraph.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIMultiplyEffect.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\FancyScrollView\01_Basic\Example01CellDto.cs" />
+     <Compile Include="Assets\Scripts\HUD\PowerupTimerUI_Off.cs" />
      <None Include="Assets\unity-ui-extensions\Resources\Shaders\UIAdditive.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

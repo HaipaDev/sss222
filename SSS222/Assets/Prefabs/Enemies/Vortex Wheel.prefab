@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveConfig: {fileID: 11400000, guid: d3645a391c2cd6942953c457b255cdcb, type: 2}
+  waypointsL: []
   waypointIndex: 0
   enemyIndex: 0
 --- !u!114 &3322887099283394469
@@ -155,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Vortex Wheel
   health: 95
   shooting: 0
   minTimeBtwnShots: 0.65
@@ -168,12 +170,12 @@ MonoBehaviour:
   givePts: 1
   scoreValueStart: 15
   scoreValueEnd: 20
-  enBallchanceInit: 100
-  CoinchanceInit: 0
+  enBallChanceInit: 30
+  coinChanceInit: 3
   powercoreChanceInit: 30
   xpAmnt: 5
-  enBallchance: 0
-  Coinchance: 0
+  enBallChance: 0
+  coinChance: 0
   powercoreChance: 0
   yeeted: 0
   dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,

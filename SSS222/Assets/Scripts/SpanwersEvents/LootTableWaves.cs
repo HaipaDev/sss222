@@ -9,7 +9,6 @@ public class LootTableEntryWaves{
     public WaveConfig lootItem;
     public float dropChance=0f;
     public float levelReq=0f;
-
 }
 [System.Serializable]
 public class ItemPercentageWaves{
@@ -17,8 +16,7 @@ public class ItemPercentageWaves{
     //[SerializeField]public float itemPercentage;
 }
 public class LootTableWaves : MonoBehaviour{
-    [SerializeField]
-    public List<LootTableEntryWaves> itemList;
+    [SerializeField]public List<LootTableEntryWaves> itemList;
     private Dictionary<WaveConfig, float> itemTable;
     [SerializeField] int currentLvl;
     [SerializeField] List<float> dropList;
@@ -33,6 +31,11 @@ public class LootTableWaves : MonoBehaviour{
         }*/
         //foreach(float dropChance in itemTable.Values){sum+=dropChance;}
         SumUp();
+        //Set values
+        var i=GameRules.instance;
+        if(i!=null){
+            if(GetComponent<Waves>().spawnerType==spawnerType.wave)itemList=i.waveList;
+        }
     }
     void OnValidate(){
         /*itemTable = new Dictionary<LootItem, float>();

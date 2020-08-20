@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e544072ca3e4bb4ba0206583b2d59ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnerType: 2
   waveConfigs:
   - {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
   - {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf, type: 2}
@@ -74,30 +75,52 @@ MonoBehaviour:
   - name: CometsFlyby
     lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
     dropChance: 8.5
+    levelReq: 0
   - name: CometStorm
     lootItem: {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf, type: 2}
     dropChance: 7
+    levelReq: 0
   - name: BatsFlyby
     lootItem: {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc, type: 2}
     dropChance: 9
+    levelReq: 0
   - name: BatV
     lootItem: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
     dropChance: 8
+    levelReq: 0
   - name: EnemyShip
     lootItem: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
     dropChance: 6.5
+    levelReq: 0
   - name: BatsCluster
     lootItem: {fileID: 11400000, guid: 2145a8982afb67c4bbfa60857b9f71f9, type: 2}
-    dropChance: 7
+    dropChance: 1
+    levelReq: 1
   - name: EnemyCombatant
     lootItem: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d, type: 2}
-    dropChance: 6.75
+    dropChance: 3
+    levelReq: 2
+  - name: StingerFlingers
+    lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
+    dropChance: 6.8
+    levelReq: 1
+  currentLvl: 0
+  dropList:
+  - 8.5
+  - 7
+  - 9
+  - 8
+  - 6.5
+  - 0
+  - 0
+  - 0
   itemsPercentage:
-  - name: CometsFlyby - 16.11% - 8.5/44.25
-  - name: CometStorm - 13.27% - 7/45.75
-  - name: BatsFlyby - 17.06% - 9/43.75
-  - name: BatV - 15.17% - 8/44.75
-  - name: EnemyShip - 12.32% - 6.5/46.25
-  - name: BatsCluster - 13.27% - 7/45.75
-  - name: EnemyCombatant - 12.8% - 6.75/46
-  sum: 52.75
+  - name: CometsFlyby(0) - 21.79% - 8.5/30.5
+  - name: CometStorm(0) - 17.95% - 7/32
+  - name: BatsFlyby(0) - 23.08% - 9/30
+  - name: BatV(0) - 20.51% - 8/31
+  - name: EnemyShip(0) - 16.67% - 6.5/32.5
+  - name: BatsCluster(1) - 0% - 0/39
+  - name: EnemyCombatant(2) - 0% - 0/39
+  - name: StingerFlingers(1) - 0% - 0/39
+  sum: 39

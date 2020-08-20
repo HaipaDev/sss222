@@ -8,7 +8,11 @@ using BayatGames.SaveGameFree;
 using UnityEngine.Rendering.PostProcessing;
 public class GameSession : MonoBehaviour{
     public static GameSession instance;
-    [HeaderAttribute("Current Player Values")]
+    [Header("Global")]
+    public bool shopOn=true;
+    public bool xpOn=true;
+    public bool upgradesOn=true;
+    [Header("Current Player Values")]
     public int score = 0;
     public float scoreMulti = 1f;
     public float luckMulti = 1f;
@@ -17,14 +21,14 @@ public class GameSession : MonoBehaviour{
     public float coresXp = 0f;
     public float coresXpTotal = 0f;
     public int enemiesCount = 0;
-    [HeaderAttribute("EVent Score Values")]
+    [Header("EVent Score Values")]
     public int EVscore = 0;
     public int EVscoreMax = 50;
     public int shopScore = 0;
     public int shopScoreMax = 200;
     public int shopScoreMaxS = 200;
     public int shopScoreMaxE = 450;
-    [HeaderAttribute("XP Values")]
+    [Header("XP Values")]
     public float xp_forCore=100f;
     public float xp_wave=20f;
     public float xp_shop=10f;
@@ -33,7 +37,7 @@ public class GameSession : MonoBehaviour{
     public float flyingTimeReq=25f;
     public float xp_staying=-5f;
     public float stayingTimeReq=4f;
-    [HeaderAttribute("Luck Multiplier Values")]
+    [Header("Luck Multiplier Values")]
     public float enballDropMulti=1;
     public float coinDropMulti=1;
     public float coreDropMulti=1;
@@ -44,16 +48,19 @@ public class GameSession : MonoBehaviour{
     public float coreMultiAmnt=0.08f;
     public float rareMultiAmnt=0.075f;
     public float legendMultiAmnt=0.01f;
-    [HeaderAttribute("Settings")]
-    [Range(0.0f, 10.0f)] public float gameSpeed = 1f;
+    [Header("Settings")]
+    [Range(0.0f, 10.0f)] public float gameSpeed=1f;
+    public float defaultGameSpeed=1f;
     public bool speedChanged;
-    [HeaderAttribute("Other")]
+    public bool slowingPause;
+    [Header("Other")]
     public bool cheatmode;
     public bool dmgPopups=true;
     [SerializeField]float restartTimer=-4;
     
     Player player;
     PostProcessVolume postProcessVolume;
+    bool setValues;
     //public string gameVersion;
     //public bool moveByMouse = true;
 
@@ -78,6 +85,7 @@ public class GameSession : MonoBehaviour{
     private void Awake(){
         SetUpSingleton();
         instance=this;
+        StartCoroutine(SetGameRulesValues());
     }
     private void SetUpSingleton(){
         int numberOfObj = FindObjectsOfType<GameSession>().Length;
@@ -87,14 +95,48 @@ public class GameSession : MonoBehaviour{
             DontDestroyOnLoad(gameObject);
         }
     }
-    private void Start()
-    {
+    private void Start(){
         FindObjectOfType<SaveSerial>().highscore = 0;
+        //SetGameRulesValues();
+    }
+    IEnumerator SetGameRulesValues(){
+    yield return new WaitForSeconds(0.1f);
+    //Set values
+    var i=GameRules.instance;
+    if(i!=null){
+        //Main
+        defaultGameSpeed=i.defaultGameSpeed;gameSpeed=defaultGameSpeed;
+        shopOn=i.shopOn;
+        xpOn=i.xpOn;
+        upgradesOn=i.upgradesOn;
+        EVscoreMax=i.EVscoreMax;
+        shopScoreMax=i.shopScoreMax;
+        shopScoreMaxS=i.shopScoreMaxS;
+        shopScoreMaxE=i.shopScoreMaxE;
+        scoreMulti=i.scoreMulti;
+        luckMulti=i.luckMulti;
+        //Leveling
+        xp_forCore=i.xp_forCore;
+        xp_wave=i.xp_wave;
+        xp_shop=i.xp_shop;
+        xp_powerup=i.xp_powerup;
+        xp_flying=i.xp_flying;
+        flyingTimeReq=i.flyingTimeReq;
+        xp_staying=i.xp_staying;
+        stayingTimeReq=i.stayingTimeReq;
+    }
     }
     private void Update()
     {
-        Time.timeScale = gameSpeed;
-        if(shopScore>=shopScoreMax && coins>0)
+        if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
+
+        //Set values on Enter Game Room
+        if(!setValues&&(SceneManager.GetActiveScene().name=="Game")){
+            StartCoroutine(SetGameRulesValues());
+            setValues=true;
+        }
+
+        if(shopOn&&(shopScore>=shopScoreMax && coins>0))
         {
             Shop.instance.SpawnCargo();
             /*Shop.shopOpen = true;
@@ -103,9 +145,9 @@ public class GameSession : MonoBehaviour{
                 enemy.health = -1;
                 enemy.Die();
             }
-            gameSpeed = 0f;*/
-            shopScoreMax = Random.Range(shopScoreMaxS,shopScoreMaxE);
-            shopScore = 0;
+            gameSpeed=0f;*/
+            shopScoreMax=Random.Range(shopScoreMaxS,shopScoreMaxE);
+            shopScore=0;
         }
 
         if(FindObjectOfType<Player>()!=null){
@@ -117,7 +159,7 @@ public class GameSession : MonoBehaviour{
         if(coresXpTotal<0)coresXpTotal=0;
         if(coresXp>=xp_forCore){
             //cores++;
-            GameAssets.instance.Make("PowerCore",new Vector2(Random.Range(-3.5f, 3.5f),7.4f));
+            if(upgradesOn)GameAssets.instance.Make("PowerCore",new Vector2(Random.Range(-3.5f, 3.5f),7.4f));
             FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             coresXp=0;
@@ -127,10 +169,10 @@ public class GameSession : MonoBehaviour{
 
         //Set speed to normal
         if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
-        (FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().matrix==false)&&speedChanged!=true){gameSpeed=1;}
+        (FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().matrix==false&&FindObjectOfType<Player>().accel==false)&&speedChanged!=true){gameSpeed=defaultGameSpeed;}
         if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
         //if(Shop.shopOpen==false&&Shop.shopOpened==false){gameSpeed=1;}
-        if(FindObjectOfType<Player>()==null){gameSpeed=1;}
+        if(FindObjectOfType<Player>()==null){gameSpeed=defaultGameSpeed;}
         
         //Restart with R or Space/Resume with Space
         if(SceneManager.GetActiveScene().name=="Game"){
@@ -181,7 +223,6 @@ public class GameSession : MonoBehaviour{
         if(UpgradeMenu.instance!=null)CalculateLuck();
 
         CheckCodes(0,0);
-        if(gameSpeed<0){gameSpeed=0;}
         //if(SaveSerial.instance.fullscreen){Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);}
     }
 
@@ -197,7 +238,7 @@ public class GameSession : MonoBehaviour{
     public void AddToScore(int scoreValue){
         score += Mathf.RoundToInt(scoreValue*scoreMulti);
         EVscore += scoreValue;
-        shopScore += Mathf.RoundToInt(scoreValue*scoreMulti);
+        if(shopOn)shopScore += Mathf.RoundToInt(scoreValue*scoreMulti);
         ScorePopUpHUD(scoreValue*scoreMulti);
     }
 
@@ -208,7 +249,7 @@ public class GameSession : MonoBehaviour{
     }
 
     public void AddToScoreNoEV(int scoreValue){score += scoreValue;ScorePopUpHUD(scoreValue);}
-    public void AddXP(float xpValue){coresXp += xpValue;coresXpTotal+=xpValue;XPPopUpHUD(xpValue);}
+    public void AddXP(float xpValue){if(xpOn){coresXp += xpValue;XPPopUpHUD(xpValue);}coresXpTotal+=xpValue;}
     public void AddEnemyCount(){enemiesCount++;FindObjectOfType<DisruptersSpawner>().EnemiesCountHealDrone++;
     var ps=FindObjectsOfType<PowerupsSpawner>();
     foreach(PowerupsSpawner p in ps){
@@ -352,18 +393,22 @@ public class GameSession : MonoBehaviour{
 
     public void ScorePopUpHUD(float score){
         GameObject scpopupHud=GameObject.Find("ScoreDiffParrent");
+        if(scpopupHud!=null){
         scpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //scpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(score<0)symbol="-";
         scpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(score).ToString();
+        }else{Debug.LogWarning("ScorePopUpHUD not present");}
     }public void XPPopUpHUD(float xp){
         GameObject xppopupHud=GameObject.Find("XPDiffParrent");
+        if(xppopupHud!=null){
         xppopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //xppopupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(xp<0)symbol="-";
         xppopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(xp).ToString();
+        }else{Debug.LogWarning("XPPopUpHUD not present");}
     }
     //public void PlayDenySFX(){AudioManager.instance.Play("Deny");}
 }

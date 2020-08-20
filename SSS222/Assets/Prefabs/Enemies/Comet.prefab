@@ -55,6 +55,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -140,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveConfig: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
+  waypointsL: []
   waypointIndex: 0
   enemyIndex: 0
 --- !u!114 &182006974740199065
@@ -167,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Comet
   health: 15
   shooting: 0
   minTimeBtwnShots: 2.25
@@ -180,12 +183,12 @@ MonoBehaviour:
   givePts: 1
   scoreValueStart: 3
   scoreValueEnd: 10
-  enBallchanceInit: 32
-  CoinchanceInit: 2
+  enBallChanceInit: 30
+  coinChanceInit: 3
   powercoreChanceInit: 0
   xpAmnt: 0
-  enBallchance: 0
-  Coinchance: 0
+  enBallChance: 0
+  coinChance: 0
   powercoreChance: 0
   yeeted: 0
   dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,

@@ -11,7 +11,7 @@ public class ShootButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     float timer;
     float timerHold;
     void Start(){
-        
+        if(GameRules.instance.autoShootPlayer){Destroy(gameObject);}
     }
     void Update(){
         if(pressed){

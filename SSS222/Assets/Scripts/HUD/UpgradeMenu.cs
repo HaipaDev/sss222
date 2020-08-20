@@ -17,7 +17,7 @@ public class UpgradeMenu : MonoBehaviour{
     public GameObject skills2Menu;
     public XPBars lvlbar;
     public float prevGameSpeed = 1f;
-    [HeaderAttribute("Upgrade Values")]
+    [Header("Upgrade Values")]
     public float maxHealth_UpgradeAmnt=5f;
     public int maxHealth_UpgradeCost=1;
     public float maxEnergy_UpgradeAmnt=5f;
@@ -39,7 +39,7 @@ public class UpgradeMenu : MonoBehaviour{
     public int postMortem_upgradeCost=1;
     public int teleport_upgradeCost=2;
     public int overhaul_upgradeCost=3;
-    [HeaderAttribute("Upgrade Counts")]
+    [Header("Upgrade Counts")]
     public int total_UpgradesCount;
     public int total_UpgradesCountMax=10;
     public int total_UpgradesLvl=0;
@@ -84,7 +84,7 @@ public class UpgradeMenu : MonoBehaviour{
     }
     void Update(){
         if(gameSession==null)gameSession = FindObjectOfType<GameSession>();
-        if (Input.GetKeyDown(KeyCode.F)){
+        if(Input.GetKeyDown(KeyCode.F)){
             if(UpgradeMenuIsOpen){
                 Resume();
             }else{

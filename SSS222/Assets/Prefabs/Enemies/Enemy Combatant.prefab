@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveConfig: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d, type: 2}
+  waypointsL: []
   waypointIndex: 0
   enemyIndex: 0
 --- !u!114 &3322887099283394469
@@ -165,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Enemy Combatant
   health: 95
   shooting: 0
   minTimeBtwnShots: 0.65
@@ -178,12 +180,12 @@ MonoBehaviour:
   givePts: 1
   scoreValueStart: 10
   scoreValueEnd: 17
-  enBallchanceInit: 50
-  CoinchanceInit: 0
+  enBallChanceInit: 30
+  coinChanceInit: 3
   powercoreChanceInit: 25
   xpAmnt: 1
-  enBallchance: 0
-  Coinchance: 0
+  enBallChance: 0
+  coinChance: 0
   powercoreChance: 0
   yeeted: 0
   dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,

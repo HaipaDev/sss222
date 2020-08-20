@@ -55,33 +55,39 @@ public class DisruptersSpawner : MonoBehaviour{
     //WaveDisplay waveDisplay;
     GameSession gameSession;
     Player player;
-    // Start is called before the first frame update
-    #region//GetRandomWeightedIndex
-        /*public int GetRandomWeightedIndex(int[] weights)
-        {
-            if (weights == null || weights.Length == 0) return -1;
 
-            int w=0;
-            int i;
-            for (i = 0; i < weights.Length; i++)
-            {
-                if (weights[i] >= 0) w += weights[i];
-            }
-
-            float r = Random.value;
-            float s = 0f;
-
-            for (i = 0; i < weights.Length; i++)
-            {
-                if (weights[i] <= 0f) continue;
-
-                s += (float)weights[i] / waveConfigsWeights.Length;
-                if (s >= r) return i;
-            }
-
-            return -1;
-        }*/
-    #endregion
+    private void Awake() {
+        StartCoroutine(SetValues());
+    }
+    IEnumerator SetValues(){
+        //Set values
+        yield return new WaitForSeconds(0.1f);
+        var i=GameRules.instance;
+        if(i!=null){
+            spawnLeech=i.spawnLeech;
+            mSTimeSpawnsLeech=i.mSTimeSpawnsLeech;
+            mETimeSpawnsLeech=i.mETimeSpawnsLeech;
+            spawnHlaser=i.spawnHlaser;
+            mSTimeSpawnsHlaser=i.mSTimeSpawnsHlaser;
+            mETimeSpawnsHlaser=i.mETimeSpawnsHlaser;
+            spawnGoblin=i.spawnGoblin;
+            mSTimeSpawnsGoblin=i.mSTimeSpawnsGoblin;
+            mETimeSpawnsGoblin=i.mETimeSpawnsGoblin;
+            spawnHealDrone=i.spawnHealDrone;
+            mEnemiesCountHealDrone=i.mEnemiesCountHealDrone;
+            mSTimeSpawnsHealDrone=i.mSTimeSpawnsHealDrone;
+            mETimeSpawnsHealDrone=i.mETimeSpawnsHealDrone;
+            spawnVortexWheel=i.spawnVortexWheel;
+            mEnergyCountVortexWheel=i.mEnergyCountVortexWheel;
+            EnergyCountVortexWheel=i.EnergyCountVortexWheel;
+            mSTimeSpawnsVortexWheel=i.mSTimeSpawnsVortexWheel;
+            mETimeSpawnsVortexWheel=i.mETimeSpawnsVortexWheel;
+            spawnGlareDevil=i.spawnGlareDevil;
+            mEnergyCountGlareDevil=i.mEnergyCountGlareDevil;
+            mSTimeSpawnsGlareDevil=i.mSTimeSpawnsGlareDevil;
+            mETimeSpawnsGlareDevil=i.mETimeSpawnsGlareDevil;
+        }
+    }
     IEnumerator Start()
     {
         //waveDisplay = FindObjectOfType<WaveDisplay>();

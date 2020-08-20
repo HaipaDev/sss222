@@ -51,7 +51,8 @@ public class PowerupDisplay : MonoBehaviour{
         player = FindObjectOfType<Player>();
         pwrup = player.powerup;
         spr = GetComponent<Image>();
-        if(powerups!=true){
+        //if(powerups!=true){
+        if(powerups!=true||player.weaponsLimited){
         if(textObj!=null)TMP=textObj.GetComponent<TMPro.TextMeshProUGUI>();
         else{textObj=transform.GetComponentInChildren<TMPro.TextMeshProUGUI>().gameObject;TMP=textObj.GetComponent<TMPro.TextMeshProUGUI>();}
         bg=transform.GetChild(0).GetComponent<Image>();
@@ -69,6 +70,15 @@ public class PowerupDisplay : MonoBehaviour{
         if (powerups==true){
             if(player!=null){
                 pwrup = player.powerup;
+                var timer=player.powerupTimer;
+                if((float)timer<10f&&(float)timer>=0){value=(float)System.Math.Round((float)timer, 1);TMP.characterSpacing=-25f;}
+                else if((float)timer>10f){value=(float)Mathf.RoundToInt((float)timer);TMP.characterSpacing=0f;}
+                else if((float)timer==-5){value=-5;}
+                //var value=System.Math.Round(timer, 1);
+
+                if (value<=0&&value>-5) {value = 0;}
+                if(value<=-5){TMP.text="∞";}
+                else {TMP.text=value.ToString();}
                 /*var sprr=this.GetType().GetField(pwrup+"Sprite").GetValue(this);
                 this.GetType().GetField("sprite").SetValue(this,sprr);
                 spr.sprite=sprite;*/

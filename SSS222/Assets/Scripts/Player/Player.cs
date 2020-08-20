@@ -8,10 +8,11 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour{
     #region Vars
-    [HeaderAttribute("Player")]
+    [Header("Player")]
     [SerializeField] bool moveX = true;
     [SerializeField] bool moveY = true;
     [SerializeField] bool moveByMouse = false;
+    [SerializeField] bool autoShoot = false;
     [SerializeField] float paddingX = -0.125f;
     [SerializeField] float paddingY = 0.45f;
     [SerializeField] public float moveSpeedInit = 5f;
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public float energy = 80f;
     [SerializeField] public float maxEnergy = 200f;
     [SerializeField] public string powerupDefault = "laser";
+    [SerializeField] public float powerupTimer=-4;
     [SerializeField] public bool losePwrupOutOfEn;
     [SerializeField] public int energyRefillUnlocked;
 
@@ -51,7 +53,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public float dmgMulti = 1f;
     [SerializeField] public float shootMulti = 1f;
     [SerializeField] public float shipScaleDefault=0.89f;
-    [HeaderAttribute("States")]
+    [Header("States")]
     public List<string> statuses;
     public string statusc="";
     [SerializeField] public bool flip = false;
@@ -111,7 +113,7 @@ public class Player : MonoBehaviour{
     public float infEnergyTimer = -4;
     public float infPrevEnergy;
     [HideInInspector]public float infEnergyTime = -4;
-    [HeaderAttribute("State Defaults")]
+    [Header("State Defaults")]
     [SerializeField] public float flipTime = 7f;
     [SerializeField] public float gcloverTime = 6f;
     [SerializeField] public float shadowTime = 10f;
@@ -148,9 +150,13 @@ public class Player : MonoBehaviour{
     GameObject cbulletPrefab;
     GameObject plaserPrefab;
     #endregion
-    [HeaderAttribute("Weapons")]
+    [Header("Weapons")]
     [SerializeField] float laserSpeed = 9f;
     [SerializeField] float laserShootPeriod = 0.34f;
+    [SerializeField] float laser2Speed = 8.9f;
+    [SerializeField] float laser2ShootPeriod = 0.35f;
+    [SerializeField] float laser3Speed = 8.8f;
+    [SerializeField] float laser3ShootPeriod = 0.36f;
     [SerializeField] float phaserSpeed = 10.5f;
     [SerializeField] float phaserShootPeriod = 0.2f;
     [SerializeField] float hrocketSpeed = 6.5f;
@@ -159,9 +165,8 @@ public class Player : MonoBehaviour{
     [SerializeField] float mlaserSpeedE = 10f;
     [SerializeField] float mlaserShootPeriod = 0.1f;
     [SerializeField] int mlaserBulletsAmmount = 10;
-    [SerializeField] float lsaberEnPeriod = 0.1f;
-    [SerializeField] float shadowBTSpeed = 4f;
-    [SerializeField] float shadowBTShootPeriod = 0.65f;
+    [SerializeField] float shadowBTSpeed = 9f;
+    [SerializeField] float shadowBTShootPeriod = 0.34f;
     [SerializeField] float qrocketSpeed = 9.5f;
     [SerializeField] float qrocketShootPeriod = 0.3f;
     [SerializeField] float procketSpeedS = 9.5f;
@@ -170,30 +175,31 @@ public class Player : MonoBehaviour{
     [SerializeField] int procketsBulletsAmmount = 10;
     [SerializeField] float cbulletSpeed = 8.25f;
     [SerializeField] float cbulletShootPeriod = 0.15f;
-    [SerializeField] float plaserSpeed = 9.5f;
-    [SerializeField] float plaserShootPeriod = 0.7f;
-    [HeaderAttribute("Energy Costs")]
+    [SerializeField] float plaserSpeed = 9.55f;
+    [SerializeField] float plaserShootPeriod = 0.75f;
+    [Header("Energy Costs")]
     //Weapons
     [SerializeField] public float laserEn = 0.3f;
     [SerializeField] public float laser2En = 1.25f;
     [SerializeField] public float laser3En = 2.5f;
     [SerializeField] public float phaserEn = 1.5f;
     [SerializeField] public float mlaserEn = 0.075f;
-    [SerializeField] public float lsaberEn = 0.375f;
+    [SerializeField] public float lsaberEn = 0.4f;
+    [SerializeField] public float lsaberEnPeriod=0.15f;
     [SerializeField] public float lclawsEn = 6.3f;
     [SerializeField] public float shadowEn = 5f;
     [SerializeField] public float shadowBTEn = 10f;
     [SerializeField] public float cbulletEn = 1.3f;
-    [SerializeField] public float plaserEn = 7f;
+    [SerializeField] public float plaserEn = 5.6f;
     //Rockets
     [SerializeField] public float hrocketOh = 0.9f;//2.6
-    [SerializeField] public float qrocketOh = 2.23f;//5.5
+    [SerializeField] public float qrocketOh = 1.63f;//5.5
     [SerializeField] public float procketEn = 0.86f;//0.26
-    [SerializeField] public float procketOh = 0.09f;
-    [HeaderAttribute("Energy Gains")]//Collectibles
+    [SerializeField] public float procketOh = 0.49f;
+    [Header("Energy Gains")]//Collectibles
     [SerializeField] public float energyBallGet = 9f;
-    [SerializeField] public float medkitEnergyGet = 26f;
-    [SerializeField] public float medkitUEnergyGet = 40f;
+    [SerializeField] public float medkitEnergyGet = 40f;
+    [SerializeField] public float medkitUEnergyGet = 26f;
     [SerializeField] public float medkitHpAmnt = 25f;
     [SerializeField] public float medkitUHpAmnt = 62f;
     [SerializeField] public float pwrupEnergyGet = 36f;
@@ -205,7 +211,21 @@ public class Player : MonoBehaviour{
     public float refillDelay=1.6f;
     public float refillCount;
     [HideInInspector]public bool refillRandomized;
-    [HeaderAttribute("Effects")]
+    [Header("Weapon Durations")]
+    public bool weaponsLimited=false;
+    public float laser2Duration=10f;
+    public float laser3Duration=10f;
+    public float phaserDuration=10f;
+    public float mlaserDuration=10f;
+    public float lsaberDuration=10f;
+    public float lclawsDuration=10f;
+    public float cstreamDuration=10f;
+    public float hrocketDuration=10f;
+    public float qrocketDuration=10f;
+    public float procketDuration=10f;
+    public float plaserDuration=10f;
+    public float shadowBtDuration=10f;
+    [Header("Effects")]
     #region//VFX
     GameObject explosionVFX;
     [HideInInspector]public GameObject flareHitVFX;
@@ -236,7 +256,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public AudioClip matrixGetSFX;
     */
     #endregion
-    [HeaderAttribute("Others")]
+    [Header("Others")]
     [SerializeField] GameObject gameOverCanvasPrefab;
     [SerializeField] GameObject shadowPrefab;
     [SerializeField] public MeshRenderer bgSprite;
@@ -266,10 +286,11 @@ public class Player : MonoBehaviour{
     float hPressedTime;
     float vPressedTime;
     public float mPressedTime;
-    public float timeFlyingTotal;
     public float timeFlyingCore;
+    public float timeFlyingTotal;
     public float stayingTimer;
     public float stayingTimerCore;
+    public float stayingTimerTotal;
 
     Rigidbody2D rb;
     PlayerSkills pskills;
@@ -304,10 +325,65 @@ public class Player : MonoBehaviour{
     public Vector2 tpPos;
 #endregion
     private void Awake() {
+        SetGameRuleValues();
+    }
+    void Start(){
+        SetGameRuleValues();
+
+        rb = GetComponent<Rigidbody2D>();
+        pskills=GetComponent<PlayerSkills>();
+        gameSession=FindObjectOfType<GameSession>();
+        saveSerial = FindObjectOfType<SaveSerial>();
+        shake = GameObject.FindObjectOfType<Shake>();
+        joystick=FindObjectOfType<FloatingJoystick>();
+        //settings = FindObjectOfType<Settings>();
+        //followMouse = GetComponent<FollowMouse>();
+        SetUpMoveBoundaries();
+        moveSpeed = moveSpeedInit;
+        moveSpeedCurrent = moveSpeed;
+        dashTime = startDashTime;
+        moveByMouse = saveSerial.moveByMouse;
+        defaultShipScale=shipScale;
+        shipScaleMin*=defaultShipScale;
+        shipScaleMax*=defaultShipScale;
+        pauseMenu=FindObjectOfType<PauseMenu>();
+        refillUI=GameObject.Find("RefillUI");
+        refilltxtS=GameObject.Find("RefillText1");
+        refilltxtE=GameObject.Find("RefillText2");
+
+        SetPrefabs();
+        moveXwas=moveX;
+        moveYwas=moveY;
+    }
+    void SetPrefabs(){
+        laserPrefab=GameAssets.instance.Get("Laser");
+        mlaserPrefab=GameAssets.instance.Get("MLaser");
+        hrocketPrefab=GameAssets.instance.Get("HRocket");
+        phaserPrefab=GameAssets.instance.Get("Phaser");
+        lsaberPrefab=GameAssets.instance.Get("LSaber");
+        lclawsPrefab=GameAssets.instance.Get("LClaws");
+        lclawsVFX=GameAssets.instance.Get("LClawsVFX");
+        shadowBTPrefab=GameAssets.instance.Get("ShadowBt");
+        qrocketPrefab=GameAssets.instance.Get("QRocket");
+        procketPrefab=GameAssets.instance.Get("PRocket");
+        cbulletPrefab=GameAssets.instance.Get("CBullet");
+        plaserPrefab=GameAssets.instance.Get("PLaser");
+
+        explosionVFX=GameAssets.instance.GetVFX("Explosion");
+        flareHitVFX=GameAssets.instance.GetVFX("FlareHit");
+        flareShootVFX=GameAssets.instance.GetVFX("FlareShoot");
+        shadowShootVFX=GameAssets.instance.GetVFX("ShadowTrail");
+        gcloverVFX=GameAssets.instance.GetVFX("GCloverVFX");
+        gcloverOVFX=GameAssets.instance.GetVFX("GCloverOutVFX");
+        crystalExplosionVFX=GameAssets.instance.GetVFX("CExplVFX");
+    }
+    void SetGameRuleValues(){
     //Set values
     var i=GameRules.instance;
     if(i!=null){
         ///Basic value
+        transform.position=i.startingPosPlayer;
+        autoShoot=i.autoShootPlayer;
         maxHP=i.healthPlayer;health=i.healthPlayer;
         energyOn=i.energyOnPlayer;
         maxEnergy=i.energyPlayer;energy=i.energyPlayer;
@@ -322,6 +398,10 @@ public class Player : MonoBehaviour{
         ///Weapons Values
         laserSpeed=i.laserSpeed;
         laserShootPeriod=i.laserShootPeriod;
+        laser2Speed=i.laser2Speed;
+        laser2ShootPeriod=i.laser2ShootPeriod;
+        laser3Speed=i.laser3Speed;
+        laser3ShootPeriod=i.laser3ShootPeriod;
         phaserSpeed=i.phaserSpeed;
         phaserShootPeriod=i.phaserShootPeriod;
         hrocketSpeed=i.hrocketSpeed;
@@ -373,54 +453,6 @@ public class Player : MonoBehaviour{
         refillEnergyAmnt=i.refillEnergyAmnt;
     }
     }
-    void Start(){
-        rb = GetComponent<Rigidbody2D>();
-        pskills=GetComponent<PlayerSkills>();
-        gameSession=FindObjectOfType<GameSession>();
-        saveSerial = FindObjectOfType<SaveSerial>();
-        shake = GameObject.FindObjectOfType<Shake>();
-        joystick=FindObjectOfType<FloatingJoystick>();
-        //settings = FindObjectOfType<Settings>();
-        //followMouse = GetComponent<FollowMouse>();
-        SetUpMoveBoundaries();
-        moveSpeed = moveSpeedInit;
-        moveSpeedCurrent = moveSpeed;
-        dashTime = startDashTime;
-        moveByMouse = saveSerial.moveByMouse;
-        defaultShipScale=shipScale;
-        shipScaleMin*=defaultShipScale;
-        shipScaleMax*=defaultShipScale;
-        pauseMenu=FindObjectOfType<PauseMenu>();
-        refillUI=GameObject.Find("RefillUI");
-        refilltxtS=GameObject.Find("RefillText1");
-        refilltxtE=GameObject.Find("RefillText2");
-
-        SetPrefabs();
-        moveXwas=moveX;
-        moveYwas=moveY;
-    }
-    void SetPrefabs(){
-        laserPrefab=GameAssets.instance.Get("Laser");
-        mlaserPrefab=GameAssets.instance.Get("MLaser");
-        hrocketPrefab=GameAssets.instance.Get("HRocket");
-        phaserPrefab=GameAssets.instance.Get("Phaser");
-        lsaberPrefab=GameAssets.instance.Get("LSaber");
-        lclawsPrefab=GameAssets.instance.Get("LClaws");
-        lclawsVFX=GameAssets.instance.Get("LClawsVFX");
-        shadowBTPrefab=GameAssets.instance.Get("ShadowBt");
-        qrocketPrefab=GameAssets.instance.Get("QRocket");
-        procketPrefab=GameAssets.instance.Get("PRocket");
-        cbulletPrefab=GameAssets.instance.Get("CBullet");
-        plaserPrefab=GameAssets.instance.Get("PLaser");
-
-        explosionVFX=GameAssets.instance.GetVFX("Explosion");
-        flareHitVFX=GameAssets.instance.GetVFX("FlareHit");
-        flareShootVFX=GameAssets.instance.GetVFX("FlareShoot");
-        shadowShootVFX=GameAssets.instance.GetVFX("ShadowTrail");
-        gcloverVFX=GameAssets.instance.GetVFX("GCloverVFX");
-        gcloverOVFX=GameAssets.instance.GetVFX("GCloverOutVFX");
-        crystalExplosionVFX=GameAssets.instance.GetVFX("CExplVFX");
-    }
 
     void Update(){
         HandleInput(false);
@@ -442,12 +474,12 @@ public class Player : MonoBehaviour{
         shootTimer -= Time.deltaTime;
         instantiateTimer-=Time.deltaTime;
         velocity=rb.velocity;
-        if(moving==false){stayingTimer+=Time.deltaTime;stayingTimerCore+=Time.deltaTime;if(hpRegenEnabled)timerHpRegen+=Time.deltaTime;}
+        if(moving==false){stayingTimer+=Time.deltaTime;stayingTimerCore+=Time.deltaTime;stayingTimerTotal+=Time.deltaTime;if(hpRegenEnabled)timerHpRegen+=Time.deltaTime;}
         if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;stayingTimerCore=0;}
         
         if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
         if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
-        if(overheatTimer>=overheatTimerMax&&overheated!=true){OnFire(3.8f,1);//health-=overheatDmg;DMGPopUpHUD(overheatDmg);OnFire(3.8f);damaged=true;AudioManager.instance.Play("Overheat");
+        if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);//health-=overheatDmg;DMGPopUpHUD(overheatDmg);OnFire(3.8f);damaged=true;AudioManager.instance.Play("Overheat");
         overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
         if(overheated==true&&overheatedTimer>0&&Time.timeScale>0.0001f){overheatedTimer-=Time.deltaTime;
             GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
@@ -455,10 +487,12 @@ public class Player : MonoBehaviour{
             Destroy(flareL.gameObject, 0.04f);
             Destroy(flareR.gameObject, 0.04f);
             }
-        if(overheatedTimer<=0){overheated=false;}
+        if(overheatedTimer<=0&&(overheatTimerMax!=4&&overheatTimer!=-4)){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
         //Debug.Log(shootTimer);
         //Debug.LogWarning(shootCoroutine);
         if(Application.platform==RuntimePlatform.Android)mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+
+        if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;AudioManager.instance.Play("PowerupOff");}}
     }
     void FixedUpdate()
     {
@@ -468,7 +502,11 @@ public class Player : MonoBehaviour{
         /*if (!Input.GetButton("Fire1")){
             if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
         }*/
-        dist = Vector2.Distance(mousePos, transform.position);
+        Vector2 mPos=new Vector2(0,0);
+        if(moveX&&moveY)mPos=new Vector2(mousePos.x,mousePos.y);
+        if(moveX&&!moveY)mPos=new Vector2(mousePos.x,transform.position.y);
+        if(!moveX&&moveY)mPos=new Vector2(transform.position.x,mousePos.y);
+        dist=Vector2.Distance(mPos, transform.position);
     }
 #region//Movement etc
     void HandleInput(bool isFixedUpdate)
@@ -540,12 +578,15 @@ public class Player : MonoBehaviour{
         mousePos.x=Mathf.Clamp(mousePos.x, xMin, xMax);
         mousePos.y=Mathf.Clamp(mousePos.y, yMin, yMax);
         //dist in FixedUpdate()
-        var distX=Mathf.Abs(mousePos.x-transform.position.x);
-        var distY=Mathf.Abs(mousePos.y-transform.position.y);
-        if((distX>0f||distY>0f)&&(distX<0.35f||distY<0.35f)){dist=0.35f;}
+        float distX=0;if(moveX){distX=Mathf.Abs(mousePos.x-transform.position.x);}
+        float distY=0;if(moveY){distY=Mathf.Abs(mousePos.y-transform.position.y);}
+        //if((distX>0f||distY>0f)&&(distX<0.35f||distY<0.35f)){dist=0.35f;}
+        //if(((moveX&&distX>0f)||(moveY&&distY>0f))&&((moveX&&distX<0.35f)||(moveY&&distY<0.35f))){dist=0.35f;}
+        if((moveX&&distX>0f&&distX<0.35f)||(moveY&&distY>0f&&distY<0.35f)){dist=0.35f;}
         //var actualdist = Vector2.Distance(mousePos, transform.position);
         if(dist>=0.3f&&Time.timeScale>0.01f){moving=true;}
-        if(dist==0f){moving=false;}
+        if((moveX&&moveY)&&dist<=0.05f){moving=false;}
+        if(((moveX&&!moveY)||!moveX&&moveY)&&dist<=0.24f){moving=false;}
         //var minMoveDist=0f;
         //if(dist<minMoveDist)dist=0;
 
@@ -554,8 +595,8 @@ public class Player : MonoBehaviour{
         //else if(FindObjectsOfType<ShootButton>()==null){transform.position = Vector2.MoveTowardqs(transform.position, mousePos*moveDir, step);}
         //if(dist>minMoveDist)
         if (moveX && moveY)transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
-        if (moveX && !moveY)transform.position = Vector2.MoveTowards(transform.position, new Vector2(mousePos.x,transform.position.y)*moveDir, step);
-        if (!moveX && moveY)transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x,mousePos.y)*moveDir, step);
+        if (moveX && !moveY)transform.position = Vector2.MoveTowards(transform.position, new Vector2(mousePos.x*moveDir,transform.position.y), step);
+        if (!moveX && moveY)transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x,mousePos.y*moveDir), step);
 
         if(Input.GetButtonDown("Fire2")){
             //moveXwas=moveX;moveX=false;
@@ -568,8 +609,8 @@ public class Player : MonoBehaviour{
         var newXpos = transform.position.x;
         var newYpos = transform.position.y;
 
-        newXpos = Mathf.Clamp(transform.position.x, xMin, xMax);
-        newYpos = Mathf.Clamp(transform.position.y, yMin, yMax);
+        if(moveX)newXpos = Mathf.Clamp(transform.position.x, xMin, xMax);
+        if(moveY)newYpos = Mathf.Clamp(transform.position.y, yMin, yMax);
 
         //if(dist>minMoveDist)
         transform.position = new Vector2(newXpos, newYpos);
@@ -597,36 +638,52 @@ public class Player : MonoBehaviour{
     private void Shoot(){
         if(Time.timeScale>0.0001f){
             if (Application.platform != RuntimePlatform.Android){
-                if(Input.GetButtonDown("Fire1")){
+                if(!autoShoot){
+                    if(Input.GetButtonDown("Fire1")){
+                        if(shootCoroutine!=null){return;}
+                        else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                    }if(!Input.GetButton("Fire1")||shootTimer<-1f){
+                        if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
+                        shootCoroutine=null;
+                        //if(shootCoroutine!=null){
+                            //StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());StopCoroutine("ShootContinuously");//}
+                        if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
+                    }
+                    /*if (Input.GetButtonUp("Fire1")){
+                        StopCoroutine(shootCoroutine);
+                    }*/
+                }else{
                     if(shootCoroutine!=null){return;}
                     else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
-                }if(!Input.GetButton("Fire1")||shootTimer<-1f){
-                    if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
-                    shootCoroutine=null;
-                    //if(shootCoroutine!=null){
-                        //StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());StopCoroutine("ShootContinuously");//}
+                    //shootCoroutine=null;
                     if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
                 }
-                /*if (Input.GetButtonUp("Fire1")){
-                    StopCoroutine(shootCoroutine);
-                }*/
             }
         }
     }
 
     public void ShootButton(bool pressed){
-        if(pressed){
+        if(!autoShoot){
+            if(pressed){
+                if(shootCoroutine!=null){return;}
+                else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+            }else if(pressed==false||shootTimer<-1f){
+                if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
+                shootCoroutine=null;
+                if(moving==true)timerEnRegen+=Time.deltaTime;
+            }
+        }else{
             if(shootCoroutine!=null){return;}
             else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
-        }else if(pressed==false||shootTimer<-1f){
-            if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
-            shootCoroutine=null;
-            if(moving==true)timerEnRegen+=Time.deltaTime;
+            //shootCoroutine=null;
+            if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
         }
     }
     public void ShadowButton(Vector2 pos){
         //if(pressed){
-            tpPos=pos;
+            if(moveX&&moveY)tpPos=pos;
+            if(moveX&&!moveY)tpPos=new Vector2(pos.x,transform.position.y);
+            if(!moveX&&moveY)tpPos=new Vector2(transform.position.x,pos.y);
             DClick(0);
             //float timeSinceLastClick = Time.time - lastClickTime;
             //if (timeSinceLastClick <= DCLICK_TIME){DClick(0); }
@@ -655,7 +712,9 @@ public class Player : MonoBehaviour{
                         if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
                     }*/
                 }else{
-                    tpPos=mousePos;
+                    if(moveX&&moveY)tpPos=mousePos;
+                    if(moveX&&!moveY)tpPos=new Vector2(mousePos.x,transform.position.y);
+                    if(!moveX&&moveY)tpPos=new Vector2(transform.position.x,mousePos.y);
                     dashed=true;
                     /*Vector2 difference = mousePos - (Vector2)transform.position;
                     difference = difference.normalized;
@@ -793,8 +852,8 @@ bool stopped=false;
                     laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser2En/4;
                     laserL2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser2En/4;
                     laserR2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser2En/4;
-                        shootTimer = (laserShootPeriod*0.75f)/shootMulti;
-                        yield return new WaitForSeconds(laserShootPeriod/shootMulti);
+                        shootTimer = (laser2ShootPeriod*0.75f)/shootMulti;
+                        yield return new WaitForSeconds(laser2ShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 }
                 else if (powerup == "laser3"){
@@ -829,8 +888,8 @@ bool stopped=false;
                     laserR2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
                     laserL3.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
                     laserR3.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
-                        shootTimer = (laserShootPeriod*0.75f)/shootMulti;
-                        yield return new WaitForSeconds(laserShootPeriod/shootMulti);
+                        shootTimer = (laser3ShootPeriod*0.75f)/shootMulti;
+                        yield return new WaitForSeconds(laser3ShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 }else if (powerup == "phaser"){
                     GameObject phaserL = Instantiate(phaserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -1148,23 +1207,24 @@ bool stopped=false;
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(moveByMouse==true && dist<1){
                     gameSession.gameSpeed=dist;
+                    gameSession.gameSpeed=Mathf.Clamp(gameSession.gameSpeed,0.05f,gameSession.defaultGameSpeed);
                 }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,1f);
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,gameSession.defaultGameSpeed);
                 }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,1f);
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,gameSession.defaultGameSpeed);
                 }else{
-                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=1f;
+                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=gameSession.defaultGameSpeed;
                 }
             }else{
                 gameSession.gameSpeed=0f;
             }
         }
-        if(matrixTimer <=0 && matrixTimer>-4){gameSession.gameSpeed=1f; ResetStatus("matrix");}
+        if(matrixTimer <=0 && matrixTimer>-4){gameSession.gameSpeed=gameSession.defaultGameSpeed; ResetStatus("matrix");}
 
         if(pmultiTimer>0){pmultiTimer-=Time.deltaTime;}
-        if(pmultiTimer <=0 && pmultiTimer>-4){gameSession.scoreMulti=1f; ResetStatus("pmulti");}
+        if(pmultiTimer <=0 && pmultiTimer>-4){gameSession.scoreMulti=gameSession.defaultGameSpeed; ResetStatus("pmulti");}
 
         if(accel==true&&matrix==false){
             if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
@@ -1173,20 +1233,21 @@ bool stopped=false;
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(moveByMouse==true && dist>0.35){
                     gameSession.gameSpeed=dist+(1-0.35f);
+                    gameSession.gameSpeed=Mathf.Clamp(gameSession.gameSpeed,0.05f,gameSession.defaultGameSpeed);
                 }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,1f,2f);
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,gameSession.defaultGameSpeed,gameSession.defaultGameSpeed*2);
                 }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,1f,2f);
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,gameSession.defaultGameSpeed,gameSession.defaultGameSpeed*2);
                 }else{
-                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=1f;
+                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=gameSession.defaultGameSpeed;
                 }
             }else{
                 gameSession.gameSpeed=0f;
             }
         }
-        if(accelTimer <=0 && accelTimer>-4){gameSession.gameSpeed=1f; ResetStatus("accel");}
+        if(accelTimer <=0 && accelTimer>-4){gameSession.gameSpeed=gameSession.defaultGameSpeed; ResetStatus("accel");}
 
         if(accel==true&&matrix==true){
             if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
@@ -1196,14 +1257,15 @@ bool stopped=false;
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(moveByMouse==true){
                     gameSession.gameSpeed=dist;
+                    gameSession.gameSpeed=Mathf.Clamp(gameSession.gameSpeed,0.05f,gameSession.defaultGameSpeed);
                 }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,2f);
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,gameSession.defaultGameSpeed*2);
                 }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,2f);
+                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,gameSession.defaultGameSpeed*2);
                 }else{
-                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=1f;
+                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=gameSession.defaultGameSpeed;
                 }
             }else{
                 gameSession.gameSpeed=0f;
@@ -1445,11 +1507,13 @@ bool stopped=false;
 #region//Pop-Ups
     public void DMGPopUpHUD(float dmg){
         GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
+        if(dmgpopupHud!=null){
         dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(dmg<0)symbol="-";
         dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(dmg).ToString();
+        }else{Debug.LogWarning("DMGPopUpHUD not present");}
     }/*public void HPPopUpHUD(float dmg){
         GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
         dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
@@ -1458,6 +1522,7 @@ bool stopped=false;
     }*/
     public void EnergyPopUpHUD(float en){
         GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
+        if(enpopupHud!=null){
         enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
@@ -1466,6 +1531,7 @@ bool stopped=false;
         enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(en).ToString();
         energyUsedCount+=Mathf.Abs(en);
         }
+        }else{Debug.LogWarning("EnergyPopUpHUD not present");}
     }/*public void EnergyPopUpHUDPlus(float en){
         GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
         enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
@@ -1527,6 +1593,14 @@ bool stopped=false;
         ResortStatuses();
     }
 
+    public void SetPowerup(string name){
+        powerup=name;
+        if(weaponsLimited){
+            var i=this.GetType().GetField(name+"Duration").GetValue(this);
+            this.GetType().GetField("powerupTimer").SetValue(this,i);
+        }
+    }
+
     public void Damage(float dmg, dmgType type){
         if(type!=dmgType.heal&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;DMGPopUpHUD(-dmgTot);}
         else if(gclover){AudioManager.instance.Play("GCloverHit");}
@@ -1549,6 +1623,7 @@ bool stopped=false;
         }
     }
     }public void Overheat(float value,bool add=true){
+        if(overheatTimerMax!=-4){
         if(overheated!=true){
             if(inverter!=true){
                 if(add){if(overheatTimer==-4){overheatTimer=0;}overheatTimer+=value;overheatCdTimer=overheatCooldown;}
@@ -1557,6 +1632,7 @@ bool stopped=false;
                 if(add){overheatTimer-=value;overheatCdTimer=overheatCooldown;}
                 else{if(overheatTimer==-4){overheatTimer=0;}overheatTimer+=value;}
             }
+        }
         }
     }
 

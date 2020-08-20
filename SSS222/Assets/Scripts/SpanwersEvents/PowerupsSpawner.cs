@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum spawnerType{
+    powerupStatus,
+    powerupWeapon,
+    wave
+}
 public class PowerupsSpawner : MonoBehaviour{
-    [SerializeField] public List<GameObject> powerups;
+    [SerializeField] public spawnerType spawnerType;
+    //[SerializeField] public List<GameObject> powerups;
     //[SerializeField] bool looping = false;
-    [SerializeField] float mTimePowerupSpawns = 10f;
-    [SerializeField] float mTimePowerupSpawnsS = 9f;
-    [SerializeField] float mTimePowerupSpawnsE = 16f;
-    [SerializeField] float firstSpawn = 15f;
+    [SerializeField] public float mTimePowerupSpawns = 10f;
+    [SerializeField] public float mTimePowerupSpawnsS = 9f;
+    [SerializeField] public float mTimePowerupSpawnsE = 16f;
+    [SerializeField] public float firstSpawn = 15f;
     [SerializeField] public int enemiesCountReq = -1;
     public float timer;
     public int enemiesCount;
@@ -17,10 +23,10 @@ public class PowerupsSpawner : MonoBehaviour{
     LootTablePowerups lootTable;
     private void Awake()
     {
-        foreach (GameObject powerup in powerups)
+        /*foreach (GameObject powerup in powerups)
         {
             sum += powerup.GetComponent<PowerupWeights>().spawnRate;
-        }
+        }*/
         lootTable=GetComponent<LootTablePowerups>();
     }
     IEnumerator Start(){
@@ -28,11 +34,10 @@ public class PowerupsSpawner : MonoBehaviour{
         do
         {
             yield return StartCoroutine(SpawnPowerupFirst());
-        }
-        while (true);
+        }while (true);
     }
 
-    public GameObject GetRandomPowerup()
+    /*public GameObject GetRandomPowerup()
     {
         float randomWeight = 0;
         do
@@ -47,7 +52,7 @@ public class PowerupsSpawner : MonoBehaviour{
             randomWeight -= powerup.GetComponent<PowerupWeights>().spawnRate;
         }
         return null;
-    }
+    }*/
 
     /*public IEnumerator SpawnAllWaves(){
         if(timeSpawns <= 0){

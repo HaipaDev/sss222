@@ -43,10 +43,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecc846f247c28a4f935da921a1dbab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultGameSpeed: 1
   barrierOn: 0
   shopOn: 1
   xpOn: 1
   upgradesOn: 1
+  EVscoreMax: 30
+  shopScoreMax: 200
+  shopScoreMaxS: 200
+  shopScoreMaxE: 450
+  scoreMulti: 1
+  luckMulti: 1
+  xp_forCore: 100
+  xp_wave: 20
+  xp_shop: 3
+  xp_powerup: 1
+  xp_flying: 7
+  flyingTimeReq: 25
+  xp_staying: -2
+  stayingTimeReq: 4
+  startingPosPlayer: {x: 0.36, y: -6.24}
+  autoShootPlayer: 1
   healthPlayer: 150
   energyOnPlayer: 1
   energyPlayer: 180
@@ -63,6 +80,10 @@ MonoBehaviour:
   shipScaleDefault: 0.89
   laserSpeed: 9
   laserShootPeriod: 0.34
+  laser2Speed: 8.9
+  laser2ShootPeriod: 0.35
+  laser3Speed: 8.8
+  laser3ShootPeriod: 0.36
   phaserSpeed: 10.5
   phaserShootPeriod: 0.2
   hrocketSpeed: 6.5
@@ -71,9 +92,8 @@ MonoBehaviour:
   mlaserSpeedE: 10
   mlaserShootPeriod: 0.1
   mlaserBulletsAmmount: 10
-  lsaberEnPeriod: 0.1
-  shadowBTSpeed: 4
-  shadowBTShootPeriod: 0.65
+  shadowBTSpeed: 9
+  shadowBTShootPeriod: 0.34
   qrocketSpeed: 9.5
   qrocketShootPeriod: 0.3
   procketSpeedS: 9.5
@@ -82,29 +102,378 @@ MonoBehaviour:
   procketsBulletsAmmount: 10
   cbulletSpeed: 8.25
   cbulletShootPeriod: 0.15
-  plaserSpeed: 9.5
-  plaserShootPeriod: 0.7
+  plaserSpeed: 9.75
+  plaserShootPeriod: 0.75
   laserEn: 0.3
   laser2En: 1.25
   laser3En: 2.5
   phaserEn: 1.5
   mlaserEn: 0.075
-  lsaberEn: 0.375
+  lsaberEn: 0.4
+  lsaberEnPeriod: 0.15
   lclawsEn: 6.3
   shadowEn: 5
   shadowBTEn: 10
   cbulletEn: 1.3
-  plaserEn: 7
+  plaserEn: 5.6
   hrocketOh: 0.9
-  qrocketOh: 2.23
+  qrocketOh: 1.63
   procketEn: 0.86
-  procketOh: 0.09
+  procketOh: 0.49
   energyBallGet: 9
-  medkitEnergyGet: 26
-  medkitUEnergyGet: 40
+  medkitEnergyGet: 40
+  medkitUEnergyGet: 26
   medkitHpAmnt: 25
   medkitUHpAmnt: 62
   pwrupEnergyGet: 36
   enForPwrupRefill: 25
   enPwrupDuplicate: 42
   refillEnergyAmnt: 110
+  pwrupStatusList:
+  - name: Accelerator
+    lootItem: {fileID: 11400000, guid: d1939f2a5efe96042842032862cdf62e, type: 2}
+    rarity: 0
+    dropChance: 3.5
+    levelReq: 1
+  - name: Armor
+    lootItem: {fileID: 11400000, guid: 8ee29e2bede3b904bb2b52557eb0f6b9, type: 2}
+    rarity: 0
+    dropChance: 3
+    levelReq: 0
+  - name: ArmorU
+    lootItem: {fileID: 11400000, guid: 2650301666c6e9d4b8719cd07986fecb, type: 2}
+    rarity: 1
+    dropChance: 1.75
+    levelReq: 1
+  - name: Flip
+    lootItem: {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
+    rarity: 0
+    dropChance: 6
+    levelReq: 0
+  - name: GCLover
+    lootItem: {fileID: 11400000, guid: f6a560a419dccd647bb79ae520e69ddf, type: 2}
+    rarity: 2
+    dropChance: 0.3
+    levelReq: 1
+  - name: Inverter
+    lootItem: {fileID: 11400000, guid: 836e8441bd1a4e1468be0e689364fb14, type: 2}
+    rarity: 0
+    dropChance: 6
+    levelReq: 0
+  - name: Magnet
+    lootItem: {fileID: 11400000, guid: 6878a416f2285834c9af2732b5242ce0, type: 2}
+    rarity: 1
+    dropChance: 5
+    levelReq: 0
+  - name: Matrix
+    lootItem: {fileID: 11400000, guid: 9000ede4635f82647a1cd13010567e48, type: 2}
+    rarity: 0
+    dropChance: 4
+    levelReq: 1
+  - name: PointMulti
+    lootItem: {fileID: 11400000, guid: 1f5c3c97f5d9e164dafb8aac25017596, type: 2}
+    rarity: 1
+    dropChance: 2
+    levelReq: 3
+  - name: Randomizer
+    lootItem: {fileID: 11400000, guid: 8645c7606471be849bbf4044ff5ceec1, type: 2}
+    rarity: 0
+    dropChance: 6
+    levelReq: 0
+  - name: Scaler
+    lootItem: {fileID: 11400000, guid: c9d54cc47e5cf20499998336988ca3ff, type: 2}
+    rarity: 0
+    dropChance: 5
+    levelReq: 0
+  - name: Shadowdash
+    lootItem: {fileID: 11400000, guid: 9b409de821cfef24e850bac7ad821f16, type: 2}
+    rarity: 0
+    dropChance: 3
+    levelReq: 1
+  mTimePowerupStatusSpawns: -1
+  mTimePowerupStatusSpawnsS: 9
+  mTimePowerupStatusSpawnsE: 16
+  firstPowerupStatusSpawn: 8
+  enemiesPowerupStatusCountReq: -1
+  pwrupWeaponList:
+  - name: CStream
+    lootItem: {fileID: 11400000, guid: 9a4e80f1fa79ea547a89f82e21045b39, type: 2}
+    rarity: 1
+    dropChance: 1.75
+    levelReq: 3
+  - name: HRockets
+    lootItem: {fileID: 11400000, guid: f75229abe571c5f4780d84f66fa08b5b, type: 2}
+    rarity: 0
+    dropChance: 3
+    levelReq: 1
+  - name: Laser2
+    lootItem: {fileID: 11400000, guid: 1368b36bec2ccca4e97ab92bed99ea99, type: 2}
+    rarity: 0
+    dropChance: 4
+    levelReq: 0
+  - name: Laser3
+    lootItem: {fileID: 11400000, guid: 6682bf37c4b0a37459f807e12dd59d27, type: 2}
+    rarity: 1
+    dropChance: 3.15
+    levelReq: 2
+  - name: LClaws
+    lootItem: {fileID: 11400000, guid: 48ec4756caf9fcb4fab471d62d339935, type: 2}
+    rarity: 1
+    dropChance: 1.5
+    levelReq: 2
+  - name: LSaber
+    lootItem: {fileID: 11400000, guid: 58529076849c1924e91e0633da503bfc, type: 2}
+    rarity: 0
+    dropChance: 5
+    levelReq: 0
+  - name: MLaser
+    lootItem: {fileID: 11400000, guid: e2b5a8667474ac54a8705649fcad7ee5, type: 2}
+    rarity: 1
+    dropChance: 2
+    levelReq: 2
+  - name: Phaser
+    lootItem: {fileID: 11400000, guid: 96f99f90403e530478f4d3e9bd04b50f, type: 2}
+    rarity: 1
+    dropChance: 2.5
+    levelReq: 1
+  - name: PLaser
+    lootItem: {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
+    rarity: 1
+    dropChance: 3
+    levelReq: 2
+  - name: QRockets
+    lootItem: {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
+    rarity: 0
+    dropChance: 3
+    levelReq: 2
+  - name: ShadowBT
+    lootItem: {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
+    rarity: 2
+    dropChance: 0.05
+    levelReq: 1
+  mTimePowerupWeaponsSpawns: -1
+  mTimePowerupWeaponsSpawnsS: -1
+  mTimePowerupWeaponsSpawnsE: -1
+  firstPowerupWeaponsSpawn: -4
+  enemiesPowerupWeaponsCountReq: 20
+  waveList:
+  - name: CometsFlyby
+    lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
+    dropChance: 8.5
+    levelReq: 0
+  - name: CometStorm
+    lootItem: {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf, type: 2}
+    dropChance: 7
+    levelReq: 0
+  - name: BatsFlyby
+    lootItem: {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc, type: 2}
+    dropChance: 9
+    levelReq: 0
+  - name: BatV
+    lootItem: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
+    dropChance: 8
+    levelReq: 0
+  - name: EnemyShip
+    lootItem: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
+    dropChance: 6.5
+    levelReq: 0
+  - name: EnemyCombatant
+    lootItem: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d, type: 2}
+    dropChance: 3
+    levelReq: 2
+  - name: BatsCluster
+    lootItem: {fileID: 11400000, guid: 2145a8982afb67c4bbfa60857b9f71f9, type: 2}
+    dropChance: 1
+    levelReq: 1
+  - name: StingerFlingers
+    lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
+    dropChance: 6.8
+    levelReq: 1
+  spawnLeech: 1
+  mSTimeSpawnsLeech: 55
+  mETimeSpawnsLeech: 80
+  spawnHlaser: 1
+  mSTimeSpawnsHlaser: 30
+  mETimeSpawnsHlaser: 60
+  spawnGoblin: 1
+  mSTimeSpawnsGoblin: 40
+  mETimeSpawnsGoblin: 50
+  spawnHealDrone: 1
+  mEnemiesCountHealDrone: 50
+  mSTimeSpawnsHealDrone: 40
+  mETimeSpawnsHealDrone: 50
+  spawnVortexWheel: 1
+  mEnergyCountVortexWheel: 200
+  EnergyCountVortexWheel: 0
+  mSTimeSpawnsVortexWheel: 40
+  mETimeSpawnsVortexWheel: 50
+  spawnGlareDevil: 1
+  mEnergyCountGlareDevil: 20
+  mSTimeSpawnsGlareDevil: 40
+  mETimeSpawnsGlareDevil: 50
+  enemies:
+  - name: Bat
+    health: 40
+    shooting: 1
+    minTimeBtwnShots: 1.75
+    maxTimeBtwnShots: 2.8
+    bullet: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
+      type: 3}
+    bulletSpeed: 5
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    givePts: 1
+    scoreValueStart: 4
+    scoreValueEnd: 9
+    enBallChanceInit: 30
+    coinChanceInit: 3
+    powercoreChanceInit: 0
+    xpAmnt: 0
+  - name: Comet
+    health: 15
+    shooting: 0
+    minTimeBtwnShots: 0
+    maxTimeBtwnShots: 0
+    bullet: {fileID: 0}
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    givePts: 1
+    scoreValueStart: 3
+    scoreValueEnd: 10
+    enBallChanceInit: 30
+    coinChanceInit: 3
+    powercoreChanceInit: 0
+    xpAmnt: 0
+  - name: Enemy Combatant
+    health: 95
+    shooting: 0
+    minTimeBtwnShots: 0
+    maxTimeBtwnShots: 0
+    bullet: {fileID: 0}
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 1
+    flyOff: 1
+    givePts: 1
+    scoreValueStart: 10
+    scoreValueEnd: 17
+    enBallChanceInit: 30
+    coinChanceInit: 3
+    powercoreChanceInit: 25
+    xpAmnt: 1
+  - name: Enemy Ship
+    health: 120
+    shooting: 1
+    minTimeBtwnShots: 0.65
+    maxTimeBtwnShots: 0.93
+    bullet: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1,
+      type: 3}
+    bulletSpeed: 8
+    DBullets: 0
+    bulletDist: 0.35
+    randomizeWaveDeath: 1
+    flyOff: 1
+    givePts: 1
+    scoreValueStart: 11
+    scoreValueEnd: 15
+    enBallChanceInit: 30
+    coinChanceInit: 3
+    powercoreChanceInit: 25
+    xpAmnt: 1
+  - name: Glare Devil
+    health: 33
+    shooting: 0
+    minTimeBtwnShots: 0
+    maxTimeBtwnShots: 0
+    bullet: {fileID: 0}
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    givePts: 1
+    scoreValueStart: 13
+    scoreValueEnd: 13
+    enBallChanceInit: 30
+    coinChanceInit: 3
+    powercoreChanceInit: 1
+    xpAmnt: 4
+  - name: Healing Drone
+    health: 115
+    shooting: 0
+    minTimeBtwnShots: 0
+    maxTimeBtwnShots: 0
+    bullet: {fileID: 0}
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    givePts: 1
+    scoreValueStart: 15
+    scoreValueEnd: 25
+    enBallChanceInit: 30
+    coinChanceInit: 3
+    powercoreChanceInit: 15
+    xpAmnt: 2.5
+  - name: Mecha Leech
+    health: 26
+    shooting: 0
+    minTimeBtwnShots: 0
+    maxTimeBtwnShots: 0
+    bullet: {fileID: 0}
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    givePts: 1
+    scoreValueStart: 15
+    scoreValueEnd: 25
+    enBallChanceInit: 30
+    coinChanceInit: 3
+    powercoreChanceInit: 13
+    xpAmnt: 4
+  - name: Stinger
+    health: 17
+    shooting: 0
+    minTimeBtwnShots: 0
+    maxTimeBtwnShots: 0
+    bullet: {fileID: 0}
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    givePts: 1
+    scoreValueStart: 3
+    scoreValueEnd: 7
+    enBallChanceInit: 30
+    coinChanceInit: 3
+    powercoreChanceInit: 1
+    xpAmnt: 1.5
+  - name: Vortex Wheel
+    health: 95
+    shooting: 0
+    minTimeBtwnShots: 0
+    maxTimeBtwnShots: 0
+    bullet: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2,
+      type: 3}
+    bulletSpeed: 8
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    givePts: 1
+    scoreValueStart: 15
+    scoreValueEnd: 20
+    enBallChanceInit: 30
+    coinChanceInit: 3
+    powercoreChanceInit: 30
+    xpAmnt: 5

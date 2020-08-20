@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
 public class Enemy : MonoBehaviour{
-    [HeaderAttribute("Enemy")]
+    [Header("Enemy")]
+    [SerializeField] public string Name;
     [SerializeField] public float health = 100f;
     float shotCounter;
     [SerializeField] public bool shooting = false;
@@ -17,20 +19,20 @@ public class Enemy : MonoBehaviour{
     [SerializeField] float bulletDist=0.35f;
     [SerializeField] bool randomizeWaveDeath = false;
     [SerializeField] bool flyOff = false;
-    [HeaderAttribute("Drops & Points")]
+    [Header("Drops & Points")]
     //[SerializeField] int scoreValue = 1;
     [SerializeField] public bool givePts = true;
     [SerializeField] int scoreValueStart = 1;
     [SerializeField] int scoreValueEnd = 10;
-    [SerializeField] float enBallchanceInit = 30f;
-    [SerializeField] float CoinchanceInit = 3f;
+    [SerializeField] float enBallChanceInit = 30f;
+    [SerializeField] float coinChanceInit = 3f;
     [SerializeField] float powercoreChanceInit = 0f;
     [SerializeField] float xpAmnt = 0f;
-    [HideInInspector] public float enBallchance;
-    [HideInInspector] public float Coinchance;
+    [HideInInspector] public float enBallChance;
+    [HideInInspector] public float coinChance;
     [HideInInspector] public float powercoreChance;
     
-    [HeaderAttribute("Effects")]
+    [Header("Effects")]
     #region//VFX
     GameObject explosionVFX;
     GameObject explosionSmallVFX;
@@ -52,7 +54,7 @@ public class Enemy : MonoBehaviour{
     */
     #endregion
     #region//Prefabs
-    [HeaderAttribute("Damage Dealers")]
+    [Header("Damage Dealers")]
     GameObject laserPrefab;
     GameObject mlaserPrefab;
     GameObject hrocketPrefab;
@@ -68,12 +70,12 @@ public class Enemy : MonoBehaviour{
     GameObject lclawsPartPrefab;
     GameObject mPulsePrefab;
     GameObject plaserPrefab;
-    [HeaderAttribute("Drops")]
+    [Header("Drops")]
     GameObject enBallPrefab;
     GameObject coinPrefab;
     GameObject powercorePrefab;
     #endregion
-    [HeaderAttribute("Others")]
+    [Header("Others")]
     //[SerializeField] public bool cTagged=false;
     //[SerializeField] public float curSpeed;
     [SerializeField] public bool yeeted=false;
@@ -87,23 +89,56 @@ public class Enemy : MonoBehaviour{
     Player player;
     Shake shake;
 
-    // Start is called before the first frame update
+    private void Awake() {
+        StartCoroutine(SetValues());
+    }
+    IEnumerator SetValues(){
+        yield return new WaitForSeconds(0.02f);
+        //Set values
+        var i=GameRules.instance;
+        if(i!=null){
+            EnemyClass e=null;
+            foreach(EnemyClass enemy in i.enemies){if(enemy.name==Name){e=enemy;}}
+            if(e!=null){
+            health=e.health;
+            shooting=e.shooting;
+            minTimeBtwnShots=e.minTimeBtwnShots;
+            maxTimeBtwnShots=e.maxTimeBtwnShots;
+            bullet=e.bullet;
+            bulletSpeed=e.bulletSpeed;
+            DBullets=e.DBullets;
+            bulletDist=e.bulletDist;
+            randomizeWaveDeath=e.randomizeWaveDeath;
+            flyOff=e.flyOff;
+            givePts=e.givePts;
+            scoreValueStart=e.scoreValueStart;
+            scoreValueEnd=e.scoreValueEnd;
+            enBallChanceInit=e.enBallChanceInit;
+            coinChanceInit=e.coinChanceInit;
+            powercoreChanceInit=e.powercoreChanceInit;
+            xpAmnt=e.xpAmnt;
+            }
+        }
+    }
     void Start(){
         rb=GetComponent<Rigidbody2D>();
         gameSession = FindObjectOfType<GameSession>();
         player = FindObjectOfType<Player>();
         shake = GameObject.FindObjectOfType<Shake>();
 
-        enBallchanceInit*=gameSession.enballDropMulti;
-        CoinchanceInit*=gameSession.coinDropMulti;
+        enBallChanceInit*=gameSession.enballDropMulti;
+        coinChanceInit*=gameSession.coinDropMulti;
         powercoreChanceInit*=gameSession.coreDropMulti;
 
-        enBallchance = Random.Range(0f, 100f);
-        Coinchance = Random.Range(0f, 100f);
+        enBallChance = Random.Range(0f, 100f);
+        coinChance = Random.Range(0f, 100f);
         powercoreChance = Random.Range(0f, 100f);
-        if (enBallchance <= enBallchanceInit && enBallchanceInit>0){ enBallchance = 1; }
-        if (Coinchance <= CoinchanceInit && CoinchanceInit>0) { Coinchance = 1; }
-        if (powercoreChance <= powercoreChanceInit && powercoreChanceInit>0) { powercoreChance = 1; }
+        if(enBallChance <= enBallChanceInit && enBallChanceInit>0){ enBallChance = 1; }
+        if(coinChance <= coinChanceInit && coinChanceInit>0) { coinChance = 1; }
+        if(powercoreChance <= powercoreChanceInit && powercoreChanceInit>0) { powercoreChance = 1; }
+        if(!GameRules.instance.energyOnPlayer)enBallChance=0;
+        if(!GameSession.instance.shopOn)coinChance=0;
+        if(!GameSession.instance.upgradesOn)powercoreChance=0;
         shotCounter = Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
 
         SetPrefabs();
@@ -188,8 +223,8 @@ public class Enemy : MonoBehaviour{
             int scoreValue = Random.Range(scoreValueStart,scoreValueEnd);
             if(givePts==true){
                 gameSession.AddToScore(scoreValue);
-                if(enBallchance==1){ Instantiate(enBallPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
-                if(Coinchance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
+                if(enBallChance==1){ Instantiate(enBallPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
+                if(coinChance==1){ Instantiate(coinPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
                 if(powercoreChance==1){ Instantiate(powercorePrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
                 gameSession.AddEnemyCount();
                 if(xpAmnt!=0)gameSession.AddXP(xpAmnt);

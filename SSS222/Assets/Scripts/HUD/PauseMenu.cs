@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour{
     public float prevGameSpeed = 1f;
 
     GameSession gameSession;
+    IEnumerator slowDownCo;
     //Shop shop;
     void Start(){
         gameSession = FindObjectOfType<GameSession>();
@@ -18,14 +19,12 @@ public class PauseMenu : MonoBehaviour{
     void Update(){
         if(gameSession==null)gameSession = FindObjectOfType<GameSession>();
         if(Input.GetKeyDown(KeyCode.Escape)){
-            if(GameIsPaused&&Time.timeScale==0){
+            if(GameIsPaused){
                 Resume();
             }else{
                 if(Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true)Pause();
             }
-        }if(Input.GetKeyDown(KeyCode.R)){
-            
-        }
+        }//if(Input.GetKeyDown(KeyCode.R)){//in GameSession}
     }
     public void Resume(){
         pauseMenuUI.SetActive(false);
@@ -33,14 +32,15 @@ public class PauseMenu : MonoBehaviour{
         gameSession.gameSpeed=1;
         //StartCoroutine(SpeedUp());
         GameIsPaused = false;
+        slowDownCo=null;
     }
     public void Pause(){
         prevGameSpeed = gameSession.gameSpeed;
         pauseMenuUI.SetActive(true);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         GameIsPaused = true;
-        //gameSession.gameSpeed=0;
-        StartCoroutine(SlowDown());
+        if(gameSession.slowingPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
+        else{gameSession.gameSpeed=0;}
         
         //ParticleSystem.Stop();
         //var ptSystems = FindObjectOfType<ParticleSystem>();
