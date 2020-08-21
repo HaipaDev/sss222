@@ -3,13 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LaunchRadialBullets : MonoBehaviour {
+	[SerializeField] GameObject projectile;
 	[SerializeField] int numberOfProjectiles=4;
 	[SerializeField] float radius=5;
 	[SerializeField] float moveSpeed=5;
 	//[SerializeField] bool rotate;
-	[SerializeField] GameObject projectile;
 
 	Vector2 startPoint;
+	void Awake(){
+    //Set Values
+    var i=GameRules.instance;
+    if(GetComponent<VortexWheel>()!=null&&i!=null){
+        var e=i.vortexWheelSettings;
+        projectile=e.projectile;
+        numberOfProjectiles=e.numberOfProjectiles;
+        radius=e.radius;
+        moveSpeed=e.moveSpeed;
+    }
+    }
 	void Start () {
 		
 	}

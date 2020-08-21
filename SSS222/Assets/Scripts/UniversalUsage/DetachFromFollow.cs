@@ -18,7 +18,17 @@ public class DetachFromFollow : MonoBehaviour{
 
     Follow follow;
     Rigidbody2D rb;
-    // Start is called before the first frame update
+    void Awake(){
+    //Set Values
+    var i=GameRules.instance;
+    if(i!=null){
+        var e=i.mechaLeechSettings;
+        catch_distance=e.catch_distance;
+        shake_distance=e.shake_distance;
+        count_max=e.count_max;
+        fallSpeed=e.fallSpeed;
+    }
+    }
     void Start()
     {
         follow = GetComponent<Follow>();

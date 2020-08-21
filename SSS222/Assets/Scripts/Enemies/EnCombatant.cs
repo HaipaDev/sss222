@@ -10,10 +10,10 @@ public class EnCombatant : MonoBehaviour{
     Vector2 selfPos;
     Vector2 selfPosX;
     Transform target;
-    [SerializeField] float speedFollow = 2f;
+    //[SerializeField] float speedFollow = 2f;
     [SerializeField] float speedFollowX = 3.5f;
     [SerializeField] float speedFollowY = 4f;
-    [SerializeField] float speedRush = 10f;
+    //[SerializeField] float speedRush = 10f;
     [SerializeField] float vspeed = 0.1f;
     [SerializeField] float distY = 1.3f;
     [SerializeField] float distX = 0.3f;
@@ -28,6 +28,20 @@ public class EnCombatant : MonoBehaviour{
     //Enemy enemy;
     Rigidbody2D rb;
     //GameSession gameSession;
+    void Awake(){
+    //Set Values
+    var i=GameRules.instance;
+    if(i!=null){
+        var e=i.enCombatantSettings;
+        speedFollowX=e.speedFollowX;
+        speedFollowY=e.speedFollowY;
+        vspeed=e.vspeed;
+        distY=e.distY;
+        distX=e.distX;
+        distYPlayer=e.distYPlayer;
+        saberPrefab=e.saberPrefab;
+    }
+    }
     void Start(){
         //if(FindObjectOfType<Tag_EnSaberWeapon>()==null){saber = Instantiate(saberPrefab,transform.position,Quaternion.identity);}//saber.GetComponent<FollowStrict>().targetObj=this.gameObject;}//saber.GetComponent<FollowOneObject>().targetObj=this.gameObject;}
         saber=gameObject.transform.GetChild(0).gameObject;

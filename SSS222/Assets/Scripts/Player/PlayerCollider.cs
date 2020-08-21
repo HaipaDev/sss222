@@ -118,9 +118,10 @@ public class PlayerCollider : MonoBehaviour{
         if (!other.CompareTag(tag))
         {
             DamageDealer damageDealer = other.GetComponent<DamageDealer>();
-            if (!damageDealer) { /*return;*/ }
+            DamageValues damageValues=DamageValues.instance;
+            //ifif(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
 
-            if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);player.Damage(damageDealer.GetDmgZone(),dmgType.silent);}
+            if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);player.Damage(damageValues.GetDmgZone(),dmgType.silent);}
             #region//Enemies
             if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet"))
             {
@@ -129,35 +130,35 @@ public class PlayerCollider : MonoBehaviour{
                 float dmg = 0;
 
                 var cometName = cometPrefab.name; var cometName1 = cometPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(cometName)) { dmg = (float)System.Math.Round(damageDealer.GetDmgComet()*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1); en = true; }
+                if (other.gameObject.name.Contains(cometName)) { dmg = (float)System.Math.Round(damageValues.GetDmgComet()*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1); en = true; }
 
                 var batName = batPrefab.name; var batName1 = batPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(batName)) { dmg = damageDealer.GetDmgBat(); en = true; }
+                if (other.gameObject.name.Contains(batName)) { dmg = damageValues.GetDmgBat(); en = true; }
                 var Sname = soundwavePrefab.name; var Sname1 = soundwavePrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(Sname)) { dmg = damageDealer.GetDmgSoundwave(); AudioManager.instance.Play("SoundwaveHit"); }
+                if (other.gameObject.name.Contains(Sname)) { dmg = damageValues.GetDmgSoundwave(); AudioManager.instance.Play("SoundwaveHit"); }
 
                 var enShip1Name = enShip1Prefab.name; var enShip1Name1 = enShip1Prefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(enShip1Name)) { dmg = damageDealer.GetDmgEnemyShip1(); en = true; }
+                if (other.gameObject.name.Contains(enShip1Name)) { dmg = damageValues.GetDmgEnemyShip1(); en = true; }
                 var EBtname = EBtPrefab.name; var EBtname1 = EBtPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(EBtname)) { dmg = damageDealer.GetDmgEBt();}
+                if (other.gameObject.name.Contains(EBtname)) { dmg = damageValues.GetDmgEBt();}
 
                 var enCombatantName = enCombatantPrefab.name; var enCombatantName1 = enCombatantPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(enCombatantName)) { en = true; destroy=false; }
                 var enSaberName = enSaberPrefab.name; var enSaberName1 = enSaberPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(enSaberName)) { dmg = damageDealer.GetDmgEnSaber(); en = false; destroy=false; }
+                if (other.gameObject.name.Contains(enSaberName)) { dmg = damageValues.GetDmgEnSaber(); en = false; destroy=false; }
 
                 var goblinName = goblinPrefab.name; var goblinName1 = goblinPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(goblinName)) { dmg = damageDealer.GetDmgGoblin(); en = true; }
+                if (other.gameObject.name.Contains(goblinName)) { dmg = damageValues.GetDmgGoblin(); en = true; }
 
                 var hdroneName = hdronePrefab.name; var hdroneName1 = hdronePrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(hdroneName)) { dmg = damageDealer.GetDmgHealDrone(); en = true; }
+                if (other.gameObject.name.Contains(hdroneName)) { dmg = damageValues.GetDmgHealDrone(); en = true; }
 
                 var vortexName = vortexPrefab.name; var vortexName1 = vortexPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(vortexName)) { dmg = damageDealer.GetDmgVortex(); en = true; }
+                if (other.gameObject.name.Contains(vortexName)) { dmg = damageValues.GetDmgVortex(); en = true; }
                 if(other.gameObject.name.Contains("StickBomb")) { dmg=0; en = false; destroy=false; }
 
                 var stingerName = stingerPrefab.name; var stingerName1 = stingerPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(stingerName)) { dmg = damageDealer.GetDmgStinger(); player.Weaken(20,1); en = true; }
+                if (other.gameObject.name.Contains(stingerName)) { dmg = damageValues.GetDmgStinger(); player.Weaken(damageValues.GetEfxStinger().x,damageValues.GetEfxStinger().y); en = true; }
 
                 var leechName = leechPrefab.name; var leechName1 = leechPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(leechName)) { en = true;  destroy = false; }
@@ -166,10 +167,10 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name.Contains(hlaserName)) { destroy = false; }
 
                 var goblinbtName = goblinbtPrefab.name; var goblinbtName1 = goblinbtPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(goblinbtName)) { dmg=damageDealer.GetDmgGoblinBt(); /*player.Blind(3,2);*/player.Fragile(6,0.8f); player.Hack(5); AudioManager.instance.Play("GoblinBtHit");}
+                if (other.gameObject.name.Contains(goblinbtName)) { dmg=damageValues.GetDmgGoblinBt(); /*player.Blind(3,2);*/player.Fragile(damageValues.GetEfxGoblinBt().x,damageValues.GetEfxGoblinBt().y); player.Hack(damageValues.GetEfxGoblinBt().x*0.9f); AudioManager.instance.Play("GoblinBtHit");}
                 
                 var glaredevName = glaredevPrefab.name; var glaredevName1 = glaredevPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(glaredevName)) { en=true; dmg=damageDealer.GetDmgGoblin(); player.Fragile(1.5f,2f); player.Weaken(1.5f,2f); }
+                if (other.gameObject.name.Contains(glaredevName)) { en=true; dmg=damageValues.GetDmgGoblin(); player.Fragile(damageValues.GetEfxGlareDev().x,damageValues.GetEfxGlareDev().y); player.Weaken(damageValues.GetEfxGlareDev().x,damageValues.GetEfxGlareDev().y); }
 
                 if (!other.gameObject.name.Contains(hlaserName))
                 {
@@ -411,22 +412,23 @@ public class PlayerCollider : MonoBehaviour{
         if (!other.CompareTag(tag))
         {
         if (dmgTimer<=0){
-            DamageDealer damageDealer = other.GetComponent<DamageDealer>();
-            if (!damageDealer) { /*return;*/ }
+            DamageDealer damageDealer=other.GetComponent<DamageDealer>();
+            DamageValues damageValues=DamageValues.instance;
+            //if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
             //bool en = false;
             float dmg = 0;
-            if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=damageDealer.GetDmgZone();}
+            if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=damageValues.GetDmgZone();}
             var leechName=leechPrefab.name;
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet")){
             
             leechName = leechPrefab.name; var leechName1 = leechPrefab.name + "(Clone)";
-            if (other.gameObject.name.Contains(leechName)) { dmg = damageDealer.GetDmgLeech(); AudioManager.instance.Play("LeechBite");}
+            if (other.gameObject.name.Contains(leechName)) { dmg = damageValues.GetDmgLeech(); AudioManager.instance.Play("LeechBite");}
 
             var hlaserName = hlaserPrefab.name; var hlaserName1 = hlaserPrefab.name + "(Clone)";
-            if (other.gameObject.name.Contains(hlaserName)) { dmg = damageDealer.GetDmgHLaser(); }
+            if (other.gameObject.name.Contains(hlaserName)) { dmg = damageValues.GetDmgHLaser(); }
 
             var enSaberName = enSaberPrefab.name; var enSaberName1 = enSaberPrefab.name + "(Clone)";
-            if (other.gameObject.name.Contains(enSaberName)) { dmg = damageDealer.GetDmgEnSaber(); }
+            if (other.gameObject.name.Contains(enSaberName)) { dmg = damageValues.GetDmgEnSaber(); }
 
             if(other.gameObject.name.Contains("StickBomb")) { dmg=0; }
             }

@@ -41,6 +41,7 @@ public class GoblinDrop : MonoBehaviour{
     // Start is called before the first frame update
     void Start()
     {
+        var i=GameRules.instance;if(i!=null){bossHp=i.goblinBossHP;}
         enemy = GetComponent<Enemy>();
         rb = GetComponent<Rigidbody2D>();
         myAudioSource = GetComponent<AudioSource>();

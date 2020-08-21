@@ -3,9 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GlareDevil : MonoBehaviour{
-    [SerializeField]float timerMax;
+    [SerializeField]float timerMax=3.3f;
+    [SerializeField]Vector2 efxBlind=new Vector2(4,4);
+
     float timer=-4;
     EnemyPathing path;
+    void Awake(){
+    //Set Values
+    var i=GameRules.instance;
+    if(i!=null){
+        var e=i.glareDevilSettings;
+        timerMax=e.timerMax;
+        efxBlind=e.efxBlind;
+    }
+    }
     void Start(){
         timer=timerMax;
         path=GetComponent<EnemyPathing>();
@@ -21,6 +32,6 @@ public class GlareDevil : MonoBehaviour{
         if(timer>0)timer-=Time.deltaTime;
     }
     void Blind(){
-        if(timer<=0){FindObjectOfType<Player>().Blind(4,4);GetComponent<AudioSource>().Play();timer=timerMax;}
+        if(timer<=0){FindObjectOfType<Player>().Blind(efxBlind.x,efxBlind.y);GetComponent<AudioSource>().Play();timer=timerMax;}
     }
 }

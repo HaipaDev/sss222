@@ -3,19 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class VortexWheel : MonoBehaviour{
+    [Header("Properties")]
+    [SerializeField] public float startTimer=3f;
+    [SerializeField] public float timeToDieMin=8f;
+    [SerializeField] public float timeToDieMax=13f;
+    [SerializeField] public float chargeMultip=0.8f;
+    [SerializeField] public float chargeMultipS=1.3f;
+    [SerializeField] Sprite[] sprites;
+    [Header("Values")]
     Tag_PlayerWeaponBlockable[] WeapsArr;
     KdTree<Tag_PlayerWeaponBlockable> Weaps;
     public float chargeEnergy;
     public float timer=-4;
-    [SerializeField] public float startTimer=3f;
-    [SerializeField] public float chargeMultip=0.8f;
-    [SerializeField] public float chargeMultipS=1.3f;
-    [SerializeField] Sprite[] sprites;
+    
     float timeToDie;
     Sprite spr;
+    void Awake(){
+    //Set Values
+    var i=GameRules.instance;
+    if(i!=null){
+        var e=i.vortexWheelSettings;
+        startTimer=e.startTimer;
+        chargeMultip=e.chargeMultip;
+        chargeMultipS=e.chargeMultipS;
+    }
+    }
     void Start(){
         spr=GetComponent<SpriteRenderer>().sprite;
-        timeToDie=UnityEngine.Random.Range(8f,13f);
+        timeToDie=UnityEngine.Random.Range(timeToDieMin,timeToDieMax);
     }
 
     void Update(){

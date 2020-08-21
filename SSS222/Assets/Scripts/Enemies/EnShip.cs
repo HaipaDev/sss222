@@ -18,6 +18,18 @@ public class EnShip : MonoBehaviour{
     //Enemy enemy;
     //Rigidbody2D rb;
     //GameSession gameSession;
+    void Awake(){
+    //Set Values
+    var i=GameRules.instance;
+    if(i!=null){
+        var e=i.enShipSettings;
+        speedFollow=e.speedFollow;
+        vspeed=e.vspeed;
+        distY=e.distY;
+        distX=e.distX;
+        getClose=e.getClose;
+    }
+    }
     void Start(){
         player = FindObjectOfType<Player>();
         //enemy = GetComponent<Enemy>();

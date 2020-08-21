@@ -49,74 +49,74 @@ public class Player : MonoBehaviour{
     [SerializeField] public float freqHpRegen=1f;
     [SerializeField] public float hpRegenAmnt=0.1f;
     //[SerializeField] public float hpForRegen=0f;
-    [SerializeField] public float armorMulti = 1f;
-    [SerializeField] public float dmgMulti = 1f;
-    [SerializeField] public float shootMulti = 1f;
+    [SerializeField] public float armorMulti=1f;
+    [SerializeField] public float dmgMulti=1f;
+    [SerializeField] public float shootMulti=1f;
     [SerializeField] public float shipScaleDefault=0.89f;
     [Header("States")]
     public List<string> statuses;
     public string statusc="";
-    [SerializeField] public bool flip = false;
+    [SerializeField] public bool flip=false;
     public float flipTimer=-4;
-    [SerializeField] public bool gclover = false;
+    [SerializeField] public bool gclover=false;
     public float gcloverTimer =-4;
-    [SerializeField] public bool shadow = false;
-    public float shadowTimer = -4;
+    [SerializeField] public bool shadow=false;
+    public float shadowTimer=-4;
     public float dashTime;
-    [SerializeField] public bool inverter = false;
-    public float inverterTimer = 14;
-    [SerializeField] public bool magnet = false;
-    public float magnetTimer = -4;
-    [SerializeField] public bool matrix = false;
-    public float matrixTimer = -4;
-    [SerializeField] public bool scaler = false;
-    public float scalerTimer = -4;
-    public float pmultiTimer = -4;
-    [SerializeField] public bool accel = false;
-    public float accelTimer = -4;
-    [SerializeField] public bool onfire = false;
-    public float onfireTimer = -4;
-    [HideInInspector]public float onfireTime = -4;
-    [SerializeField] public bool decay = false;
-    public float decayTimer = -4;
-    [HideInInspector]public float decayTime = -4;
-    [SerializeField] public bool electrc = false;
-    public float electrcTimer = -4;
-    [HideInInspector]public float electrcTime = -4;
-    [SerializeField] public bool frozen = false;
-    public float frozenTimer = -4;
-    [HideInInspector]public float frozenTime = -4;
-    [SerializeField] public bool armored = false;
-    public float armoredTimer = -4;
-    [HideInInspector]public float armoredTime = -4;
+    [SerializeField] public bool inverter=false;
+    public float inverterTimer=14;
+    [SerializeField] public bool magnet=false;
+    public float magnetTimer=-4;
+    [SerializeField] public bool matrix=false;
+    public float matrixTimer=-4;
+    [SerializeField] public bool scaler=false;
+    public float scalerTimer=-4;
+    public float pmultiTimer=-4;
+    [SerializeField] public bool accel=false;
+    public float accelTimer=-4;
+    [SerializeField] public bool onfire=false;
+    public float onfireTimer=-4;
+    [HideInInspector]public float onfireTime=-4;
+    [SerializeField] public bool decay=false;
+    public float decayTimer=-4;
+    [HideInInspector]public float decayTime=-4;
+    [SerializeField] public bool electrc=false;
+    public float electrcTimer=-4;
+    [HideInInspector]public float electrcTime=-4;
+    [SerializeField] public bool frozen=false;
+    public float frozenTimer=-4;
+    [HideInInspector]public float frozenTime=-4;
+    [SerializeField] public bool armored=false;
+    public float armoredTimer=-4;
+    [HideInInspector]public float armoredTime=-4;
     [HideInInspector]public float armoredStrength=1;
-    [SerializeField] public bool fragile = false;
-    public float fragileTimer = -4;
-    [HideInInspector]public float fragileTime = -4;
+    [SerializeField] public bool fragile=false;
+    public float fragileTimer=-4;
+    [HideInInspector]public float fragileTime=-4;
     [HideInInspector]public float fragileStrength=1;
-    [SerializeField] public bool power = false;
-    public float powerTimer = -4;
-    [HideInInspector]public float powerTime = -4;
+    [SerializeField] public bool power=false;
+    public float powerTimer=-4;
+    [HideInInspector]public float powerTime=-4;
     [HideInInspector]public float powerStrength=1;
-    [SerializeField] public bool weakns = false;
-    public float weaknsTimer = -4;
-    [HideInInspector]public float weaknsTime = -4;
+    [SerializeField] public bool weakns=false;
+    public float weaknsTimer=-4;
+    [HideInInspector]public float weaknsTime=-4;
     [HideInInspector]public float weaknsStrength=1;
-    [SerializeField] public bool hacked = false;
-    public float hackedTimer = -4;
-    [HideInInspector]public float hackedTime = -4;
-    [SerializeField] public bool blind = false;
-    public float blindTimer = -4;
+    [SerializeField] public bool hacked=false;
+    public float hackedTimer=-4;
+    [HideInInspector]public float hackedTime=-4;
+    [SerializeField] public bool blind=false;
+    public float blindTimer=-4;
     [HideInInspector]public float blindStrenght;
-    [HideInInspector]public float blindTime = -4;
-    [SerializeField] public bool infEnergy = false;
-    public float infEnergyTimer = -4;
+    [HideInInspector]public float blindTime=-4;
+    [SerializeField] public bool infEnergy=false;
+    public float infEnergyTimer=-4;
     public float infPrevEnergy;
-    [HideInInspector]public float infEnergyTime = -4;
+    [HideInInspector]public float infEnergyTime=-4;
     [Header("State Defaults")]
-    [SerializeField] public float flipTime = 7f;
-    [SerializeField] public float gcloverTime = 6f;
-    [SerializeField] public float shadowTime = 10f;
+    [SerializeField] public float flipTime=7f;
+    [SerializeField] public float gcloverTime=6f;
+    [SerializeField] public float shadowTime=10f;
     [SerializeField] public float shadowLength=0.33f;
     [SerializeField] public float dashSpeed=10f;
     [SerializeField] public float startDashTime=0.2f;
@@ -128,14 +128,14 @@ public class Player : MonoBehaviour{
     [SerializeField] public float matrixTime=7f;
     [SerializeField] public float pmultiTime=24f;
     [SerializeField] public float accelTime=7f;
-    [SerializeField]public float onfireTickrate = 0.38f;
-    [SerializeField]public float onfireDmg = 1f;
-    [SerializeField]public float decayTickrate = 0.5f;
-    [SerializeField]public float decayDmg = 0.5f;
-    [SerializeField]public float armoredMulti = 2f;
-    [SerializeField]public float fragileMulti = 0.7f;
-    [SerializeField]public float powerMulti = 1.6f;
-    [SerializeField]public float weaknsMulti = 0.66f;
+    [SerializeField] public float onfireTickrate=0.38f;
+    [SerializeField] public float onfireDmg=1f;
+    [SerializeField] public float decayTickrate=0.5f;
+    [SerializeField] public float decayDmg=0.5f;
+    [SerializeField] public float armoredMulti=2f;
+    [SerializeField] public float fragileMulti=0.7f;
+    [SerializeField] public float powerMulti=1.6f;
+    [SerializeField] public float weaknsMulti=0.66f;
     #region//Weapon Prefabs
     GameObject laserPrefab;
     GameObject phaserPrefab;
@@ -151,60 +151,60 @@ public class Player : MonoBehaviour{
     GameObject plaserPrefab;
     #endregion
     [Header("Weapons")]
-    [SerializeField] float laserSpeed = 9f;
-    [SerializeField] float laserShootPeriod = 0.34f;
-    [SerializeField] float laser2Speed = 8.9f;
-    [SerializeField] float laser2ShootPeriod = 0.35f;
-    [SerializeField] float laser3Speed = 8.8f;
-    [SerializeField] float laser3ShootPeriod = 0.36f;
-    [SerializeField] float phaserSpeed = 10.5f;
-    [SerializeField] float phaserShootPeriod = 0.2f;
-    [SerializeField] float hrocketSpeed = 6.5f;
-    [SerializeField] float hrocketShootPeriod = 0.3f;
-    [SerializeField] float mlaserSpeedS = 8.5f;
-    [SerializeField] float mlaserSpeedE = 10f;
-    [SerializeField] float mlaserShootPeriod = 0.1f;
-    [SerializeField] int mlaserBulletsAmmount = 10;
-    [SerializeField] float shadowBTSpeed = 9f;
-    [SerializeField] float shadowBTShootPeriod = 0.34f;
-    [SerializeField] float qrocketSpeed = 9.5f;
-    [SerializeField] float qrocketShootPeriod = 0.3f;
-    [SerializeField] float procketSpeedS = 9.5f;
-    [SerializeField] float procketSpeedE = 10.5f;
-    [SerializeField] float procketShootPeriod = 0.5f;
-    [SerializeField] int procketsBulletsAmmount = 10;
-    [SerializeField] float cbulletSpeed = 8.25f;
-    [SerializeField] float cbulletShootPeriod = 0.15f;
-    [SerializeField] float plaserSpeed = 9.55f;
-    [SerializeField] float plaserShootPeriod = 0.75f;
+    [SerializeField] float laserSpeed=9f;
+    [SerializeField] float laserShootPeriod=0.34f;
+    [SerializeField] float laser2Speed=8.9f;
+    [SerializeField] float laser2ShootPeriod=0.35f;
+    [SerializeField] float laser3Speed=8.8f;
+    [SerializeField] float laser3ShootPeriod=0.36f;
+    [SerializeField] float phaserSpeed=10.5f;
+    [SerializeField] float phaserShootPeriod=0.2f;
+    [SerializeField] float hrocketSpeed=6.5f;
+    [SerializeField] float hrocketShootPeriod=0.3f;
+    [SerializeField] float mlaserSpeedS=8.5f;
+    [SerializeField] float mlaserSpeedE=10f;
+    [SerializeField] float mlaserShootPeriod=0.1f;
+    [SerializeField] int mlaserBulletsAmmount=10;
+    [SerializeField] float shadowBTSpeed=9f;
+    [SerializeField] float shadowBTShootPeriod=0.34f;
+    [SerializeField] float qrocketSpeed=9.5f;
+    [SerializeField] float qrocketShootPeriod=0.3f;
+    [SerializeField] float procketSpeedS=9.5f;
+    [SerializeField] float procketSpeedE=10.5f;
+    [SerializeField] float procketShootPeriod=0.5f;
+    [SerializeField] int procketsBulletsAmmount=10;
+    [SerializeField] float cbulletSpeed=8.25f;
+    [SerializeField] float cbulletShootPeriod=0.15f;
+    [SerializeField] float plaserSpeed=9.55f;
+    [SerializeField] float plaserShootPeriod=0.75f;
     [Header("Energy Costs")]
     //Weapons
-    [SerializeField] public float laserEn = 0.3f;
-    [SerializeField] public float laser2En = 1.25f;
-    [SerializeField] public float laser3En = 2.5f;
-    [SerializeField] public float phaserEn = 1.5f;
-    [SerializeField] public float mlaserEn = 0.075f;
-    [SerializeField] public float lsaberEn = 0.4f;
+    [SerializeField] public float laserEn=0.3f;
+    [SerializeField] public float laser2En=1.25f;
+    [SerializeField] public float laser3En=2.5f;
+    [SerializeField] public float phaserEn=1.5f;
+    [SerializeField] public float mlaserEn=0.075f;
+    [SerializeField] public float lsaberEn=0.4f;
     [SerializeField] public float lsaberEnPeriod=0.15f;
-    [SerializeField] public float lclawsEn = 6.3f;
-    [SerializeField] public float shadowEn = 5f;
-    [SerializeField] public float shadowBTEn = 10f;
-    [SerializeField] public float cbulletEn = 1.3f;
-    [SerializeField] public float plaserEn = 5.6f;
+    [SerializeField] public float lclawsEn=6.3f;
+    [SerializeField] public float shadowEn=5f;
+    [SerializeField] public float shadowBTEn=10f;
+    [SerializeField] public float cbulletEn=1.3f;
+    [SerializeField] public float plaserEn=5.6f;
     //Rockets
-    [SerializeField] public float hrocketOh = 0.9f;//2.6
-    [SerializeField] public float qrocketOh = 1.63f;//5.5
-    [SerializeField] public float procketEn = 0.86f;//0.26
-    [SerializeField] public float procketOh = 0.49f;
+    [SerializeField] public float hrocketOh=0.9f;//2.6
+    [SerializeField] public float qrocketOh=1.63f;//5.5
+    [SerializeField] public float procketEn=0.86f;//0.26
+    [SerializeField] public float procketOh=0.49f;
     [Header("Energy Gains")]//Collectibles
-    [SerializeField] public float energyBallGet = 9f;
-    [SerializeField] public float medkitEnergyGet = 40f;
-    [SerializeField] public float medkitUEnergyGet = 26f;
-    [SerializeField] public float medkitHpAmnt = 25f;
-    [SerializeField] public float medkitUHpAmnt = 62f;
-    [SerializeField] public float pwrupEnergyGet = 36f;
-    [SerializeField] public float enForPwrupRefill = 25f;
-    [SerializeField] public float enPwrupDuplicate = 42f;
+    [SerializeField] public float energyBallGet=9f;
+    [SerializeField] public float medkitEnergyGet=40f;
+    [SerializeField] public float medkitUEnergyGet=26f;
+    [SerializeField] public float medkitHpAmnt=25f;
+    [SerializeField] public float medkitUHpAmnt=62f;
+    [SerializeField] public float pwrupEnergyGet=36f;
+    [SerializeField] public float enForPwrupRefill=25f;
+    [SerializeField] public float enPwrupDuplicate=42f;
     public float refillEnergyAmnt=110f;
     public int refillCostS=1;
     public int refillCostE=2;
@@ -423,6 +423,29 @@ public class Player : MonoBehaviour{
         cbulletShootPeriod=i.cbulletShootPeriod;
         plaserSpeed=i.plaserSpeed;
         plaserShootPeriod=i.plaserShootPeriod;
+        ///State Defaults
+        flipTime=i.flipTime;
+        gcloverTime=i.gcloverTime;
+        shadowTime=i.shadowTime;
+        shadowLength=i.shadowLength;
+        dashSpeed=i.dashSpeed;
+        startDashTime=i.startDashTime;
+        inverterTime=i.inverterTime;
+        magnetTime=i.magnetTime;
+        scalerTime=i.scalerTime;
+        shipScaleMin=i.shipScaleMin;
+        shipScaleMax=i.shipScaleMax;
+        matrixTime=i.matrixTime;
+        pmultiTime=i.pmultiTime;
+        accelTime=i.accelTime;
+        onfireTickrate=i.onfireTickrate;
+        onfireDmg=i.onfireDmg;
+        decayTickrate=i.decayTickrate;
+        decayDmg=i.decayDmg;
+        armoredMulti=i.armoredMulti;
+        fragileMulti=i.fragileMulti;
+        powerMulti=i.powerMulti;
+        weaknsMulti=i.weaknsMulti;
         ///Energy costs
         //Weapons
         laserEn=i.laserEn;
@@ -451,13 +474,27 @@ public class Player : MonoBehaviour{
         enForPwrupRefill=i.enForPwrupRefill;
         enPwrupDuplicate=i.enPwrupDuplicate;
         refillEnergyAmnt=i.refillEnergyAmnt;
+        ///Weapons Durations
+        weaponsLimited=i.weaponsLimited;
+        laser2Duration=i.laser2Duration;
+        laser3Duration=i.laser3Duration;
+        phaserDuration=i.phaserDuration;
+        mlaserDuration=i.mlaserDuration;
+        lsaberDuration=i.lsaberDuration;
+        lclawsDuration=i.lclawsDuration;
+        cstreamDuration=i.cstreamDuration;
+        hrocketDuration=i.hrocketDuration;
+        qrocketDuration=i.qrocketDuration;
+        procketDuration=i.procketDuration;
+        plaserDuration=i.plaserDuration;
+        shadowBtDuration=i.shadowBtDuration;
     }
     }
 
     void Update(){
         HandleInput(false);
-        energy = Mathf.Clamp(energy, 0, maxEnergy);
-        health =Mathf.Clamp(health,0f,maxHP);
+        energy=Mathf.Clamp(energy, 0, maxEnergy);
+        health=Mathf.Clamp(health,0f,maxHP);
         //PlayerBFlame();
         //if(powerup=="lsaber"||powerup=="lclaws")StartCoroutine(DrawOtherWeapons());
         DrawOtherWeapons();
@@ -488,6 +525,7 @@ public class Player : MonoBehaviour{
             Destroy(flareR.gameObject, 0.04f);
             }
         if(overheatedTimer<=0&&(overheatTimerMax!=4&&overheatTimer!=-4)){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
+        //if((autoShoot&&energyOn&&energy>0)&&(shootTimer<=0||shootCoroutine==null)){Shoot();}
         //Debug.Log(shootTimer);
         //Debug.LogWarning(shootCoroutine);
         if(Application.platform==RuntimePlatform.Android)mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
@@ -1052,7 +1090,7 @@ bool stopped=false;
             }*/
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
                 //else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup = powerupDefault; shootTimer = 1f; yield return new WaitForSeconds(1f); }
-        }else{ AudioManager.instance.Play("NoEnergy"); shootTimer = 0f; yield break; }
+        }else{ if(!autoShoot){AudioManager.instance.Play("NoEnergy");} shootTimer = 0f; shootCoroutine=null; yield break; }
         }
         }
     }

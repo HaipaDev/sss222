@@ -25,6 +25,7 @@ public class GameRules : MonoBehaviour{
     public float flyingTimeReq=25f;
     public float xp_staying=-2f;
     public float stayingTimeReq=4f;
+#region//Player
     [Header("Player")]
     public Vector2 startingPosPlayer=new Vector2(0.36f,-6.24f);
     public bool autoShootPlayer=false;
@@ -42,8 +43,30 @@ public class GameRules : MonoBehaviour{
     public float dmgMultiPlayer=1f;
     public float shootMultiPlayer=1f;
     public float shipScaleDefault=0.89f;
+    [Header("State Defaults")]
+    public float flipTime = 7f;
+    public float gcloverTime = 6f;
+    public float shadowTime = 10f;
+    public float shadowLength=0.33f;
+    public float dashSpeed=10f;
+    public float startDashTime=0.2f;
+    public float inverterTime=10f;
+    public float magnetTime=15f;
+    public float scalerTime=15f;
+    public float shipScaleMin=0.45f;
+    public float shipScaleMax=2.5f;
+    public float matrixTime=7f;
+    public float pmultiTime=24f;
+    public float accelTime=7f;
+    public float onfireTickrate = 0.38f;
+    public float onfireDmg = 1f;
+    public float decayTickrate = 0.5f;
+    public float decayDmg = 0.5f;
+    public float armoredMulti = 2f;
+    public float fragileMulti = 0.7f;
+    public float powerMulti = 1.6f;
+    public float weaknsMulti = 0.66f;
     [Header("Player Weapons")]
-    
     public float laserSpeed=9f;
     public float laserShootPeriod=0.34f;
     public float laser2Speed=8.9f;
@@ -99,6 +122,22 @@ public class GameRules : MonoBehaviour{
     public float enForPwrupRefill=25f;
     public float enPwrupDuplicate=42f;
     public float refillEnergyAmnt=110f;
+    [Header("Weapon Durations")]
+    public bool weaponsLimited=false;
+    public float laser2Duration=10f;
+    public float laser3Duration=10f;
+    public float phaserDuration=10f;
+    public float mlaserDuration=10f;
+    public float lsaberDuration=10f;
+    public float lclawsDuration=10f;
+    public float cstreamDuration=10f;
+    public float hrocketDuration=10f;
+    public float qrocketDuration=10f;
+    public float procketDuration=10f;
+    public float plaserDuration=10f;
+    public float shadowBtDuration=10f;
+#endregion
+#region//Powerup, Waves Spawns & Enemies
     [Header("Powerup/Waves Spawns")]
     public List<LootTableEntryPowerup> pwrupStatusList;
     public float mTimePowerupStatusSpawns=-1;
@@ -135,7 +174,52 @@ public class GameRules : MonoBehaviour{
     public float mEnergyCountGlareDevil=20;
     public float mSTimeSpawnsGlareDevil=40f;
     public float mETimeSpawnsGlareDevil=50f;
+    [Header("Enemies")]
     public EnemyClass[] enemies;
+    public CometSettings cometSettings;
+    public EnCombatantSettings enCombatantSettings;
+    public EnShipSettings enShipSettings;
+    public MechaLeechSettings mechaLeechSettings;
+    public HealingDroneSettings healingDroneSettings;
+    public VortexWheelSettings vortexWheelSettings;
+    public GlareDevilSettings glareDevilSettings;
+    public float goblinBossHP=50;
+#endregion
+#region//Damage Values
+[Header("Damage Values")]
+public float dmg=5;
+public float dmgZone=2;
+public float dmgLaser=5f;
+public float dmgPhaser=0.5f;
+public float dmgHRocket=13.5f;
+public float dmgMiniLaser=0.32f;
+public float dmgLSaber=0.86f;
+public float dmgLClaws=7f;
+public float dmgShadowBT=40.5f;
+public float dmgQRocket=14.5f;
+public float dmgPRocket=0f;
+public float dmgPRocketExpl=0.5f;
+public float dmgCBullet=2f;
+public float dmgPlaser=6.78f;
+public float dmgMPulse=130f;
+
+public float dmgComet=10f;
+public float dmgBat=36f;
+public float dmgSoundwave=16.5f;
+public float dmgEnemyShip1=80f;
+public float dmgEBt=24.5f;
+public float dmgEnemySaber=2.5f;    
+public float dmgGoblin=16f;
+public float dmgHealDrone=75f;
+public float dmgVortex=70f;
+public float dmgLeech=4f;
+public float dmgHLaser=90f;
+public float dmgStinger=33.3f;
+public Vector2 efxStinger=new Vector2(20,1);
+public float dmgGoblinBt=7f;
+public Vector2 efxGoblinBt=new Vector2(6,0.8f);
+public Vector2 efxGlareDev=new Vector2(1.5f,2f);
+#endregion
     private void Awake(){
         instance=this;
     }
@@ -164,7 +248,8 @@ public class GameRules : MonoBehaviour{
 [System.Serializable]
 public class EnemyClass{
     public string name;
-    //[Header("Basic")]
+    public Vector2 size = Vector2.one;
+    public Sprite spr;
     public float health=100;
     public bool shooting = false;
     public float minTimeBtwnShots=0.2f;
@@ -183,4 +268,80 @@ public class EnemyClass{
     public float coinChanceInit = 3f;
     public float powercoreChanceInit = 0f;
     public float xpAmnt = 0f;
+    public GameObject specialDrop;
+}
+[System.Serializable]
+public class CometSettings{
+    [Header("Basic")]
+    public float sizeMin=0.4f;
+    public float sizeMax=1.4f;
+    public bool healthBySize=true;
+    public Sprite[] sprites;
+    public GameObject bflamePart;
+    [Header("Lunar")]
+    public float sizeMinLunar=0.88f;
+    public float sizeMaxLunar=1.55f;
+    public int lunarCometChance=10;
+    public float lunarHealthMulti=2.5f;
+    public float lunarSpeedMulti=0.415f;
+    public Sprite[] spritesLunar;
+    public GameObject lunarPart;
+}
+[System.Serializable]
+public class EnCombatantSettings{
+    public float speedFollowX = 3.5f;
+    public float speedFollowY = 4f;
+    public float vspeed = 0.1f;
+    public float distY = 1.3f;
+    public float distX = 0.3f;
+    public float distYPlayer = 1.5f;
+    public GameObject saberPrefab;
+}
+[System.Serializable]
+public class EnShipSettings{
+    public float speedFollow = 2f;
+    public float vspeed = 0.1f;
+    public float distY = 1.3f;
+    public float distX = 0.3f;
+    public bool getClose = false;
+}
+[System.Serializable]
+public class MechaLeechSettings{
+    public float catch_distance=1.5f;
+    public float shake_distance = 0.05f;
+    public int count_max = 3;
+    public float fallSpeed = 6f;
+}
+[System.Serializable]
+public class HealingDroneSettings{
+    public GameObject healBallPrefab;
+    public float shootFrequency=0.2f;
+    public float speedBullet=4f;
+    [Header("Dodge")]
+    public float distMin=1.6f;
+    public float dodgeSpeed=2f;
+    public float dodgeTime=0.5f;
+}
+/*[System.Serializable]
+public class GoblinThiefSettings{
+    
+}*/
+[System.Serializable]
+public class VortexWheelSettings{
+    public float startTimer=3f;
+    public float timeToDieMin=8f;
+    public float timeToDieMax=13f;
+    public float chargeMultip=0.8f;
+    public float chargeMultipS=1.3f;
+    Sprite[] sprites;
+    [Header("Bullet")]
+	public GameObject projectile;
+	public int numberOfProjectiles=4;
+	public float radius=5;
+	public float moveSpeed=5;
+}
+[System.Serializable]
+public class GlareDevilSettings{
+    public float timerMax=3.3f;
+    public Vector2 efxBlind=new Vector2(4,4);
 }
