@@ -28,6 +28,7 @@ public class PlayerSkills : MonoBehaviour{
         umenu=FindObjectOfType<UpgradeMenu>();
         player=GetComponent<Player>();
         mPulsePrefab=GameAssets.instance.Get("MPulse");
+        if(GameRules.instance.upgradesOn!=true){Destroy(this);}
     }
 
     void Update(){

@@ -29,7 +29,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public float powerupTimer=-4;
     [SerializeField] public bool losePwrupOutOfEn;
     [SerializeField] public int energyRefillUnlocked;
-
+    [SerializeField] public bool overheatOn=true;
     [SerializeField] public float overheatTimer = -4f;
     [SerializeField] public float overheatTimerMax = 3f;
     [SerializeField] public float overheatDmg = 10f;
@@ -38,6 +38,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public bool overheated;
     [SerializeField] public float overheatedTime=3;
     public float overheatedTimer;
+    [SerializeField] public bool recoilOn=true;
 
     public bool enRegenEnabled;
     public float timerEnRegen;
@@ -395,6 +396,8 @@ public class Player : MonoBehaviour{
         dmgMulti=i.dmgMultiPlayer;
         shootMulti=i.shootMultiPlayer;
         shipScaleDefault=i.shipScaleDefault;
+        overheatOn=i.overheatOnPlayer;
+        recoilOn=i.recoilOnPlayer;
         ///Weapons Values
         laserSpeed=i.laserSpeed;
         laserShootPeriod=i.laserShootPeriod;
@@ -498,7 +501,7 @@ public class Player : MonoBehaviour{
         //PlayerBFlame();
         //if(powerup=="lsaber"||powerup=="lclaws")StartCoroutine(DrawOtherWeapons());
         DrawOtherWeapons();
-        if(GetComponent<PlayerSkills>().timerTeleport==-4)Shoot();
+        if(GetComponent<PlayerSkills>()!=null){if(GetComponent<PlayerSkills>().timerTeleport==-4){Shoot();}}else{Shoot();}
         States();
         Regen();
         Die();
@@ -530,7 +533,7 @@ public class Player : MonoBehaviour{
         //Debug.LogWarning(shootCoroutine);
         if(Application.platform==RuntimePlatform.Android)mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
-        if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;AudioManager.instance.Play("PowerupOff");}}
+        if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
     }
     void FixedUpdate()
     {
@@ -1346,7 +1349,7 @@ bool stopped=false;
     public void Recoil(float strength, float time){
         //rb.velocity = Vector2.down*strength;
         //Debug.Log(rb.velocity);
-        StartCoroutine(RecoilI(strength,time));
+        if(recoilOn)StartCoroutine(RecoilI(strength,time));
     }
     IEnumerator RecoilI(float strength,float time){
         shake.CamShake(0.1f,1/(time*4));
@@ -1435,7 +1438,7 @@ bool stopped=false;
 #region//Skills
     //Skills are in PlayerSkills
     private void RefillEnergy(){
-        if(energy<=0&&hacked!=true){
+        if(energyOn&&energy<=0&&hacked!=true){
             if(energyRefillUnlocked==1){
                 if(refillDelay>0)refillDelay-=Time.deltaTime;
                 if(refillDelay<=0){refillDelay=-4;}
@@ -1661,6 +1664,7 @@ bool stopped=false;
         }
     }
     }public void Overheat(float value,bool add=true){
+        if(overheatOn){
         if(overheatTimerMax!=-4){
         if(overheated!=true){
             if(inverter!=true){
@@ -1670,6 +1674,7 @@ bool stopped=false;
                 if(add){overheatTimer-=value;overheatCdTimer=overheatCooldown;}
                 else{if(overheatTimer==-4){overheatTimer=0;}overheatTimer+=value;}
             }
+        }
         }
         }
     }

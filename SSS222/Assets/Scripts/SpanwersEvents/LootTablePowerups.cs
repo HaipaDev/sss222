@@ -66,6 +66,7 @@ public class LootTablePowerups : MonoBehaviour{
                 ps.enemiesCountReq=i.enemiesPowerupWeaponsCountReq;
             }
         }
+        if(itemList.Count==0){Destroy(this);}
     }
     private void Start() {
         gameSession=FindObjectOfType<GameSession>();

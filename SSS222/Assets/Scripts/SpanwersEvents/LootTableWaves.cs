@@ -30,12 +30,20 @@ public class LootTableWaves : MonoBehaviour{
             itemTable.Add(entry.lootItem, entry.dropChance);
         }*/
         //foreach(float dropChance in itemTable.Values){sum+=dropChance;}
-        SumUp();
+        //SumUp();
         //Set values
+        StartCoroutine(SetValues());
+    }
+    IEnumerator SetValues(){
+        yield return new WaitForSeconds(0.125f);
         var i=GameRules.instance;
         if(i!=null){
-            if(GetComponent<Waves>().spawnerType==spawnerType.wave)itemList=i.waveList;
+            var w=GetComponent<Waves>();
+            if(w.spawnerType==spawnerType.wave)itemList=i.waveList;
+            w.startingWave=i.startingWave;
+            w.startingWaveRandom=i.startingWaveRandom;
         }
+        SumUp();
     }
     void OnValidate(){
         /*itemTable = new Dictionary<LootItem, float>();

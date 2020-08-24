@@ -81,7 +81,7 @@ public class ValueDisplay : MonoBehaviour{
 
         else if (value == "cooldownQ") scoreText.text = System.Math.Round(pskills.cooldownQ,0).ToString();
         else if (value == "cooldownE") scoreText.text = System.Math.Round(pskills.cooldownE,0).ToString();
-        else if (value == "timerTeleport") scoreText.text = System.Math.Round(pskills.timerTeleport,1).ToString();
+        else if (value == "timerTeleport")if(FindObjectOfType<PlayerSkills>()!=null){ scoreText.text = System.Math.Round(pskills.timerTeleport,1).ToString();}else{Destroy(transform.parent.gameObject);}
         
         /*else if (value == "state"){
             var value = System.Math.Round(player.GetGCloverTimer(),1);

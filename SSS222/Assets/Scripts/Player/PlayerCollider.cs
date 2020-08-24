@@ -130,7 +130,7 @@ public class PlayerCollider : MonoBehaviour{
                 float dmg = 0;
 
                 var cometName = cometPrefab.name; var cometName1 = cometPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(cometName)) { dmg = (float)System.Math.Round(damageValues.GetDmgComet()*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1); en = true; }
+                if (other.gameObject.name.Contains(cometName)) { if(other.GetComponent<CometRandomProperties>()!=null){if(other.GetComponent<CometRandomProperties>().damageBySpeedSize){dmg = (float)System.Math.Round(damageValues.GetDmgComet()*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1);}else{dmg=damageValues.GetDmgComet();}dmg=damageValues.GetDmgComet();} en = true; }
 
                 var batName = batPrefab.name; var batName1 = batPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(batName)) { dmg = damageValues.GetDmgBat(); en = true; }

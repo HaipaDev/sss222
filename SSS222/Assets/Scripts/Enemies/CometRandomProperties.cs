@@ -7,6 +7,7 @@ public class CometRandomProperties : MonoBehaviour{
     [SerializeField] float sizeMin=0.4f;
     [SerializeField] float sizeMax=1.4f;
     [SerializeField] bool healthBySize=true;
+    [SerializeField] public bool damageBySpeedSize=true;
     [SerializeField] Sprite[] sprites;
     [SerializeField] GameObject bflamePart;
     [Header("Lunar")]
@@ -31,6 +32,7 @@ public class CometRandomProperties : MonoBehaviour{
         sizeMin=e.sizeMin;
         sizeMax=e.sizeMax;
         healthBySize=e.healthBySize;
+        damageBySpeedSize=e.damageBySpeedSize;
         sprites=e.sprites;
         bflamePart=e.bflamePart;
 
@@ -45,7 +47,6 @@ public class CometRandomProperties : MonoBehaviour{
     }
     void Start()
     {
-        if(!GameSession.instance.shopOn){Destroy(this);}
         bFlame = GetComponent<BackflameEffect>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -75,7 +76,7 @@ public class CometRandomProperties : MonoBehaviour{
             }
         }
         //rotationSpeed=Random.Range(2,8);
-        Destroy(this,0.5f);
+        //Destroy(this,0.3f);
     }
 
     void Update(){

@@ -6,7 +6,8 @@ public class Waves : MonoBehaviour{
     [SerializeField] public spawnerType spawnerType;
     //[SerializeField] List<WaveConfig> waveConfigs;
     //[SerializeField] int[] waveConfigsWeights;
-    [SerializeField] int startingWave = 0;
+    [SerializeField] public int startingWave = 0;
+    [SerializeField] public bool startingWaveRandom = false;
     public int waveIndex = 0;
     public WaveConfig currentWave;
     [SerializeField] bool looping = true;
@@ -27,10 +28,12 @@ public class Waves : MonoBehaviour{
     }
     IEnumerator Start()
     {
+        yield return new WaitForSeconds(0.15f);
         waveDisplay = FindObjectOfType<WaveDisplay>();
         lootTable = FindObjectOfType<LootTableWaves>();
         gameSession = FindObjectOfType<GameSession>();
         player = FindObjectOfType<Player>();
+        if(startingWaveRandom){startingWave=Random.Range(0,lootTable.itemList.Count-1);}
         do
         {
             yield return StartCoroutine(SpawnWaves());

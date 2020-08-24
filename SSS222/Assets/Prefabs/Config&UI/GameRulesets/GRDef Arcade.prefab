@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2596765366526495023}
   - component: {fileID: 1938246018583424785}
   m_Layer: 0
-  m_Name: GameRules
+  m_Name: GRDef Arcade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2531504637027084995}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 236.94508, y: 347.41443, z: -104.123474}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecc846f247c28a4f935da921a1dbab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cfgName: Arcade Mode
   defaultGameSpeed: 1
   barrierOn: 0
   shopOn: 1
@@ -63,7 +64,7 @@ MonoBehaviour:
   xp_staying: -2
   stayingTimeReq: 4
   startingPosPlayer: {x: 0.36, y: -6.24}
-  autoShootPlayer: 1
+  autoShootPlayer: 0
   healthPlayer: 150
   energyOnPlayer: 1
   energyPlayer: 180

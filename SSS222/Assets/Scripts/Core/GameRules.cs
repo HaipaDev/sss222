@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameRules : MonoBehaviour{
     public static GameRules instance;
     [Header("Global")]
+    public string cfgName;
     public float defaultGameSpeed=1f;
     public bool barrierOn=false;
     public bool shopOn=true;
@@ -43,6 +44,8 @@ public class GameRules : MonoBehaviour{
     public float dmgMultiPlayer=1f;
     public float shootMultiPlayer=1f;
     public float shipScaleDefault=0.89f;
+    public bool overheatOnPlayer=true;
+    public bool recoilOnPlayer=true;
     [Header("State Defaults")]
     public float flipTime = 7f;
     public float gcloverTime = 6f;
@@ -137,7 +140,7 @@ public class GameRules : MonoBehaviour{
     public float plaserDuration=10f;
     public float shadowBtDuration=10f;
 #endregion
-#region//Powerup, Waves Spawns & Enemies
+#region//Powerup Spawns
     [Header("Powerup/Waves Spawns")]
     public List<LootTableEntryPowerup> pwrupStatusList;
     public float mTimePowerupStatusSpawns=-1;
@@ -151,7 +154,12 @@ public class GameRules : MonoBehaviour{
     public float mTimePowerupWeaponsSpawnsE=-1;
     public float firstPowerupWeaponsSpawn=-4;
     public int enemiesPowerupWeaponsCountReq=20;
+#endregion
+#region//Waves Spawns & Enemies
+[Header("Waves & Disrupters")]
     public List<LootTableEntryWaves> waveList;
+    public int startingWave=0;
+    public bool startingWaveRandom=false;
     public bool spawnLeech=true;
     public float mSTimeSpawnsLeech=55f;
     public float mETimeSpawnsLeech=80f;
@@ -224,7 +232,7 @@ public Vector2 efxGlareDev=new Vector2(1.5f,2f);
         instance=this;
     }
     private void OnValidate(){
-        foreach(LootTableEntryPowerup entry in pwrupStatusList){
+        /*foreach(LootTableEntryPowerup entry in pwrupStatusList){
         entry.name=entry.lootItem.name;
         entry.rarity=entry.lootItem.rarity;
         entry.dropChance=entry.lootItem.dropChance;
@@ -240,7 +248,7 @@ public Vector2 efxGlareDev=new Vector2(1.5f,2f);
         entry.name=entry.lootItem.name;
         //entry.dropChance=entry.lootItem.dropChance;
         //entry.levelReq=entry.lootItem.levelReq;
-        }
+        }*/
     }
 }
 
@@ -276,6 +284,7 @@ public class CometSettings{
     public float sizeMin=0.4f;
     public float sizeMax=1.4f;
     public bool healthBySize=true;
+    public bool damageBySpeedSize=true;
     public Sprite[] sprites;
     public GameObject bflamePart;
     [Header("Lunar")]
