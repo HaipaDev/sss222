@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d, type: 2}
+  waveConfig: {fileID: 0}
   waypointsL: []
   waypointIndex: 0
   enemyIndex: 0
@@ -167,6 +167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Enemy Combatant
+  size: {x: 1, y: 1}
+  spr: {fileID: 0}
   health: 95
   shooting: 0
   minTimeBtwnShots: 0.65
@@ -187,6 +189,7 @@ MonoBehaviour:
   enBallChance: 0
   coinChance: 0
   powercoreChance: 0
+  specialDrop: {fileID: 0}
   yeeted: 0
   dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
     type: 3}
@@ -233,10 +236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ecded6b84710a438b108ec104cc78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedFollow: 2
   speedFollowX: 3.5
   speedFollowY: 2
-  speedRush: 10
   vspeed: 0.1
   distY: -1.3
   distX: 0.3

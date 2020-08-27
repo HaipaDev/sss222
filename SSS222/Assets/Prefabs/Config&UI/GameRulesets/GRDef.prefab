@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2596765366526495023}
   - component: {fileID: 1938246018583424785}
   m_Layer: 0
-  m_Name: GRDef Arcade
+  m_Name: GRDef
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,26 +43,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecc846f247c28a4f935da921a1dbab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cfgName: Arcade Mode
+  cfgName: Adventure Mode
   defaultGameSpeed: 1
   barrierOn: 0
   shopOn: 1
   xpOn: 1
   upgradesOn: 1
-  EVscoreMax: 30
+  EVscoreMax: 40
   shopScoreMax: 200
   shopScoreMaxS: 200
   shopScoreMaxE: 450
   scoreMulti: 1
   luckMulti: 1
-  xp_forCore: 100
-  xp_wave: 20
-  xp_shop: 3
-  xp_powerup: 1
-  xp_flying: 7
-  flyingTimeReq: 25
-  xp_staying: -2
-  stayingTimeReq: 4
   startingPosPlayer: {x: 0.36, y: -6.24}
   autoShootPlayer: 0
   healthPlayer: 150
@@ -79,6 +71,11 @@ MonoBehaviour:
   dmgMultiPlayer: 1
   shootMultiPlayer: 1
   shipScaleDefault: 0.89
+  overheatOnPlayer: 1
+  overheatTimerMax: 8.66
+  overheatCooldown: 0.65
+  overheatedTime: 3
+  recoilOnPlayer: 1
   flipTime: 7
   gcloverTime: 6
   shadowTime: 10
@@ -165,6 +162,23 @@ MonoBehaviour:
   procketDuration: 10
   plaserDuration: 10
   shadowBtDuration: 10
+  skillsPlayer:
+  - name: Magnetic Pulse
+    ID: 0
+    item: {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
+    enCost: 33
+    cooldown: 30
+  - name: Teleport
+    ID: 0
+    item: {fileID: 11400000, guid: d66606c472024f44e8f0f96cdfac0c12, type: 2}
+    enCost: 20
+    cooldown: 40
+  - name: Overhaul
+    ID: 0
+    item: {fileID: 11400000, guid: e134429416de4d7479afc43faf800246, type: 2}
+    enCost: 0
+    cooldown: 90
+  timeOverhaul: 10
   pwrupStatusList:
   - name: Accelerator
     lootItem: {fileID: 11400000, guid: d1939f2a5efe96042842032862cdf62e, type: 2}
@@ -325,6 +339,8 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
     dropChance: 6.8
     levelReq: 1
+  startingWave: 0
+  startingWaveRandom: 0
   spawnLeech: 1
   mSTimeSpawnsLeech: 55
   mETimeSpawnsLeech: 80
@@ -422,7 +438,7 @@ MonoBehaviour:
     bullet: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1,
       type: 3}
     bulletSpeed: 8
-    DBullets: 0
+    DBullets: 1
     bulletDist: 0.35
     randomizeWaveDeath: 1
     flyOff: 1
@@ -454,6 +470,28 @@ MonoBehaviour:
     coinChanceInit: 3
     powercoreChanceInit: 1
     xpAmnt: 4
+    specialDrop: {fileID: 0}
+  - name: Goblin Thief
+    size: {x: 1, y: 1}
+    spr: {fileID: 21300000, guid: 40f2dc524d630924491ca3d1aa85e6d1, type: 3}
+    health: 16
+    shooting: 0
+    minTimeBtwnShots: 1.8
+    maxTimeBtwnShots: 2.2
+    bullet: {fileID: 5313808222654050488, guid: 31832a8c249783e449d9e8aad6457ca7,
+      type: 3}
+    bulletSpeed: 4
+    DBullets: 1
+    bulletDist: 0.1
+    randomizeWaveDeath: 0
+    flyOff: 0
+    givePts: 1
+    scoreValueStart: 15
+    scoreValueEnd: 25
+    enBallChanceInit: 30
+    coinChanceInit: 3
+    powercoreChanceInit: 10
+    xpAmnt: 2
     specialDrop: {fileID: 0}
   - name: Healing Drone
     size: {x: 1, y: 1}
@@ -545,6 +583,7 @@ MonoBehaviour:
     sizeMin: 0.4
     sizeMax: 1.4
     healthBySize: 1
+    damageBySpeedSize: 1
     sprites:
     - {fileID: 21300000, guid: 99983d2108c82d9488eb046ba733b402, type: 3}
     - {fileID: 21300000, guid: 9a41682c86a2e8646ab244683f0ab5e5, type: 3}
@@ -634,3 +673,196 @@ MonoBehaviour:
   dmgGoblinBt: 7
   efxGoblinBt: {x: 6, y: 0.8}
   efxGlareDev: {x: 1.5, y: 2}
+  shopList:
+  - name: 0Minigun
+    item: {fileID: 11400000, guid: 6ec05bf2e77023040a7434c469830641, type: 2}
+    dropChance:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    price: -1
+    priceS: 25
+    priceE: 35
+  - name: 1Phaser
+    item: {fileID: 11400000, guid: 3dbde611149621a41921a182d1909a6c, type: 2}
+    dropChance:
+    - 1
+    - 2
+    - 3.5
+    - 4
+    - 4.5
+    price: -1
+    priceS: 22
+    priceE: 25
+  - name: 2HRockets
+    item: {fileID: 11400000, guid: a28047dfde9ced14a9903f48debcca04, type: 2}
+    dropChance:
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    price: -1
+    priceS: 15
+    priceE: 21
+  - name: 3LaserTriple
+    item: {fileID: 11400000, guid: abb4cfc964a457a43966da12baf2d6e1, type: 2}
+    dropChance:
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    price: -1
+    priceS: 10
+    priceE: 24
+  - name: 4MedkitUltra
+    item: {fileID: 11400000, guid: 165a7c68e9b1f2c47b32f92ac76ac387, type: 2}
+    dropChance:
+    - 0
+    - 0.75
+    - 1
+    - 2
+    - 3
+    price: -1
+    priceS: 20
+    priceE: 27
+  - name: 5LSaber
+    item: {fileID: 11400000, guid: b85bbd8627abfd044ba3d84fbb99696a, type: 2}
+    dropChance:
+    - 7
+    - 6
+    - 5.3
+    - 4
+    - 3
+    price: -1
+    priceS: 8
+    priceE: 12
+  - name: 6QRockets
+    item: {fileID: 11400000, guid: dd25ef0572237bd4dadb8483a89004df, type: 2}
+    dropChance:
+    - 3
+    - 4
+    - 5
+    - 5.5
+    - 6.2
+    price: -1
+    priceS: 18
+    priceE: 28
+  - name: 7PRockets
+    item: {fileID: 11400000, guid: c24afda4a89457e4f9314bf378d20b5d, type: 2}
+    dropChance:
+    - 0
+    - 0.2
+    - 0.5
+    - 1
+    - 3
+    price: -1
+    priceS: 36
+    priceE: 45
+  - name: 8Magnet
+    item: {fileID: 11400000, guid: 6d1914be2a8292b44bfe7829c76f6525, type: 2}
+    dropChance:
+    - 7
+    - 6
+    - 5
+    - 4
+    - 4
+    price: -1
+    priceS: 13
+    priceE: 26
+  - name: 9Randomizer
+    item: {fileID: 11400000, guid: f9bb167715c7fcc419a9f9aa53b85245, type: 2}
+    dropChance:
+    - 6.5
+    - 6
+    - 5.5
+    - 5
+    - 5
+    price: -1
+    priceS: 9
+    priceE: 17
+  - name: 10PowerCore
+    item: {fileID: 11400000, guid: ca7b448a3f962ed45b97683ad5bdea1e, type: 2}
+    dropChance:
+    - 6
+    - 4
+    - 2
+    - 1
+    - 1
+    price: -1
+    priceS: 12
+    priceE: 23
+  - name: 11SpeedUpgrade
+    item: {fileID: 11400000, guid: de21f97679bf7a242afdafac444f7804, type: 2}
+    dropChance:
+    - 1
+    - 2
+    - 3
+    - 3
+    - 3.5
+    price: -1
+    priceS: 9
+    priceE: 33
+  - name: 12MicroMedkit
+    item: {fileID: 11400000, guid: 32d0083f734ca5c4da2bc4a855ae429f, type: 2}
+    dropChance:
+    - 6
+    - 4
+    - 2
+    - 1
+    - 1
+    price: -1
+    priceS: 3
+    priceE: 7
+  - name: 13MicroBattery
+    item: {fileID: 11400000, guid: 3765c1456dd867849a3897323fb24e52, type: 2}
+    dropChance:
+    - 6
+    - 4
+    - 2
+    - 1
+    - 1
+    price: -1
+    priceS: 3
+    priceE: 7
+  reputationThresh: 01000000030000000500000008000000
+  xp_forCore: 100
+  xp_wave: 20
+  xp_shop: 3
+  xp_powerup: 1
+  xp_flying: 7
+  flyingTimeReq: 25
+  xp_staying: -2
+  stayingTimeReq: 4
+  maxHealth_UpgradeAmnt: 5
+  maxHealth_UpgradeCost: 1
+  maxEnergy_UpgradeAmnt: 5
+  maxEnergy_UpgradeCost: 1
+  speed_UpgradeAmnt: 0.1
+  speed_UpgradeCost: 1
+  hpRegen_UpgradeAmnt: 0.2
+  hpRegen_UpgradeCost: 1
+  enRegen_UpgradeAmnt: 1
+  enRegen_UpgradeCost: 1
+  luck_UpgradeAmnt: 0.05
+  luck_UpgradeCost: 1
+  defaultPowerup_upgradeCost1: 1
+  defaultPowerup_upgradeCost2: 1
+  defaultPowerup_upgradeCost3: 4
+  energyRefill_upgradeCost: 2
+  energyRefill_upgradeCost2: 3
+  mPulse_upgradeCost: 3
+  postMortem_upgradeCost: 1
+  teleport_upgradeCost: 2
+  overhaul_upgradeCost: 3
+  total_UpgradesCountMax: 5
+  other_UpgradesCountMax: 10
+  maxHealth_UpgradesCountMax: 5
+  maxEnergy_UpgradesCountMax: 4
+  speed_UpgradesCountMax: 5
+  hpRegen_UpgradesCountMax: 2
+  enRegen_UpgradesCountMax: 2
+  luck_UpgradesCountMax: 5

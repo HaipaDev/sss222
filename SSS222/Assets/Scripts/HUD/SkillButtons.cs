@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class SkillButtons : MonoBehaviour{
     [SerializeField] skillKeyBind keyBind;
-    Player player;
     PlayerSkills pskills;
     skillKeyBind[] skillsBinds;
-    SkillSlotID[] skills;
+    Skill[] skills;
     [SerializeField] SkillButtons[] buttons;
     public int ID;
     bool correct;
     //public bool on;
     void Start(){
-        player=FindObjectOfType<Player>();
-        pskills=player.GetComponent<PlayerSkills>();
+        pskills=FindObjectOfType<PlayerSkills>();
+        StartCoroutine(SetSkills());
+    }
+    IEnumerator SetSkills(){
+        yield return new WaitForSeconds(0.07f);
         skillsBinds=pskills.skillsBinds;
         skills=pskills.skills;
     }

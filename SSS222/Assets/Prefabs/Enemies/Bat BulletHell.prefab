@@ -150,7 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
+  waveConfig: {fileID: 0}
+  waypointsL: []
   waypointIndex: 0
   enemyIndex: 0
 --- !u!114 &182006974740199065
@@ -178,6 +179,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
+  size: {x: 1, y: 1}
+  spr: {fileID: 0}
   health: 17
   shooting: 1
   minTimeBtwnShots: 1.75
@@ -191,13 +195,14 @@ MonoBehaviour:
   givePts: 1
   scoreValueStart: 3
   scoreValueEnd: 7
-  enBallchanceInit: 10
-  CoinchanceInit: 0
+  enBallChanceInit: 30
+  coinChanceInit: 3
   powercoreChanceInit: 1
   xpAmnt: 0
-  enBallchance: 0
-  Coinchance: 0
+  enBallChance: 0
+  coinChance: 0
   powercoreChance: 0
+  specialDrop: {fileID: 0}
   yeeted: 0
   dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
     type: 3}
@@ -324,8 +329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20142691f7b1a0a4da64693a816273b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectile: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
+    type: 3}
   numberOfProjectiles: 6
   radius: 5
   moveSpeed: 5
-  projectile: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
-    type: 3}

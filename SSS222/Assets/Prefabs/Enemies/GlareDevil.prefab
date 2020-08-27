@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: cfcec9cd9f6628042b19807cd904b132, type: 2}
+  waveConfig: {fileID: 0}
   waypointsL: []
   waypointIndex: 0
   enemyIndex: 0
@@ -178,6 +178,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Glare Devil
+  size: {x: 1, y: 1}
+  spr: {fileID: 0}
   health: 33
   shooting: 0
   minTimeBtwnShots: 2.25
@@ -198,6 +200,7 @@ MonoBehaviour:
   enBallChance: 0
   coinChance: 0
   powercoreChance: 0
+  specialDrop: {fileID: 0}
   yeeted: 0
   dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
     type: 3}
@@ -313,6 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerMax: 3.3
+  efxBlind: {x: 4, y: 4}
 --- !u!114 &637602792
 MonoBehaviour:
   m_ObjectHideFlags: 0

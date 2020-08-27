@@ -10,29 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27a14c5dde1fe9e4aaf080d5453ad783, type: 3}
-  m_Name: BatFlyby-Classic
+  m_Name: CometsFlyby-Faster
   m_EditorClassIdentifier: 
-  waveName: Bat Flyby
+  waveName: Comets Flyby
   enemies:
-  - {fileID: 3147796775416149952, guid: 2c3f94b277a11e0478605915547d8fed, type: 3}
-  timeSpawn: 0.001
-  timeSpawnWave: 2.46
+  - {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475, type: 3}
+  timeSpawn: 0
+  timeSpawnWave: 1.8
   spawnRandomFactor: 0
   numberOfEnemies: 1
-  moveSpeed: 2.1
-  randomSpeed: 0
-  moveSpeedS: 1
-  moveSpeedE: 3
+  moveSpeed: 1.66
+  randomSpeed: 1
+  moveSpeedS: 4.85
+  moveSpeedE: 5.84
   startToEndPath: 0
-  between2PtsPath: 0
-  pathStartPrefab: {fileID: 0}
+  between2PtsPath: 1
+  pathStartPrefab: {fileID: 7846228419670946794, guid: dffab90ce99bc95479e1e3d6390ac86e,
+    type: 3}
   pathEndPrefab: {fileID: 0}
-  randomPath: 1
+  randomPath: 0
   randomPathEach: 0
   randomPoint: 0
-  pathsRandom:
-  - {fileID: 3591246922493209333, guid: cb14d6b6757d0034991011747f9b38ac, type: 3}
-  - {fileID: 3371173115540754859, guid: 8c63db85a22b70847a493eb25c4cc29e, type: 3}
+  pathsRandom: []
   shipPlace: 0
   shipYY: 0
   loopPath: 0

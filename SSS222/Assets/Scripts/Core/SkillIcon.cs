@@ -6,14 +6,18 @@ using UnityEngine.UI;
 public class SkillIcon : MonoBehaviour{
     [SerializeField] GameObject parent;
     int ID;
-    SkillSlotID[] skills;
+    Skill[] skills;
     Sprite sprite;
     void Start(){
+        StartCoroutine(SetSkills());
+    }
+    IEnumerator SetSkills(){
+        yield return new WaitForSeconds(0.07f);
         skills=FindObjectOfType<PlayerSkills>().skills;
     }
     void Update(){
         ID=parent.GetComponent<SkillButtons>().ID;
-        if(ID!=-1)sprite=skills[ID].sprite;
+        if(ID!=-1)sprite=skills[ID].item.sprite;
         GetComponent<Image>().sprite=sprite;
     }
 }

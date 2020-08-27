@@ -56,11 +56,14 @@ public class GameSession : MonoBehaviour{
     [Header("Other")]
     public bool cheatmode;
     public bool dmgPopups=true;
+    public bool analyticsOn=true;
+    public int gameModeSelected;
     [SerializeField]float restartTimer=-4;
     
     Player player;
     PostProcessVolume postProcessVolume;
     bool setValues;
+    public float gameSessionTime=0;
     //public string gameVersion;
     //public bool moveByMouse = true;
 
@@ -100,7 +103,7 @@ public class GameSession : MonoBehaviour{
         //SetGameRulesValues();
     }
     IEnumerator SetGameRulesValues(){
-    yield return new WaitForSeconds(0.1f);
+    yield return new WaitForSeconds(0.03f);
     //Set values
     var i=GameRules.instance;
     if(i!=null){
@@ -135,6 +138,8 @@ public class GameSession : MonoBehaviour{
             StartCoroutine(SetGameRulesValues());
             setValues=true;
         }
+        if(SceneManager.GetActiveScene().name=="Game"&&FindObjectOfType<Player>()!=null){gameSessionTime+=Time.unscaledDeltaTime;}
+        if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
 
         if(shopOn&&(shopScore>=shopScoreMax && coins>0))
         {
@@ -154,10 +159,10 @@ public class GameSession : MonoBehaviour{
             if(FindObjectOfType<Player>().timeFlyingCore>flyingTimeReq){AddXP(xp_flying);FindObjectOfType<Player>().timeFlyingCore=0f;}
             if(FindObjectOfType<Player>().stayingTimerCore>stayingTimeReq){if(coresXp>-xp_staying)AddXP(xp_staying);FindObjectOfType<Player>().stayingTimerCore=0f;}
         }
-
+        
         coresXp=Mathf.Clamp(coresXp,0,xp_forCore);
         if(coresXpTotal<0)coresXpTotal=0;
-        if(coresXp>=xp_forCore){
+        if(xpOn&&coresXp>=xp_forCore){
             //cores++;
             if(upgradesOn)GameAssets.instance.Make("PowerCore",new Vector2(Random.Range(-3.5f, 3.5f),7.4f));
             FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
@@ -271,6 +276,7 @@ public class GameSession : MonoBehaviour{
         coreDropMulti=1;
         rarePwrupMulti=1;
         legendPwrupMulti=1;
+        gameSessionTime=0;
     }
     public void SaveHighscore()
     {
@@ -411,4 +417,14 @@ public class GameSession : MonoBehaviour{
         }else{Debug.LogWarning("XPPopUpHUD not present");}
     }
     //public void PlayDenySFX(){AudioManager.instance.Play("Deny");}
+    public string FormatTime(float time){
+        int minutes = (int) time / 60 ;
+        int seconds = (int) time - 60 * minutes;
+        //int milliseconds = (int) (1000 * (time - minutes * 60 - seconds));
+    return string.Format("{0:00}:{1:00}"/*:{2:000}"*/, minutes, seconds/*, milliseconds*/ );
+    }
+    public string GetGameSessionTime(){
+        return FormatTime(gameSessionTime);
+    }
+    public void SetGameModeSelected(int i){gameModeSelected=i;}
 }

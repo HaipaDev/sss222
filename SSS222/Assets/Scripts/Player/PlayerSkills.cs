@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]public class Skill{
+    [HideInInspector]public string name;
+    [HideInInspector]public int ID;
+    public SkillSlotID item;
+    public float enCost;
+    public float cooldown;
+}
 public class PlayerSkills : MonoBehaviour{
-    [SerializeField] public SkillSlotID[] skills;
+    [SerializeField] public Skill[] skills;
     [SerializeField] public skillKeyBind[] skillsBinds;
     public float cooldownQ;
     public float cooldownE;
@@ -23,6 +30,19 @@ public class PlayerSkills : MonoBehaviour{
     Player player;
     GameSession gameSession;
     UpgradeMenu umenu;
+    void Awake() {
+        StartCoroutine(SetValues());
+    }
+    IEnumerator SetValues(){
+    yield return new WaitForSeconds(0.2f);
+    //Set values
+    var i=GameRules.instance;
+    if(i!=null){
+        skills=i.skillsPlayer;
+        timeOverhaul=i.timeOverhaul;
+    }
+    ResizeSet();
+    }
     void Start(){
         gameSession=FindObjectOfType<GameSession>();
         umenu=FindObjectOfType<UpgradeMenu>();
@@ -34,10 +54,16 @@ public class PlayerSkills : MonoBehaviour{
     void Update(){
         UseSkills(0);
         SkillsUpdate();
+        
     }
 
-    private void OnValidate() {
+    private void OnValidate(){
+        foreach(Skill s in skills){/*s.ID=s.item.ID;*/s.name=s.item.name;  /*s.enCost=s.item.enCost;s.cooldown=s.item.cooldown;*/}
+        ResizeSet();
+    }
+    private void ResizeSet(){
         System.Array.Resize(ref skillsBinds, skills.Length);
+        for(var i=0;i<skills.Length;i++){skills[i].ID=i;}
     }
 
     public void UseSkills(int key){
@@ -45,7 +71,7 @@ public class PlayerSkills : MonoBehaviour{
         if(cooldownQ>0)cooldownQ-=Time.deltaTime;
         if(cooldownE>0)cooldownE-=Time.deltaTime;
         if(Input.GetKeyDown(KeyCode.Q) || key==1){
-            foreach(SkillSlotID skill in skills){
+            foreach(Skill skill in skills){
                 var i=skill.ID;
                 //if(skill.keySet==skillKeyBind.Q){
                 if(skillsBinds[i]==skillKeyBind.Q){
@@ -57,7 +83,7 @@ public class PlayerSkills : MonoBehaviour{
                 }
             }
         }if(Input.GetKeyDown(KeyCode.E) || key==2){
-            foreach(SkillSlotID skill in skills){
+            foreach(Skill skill in skills){
                 var i=skill.ID;
                 //if(skill.keySet==skillKeyBind.E){
                 if(skillsBinds[i]==skillKeyBind.E){

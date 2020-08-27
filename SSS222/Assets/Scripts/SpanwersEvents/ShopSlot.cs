@@ -13,7 +13,7 @@ public class ShopSlot : MonoBehaviour{
     GameSession gameSession;
     GameObject shopVFX;
     UpgradeMenu umenu;
-    ShopSlotID item;
+    ShopItem item;
     void Start()
     {
         if (player == null) player = FindObjectOfType<Player>();
@@ -35,11 +35,11 @@ public class ShopSlot : MonoBehaviour{
     {
         //GetComponent<Image>().sprite = shopMenu.shopSlotIDs[ID].sprite;
         //slotText.GetComponent<TMPro.TextMeshProUGUI>().text = shopMenu.shopSlotIDs[ID].price.ToString();
-        if(ID!=-1)item=(ShopSlotID)lootTable.itemList[ID];
-        GetComponent<Image>().sprite = item.sprite;
+        if(ID!=-1)item=(ShopItem)lootTable.itemList[ID];
+        GetComponent<Image>().sprite = item.item.sprite;
         //transform.localScale = new Vector3(lootTable.itemList[ID].lootItem.scaleX,lootTable.itemList[ID].lootItem.scaleY,1);
         var rt=GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(300*item.scaleX, 300*item.scaleY);
+        rt.sizeDelta = new Vector2(300*item.item.scaleX, 300*item.item.scaleY);
         if(item.price!=-1){price=item.price;}
         else{price=Random.Range(item.priceS,item.priceE);}
         slotText.GetComponent<TMPro.TextMeshProUGUI>().text = price.ToString();
@@ -69,8 +69,8 @@ public class ShopSlot : MonoBehaviour{
                 shopMenu.Purchase();
                 //if(ID!=4 && ID!=8 && ID!=9 && ID!=10){
                 if(ID!=-1){
-                if(item.pwrupName!=""){
-                    player.powerup=item.pwrupName;
+                if(item.item.pwrupName!=""){
+                    player.powerup=item.item.pwrupName;
                     player.energy += player.pwrupEnergyGet;
                 }else if(ID==4){
                     if (player.health>(player.maxHP-30)) { gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP-player.health)*2); }

@@ -53,6 +53,8 @@ public class PlayerCollider : MonoBehaviour{
     [SerializeField] public GameObject dmgPopupPrefab;
     [SerializeField] float dmgFreq=0.38f;
     public float dmgTimer;
+    public string lastHitObj;
+    public float lastHitDmg;
 
     Player player;
     GameSession gameSession;
@@ -130,7 +132,7 @@ public class PlayerCollider : MonoBehaviour{
                 float dmg = 0;
 
                 var cometName = cometPrefab.name; var cometName1 = cometPrefab.name + "(Clone)";
-                if (other.gameObject.name.Contains(cometName)) { if(other.GetComponent<CometRandomProperties>()!=null){if(other.GetComponent<CometRandomProperties>().damageBySpeedSize){dmg = (float)System.Math.Round(damageValues.GetDmgComet()*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1);}else{dmg=damageValues.GetDmgComet();}dmg=damageValues.GetDmgComet();} en = true; }
+                if (other.gameObject.name.Contains(cometName)) { if(other.GetComponent<CometRandomProperties>()!=null){if(other.GetComponent<CometRandomProperties>().damageBySpeedSize){dmg=(float)System.Math.Round(damageValues.GetDmgComet()*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1);}else{dmg=damageValues.GetDmgComet();}}else{dmg=damageValues.GetDmgComet();} en = true; }
 
                 var batName = batPrefab.name; var batName1 = batPrefab.name + "(Clone)";
                 if (other.gameObject.name.Contains(batName)) { dmg = damageValues.GetDmgBat(); en = true; }
@@ -198,6 +200,7 @@ public class PlayerCollider : MonoBehaviour{
                     if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);}
                     //else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
                 }
+                var name=other.gameObject.name.Split('(')[0];lastHitObj=name;lastHitDmg=dmg;
                 if(gameSession.dmgPopups==true&&dmg!=0&&!player.gclover){
                     GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(dmgPopupPrefab,transform.position);
                     dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;

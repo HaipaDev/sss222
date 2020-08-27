@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8689102416231088193}
   - component: {fileID: 1110796801287457597}
+  - component: {fileID: 2792471921738564784}
   - component: {fileID: 4215481038911001461}
   m_Layer: 0
   m_Name: Game Session
@@ -44,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da37379824486b54ea7f2696a5b904fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopOn: 1
+  xpOn: 1
+  upgradesOn: 1
   score: 0
   scoreMulti: 1
   luckMulti: 1
@@ -77,10 +81,27 @@ MonoBehaviour:
   rareMultiAmnt: 0.075
   legendMultiAmnt: 0.04
   gameSpeed: 1
+  defaultGameSpeed: 1
   speedChanged: 0
+  slowingPause: 0
   cheatmode: 1
   dmgPopups: 1
+  analyticsOn: 1
+  gameModeSelected: 0
   restartTimer: -4
+  gameSessionTime: 0
+--- !u!114 &2792471921738564784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2670168737584117729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f9bea8f2a1b8c643886772f027bb876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &4215481038911001461
 AudioSource:
   m_ObjectHideFlags: 0

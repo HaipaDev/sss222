@@ -18,22 +18,30 @@ public class UpgradeMenu : MonoBehaviour{
     public XPBars lvlbar;
     public float prevGameSpeed = 1f;
     [Header("Upgrade Values")]
+    public int total_UpgradesCountMax=5;
+    public int other_UpgradesCountMax=10;
     public float maxHealth_UpgradeAmnt=5f;
     public int maxHealth_UpgradeCost=1;
+    public int maxHealth_UpgradesCountMax=5;
     public float maxEnergy_UpgradeAmnt=5f;
     public int maxEnergy_UpgradeCost=1;
-    public float speed_UpgradeAmnt=0.05f;
+    public int maxEnergy_UpgradesCountMax=4;
+    public float speed_UpgradeAmnt=0.1f;
     public int speed_UpgradeCost=1;
+    public int speed_UpgradesCountMax=5;
     public float hpRegen_UpgradeAmnt=0.2f;
     public int hpRegen_UpgradeCost=1;
-    public float enRegen_UpgradeAmnt=2f;
+    public int hpRegen_UpgradesCountMax=2;
+    public float enRegen_UpgradeAmnt=1;
     public int enRegen_UpgradeCost=1;
+    public int enRegen_UpgradesCountMax=2;
     public float luck_UpgradeAmnt=0.05f;
     public int luck_UpgradeCost=1;
+    public int luck_UpgradesCountMax=5;
     public int defaultPowerup_upgradeCost1=1;
-    public int defaultPowerup_upgradeCost2=3;
-    public int defaultPowerup_upgradeCost3=6;
-    public int energyRefill_upgradeCost=3;
+    public int defaultPowerup_upgradeCost2=1;
+    public int defaultPowerup_upgradeCost3=4;
+    public int energyRefill_upgradeCost=2;
     public int energyRefill_upgradeCost2=3;
     public int mPulse_upgradeCost=3;
     public int postMortem_upgradeCost=1;
@@ -41,26 +49,18 @@ public class UpgradeMenu : MonoBehaviour{
     public int overhaul_upgradeCost=3;
     [Header("Upgrade Counts")]
     public int total_UpgradesCount;
-    public int total_UpgradesCountMax=10;
     public int total_UpgradesLvl=0;
-    public int other_UpgradesCountMax=10;
     public int maxHealth_UpgradesCount;
-    public int maxHealth_UpgradesCountMax=10;
     public int maxHealth_UpgradesLvl=1;
     public int maxEnergy_UpgradesCount;
-    public int maxEnergy_UpgradesCountMax=4;
     public int maxEnergy_UpgradesLvl=1;
     public int speed_UpgradesCount;
-    public int speed_UpgradesCountMax=10;
     public int speed_UpgradesLvl=1;
     public int hpRegen_UpgradesCount;
-    public int hpRegen_UpgradesCountMax=2;
     public int hpRegen_UpgradesLvl=0;
     public int enRegen_UpgradesCount;
-    public int enRegen_UpgradesCountMax=2;
     public int enRegen_UpgradesLvl=0;
     public int luck_UpgradesCount;
-    public int luck_UpgradesCountMax=5;
     public int luck_UpgradesLvl=1;
     public int defaultPowerup_upgradeCount;
     public int energyRefill_upgraded;
@@ -74,7 +74,45 @@ public class UpgradeMenu : MonoBehaviour{
 
     int lvlID;
     int lvlcr;
-
+    private void Awake() {
+        StartCoroutine(SetValues());
+    }
+    IEnumerator SetValues(){
+    yield return new WaitForSeconds(0.07f);
+    var i=GameRules.instance;
+    if(i!=null){
+        maxHealth_UpgradeAmnt=i.maxHealth_UpgradeAmnt;
+        maxHealth_UpgradeCost=i.maxHealth_UpgradeCost;
+        maxEnergy_UpgradeAmnt=i.maxEnergy_UpgradeAmnt;
+        maxEnergy_UpgradeCost=i.maxEnergy_UpgradeCost;
+        speed_UpgradeAmnt=i.speed_UpgradeAmnt;
+        speed_UpgradeCost=i.speed_UpgradeCost;
+        hpRegen_UpgradeAmnt=i.hpRegen_UpgradeAmnt;
+        hpRegen_UpgradeCost=i.hpRegen_UpgradeCost;
+        enRegen_UpgradeAmnt=i.enRegen_UpgradeAmnt;
+        enRegen_UpgradeCost=i.enRegen_UpgradeCost;
+        luck_UpgradeAmnt=i.luck_UpgradeAmnt;
+        luck_UpgradeCost=i.luck_UpgradeCost;
+        defaultPowerup_upgradeCost1=i.defaultPowerup_upgradeCost1;
+        defaultPowerup_upgradeCost2=i.defaultPowerup_upgradeCost2;
+        defaultPowerup_upgradeCost3=i.defaultPowerup_upgradeCost3;
+        energyRefill_upgradeCost=i.energyRefill_upgradeCost;
+        energyRefill_upgradeCost2=i.energyRefill_upgradeCost2;
+        mPulse_upgradeCost=i.mPulse_upgradeCost;
+        postMortem_upgradeCost=i.postMortem_upgradeCost;
+        teleport_upgradeCost=i.teleport_upgradeCost;
+        overhaul_upgradeCost=i.overhaul_upgradeCost;
+        //
+        total_UpgradesCountMax=i.total_UpgradesCountMax;
+        other_UpgradesCountMax=i.other_UpgradesCountMax;
+        maxHealth_UpgradesCountMax=i.maxHealth_UpgradesCountMax;
+        maxEnergy_UpgradesCountMax=i.maxEnergy_UpgradesCountMax;
+        speed_UpgradesCountMax=i.speed_UpgradesCountMax;
+        hpRegen_UpgradesCountMax=i.hpRegen_UpgradesCountMax;
+        enRegen_UpgradesCountMax=i.enRegen_UpgradesCountMax;
+        luck_UpgradesCountMax=i.luck_UpgradesCountMax;
+    }
+    }
     void Start(){
         instance=this;
         gameSession = FindObjectOfType<GameSession>();

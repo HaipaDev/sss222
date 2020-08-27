@@ -15,15 +15,23 @@ public class LootTableDropPowerup{
     [SerializeField]public float dropChance=0f;
 }*/
 [System.Serializable]
+public class ShopItem{
+    [HideInInspector]public string name;
+    public ShopSlotID item;
+    public float[] dropChance=new float[GameRules.repLength+1];
+    public int price=-1;
+    public int priceS=1;
+    public int priceE=3;
+}
+[System.Serializable]
 public class ItemPercentageShop2{
     [HideInInspector]public string name;
     //[SerializeField]public float itemPercentage;
 }
 public class LootTableShop2 : MonoBehaviour{
     [SerializeField]
-    public UnityEngine.Object[] itemList;
-    [SerializeField] public static int repLength=4;
-    [SerializeField]int[] reputationThresh=new int[repLength];
+    public ShopItem[] itemList;
+    [SerializeField]int[] reputationThresh=new int[GameRules.repLength];
     public int reputation;
     public List<float> dropList;
     private Dictionary<PowerupItem, float> itemTable;
@@ -37,7 +45,16 @@ public class LootTableShop2 : MonoBehaviour{
             itemTable.Add(entry.lootItem, entry.dropChance);
         }*/
         //foreach(float dropChance in itemTable.Values){sum+=dropChance;}
+        StartCoroutine(SetValues());
         SumUp();
+    }
+    IEnumerator SetValues(){
+    yield return new WaitForSeconds(0.07f);
+    var i=GameRules.instance;
+    if(i!=null){
+        itemList=i.shopList;
+        reputationThresh=i.reputationThresh;
+    }
     }
     void OnValidate(){
         /*itemTable = new Dictionary<LootItem, float>();
@@ -60,10 +77,10 @@ public class LootTableShop2 : MonoBehaviour{
             randomWeight = Random.Range(0, sum);
         } while (randomWeight == sum);
         var i=-1;
-        foreach(ShopSlotID entry in itemList){
+        foreach(ShopItem entry in itemList){
             i++;
             //foreach(float drop in dropList){
-                if(randomWeight<dropList[i]) return entry;
+                if(randomWeight<dropList[i]) return entry.item;
                 randomWeight-=dropList[i];
             //}
         }
@@ -75,7 +92,7 @@ public class LootTableShop2 : MonoBehaviour{
         return null;
     }
     void SumUp(){
-        itemList=Resources.FindObjectsOfTypeAll(typeof(ShopSlotID));
+        //itemList=Resources.FindObjectsOfTypeAll(typeof(ShopSlotID));
         //System.Array.Resize(ref dropList, itemList.Count);
         dropList.Clear();
         //foreach(float dropChance in itemTable.Values){sum+=dropChance;};
@@ -83,7 +100,7 @@ public class LootTableShop2 : MonoBehaviour{
         //itemsPercentage = new ItemPercentage[itemList.Count];
         var i=-1;
         System.Array.Resize(ref itemsPercentage, itemList.Length);
-        foreach(ShopSlotID entry in itemList){
+        foreach(ShopItem entry in itemList){
             i++;
             dropList.Add(entry.dropChance[0]);
             //dropList.Add(entry.dropChance);
@@ -113,7 +130,7 @@ public class LootTableShop2 : MonoBehaviour{
     }
     void SumUpAfter(){
         var i=-1;
-        foreach(ShopSlotID entry in itemList){
+        foreach(ShopItem entry in itemList){
             i++;
             //For 0
             if(reputation<reputationThresh[0]){

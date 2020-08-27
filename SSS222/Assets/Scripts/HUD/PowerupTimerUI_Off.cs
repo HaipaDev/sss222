@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerupTimerUI_Off : MonoBehaviour{
-    private void Start() {
+    private void Start(){
+        StartCoroutine(Check());
+    }
+    IEnumerator Check(){
+        yield return new WaitForSeconds(0.07f);
         if(FindObjectOfType<Player>()!=null){if(!FindObjectOfType<Player>().weaponsLimited){Destroy(gameObject);}}
     }
     private void Update() {

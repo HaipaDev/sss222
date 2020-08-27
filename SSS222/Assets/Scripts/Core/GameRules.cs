@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameRules : MonoBehaviour{
+#region//Values
     public static GameRules instance;
+#region //Global values
     [Header("Global")]
     public string cfgName;
     public float defaultGameSpeed=1f;
@@ -17,15 +19,7 @@ public class GameRules : MonoBehaviour{
     public int shopScoreMaxE=450;
     public float scoreMulti=1;
     public float luckMulti=1;
-    [Header("Leveling")]
-    public float xp_forCore=100f;
-    public float xp_wave=20f;
-    public float xp_shop=3f;
-    public float xp_powerup=1f;
-    public float xp_flying=7f;
-    public float flyingTimeReq=25f;
-    public float xp_staying=-2f;
-    public float stayingTimeReq=4f;
+#endregion
 #region//Player
     [Header("Player")]
     public Vector2 startingPosPlayer=new Vector2(0.36f,-6.24f);
@@ -45,6 +39,9 @@ public class GameRules : MonoBehaviour{
     public float shootMultiPlayer=1f;
     public float shipScaleDefault=0.89f;
     public bool overheatOnPlayer=true;
+    public float overheatTimerMax = 8.66f;
+    public float overheatCooldown = 0.65f;
+    public float overheatedTime=3;
     public bool recoilOnPlayer=true;
     [Header("State Defaults")]
     public float flipTime = 7f;
@@ -139,6 +136,9 @@ public class GameRules : MonoBehaviour{
     public float procketDuration=10f;
     public float plaserDuration=10f;
     public float shadowBtDuration=10f;
+    [Header("Skills")]
+    public Skill[] skillsPlayer;
+    public float timeOverhaul=10;
 #endregion
 #region//Powerup Spawns
     [Header("Powerup/Waves Spawns")]
@@ -195,43 +195,102 @@ public class GameRules : MonoBehaviour{
 #endregion
 #region//Damage Values
 [Header("Damage Values")]
-public float dmg=5;
-public float dmgZone=2;
-public float dmgLaser=5f;
-public float dmgPhaser=0.5f;
-public float dmgHRocket=13.5f;
-public float dmgMiniLaser=0.32f;
-public float dmgLSaber=0.86f;
-public float dmgLClaws=7f;
-public float dmgShadowBT=40.5f;
-public float dmgQRocket=14.5f;
-public float dmgPRocket=0f;
-public float dmgPRocketExpl=0.5f;
-public float dmgCBullet=2f;
-public float dmgPlaser=6.78f;
-public float dmgMPulse=130f;
-
-public float dmgComet=10f;
-public float dmgBat=36f;
-public float dmgSoundwave=16.5f;
-public float dmgEnemyShip1=80f;
-public float dmgEBt=24.5f;
-public float dmgEnemySaber=2.5f;    
-public float dmgGoblin=16f;
-public float dmgHealDrone=75f;
-public float dmgVortex=70f;
-public float dmgLeech=4f;
-public float dmgHLaser=90f;
-public float dmgStinger=33.3f;
-public Vector2 efxStinger=new Vector2(20,1);
-public float dmgGoblinBt=7f;
-public Vector2 efxGoblinBt=new Vector2(6,0.8f);
-public Vector2 efxGlareDev=new Vector2(1.5f,2f);
+    public float dmg=5;
+    public float dmgZone=2;
+    public float dmgLaser=5f;
+    public float dmgPhaser=0.5f;
+    public float dmgHRocket=13.5f;
+    public float dmgMiniLaser=0.32f;
+    public float dmgLSaber=0.86f;
+    public float dmgLClaws=7f;
+    public float dmgShadowBT=40.5f;
+    public float dmgQRocket=14.5f;
+    public float dmgPRocket=0f;
+    public float dmgPRocketExpl=0.5f;
+    public float dmgCBullet=2f;
+    public float dmgPlaser=6.78f;
+    public float dmgMPulse=130f;
+    //
+    public float dmgComet=10f;
+    public float dmgBat=36f;
+    public float dmgSoundwave=16.5f;
+    public float dmgEnemyShip1=80f;
+    public float dmgEBt=24.5f;
+    public float dmgEnemySaber=2.5f;    
+    public float dmgGoblin=16f;
+    public float dmgHealDrone=75f;
+    public float dmgVortex=70f;
+    public float dmgLeech=4f;
+    public float dmgHLaser=90f;
+    public float dmgStinger=33.3f;
+    public Vector2 efxStinger=new Vector2(20,1);
+    public float dmgGoblinBt=7f;
+    public Vector2 efxGoblinBt=new Vector2(6,0.8f);
+    public Vector2 efxGlareDev=new Vector2(1.5f,2f);
 #endregion
+#region//Shop
+[Header("Shop")]
+    public ShopItem[] shopList;
+    public const int repLength=4;
+    public int[] reputationThresh=new int[repLength];
+#endregion
+#region//Leveling
+
+    [Header("Leveling")]
+    public float xp_forCore=100f;
+    public float xp_wave=20f;
+    public float xp_shop=3f;
+    public float xp_powerup=1f;
+    public float xp_flying=7f;
+    public float flyingTimeReq=25f;
+    public float xp_staying=-2f;
+    public float stayingTimeReq=4f;
+#endregion
+#region//Upgrades
+[Header("Upgrades")]
+    public int total_UpgradesCountMax=5;
+    public int other_UpgradesCountMax=10;
+    public float maxHealth_UpgradeAmnt=5f;
+    public int maxHealth_UpgradeCost=1;
+    public int maxHealth_UpgradesCountMax=5;
+    public float maxEnergy_UpgradeAmnt=5f;
+    public int maxEnergy_UpgradeCost=1;
+    public int maxEnergy_UpgradesCountMax=4;
+    public float speed_UpgradeAmnt=0.1f;
+    public int speed_UpgradeCost=1;
+    public int speed_UpgradesCountMax=5;
+    public float hpRegen_UpgradeAmnt=0.2f;
+    public int hpRegen_UpgradeCost=1;
+    public int hpRegen_UpgradesCountMax=2;
+    public float enRegen_UpgradeAmnt=1;
+    public int enRegen_UpgradeCost=1;
+    public int enRegen_UpgradesCountMax=2;
+    public float luck_UpgradeAmnt=0.05f;
+    public int luck_UpgradeCost=1;
+    public int luck_UpgradesCountMax=5;
+    public int defaultPowerup_upgradeCost1=1;
+    public int defaultPowerup_upgradeCost2=1;
+    public int defaultPowerup_upgradeCost3=4;
+    public int energyRefill_upgradeCost=2;
+    public int energyRefill_upgradeCost2=3;
+    public int mPulse_upgradeCost=3;
+    public int postMortem_upgradeCost=1;
+    public int teleport_upgradeCost=2;
+    public int overhaul_upgradeCost=3;
+#endregion
+#endregion
+#region//Voids
     private void Awake(){
         instance=this;
     }
     private void OnValidate(){
+        foreach(ShopItem entry in shopList){
+            entry.name=entry.item.name;
+            entry.dropChance=entry.item.dropChance;
+            entry.price=entry.item.price;
+            entry.priceS=entry.item.priceS;
+            entry.priceE=entry.item.priceE;
+        }
         /*foreach(LootTableEntryPowerup entry in pwrupStatusList){
         entry.name=entry.lootItem.name;
         entry.rarity=entry.lootItem.rarity;
@@ -251,8 +310,9 @@ public Vector2 efxGlareDev=new Vector2(1.5f,2f);
         }*/
     }
 }
+#endregion
 
-
+#region//Custom classes
 [System.Serializable]
 public class EnemyClass{
     public string name;
@@ -354,3 +414,6 @@ public class GlareDevilSettings{
     public float timerMax=3.3f;
     public Vector2 efxBlind=new Vector2(4,4);
 }
+
+
+#endregion

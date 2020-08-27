@@ -7,7 +7,7 @@ public class ShopUI_Destroy : MonoBehaviour{
         StartCoroutine(Check());
     }
     IEnumerator Check(){
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.07f);
         if(GameSession.instance!=null){if(!GameSession.instance.shopOn)Destroy(gameObject);}
         Destroy(this);
     }

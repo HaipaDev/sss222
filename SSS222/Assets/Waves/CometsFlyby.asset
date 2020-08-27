@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: CometsFlyby
   m_EditorClassIdentifier: 
   waveName: Comets Flyby
-  spawnRate: 8.5
   enemies:
   - {fileID: 3147796775416149952, guid: c6109cf7f384ee046a6008021ed7a475, type: 3}
   timeSpawn: 0
@@ -22,8 +21,8 @@ MonoBehaviour:
   numberOfEnemies: 1
   moveSpeed: 1.66
   randomSpeed: 1
-  moveSpeedS: 1.55
-  moveSpeedE: 2.74
+  moveSpeedS: 2.65
+  moveSpeedE: 3.74
   startToEndPath: 0
   between2PtsPath: 1
   pathStartPrefab: {fileID: 7846228419670946794, guid: dffab90ce99bc95479e1e3d6390ac86e,
@@ -35,3 +34,5 @@ MonoBehaviour:
   pathsRandom: []
   shipPlace: 0
   shipYY: 0
+  loopPath: 0
+  loopPathPrefab: {fileID: 0}

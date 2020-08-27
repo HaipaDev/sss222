@@ -7,7 +7,7 @@ public class EnergyUI_Destroy : MonoBehaviour{
         StartCoroutine(Check());
     }
     IEnumerator Check(){
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.07f);
         if(GameRules.instance!=null){if(!GameRules.instance.energyOnPlayer)Destroy(gameObject);}
         Destroy(this);
     }

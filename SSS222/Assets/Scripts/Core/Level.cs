@@ -50,7 +50,8 @@ public class Level : MonoBehaviour{
         //FindObjectOfType<GameSession>().savableData.Save();
         //FindObjectOfType<SaveSerial>().Save();
     }
-    public void LoadGameScene(){
+    public void LoadGameScene(int i){
+        GameSession.instance.SetGameModeSelected(i);
         SceneManager.LoadScene("Game");
         //LoadLevel("Game");
         FindObjectOfType<GameSession>().ResetScore();

@@ -7,7 +7,7 @@ public class ColorSkillKey : MonoBehaviour{
     [SerializeField] public int ID;
     [SerializeField] public skillKeyBind key;
     Player player;
-    SkillSlotID[] skills;
+    Skill[] skills;
     skillKeyBind[] skillsBinds;
     Color color;
     Image spr;
@@ -15,8 +15,12 @@ public class ColorSkillKey : MonoBehaviour{
     public bool on;
     void Start(){
         player=FindObjectOfType<Player>();
-        skills=player.GetComponent<PlayerSkills>().skills;
-        skillsBinds=player.GetComponent<PlayerSkills>().skillsBinds;
+        StartCoroutine(SetSkills());
+    }
+    IEnumerator SetSkills(){
+        yield return new WaitForSeconds(0.07f);
+        skills=FindObjectOfType<PlayerSkills>().skills;
+        skillsBinds=FindObjectOfType<PlayerSkills>().skillsBinds;
         spr=GetComponent<Image>();
         txt=GetComponentInChildren<TMPro.TextMeshProUGUI>();
     }

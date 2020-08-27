@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 public class Player : MonoBehaviour{
     #region Vars
@@ -19,23 +20,22 @@ public class Player : MonoBehaviour{
     [SerializeField] public float lsaberSpeedMulti = 1.25f;
     public float moveSpeed = 5f;
     public float moveSpeedCurrent;
-    [SerializeField] public float health = 200f;
+    public float health = 200f;
     [SerializeField] public float maxHP = 200f;
     [SerializeField] public string powerup = "laser";
     [SerializeField] public bool energyOn = true;
-    [SerializeField] public float energy = 80f;
+    public float energy = 80f;
     [SerializeField] public float maxEnergy = 200f;
     [SerializeField] public string powerupDefault = "laser";
-    [SerializeField] public float powerupTimer=-4;
+    public float powerupTimer=-4;
     [SerializeField] public bool losePwrupOutOfEn;
     [SerializeField] public int energyRefillUnlocked;
     [SerializeField] public bool overheatOn=true;
-    [SerializeField] public float overheatTimer = -4f;
-    [SerializeField] public float overheatTimerMax = 3f;
-    [SerializeField] public float overheatDmg = 10f;
+    public float overheatTimer = -4f;
+    [SerializeField] public float overheatTimerMax = 8.66f;
     [SerializeField] public float overheatCdTimer;
-    public float overheatCooldown = 1.5f;
-    [SerializeField] public bool overheated;
+    [SerializeField] public float overheatCooldown = 0.65f;
+    public bool overheated;
     [SerializeField] public float overheatedTime=3;
     public float overheatedTimer;
     [SerializeField] public bool recoilOn=true;
@@ -324,6 +324,7 @@ public class Player : MonoBehaviour{
     const float mouseShadowSpeed=150;
     bool dashed;
     public Vector2 tpPos;
+    bool dead;
 #endregion
     private void Awake() {
         SetGameRuleValues();
@@ -519,7 +520,7 @@ public class Player : MonoBehaviour{
         
         if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
         if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
-        if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);//health-=overheatDmg;DMGPopUpHUD(overheatDmg);OnFire(3.8f);damaged=true;AudioManager.instance.Play("Overheat");
+        if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);
         overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
         if(overheated==true&&overheatedTimer>0&&Time.timeScale>0.0001f){overheatedTimer-=Time.deltaTime;
             GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
@@ -540,9 +541,7 @@ public class Player : MonoBehaviour{
         // If we're first at-bat, handle the input immediately and mark it already-handled.
         HandleInput(true);
         //MovePlayer();
-        /*if (!Input.GetButton("Fire1")){
-            if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}
-        }*/
+        //if (!Input.GetButton("Fire1")){if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}}
         Vector2 mPos=new Vector2(0,0);
         if(moveX&&moveY)mPos=new Vector2(mousePos.x,mousePos.y);
         if(moveX&&!moveY)mPos=new Vector2(mousePos.x,transform.position.y);
@@ -829,12 +828,25 @@ public class Player : MonoBehaviour{
     }
 
     private void Die(){
-        if (health <= 0){
-            GameObject explosion = GameAssets.instance.VFX("Explosion",transform.position,0.5f);
-            AudioManager.instance.Play("Death");
-            Destroy(explosion, 0.5f);
-            pskills.DeathSkills();
+        if(health <= 0 && dead!=true){
+            dead=true;
+            Hide();
             Destroy(gameObject, 0.05f);//Kill player
+            pskills.DeathSkills();
+            if(gameSession.analyticsOn==true){
+            AnalyticsResult analyticsResult=Analytics.CustomEvent("Death",
+            new Dictionary<string,object>{
+                { "Source: ", GetComponent<PlayerCollider>().lastHitObj },
+                { "Damage: ", GetComponent<PlayerCollider>().lastHitDmg },
+                { "Score: ", GameSession.instance.score },
+                { "Time: ", GameSession.instance.GetGameSessionTime() }
+            });
+            Debug.Log("analyticsResult: "+analyticsResult);
+            }
+            Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
+
+            GameObject explosion = GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(explosion, 0.5f);
+            AudioManager.instance.Play("Death");
             gameOverCanvasPrefab.gameObject.SetActive(true);
             var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
             Destroy(GameObject.Find(lsaberName));
@@ -843,6 +855,12 @@ public class Player : MonoBehaviour{
             Destroy(GameObject.Find(lclawsName));
             Destroy(GameObject.Find(lclawsName1));
         }
+    }
+    private void Hide(){
+        GetComponent<SpriteRenderer>().enabled=false;
+        GetComponent<Collider2D>().enabled=false;
+        GetComponent<BackflameEffect>().enabled=false;
+        GetComponent<PlayerSkills>().enabled=false;
     }
 #endregion
 
@@ -1211,8 +1229,8 @@ bool stopped=false;
                     else{followC.distReq=6f;followC.speedFollow=5f;}
                 }
             }else{
-                PowerupWeights[] objs = FindObjectsOfType<PowerupWeights>();
-                foreach(PowerupWeights obj in objs){
+                Tag_Powerup[] objs = FindObjectsOfType<Tag_Powerup>();
+                foreach(Tag_Powerup obj in objs){
                     var follow = obj.GetComponent<Follow>();
                     if(follow!=null)Destroy(follow);
                 }

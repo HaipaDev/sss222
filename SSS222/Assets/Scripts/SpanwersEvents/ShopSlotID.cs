@@ -9,7 +9,7 @@ public class ShopSlotID : ScriptableObject{
     [SerializeField] public string itemName = "";
     [SerializeField] public string pwrupName = "";
     [SerializeField] public int ID;
-    [SerializeField] public float[] dropChance=new float[LootTableShop2.repLength+1];
+    [SerializeField] public float[] dropChance=new float[GameRules.repLength+1];
     [SerializeField] public int price=-1;
     [SerializeField] public int priceS;
     [SerializeField] public int priceE;
@@ -19,7 +19,7 @@ public class ShopSlotID : ScriptableObject{
     //[SerializeField] public float spawnRate = 10f;
 
     private void OnValidate() {
-        Array.Resize(ref dropChance,LootTableShop2.repLength+1);
+        Array.Resize(ref dropChance,GameRules.repLength+1);
         /*float dr=0f;
         foreach(float drop in dropChance){
             if(drop!=0)dr=drop;
