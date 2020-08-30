@@ -31,9 +31,9 @@ public class EnemyPathing : MonoBehaviour{
                     waypointsR = waveConfig.GetWaypointsRandomPoint();
                     if(waveConfig.loopPath==true){waypointsL=waveConfig.GetWaypointsLoop();}
                 //}else if(waveConfig.loopPath==true){waypointsL=waveConfig.GetWaypointsLoop();
-                }else{
+                }else{if(waveConfig.shipPlace!=true){
                     waypointsS = waveConfig.GetWaypoints();
-                }
+                }}
             }
             if(waveConfig.loopPath!=true){
             if (waveConfig.randomPath == true || waveConfig.randomPathEach==true || waveConfig.randomPoint==true){ transform.position = waypointsR[waypointIndex].transform.position; 

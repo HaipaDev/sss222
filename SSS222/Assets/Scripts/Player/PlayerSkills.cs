@@ -58,7 +58,7 @@ public class PlayerSkills : MonoBehaviour{
     }
 
     private void OnValidate(){
-        foreach(Skill s in skills){/*s.ID=s.item.ID;*/s.name=s.item.name;  /*s.enCost=s.item.enCost;s.cooldown=s.item.cooldown;*/}
+        if(skills.Length>0)foreach(Skill s in skills){/*s.ID=s.item.ID;*/s.name=s.item.name;  /*s.enCost=s.item.enCost;s.cooldown=s.item.cooldown;*/}
         ResizeSet();
     }
     private void ResizeSet(){

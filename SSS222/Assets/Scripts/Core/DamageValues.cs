@@ -51,8 +51,8 @@ public class DamageValues : MonoBehaviour{
 private void Awake() {
 instance=this;
 StartCoroutine(SetValues());}
-IEnumerator SetValues(){
-yield return new WaitForSeconds(0.1f);
+public IEnumerator SetValues(){
+yield return new WaitForSeconds(0.08f);
 var i=GameRules.instance;
 if(i!=null){
     dmg=i.dmg;

@@ -40,7 +40,6 @@ public class LootTablePowerups : MonoBehaviour{
             itemTable.Add(entry.lootItem, entry.dropChance);
         }*/
         //foreach(float dropChance in itemTable.Values){sum+=dropChance;}
-        SumUp();
         StartCoroutine(SetValues());
     }
     private IEnumerator SetValues(){
@@ -67,6 +66,8 @@ public class LootTablePowerups : MonoBehaviour{
             }
         }
         if(itemList.Count==0){Destroy(this);}
+        yield return new WaitForSeconds(0.2f);
+        SumUp();
     }
     private void Start() {
         gameSession=FindObjectOfType<GameSession>();
@@ -108,8 +109,10 @@ public class LootTablePowerups : MonoBehaviour{
         return null;
     }
     void SumUp(){
+        if(dropList.Count<itemList.Count){
         //System.Array.Resize(ref dropList, itemList.Count);
-        dropList.Clear();
+        //if(dropList.Count>itemList.Count)dropList.Clear();
+        dropList=new List<float>(itemList.Count);
         //foreach(float dropChance in itemTable.Values){sum+=dropChance;};
         //itemTable = new Dictionary<PowerupItem, float>();
         //itemsPercentage = new ItemPercentage[itemList.Count];
@@ -127,8 +130,8 @@ public class LootTablePowerups : MonoBehaviour{
             entry.dropChance=entry.lootItem.dropChance;
             entry.levelReq=entry.lootItem.levelReq;
             */
+            //dropList[i]=entry.dropChance;
             dropList.Add(entry.dropChance);
-            //dropList.Add(entry.dropChance);
             //foreach(float drop in dropList){
             //itemTable.Add(entry, (float)dropList[i]);
             //entry.name=entry.lootItem.name;
@@ -143,7 +146,7 @@ public class LootTablePowerups : MonoBehaviour{
                 string r="";
                 if(entry.rarity==rarityPowerup.Legendary){}r="|L";
                 if(entry.rarity==rarityPowerup.Rare){r="|R";}
-                if(entry.rarity==rarityPowerup.Common){r="c";}
+                //if(entry.rarity==rarityPowerup.Common){r="c";}
                 
                 
                 itemsPercentage[i].name=entry.name+"("+entry.levelReq+r+")"+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
@@ -152,6 +155,7 @@ public class LootTablePowerups : MonoBehaviour{
             //}
         }
         sum=dropList.Sum();
+        }
     }
     /*void SumUpAfter(){
         int i=0;
@@ -180,6 +184,7 @@ public class LootTablePowerups : MonoBehaviour{
         sum=dropList.Sum();
     }*/
     void SumUpAfter(){
+        if(dropList.Count<itemList.Count){dropList.Capacity=itemList.Capacity;}
         var i=-1;
         foreach(LootTableEntryPowerup entry in itemList){
             i++;

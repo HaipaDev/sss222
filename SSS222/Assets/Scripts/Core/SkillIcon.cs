@@ -12,7 +12,7 @@ public class SkillIcon : MonoBehaviour{
         StartCoroutine(SetSkills());
     }
     IEnumerator SetSkills(){
-        yield return new WaitForSeconds(0.07f);
+        yield return new WaitForSeconds(0.1f);
         skills=FindObjectOfType<PlayerSkills>().skills;
     }
     void Update(){

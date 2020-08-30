@@ -22,7 +22,7 @@ public class PauseMenu : MonoBehaviour{
             if(GameIsPaused){
                 Resume();
             }else{
-                if(Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true)Pause();
+                if((Shop.instance!=null&&Shop.shopOpened!=true) && (UpgradeMenu.instance!=null&&UpgradeMenu.UpgradeMenuIsOpen!=true)||(Shop.instance==null||UpgradeMenu.instance==null))Pause();
             }
         }//if(Input.GetKeyDown(KeyCode.R)){//in GameSession}
     }

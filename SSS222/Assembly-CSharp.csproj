@@ -102,6 +102,7 @@
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\SaveGameWeb.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\MenuSystem\Menu.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\ToggleValue.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Primitives\UIPrimitiveBase.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Utilities\ReturnKeyTriggersButton.cs" />
      <Compile Include="Assets\Scripts\LvlTree.cs" />
@@ -121,6 +122,7 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\ColorPicker\ColorLabel.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Serializers\ISaveGameSerializer.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\ValueDisplay.cs" />
+     <Compile Include="Assets\Scripts\Visuals\TimeFreezer.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\RescalingPanels\RescalePanel.cs" />
      <Compile Include="Assets\Scripts\Enemies\GoblinDrop.cs" />
      <Compile Include="Assets\Tags\LootItem.cs" />
@@ -458,6 +460,8 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Primitives\DiamondGraph.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIMultiplyEffect.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\FancyScrollView\01_Basic\Example01CellDto.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\SpritesLib.cs" />
+     <Compile Include="Assets\Scripts\Menu\ModeInfoManager.cs" />
      <None Include="Assets\unity-ui-extensions\Resources\Shaders\UIAdditive.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

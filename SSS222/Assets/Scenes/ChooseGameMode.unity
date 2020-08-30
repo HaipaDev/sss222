@@ -446,36 +446,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1098410306
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1098410307}
-  m_Layer: 0
-  m_Name: Background (Missing Prefab)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1098410307
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098410306}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1102041494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -521,7 +491,7 @@ PrefabInstance:
     - target: {fileID: 2096478727153817198, guid: 48d185b94cd3a6544b6aba9f7d2430ee,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2096478727153817198, guid: 48d185b94cd3a6544b6aba9f7d2430ee,
         type: 3}
@@ -686,6 +656,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3582436128799516447, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadGameModeInfoScene
+      objectReference: {fileID: 0}
     - target: {fileID: 7411510093557452867, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -701,6 +676,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7411510093557452867, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadGameModeInfoScene
+      objectReference: {fileID: 0}
     - target: {fileID: 7411510093639862057, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -715,7 +695,7 @@ PrefabInstance:
     - target: {fileID: 7411510093639862057, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadGameScene
+      value: LoadGameModeInfoScene
       objectReference: {fileID: 0}
     - target: {fileID: 7411510093639862057, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
@@ -730,7 +710,12 @@ PrefabInstance:
     - target: {fileID: 7411510093639862057, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411510093639862057, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7411510094129886687, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
@@ -752,6 +737,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7411510094129886687, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadGameModeInfoScene
+      objectReference: {fileID: 0}
     - target: {fileID: 7411510094139132566, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -766,7 +756,7 @@ PrefabInstance:
     - target: {fileID: 7411510094139132566, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadGameScene
+      value: LoadGameModeInfoScene
       objectReference: {fileID: 0}
     - target: {fileID: 7411510094139132566, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
@@ -797,7 +787,7 @@ PrefabInstance:
     - target: {fileID: 7411510094213533130, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadGameScene
+      value: LoadGameModeInfoScene
       objectReference: {fileID: 0}
     - target: {fileID: 7411510094213533130, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
@@ -853,7 +843,7 @@ PrefabInstance:
     - target: {fileID: 7411510095300660504, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadGameScene
+      value: LoadGameModeInfoScene
       objectReference: {fileID: 0}
     - target: {fileID: 7411510095300660504, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
@@ -868,6 +858,31 @@ PrefabInstance:
     - target: {fileID: 7411510095300660504, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411510095553703023, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411510095553703023, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411510095553703023, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411510095553703023, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411510095553703023, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_fontStyle
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8972392137798979312, guid: 8a784139e3e9e63488fc974d2b0c6329,

@@ -10,8 +10,9 @@ public class GameSession : MonoBehaviour{
     public static GameSession instance;
     [Header("Global")]
     public bool shopOn=true;
-    public bool xpOn=true;
+    public bool shopCargoOn=true;
     public bool upgradesOn=true;
+    public bool xpOn=true;
     [Header("Current Player Values")]
     public int score = 0;
     public float scoreMulti = 1f;
@@ -143,14 +144,14 @@ public class GameSession : MonoBehaviour{
 
         if(shopOn&&(shopScore>=shopScoreMax && coins>0))
         {
-            Shop.instance.SpawnCargo();
-            /*Shop.shopOpen = true;
+            if(shopCargoOn){Shop.instance.SpawnCargo();}
+            else{Shop.shopOpen = true;
             foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
                 enemy.givePts = false;
                 enemy.health = -1;
                 enemy.Die();
             }
-            gameSpeed=0f;*/
+            gameSpeed=0f;}
             shopScoreMax=Random.Range(shopScoreMaxS,shopScoreMaxE);
             shopScore=0;
         }
@@ -423,8 +424,10 @@ public class GameSession : MonoBehaviour{
         //int milliseconds = (int) (1000 * (time - minutes * 60 - seconds));
     return string.Format("{0:00}:{1:00}"/*:{2:000}"*/, minutes, seconds/*, milliseconds*/ );
     }
-    public string GetGameSessionTime(){
+    public string GetGameSessionTimeFormat(){
         return FormatTime(gameSessionTime);
+    }public int GetGameSessionTime(){
+        return Mathf.RoundToInt(gameSessionTime);
     }
     public void SetGameModeSelected(int i){gameModeSelected=i;}
 }

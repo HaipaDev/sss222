@@ -13,7 +13,7 @@ public class GameCreator : MonoBehaviour{
     [SerializeField] GameObject levelPrefab;
     [SerializeField] GameObject audioManagerPrefab;
     //[SerializeField] int gamerulesetsID;
-    [SerializeField] GameRulesets[] gamerulesetsPrefabs;
+    [SerializeField] GameRules[] gamerulesetsPrefabs;
     private void Awake()
     {
         if (FindObjectOfType<GameSession>() == null){Instantiate(gameSessionPrefab);}
@@ -22,16 +22,9 @@ public class GameCreator : MonoBehaviour{
         if (FindObjectOfType<GameAssets>() == null){Instantiate(gameAssetsPrefab);}
         if (FindObjectOfType<Level>() == null){Instantiate(levelPrefab);}
         if (FindObjectOfType<AudioManager>() == null){Instantiate(audioManagerPrefab);}
-        if (FindObjectOfType<GameRules>() == null&&SceneManager.GetActiveScene().name=="Game"){Instantiate(gamerulesetsPrefabs[GameSession.instance.gameModeSelected].GetGamerules());}
+        if (FindObjectOfType<GameRules>() == null&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Instantiate(gamerulesetsPrefabs[GameSession.instance.gameModeSelected]);}
         //if (FindObjectOfType<GameRules>() == null&&SceneManager.GetActiveScene().name=="SandboxMenu"){Instantiate(gamerulesetsPrefabs[4].GetGamerules());}
         if (FindObjectOfType<PostProcessVolume>() != null && FindObjectOfType<SaveSerial>().pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
         Destroy(gameObject);
-    }
-    [System.Serializable]
-    public class GameRulesets{
-        [HideInInspector] string name;
-        [SerializeField]GameRules gameRules;
-        private void OnValidate() {name=gameRules.cfgName;}
-        public GameRules GetGamerules(){return gameRules;}
     }
 }

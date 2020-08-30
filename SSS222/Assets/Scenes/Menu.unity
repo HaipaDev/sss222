@@ -720,6 +720,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1542442386, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -895
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442386, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -399.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442386, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 271.59424
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442386, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 151.89044
+      objectReference: {fileID: 0}
     - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
       propertyPath: m_fontColorGradient.bottomLeft.r
       value: 0.676865
@@ -771,20 +787,24 @@ PrefabInstance:
     - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: e97c0f3b438a0e0488029da84806c90c,
+      objectReference: {fileID: 11400000, guid: 4949b6fb520a4654ea3c7bdd9b500e11,
         type: 2}
     - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -4510105064258215381, guid: e97c0f3b438a0e0488029da84806c90c,
+      objectReference: {fileID: -978371348157908502, guid: 4949b6fb520a4654ea3c7bdd9b500e11,
         type: 2}
     - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
       propertyPath: m_fontSize
-      value: 150
+      value: 161.45
       objectReference: {fileID: 0}
     - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
       propertyPath: m_text
-      value: 0.3
+      value: v0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 430024665021181408, guid: c3243b564edf95f46895bf4210dd31a4,
         type: 3}

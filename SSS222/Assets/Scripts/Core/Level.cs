@@ -50,15 +50,17 @@ public class Level : MonoBehaviour{
         //FindObjectOfType<GameSession>().savableData.Save();
         //FindObjectOfType<SaveSerial>().Save();
     }
-    public void LoadGameScene(int i){
-        GameSession.instance.SetGameModeSelected(i);
+    public void LoadGameScene(){
+        //GameSession.instance.SetGameModeSelected(i);
+        StartCoroutine(DamageValues.instance.SetValues());
         SceneManager.LoadScene("Game");
         //LoadLevel("Game");
         FindObjectOfType<GameSession>().ResetScore();
         FindObjectOfType<GameSession>().gameSpeed=1f;
         Time.timeScale = 1f;
     }
-    public void LoadGameModeChooseScene(){SceneManager.LoadScene("GameModeChoose");}
+    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");}
+    public void LoadGameModeInfoScene(int i){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGameModeSelected(i);}
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
     public void LoadInventoryScene(){SceneManager.LoadScene("Inventory");}
     public void LoadCreditsScene(){SceneManager.LoadScene("Credits");}

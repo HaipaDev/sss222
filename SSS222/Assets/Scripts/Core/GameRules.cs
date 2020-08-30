@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameRules : MonoBehaviour{
 #region//Values
-    public static GameRules instance;
-#region //Global values
+public static GameRules instance;
+#region//Global values
     [Header("Global")]
     public string cfgName;
     public float defaultGameSpeed=1f;
-    public bool barrierOn=false;
     public bool shopOn=true;
-    public bool xpOn=true;
+    public bool shopCargoOn=true;
     public bool upgradesOn=true;
+    public bool xpOn=true;
+    public bool barrierOn=false;
     public int EVscoreMax=30;
     public int shopScoreMax=200;
     public int shopScoreMaxS=200;
@@ -282,15 +284,28 @@ public class GameRules : MonoBehaviour{
 #region//Voids
     private void Awake(){
         instance=this;
+        SetupSingleton();
+    }
+    private void SetupSingleton(){
+        int numberOfObj = FindObjectsOfType<GameRules>().Length;
+        if(numberOfObj>1||!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){
+            Destroy(gameObject);
+        }else{
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    private void Update() {
+        if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
     }
     private void OnValidate(){
-        foreach(ShopItem entry in shopList){
+        if(!shopOn)shopCargoOn=false;
+        /*foreach(ShopItem entry in shopList){
             entry.name=entry.item.name;
             entry.dropChance=entry.item.dropChance;
             entry.price=entry.item.price;
             entry.priceS=entry.item.priceS;
             entry.priceE=entry.item.priceE;
-        }
+        }*/
         /*foreach(LootTableEntryPowerup entry in pwrupStatusList){
         entry.name=entry.lootItem.name;
         entry.rarity=entry.lootItem.rarity;

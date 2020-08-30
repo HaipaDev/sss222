@@ -164,7 +164,7 @@ public class Waves : MonoBehaviour{
             else if (timeSpawns <=0 && timeSpawns > -4) {SpawnAllEnemiesInWave(currentWave); timeSpawns = currentWave.timeSpawnWave; }
         }
             if (progressiveWaves==true){if (waveIndex >= GetComponent<LootTableWaves>().itemList.Count) { waveIndex = startingWave; } }
-            else{if (gameSession.EVscore >= gameSession.EVscoreMax) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
+            else{if(gameSession.EVscoreMax!=-5&&gameSession.EVscore>=gameSession.EVscoreMax) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
                 timeSpawns = 0; currentWave=GetRandomWave();//waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
                 gameSession.EVscore = 0; gameSession.AddXP(gameSession.xp_wave);//XP For Wave
                 } }

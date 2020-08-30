@@ -528,7 +528,7 @@ public class Player : MonoBehaviour{
             Destroy(flareL.gameObject, 0.04f);
             Destroy(flareR.gameObject, 0.04f);
             }
-        if(overheatedTimer<=0&&(overheatTimerMax!=4&&overheatTimer!=-4)){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
+        if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
         //if((autoShoot&&energyOn&&energy>0)&&(shootTimer<=0||shootCoroutine==null)){Shoot();}
         //Debug.Log(shootTimer);
         //Debug.LogWarning(shootCoroutine);
@@ -836,16 +836,18 @@ public class Player : MonoBehaviour{
             if(gameSession.analyticsOn==true){
             AnalyticsResult analyticsResult=Analytics.CustomEvent("Death",
             new Dictionary<string,object>{
+                { "Mode: ", GameRules.instance.cfgName },
+                { "Score: ", GameSession.instance.score },
+                { "Time: ", GameSession.instance.GetGameSessionTime() },
                 { "Source: ", GetComponent<PlayerCollider>().lastHitObj },
                 { "Damage: ", GetComponent<PlayerCollider>().lastHitDmg },
-                { "Score: ", GameSession.instance.score },
-                { "Time: ", GameSession.instance.GetGameSessionTime() }
+                { "Full Report: ", GameRules.instance.cfgName+", "+GameSession.instance.score+", "+GameSession.instance.GetGameSessionTimeFormat()+", "+GetComponent<PlayerCollider>().lastHitObj+", "+GetComponent<PlayerCollider>().lastHitDmg }
             });
             Debug.Log("analyticsResult: "+analyticsResult);
             }
             Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
 
-            GameObject explosion = GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(explosion, 0.5f);
+            GameObject explosion = GameAssets.instance.VFX("Explosion",transform.position,0.5f);//Destroy(explosion, 0.5f);
             AudioManager.instance.Play("Death");
             gameOverCanvasPrefab.gameObject.SetActive(true);
             var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
@@ -859,8 +861,9 @@ public class Player : MonoBehaviour{
     private void Hide(){
         GetComponent<SpriteRenderer>().enabled=false;
         GetComponent<Collider2D>().enabled=false;
-        GetComponent<BackflameEffect>().enabled=false;
-        GetComponent<PlayerSkills>().enabled=false;
+        if(GetComponent<BackflameEffect>()!=null)GetComponent<BackflameEffect>().enabled=false;
+        if(GetComponent<PlayerSkills>()!=null)GetComponent<PlayerSkills>().enabled=false;
+        foreach(Transform c in transform){Destroy(c.gameObject);}
     }
 #endregion
 

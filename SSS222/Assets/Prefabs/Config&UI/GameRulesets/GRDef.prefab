@@ -45,10 +45,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cfgName: Adventure Mode
   defaultGameSpeed: 1
-  barrierOn: 0
   shopOn: 1
-  xpOn: 1
+  shopCargoOn: 1
   upgradesOn: 1
+  xpOn: 1
+  barrierOn: 0
   EVscoreMax: 40
   shopScoreMax: 200
   shopScoreMaxS: 200
@@ -57,9 +58,9 @@ MonoBehaviour:
   luckMulti: 1
   startingPosPlayer: {x: 0.36, y: -6.24}
   autoShootPlayer: 0
-  healthPlayer: 150
+  healthPlayer: 75
   energyOnPlayer: 1
-  energyPlayer: 180
+  energyPlayer: 100
   powerupStarting: laser
   powerupDefault: laser
   moveX: 1
@@ -787,11 +788,11 @@ MonoBehaviour:
   - name: 10PowerCore
     item: {fileID: 11400000, guid: ca7b448a3f962ed45b97683ad5bdea1e, type: 2}
     dropChance:
+    - 5
     - 6
-    - 4
-    - 2
-    - 1
-    - 1
+    - 5
+    - 5.5
+    - 5
     price: -1
     priceS: 12
     priceE: 23
@@ -837,18 +838,26 @@ MonoBehaviour:
   flyingTimeReq: 25
   xp_staying: -2
   stayingTimeReq: 4
+  total_UpgradesCountMax: 5
+  other_UpgradesCountMax: 10
   maxHealth_UpgradeAmnt: 5
   maxHealth_UpgradeCost: 1
+  maxHealth_UpgradesCountMax: 5
   maxEnergy_UpgradeAmnt: 5
   maxEnergy_UpgradeCost: 1
+  maxEnergy_UpgradesCountMax: 4
   speed_UpgradeAmnt: 0.1
   speed_UpgradeCost: 1
+  speed_UpgradesCountMax: 5
   hpRegen_UpgradeAmnt: 0.2
   hpRegen_UpgradeCost: 1
+  hpRegen_UpgradesCountMax: 2
   enRegen_UpgradeAmnt: 1
   enRegen_UpgradeCost: 1
+  enRegen_UpgradesCountMax: 2
   luck_UpgradeAmnt: 0.05
   luck_UpgradeCost: 1
+  luck_UpgradesCountMax: 5
   defaultPowerup_upgradeCost1: 1
   defaultPowerup_upgradeCost2: 1
   defaultPowerup_upgradeCost3: 4
@@ -858,11 +867,3 @@ MonoBehaviour:
   postMortem_upgradeCost: 1
   teleport_upgradeCost: 2
   overhaul_upgradeCost: 3
-  total_UpgradesCountMax: 5
-  other_UpgradesCountMax: 10
-  maxHealth_UpgradesCountMax: 5
-  maxEnergy_UpgradesCountMax: 4
-  speed_UpgradesCountMax: 5
-  hpRegen_UpgradesCountMax: 2
-  enRegen_UpgradesCountMax: 2
-  luck_UpgradesCountMax: 5

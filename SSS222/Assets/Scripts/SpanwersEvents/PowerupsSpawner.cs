@@ -74,7 +74,7 @@ public class PowerupsSpawner : MonoBehaviour{
     private IEnumerator SpawnPowerups(){
         if((enemiesCountReq==-1&&timer<=0)||(enemiesCountReq>-1&&enemiesCount>=enemiesCountReq)){
         //var index = Random.Range(0, powerups.Count);
-        var powerupsPos = new Vector3(Random.Range(-2.5f, 4f), 7f, 0);
+        var powerupsPos = new Vector3(Random.Range(-3f, 3f), 7f, 0);
         var newPowerup=Instantiate(
             //GetRandomPowerup(),
             lootTable.GetItem().item,
