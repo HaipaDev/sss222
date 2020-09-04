@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3676386598028052292}
   - component: {fileID: 972416664606367055}
   - component: {fileID: 7333537673251837494}
+  - component: {fileID: -5383710884614058826}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Powerups
@@ -225,3 +226,15 @@ MonoBehaviour:
   amnt: 0
   amntS: 4
   amntE: 14
+--- !u!114 &-5383710884614058826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056705403108089519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

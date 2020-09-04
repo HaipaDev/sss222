@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 public class Loader : MonoBehaviour{
     public float timer=1f;
     public AudioMixer audioMixer;
+    bool loaded;
     private void Awake() {
         //if(Application.platform == RuntimePlatform.Android)timer=1.2f;
     }
@@ -15,8 +16,11 @@ public class Loader : MonoBehaviour{
         //FindObjectOfType<GameSession>().savableData.Load();
         if(Application.platform == RuntimePlatform.Android){FindObjectOfType<SaveSerial>().pprocessing=false;FindObjectOfType<SaveSerial>().scbuttons=true;}
         else{FindObjectOfType<SaveSerial>().pprocessing=true;FindObjectOfType<SaveSerial>().scbuttons=false;}
+        if(!loaded){
         FindObjectOfType<SaveSerial>().Load();
         FindObjectOfType<SaveSerial>().LoadSettings();
+        loaded=true;
+        }
         if (Application.platform != RuntimePlatform.Android){Screen.fullScreen = FindObjectOfType<SaveSerial>().fullscreen;if(SaveSerial.instance.fullscreen)Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);
         QualitySettings.SetQualityLevel(FindObjectOfType<SaveSerial>().quality);}
         if (Application.platform == RuntimePlatform.Android)FindObjectOfType<SaveSerial>().moveByMouse=false;

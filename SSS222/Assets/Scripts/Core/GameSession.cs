@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -59,12 +60,14 @@ public class GameSession : MonoBehaviour{
     public bool dmgPopups=true;
     public bool analyticsOn=true;
     public int gameModeSelected;
+    public const int gameModeMaxID=4;
     [SerializeField]float restartTimer=-4;
     
     Player player;
     PostProcessVolume postProcessVolume;
     bool setValues;
     public float gameSessionTime=0;
+    [Range(0,2)]public static int maskMode=1;
     //public string gameVersion;
     //public bool moveByMouse = true;
 
@@ -90,6 +93,11 @@ public class GameSession : MonoBehaviour{
         SetUpSingleton();
         instance=this;
         StartCoroutine(SetGameRulesValues());
+        #if UNITY_EDITOR
+        cheatmode=true;
+        #else
+        cheatmode=false;
+        #endif
     }
     private void SetUpSingleton(){
         int numberOfObj = FindObjectsOfType<GameSession>().Length;
@@ -100,7 +108,7 @@ public class GameSession : MonoBehaviour{
         }
     }
     private void Start(){
-        FindObjectOfType<SaveSerial>().highscore = 0;
+        Array.Clear(FindObjectOfType<SaveSerial>().highscore,0,FindObjectOfType<SaveSerial>().highscore.Length);
         //SetGameRulesValues();
     }
     IEnumerator SetGameRulesValues(){
@@ -152,7 +160,7 @@ public class GameSession : MonoBehaviour{
                 enemy.Die();
             }
             gameSpeed=0f;}
-            shopScoreMax=Random.Range(shopScoreMaxS,shopScoreMaxE);
+            shopScoreMax=UnityEngine.Random.Range(shopScoreMaxS,shopScoreMaxE);
             shopScore=0;
         }
 
@@ -165,7 +173,7 @@ public class GameSession : MonoBehaviour{
         if(coresXpTotal<0)coresXpTotal=0;
         if(xpOn&&coresXp>=xp_forCore){
             //cores++;
-            if(upgradesOn)GameAssets.instance.Make("PowerCore",new Vector2(Random.Range(-3.5f, 3.5f),7.4f));
+            if(upgradesOn)GameAssets.instance.Make("PowerCore",new Vector2(UnityEngine.Random.Range(-3.5f, 3.5f),7.4f));
             FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             coresXp=0;
@@ -238,7 +246,7 @@ public class GameSession : MonoBehaviour{
     public float GetCoresXP(){return coresXp;}
     public int GetEVScore(){return EVscore;}
     public int GetShopScore(){return shopScore; }
-    public int GetHighscore(){return FindObjectOfType<SaveSerial>().highscore;}
+    public int GetHighscore(int i){return FindObjectOfType<SaveSerial>().highscore[i];}
     public string GetVersion(){return FindObjectOfType<SaveSerial>().gameVersion;}
 
     public void AddToScore(int scoreValue){
@@ -281,8 +289,32 @@ public class GameSession : MonoBehaviour{
     }
     public void SaveHighscore()
     {
-        if (score > FindObjectOfType<SaveSerial>().highscore) FindObjectOfType<SaveSerial>().highscore = score;
+        if(score>FindObjectOfType<SaveSerial>().highscore[GameSession.instance.gameModeSelected]){FindObjectOfType<SaveSerial>().highscore[GameSession.instance.gameModeSelected]=score;}
+        if(GameSession.instance.gameModeSelected==0){StartCoroutine(SaveAdventureI());}
         //FindObjectOfType<DataSavable>().highscore = highscore;
+    }
+    IEnumerator SaveAdventureI(){
+        yield return new WaitForSecondsRealtime(0.02f);
+        var u=UpgradeMenu.instance;
+        if(u!=null){
+        FindObjectOfType<SaveSerial>().total_UpgradesCount=u.total_UpgradesCount;
+        FindObjectOfType<SaveSerial>().total_UpgradesLvl=u.total_UpgradesLvl;
+        FindObjectOfType<SaveSerial>().maxHealth_upgradesCount=u.maxHealth_UpgradesCount;
+        FindObjectOfType<SaveSerial>().maxHealth_upgradesLvl=u.maxHealth_UpgradesLvl;
+        yield return new WaitForSecondsRealtime(0.02f);
+        FindObjectOfType<SaveSerial>().SaveAdventure();
+        }else{Debug.LogError("UpgradeMenu not present");}
+    }
+    public IEnumerator LoadAdventureI(){
+        yield return new WaitForSecondsRealtime(0.05f);
+        var u=UpgradeMenu.instance;
+        if(u!=null){
+        u.total_UpgradesCount=FindObjectOfType<SaveSerial>().total_UpgradesCount;
+        u.total_UpgradesLvl=FindObjectOfType<SaveSerial>().total_UpgradesLvl;
+        u.maxHealth_UpgradesCount=FindObjectOfType<SaveSerial>().maxHealth_upgradesCount;
+        u.maxHealth_UpgradesLvl=FindObjectOfType<SaveSerial>().maxHealth_upgradesLvl;
+        Debug.Log("Adventure Data loaded");
+        }else{Debug.LogError("UpgradeMenu not present");}
     }
     public void SaveSettings(){
         var ss=FindObjectOfType<SaveSerial>();
@@ -430,4 +462,5 @@ public class GameSession : MonoBehaviour{
         return Mathf.RoundToInt(gameSessionTime);
     }
     public void SetGameModeSelected(int i){gameModeSelected=i;}
+    public void SetCheatmode(){if(!cheatmode){cheatmode=true;return;}else{cheatmode=false;return;}}
 }

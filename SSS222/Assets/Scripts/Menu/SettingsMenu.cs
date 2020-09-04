@@ -88,6 +88,8 @@ public class SettingsMenu : MonoBehaviour{
     public void SetSteering(bool isMovingByMouse){
         moveByMouse = isMovingByMouse;
         //saveSerial.moveByMouse = isMovingByMouse;
+    }public void SetCheatmode(bool isCheatmode){
+        GameSession.instance.cheatmode = isCheatmode;
     }
     public void PlayDing(){
         audioSource.Play();

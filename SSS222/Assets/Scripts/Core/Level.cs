@@ -4,15 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour{
-    GameSession gameSession;
     [SerializeField]ParticleSystem transition;
     [SerializeField]Animator transitioner;
     [SerializeField]float transitionTime=0.35f;
     //float prevGameSpeed;
     private void Awake()
     {
-        gameSession = FindObjectOfType<GameSession>();
-        gameSession.gameSpeed=1f;
+        GameSession.instance = FindObjectOfType<GameSession>();
+        GameSession.instance.gameSpeed=1f;
         Time.timeScale = 1f;
         SetUpSingleton();
     }
@@ -25,26 +24,26 @@ public class Level : MonoBehaviour{
         }
     }
     void Start(){
-        gameSession = FindObjectOfType<GameSession>();
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
-        //prevGameSpeed = gameSession.gameSpeed;
+        //prevGameSpeed = GameSession.instance.gameSpeed;
     }
-    void Update()
-    {
-        gameSession = FindObjectOfType<GameSession>();
+    void Update(){
         CheckESC();
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
         //transitioner=FindObjectOfType<Tag_Transition>().GetComponent<Animator>();
     }
 
-    public void LoadStartMenu(){
+    public void LoadStartMenu(){FindObjectOfType<Level>().StartCoroutine(LoadStartMenuI());}
+    IEnumerator LoadStartMenuI(){
         FindObjectOfType<GameSession>().SaveHighscore();
+        
+        yield return new WaitForSecondsRealtime(0.05f);
         FindObjectOfType<GameSession>().ResetScore();
         FindObjectOfType<SaveSerial>().Save();
         FindObjectOfType<GameSession>().ResetMusicPitch();
         SceneManager.LoadScene("Menu");
         //LoadLevel("Menu");
-        if(SceneManager.GetActiveScene().name=="Menu")FindObjectOfType<GameSession>().gameSpeed=1f;
+        if(SceneManager.GetActiveScene().name=="Menu"){FindObjectOfType<GameSession>().speedChanged=false;FindObjectOfType<GameSession>().gameSpeed=1f;}
         //Time.timeScale = 1f;
         
         //FindObjectOfType<GameSession>().savableData.Save();
@@ -53,6 +52,7 @@ public class Level : MonoBehaviour{
     public void LoadGameScene(){
         //GameSession.instance.SetGameModeSelected(i);
         StartCoroutine(DamageValues.instance.SetValues());
+        if(GameSession.instance.gameModeSelected==0){GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
         SceneManager.LoadScene("Game");
         //LoadLevel("Game");
         FindObjectOfType<GameSession>().ResetScore();
@@ -65,17 +65,20 @@ public class Level : MonoBehaviour{
     public void LoadInventoryScene(){SceneManager.LoadScene("Inventory");}
     public void LoadCreditsScene(){SceneManager.LoadScene("Credits");}
     public void LoadWebsite(string url){Application.OpenURL(url);}
-    public void RestartGame(){
+    public void RestartGame(){RestartGameI();}
+    IEnumerator RestartGameI(){
         PauseMenu.GameIsPaused=false;
         FindObjectOfType<GameSession>().SaveHighscore();
         FindObjectOfType<GameSession>().ResetScore();
         FindObjectOfType<GameSession>().ResetMusicPitch();
+        yield return new WaitForSecondsRealtime(0.05f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         FindObjectOfType<GameSession>().gameSpeed=1f;
         Time.timeScale = 1f;
-    }public void RestartScene(){
+    }
+    public void RestartScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        gameSession.gameSpeed=1f;
+        GameSession.instance.gameSpeed=1f;
         Time.timeScale = 1f;
     }
     public void QuitGame(){
@@ -83,7 +86,7 @@ public class Level : MonoBehaviour{
     }
     public void Restart(){
         SceneManager.LoadScene("Loading");
-        gameSession.gameSpeed=1f;
+        GameSession.instance.gameSpeed=1f;
         Time.timeScale = 1f;
     }
     void CheckESC(){

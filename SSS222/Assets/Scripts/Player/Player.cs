@@ -20,12 +20,13 @@ public class Player : MonoBehaviour{
     [SerializeField] public float lsaberSpeedMulti = 1.25f;
     public float moveSpeed = 5f;
     public float moveSpeedCurrent;
-    public float health = 200f;
-    [SerializeField] public float maxHP = 200f;
+    public float health = 100f;
+    [SerializeField] public float maxHP = 100f;
     [SerializeField] public string powerup = "laser";
     [SerializeField] public bool energyOn = true;
-    public float energy = 80f;
-    [SerializeField] public float maxEnergy = 200f;
+    public float energy = 120f;
+    //[SerializeField] public float maxEnergyStarting = 30f;
+    [SerializeField] public float maxEnergy = 120f;
     [SerializeField] public string powerupDefault = "laser";
     public float powerupTimer=-4;
     [SerializeField] public bool losePwrupOutOfEn;
@@ -331,7 +332,8 @@ public class Player : MonoBehaviour{
     }
     void Start(){
         SetGameRuleValues();
-
+        if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
+        
         rb = GetComponent<Rigidbody2D>();
         pskills=GetComponent<PlayerSkills>();
         gameSession=FindObjectOfType<GameSession>();
@@ -1135,7 +1137,7 @@ bool stopped=false;
         var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
         var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
         var cargoDist=2.8f;
-        if (energy > 0){
+        if(energy>0){
             //yield return new WaitForSeconds(lsaberEnPeriod);
             if (powerup == "lsaber"){
                 //yield return new WaitForSeconds(lsaberEnPeriod);

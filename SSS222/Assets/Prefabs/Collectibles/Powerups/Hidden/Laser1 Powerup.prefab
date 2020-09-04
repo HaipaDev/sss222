@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -4864249863085166269}
   - component: {fileID: 8467605574232654556}
   - component: {fileID: -1159023726621563788}
+  - component: {fileID: -5891966911980020208}
   m_Layer: 0
   m_Name: Laser1 Powerup
   m_TagString: Powerups
@@ -161,7 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4952b1ae5d2056b4c83d38de0a65b91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRate: 12
 --- !u!114 &8467605574232654556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,5 +184,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5891966911980020208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274471404120805607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

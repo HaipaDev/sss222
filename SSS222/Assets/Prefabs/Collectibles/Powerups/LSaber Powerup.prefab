@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -8152912361647566963}
   - component: {fileID: -7642471649942006840}
   - component: {fileID: -1855437253919831812}
+  - component: {fileID: 3875327302202227100}
   m_Layer: 0
   m_Name: LSaber Powerup
   m_TagString: Powerups
@@ -52,6 +53,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -160,7 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4952b1ae5d2056b4c83d38de0a65b91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRate: 9.5
 --- !u!114 &-7642471649942006840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,5 +184,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3875327302202227100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4548736405339070879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -94,6 +94,7 @@ public class Enemy : MonoBehaviour{
 
     private void Awake() {
         StartCoroutine(SetValues());
+        if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
     }
     IEnumerator SetValues(){
         yield return new WaitForSeconds(0.02f);

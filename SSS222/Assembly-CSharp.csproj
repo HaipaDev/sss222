@@ -75,7 +75,7 @@
      <Compile Include="Assets\Scripts\UniversalUsage\LaunchRadialBullets.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\ShaderEffects\UISoftAdditiveEffect.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Layout\CardUI\Superellipse Creation\SuperellipsePoints.cs" />
-     <Compile Include="Assets\Tags\Tag_PlayerWeapon.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_PlayerWeapon.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Types\Vector3Save.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
      <Compile Include="Assets\Scripts\Functions\KDTree.cs" />
@@ -117,7 +117,7 @@
      <Compile Include="Assets\Scripts\UniversalUsage\DestroyOnUpdate.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\SelectionBox\SelectionBox.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowStrict.cs" />
-     <Compile Include="Assets\Tags\Tag_NotAndroid.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_NotAndroid.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowUI.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\ColorPicker\ColorLabel.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Serializers\ISaveGameSerializer.cs" />
@@ -125,7 +125,7 @@
      <Compile Include="Assets\Scripts\Visuals\TimeFreezer.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\RescalingPanels\RescalePanel.cs" />
      <Compile Include="Assets\Scripts\Enemies\GoblinDrop.cs" />
-     <Compile Include="Assets\Tags\LootItem.cs" />
+     <Compile Include="Assets\Scripts\Tags\LootItem.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIImageCrop.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\BestFitOutline.cs" />
      <Compile Include="Assets\ZExtendableSaveSystem\Example\GameMaster.cs" />
@@ -135,12 +135,12 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\ComboBox\ComboBox.cs" />
      <Compile Include="Assets\Weighted Random Numbers\Examples\Tree Resizer\Scripts\CamToRectTransformResizer.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Utilities\BezierPath.cs" />
-     <Compile Include="Assets\Tags\Tag_GameCanvas.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_GameCanvas.cs" />
      <Compile Include="Assets\Scripts\Shaders\QuickGlow.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\ColorPicker\HSVUtil.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\ParabolaLR.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\ToolTips\BoundTooltip\BoundTooltipTrigger.cs" />
-     <Compile Include="Assets\Tags\Tag_OutsideZone.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_OutsideZone.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\SaveGame.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
@@ -150,6 +150,7 @@
      <Compile Include="Assets\Scripts\Core\GSprite.cs" />
      <Compile Include="Assets\Scripts\HUD\PowerupDisplay.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\Accordion\Tweening\ITweenValue.cs" />
+     <Compile Include="Assets\Scripts\Menu\ModeInfoManager.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
      <Compile Include="Assets\Scripts\HUD\XPFill.cs" />
      <Compile Include="Assets\Scripts\Enemies\ParticleDelay.cs" />
@@ -171,6 +172,7 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Layout\ScrollSnapBase.cs" />
      <Compile Include="Assets\Scripts\HUD\StateDisplayTable.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+     <Compile Include="Assets\Scripts\HUD\CheatMode_Destroy.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Layout\UIVerticalScroller.cs" />
      <Compile Include="Assets\Scripts\Visuals\BackflameEffect.cs" />
      <Compile Include="Assets\Scripts\Shaders\InvertAllAudio.cs" />
@@ -239,7 +241,7 @@
      <Compile Include="Assets\Scripts\HUD\Camera\CameraScript.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\StickTo.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\ToolTips\HoverTooltip.cs" />
-     <Compile Include="Assets\Tags\Tag_EnSaberWeapon.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_EnSaberWeapon.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Utilities\UIScrollToSelectionXY.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\InputModules\GamePadInputModule.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\ReorderableList\ReorderableListContent.cs" />
@@ -259,6 +261,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
      <Compile Include="Assets\Scripts\Player\GloomyScythe.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\LootTableShop.cs" />
+     <Compile Include="Assets\Scripts\UniversalUsage\SpritesLib.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Encoders\SaveGameSimpleEncoder.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Utilities\SelectableScaler.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\UILineRenderer\TestAddingPointsList.cs" />
@@ -287,7 +290,7 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\CylinderText.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\ColorPicker\ColorSlider.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\UIFlippable.cs" />
-     <Compile Include="Assets\Tags\Tag_OnlyAndroid.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_OnlyAndroid.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\Task.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyPathing.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Utilities\ScrollRectExtensions.cs" />
@@ -361,8 +364,8 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\HSS-VSS-ScrollSnap\UpdateScrollSnap.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
-     <Compile Include="Assets\Tags\Tag_Transition.cs" />
-     <Compile Include="Assets\Tags\Tag_PlayerWeaponBlockable.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_Transition.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_PlayerWeaponBlockable.cs" />
      <Compile Include="Assets\Scripts\HUD\BlindnessUI.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\AnimOff.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FallDown.cs" />
@@ -393,7 +396,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\ColorPicker\ColorImage.cs" />
      <Compile Include="Assets\Scripts\Core\SkillIcon.cs" />
-     <Compile Include="Assets\Tags\Tag_MagnetAffected.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_MagnetAffected.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\FancyScrollView\03_InfiniteScroll\Example03ScrollViewCell.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\BoxSlider.cs" />
@@ -428,7 +431,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\BarValue.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\Accordion\Tweening\FloatTween.cs" />
-     <Compile Include="Assets\Tags\Tag_Powerup.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_Powerup.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Controls\ReorderableList\ReorderableListDebug.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\MenuSystem\SimpleMenu.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\Follow.cs" />
@@ -460,8 +463,7 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Primitives\DiamondGraph.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIMultiplyEffect.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\FancyScrollView\01_Basic\Example01CellDto.cs" />
-     <Compile Include="Assets\Scripts\UniversalUsage\SpritesLib.cs" />
-     <Compile Include="Assets\Scripts\Menu\ModeInfoManager.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_Collectible.cs" />
      <None Include="Assets\unity-ui-extensions\Resources\Shaders\UIAdditive.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

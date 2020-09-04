@@ -11,11 +11,17 @@ using BayatGames.SaveGameFree.Serializers;
 public class SaveSerial : MonoBehaviour{
 	public static SaveSerial instance;
 	[SerializeField] string filename = "playerData";
+	[SerializeField] string filenameAdventure = "adventureData";
 	[SerializeField] string filenameSettings = "gameSettings.cfg";
 	[HeaderAttribute("PlayerData")]
-	public int highscore;
+	public int[] highscore=new int[GameSession.gameModeMaxID];
 	public int skinID;
 	public float[] chameleonColor = new float[3];
+	[HeaderAttribute("AdventureData")]
+	public int total_UpgradesCount;
+	public int total_UpgradesLvl;
+	public int maxHealth_upgradesCount;
+	public int maxHealth_upgradesLvl;
 	[HeaderAttribute("SettingsData")]
 	public string gameVersion;
 	public bool moveByMouse;
@@ -28,11 +34,16 @@ public class SaveSerial : MonoBehaviour{
 	public float musicVolume;
 	public class PlayerData
 	{
-		public int highscore;
+		public int[] highscore=new int[GameSession.gameModeMaxID];
 		public int skinID;
 		public float[] chameleonColor=new float[3];
-		
-	}public class SettingsData
+	}public class AdventureData{
+		public int total_UpgradesCount;
+		public int total_UpgradesLvl;
+		public int maxHealth_upgradesCount;
+		public int maxHealth_upgradesLvl;
+	}
+	public class SettingsData
 	{
 		public string gameVersion;
 		public bool moveByMouse;
@@ -52,12 +63,24 @@ public class SaveSerial : MonoBehaviour{
 		data.chameleonColor[0] = chameleonColor[0];
 		data.chameleonColor[1] = chameleonColor[1];
 		data.chameleonColor[2] = chameleonColor[2];
+		
 
 		// Saving the data
 		SaveGame.Encode = true;
 		SaveGame.Serializer = new SaveGameJsonSerializer();
 		SaveGame.Save(filename, data);
 		Debug.Log("Game Data saved");
+	}public void SaveAdventure()
+	{
+		AdventureData data = new AdventureData();
+		data.maxHealth_upgradesCount=maxHealth_upgradesCount;
+		data.maxHealth_upgradesLvl=maxHealth_upgradesLvl;
+		
+		// Saving the data
+		SaveGame.Encode = true;
+		SaveGame.Serializer = new SaveGameJsonSerializer();
+		SaveGame.Save(filenameAdventure, data);
+		Debug.Log("Adventure Data saved");
 	}
 	public void SaveSettings()
 	{
@@ -86,7 +109,7 @@ public class SaveSerial : MonoBehaviour{
 			SaveGame.Serializer = new SaveGameJsonSerializer();
 			data = SaveGame.Load<PlayerData>(filename);
 
-			if(data.highscore!=0)highscore = data.highscore;
+			var hi=-1;foreach(int h in data.highscore){hi++;if(h!=0)highscore[hi] = h;}
 			skinID = data.skinID;
 			chameleonColor[0] = data.chameleonColor[0];
 			chameleonColor[1] = data.chameleonColor[1];
@@ -133,6 +156,7 @@ public class SaveSerial : MonoBehaviour{
 	{
 		SetUpSingleton();
 		instance=this;
+		highscore=new int[GameSession.gameModeMaxID];
 	}
 	private void SetUpSingleton()
 	{

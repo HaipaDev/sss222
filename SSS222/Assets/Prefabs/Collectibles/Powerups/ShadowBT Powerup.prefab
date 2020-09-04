@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6355463862787278257}
   - component: {fileID: -2957623977586560592}
   - component: {fileID: 2328231923669522454}
+  - component: {fileID: -7153348333969063607}
   m_Layer: 0
   m_Name: ShadowBT Powerup
   m_TagString: Powerups
@@ -54,6 +55,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -250,6 +252,7 @@ MonoBehaviour:
   yy: 0.6
   time: 0.3
   stayStill: 1
+  BFlame: {fileID: 0}
 --- !u!114 &-3426483882305900135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4952b1ae5d2056b4c83d38de0a65b91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRate: 1.5
 --- !u!114 &-2957623977586560592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,5 +301,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7153348333969063607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4548736405339070879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

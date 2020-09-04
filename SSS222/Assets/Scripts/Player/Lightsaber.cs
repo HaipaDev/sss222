@@ -8,6 +8,7 @@ public class Lightsaber : MonoBehaviour{
     EnCombatant enCombatant;
     void Start()
     {
+        if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
         player=FindObjectOfType<Player>();
         enCombatant=FindObjectOfType<EnCombatant>();
         //int numberOfObj = FindObjectsOfType<Lightsaber>().Length;if (numberOfObj > 1){Destroy(gameObject);}

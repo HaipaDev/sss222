@@ -190,6 +190,7 @@ MonoBehaviour:
   moveX: 1
   moveY: 1
   moveByMouse: 1
+  autoShoot: 0
   paddingX: 0.15
   paddingY: 0.45
   moveSpeedInit: 5
@@ -199,19 +200,22 @@ MonoBehaviour:
   health: 150
   maxHP: 150
   powerup: laser
+  energyOn: 1
   energy: 180
   maxEnergy: 180
   powerupDefault: laser
+  powerupTimer: -4
   losePwrupOutOfEn: 1
   energyRefillUnlocked: 0
+  overheatOn: 1
   overheatTimer: -4
   overheatTimerMax: 8.66
-  overheatDmg: 10
   overheatCdTimer: 0
   overheatCooldown: 0.65
   overheated: 0
   overheatedTime: 3
   overheatedTimer: -4
+  recoilOn: 1
   enRegenEnabled: 0
   timerEnRegen: 0
   freqEnRegen: 1
@@ -225,33 +229,6 @@ MonoBehaviour:
   dmgMulti: 1
   shootMulti: 1
   shipScaleDefault: 0.89
-  lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
-    type: 3}
-  lclawsPrefab: {fileID: 4755926375889011706, guid: b9340c203c57d954687d49864bad3d74,
-    type: 3}
-  laserSpeed: 9
-  laserShootPeriod: 0.34
-  phaserSpeed: 10.5
-  phaserShootPeriod: 0.2
-  hrocketSpeed: 6.5
-  hrocketShootPeriod: 0.3
-  mlaserSpeedS: 8.5
-  mlaserSpeedE: 10
-  mlaserShootPeriod: 0.1
-  mlaserBulletsAmmount: 10
-  lsaberEnPeriod: 0.05
-  shadowBTSpeed: 9
-  shadowBTShootPeriod: 0.34
-  qrocketSpeed: 9.5
-  qrocketShootPeriod: 0.3
-  procketSpeedS: 9.5
-  procketSpeedE: 10.5
-  procketShootPeriod: 0.5
-  procketsBulletsAmmount: 10
-  cbulletSpeed: 8.25
-  cbulletShootPeriod: 0.15
-  plaserSpeed: 9.75
-  plaserShootPeriod: 0.75
   statuses: []
   statusc: 
   flip: 0
@@ -333,12 +310,43 @@ MonoBehaviour:
   fragileMulti: 0.7
   powerMulti: 1.6
   weaknsMulti: 0.66
+  lsaberPrefab: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229,
+    type: 3}
+  lclawsPrefab: {fileID: 4755926375889011706, guid: b9340c203c57d954687d49864bad3d74,
+    type: 3}
+  laserSpeed: 9
+  laserShootPeriod: 0.34
+  laser2Speed: 8.9
+  laser2ShootPeriod: 0.35
+  laser3Speed: 8.8
+  laser3ShootPeriod: 0.36
+  phaserSpeed: 10.5
+  phaserShootPeriod: 0.2
+  hrocketSpeed: 6.5
+  hrocketShootPeriod: 0.3
+  mlaserSpeedS: 8.5
+  mlaserSpeedE: 10
+  mlaserShootPeriod: 0.1
+  mlaserBulletsAmmount: 10
+  shadowBTSpeed: 9
+  shadowBTShootPeriod: 0.34
+  qrocketSpeed: 9.5
+  qrocketShootPeriod: 0.3
+  procketSpeedS: 9.5
+  procketSpeedE: 10.5
+  procketShootPeriod: 0.5
+  procketsBulletsAmmount: 10
+  cbulletSpeed: 8.25
+  cbulletShootPeriod: 0.15
+  plaserSpeed: 9.75
+  plaserShootPeriod: 0.75
   laserEn: 0.3
   laser2En: 1.25
   laser3En: 2.5
   phaserEn: 1.5
   mlaserEn: 0.075
   lsaberEn: 0.375
+  lsaberEnPeriod: 0.05
   lclawsEn: 6.3
   shadowEn: 5
   shadowBTEn: 10
@@ -362,6 +370,19 @@ MonoBehaviour:
   refillDelay: 1.6
   refillCount: 0
   refillRandomized: 0
+  weaponsLimited: 0
+  laser2Duration: 10
+  laser3Duration: 10
+  phaserDuration: 10
+  mlaserDuration: 10
+  lsaberDuration: 10
+  lclawsDuration: 10
+  cstreamDuration: 10
+  hrocketDuration: 10
+  qrocketDuration: 10
+  procketDuration: 10
+  plaserDuration: 10
+  shadowBtDuration: 10
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
   gcloverOVFX: {fileID: 100000, guid: 41fbf007ac904dd48afafa7a6655e3ef, type: 3}
   gameOverCanvasPrefab: {fileID: 0}
@@ -383,10 +404,11 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   shipScale: 0.89
   mPressedTime: 0
-  timeFlyingTotal: 0
   timeFlyingCore: 0
+  timeFlyingTotal: 0
   stayingTimer: 0
   stayingTimerCore: 0
+  stayingTimerTotal: 0
   joystick: {fileID: 0}
   moving: 0
   energyUsedCount: 0
@@ -407,6 +429,8 @@ MonoBehaviour:
     type: 3}
   dmgFreq: 0.38
   dmgTimer: 0
+  lastHitObj: 
+  lastHitDmg: 0
 --- !u!114 &3388790463455218104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,9 +444,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills:
-  - {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
-  - {fileID: 11400000, guid: d66606c472024f44e8f0f96cdfac0c12, type: 2}
-  - {fileID: 11400000, guid: e134429416de4d7479afc43faf800246, type: 2}
+  - name: 
+    ID: 0
+    item: {fileID: 0}
+    enCost: 0
+    cooldown: 0
+  - name: 
+    ID: 0
+    item: {fileID: 0}
+    enCost: 0
+    cooldown: 0
+  - name: 
+    ID: 0
+    item: {fileID: 0}
+    enCost: 0
+    cooldown: 0
   skillsBinds: 000000000000000000000000
   cooldownQ: 0
   cooldownE: 0

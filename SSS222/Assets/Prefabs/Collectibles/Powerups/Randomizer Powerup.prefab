@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -351982121849671072}
   - component: {fileID: 4305882262000766416}
   - component: {fileID: -6444293445127140414}
+  - component: {fileID: -2469076448820819903}
   m_Layer: 0
   m_Name: Randomizer Powerup
   m_TagString: Powerups
@@ -267,7 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4952b1ae5d2056b4c83d38de0a65b91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRate: 7
 --- !u!114 &4305882262000766416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,5 +290,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-2469076448820819903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649215481239408911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
