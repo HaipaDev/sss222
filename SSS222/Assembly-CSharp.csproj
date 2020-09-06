@@ -143,6 +143,7 @@
      <Compile Include="Assets\Scripts\Tags\Tag_OutsideZone.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\SaveGame.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_AdventureUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Layout\CardUI\2D Cards\CardExpanding2D.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\DetachFromFollow.cs" />
@@ -202,6 +203,7 @@
      <Compile Include="Assets\Scripts\UniversalUsage\DamageOverDist.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\Enlarge.cs" />
      <Compile Include="Assets\ZBayatGames\SaveGameFree\Scripts\Types\Vector2Save.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_Collectible.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\UICircleProgress\UICircleChangeColor.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Utilities\Circle.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\ComboBox\ComboBoxChanged.cs" />
@@ -463,7 +465,7 @@
      <Compile Include="Assets\unity-ui-extensions\Scripts\Primitives\DiamondGraph.cs" />
      <Compile Include="Assets\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIMultiplyEffect.cs" />
      <Compile Include="Assets\unity-ui-extensions\Examples\FancyScrollView\01_Basic\Example01CellDto.cs" />
-     <Compile Include="Assets\Scripts\Tags\Tag_Collectible.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_Joystick.cs" />
      <None Include="Assets\unity-ui-extensions\Resources\Shaders\UIAdditive.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

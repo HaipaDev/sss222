@@ -11,17 +11,169 @@ using BayatGames.SaveGameFree.Serializers;
 public class SaveSerial : MonoBehaviour{
 	public static SaveSerial instance;
 	[SerializeField] string filename = "playerData";
+	bool dataEncode=true;
 	[SerializeField] string filenameAdventure = "adventureData";
+	bool adventureEncode=false;
 	[SerializeField] string filenameSettings = "gameSettings.cfg";
+	bool settingsEncode=false;
+#region//Player Data
 	[HeaderAttribute("PlayerData")]
 	public int[] highscore=new int[GameSession.gameModeMaxID];
 	public int skinID;
 	public float[] chameleonColor = new float[3];
+	public class PlayerData{
+		public int[] highscore=new int[GameSession.gameModeMaxID];
+		public int skinID;
+		public float[] chameleonColor=new float[3];
+	}
+	public void Save(){
+		PlayerData data = new PlayerData();
+		data.highscore = highscore;
+		data.skinID = skinID;
+		data.chameleonColor[0] = chameleonColor[0];
+		data.chameleonColor[1] = chameleonColor[1];
+		data.chameleonColor[2] = chameleonColor[2];
+		
+
+		// Saving the data
+		SaveGame.Encode = dataEncode;
+		SaveGame.Serializer = new SaveGameJsonSerializer();
+		SaveGame.Save(filename, data);
+		Debug.Log("Game Data saved");
+	}
+	public void Load(){
+		if (File.Exists(Application.persistentDataPath + "/"+filename)){
+			PlayerData data = new PlayerData();
+			SaveGame.Encode = dataEncode;
+			SaveGame.Serializer = new SaveGameJsonSerializer();
+			data = SaveGame.Load<PlayerData>(filename);
+
+			var hi=-1;foreach(int h in data.highscore){hi++;if(h!=0)highscore[hi] = h;}
+			skinID = data.skinID;
+			chameleonColor[0] = data.chameleonColor[0];
+			chameleonColor[1] = data.chameleonColor[1];
+			chameleonColor[2] = data.chameleonColor[2];
+			Debug.Log("Adventure Data loaded");
+		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
+	}
+	public void Delete(){
+		if (File.Exists(Application.persistentDataPath + "/"+filename)){
+			File.Delete(Application.persistentDataPath + "/"+filename);
+		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
+	}
+#endregion
+#region //Adventure Data
 	[HeaderAttribute("AdventureData")]
+	public float xp;
 	public int total_UpgradesCount;
 	public int total_UpgradesLvl;
-	public int maxHealth_upgradesCount;
-	public int maxHealth_upgradesLvl;
+	public int maxHealth_UpgradesCount;
+	public int maxHealth_UpgradesLvl;
+	public int maxEnergy_UpgradesCount;
+	public int maxEnergy_UpgradesLvl;
+	public int speed_UpgradesCount;
+	public int speed_UpgradesLvl;
+	public int hpRegen_UpgradesCount;
+	public int hpRegen_UpgradesLvl;
+	public int enRegen_UpgradesCount;
+	public int enRegen_UpgradesLvl;
+	public int luck_UpgradesCount;
+	public int luck_UpgradesLvl;
+	public int defaultPowerup_upgradeCount;
+	public int energyRefill_upgraded;
+	public int magneticPulse_upgraded;
+	public int teleport_upgraded;
+	public int overhaul_upgraded;
+	public class AdventureData{
+		public float xp;
+		public int total_UpgradesCount;
+		public int total_UpgradesLvl;
+		public int maxHealth_UpgradesCount;
+		public int maxHealth_UpgradesLvl;
+		public int maxEnergy_UpgradesCount;
+		public int maxEnergy_UpgradesLvl;
+		public int speed_UpgradesCount;
+		public int speed_UpgradesLvl;
+		public int hpRegen_UpgradesCount;
+		public int hpRegen_UpgradesLvl;
+		public int enRegen_UpgradesCount;
+		public int enRegen_UpgradesLvl;
+		public int luck_UpgradesCount;
+		public int luck_UpgradesLvl;
+		public int defaultPowerup_upgradeCount;
+		public int energyRefill_upgraded;
+		public int magneticPulse_upgraded;
+		public int teleport_upgraded;
+		public int overhaul_upgraded;
+	}
+	public void SaveAdventure(){
+		AdventureData data = new AdventureData();
+		data.xp=xp;
+		data.total_UpgradesCount=total_UpgradesCount;
+		data.total_UpgradesLvl=total_UpgradesLvl;
+		data.maxHealth_UpgradesCount=maxHealth_UpgradesCount;
+		data.maxHealth_UpgradesLvl=maxHealth_UpgradesLvl;
+		data.maxEnergy_UpgradesCount=maxEnergy_UpgradesCount;
+		data.maxEnergy_UpgradesLvl=maxEnergy_UpgradesLvl;
+		data.speed_UpgradesCount=speed_UpgradesCount;
+		data.speed_UpgradesLvl=speed_UpgradesLvl;
+		data.hpRegen_UpgradesCount=hpRegen_UpgradesCount;
+		data.hpRegen_UpgradesLvl=hpRegen_UpgradesLvl;
+		data.enRegen_UpgradesCount=enRegen_UpgradesCount;
+		data.enRegen_UpgradesLvl=enRegen_UpgradesLvl;
+		data.luck_UpgradesCount=luck_UpgradesCount;
+		data.luck_UpgradesLvl=luck_UpgradesLvl;
+
+		data.defaultPowerup_upgradeCount=defaultPowerup_upgradeCount;
+		data.energyRefill_upgraded=energyRefill_upgraded;
+		data.magneticPulse_upgraded=magneticPulse_upgraded;
+		data.teleport_upgraded=teleport_upgraded;
+		data.overhaul_upgraded=overhaul_upgraded;
+		
+		// Saving the data
+		SaveGame.Encode = adventureEncode;
+		SaveGame.Serializer = new SaveGameJsonSerializer();
+		SaveGame.Save(filenameAdventure, data);
+		Debug.Log("Adventure Data saved");
+	}
+	public void LoadAdventure(){
+		if (File.Exists(Application.persistentDataPath + "/"+filenameAdventure)){
+			AdventureData data = new AdventureData();
+			SaveGame.Encode = adventureEncode;
+			SaveGame.Serializer = new SaveGameJsonSerializer();
+			data = SaveGame.Load<AdventureData>(filenameAdventure);
+
+			xp=data.xp;
+			total_UpgradesCount=data.total_UpgradesCount;
+			total_UpgradesLvl=data.total_UpgradesLvl;
+			maxHealth_UpgradesCount=data.maxHealth_UpgradesCount;
+			maxHealth_UpgradesLvl=data.maxHealth_UpgradesLvl;
+			maxEnergy_UpgradesCount=data.maxEnergy_UpgradesCount;
+			maxEnergy_UpgradesLvl=data.maxEnergy_UpgradesLvl;
+			speed_UpgradesCount=data.speed_UpgradesCount;
+			speed_UpgradesLvl=data.speed_UpgradesLvl;
+			hpRegen_UpgradesCount=data.hpRegen_UpgradesCount;
+			hpRegen_UpgradesLvl=data.hpRegen_UpgradesLvl;
+			enRegen_UpgradesCount=data.enRegen_UpgradesCount;
+			enRegen_UpgradesLvl=data.enRegen_UpgradesLvl;
+			luck_UpgradesCount=data.luck_UpgradesCount;
+			luck_UpgradesLvl=data.luck_UpgradesLvl;
+
+			defaultPowerup_upgradeCount=data.defaultPowerup_upgradeCount;
+			energyRefill_upgraded=data.energyRefill_upgraded;
+			magneticPulse_upgraded=data.magneticPulse_upgraded;
+			teleport_upgraded=data.teleport_upgraded;
+			overhaul_upgraded=data.overhaul_upgraded;
+			Debug.Log("Adventure Data loaded");
+		}else Debug.Log("Adventure Data file not found in "+Application.persistentDataPath+"/"+filenameAdventure);
+	}
+	public void DeleteAdventure(){
+		if (File.Exists(Application.persistentDataPath + "/"+filenameAdventure)){
+			File.Delete(Application.persistentDataPath + "/"+filenameAdventure);
+		}else Debug.Log("Adventure Data file not found in "+Application.persistentDataPath+"/"+filenameAdventure);
+	}
+#endregion
+#region//Settings Data
 	[HeaderAttribute("SettingsData")]
 	public string gameVersion;
 	public bool moveByMouse;
@@ -32,19 +184,9 @@ public class SaveSerial : MonoBehaviour{
 	public float masterVolume;
 	public float soundVolume;
 	public float musicVolume;
-	public class PlayerData
-	{
-		public int[] highscore=new int[GameSession.gameModeMaxID];
-		public int skinID;
-		public float[] chameleonColor=new float[3];
-	}public class AdventureData{
-		public int total_UpgradesCount;
-		public int total_UpgradesLvl;
-		public int maxHealth_upgradesCount;
-		public int maxHealth_upgradesLvl;
-	}
-	public class SettingsData
-	{
+	public JoystickType joystickType=JoystickType.Dynamic;
+	public float joystickSize=1f;
+	public class SettingsData{
 		public string gameVersion;
 		public bool moveByMouse;
 		public bool fullscreen;
@@ -54,36 +196,8 @@ public class SaveSerial : MonoBehaviour{
 		public float masterVolume;
 		public float soundVolume;
 		public float musicVolume;
-	}
-	public void Save()
-	{
-		PlayerData data = new PlayerData();
-		data.highscore = highscore;
-		data.skinID = skinID;
-		data.chameleonColor[0] = chameleonColor[0];
-		data.chameleonColor[1] = chameleonColor[1];
-		data.chameleonColor[2] = chameleonColor[2];
-		
-
-		// Saving the data
-		SaveGame.Encode = true;
-		SaveGame.Serializer = new SaveGameJsonSerializer();
-		SaveGame.Save(filename, data);
-		Debug.Log("Game Data saved");
-	}public void SaveAdventure()
-	{
-		AdventureData data = new AdventureData();
-		data.maxHealth_upgradesCount=maxHealth_upgradesCount;
-		data.maxHealth_upgradesLvl=maxHealth_upgradesLvl;
-		
-		// Saving the data
-		SaveGame.Encode = true;
-		SaveGame.Serializer = new SaveGameJsonSerializer();
-		SaveGame.Save(filenameAdventure, data);
-		Debug.Log("Adventure Data saved");
-	}
-	public void SaveSettings()
-	{
+	}	
+	public void SaveSettings(){
 		SettingsData data = new SettingsData();
 		data.gameVersion=gameVersion;
 		data.moveByMouse = moveByMouse;
@@ -96,32 +210,15 @@ public class SaveSerial : MonoBehaviour{
 		data.musicVolume = musicVolume;
 
 		// Saving the data
-		SaveGame.Encode = false;
+		SaveGame.Encode = settingsEncode;
 		SaveGame.Serializer = new SaveGameJsonSerializer();
 		SaveGame.Save(filenameSettings, data);
 		Debug.Log("Settings saved");
 	}
-	public void Load()
-	{
-		if (File.Exists(Application.persistentDataPath + "/"+filename)){
-			PlayerData data = new PlayerData();
-			SaveGame.Encode = true;
-			SaveGame.Serializer = new SaveGameJsonSerializer();
-			data = SaveGame.Load<PlayerData>(filename);
-
-			var hi=-1;foreach(int h in data.highscore){hi++;if(h!=0)highscore[hi] = h;}
-			skinID = data.skinID;
-			chameleonColor[0] = data.chameleonColor[0];
-			chameleonColor[1] = data.chameleonColor[1];
-			chameleonColor[2] = data.chameleonColor[2];
-			Debug.Log("Game Data loaded");
-		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
-	}
-	public void LoadSettings()
-	{
+	public void LoadSettings(){
 		if (File.Exists(Application.persistentDataPath + "/"+filenameSettings)){
 			SettingsData data = new SettingsData();
-			SaveGame.Encode = false;
+			SaveGame.Encode = settingsEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
 			data = SaveGame.Load<SettingsData>(filenameSettings);
 
@@ -138,20 +235,13 @@ public class SaveSerial : MonoBehaviour{
 		}
 		else Debug.Log("Settings file not found in " + Application.persistentDataPath + "/" + filenameSettings);
 	}
-
-	public void Delete()
-	{
-		if (File.Exists(Application.persistentDataPath + "/"+filename)){
-			File.Delete(Application.persistentDataPath + "/"+filename);
-		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
-	}
-	public void ResetSettings()
-	{
+	public void ResetSettings(){
 		if (File.Exists(Application.persistentDataPath + "/"+filenameSettings)){
 			File.Delete(Application.persistentDataPath + "/"+filenameSettings);
 		}else Debug.Log("Settings file not found in "+Application.persistentDataPath+"/"+filenameSettings);
 	}
-	#region//Singleton
+	#endregion
+#region//Singleton
 	private void Awake()
 	{
 		SetUpSingleton();
@@ -170,7 +260,8 @@ public class SaveSerial : MonoBehaviour{
 			DontDestroyOnLoad(gameObject);
 		}
 	}
-	#endregion
+#endregion
+#region//Old
 	/*public int highscore;
     public void SaveGame()
 	{
@@ -219,4 +310,5 @@ public class SaveSerial : MonoBehaviour{
 class SaveData{
     public int savedHscore;
 }*/
+#endregion
 }

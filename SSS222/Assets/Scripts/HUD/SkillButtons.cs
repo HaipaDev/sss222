@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SkillButtons : MonoBehaviour{
     [SerializeField] skillKeyBind keyBind;
-    skillKeyBind[] skillsBinds;
-    Skill[] skills;
+    [SerializeField]skillKeyBind[] skillsBinds;
+    [SerializeField]Skill[] skills;
     [SerializeField] SkillButtons[] buttons;
     public int ID;
     bool correct;
@@ -14,7 +14,7 @@ public class SkillButtons : MonoBehaviour{
         StartCoroutine(SetSkills());
     }
     IEnumerator SetSkills(){
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.2f);
         skillsBinds=FindObjectOfType<PlayerSkills>().skillsBinds;
         skills=FindObjectOfType<PlayerSkills>().skills;
     }

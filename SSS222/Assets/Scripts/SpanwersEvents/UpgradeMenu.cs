@@ -74,6 +74,7 @@ public class UpgradeMenu : MonoBehaviour{
 
     int lvlID;
     int lvlcr;
+    float startTimer=0.5f;
     private void Awake() {
         StartCoroutine(SetValues());
     }
@@ -301,7 +302,8 @@ public class UpgradeMenu : MonoBehaviour{
     [SerializeField]XPBars hpreg;
     [SerializeField]XPBars enreg;
     void LevelEverything(){
-        if(total_UpgradesCount>=total_UpgradesCountMax){LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=Mathf.Clamp(total_UpgradesCount-total_UpgradesCountMax,0,99);total_UpgradesLvl++;}//AudioManager.instance.Play("LvlUp2");}
+    if(startTimer>0){startTimer-=Time.unscaledDeltaTime;}
+    if(startTimer<=0){
         var on=false;
         if(upgradeMenuUI.activeSelf==true)on=true;
         if(total_UpgradesLvl==0){
@@ -330,6 +332,21 @@ public class UpgradeMenu : MonoBehaviour{
                 if(co==null&&on==true){ChangeLvlBar(6,ref lvlbar);}
                 }
         }
+        if(total_UpgradesCount>=total_UpgradesCountMax){
+            LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=Mathf.Clamp(total_UpgradesCount-total_UpgradesCountMax,0,99);
+            var g=GameRules.instance;
+            var player=FindObjectOfType<Player>();
+            if(g!=null&&player!=null){
+                if(g.laserSpeedChangePerLv==true){
+                    if(total_UpgradesLvl==g.laserSpeed_stage1&&player.laserShootPeriod!=g.laserSpeed_st1){player.laserShootPeriod=g.laserSpeed_st1;}
+                    if(total_UpgradesLvl==g.laserSpeed_stage2&&player.laserShootPeriod!=g.laserSpeed_st2){player.laserShootPeriod=g.laserSpeed_st2;}
+                    if(total_UpgradesLvl==g.laserSpeed_stage3&&player.laserShootPeriod!=g.laserSpeed_st3){player.laserShootPeriod=g.laserSpeed_st3;}
+                }
+                if(g.shootSpeedChangePerLv==true){player.shootMulti+=g.shootSpeedAmntPerLv;}
+                if(g.armorChangePerLv==true){player.armorMulti+=g.armorAmntPerLv;}
+            }
+            total_UpgradesLvl++;
+            }//AudioManager.instance.Play("LvlUp2");}
         if(lvlbar.current==null)lvlbar.created=2;
         if(barr==lvlbar){lvlbar.ID=lvlID;lvlbar.created=lvlcr;}
         /*if(statsMenu.activeSelf==true){
@@ -351,13 +368,22 @@ public class UpgradeMenu : MonoBehaviour{
             }else{Debug.LogError("EnReg Lvl Bar Not Found");}
         }*/
 
+        /*maxHealth_UpgradeCost=Mathf.Clamp(maxHealth_UpgradeCost,1,999);
+        maxEnergy_UpgradeCost=Mathf.Clamp(maxEnergy_UpgradeCost,1,999);
+        speed_UpgradeCost=Mathf.Clamp(speed_UpgradeCost,1,999);
+        luck_UpgradeCost=Mathf.Clamp(luck_UpgradeCost,1,999);*/
+
+        if(maxHealth_UpgradesCount==1 && maxHealth_UpgradesLvl==0){maxHealth_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
         if(maxHealth_UpgradesCount>=maxHealth_UpgradesCountMax){LastBar(maxHealth_UpgradesCountMax,"maxHealth_UpgradesCount");maxHealth_UpgradesCount=0;maxHealth_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(maxEnergy_UpgradesCount==1 && maxEnergy_UpgradesLvl==0){maxEnergy_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
         if(maxEnergy_UpgradesCount>=maxEnergy_UpgradesCountMax){LastBar(maxEnergy_UpgradesCountMax,"maxEnergy_UpgradesCount");maxEnergy_UpgradesCount=0;maxEnergy_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(speed_UpgradesCount==1 && speed_UpgradesLvl==0){speed_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
         if(speed_UpgradesCount>=speed_UpgradesCountMax){LastBar(speed_UpgradesCountMax,"speed_UpgradesCount");speed_UpgradesCount=0;speed_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        /**/if(hpRegen_UpgradesCount==1 && hpRegen_UpgradesLvl==0){hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        /**/if(hpRegen_UpgradesCount==1 && hpRegen_UpgradesLvl==0){hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
         if(hpRegen_UpgradesCount>=hpRegen_UpgradesCountMax){LastBar(hpRegen_UpgradesCountMax,"hpRegen_UpgradesCount");hpRegen_UpgradesCount=0;hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        /**/if(enRegen_UpgradesCount==1 && enRegen_UpgradesLvl==0){enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        /**/if(enRegen_UpgradesCount==1 && enRegen_UpgradesLvl==0){enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
         if(enRegen_UpgradesCount>=enRegen_UpgradesCountMax){LastBar(enRegen_UpgradesCountMax,"enRegen_UpgradesCount");enRegen_UpgradesCount=0;enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(luck_UpgradesCount==1 && luck_UpgradesLvl==0){luck_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
         if(luck_UpgradesCount>=luck_UpgradesCountMax){LastBar(luck_UpgradesCountMax,"luck_UpgradesCount");luck_UpgradesCount=0;luck_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
 
 
@@ -367,6 +393,7 @@ public class UpgradeMenu : MonoBehaviour{
         if(hpRegen_UpgradesLvl>0)hpRegen_UpgradeCost=hpRegen_UpgradesLvl;
         if(enRegen_UpgradesLvl>0)enRegen_UpgradeCost=enRegen_UpgradesLvl;
         if(luck_UpgradesLvl>0)luck_UpgradeCost=luck_UpgradesLvl;
+    }
     }
     void LastBar(int max,string name){
         foreach(XPFill obj in FindObjectsOfType<XPFill>()){

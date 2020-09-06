@@ -6,29 +6,30 @@ using UnityEngine.UI;
 public class ColorSkillKey : MonoBehaviour{
     [SerializeField] public int ID;
     [SerializeField] public skillKeyBind key;
-    Player player;
-    Skill[] skills;
-    skillKeyBind[] skillsBinds;
+    [SerializeField]Skill[] skills;
+    [SerializeField]skillKeyBind[] skillsBinds;
     Color color;
-    Image spr;
+    Image img;
     TMPro.TextMeshProUGUI txt;
     public bool on;
     void Start(){
-        player=FindObjectOfType<Player>();
+        img=GetComponent<Image>();
+        txt=GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        StartCoroutine(SetSkills());
+    }
+    private void OnEnable() {
         StartCoroutine(SetSkills());
     }
     IEnumerator SetSkills(){
-        yield return new WaitForSeconds(0.07f);
+        yield return new WaitForSecondsRealtime(0.21f);
         skills=FindObjectOfType<PlayerSkills>().skills;
         skillsBinds=FindObjectOfType<PlayerSkills>().skillsBinds;
-        spr=GetComponent<Image>();
-        txt=GetComponentInChildren<TMPro.TextMeshProUGUI>();
     }
 
     void Update(){
         if(skillsBinds[ID]==key){color=Color.green;on=true;}
         else{color=Color.white;on=false;}
-        spr.color=color;
+        img.color=color;
         txt.color=color;
     }
 }

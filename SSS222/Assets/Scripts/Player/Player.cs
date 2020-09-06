@@ -6,9 +6,11 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.Analytics;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour{
-    #region Vars
+#region Vars
+#region//Basic Player Values
     [Header("Player")]
     [SerializeField] bool moveX = true;
     [SerializeField] bool moveY = true;
@@ -51,10 +53,15 @@ public class Player : MonoBehaviour{
     [SerializeField] public float freqHpRegen=1f;
     [SerializeField] public float hpRegenAmnt=0.1f;
     //[SerializeField] public float hpForRegen=0f;
-    [SerializeField] public float armorMulti=1f;
-    [SerializeField] public float dmgMulti=1f;
-    [SerializeField] public float shootMulti=1f;
+    [SerializeField] public float armorMultiInit=1f;
+    [SerializeField] public float dmgMultiInit=1f;
+    [SerializeField] public float shootMultiInit=1f;
+    public float armorMulti=1f;
+    public float dmgMulti=1f;
+    public float shootMulti=1f;
     [SerializeField] public float shipScaleDefault=0.89f;
+#endregion
+#region//States
     [Header("States")]
     public List<string> statuses;
     public string statusc="";
@@ -138,7 +145,8 @@ public class Player : MonoBehaviour{
     [SerializeField] public float fragileMulti=0.7f;
     [SerializeField] public float powerMulti=1.6f;
     [SerializeField] public float weaknsMulti=0.66f;
-    #region//Weapon Prefabs
+#endregion
+#region//Weapon Prefabs
     GameObject laserPrefab;
     GameObject phaserPrefab;
     GameObject hrocketPrefab;
@@ -151,14 +159,15 @@ public class Player : MonoBehaviour{
     GameObject procketPrefab;
     GameObject cbulletPrefab;
     GameObject plaserPrefab;
-    #endregion
+#endregion
+#region//Weapon Values 
     [Header("Weapons")]
     [SerializeField] float laserSpeed=9f;
-    [SerializeField] float laserShootPeriod=0.34f;
+    [SerializeField] public float laserShootPeriod=0.34f;
     [SerializeField] float laser2Speed=8.9f;
-    [SerializeField] float laser2ShootPeriod=0.35f;
+    [SerializeField] public float laser2ShootPeriod=0.35f;
     [SerializeField] float laser3Speed=8.8f;
-    [SerializeField] float laser3ShootPeriod=0.36f;
+    [SerializeField] public float laser3ShootPeriod=0.36f;
     [SerializeField] float phaserSpeed=10.5f;
     [SerializeField] float phaserShootPeriod=0.2f;
     [SerializeField] float hrocketSpeed=6.5f;
@@ -179,6 +188,8 @@ public class Player : MonoBehaviour{
     [SerializeField] float cbulletShootPeriod=0.15f;
     [SerializeField] float plaserSpeed=9.55f;
     [SerializeField] float plaserShootPeriod=0.75f;
+#endregion
+#region//Energy/Weapon Durations
     [Header("Energy Costs")]
     //Weapons
     [SerializeField] public float laserEn=0.3f;
@@ -213,6 +224,7 @@ public class Player : MonoBehaviour{
     public float refillDelay=1.6f;
     public float refillCount;
     [HideInInspector]public bool refillRandomized;
+
     [Header("Weapon Durations")]
     public bool weaponsLimited=false;
     public float laser2Duration=10f;
@@ -227,6 +239,8 @@ public class Player : MonoBehaviour{
     public float procketDuration=10f;
     public float plaserDuration=10f;
     public float shadowBtDuration=10f;
+#endregion
+#region//Other
     [Header("Effects")]
     #region//VFX
     GameObject explosionVFX;
@@ -327,11 +341,11 @@ public class Player : MonoBehaviour{
     public Vector2 tpPos;
     bool dead;
 #endregion
+#endregion
     private void Awake() {
-        SetGameRuleValues();
+        StartCoroutine(SetGameRuleValues());
     }
     void Start(){
-        SetGameRuleValues();
         if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
         
         rb = GetComponent<Rigidbody2D>();
@@ -339,12 +353,12 @@ public class Player : MonoBehaviour{
         gameSession=FindObjectOfType<GameSession>();
         saveSerial = FindObjectOfType<SaveSerial>();
         shake = GameObject.FindObjectOfType<Shake>();
-        joystick=FindObjectOfType<FloatingJoystick>();
+        if(SaveSerial.instance.joystickType==JoystickType.Dynamic)joystick=FindObjectOfType<DynamicJoystick>();
+        if(SaveSerial.instance.joystickType==JoystickType.Fixed)joystick=FindObjectOfType<FixedJoystick>();
+        if(SaveSerial.instance.joystickType==JoystickType.Floating)joystick=FindObjectOfType<FloatingJoystick>();
         //settings = FindObjectOfType<Settings>();
         //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
-        moveSpeed = moveSpeedInit;
-        moveSpeedCurrent = moveSpeed;
         dashTime = startDashTime;
         moveByMouse = saveSerial.moveByMouse;
         defaultShipScale=shipScale;
@@ -381,23 +395,26 @@ public class Player : MonoBehaviour{
         gcloverOVFX=GameAssets.instance.GetVFX("GCloverOutVFX");
         crystalExplosionVFX=GameAssets.instance.GetVFX("CExplVFX");
     }
-    void SetGameRuleValues(){
+    IEnumerator SetGameRuleValues(){
+    yield return new WaitForSecondsRealtime(0.07f);
     //Set values
     var i=GameRules.instance;
     if(i!=null){
         ///Basic value
         transform.position=i.startingPosPlayer;
         autoShoot=i.autoShootPlayer;
-        maxHP=i.healthPlayer;health=i.healthPlayer;
+        maxHP=i.maxHPPlayer;
+        health=i.healthPlayer;
         energyOn=i.energyOnPlayer;
-        maxEnergy=i.energyPlayer;energy=i.energyPlayer;
+        maxEnergy=i.maxEnergyPlayer;
+        energy=i.energyPlayer;
         powerup=i.powerupStarting;powerupDefault=i.powerupDefault;
         moveX=i.moveX;moveY=i.moveY;
         paddingX=i.paddingX;paddingY=i.paddingY;
         moveSpeedInit=i.moveSpeedPlayer;
-        armorMulti=i.armorMultiPlayer;
-        dmgMulti=i.dmgMultiPlayer;
-        shootMulti=i.shootMultiPlayer;
+        armorMultiInit=i.armorMultiPlayer;
+        dmgMultiInit=i.dmgMultiPlayer;
+        shootMultiInit=i.shootMultiPlayer;
         shipScaleDefault=i.shipScaleDefault;
         overheatOn=i.overheatOnPlayer;
         recoilOn=i.recoilOnPlayer;
@@ -494,7 +511,19 @@ public class Player : MonoBehaviour{
         procketDuration=i.procketDuration;
         plaserDuration=i.plaserDuration;
         shadowBtDuration=i.shadowBtDuration;
+
+        yield return new WaitForSecondsRealtime(0.06f);
+        var u=UpgradeMenu.instance;
+        if(u!=null&&GameSession.instance.gameModeSelected==0){
+            maxHP+=(Mathf.Clamp(u.maxHealth_UpgradesLvl-1,0,999)*(u.maxHealth_UpgradesCountMax*u.maxHealth_UpgradeAmnt))+(u.maxHealth_UpgradeAmnt*u.maxHealth_UpgradesCount);health=maxHP;
+            maxEnergy+=(Mathf.Clamp(u.maxEnergy_UpgradesLvl-1,0,999)*(u.maxEnergy_UpgradesCountMax*u.maxEnergy_UpgradeAmnt))+(u.maxEnergy_UpgradeAmnt*u.maxEnergy_UpgradesCount);energy=maxEnergy;
+        }else{Debug.LogError("UpgradeMenu not found");}
     }
+        moveSpeed=moveSpeedInit;
+        moveSpeedCurrent=moveSpeed;
+        shootMulti=shootMultiInit;
+        dmgMulti=dmgMultiInit;
+        armorMulti=armorMultiInit;
     }
 
     void Update(){
@@ -846,8 +875,9 @@ public class Player : MonoBehaviour{
                 { "Full Report: ", GameRules.instance.cfgName+", "+GameSession.instance.score+", "+GameSession.instance.GetGameSessionTimeFormat()+", "+GetComponent<PlayerCollider>().lastHitObj+", "+GetComponent<PlayerCollider>().lastHitDmg }
             });
             Debug.Log("analyticsResult: "+analyticsResult);
+            Debug.Log("Full Report: "+GameRules.instance.cfgName+", "+GameSession.instance.score+", "+GameSession.instance.GetGameSessionTimeFormat()+", "+GetComponent<PlayerCollider>().lastHitObj+", "+GetComponent<PlayerCollider>().lastHitDmg);
             }
-            Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
+            //Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
 
             GameObject explosion = GameAssets.instance.VFX("Explosion",transform.position,0.5f);//Destroy(explosion, 0.5f);
             AudioManager.instance.Play("Death");

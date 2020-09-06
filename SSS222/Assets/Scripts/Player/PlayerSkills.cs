@@ -34,7 +34,7 @@ public class PlayerSkills : MonoBehaviour{
         StartCoroutine(SetValues());
     }
     IEnumerator SetValues(){
-    yield return new WaitForSeconds(0.2f);
+    yield return new WaitForSecondsRealtime(0.15f);
     //Set values
     var i=GameRules.instance;
     if(i!=null){

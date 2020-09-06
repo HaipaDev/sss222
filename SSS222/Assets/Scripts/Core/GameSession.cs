@@ -296,24 +296,48 @@ public class GameSession : MonoBehaviour{
     IEnumerator SaveAdventureI(){
         yield return new WaitForSecondsRealtime(0.02f);
         var u=UpgradeMenu.instance;
-        if(u!=null){
-        FindObjectOfType<SaveSerial>().total_UpgradesCount=u.total_UpgradesCount;
-        FindObjectOfType<SaveSerial>().total_UpgradesLvl=u.total_UpgradesLvl;
-        FindObjectOfType<SaveSerial>().maxHealth_upgradesCount=u.maxHealth_UpgradesCount;
-        FindObjectOfType<SaveSerial>().maxHealth_upgradesLvl=u.maxHealth_UpgradesLvl;
+        var s=FindObjectOfType<SaveSerial>();
+        if(u!=null&&s!=null){
+        s.xp=coresXp;
+        s.total_UpgradesCount=u.total_UpgradesCount;
+        s.total_UpgradesLvl=u.total_UpgradesLvl;
+        s.maxHealth_UpgradesCount=u.maxHealth_UpgradesCount;
+        s.maxHealth_UpgradesLvl=u.maxHealth_UpgradesLvl;
+        s.maxEnergy_UpgradesCount=u.maxEnergy_UpgradesCount;
+        s.maxEnergy_UpgradesLvl=u.maxEnergy_UpgradesLvl;
+        s.speed_UpgradesCount=u.speed_UpgradesCount;
+        s.speed_UpgradesLvl=u.speed_UpgradesLvl;
+        s.hpRegen_UpgradesCount=u.hpRegen_UpgradesCount;
+        s.hpRegen_UpgradesLvl=u.hpRegen_UpgradesLvl;
+        s.enRegen_UpgradesCount=u.enRegen_UpgradesCount;
+        s.enRegen_UpgradesLvl=u.enRegen_UpgradesLvl;
+        s.luck_UpgradesCount=u.luck_UpgradesCount;
+        s.luck_UpgradesLvl=u.luck_UpgradesLvl;
         yield return new WaitForSecondsRealtime(0.02f);
-        FindObjectOfType<SaveSerial>().SaveAdventure();
+        s.SaveAdventure();
         }else{Debug.LogError("UpgradeMenu not present");}
     }
     public IEnumerator LoadAdventureI(){
-        yield return new WaitForSecondsRealtime(0.05f);
+        yield return new WaitForSecondsRealtime(0.04f);
         var u=UpgradeMenu.instance;
-        if(u!=null){
-        u.total_UpgradesCount=FindObjectOfType<SaveSerial>().total_UpgradesCount;
-        u.total_UpgradesLvl=FindObjectOfType<SaveSerial>().total_UpgradesLvl;
-        u.maxHealth_UpgradesCount=FindObjectOfType<SaveSerial>().maxHealth_upgradesCount;
-        u.maxHealth_UpgradesLvl=FindObjectOfType<SaveSerial>().maxHealth_upgradesLvl;
-        Debug.Log("Adventure Data loaded");
+        var s=FindObjectOfType<SaveSerial>();
+        if(u!=null&&s!=null){
+        coresXp=s.xp;
+        u.total_UpgradesCount=s.total_UpgradesCount;
+        u.total_UpgradesLvl=s.total_UpgradesLvl;
+        u.maxHealth_UpgradesCount=s.maxHealth_UpgradesCount;
+        u.maxHealth_UpgradesLvl=s.maxHealth_UpgradesLvl;
+        u.maxEnergy_UpgradesCount=s.maxEnergy_UpgradesCount;
+        u.maxEnergy_UpgradesLvl=s.maxEnergy_UpgradesLvl;
+        u.speed_UpgradesCount=s.speed_UpgradesCount;
+        u.speed_UpgradesLvl=s.speed_UpgradesLvl;
+        u.hpRegen_UpgradesCount=s.hpRegen_UpgradesCount;
+        u.hpRegen_UpgradesLvl=s.hpRegen_UpgradesLvl;
+        u.enRegen_UpgradesCount=s.enRegen_UpgradesCount;
+        u.enRegen_UpgradesLvl=s.enRegen_UpgradesLvl;
+        u.luck_UpgradesCount=s.luck_UpgradesCount;
+        u.luck_UpgradesLvl=s.luck_UpgradesLvl;
+        //Debug.Log("Adventure Data loaded");
         }else{Debug.LogError("UpgradeMenu not present");}
     }
     public void SaveSettings(){
@@ -340,7 +364,7 @@ public class GameSession : MonoBehaviour{
     public void Load(){ FindObjectOfType<SaveSerial>().Load(); FindObjectOfType<SaveSerial>().LoadSettings(); }
     public void DeleteAllShowConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((false)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((true)); }
     public void DeleteAllHideConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((true)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((false)); }
-    public void DeleteAll(){ FindObjectOfType<SaveSerial>().Delete(); ResetSettings(); FindObjectOfType<Level>().Restart(); Destroy(FindObjectOfType<SaveSerial>().gameObject); Destroy(gameObject);}
+    public void DeleteAll(){ FindObjectOfType<SaveSerial>().Delete();FindObjectOfType<SaveSerial>().DeleteAdventure(); ResetSettings(); FindObjectOfType<Level>().Restart(); Destroy(FindObjectOfType<SaveSerial>().gameObject); Destroy(gameObject);GameSession.instance=this;}
     public void ResetSettings(){
         FindObjectOfType<SaveSerial>().ResetSettings();
         FindObjectOfType<Level>().RestartScene();

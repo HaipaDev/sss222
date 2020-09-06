@@ -58,9 +58,11 @@ MonoBehaviour:
   luckMulti: 1
   startingPosPlayer: {x: 0.36, y: -6.24}
   autoShootPlayer: 0
+  maxHPPlayer: 75
   healthPlayer: 75
   energyOnPlayer: 1
-  energyPlayer: 100
+  maxEnergyPlayer: 180
+  energyPlayer: 180
   powerupStarting: laser
   powerupDefault: laser
   moveX: 1
@@ -215,7 +217,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 6878a416f2285834c9af2732b5242ce0, type: 2}
     rarity: 1
     dropChance: 5
-    levelReq: 0
+    levelReq: 1
   - name: Matrix
     lootItem: {fileID: 11400000, guid: 9000ede4635f82647a1cd13010567e48, type: 2}
     rarity: 0
@@ -225,12 +227,12 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 1f5c3c97f5d9e164dafb8aac25017596, type: 2}
     rarity: 1
     dropChance: 2
-    levelReq: 3
+    levelReq: 5
   - name: Randomizer
     lootItem: {fileID: 11400000, guid: 8645c7606471be849bbf4044ff5ceec1, type: 2}
     rarity: 0
     dropChance: 6
-    levelReq: 0
+    levelReq: 1
   - name: Scaler
     lootItem: {fileID: 11400000, guid: c9d54cc47e5cf20499998336988ca3ff, type: 2}
     rarity: 0
@@ -240,7 +242,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 9b409de821cfef24e850bac7ad821f16, type: 2}
     rarity: 0
     dropChance: 3
-    levelReq: 1
+    levelReq: 2
   mTimePowerupStatusSpawns: -1
   mTimePowerupStatusSpawnsS: 9
   mTimePowerupStatusSpawnsE: 16
@@ -251,7 +253,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 9a4e80f1fa79ea547a89f82e21045b39, type: 2}
     rarity: 1
     dropChance: 1.75
-    levelReq: 3
+    levelReq: 4
   - name: HRockets
     lootItem: {fileID: 11400000, guid: f75229abe571c5f4780d84f66fa08b5b, type: 2}
     rarity: 0
@@ -271,7 +273,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 48ec4756caf9fcb4fab471d62d339935, type: 2}
     rarity: 1
     dropChance: 1.5
-    levelReq: 2
+    levelReq: 3
   - name: LSaber
     lootItem: {fileID: 11400000, guid: 58529076849c1924e91e0633da503bfc, type: 2}
     rarity: 0
@@ -281,17 +283,17 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: e2b5a8667474ac54a8705649fcad7ee5, type: 2}
     rarity: 1
     dropChance: 2
-    levelReq: 2
+    levelReq: 4
   - name: Phaser
     lootItem: {fileID: 11400000, guid: 96f99f90403e530478f4d3e9bd04b50f, type: 2}
     rarity: 1
     dropChance: 2.5
-    levelReq: 1
+    levelReq: 3
   - name: PLaser
     lootItem: {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
     rarity: 1
     dropChance: 3
-    levelReq: 2
+    levelReq: 5
   - name: QRockets
     lootItem: {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
     rarity: 0
@@ -830,7 +832,7 @@ MonoBehaviour:
     priceS: 3
     priceE: 7
   reputationThresh: 01000000030000000500000008000000
-  xp_forCore: 100
+  xp_forCore: 300
   xp_wave: 20
   xp_shop: 3
   xp_powerup: 1

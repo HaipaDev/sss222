@@ -817,8 +817,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4201300888754685035, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadStartMenu
+        m_TargetAssemblyTypeName: Level, Assembly-CSharp
+        m_MethodName: LoadStartMenuGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -872,7 +872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2044199700624404127
 RectTransform:
   m_ObjectHideFlags: 0

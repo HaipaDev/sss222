@@ -87,6 +87,10 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "speedGRPlayer") scoreText.text = GameRules.instance.moveSpeedPlayer.ToString();
         else if (value == "healthGRPlayer") scoreText.text = GameRules.instance.healthPlayer.ToString();
         else if (value == "energyGRPlayer") scoreText.text = GameRules.instance.energyPlayer.ToString();
+
+
+        else if (value == "joystickType"){scoreText.text = SaveSerial.instance.joystickType.ToString();}
+        else if (value == "joystickSize"){scoreText.text = System.Math.Round(SaveSerial.instance.joystickSize,2).ToString();}
         
         /*else if (value == "state"){
             var value = System.Math.Round(player.GetGCloverTimer(),1);

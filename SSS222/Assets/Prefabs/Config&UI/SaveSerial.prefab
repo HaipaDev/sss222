@@ -44,12 +44,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   filename: playerData
+  filenameAdventure: adventureData
   filenameSettings: gameSettings.cfg
-  highscore: 0
+  highscore: 
+  skinID: 0
   chameleonColor:
   - 0
   - 1
   - 1
+  total_UpgradesCount: 0
+  total_UpgradesLvl: 0
+  maxHealth_UpgradesCount: 0
+  maxHealth_UpgradesLvl: 0
   gameVersion: 0.3
   moveByMouse: 1
   fullscreen: 1
@@ -58,4 +64,4 @@ MonoBehaviour:
   quality: 4
   masterVolume: 0
   soundVolume: 0
-  musicVolume: 0
+  musicVolume: -40

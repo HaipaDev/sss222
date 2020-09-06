@@ -26,8 +26,10 @@ public static GameRules instance;
     [Header("Player")]
     public Vector2 startingPosPlayer=new Vector2(0.36f,-6.24f);
     public bool autoShootPlayer=false;
+    public float maxHPPlayer=150;
     public float healthPlayer=150;
     public bool energyOnPlayer=true;
+    public float maxEnergyPlayer=180;
     public float energyPlayer=180;
     public string powerupStarting="laser";
     public string powerupDefault="laser";
@@ -237,7 +239,6 @@ public static GameRules instance;
     public int[] reputationThresh=new int[repLength];
 #endregion
 #region//Leveling
-
     [Header("Leveling")]
     public float xp_forCore=100f;
     public float xp_wave=20f;
@@ -247,6 +248,18 @@ public static GameRules instance;
     public float flyingTimeReq=25f;
     public float xp_staying=-2f;
     public float stayingTimeReq=4f;
+    [Header("Changes per level")]
+    public bool laserSpeedChangePerLv=false;
+    public int laserSpeed_stage1=1;
+    public float laserSpeed_st1=0.30f;
+    public int laserSpeed_stage2=2;
+    public float laserSpeed_st2=0.26f;
+    public int laserSpeed_stage3=4;
+    public float laserSpeed_st3=0.22f;
+    public bool shootSpeedChangePerLv=true;
+    public float shootSpeedAmntPerLv=0.01f;
+    public bool armorChangePerLv=true;
+    public float armorAmntPerLv=0.005f;
 #endregion
 #region//Upgrades
 [Header("Upgrades")]
