@@ -95,9 +95,9 @@ public class SettingsMenu : MonoBehaviour{
         //saveSerial.moveByMouse = isMovingByMouse;
     }public void SetJoystick(){
         var s=SaveSerial.instance;
-        if(s.joystickType==(JoystickType)0){s.joystickType=(JoystickType)1;}
-        if(s.joystickType==(JoystickType)1){s.joystickType=(JoystickType)2;}
-        if(s.joystickType==(JoystickType)2){s.joystickType=(JoystickType)0;}
+        if(s.joystickType==(JoystickType)0){s.joystickType=(JoystickType)1;return;}
+        if(s.joystickType==(JoystickType)1){s.joystickType=(JoystickType)2;return;}
+        if(s.joystickType==(JoystickType)2){s.joystickType=(JoystickType)0;return;}
     }public void SetJoystickSize(float size){
         SaveSerial.instance.joystickSize=size;
     }public void SetCheatmode(bool isCheatmode){

@@ -343,7 +343,7 @@ public class UpgradeMenu : MonoBehaviour{
                     if(total_UpgradesLvl==g.laserSpeed_stage3&&player.laserShootPeriod!=g.laserSpeed_st3){player.laserShootPeriod=g.laserSpeed_st3;}
                 }
                 if(g.shootSpeedChangePerLv==true){player.shootMulti+=g.shootSpeedAmntPerLv;}
-                if(g.armorChangePerLv==true){player.armorMulti+=g.armorAmntPerLv;}
+                if(g.armorChangePerLv==true){player.armorMultiInit+=g.armorAmntPerLv;}
             }
             total_UpgradesLvl++;
             }//AudioManager.instance.Play("LvlUp2");}

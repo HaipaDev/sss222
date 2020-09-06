@@ -7,7 +7,7 @@ public class UpgradeUI_Destroy : MonoBehaviour{
         StartCoroutine(Check());
     }
     IEnumerator Check(){
-        yield return new WaitForSecondsRealtime(0.07f);
+        yield return new WaitForSeconds(0.1f);
         if(GameSession.instance!=null){if(!GameSession.instance.upgradesOn)Destroy(gameObject);}
         Destroy(this);
     }

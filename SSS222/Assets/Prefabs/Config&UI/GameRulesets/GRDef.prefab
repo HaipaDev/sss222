@@ -840,6 +840,17 @@ MonoBehaviour:
   flyingTimeReq: 25
   xp_staying: -2
   stayingTimeReq: 4
+  laserSpeedChangePerLv: 1
+  laserSpeed_stage1: 1
+  laserSpeed_st1: 0.3
+  laserSpeed_stage2: 2
+  laserSpeed_st2: 0.26
+  laserSpeed_stage3: 4
+  laserSpeed_st3: 0.235
+  shootSpeedChangePerLv: 1
+  shootSpeedAmntPerLv: 0.01
+  armorChangePerLv: 1
+  armorAmntPerLv: 0.005
   total_UpgradesCountMax: 5
   other_UpgradesCountMax: 10
   maxHealth_UpgradeAmnt: 5

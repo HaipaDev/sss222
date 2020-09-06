@@ -196,6 +196,8 @@ public class SaveSerial : MonoBehaviour{
 		public float masterVolume;
 		public float soundVolume;
 		public float musicVolume;
+		public JoystickType joystickType;
+		public float joystickSize;
 	}	
 	public void SaveSettings(){
 		SettingsData data = new SettingsData();
@@ -208,6 +210,8 @@ public class SaveSerial : MonoBehaviour{
 		data.masterVolume = masterVolume;
 		data.soundVolume = soundVolume;
 		data.musicVolume = musicVolume;
+		data.joystickType=joystickType;
+		data.joystickSize=joystickSize;
 
 		// Saving the data
 		SaveGame.Encode = settingsEncode;
@@ -231,6 +235,8 @@ public class SaveSerial : MonoBehaviour{
 			masterVolume = data.masterVolume;
 			soundVolume = data.soundVolume;
 			musicVolume = data.musicVolume;
+			joystickType=data.joystickType;
+			joystickSize=data.joystickSize;
 			Debug.Log("Settings loaded");
 		}
 		else Debug.Log("Settings file not found in " + Application.persistentDataPath + "/" + filenameSettings);

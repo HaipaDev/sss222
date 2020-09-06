@@ -7,7 +7,7 @@ public class PowerupTimerUI_Off : MonoBehaviour{
         StartCoroutine(Check());
     }
     IEnumerator Check(){
-        yield return new WaitForSecondsRealtime(0.07f);
+        yield return new WaitForSeconds(0.1f);
         if(FindObjectOfType<Player>()!=null){if(!FindObjectOfType<Player>().weaponsLimited){Destroy(gameObject);}}
     }
     private void Update() {

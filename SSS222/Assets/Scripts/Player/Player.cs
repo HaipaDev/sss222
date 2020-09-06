@@ -12,10 +12,10 @@ public class Player : MonoBehaviour{
 #region Vars
 #region//Basic Player Values
     [Header("Player")]
-    [SerializeField] bool moveX = true;
-    [SerializeField] bool moveY = true;
+    [SerializeField] public bool moveX = true;
+    [SerializeField] public bool moveY = true;
     [SerializeField] bool moveByMouse = false;
-    [SerializeField] bool autoShoot = false;
+    [SerializeField] public bool autoShoot = false;
     [SerializeField] float paddingX = -0.125f;
     [SerializeField] float paddingY = 0.45f;
     [SerializeField] public float moveSpeedInit = 5f;
@@ -353,9 +353,10 @@ public class Player : MonoBehaviour{
         gameSession=FindObjectOfType<GameSession>();
         saveSerial = FindObjectOfType<SaveSerial>();
         shake = GameObject.FindObjectOfType<Shake>();
-        if(SaveSerial.instance.joystickType==JoystickType.Dynamic)joystick=FindObjectOfType<DynamicJoystick>();
-        if(SaveSerial.instance.joystickType==JoystickType.Fixed)joystick=FindObjectOfType<FixedJoystick>();
-        if(SaveSerial.instance.joystickType==JoystickType.Floating)joystick=FindObjectOfType<FloatingJoystick>();
+        joystick=FindObjectOfType<VariableJoystick>();
+        //if(SaveSerial.instance.joystickType==JoystickType.Dynamic)joystick=FindObjectOfType<DynamicJoystick>();
+        //if(SaveSerial.instance.joystickType==JoystickType.Fixed)joystick=FindObjectOfType<FixedJoystick>();
+        //if(SaveSerial.instance.joystickType==JoystickType.Floating)joystick=FindObjectOfType<FloatingJoystick>();
         //settings = FindObjectOfType<Settings>();
         //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
@@ -549,17 +550,19 @@ public class Player : MonoBehaviour{
         if(moving==false){stayingTimer+=Time.deltaTime;stayingTimerCore+=Time.deltaTime;stayingTimerTotal+=Time.deltaTime;if(hpRegenEnabled)timerHpRegen+=Time.deltaTime;}
         if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;stayingTimerCore=0;}
         
-        if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
-        if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
-        if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);
-        overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
-        if(overheated==true&&overheatedTimer>0&&Time.timeScale>0.0001f){overheatedTimer-=Time.deltaTime;
-            GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-            GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-            Destroy(flareL.gameObject, 0.04f);
-            Destroy(flareR.gameObject, 0.04f);
-            }
-        if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
+        if(overheatOn){
+            if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
+            if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
+            if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);
+            overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
+            if(overheated==true&&overheatedTimer>0&&Time.timeScale>0.0001f){overheatedTimer-=Time.deltaTime;
+                GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                Destroy(flareL.gameObject, 0.04f);
+                Destroy(flareR.gameObject, 0.04f);
+                }
+            if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
+        }//else{}
         //if((autoShoot&&energyOn&&energy>0)&&(shootTimer<=0||shootCoroutine==null)){Shoot();}
         //Debug.Log(shootTimer);
         //Debug.LogWarning(shootCoroutine);
@@ -708,7 +711,7 @@ public class Player : MonoBehaviour{
 
     private void Shoot(){
         if(Time.timeScale>0.0001f){
-            if (Application.platform != RuntimePlatform.Android){
+            if(Application.platform != RuntimePlatform.Android){
                 if(!autoShoot){
                     if(Input.GetButtonDown("Fire1")){
                         if(shootCoroutine!=null){return;}
@@ -729,6 +732,13 @@ public class Player : MonoBehaviour{
                     //shootCoroutine=null;
                     if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
                 }
+            }else{
+                if(autoShoot){//Autoshoot on Android
+                    if(shootCoroutine!=null){return;}
+                    else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                    //shootCoroutine=null;
+                    if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
+                }
             }
         }
     }
@@ -743,12 +753,7 @@ public class Player : MonoBehaviour{
                 shootCoroutine=null;
                 if(moving==true)timerEnRegen+=Time.deltaTime;
             }
-        }else{
-            if(shootCoroutine!=null){return;}
-            else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
-            //shootCoroutine=null;
-            if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
-        }
+        }//Autoshoot in Shoot()
     }
     public void ShadowButton(Vector2 pos){
         //if(pressed){

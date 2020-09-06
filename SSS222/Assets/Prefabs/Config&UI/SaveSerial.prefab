@@ -52,11 +52,27 @@ MonoBehaviour:
   - 0
   - 1
   - 1
+  xp: 0
   total_UpgradesCount: 0
   total_UpgradesLvl: 0
   maxHealth_UpgradesCount: 0
   maxHealth_UpgradesLvl: 0
-  gameVersion: 0.3
+  maxEnergy_UpgradesCount: 0
+  maxEnergy_UpgradesLvl: 0
+  speed_UpgradesCount: 0
+  speed_UpgradesLvl: 0
+  hpRegen_UpgradesCount: 0
+  hpRegen_UpgradesLvl: 0
+  enRegen_UpgradesCount: 0
+  enRegen_UpgradesLvl: 0
+  luck_UpgradesCount: 0
+  luck_UpgradesLvl: 0
+  defaultPowerup_upgradeCount: 0
+  energyRefill_upgraded: 0
+  magneticPulse_upgraded: 0
+  teleport_upgraded: 0
+  overhaul_upgraded: 0
+  gameVersion: 0.4
   moveByMouse: 1
   fullscreen: 1
   pprocessing: 0
@@ -65,3 +81,5 @@ MonoBehaviour:
   masterVolume: 0
   soundVolume: 0
   musicVolume: -40
+  joystickType: 2
+  joystickSize: 1
