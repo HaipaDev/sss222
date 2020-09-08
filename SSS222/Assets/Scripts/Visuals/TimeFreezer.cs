@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TimeFreezer : MonoBehaviour{
     public static TimeFreezer instance;
-    [SerializeField] float duration=0.1f;
+    float dur;
     bool _isFrozen=false;
     void Start(){
         instance=this;
@@ -16,8 +16,9 @@ public class TimeFreezer : MonoBehaviour{
         }
     }
     float _pendingFreezeDuration=0f;
-    public void Freeze(){
-        _pendingFreezeDuration=duration;
+    public void Freeze(float dur){
+        _pendingFreezeDuration=dur;
+        this.dur=dur;
     }
     IEnumerator DoFreeze(){
         _isFrozen=true;
@@ -25,8 +26,8 @@ public class TimeFreezer : MonoBehaviour{
         var ogChanged=GameSession.instance.speedChanged;
         GameSession.instance.speedChanged=true;
         GameSession.instance.gameSpeed=0f;
-
-        yield return new WaitForSecondsRealtime(duration);
+        
+        yield return new WaitForSecondsRealtime(dur);
         
         GameSession.instance.speedChanged=ogChanged;
         GameSession.instance.gameSpeed=ogTime;

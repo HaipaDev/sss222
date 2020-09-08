@@ -573,7 +573,7 @@ public class Player : MonoBehaviour{
     void FixedUpdate()
     {
         // If we're first at-bat, handle the input immediately and mark it already-handled.
-        HandleInput(true);
+        //HandleInput(true);
         //MovePlayer();
         //if (!Input.GetButton("Fire1")){if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}}
         Vector2 mPos=new Vector2(0,0);
@@ -583,13 +583,11 @@ public class Player : MonoBehaviour{
         dist=Vector2.Distance(mPos, transform.position);
     }
 #region//Movement etc
-    void HandleInput(bool isFixedUpdate)
-    {
+    void HandleInput(bool isFixedUpdate){
         bool hadAlreadyHandled = hasHandledInputThisFrame;
         hasHandledInputThisFrame = isFixedUpdate;
         if (hadAlreadyHandled)
             return;
-
         /* Perform any instantaneous actions, using Time.fixedDeltaTime where necessary */
     }
     void CountTimeMovementPressed(){
@@ -751,9 +749,9 @@ public class Player : MonoBehaviour{
             }else if(pressed==false||shootTimer<-1f){
                 if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                 shootCoroutine=null;
-                if(moving==true)timerEnRegen+=Time.deltaTime;
+                if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
             }
-        }//Autoshoot in Shoot()
+        }else{return;}//Autoshoot in Shoot()
     }
     public void ShadowButton(Vector2 pos){
         //if(pressed){
@@ -893,6 +891,8 @@ public class Player : MonoBehaviour{
             var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
             Destroy(GameObject.Find(lclawsName));
             Destroy(GameObject.Find(lclawsName1));
+
+            foreach(Tag_DestroyPlayerDead go in FindObjectsOfType<Tag_DestroyPlayerDead>()){Destroy(go.gameObject);}
         }
     }
     private void Hide(){

@@ -91,6 +91,7 @@ public class Enemy : MonoBehaviour{
     GameSession gameSession;
     Player player;
     Shake shake;
+    float freezefxTime=0.05f;
 
     private void Awake() {
         StartCoroutine(SetValues());
@@ -244,7 +245,7 @@ public class Enemy : MonoBehaviour{
             //if(GetComponent<ParticleDelay>()!=null){GetComponent<ParticleDelay>().on=true;health=-1000;Destroy(gameObject,0.05f);}
             /*if(GetComponent<ParticleDelay>()==null){*/GameObject explosion = Instantiate(explosionVFX, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);Destroy(explosion, 0.5f);Destroy(gameObject,0.01f);//}
             shake.CamShake(2,1);
-            if(TimeFreezer.instance!=null)TimeFreezer.instance.Freeze();
+            //if(TimeFreezer.instance!=null&&freezefxTime>0)TimeFreezer.instance.Freeze(freezefxTime);
         }
     }
     private void OnDestroy(){

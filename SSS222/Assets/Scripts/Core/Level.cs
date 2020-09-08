@@ -73,7 +73,7 @@ public class Level : MonoBehaviour{
     public void LoadInventoryScene(){SceneManager.LoadScene("Inventory");}
     public void LoadCreditsScene(){SceneManager.LoadScene("Credits");}
     public void LoadWebsite(string url){Application.OpenURL(url);}
-    public void RestartGame(){StartCoroutine(RestartGameI());}
+    public void RestartGame(){FindObjectOfType<Level>().StartCoroutine(RestartGameI());}
     IEnumerator RestartGameI(){
         //PauseMenu.GameIsPaused=false;
         FindObjectOfType<GameSession>().SaveHighscore();
