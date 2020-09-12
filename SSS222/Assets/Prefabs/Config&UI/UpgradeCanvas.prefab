@@ -4622,7 +4622,7 @@ GameObject:
   - component: {fileID: 656594086}
   - component: {fileID: 656594085}
   m_Layer: 5
-  m_Name: LevelReq2
+  m_Name: LevelReq2(5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4698,6 +4698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockableID: 5
   level: 3
   txt: 'LEVEL REQUIRED '
 --- !u!1 &684151331
@@ -8059,7 +8060,7 @@ GameObject:
   - component: {fileID: 1146251271}
   - component: {fileID: 1146251270}
   m_Layer: 5
-  m_Name: LevelReq3
+  m_Name: LevelReq3(6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8135,6 +8136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockableID: 6
   level: 4
   txt: 'LEVEL REQUIRED '
 --- !u!1 &1156907531
@@ -12413,7 +12415,7 @@ GameObject:
   - component: {fileID: 1932686490}
   - component: {fileID: 1932686489}
   m_Layer: 5
-  m_Name: LevelReq1
+  m_Name: LevelReq1(4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12489,6 +12491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockableID: 4
   level: 2
   txt: 'LEVEL REQUIRED '
 --- !u!1 &1955338219
@@ -16055,7 +16058,7 @@ GameObject:
   - component: {fileID: 8092092723883649465}
   - component: {fileID: 3010897093523200913}
   m_Layer: 5
-  m_Name: LevelReq2
+  m_Name: LevelReq2(2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16131,6 +16134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockableID: 2
   level: 1
   txt: LVL REQ
 --- !u!1 &1723514343938078858
@@ -19034,7 +19038,7 @@ GameObject:
   - component: {fileID: 8498305748828851584}
   - component: {fileID: 5242269767335373124}
   m_Layer: 5
-  m_Name: LevelReq1
+  m_Name: LevelReq1(0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19110,6 +19114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockableID: 0
   level: 3
   txt: 'LEVEL REQUIRED: '
 --- !u!1 &3595334044384273276
@@ -23359,6 +23364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockableID: 0
   level: 1
   txt: 'LEVEL REQUIRED: '
 --- !u!1 &5881815411163755825
@@ -27115,7 +27121,7 @@ GameObject:
   - component: {fileID: 8189561299744755552}
   - component: {fileID: 957770058077150279}
   m_Layer: 5
-  m_Name: LevelReq1.1
+  m_Name: LevelReq1.1(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27191,6 +27197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockableID: 1
   level: 4
   txt: LVL REQ
 --- !u!1 &8600238560031621298
@@ -27696,7 +27703,7 @@ GameObject:
   - component: {fileID: 3738316610820815129}
   - component: {fileID: 3869544157553561934}
   m_Layer: 5
-  m_Name: LevelReq2.1
+  m_Name: LevelReq2.1(3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27772,6 +27779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockableID: 3
   level: 2
   txt: LVL
 --- !u!1001 &431528389542540042

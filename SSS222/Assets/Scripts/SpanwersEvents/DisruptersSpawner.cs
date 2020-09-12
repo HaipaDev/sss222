@@ -109,26 +109,26 @@ public class DisruptersSpawner : MonoBehaviour{
     public IEnumerator SpawnWaves()
     {
         if(spawnLeech==true){
-        if (timeSpawnsLeech<=0 && timeSpawnsLeech>-4){
+        if(timeSpawnsLeech<=0&&timeSpawnsLeech>-4&&FindObjectOfType<Player>()!=null){
             //currentWave = cfgLeech;
             yield return StartCoroutine(SpawnAllEnemiesInWave(cfgLeech));
-            timeSpawnsLeech = -4;
+            timeSpawnsLeech=-4;
         }
         //if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
         //else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/
         //waveIndex = Random.Range(0, waveConfigs.Count); gameSession.EVscore = 0; } }
         }
         if(spawnHlaser==true){
-            if (timeSpawnsHlaser <= 0 && timeSpawnsHlaser > -4){
+            if(timeSpawnsHlaser<=0&&timeSpawnsHlaser>-4){
                 yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHlaser));
-                timeSpawnsHlaser = -4;
+                timeSpawnsHlaser=-4;
             }
         }
         if(spawnGoblin==true){
             if(GameObject.FindGameObjectWithTag("Powerups")!=null){
-                if (timeSpawnsGoblin <= 0 && timeSpawnsGoblin > -4){
+                if(timeSpawnsGoblin<=0&&timeSpawnsGoblin>-4){
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGoblin));
-                    timeSpawnsGoblin = -4;
+                    timeSpawnsGoblin=-4;
                 }
             }
         }

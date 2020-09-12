@@ -59,7 +59,7 @@ public class Level : MonoBehaviour{
     }
     public void LoadGameScene(){
         //GameSession.instance.SetGameModeSelected(i);
-        StartCoroutine(DamageValues.instance.SetValues());
+        DamageValues.instance.StartCoroutine(DamageValues.instance.SetValues());
         if(GameSession.instance.gameModeSelected==0){FindObjectOfType<SaveSerial>().LoadAdventure();GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
         SceneManager.LoadScene("Game");
         //LoadLevel("Game");

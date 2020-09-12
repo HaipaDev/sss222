@@ -13,7 +13,7 @@ public class Shop : MonoBehaviour{
     public int currentSlotID;
     public GameObject currentSlot;
     public ShopSlot[] slots;
-    public GameObject cargoPrefab;
+    //public GameObject cargoPrefab;
     public float shopTimeMax=10f;
     //public GameObject[] slotText;
     //public List<ShopSlotID> shopSlotIDs;
@@ -27,18 +27,25 @@ public class Shop : MonoBehaviour{
     public bool subbed;
     public int purchasedNotTimes;
     //public int purchasesCurrent;
+    public bool repEnabled;
     public int reputation;
     public int reputationSlot;
     public float sum;
     public float shopTimer=-4;
     public LootTableShop2 lootTable;
     //Player player;
-    private void Awake()
-    {
+    private void Awake(){
         //foreach (ShopSlotID shopSlotID in shopSlotIDs){sum += shopSlotID.spawnRate;}
         instance=this;
     }
     void Start(){
+        var g=GameRules.instance;
+        if(g!=null){
+            repEnabled=g.repEnabled;
+            currentSlotID=g.defSlots;
+            if(g.shopTimeLimitEnabled){shopTimeMax=g.shopTimeLimit;}else{shopTimeMax=-5;}
+        }
+
         lootTable=GetComponent<LootTableShop2>();
         SetSlots();
         shopMenuUI.SetActive(false);
@@ -52,13 +59,13 @@ public class Shop : MonoBehaviour{
     }
 
     void Update(){
-        if (shopOpen == true) { OpenShop(); }
-        if (Input.GetKeyDown(KeyCode.Escape)){Resume();}
+        if(shopOpen==true){OpenShop();}
+        if(Input.GetKeyDown(KeyCode.Escape)){Resume();}
         SetSlots();
         //if (player == null) player = FindObjectOfType<Player>();
-        LevelRep();
-        if(shopOpened&&shopTimer>0){shopTimer-=Time.unscaledDeltaTime;}
-        if(shopTimer<=0&&shopTimer!=-4){Resume();}
+        if(repEnabled)LevelRep();
+        if(shopTimeMax!=-5&&shopOpened&&shopTimer>0){shopTimer-=Time.unscaledDeltaTime;}
+        if(shopTimeMax!=-5&&shopTimer<=0&&shopTimer!=-4){Resume();}
     }
     public void SpawnCargo(){
         float xx=3.45f;
@@ -145,11 +152,15 @@ public class Shop : MonoBehaviour{
         RepPlus(1);
     }
     public void RepPlus(int amnt){
+        if(repEnabled){
         reputation+=amnt;
         reputationSlot+=amnt;
+        }
     }public void RepMinus(int amnt){
+        if(repEnabled){
         reputation-=amnt;
         reputationSlot-=amnt;
+        }
     }
     /*public ShopSlotID GetRandomID(){
         //if (currentWave == null) return 0;

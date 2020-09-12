@@ -334,18 +334,21 @@ public class UpgradeMenu : MonoBehaviour{
         }
         if(total_UpgradesCount>=total_UpgradesCountMax){
             LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=Mathf.Clamp(total_UpgradesCount-total_UpgradesCountMax,0,99);
+            total_UpgradesLvl++;
             var g=GameRules.instance;
             var player=FindObjectOfType<Player>();
             if(g!=null&&player!=null){
-                if(g.laserSpeedChangePerLv==true){
+                if(g.lvlEvents.Length>0){g.lvlEvents[0].Invoke();}
+                var i=0;foreach(int id in g.lvlEventsIDs){if(i<g.lvlEventsIDs.Length-1){i++;}if(total_UpgradesLvl==g.lvlEventsIDs[i])g.lvlEvents[i].Invoke();}
+                //if(total_UpgradesLvl>0){if(g.lvlEvents.Length<total_UpgradesLvl){return;}else{g.lvlEvents[total_UpgradesLvl].Invoke();}}
+                /*if(g.laserSpeedChangePerLv==true){
                     if(total_UpgradesLvl==g.laserSpeed_stage1&&player.laserShootPeriod!=g.laserSpeed_st1){player.laserShootPeriod=g.laserSpeed_st1;}
                     if(total_UpgradesLvl==g.laserSpeed_stage2&&player.laserShootPeriod!=g.laserSpeed_st2){player.laserShootPeriod=g.laserSpeed_st2;}
                     if(total_UpgradesLvl==g.laserSpeed_stage3&&player.laserShootPeriod!=g.laserSpeed_st3){player.laserShootPeriod=g.laserSpeed_st3;}
                 }
                 if(g.shootSpeedChangePerLv==true){player.shootMulti+=g.shootSpeedAmntPerLv;}
-                if(g.armorChangePerLv==true){player.armorMultiInit+=g.armorAmntPerLv;}
+                if(g.armorChangePerLv==true){player.armorMultiInit+=g.armorAmntPerLv;}*/
             }
-            total_UpgradesLvl++;
             }//AudioManager.instance.Play("LvlUp2");}
         if(lvlbar.current==null)lvlbar.created=2;
         if(barr==lvlbar){lvlbar.ID=lvlID;lvlbar.created=lvlcr;}

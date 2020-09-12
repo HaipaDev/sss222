@@ -164,30 +164,41 @@ public class Player : MonoBehaviour{
     [Header("Weapons")]
     [SerializeField] float laserSpeed=9f;
     [SerializeField] public float laserShootPeriod=0.34f;
+    [SerializeField] public float laserHoldSpeed=0.65f;
     [SerializeField] float laser2Speed=8.9f;
     [SerializeField] public float laser2ShootPeriod=0.35f;
+    [SerializeField] public float laser2HoldSpeed=0.75f;
     [SerializeField] float laser3Speed=8.8f;
     [SerializeField] public float laser3ShootPeriod=0.36f;
+    [SerializeField] public float laser3HoldSpeed=0.75f;
     [SerializeField] float phaserSpeed=10.5f;
     [SerializeField] float phaserShootPeriod=0.2f;
+    [SerializeField] public float phaserHoldSpeed=1f;
     [SerializeField] float hrocketSpeed=6.5f;
     [SerializeField] float hrocketShootPeriod=0.3f;
+    [SerializeField] public float hrocketHoldSpeed=1f;
     [SerializeField] float mlaserSpeedS=8.5f;
     [SerializeField] float mlaserSpeedE=10f;
     [SerializeField] float mlaserShootPeriod=0.1f;
-    [SerializeField] int mlaserBulletsAmmount=10;
+    [SerializeField] public float mlaserHoldSpeed=1f;
+    [SerializeField] public int mlaserBulletsAmmount=10;
     [SerializeField] float shadowBTSpeed=9f;
     [SerializeField] float shadowBTShootPeriod=0.34f;
+    [SerializeField] public float shadowBTHoldSpeed=0.5f;
     [SerializeField] float qrocketSpeed=9.5f;
     [SerializeField] float qrocketShootPeriod=0.3f;
+    [SerializeField] public float qrocketHoldSpeed=0.9f;
     [SerializeField] float procketSpeedS=9.5f;
     [SerializeField] float procketSpeedE=10.5f;
     [SerializeField] float procketShootPeriod=0.5f;
     [SerializeField] int procketsBulletsAmmount=10;
+    [SerializeField] public float procketHoldSpeed=0.8f;
     [SerializeField] float cbulletSpeed=8.25f;
     [SerializeField] float cbulletShootPeriod=0.15f;
+    [SerializeField] public float cbulletHoldSpeed=0.825f;
     [SerializeField] float plaserSpeed=9.55f;
     [SerializeField] float plaserShootPeriod=0.75f;
+    [SerializeField] public float plaserHoldSpeed=1f;
 #endregion
 #region//Energy/Weapon Durations
     [Header("Energy Costs")]
@@ -516,8 +527,8 @@ public class Player : MonoBehaviour{
         yield return new WaitForSecondsRealtime(0.06f);
         var u=UpgradeMenu.instance;
         if(u!=null&&GameSession.instance.gameModeSelected==0){
-            maxHP+=(Mathf.Clamp(u.maxHealth_UpgradesLvl-1,0,999)*(u.maxHealth_UpgradesCountMax*u.maxHealth_UpgradeAmnt))+(u.maxHealth_UpgradeAmnt*u.maxHealth_UpgradesCount);health=maxHP;
-            maxEnergy+=(Mathf.Clamp(u.maxEnergy_UpgradesLvl-1,0,999)*(u.maxEnergy_UpgradesCountMax*u.maxEnergy_UpgradeAmnt))+(u.maxEnergy_UpgradeAmnt*u.maxEnergy_UpgradesCount);energy=maxEnergy;
+            maxHP+=(Mathf.Clamp(u.maxHealth_UpgradesLvl-1,0,999)*(u.maxHealth_UpgradesCountMax*u.maxHealth_UpgradeAmnt))+(u.maxHealth_UpgradeAmnt*u.maxHealth_UpgradesCount);/*if(u.total_UpgradesLvl>0)*/health=maxHP;
+            maxEnergy+=(Mathf.Clamp(u.maxEnergy_UpgradesLvl-1,0,999)*(u.maxEnergy_UpgradesCountMax*u.maxEnergy_UpgradeAmnt))+(u.maxEnergy_UpgradeAmnt*u.maxEnergy_UpgradesCount);if(u.total_UpgradesLvl>0)energy=maxEnergy;
         }else{Debug.LogError("UpgradeMenu not found");}
     }
         moveSpeed=moveSpeedInit;
@@ -529,8 +540,8 @@ public class Player : MonoBehaviour{
 
     void Update(){
         HandleInput(false);
-        energy=Mathf.Clamp(energy, 0, maxEnergy);
-        health=Mathf.Clamp(health,0f,maxHP);
+        energy=Mathf.Clamp(energy,0,maxEnergy);
+        health=Mathf.Clamp(health,0,maxHP);
         //PlayerBFlame();
         //if(powerup=="lsaber"||powerup=="lclaws")StartCoroutine(DrawOtherWeapons());
         DrawOtherWeapons();
@@ -713,7 +724,7 @@ public class Player : MonoBehaviour{
                 if(!autoShoot){
                     if(Input.GetButtonDown("Fire1")){
                         if(shootCoroutine!=null){return;}
-                        else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                        else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     }if(!Input.GetButton("Fire1")||shootTimer<-1f){
                         if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                         shootCoroutine=null;
@@ -726,14 +737,14 @@ public class Player : MonoBehaviour{
                     }*/
                 }else{
                     if(shootCoroutine!=null){return;}
-                    else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                    else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     //shootCoroutine=null;
                     if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
                 }
             }else{
                 if(autoShoot){//Autoshoot on Android
                     if(shootCoroutine!=null){return;}
-                    else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                    else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     //shootCoroutine=null;
                     if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
                 }
@@ -745,7 +756,7 @@ public class Player : MonoBehaviour{
         if(!autoShoot){
             if(pressed){
                 if(shootCoroutine!=null){return;}
-                else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
             }else if(pressed==false||shootTimer<-1f){
                 if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                 shootCoroutine=null;
@@ -912,7 +923,7 @@ bool stopped=false;
         if (energy>0||!energyOn){
             if(overheated!=true&&electrc!=true){
                 //SetPrefabs();
-                if (powerup=="laser"){
+                if(powerup=="laser"){
                     GameObject laserL = GameAssets.instance.Make("Laser", new Vector2(transform.position.x - 0.35f, transform.position.y)) as GameObject;
                     GameObject laserR = Instantiate(laserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
                     GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
@@ -924,7 +935,7 @@ bool stopped=false;
                     AddSubEnergy(laserEn,false);
                     laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn/2;
                     laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn/2;
-                        shootTimer = (laserShootPeriod*0.65f)/shootMulti;
+                        shootTimer = (laserShootPeriod*laserHoldSpeed)/shootMulti;
                         stopped=false;
                         yield return new WaitForSeconds((laserShootPeriod*1.7f)/shootMulti);
                         stopped=true;
@@ -951,7 +962,7 @@ bool stopped=false;
                     laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser2En/4;
                     laserL2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser2En/4;
                     laserR2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser2En/4;
-                        shootTimer = (laser2ShootPeriod*0.75f)/shootMulti;
+                        shootTimer = (laser2ShootPeriod*laser2HoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(laser2ShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 }
@@ -987,7 +998,7 @@ bool stopped=false;
                     laserR2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
                     laserL3.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
                     laserR3.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
-                        shootTimer = (laser3ShootPeriod*0.75f)/shootMulti;
+                        shootTimer = (laser3ShootPeriod*laser3HoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(laser3ShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 }else if (powerup == "phaser"){
@@ -1002,7 +1013,7 @@ bool stopped=false;
                     AddSubEnergy(phaserEn,false);
                     phaserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=phaserEn/2;
                     phaserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=phaserEn/2;
-                        shootTimer = phaserShootPeriod/shootMulti;
+                        shootTimer = (phaserShootPeriod*phaserHoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(phaserShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 }else if (powerup == "mlaser"){
@@ -1025,8 +1036,8 @@ bool stopped=false;
                     GameObject flareR = Instantiate(flareShootVFX, new Vector2(xxR, yyR - flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flareL.gameObject, 0.3f);
                     Destroy(flareR.gameObject, 0.3f);
-                    Recoil(7f,0.15f);
-                        shootTimer = mlaserShootPeriod/shootMulti;
+                    Recoil(1f*mlaserBulletsAmmount*0.75f,0.15f);
+                        shootTimer = (mlaserShootPeriod*mlaserHoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(mlaserShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 //Rockets
@@ -1039,7 +1050,7 @@ bool stopped=false;
                     hrocket.GetComponent<Rigidbody2D>().velocity = new Vector2(0, hrocketSpeed);
                     //AddSubEnergy(hrocketEn,false);
                     Overheat(hrocketOh,true);
-                        shootTimer = hrocketShootPeriod/shootMulti;
+                        shootTimer = (hrocketShootPeriod*hrocketHoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(hrocketShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 }else if (powerup == "qrocket"){
@@ -1053,7 +1064,7 @@ bool stopped=false;
                     hrocketR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
                     //AddSubEnergy(qrocketEn,false);
                     Overheat(qrocketOh,true);
-                        shootTimer = qrocketShootPeriod/shootMulti;
+                        shootTimer = (qrocketShootPeriod*qrocketHoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(qrocketShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 }else if (powerup == "procket"){
@@ -1071,7 +1082,7 @@ bool stopped=false;
                         AddSubEnergy(procketEn*procketsBulletsAmmount,false);
                         Overheat(procketOh*procketsBulletsAmmount,true);
                         //EnergyPopUpHUD(procketEn*procketsBulletsAmmount);
-                        shootTimer = procketShootPeriod/shootMulti;
+                        shootTimer = (procketShootPeriod*procketHoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(procketShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 }else if(powerup=="lclawsA"){
@@ -1095,7 +1106,7 @@ bool stopped=false;
                     cbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
                     AddSubEnergy(cbulletEn,false);
                     cbullet.GetComponent<Tag_PlayerWeaponBlockable>().energy=cbulletEn;
-                        shootTimer = (cbulletShootPeriod*0.825f)/shootMulti;
+                        shootTimer = (cbulletShootPeriod*cbulletHoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(cbulletShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 }else if (powerup == "shadowbt"){
@@ -1108,7 +1119,7 @@ bool stopped=false;
                     //laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
                     //laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
                     AddSubEnergy(shadowBTEn,false);
-                        shootTimer = shadowBTShootPeriod/shootMulti;
+                        shootTimer = (shadowBTShootPeriod*shadowBTHoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(shadowBTShootPeriod/shootMulti);
                         //shootCoroutine=null;
                 }else if (powerup == "plaser"){
@@ -1139,10 +1150,10 @@ bool stopped=false;
                     laserR3.transform.eulerAngles = new Vector3(0, 0, -13f);
                     AddSubEnergy(plaserEn,false);
                     Recoil(10f,0.2f);
-                        shootTimer = (plaserShootPeriod*0.75f)/shootMulti;
+                        shootTimer = (plaserShootPeriod*plaserHoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(plaserShootPeriod/shootMulti);
                         //shootCoroutine=null;
-                }else {if(powerup!="lsaberA" && powerup!="lclawsA" &&powerup!="cstream"&&powerup!="shadowbt"){/*if(losePwrupOutOfEn)*/ shootTimer = 1f; yield break;}else{ yield break;}}
+                }else {if(powerup!="lsaberA" && powerup!="lclawsA" &&powerup!="cstream"&&powerup!="shadowbt"&&powerup!="null"){/*if(losePwrupOutOfEn)*/ shootTimer = 1f; yield break;}else{ yield break;}}
             }else{yield break;}/*if(overheatedTimer==-4){
                 //yield break;}
                 //if(powerup!="lclawsA"&&powerup!="cstream"&&powerup!="shadowbt"){}
@@ -1150,7 +1161,7 @@ bool stopped=false;
                 else if(powerup!="lsaberA" && powerup!="lclawsA" &&powerup!="cstream"&&powerup!="shadowbt"){yield break;}
             }*/
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
-                //else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup = powerupDefault; shootTimer = 1f; yield return new WaitForSeconds(1f); }
+                //else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup=powerupDefault; shootTimer=1f; yield return new WaitForSeconds(1f); }
         }else{ if(!autoShoot){AudioManager.instance.Play("NoEnergy");} shootTimer = 0f; shootCoroutine=null; yield break; }
         }
         }
@@ -1212,13 +1223,13 @@ bool stopped=false;
                 Destroy(GameObject.Find(lclawsName1));
                 moveSpeedCurrent = moveSpeed;
             }
-        }else { energy = 0; //yield return new WaitForSeconds(0.2f);
+        }else { energy=0; //yield return new WaitForSeconds(0.2f);
             Destroy(GameObject.Find(lsaberName1));
             Destroy(GameObject.Find(lclawsName1));
             moveSpeedCurrent = moveSpeed;
             if(powerup=="lsaberA")powerup="lsaber";
             if(powerup=="lclawsA")powerup="lclaws";
-            if(losePwrupOutOfEn)powerup = powerupDefault;
+            if(losePwrupOutOfEn)powerup=powerupDefault;
         }
         if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
             if(GameObject.Find(lsaberName)!=null)Destroy(GameObject.Find(lsaberName));

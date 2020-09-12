@@ -339,6 +339,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 465194914}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &718261907 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5073366011761102749, guid: 152a40c0d5152554692a15ae8364a540,
+    type: 3}
+  m_PrefabInstance: {fileID: 6013975900709083598}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &718261910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718261907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e088c879c4794049ba9fb69f22aef4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &753972726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -505,6 +523,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1955137468278647860}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1005854731 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 665151757122804633, guid: 152a40c0d5152554692a15ae8364a540,
+    type: 3}
+  m_PrefabInstance: {fileID: 6013975900709083598}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1005854734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005854731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee1f65aa6e983743beffbcbfc3e53cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1117112156 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2725712946868866621, guid: 3fcaf365c5e1d1a45adb3f83965c778b,
@@ -526,7 +562,7 @@ PrefabInstance:
     - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -2886,6 +2922,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
+        type: 3}
+      propertyPath: lvlEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
+        type: 3}
+      propertyPath: maxEnergyPlayer
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 3660936485932447889, guid: 99e8818fb6d6d00489a2a8785bcf265f,
         type: 3}
       propertyPath: m_Name
@@ -3336,6 +3382,11 @@ PrefabInstance:
         type: 3}
       propertyPath: energy
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: procketHoldSpeed
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547399, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}

@@ -62,7 +62,7 @@ MonoBehaviour:
   healthPlayer: 75
   energyOnPlayer: 1
   maxEnergyPlayer: 180
-  energyPlayer: 180
+  energyPlayer: 100
   powerupStarting: laser
   powerupDefault: laser
   moveX: 1
@@ -114,7 +114,7 @@ MonoBehaviour:
   mlaserSpeedS: 8.5
   mlaserSpeedE: 10
   mlaserShootPeriod: 0.1
-  mlaserBulletsAmmount: 10
+  mlaserBulletsAmmount: 3
   shadowBTSpeed: 9
   shadowBTShootPeriod: 0.34
   qrocketSpeed: 9.5
@@ -381,6 +381,7 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
+    freezefxTime: 0
     givePts: 1
     scoreValueStart: 4
     scoreValueEnd: 9
@@ -402,6 +403,7 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
+    freezefxTime: 0
     givePts: 1
     scoreValueStart: 3
     scoreValueEnd: 10
@@ -423,6 +425,7 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 1
     flyOff: 1
+    freezefxTime: 0
     givePts: 1
     scoreValueStart: 10
     scoreValueEnd: 17
@@ -445,6 +448,7 @@ MonoBehaviour:
     bulletDist: 0.35
     randomizeWaveDeath: 1
     flyOff: 1
+    freezefxTime: 0
     givePts: 1
     scoreValueStart: 11
     scoreValueEnd: 15
@@ -466,6 +470,7 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
+    freezefxTime: 0
     givePts: 1
     scoreValueStart: 13
     scoreValueEnd: 13
@@ -488,6 +493,7 @@ MonoBehaviour:
     bulletDist: 0.1
     randomizeWaveDeath: 0
     flyOff: 0
+    freezefxTime: 0
     givePts: 1
     scoreValueStart: 15
     scoreValueEnd: 25
@@ -509,6 +515,7 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
+    freezefxTime: 0
     givePts: 1
     scoreValueStart: 15
     scoreValueEnd: 25
@@ -531,6 +538,7 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
+    freezefxTime: 0
     givePts: 1
     scoreValueStart: 15
     scoreValueEnd: 25
@@ -552,6 +560,7 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
+    freezefxTime: 0
     givePts: 1
     scoreValueStart: 3
     scoreValueEnd: 7
@@ -574,6 +583,7 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
+    freezefxTime: 0
     givePts: 1
     scoreValueStart: 15
     scoreValueEnd: 20
@@ -831,7 +841,13 @@ MonoBehaviour:
     price: -1
     priceS: 3
     priceE: 7
+  defSlots: 1
+  repEnabled: 1
   reputationThresh: 01000000030000000500000008000000
+  shopTimeLimitEnabled: 1
+  shopTimeLimit: 10
+  crystalDropS: 4
+  crystalDropE: 14
   xp_forCore: 300
   xp_wave: 20
   xp_shop: 3
@@ -840,17 +856,64 @@ MonoBehaviour:
   flyingTimeReq: 25
   xp_staying: -2
   stayingTimeReq: 4
-  laserSpeedChangePerLv: 1
-  laserSpeed_stage1: 1
-  laserSpeed_st1: 0.3
-  laserSpeed_stage2: 2
-  laserSpeed_st2: 0.26
-  laserSpeed_stage3: 4
-  laserSpeed_st3: 0.235
-  shootSpeedChangePerLv: 1
-  shootSpeedAmntPerLv: 0.01
-  armorChangePerLv: 1
-  armorAmntPerLv: 0.005
+  lvlEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1938246018583424785}
+        m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
+        m_MethodName: AdventureLvlEach
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1938246018583424785}
+        m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
+        m_MethodName: AdventureLvl1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1938246018583424785}
+        m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
+        m_MethodName: AdventureLvl2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1938246018583424785}
+        m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
+        m_MethodName: AdventureLvl4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  lvlEventsIDs: 00000000010000000200000004000000
   total_UpgradesCountMax: 5
   other_UpgradesCountMax: 10
   maxHealth_UpgradeAmnt: 5
@@ -880,3 +943,4 @@ MonoBehaviour:
   postMortem_upgradeCost: 1
   teleport_upgradeCost: 2
   overhaul_upgradeCost: 3
+  unlockableSkills: 03000000040000000100000002000000020000000300000004000000

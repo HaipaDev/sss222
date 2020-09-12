@@ -364,7 +364,7 @@ public class GameSession : MonoBehaviour{
     public void Load(){ FindObjectOfType<SaveSerial>().Load(); FindObjectOfType<SaveSerial>().LoadSettings(); }
     public void DeleteAllShowConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((false)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((true)); }
     public void DeleteAllHideConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((true)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((false)); }
-    public void DeleteAll(){ FindObjectOfType<SaveSerial>().Delete();FindObjectOfType<SaveSerial>().DeleteAdventure(); ResetSettings(); FindObjectOfType<Level>().Restart(); Destroy(FindObjectOfType<SaveSerial>().gameObject); Destroy(gameObject);GameSession.instance=this;}
+    public void DeleteAll(){ FindObjectOfType<SaveSerial>().Delete();FindObjectOfType<SaveSerial>().DeleteAdventure(); ResetSettings(); FindObjectOfType<Level>().Restart(); Destroy(FindObjectOfType<SaveSerial>().gameObject); Destroy(gameObject);SaveSerial.instance=null;GameSession.instance=null;}
     public void ResetSettings(){
         FindObjectOfType<SaveSerial>().ResetSettings();
         FindObjectOfType<Level>().RestartScene();

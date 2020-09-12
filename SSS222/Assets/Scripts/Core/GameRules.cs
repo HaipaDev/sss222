@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class GameRules : MonoBehaviour{
 #region//Values
@@ -235,8 +237,14 @@ public static GameRules instance;
 #region//Shop
 [Header("Shop")]
     public ShopItem[] shopList;
-    public const int repLength=4;
+    public int defSlots=1;
+    public bool repEnabled=true;
+     public const int repLength=4;
     public int[] reputationThresh=new int[repLength];
+    public bool shopTimeLimitEnabled=true;
+    public float shopTimeLimit=10;
+    public int crystalDropS=4;
+    public int crystalDropE=14;
 #endregion
 #region//Leveling
     [Header("Leveling")]
@@ -249,17 +257,8 @@ public static GameRules instance;
     public float xp_staying=-2f;
     public float stayingTimeReq=4f;
     [Header("Changes per level")]
-    public bool laserSpeedChangePerLv=false;
-    public int laserSpeed_stage1=1;
-    public float laserSpeed_st1=0.30f;
-    public int laserSpeed_stage2=2;
-    public float laserSpeed_st2=0.26f;
-    public int laserSpeed_stage3=4;
-    public float laserSpeed_st3=0.22f;
-    public bool shootSpeedChangePerLv=true;
-    public float shootSpeedAmntPerLv=0.01f;
-    public bool armorChangePerLv=true;
-    public float armorAmntPerLv=0.005f;
+    public UnityEvent[] lvlEvents;
+    public int[] lvlEventsIDs;
 #endregion
 #region//Upgrades
 [Header("Upgrades")]
@@ -292,6 +291,7 @@ public static GameRules instance;
     public int postMortem_upgradeCost=1;
     public int teleport_upgradeCost=2;
     public int overhaul_upgradeCost=3;
+    public int[] unlockableSkills;
 #endregion
 #endregion
 #region//Voids
@@ -337,6 +337,39 @@ public static GameRules instance;
         //entry.levelReq=entry.lootItem.levelReq;
         }*/
     }
+    #region//Custom Events
+    public void AdventureLvlEach(){
+        var p=FindObjectOfType<Player>();
+        p.shootMulti+=0.01f;
+        p.armorMultiInit+=0.005f;
+    }
+    public void AdventureLvl1(){
+        var p=FindObjectOfType<Player>();
+        p.laserShootPeriod=0.30f;
+        p.mlaserBulletsAmmount=5;
+    }
+    public void AdventureLvl2(){
+        var p=FindObjectOfType<Player>();
+        p.laserShootPeriod=0.26f;
+        p.mlaserBulletsAmmount=7;
+    }
+    public void AdventureLvl4(){
+        var p=FindObjectOfType<Player>();
+        p.laserShootPeriod=0.22f;
+        p.mlaserBulletsAmmount=10;
+    }
+
+
+    public void ArcadeLvlEach(){
+        var p=FindObjectOfType<Player>();
+        p.shootMulti+=0.01f;
+        p.armorMultiInit+=0.005f;
+    }
+    public void ArcadeLvl1(){
+        var p=FindObjectOfType<Player>();
+        p.maxEnergy*=2;
+    }
+    #endregion
 }
 #endregion
 
@@ -356,6 +389,7 @@ public class EnemyClass{
     public float bulletDist=0.35f;
     public bool randomizeWaveDeath = false;
     public bool flyOff = false;
+    public float freezefxTime = 0;
     [Header("Drops & Points")]
     public bool givePts = true;
     public int scoreValueStart = 1;
