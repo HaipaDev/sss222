@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,12 +12,19 @@ public class LvlTree : MonoBehaviour{
     [SerializeField] GameObject listElement;
     [SerializeField] GameObject gridElement;
     [SerializeField] GameObject[] lists;
-    [SerializeField] UnityEngine.Object[] powerups;
-    [SerializeField] GameObject[] powerupsItems;
+    [SerializeField] List<LootTableEntryPowerup> powerups;
+    [SerializeField] List<GameObject> powerupsItems;
     [SerializeField] List<int> levels;
     //int maxHSlots=13;
     int minLevel=0;
-    void Awake(){
+    void Awake(){StartCoroutine(SetValues());}
+    IEnumerator SetValues(){
+        yield return new WaitForSecondsRealtime(0.25f);
+        foreach(LootTablePowerups lt in FindObjectsOfType<LootTablePowerups>()){powerups.AddRange(lt.itemList);}
+        foreach(LootTableEntryPowerup entry in powerups){if(entry.dropChance<=0){powerups.Remove(entry);}powerupsItems.Add(entry.lootItem.item);}
+        yield return new WaitForSecondsRealtime(0.025f);
+        SetLevels();
+        yield return new WaitForSecondsRealtime(0.025f);
         for(var i=0; i<levels.Count; i++){
             Array.Resize(ref lists,levels.Count);
             GameObject go;
@@ -25,7 +33,7 @@ public class LvlTree : MonoBehaviour{
             go.GetComponentInChildren<LvlTreeList>().level=levels[i];
             go.name="Lvl"+levels[i].ToString();
             var p=-1;
-            foreach(PowerupItem powerup in powerups){
+            foreach(LootTableEntryPowerup powerup in powerups){
                 p++;
                 if(levels[i]==powerup.levelReq){
                     //for(var a=0;a<20;a++){//test make 20x more
@@ -54,22 +62,22 @@ public class LvlTree : MonoBehaviour{
             lists[i]=go;
         }
     }
-
-    void Update(){
-        
-    }
     void OnValidate() {
         //powerups=AssetDatabase.FindAssets("t:PowerupItem");
-        powerups=Resources.FindObjectsOfTypeAll(typeof(PowerupItem));
-        Array.Resize(ref powerupsItems,powerups.Length);
+        //powerups=Resources.FindObjectsOfTypeAll(typeof(PowerupItem));
+        //Array.Resize(ref powerupsItems,powerups.Count);
         //Array.Resize(ref powerupsItems,powerups.Length);
+        //SetLevels();
+        //string paths=AssetDatabase.GUIDToAssetPath(powerups[0]);
+    }
+    void SetLevels(){
         levels.Clear();
-        for(var i=0; i<powerups.Length; i++){
-            powerupsItems[i]=(GameObject)powerups[i].GetType().GetField("item").GetValue(powerups[i]);
-            var p=(int)powerups[i].GetType().GetField("levelReq").GetValue(powerups[i]);
+        for(var i=0; i<powerups.Count; i++){
+            int p=powerups[i].levelReq;
+            //powerupsItems[i]=(GameObject)powerups[i].GetType().GetField("item").GetValue(powerups[i]);
+            //var p=(int)powerups[i].GetType().GetField("levelReq").GetValue(powerups[i]);
             if(p>=minLevel&&!levels.Contains(p))levels.Add(p);
             levels.Sort();
         }
-        //string paths=AssetDatabase.GUIDToAssetPath(powerups[0]);
     }
 }

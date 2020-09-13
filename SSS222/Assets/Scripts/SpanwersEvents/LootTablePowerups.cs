@@ -9,7 +9,7 @@ public class LootTableEntryPowerup{
     public PowerupItem lootItem;
     public rarityPowerup rarity;
     public float dropChance=0f;
-    public float levelReq=0f;
+    public int levelReq=0;
     //[HideInInspector]public float dropChance=0f;
 }
 //[System.Serializable]

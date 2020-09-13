@@ -22,7 +22,7 @@ public class TimeFreezer : MonoBehaviour{
     }
     IEnumerator DoFreeze(){
         _isFrozen=true;
-        var ogTime=Time.timeScale;
+        var ogTime=GameSession.instance.gameSpeed;
         var ogChanged=GameSession.instance.speedChanged;
         GameSession.instance.speedChanged=true;
         GameSession.instance.gameSpeed=0f;

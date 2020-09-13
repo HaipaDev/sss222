@@ -1255,13 +1255,14 @@ bool stopped=false;
         }
         if (gcloverTimer <= 0 && gcloverTimer>-4) { ResetStatus("gclover"); AudioManager.instance.Play("GCloverOff"); }
 
-        if (shadow == true) { shadowTimer-=Time.deltaTime; }
-        if (shadowTimer <= 0 && shadowTimer > -4) { ResetStatus("shadow"); AudioManager.instance.Play("PowerupOff"); }
-        if (shadow==true){ Shadow(); if(GetComponent<BackflameEffect>().enabled==true)GetComponent<BackflameEffect>().enabled = false; }
-        else{ dashTime=-4; if(GetComponent<BackflameEffect>().enabled==false)GetComponent<BackflameEffect>().enabled=true; }
+        if (shadow==true){shadowTimer-=Time.deltaTime;}
+        if (shadowTimer <= 0 && shadowTimer > -4){ResetStatus("shadow");AudioManager.instance.Play("PowerupOff");}
+        if (shadow==true){Shadow();if(GetComponent<BackflameEffect>().enabled==true)GetComponent<BackflameEffect>().enabled=false;}
+        else{ dashTime=-4; if(GetComponent<BackflameEffect>().enabled==false)GetComponent<BackflameEffect>().enabled=true;}
         if (shadow==true&&dashTime<=0&&dashTime!=-4) { rb.velocity=Vector2.zero; dashing=false; /*moveX=moveXwas;moveY=moveYwas;*/ dashTime=-4;}
         else{ dashTime -= Time.deltaTime; if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}/*if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);*/}
         if(energy<=0){ shadow=false; }
+        if(shadow==false){dashing=false;}
 
         if(inverter==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){
         FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=false;FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().enabled=true;FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=true;}

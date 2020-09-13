@@ -296,7 +296,6 @@ public static GameRules instance;
 #endregion
 #region//Voids
     private void Awake(){
-        instance=this;
         SetupSingleton();
     }
     private void SetupSingleton(){
@@ -305,6 +304,7 @@ public static GameRules instance;
             Destroy(gameObject);
         }else{
             DontDestroyOnLoad(gameObject);
+            instance=this;
         }
     }
     private void Update() {
@@ -362,8 +362,8 @@ public static GameRules instance;
 
     public void ArcadeLvlEach(){
         var p=FindObjectOfType<Player>();
-        p.shootMulti+=0.01f;
-        p.armorMultiInit+=0.005f;
+        p.shootMulti+=0.02f;
+        p.armorMultiInit+=0.01f;
     }
     public void ArcadeLvl1(){
         var p=FindObjectOfType<Player>();

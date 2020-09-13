@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PowerupTimerUI_Off : MonoBehaviour{
     private void Start(){
-        StartCoroutine(Check());
+        //StartCoroutine(Check());
     }
     IEnumerator Check(){
         yield return new WaitForSeconds(0.1f);

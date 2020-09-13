@@ -197,7 +197,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 2650301666c6e9d4b8719cd07986fecb, type: 2}
     rarity: 1
     dropChance: 1.75
-    levelReq: 1
+    levelReq: 2
   - name: Flip
     lootItem: {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
     rarity: 0
@@ -207,7 +207,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: f6a560a419dccd647bb79ae520e69ddf, type: 2}
     rarity: 2
     dropChance: 0.3
-    levelReq: 1
+    levelReq: 4
   - name: Inverter
     lootItem: {fileID: 11400000, guid: 836e8441bd1a4e1468be0e689364fb14, type: 2}
     rarity: 0
@@ -217,7 +217,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 6878a416f2285834c9af2732b5242ce0, type: 2}
     rarity: 1
     dropChance: 5
-    levelReq: 1
+    levelReq: 2
   - name: Matrix
     lootItem: {fileID: 11400000, guid: 9000ede4635f82647a1cd13010567e48, type: 2}
     rarity: 0
@@ -258,7 +258,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: f75229abe571c5f4780d84f66fa08b5b, type: 2}
     rarity: 0
     dropChance: 3
-    levelReq: 1
+    levelReq: 3
   - name: Laser2
     lootItem: {fileID: 11400000, guid: 1368b36bec2ccca4e97ab92bed99ea99, type: 2}
     rarity: 0
@@ -283,27 +283,27 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: e2b5a8667474ac54a8705649fcad7ee5, type: 2}
     rarity: 1
     dropChance: 2
-    levelReq: 4
+    levelReq: 0
   - name: Phaser
     lootItem: {fileID: 11400000, guid: 96f99f90403e530478f4d3e9bd04b50f, type: 2}
     rarity: 1
     dropChance: 2.5
-    levelReq: 3
+    levelReq: 2
   - name: PLaser
     lootItem: {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
     rarity: 1
     dropChance: 3
-    levelReq: 5
+    levelReq: 4
   - name: QRockets
     lootItem: {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
     rarity: 0
     dropChance: 3
-    levelReq: 2
+    levelReq: 1
   - name: ShadowBT
     lootItem: {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
     rarity: 2
     dropChance: 0.05
-    levelReq: 1
+    levelReq: 4
   mTimePowerupWeaponsSpawns: -1
   mTimePowerupWeaponsSpawnsS: -1
   mTimePowerupWeaponsSpawnsE: -1

@@ -4,18 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PowerupDisplay : MonoBehaviour{
-    Player player;
-    string pwrup;
-    Image spr;
     [SerializeField] public int number;
     float value;
     [SerializeField] bool powerups = true;
     [SerializeField] GameObject textObj;
+    string pwrup;
     public string state="";
     /*[HeaderAttribute("Displays")]
     [SerializeField] GameObject display1;
     [SerializeField] GameObject display2;*/
     //[SerializeField] GameObject display3;
+    Player player;
+    Image spr;
     TMPro.TextMeshProUGUI TMP;
     /*[HeaderAttribute("Sprites")]
     [SerializeField] Sprite laserSprite;
@@ -48,9 +48,9 @@ public class PowerupDisplay : MonoBehaviour{
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<Player>();
+        player=FindObjectOfType<Player>();
         //if(player!=null)pwrup = player.powerup;
-        spr = GetComponent<Image>();
+        spr=GetComponent<Image>();
         //if(powerups!=true){
         if(powerups!=true||(player!=null&&player.weaponsLimited)){
         if(textObj==null){if(transform.GetComponentInChildren<TMPro.TextMeshProUGUI>()!=null)textObj=transform.GetComponentInChildren<TMPro.TextMeshProUGUI>().gameObject;}
@@ -59,11 +59,13 @@ public class PowerupDisplay : MonoBehaviour{
         }
         color = spr.color;
         if(bg!=null)color2 = bg.color;
+        if(GameRules.instance!=null){pwrup=GameRules.instance.powerupStarting;spr.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");}//?
     }
 
     // Update is called once per frame
     void Update()
     {
+        //if(player==null){player=FindObjectOfType<Player>();}
         spr.color = color;
         if(bg!=null)bg.color = color2;
 
@@ -84,11 +86,12 @@ public class PowerupDisplay : MonoBehaviour{
                 /*var sprr=this.GetType().GetField(pwrup+"Sprite").GetValue(this);
                 this.GetType().GetField("sprite").SetValue(this,sprr);
                 spr.sprite=sprite;*/
-                if(/*pwrup!="laser"&&*/pwrup!="lsaberA"&&pwrup!="lclawsA"&&pwrup!="null"){color.a=1;spr.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");}
+                if(/*pwrup!="laser"&&*/pwrup!="lsaberA"&&pwrup!="lclawsA"&&pwrup!="null"){spr.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");}
                 //else if(pwrup=="laser")spr.sprite=GameAssets.instance.Spr("laser");
                 else if(pwrup=="lsaberA")spr.sprite=GameAssets.instance.Spr("lsaberPwrup");
                 else if(pwrup=="lclawsA")spr.sprite=GameAssets.instance.Spr("lclawsPwrup");
-                else if(pwrup=="null")color.a=0;
+                if(pwrup=="null")color.a=0;
+                else color.a=1;
                 /*if (pwrup=="laser2"){ spr.sprite = laser2Sprite; }
                 else if(pwrup=="laser3"){ spr.sprite = laser3Sprite; }
                 else if(pwrup=="mlaser"){ spr.sprite = mlaserSprite; }
@@ -101,7 +104,7 @@ public class PowerupDisplay : MonoBehaviour{
                 else if(pwrup== "prockets") { spr.sprite = procketsSprite; }
                 else if(pwrup== "cstream") { spr.sprite = cstreamSprite; }
                 else { spr.sprite = laserSprite; }*/
-            }if(GameRules.instance!=null){pwrup=GameRules.instance.powerupStarting;spr.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");}
+            }
         }else{
             if(player!=null){
                 if(player.statuses.Count>number){if(player.statuses[number]!=""){state=player.statuses[number];}else state="";}else state="";
