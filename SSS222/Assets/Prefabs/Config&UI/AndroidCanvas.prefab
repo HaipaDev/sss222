@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -5, y: 910}
+  m_AnchoredPosition: {x: -261, y: 910}
   m_SizeDelta: {x: -982, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &787598058141274716
@@ -281,7 +281,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -6, y: 910}
+  m_AnchoredPosition: {x: 261, y: 910}
   m_SizeDelta: {x: -982, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &1135208024797848016
@@ -779,6 +779,7 @@ GameObject:
   - component: {fileID: 4927005160537518287}
   - component: {fileID: 1068393056294796802}
   - component: {fileID: 1339548722}
+  - component: {fileID: 1135208025492809180}
   m_Layer: 5
   m_Name: AndroidCanvas
   m_TagString: Untagged
@@ -888,7 +889,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4927005160537518286}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bf9c88fcdbb4b440807b0f8cf87e263, type: 3}
   m_Name: 
@@ -907,6 +908,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7275858a3474fd43bb012e32ac82a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1135208025492809180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927005160537518286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c99aa99dba45ae2409e0903a8bac2a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setStart: 0
+  lefthandSwitch: 1
+  placeSwitchItemsL:
+  - {fileID: 5070146239176450900}
+  placeSwitchItemsR:
+  - {fileID: 8797093643959647985}
+  placeSwitchSpec:
+  - rectTransform: {fileID: 2891871714886297027}
+    pos: {x: 0, y: -473}
+  anchorSwitchItemsL:
+  - {fileID: 8429984816886233568}
+  anchorSwitchItemsR:
+  - {fileID: 2891871714886297027}
 --- !u!1 &5012690594239242795
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,7 +970,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 227, y: -473}
+  m_AnchoredPosition: {x: -41, y: -473}
   m_SizeDelta: {x: 546, y: 885}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9052359618517190585
@@ -1468,7 +1494,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 376.2, y: 93}
+  m_AnchoredPosition: {x: 108.19998, y: 93}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1525485778494393953
@@ -1720,7 +1746,7 @@ PrefabInstance:
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -263.7
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18,
         type: 3}
@@ -1896,7 +1922,7 @@ PrefabInstance:
     - target: {fileID: 3881087803549984436, guid: ec536a7718376554185e4a856d5ae230,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -263.7
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 3881087803549984436, guid: ec536a7718376554185e4a856d5ae230,
         type: 3}
@@ -1991,6 +2017,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec536a7718376554185e4a856d5ae230, type: 3}
+--- !u!224 &8429984816886233568 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230,
+    type: 3}
+  m_PrefabInstance: {fileID: 4693091993603048239}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8429984817151616411 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3881087803549984436, guid: ec536a7718376554185e4a856d5ae230,

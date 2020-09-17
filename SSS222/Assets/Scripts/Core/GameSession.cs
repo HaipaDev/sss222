@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using BayatGames.SaveGameFree;
 using UnityEngine.Rendering.PostProcessing;
+//using UnityEngine.InputSystem;
 public class GameSession : MonoBehaviour{
     public static GameSession instance;
     [Header("Global")]
@@ -67,7 +68,9 @@ public class GameSession : MonoBehaviour{
     PostProcessVolume postProcessVolume;
     bool setValues;
     public float gameSessionTime=0;
+    //[SerializeField] InputMaster inputMaster;
     [Range(0,2)]public static int maskMode=1;
+    
     //public string gameVersion;
     //public bool moveByMouse = true;
 
@@ -230,9 +233,11 @@ public class GameSession : MonoBehaviour{
 
         //Postprocessing
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
+        if(SaveSerial.instance!=null){
         //if(SaveSerial.instance.pprocessing==true && postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
         if(SaveSerial.instance.pprocessing==true && postProcessVolume!=null){postProcessVolume.GetComponent<PostProcessVolume>().enabled=true;}
         if(SaveSerial.instance.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
+        }
 
         if(UpgradeMenu.instance!=null)CalculateLuck();
 
@@ -341,7 +346,7 @@ public class GameSession : MonoBehaviour{
         }else{Debug.LogError("UpgradeMenu not present");}
     }
     public void SaveSettings(){
-        var ss=FindObjectOfType<SaveSerial>();
+        /*var ss=FindObjectOfType<SaveSerial>();
         var sm=FindObjectOfType<SettingsMenu>();
         ss.moveByMouse = sm.moveByMouse;
         ss.quality = sm.quality;
@@ -351,8 +356,9 @@ public class GameSession : MonoBehaviour{
         ss.masterVolume = sm.masterVolume;
         ss.soundVolume = sm.soundVolume;
         ss.musicVolume = sm.musicVolume;
+        ss.lefthand = sm.lefthand;*/
 
-        ss.SaveSettings();
+        SaveSerial.instance.SaveSettings();
     }
     public void SaveInventory(){
         FindObjectOfType<SaveSerial>().skinID = FindObjectOfType<Inventory>().skinID;
@@ -364,7 +370,8 @@ public class GameSession : MonoBehaviour{
     public void Load(){ FindObjectOfType<SaveSerial>().Load(); FindObjectOfType<SaveSerial>().LoadSettings(); }
     public void DeleteAllShowConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((false)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((true)); }
     public void DeleteAllHideConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((true)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((false)); }
-    public void DeleteAll(){ FindObjectOfType<SaveSerial>().Delete();FindObjectOfType<SaveSerial>().DeleteAdventure(); ResetSettings(); FindObjectOfType<Level>().Restart(); Destroy(FindObjectOfType<SaveSerial>().gameObject); Destroy(gameObject);SaveSerial.instance=null;GameSession.instance=null;}
+    public void DeleteAll(){ FindObjectOfType<SaveSerial>().Delete();FindObjectOfType<SaveSerial>().DeleteAdventure(); ResetSettings(); FindObjectOfType<Level>().LoadStartMenu();//FindObjectOfType<Level>().Restart();
+    /*Destroy(FindObjectOfType<SaveSerial>().gameObject);Destroy(this.gameObject); SaveSerial.instance=null;GameSession.instance=null;DamageValues.instance=null;*/}
     public void ResetSettings(){
         FindObjectOfType<SaveSerial>().ResetSettings();
         FindObjectOfType<Level>().RestartScene();

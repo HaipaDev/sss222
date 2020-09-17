@@ -48,7 +48,7 @@ public class DamageValues : MonoBehaviour{
     Vector2 efxGlareDev = new Vector2(1.5f,2f);
 
 #region//Set Values
-private void Awake() {
+private void Awake(){
 instance=this;
 StartCoroutine(SetValues());}
 public IEnumerator SetValues(){

@@ -186,6 +186,7 @@ public class SaveSerial : MonoBehaviour{
 	public float musicVolume;
 	public JoystickType joystickType=JoystickType.Dynamic;
 	public float joystickSize=1f;
+	public bool lefthand;
 	public class SettingsData{
 		public string gameVersion;
 		public bool moveByMouse;
@@ -198,6 +199,7 @@ public class SaveSerial : MonoBehaviour{
 		public float musicVolume;
 		public JoystickType joystickType;
 		public float joystickSize;
+		public bool lefthand;
 	}	
 	public void SaveSettings(){
 		SettingsData data = new SettingsData();
@@ -212,6 +214,7 @@ public class SaveSerial : MonoBehaviour{
 		data.musicVolume = musicVolume;
 		data.joystickType=joystickType;
 		data.joystickSize=joystickSize;
+		data.lefthand=lefthand;
 
 		// Saving the data
 		SaveGame.Encode = settingsEncode;
@@ -237,6 +240,7 @@ public class SaveSerial : MonoBehaviour{
 			musicVolume = data.musicVolume;
 			joystickType=data.joystickType;
 			joystickSize=data.joystickSize;
+			lefthand=data.lefthand;
 			Debug.Log("Settings loaded");
 		}
 		else Debug.Log("Settings file not found in " + Application.persistentDataPath + "/" + filenameSettings);

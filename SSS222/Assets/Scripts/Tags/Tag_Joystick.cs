@@ -5,10 +5,12 @@ using UnityEngine;
 public class Tag_Joystick : MonoBehaviour{
     [SerializeField] JoystickType joystickType;
     [SerializeField] Vector2 fixedPosition;
-    void Start(){
+    IEnumerator Start(){
+        yield return new WaitForSeconds(0.05f);
         joystickType=SaveSerial.instance.joystickType;
         var vj=GetComponent<VariableJoystick>();
         vj.fixedPosition=fixedPosition;
+        if(SaveSerial.instance.lefthand){vj.fixedPosition=new Vector2(-fixedPosition.x,fixedPosition.y);}
         if(FindObjectOfType<Player>()!=null){
             var p=FindObjectOfType<Player>();
             if(p.moveX&&p.moveY)vj.AxisOptions=AxisOptions.Both;

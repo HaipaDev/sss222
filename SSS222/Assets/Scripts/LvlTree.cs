@@ -19,12 +19,15 @@ public class LvlTree : MonoBehaviour{
     int minLevel=0;
     void Awake(){StartCoroutine(SetValues());}
     IEnumerator SetValues(){
-        yield return new WaitForSecondsRealtime(0.25f);
+        yield return new WaitForSecondsRealtime(0.15f);
         foreach(LootTablePowerups lt in FindObjectsOfType<LootTablePowerups>()){powerups.AddRange(lt.itemList);}
-        foreach(LootTableEntryPowerup entry in powerups){if(entry.dropChance<=0){powerups.Remove(entry);}powerupsItems.Add(entry.lootItem.item);}
-        yield return new WaitForSecondsRealtime(0.025f);
+        yield return new WaitForSecondsRealtime(0.015f);
+        List<LootTableEntryPowerup> removeList=new List<LootTableEntryPowerup>();
+        foreach(LootTableEntryPowerup entry in powerups){if(entry.dropChance<=0){removeList.Add(entry);}else{powerupsItems.Add(entry.lootItem.item);}}
+        foreach(LootTableEntryPowerup rem in removeList){if(powerups.Contains(rem)){powerups.Remove(rem);}}
+        yield return new WaitForSecondsRealtime(0.015f);
         SetLevels();
-        yield return new WaitForSecondsRealtime(0.025f);
+        yield return new WaitForSecondsRealtime(0.015f);
         for(var i=0; i<levels.Count; i++){
             Array.Resize(ref lists,levels.Count);
             GameObject go;

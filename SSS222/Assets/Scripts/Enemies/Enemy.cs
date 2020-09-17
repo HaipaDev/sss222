@@ -258,6 +258,7 @@ public class Enemy : MonoBehaviour{
     private void DestroyOutside(){
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true; health=-1; Die();} else{ Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){foreach(GameObject obj in GetComponent<GoblinDrop>().powerup)Destroy(obj);/*obj.SetActive(true);*/}}}
     }
+    //Collisions
     private void OnTriggerEnter2D(Collider2D other){
         //if(FindObjectOfType<Player>().shadowRaycast[FindObjectOfType<Player>().shadowRaycast.FindIndex(FindObjectOfType<Player>().shadowRaycast.Count,(x) => x == this)]==this){Die();}
         if(!other.CompareTag(tag)&&!other.CompareTag("EnemyBullet")&&other.GetComponent<Tag_OutsideZone>()==null){

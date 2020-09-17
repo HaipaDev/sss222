@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
+//using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour{
 #region Vars
@@ -351,6 +352,7 @@ public class Player : MonoBehaviour{
     bool dashed;
     public Vector2 tpPos;
     bool dead;
+    //public @InputMaster inputMaster;
 #endregion
 #endregion
     private void Awake() {
@@ -384,6 +386,8 @@ public class Player : MonoBehaviour{
         SetPrefabs();
         moveXwas=moveX;
         moveYwas=moveY;
+
+        //inputMaster.Player.Shoot.performed += _ => Shoot();
     }
     void SetPrefabs(){
         laserPrefab=GameAssets.instance.Get("Laser");
@@ -529,7 +533,7 @@ public class Player : MonoBehaviour{
         if(u!=null&&GameSession.instance.gameModeSelected==0){
             maxHP+=(Mathf.Clamp(u.maxHealth_UpgradesLvl-1,0,999)*(u.maxHealth_UpgradesCountMax*u.maxHealth_UpgradeAmnt))+(u.maxHealth_UpgradeAmnt*u.maxHealth_UpgradesCount);/*if(u.total_UpgradesLvl>0)*/health=maxHP;
             maxEnergy+=(Mathf.Clamp(u.maxEnergy_UpgradesLvl-1,0,999)*(u.maxEnergy_UpgradesCountMax*u.maxEnergy_UpgradeAmnt))+(u.maxEnergy_UpgradeAmnt*u.maxEnergy_UpgradesCount);if(u.total_UpgradesLvl>0)energy=maxEnergy;
-        }else{Debug.LogError("UpgradeMenu not found");}
+        }else if(u==null){Debug.LogError("UpgradeMenu not found");}
     }
         moveSpeed=moveSpeedInit;
         moveSpeedCurrent=moveSpeed;
@@ -732,9 +736,7 @@ public class Player : MonoBehaviour{
                             //StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());StopCoroutine("ShootContinuously");//}
                         if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
                     }
-                    /*if (Input.GetButtonUp("Fire1")){
-                        StopCoroutine(shootCoroutine);
-                    }*/
+                    //if (Input.GetButtonUp("Fire1")){StopCoroutine(shootCoroutine);}
                 }else{
                     if(shootCoroutine!=null){return;}
                     else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
