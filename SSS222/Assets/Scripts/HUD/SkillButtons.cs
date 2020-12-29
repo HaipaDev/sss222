@@ -15,8 +15,10 @@ public class SkillButtons : MonoBehaviour{
     }
     IEnumerator SetSkills(){
         yield return new WaitForSecondsRealtime(0.2f);
-        skillsBinds=FindObjectOfType<PlayerSkills>().skillsBinds;
-        skills=FindObjectOfType<PlayerSkills>().skills;
+        if(FindObjectOfType<PlayerSkills>()!=null){
+        if(FindObjectOfType<PlayerSkills>().skillsBinds!=null)skillsBinds=FindObjectOfType<PlayerSkills>().skillsBinds;
+        if(FindObjectOfType<PlayerSkills>().skills!=null)skills=FindObjectOfType<PlayerSkills>().skills;
+        }
     }
 
     void Update(){

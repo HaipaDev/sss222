@@ -10,32 +10,28 @@ public class WaveDisplay : MonoBehaviour{
     public float timer=2f;
     public float showTime = 5f;
     public bool enableText=false;
-    string str;
-    GameObject curwaveObj;
+    [SerializeField]GameObject curwaveObj;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        curwaveObj = GameObject.Find("CurrentWave");
+    void Start(){
+        //curwaveObj = GameObject.Find("CurrentWave");
         curwaveObjText = curwaveObj.GetComponent<TMPro.TextMeshProUGUI>();
         waveText = GetComponent<TMPro.TextMeshProUGUI>();
         waves = FindObjectOfType<Waves>();
         gameSession = FindObjectOfType<GameSession>();
+        enableText=true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(waves==null){waves=FindObjectOfType<Waves>();}
-        if(waves!=null){waveText.text=waves.GetWaveName().ToString();}
-        str = waveText.text;
-        if(str!=null && str!=""){ if (timer <= 0) { waveText.enabled = false; curwaveObjText.enabled = false; } }
-        else{ waveText.enabled = false; curwaveObjText.enabled = false; }
+    void Update(){
+        if(timer>0)timer-=Time.deltaTime;
 
-        if(enableText == true){ waveText.enabled = true; curwaveObjText.enabled = true; timer = showTime; enableText = false; }
         
-        if(timer>0)timer -= Time.deltaTime;
+        if(waveText.text!=null&&waveText.text!=""){if(timer<=0){waveText.enabled=false;curwaveObjText.enabled=false;}}
+        else{waveText.enabled=false;curwaveObjText.enabled=false;}
+        if(enableText==true){waveText.enabled=true;curwaveObjText.enabled=true;timer=showTime;enableText=false;}
+        if(waveText!=null&&waves.currentWave!=null){
+            waveText.text=
+            waves.GetWaveName();
+        }
         //Debug.Log(timer);
-        //if (timer <= 0){ waveText.enabled = false;  timer = 2f; }
     }
 }

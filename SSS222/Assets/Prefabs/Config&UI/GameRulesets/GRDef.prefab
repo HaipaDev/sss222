@@ -53,7 +53,7 @@ MonoBehaviour:
   EVscoreMax: 40
   shopScoreMax: 200
   shopScoreMaxS: 200
-  shopScoreMaxE: 450
+  shopScoreMaxE: 500
   scoreMulti: 1
   luckMulti: 1
   startingPosPlayer: {x: 0.36, y: -6.24}
@@ -63,6 +63,9 @@ MonoBehaviour:
   energyOnPlayer: 1
   maxEnergyPlayer: 180
   energyPlayer: 100
+  fuelOn: 0
+  fuelDrainAmnt: 0.1
+  fuelDrainFreq: 0.5
   powerupStarting: laser
   powerupDefault: laser
   moveX: 1
@@ -340,10 +343,11 @@ MonoBehaviour:
     levelReq: 1
   - name: StingerFlingers
     lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
-    dropChance: 6.8
+    dropChance: 6.2
     levelReq: 1
   startingWave: 0
   startingWaveRandom: 0
+  uniqueWaves: 1
   spawnLeech: 1
   mSTimeSpawnsLeech: 55
   mETimeSpawnsLeech: 80

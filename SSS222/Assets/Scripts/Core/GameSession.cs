@@ -61,7 +61,7 @@ public class GameSession : MonoBehaviour{
     public bool dmgPopups=true;
     public bool analyticsOn=true;
     public int gameModeSelected;
-    public const int gameModeMaxID=4;
+    public const int gameModeMaxID=5;//-1
     [SerializeField]float restartTimer=-4;
     
     Player player;

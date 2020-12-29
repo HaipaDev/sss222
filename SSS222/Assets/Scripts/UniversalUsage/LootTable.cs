@@ -79,7 +79,7 @@ public class LootTable : MonoBehaviour{
                 //itemsPercentage.Join();
                 //ItemPercentage itemsPercentage= new ItemPercentage();
                 //itemsPercentage[i].itemPercentage=value;
-                itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+entry.dropChance+"/"+(sum-entry.dropChance);
+                if(i>=0&&i<itemsPercentage.Length)itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+entry.dropChance+"/"+(sum-entry.dropChance);
                 //foreach(ItemPercentage item in itemsPercentage){item.name=entry.name;item.itemPercentage=value;}
             //}
         }

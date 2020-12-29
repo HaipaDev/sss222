@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -58,7 +58,7 @@ public class PlayerSkills : MonoBehaviour{
     }
 
     private void OnValidate(){
-        if(skills.Length>0)foreach(Skill s in skills){/*s.ID=s.item.ID;*/s.name=s.item.name;  /*s.enCost=s.item.enCost;s.cooldown=s.item.cooldown;*/}
+        if(skills.Length>0){foreach(Skill s in skills){/*s.ID=s.item.ID;*/if(s.item!=null)s.name=s.item.name;  /*s.enCost=s.item.enCost;s.cooldown=s.item.cooldown;*/}}
         ResizeSet();
     }
     private void ResizeSet(){
@@ -109,20 +109,21 @@ public class PlayerSkills : MonoBehaviour{
             if(key==skillKeyBind.Q){cooldownQ=cooldown;}
             if(key==skillKeyBind.E){cooldownE=cooldown;}
             if(key==skillKeyBind.Disabled){}
-            if(i==0){
+            if(i==0){//Magnetic Pulse
                 GameObject mPulse=Instantiate(mPulsePrefab, transform.position,Quaternion.identity);
-            }if(i==1){
+            }if(i==1){//Teleport
                 gameSession.gameSpeed=0.025f;
                 gameSession.speedChanged=true;
                 SetActiveAllChildren(timerUI.transform,true);
                 currentSkillID=i;
             }
         }else{AudioManager.instance.Play("Deny");}
-        }else if(i==2){
+        }else if(i==2){//Overhaul
         if(gameSession.coresXp>0){
                 if(key==skillKeyBind.Q){cooldownQ=cooldown;}
                 if(key==skillKeyBind.E){cooldownE=cooldown;}
                 if(key==skillKeyBind.Disabled){}
+                if(player.energy<1){player.AddSubEnergy(20);}
                 var ratio=(gameSession.coresXp/gameSession.xp_forCore);
                 gameSession.XPPopUpHUD(-gameSession.coresXp);
                 player.InfEnergy(ratio*33);
@@ -165,7 +166,7 @@ public class PlayerSkills : MonoBehaviour{
         if(timerOverhaul>0&&player.infEnergy){
             timerOverhaul-=Time.deltaTime;
         }if((timerOverhaul<0&&timerOverhaul!=-4)&&player.infEnergy){player.Overhaul();timerOverhaul=timeOverhaul;}
-        if(!player.infEnergy&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}//Destroy(overhaulAudio);}
+        if(!player.infEnergy&&AudioManager.instance!=null&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}//Destroy(overhaulAudio);}
     }
     #endregion
 

@@ -10,7 +10,7 @@ namespace NGS.ExtendableSaveSystem
     {
         protected ISavableComponent[] GetOrderedSavableComponents()
         {
-            return FindObjectsOfTypeAll(typeof(Component))
+            return Resources.FindObjectsOfTypeAll(typeof(Component))
                 .Where(c => c is ISavableComponent)
                 .Select(c => (ISavableComponent)c)
                 .OrderBy(c => c.executionOrder)

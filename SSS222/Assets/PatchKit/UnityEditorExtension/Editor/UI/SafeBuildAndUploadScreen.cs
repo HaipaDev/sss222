@@ -363,7 +363,21 @@ public class SafeBuildAndUploadScreen : Screen
 
         try
         {
-            _appName = Core.Api.GetAppInfo(appSecret).Name;
+            var appInfo = Core.Api.GetAppInfo(appSecret);
+            _appName = appInfo.Name;
+            
+            if (appInfo.Removed)
+            {
+                Dispatch(
+                    () =>
+                    {
+                        EditorUtility.DisplayDialog(
+                            "Game Not Found",
+                            "This game does no longer exist on your PatchKit account.\n\n",
+                            "OK");
+                        Config.UnlinkApp(_platform);
+                    });
+            }
         }
         catch (ApiConnectionException e)
         {
@@ -375,7 +389,7 @@ public class SafeBuildAndUploadScreen : Screen
         {
             Debug.LogWarning(e);
 
-            Config.UnlinkApp(_platform);
+            Dispatch(() => Config.UnlinkApp(_platform));
         }
     }
 

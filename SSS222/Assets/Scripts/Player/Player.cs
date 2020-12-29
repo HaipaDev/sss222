@@ -25,11 +25,15 @@ public class Player : MonoBehaviour{
     public float moveSpeedCurrent;
     public float health = 100f;
     [SerializeField] public float maxHP = 100f;
-    [SerializeField] public string powerup = "laser";
+    [SerializeField] public string powerup = "null";
     [SerializeField] public bool energyOn = true;
     public float energy = 120f;
     //[SerializeField] public float maxEnergyStarting = 30f;
     [SerializeField] public float maxEnergy = 120f;
+    [SerializeField] public bool fuelOn=false;
+    [SerializeField] public float fuelDrainAmnt=0.1f;
+    [SerializeField] public float fuelDrainFreq=0.5f;
+    [SerializeField] public float fuelDrainTimer=-4;
     [SerializeField] public string powerupDefault = "laser";
     public float powerupTimer=-4;
     [SerializeField] public bool losePwrupOutOfEn;
@@ -301,7 +305,7 @@ public class Player : MonoBehaviour{
     [HideInInspector]public bool dashing = false;
     [HideInInspector]public bool flamed = false;
     [HideInInspector]public bool electricified = false;
-    [HideInInspector]public float shootTimer = 0f;
+    [HideInInspector]public float shootTimer = 2f;
     [HideInInspector]public float instantiateTime = 0.025f;
     [HideInInspector]public float instantiateTimer = 0f;
     float lsaberEnTimer;
@@ -424,6 +428,9 @@ public class Player : MonoBehaviour{
         energyOn=i.energyOnPlayer;
         maxEnergy=i.maxEnergyPlayer;
         energy=i.energyPlayer;
+        fuelOn=i.fuelOn;
+        fuelDrainAmnt=i.fuelDrainAmnt;
+        fuelDrainFreq=i.fuelDrainFreq;
         powerup=i.powerupStarting;powerupDefault=i.powerupDefault;
         moveX=i.moveX;moveY=i.moveY;
         paddingX=i.paddingX;paddingY=i.paddingY;
@@ -555,15 +562,23 @@ public class Player : MonoBehaviour{
         Die();
         CountTimeMovementPressed();
         RefillEnergy();
-        if(frozen!=true){
+        if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
+            if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
+            if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}
             if(moveByMouse!=true){ MovePlayer(); }//followMouse.enabled = false; }
             else{ MoveWithMouse(); }// followMouse.enabled = true; }
+        }else{
+            if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
+            if(transform.GetChild(0).gameObject.activeSelf==true){transform.GetChild(0).gameObject.SetActive(false);}
         }
         shootTimer -= Time.deltaTime;
         instantiateTimer-=Time.deltaTime;
         velocity=rb.velocity;
         if(moving==false){stayingTimer+=Time.deltaTime;stayingTimerCore+=Time.deltaTime;stayingTimerTotal+=Time.deltaTime;if(hpRegenEnabled)timerHpRegen+=Time.deltaTime;}
-        if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;stayingTimerCore=0;}
+        if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;stayingTimerCore=0;
+        if(fuelOn){if(fuelDrainTimer<=0){if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt);}fuelDrainTimer=fuelDrainFreq;}else{fuelDrainTimer-=Time.deltaTime;}}
+        }
+        //if(energy>0&&fuelDrainTimer<=0){}
         
         if(overheatOn){
             if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
@@ -918,7 +933,7 @@ public class Player : MonoBehaviour{
 #endregion
 
 #region//Powerups
-bool stopped=false;
+//bool stopped=false;
     public IEnumerator ShootContinuously(){
         while (true){
         if (Time.timeScale>0.0001f){
@@ -938,9 +953,9 @@ bool stopped=false;
                     laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn/2;
                     laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn/2;
                         shootTimer = (laserShootPeriod*laserHoldSpeed)/shootMulti;
-                        stopped=false;
+                        //stopped=false;
                         yield return new WaitForSeconds((laserShootPeriod*1.7f)/shootMulti);
-                        stopped=true;
+                        //stopped=true;
                         //shootCoroutine=null;
                 }else if(powerup=="laser2"){
                     GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -1293,7 +1308,7 @@ bool stopped=false;
         if(magnetTimer <=0 && magnetTimer>-4){ResetStatus("magnet");}
         
         if(scaler==true){
-            var i=0;
+            /*var i=0;
             scalerTimer-=Time.deltaTime;
             if(Time.timeScale>0.0001f){// && instantiateTimer<=0){
                 for(i=0; i<100; i++){
@@ -1306,7 +1321,7 @@ bool stopped=false;
                 //if(shipScale<=0.45){scaleUp=true;}
                 //if(shipScale>=1.64){scaleUp=false;}
                 //instantiateTimer=instantiateTime;
-            }
+            }*/
         }else{
             shipScale=shipScaleDefault;
         }

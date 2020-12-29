@@ -24,6 +24,7 @@ public class Screenflash : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
+        if(player!=null){
         if(player.damaged==true){image.color = damageFlashColor;player.damaged = false;}
         else { image.color = Color.Lerp(image.color, Color.clear, damageFlashSpeed * Time.deltaTime); }
         if(player.healed==true){image.color = healFlashColor;player.healed = false;}
@@ -34,5 +35,6 @@ public class Screenflash : MonoBehaviour{
         else { image.color = Color.Lerp(image.color, Color.clear, flameFlashSpeed * Time.deltaTime); }
         if (player.electricified==true){image.color = electrcFlashColor;player.electricified = false;}
         else { image.color = Color.Lerp(image.color, Color.clear, electrcFlashSpeed * Time.deltaTime); }
+        }
     }
 }

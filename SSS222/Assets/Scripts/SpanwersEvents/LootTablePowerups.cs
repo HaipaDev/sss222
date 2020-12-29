@@ -81,7 +81,7 @@ public class LootTablePowerups : MonoBehaviour{
         SumUpAfter();
     }
     void Update(){
-        currentLvl=UpgradeMenu.instance.total_UpgradesLvl;
+        if(UpgradeMenu.instance!=null)currentLvl=UpgradeMenu.instance.total_UpgradesLvl;
         SumUp();
         SumUpAfter();
     }
@@ -149,7 +149,7 @@ public class LootTablePowerups : MonoBehaviour{
                 //if(entry.rarity==rarityPowerup.Common){r="c";}
                 
                 
-                itemsPercentage[i].name=entry.name+"("+entry.levelReq+r+")"+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
+                if(entry!=null&&itemsPercentage!=null&&itemsPercentage[i]!=null)itemsPercentage[i].name=entry.name+"("+entry.levelReq+r+")"+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
                 //foreach(ItemPercentage item in itemsPercentage){item.name=entry.name;item.itemPercentage=value;}
             //}
             //}
@@ -200,7 +200,7 @@ public class LootTablePowerups : MonoBehaviour{
             }
             //System.Array.Resize(ref itemsPercentage, itemList.Count);
             var value=System.Convert.ToSingle(System.Math.Round((dropList[i]/sum*100),2));
-            itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
+            if(entry!=null&&itemsPercentage!=null&&itemsPercentage[i]!=null)itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
         }
         sum=dropList.Sum();
     }
