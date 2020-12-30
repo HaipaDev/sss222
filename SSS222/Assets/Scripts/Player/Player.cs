@@ -1308,8 +1308,8 @@ public class Player : MonoBehaviour{
         if(magnetTimer <=0 && magnetTimer>-4){ResetStatus("magnet");}
         
         if(scaler==true){
-            /*var i=0;
             scalerTimer-=Time.deltaTime;
+            /*var i=0;
             if(Time.timeScale>0.0001f){// && instantiateTimer<=0){
                 for(i=0; i<100; i++){
                     if(UnityEngine.Random.Range(0,100)>50){scaleUp=true;}else{scaleUp=false;}
@@ -1361,7 +1361,7 @@ public class Player : MonoBehaviour{
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(moveByMouse==true && dist>0.35){
                     gameSession.gameSpeed=dist+(1-0.35f);
-                    gameSession.gameSpeed=Mathf.Clamp(gameSession.gameSpeed,0.05f,gameSession.defaultGameSpeed);
+                    gameSession.gameSpeed=Mathf.Clamp(gameSession.gameSpeed,gameSession.defaultGameSpeed,gameSession.defaultGameSpeed*2);
                 }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
@@ -1385,7 +1385,7 @@ public class Player : MonoBehaviour{
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(moveByMouse==true){
                     gameSession.gameSpeed=dist;
-                    gameSession.gameSpeed=Mathf.Clamp(gameSession.gameSpeed,0.05f,gameSession.defaultGameSpeed);
+                    gameSession.gameSpeed=Mathf.Clamp(gameSession.gameSpeed,0.05f,gameSession.defaultGameSpeed*2);
                 }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);

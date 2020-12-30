@@ -69,7 +69,7 @@ public class EnemyPathing : MonoBehaviour{
 
     private void Move()
     {
-        if(waveConfig.startToEndPath==true)
+        if(waveConfig.startToEndPath==true)//Start-End Path
         {
             if (transform.position!= waypointsE[waypointIndex].transform.position)
             {
@@ -79,10 +79,10 @@ public class EnemyPathing : MonoBehaviour{
                 //if (transform.position == targetPos)waypointIndex++;
             }
             else{ Destroy(gameObject); }
-        }else if(waveConfig.between2PtsPath==true){
+        }else if(waveConfig.between2PtsPath==true){//Between 2 points
             if(transform.position.y<-7.5f){ Destroy(gameObject); }
         }else{
-            if(waveConfig.randomPath==true || waveConfig.randomPathEach==true){
+            if(waveConfig.randomPath==true || waveConfig.randomPathEach==true){//Random Path
                 if (waypointIndex < waypointsR.Count)
                 {
                     var targetPos = waypointsR[waypointIndex].transform.position;
@@ -92,16 +92,16 @@ public class EnemyPathing : MonoBehaviour{
                 }else { Destroy(gameObject); }
             }//else if(waveConfig.randomPoint==true){}
             else{
-                if(waveConfig.shipPlace==false && waveConfig.loopPath==false){
-                    if (waypointIndex < waypointsS.Count)
+                if(waveConfig.shipPlace==false && waveConfig.loopPath==false){//Random Point
+                    if (waypointIndex < waypointsR.Count)
                     {
-                        var targetPos = waypointsS[waypointIndex].transform.position;
+                        var targetPos = waypointsR[waypointIndex].transform.position;
                         var step = waveConfig.GetMoveSpeed() * Time.deltaTime;
                         transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
                         if (transform.position == targetPos) waypointIndex++;
                     }
                     else { Destroy(gameObject); }
-                }if(waveConfig.loopPath==true){
+                }if(waveConfig.loopPath==true){//Loop Path
                     if (waypointIndex < waypointsL.Count){
                         var targetPos = waypointsL[waypointIndex].transform.position;
                         var step = waveConfig.GetMoveSpeed() * Time.deltaTime;

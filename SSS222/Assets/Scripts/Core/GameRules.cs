@@ -411,6 +411,8 @@ public class CometSettings{
     public float sizeMax=1.4f;
     public bool healthBySize=true;
     public bool damageBySpeedSize=true;
+    public bool scoreBySize=false;
+    public CometScoreSize[] scoreSizes;
     public Sprite[] sprites;
     public GameObject bflamePart;
     [Header("Lunar")]
@@ -419,6 +421,11 @@ public class CometSettings{
     public int lunarCometChance=10;
     public float lunarHealthMulti=2.5f;
     public float lunarSpeedMulti=0.415f;
+    public int lunarScore=-1;
+    public int lunarScoreS=0;
+    public int lunarScoreE=0;
+    public GameObject lunarDrop;
+    public int lunarDropChance=0;
     public Sprite[] spritesLunar;
     public GameObject lunarPart;
 }
