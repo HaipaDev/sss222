@@ -42,6 +42,7 @@ public class LootTableWaves : MonoBehaviour{
             if(w.spawnerType==spawnerType.wave)itemList=i.waveList;
             w.startingWave=i.startingWave;
             w.startingWaveRandom=i.startingWaveRandom;
+            w.uniqueWaves=i.uniqueWaves;
         }
         SumUp();
     }
@@ -53,7 +54,7 @@ public class LootTableWaves : MonoBehaviour{
         SumUp();
     }
     private void Update() {
-        currentLvl=UpgradeMenu.instance.total_UpgradesLvl;
+        if(UpgradeMenu.instance!=null)currentLvl=UpgradeMenu.instance.total_UpgradesLvl;
     }
     public WaveConfig GetItem(){
         float randomWeight = 0;

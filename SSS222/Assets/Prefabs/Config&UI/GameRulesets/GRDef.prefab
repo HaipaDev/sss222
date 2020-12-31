@@ -53,7 +53,7 @@ MonoBehaviour:
   EVscoreMax: 40
   shopScoreMax: 200
   shopScoreMaxS: 200
-  shopScoreMaxE: 450
+  shopScoreMaxE: 500
   scoreMulti: 1
   luckMulti: 1
   startingPosPlayer: {x: 0.36, y: -6.24}
@@ -63,6 +63,9 @@ MonoBehaviour:
   energyOnPlayer: 1
   maxEnergyPlayer: 180
   energyPlayer: 100
+  fuelOn: 0
+  fuelDrainAmnt: 0.1
+  fuelDrainFreq: 0.5
   powerupStarting: laser
   powerupDefault: laser
   moveX: 1
@@ -340,10 +343,11 @@ MonoBehaviour:
     levelReq: 1
   - name: StingerFlingers
     lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
-    dropChance: 6.8
+    dropChance: 6.2
     levelReq: 1
   startingWave: 0
   startingWaveRandom: 0
+  uniqueWaves: 1
   spawnLeech: 1
   mSTimeSpawnsLeech: 55
   mETimeSpawnsLeech: 80
@@ -597,6 +601,8 @@ MonoBehaviour:
     sizeMax: 1.4
     healthBySize: 1
     damageBySpeedSize: 1
+    scoreBySize: 0
+    scoreSizes: []
     sprites:
     - {fileID: 21300000, guid: 99983d2108c82d9488eb046ba733b402, type: 3}
     - {fileID: 21300000, guid: 9a41682c86a2e8646ab244683f0ab5e5, type: 3}
@@ -608,6 +614,11 @@ MonoBehaviour:
     lunarCometChance: 10
     lunarHealthMulti: 2.5
     lunarSpeedMulti: 0.415
+    lunarScore: -1
+    lunarScoreS: 0
+    lunarScoreE: 0
+    lunarDrop: {fileID: 0}
+    lunarDropChance: 0
     spritesLunar:
     - {fileID: 21300000, guid: d77e60d2555e3794bb7b3751fc12984a, type: 3}
     - {fileID: 21300000, guid: 9707760d56d495d49ad28413a26f324c, type: 3}

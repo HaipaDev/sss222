@@ -267,6 +267,7 @@ public class PlayerCollider : MonoBehaviour{
                     if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
                     if(player.scaler==true){EnergyAddDupl();}
                     player.SetStatus("scaler");
+                    player.shipScale=UnityEngine.Random.Range(player.shipScaleMin,player.shipScaleMax);
                     }
 
                 var gcloverName = gcloverPwrupPrefab.name;

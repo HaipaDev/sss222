@@ -33,6 +33,7 @@ public class ShipSkinManager : MonoBehaviour{
             overlayOBJ.transform.position=new Vector3(overlayOBJ.transform.position.x,overlayOBJ.transform.position.y,-0.01f);
             overlayOBJ.transform.localScale=Vector2.one;
             overlay = overlayOBJ.GetComponent<SpriteRenderer>();
+            if(GameSession.maskMode!=0)overlayOBJ.GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
         }
     }
 

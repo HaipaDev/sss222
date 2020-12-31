@@ -33,6 +33,9 @@ public static GameRules instance;
     public bool energyOnPlayer=true;
     public float maxEnergyPlayer=180;
     public float energyPlayer=180;
+    public bool fuelOn=false;
+    public float fuelDrainAmnt=0.1f;
+    public float fuelDrainFreq=0.5f;
     public string powerupStarting="laser";
     public string powerupDefault="laser";
     public bool moveX=true;
@@ -166,6 +169,7 @@ public static GameRules instance;
     public List<LootTableEntryWaves> waveList;
     public int startingWave=0;
     public bool startingWaveRandom=false;
+    public bool uniqueWaves=true;
     public bool spawnLeech=true;
     public float mSTimeSpawnsLeech=55f;
     public float mETimeSpawnsLeech=80f;
@@ -407,6 +411,8 @@ public class CometSettings{
     public float sizeMax=1.4f;
     public bool healthBySize=true;
     public bool damageBySpeedSize=true;
+    public bool scoreBySize=false;
+    public CometScoreSize[] scoreSizes;
     public Sprite[] sprites;
     public GameObject bflamePart;
     [Header("Lunar")]
@@ -415,6 +421,11 @@ public class CometSettings{
     public int lunarCometChance=10;
     public float lunarHealthMulti=2.5f;
     public float lunarSpeedMulti=0.415f;
+    public int lunarScore=-1;
+    public int lunarScoreS=0;
+    public int lunarScoreE=0;
+    public GameObject lunarDrop;
+    public int lunarDropChance=0;
     public Sprite[] spritesLunar;
     public GameObject lunarPart;
 }

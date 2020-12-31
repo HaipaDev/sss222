@@ -217,7 +217,7 @@ public class Enemy : MonoBehaviour{
         }else{
             GetComponent<LaunchRadialBullets>().Shoot();
         }
-        shotCounter = Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
+        shotCounter=Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
         }
     }
     private void FlyOff(){
@@ -228,8 +228,20 @@ public class Enemy : MonoBehaviour{
     }
     
     public void Die(){
-        if (health <= 0 && health!=-1000){
-            int scoreValue = Random.Range(scoreValueStart,scoreValueEnd);
+        if (health<=0&&health!=-1000){
+            int scoreValue=Random.Range(scoreValueStart,scoreValueEnd);
+            if(GetComponent<CometRandomProperties>()!=null){
+                var comet=GetComponent<CometRandomProperties>();
+                if(comet.scoreBySize){
+                    for(var i=0;i<comet.scoreSizes.Length&&(comet.Size()>comet.scoreSizes[i].size&&(i+1<comet.scoreSizes.Length&&comet.Size()<comet.scoreSizes[i+1].size));i++){ /*&&comet.scoreSizes[i].size-System.Math.Truncate(comet.scoreSizes[i].size)>0.5*/ //){i++;}
+                    scoreValue=comet.scoreSizes[i].score;}
+                }
+                if(comet.isLunar){
+                    var lunarScore=comet.LunarScore();
+                    if(lunarScore!=-1)scoreValue=lunarScore;
+                    if(comet.LunarDrop()){Instantiate(comet.GetLunarDrop(),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);}
+                }
+            }
             if(givePts==true){
                 gameSession.AddToScore(scoreValue);
                 if(enBallChance==1){ Instantiate(enBallPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity); }
@@ -264,7 +276,7 @@ public class Enemy : MonoBehaviour{
         if(!other.CompareTag(tag)&&!other.CompareTag("EnemyBullet")&&other.GetComponent<Tag_OutsideZone>()==null){
             DamageDealer damageDealer=other.GetComponent<DamageDealer>();
             DamageValues damageValues=DamageValues.instance;
-            if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
+            if(gameObject!=null&&other.gameObject!=null)if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
             var dmg = damageValues.GetDmg();
 
             if(other.GetComponent<Player>()!=null){if(other.GetComponent<Player>().dashing==true){Die();}}
@@ -325,8 +337,8 @@ public class Enemy : MonoBehaviour{
                     dmg/=3;
                 }
             }
-            dmg*=player.dmgMulti;
-            health -= dmg;
+            if(player!=null)dmg*=player.dmgMulti;
+            health-=dmg;
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
             var flare = Instantiate(flareHitVFX, new Vector2(transform.position.x,transform.position.y - 0.5f), Quaternion.identity);
             Destroy(flare.gameObject, 0.3f);
@@ -361,7 +373,7 @@ public class Enemy : MonoBehaviour{
         {
             DamageDealer damageDealer=other.GetComponent<DamageDealer>();
             DamageValues damageValues=DamageValues.instance;
-            if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
+            if(gameObject!=null&&other.gameObject!=null)if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
             float dmg = damageValues.GetDmg();
 
             var Pname = phaserPrefab.name; var Pname1 = phaserPrefab.name + "(Clone)";
@@ -387,7 +399,7 @@ public class Enemy : MonoBehaviour{
             var mPulsename = mPulsePrefab.name; var mPulsename1 = mPulsePrefab.name + "(Clone)";
             if (other.gameObject.name == mPulsename || other.gameObject.name == mPulsename1) { dmg = 0; AudioManager.instance.Play("PRocketHit");}
 
-            dmg*=player.dmgMulti;
+            if(player!=null)dmg*=player.dmgMulti;
             health -= dmg;
             //Destroy(other.gameObject, 0.05f);
 

@@ -13,6 +13,7 @@ public class StateDisplayTable : MonoBehaviour{
 
     void Update(){
         //Create
+        if(player!=null){
         for(var i=0;i<player.statuses.Count;i++){
             if(table.transform.childCount==0){
                 GameObject go=Instantiate(element,table.transform);
@@ -27,6 +28,7 @@ public class StateDisplayTable : MonoBehaviour{
                 go.GetComponent<PowerupDisplay>().number=i;
                 //}
             }
+        }
         }
         //Destroy
         /*for(var i=player.statuses.Count;i<26;i++){

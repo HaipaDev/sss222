@@ -7,7 +7,7 @@ public class AnimationOn : MonoBehaviour{
     public void AnimationSet(bool on){
         this.on=on;
         if(on==true){
-            GetComponent<Animator>().Play("on",-1,0);
+            GetComponent<Animator>().Play("On",0,0);
             GetComponent<Animator>().enabled=true;
             GetComponent<Animator>().SetTrigger("on");
         }else{

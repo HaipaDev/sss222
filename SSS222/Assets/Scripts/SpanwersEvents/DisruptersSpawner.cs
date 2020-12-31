@@ -213,14 +213,16 @@ public class DisruptersSpawner : MonoBehaviour{
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
         }else if(waveConfig.shipPlace==true){
+            if(player!=null){
             for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
             {
                 var newEnemy = Instantiate(
                     waveConfig.GetEnemyPrefab(),
                     new Vector2(player.transform.position.x, 7.2f+waveConfig.shipYY),
                 Quaternion.identity);
-                newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                if(newEnemy!=null)newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
+            }
             }
         }
         else { yield return new WaitForSeconds(waveConfig.GetTimeSpawn()); }

@@ -16,7 +16,7 @@ public class SkillIcon : MonoBehaviour{
     }
     IEnumerator SetSkills(){
         yield return new WaitForSecondsRealtime(0.2f);
-        skills=FindObjectOfType<PlayerSkills>().skills;
+        if(FindObjectOfType<PlayerSkills>()!=null)skills=FindObjectOfType<PlayerSkills>().skills;
     }
     void Update(){
         ID=parent.GetComponent<SkillButtons>().ID;

@@ -12,6 +12,7 @@ public class Waves : MonoBehaviour{
     public WaveConfig currentWave;
     [SerializeField] bool looping = true;
     [SerializeField] bool progressiveWaves = false;
+    [SerializeField] public bool uniqueWaves = true;//Unique Wave Randomization?
     [SerializeField] float mTimeSpawns = 2f;
     public float timeSpawns = 0f;
 
@@ -33,7 +34,7 @@ public class Waves : MonoBehaviour{
         lootTable = FindObjectOfType<LootTableWaves>();
         gameSession = FindObjectOfType<GameSession>();
         player = FindObjectOfType<Player>();
-        if(startingWaveRandom){startingWave=Random.Range(0,lootTable.itemList.Count-1);}
+        if(startingWaveRandom){currentWave=GetRandomWave();startingWave=waveIndex;}//Random.Range(0,lootTable.itemList.Count-1);}
         do
         {
             yield return StartCoroutine(SpawnWaves());
@@ -42,10 +43,17 @@ public class Waves : MonoBehaviour{
     }
 
     public WaveConfig GetRandomWave(){
-        if(currentWave==null)return lootTable.itemList[startingWave].lootItem;
+        if(currentWave==null&&!startingWaveRandom)return lootTable.itemList[startingWave].lootItem;
         else{
             //currentWave=lootTable.GetItem();
-            return lootTable.GetItem();
+            
+            if(uniqueWaves){
+                WaveConfig wave;
+                do{
+                    wave=lootTable.GetItem();
+                    return wave;
+                }while(wave!=currentWave);
+            }else{return lootTable.GetItem();}
         }
         /*else{
             float randomWeight = 0;
@@ -159,15 +167,15 @@ public class Waves : MonoBehaviour{
     void Update()
     {
         if(Time.timeScale>0.0001f){
-            if (timeSpawns > -0.01) { timeSpawns -= Time.deltaTime; }
-            else if (timeSpawns == -4) { timeSpawns = currentWave.timeSpawnWave; }
-            else if (timeSpawns <=0 && timeSpawns > -4) {SpawnAllEnemiesInWave(currentWave); timeSpawns = currentWave.timeSpawnWave; }
+            if(timeSpawns>-0.01){timeSpawns -= Time.deltaTime;}
+            else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
+            else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){SpawnAllEnemiesInWave(currentWave);timeSpawns=currentWave.timeSpawnWave;}
         }
-            if (progressiveWaves==true){if (waveIndex >= GetComponent<LootTableWaves>().itemList.Count) { waveIndex = startingWave; } }
-            else{if(gameSession.EVscoreMax!=-5&&gameSession.EVscore>=gameSession.EVscoreMax) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
-                timeSpawns = 0; currentWave=GetRandomWave();//waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
-                gameSession.EVscore = 0; gameSession.AddXP(gameSession.xp_wave);//XP For Wave
-                } }
+            if(progressiveWaves==true){if(waveIndex>=GetComponent<LootTableWaves>().itemList.Count){waveIndex=startingWave;}}
+            else{if(gameSession!=null)if(gameSession.EVscoreMax!=-5&&gameSession.EVscore>=gameSession.EVscoreMax){if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
+                timeSpawns=0; currentWave=GetRandomWave();//waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
+                gameSession.EVscore=0; gameSession.AddXP(gameSession.xp_wave);//XP For Wave
+                }}
             //if (timeSpawns <= 0) {timeSpawns = mTimeSpawns; }
             //Debug.Log(timeSpawns);
         //}
