@@ -90,8 +90,11 @@ public class ConnectAppScreen : Screen
         int appIndex = 0;
         foreach (App app in Apps)
         {
-            DrawApp(app, appIndex % 2 == 0);
-            appIndex++;
+            if (!app.Removed)
+            {
+                DrawApp(app, appIndex % 2 == 0);
+                appIndex++;
+            }
         }
 
         EditorGUILayout.EndScrollView();
