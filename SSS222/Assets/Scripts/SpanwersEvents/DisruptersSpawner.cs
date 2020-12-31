@@ -220,7 +220,7 @@ public class DisruptersSpawner : MonoBehaviour{
                     waveConfig.GetEnemyPrefab(),
                     new Vector2(player.transform.position.x, 7.2f+waveConfig.shipYY),
                 Quaternion.identity);
-                if(newEnemy!=null&&waveConfig!=null)newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                if(newEnemy!=null)newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             }

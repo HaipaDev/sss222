@@ -127,8 +127,6 @@ PlayerSettings:
   bundleVersion: 0.4
   preloadedAssets:
   - {fileID: 3389254574830597111, guid: 81dbb47d768940c48bc686e78eee47ad, type: 3}
-  - {fileID: -6323133040006334020, guid: 7540c7ad45821d64ea237eb1e3c121e6, type: 2}
-  - {fileID: 11400000, guid: 1f11130a35c57d24796353eb1fa2a0cb, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -171,7 +169,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.HyperGamesDev.SSS222
+    Standalone: com.Company.ProductName
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -678,8 +676,7 @@ PlayerSettings:
   gcIncremental: 0
   assemblyVersionValidation: 1
   gcWBarrierValidation: 0
-  apiCompatibilityLevelPerPlatform:
-    Standalone: 6
+  apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: Template_2D

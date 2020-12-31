@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GlareDevil : MonoBehaviour{
-    [SerializeField]float timerStart=1f;
     [SerializeField]float timerMax=3.3f;
     [SerializeField]Vector2 efxBlind=new Vector2(4,4);
 
@@ -14,13 +13,12 @@ public class GlareDevil : MonoBehaviour{
     var i=GameRules.instance;
     if(i!=null){
         var e=i.glareDevilSettings;
-        timerStart=e.timerStart;
         timerMax=e.timerMax;
         efxBlind=e.efxBlind;
     }
     }
     void Start(){
-        timer=timerStart;
+        timer=timerMax;
         path=GetComponent<EnemyPathing>();
     }
 
