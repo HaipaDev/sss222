@@ -484,6 +484,7 @@ public class VortexWheelSettings{
 }
 [System.Serializable]
 public class GlareDevilSettings{
+    public float timerStart=1f;
     public float timerMax=3.3f;
     public Vector2 efxBlind=new Vector2(4,4);
 }

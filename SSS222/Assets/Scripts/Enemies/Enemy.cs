@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour{
     [SerializeField] public Vector2 size = Vector2.one;
     [SerializeField] public Sprite spr;
     [SerializeField] public float health = 100f;
-    float shotCounter;
+    float shotCounter=-4;
     [SerializeField] public bool shooting = false;
     [SerializeField] float minTimeBtwnShots=0.2f;
     [SerializeField] float maxTimeBtwnShots=1f;
@@ -148,7 +148,7 @@ public class Enemy : MonoBehaviour{
         if(!GameRules.instance.energyOnPlayer)enBallChance=0;
         if(!GameSession.instance.shopOn)coinChance=0;
         if(!GameSession.instance.upgradesOn)powercoreChance=0;
-        shotCounter = Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
+        //shotCounter = Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
 
         SetPrefabs();
     }
@@ -181,7 +181,7 @@ public class Enemy : MonoBehaviour{
         dmgPopupPrefab=GameAssets.instance.GetVFX("DMGPopup");
     }
     void Update(){
-        if (shooting){Shoot();}
+        if(shooting){Shoot();}
         if(flyOff){FlyOff();}
         Die();
         DestroyOutside();
@@ -200,7 +200,8 @@ public class Enemy : MonoBehaviour{
     }
     
     private void Shoot(){
-        shotCounter -= Time.deltaTime;
+        if(shotCounter==-4)shotCounter=Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
+        if(shotCounter>0)shotCounter-=Time.deltaTime;
         if(shotCounter<=0f){
         if(GetComponent<LaunchRadialBullets>()==null){
             if(DBullets!=true){

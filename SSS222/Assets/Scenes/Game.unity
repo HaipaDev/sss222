@@ -3007,6 +3007,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
+        type: 3}
+      propertyPath: enemies.Array.data[5].maxTimeBtwnShots
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
+        type: 3}
+      propertyPath: enemies.Array.data[5].minTimeBtwnShots
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 3660936485932447889, guid: 99e8818fb6d6d00489a2a8785bcf265f,
         type: 3}
       propertyPath: m_Name
