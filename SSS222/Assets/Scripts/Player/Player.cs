@@ -1298,8 +1298,8 @@ public class Player : MonoBehaviour{
                     else{followC.distReq=6f;followC.speedFollow=5f;}
                 }
             }else{
-                Tag_Powerup[] objs = FindObjectsOfType<Tag_Powerup>();
-                foreach(Tag_Powerup obj in objs){
+                Tag_Collectible[] objs = FindObjectsOfType<Tag_Collectible>();
+                foreach(Tag_Collectible obj in objs){
                     var follow = obj.GetComponent<Follow>();
                     if(follow!=null)Destroy(follow);
                 }
@@ -1633,14 +1633,14 @@ public class Player : MonoBehaviour{
 #endregion
 
 #region//Pop-Ups
-    public void DMGPopUpHUD(float dmg){
-        GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
-        if(dmgpopupHud!=null){
-        dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+    public void DMGPopUpHUD(float amnt){
+        GameObject popupHud=GameObject.Find("HPDiffParrent");
+        if(popupHud!=null){
+        popupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
-        if(dmg<0)symbol="-";
-        dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(dmg).ToString();
+        if(amnt<0)symbol="-";
+        popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
         }else{Debug.LogWarning("DMGPopUpHUD not present");}
     }/*public void HPPopUpHUD(float dmg){
         GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
@@ -1648,18 +1648,36 @@ public class Player : MonoBehaviour{
         //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
         dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+dmg.ToString();
     }*/
-    public void EnergyPopUpHUD(float en){
-        GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
-        if(enpopupHud!=null){
-        enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+    public void EnergyPopUpHUD(float amnt){
+        GameObject popupHud=GameObject.Find("EnergyDiffParrent");
+        if(popupHud!=null){
+        popupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
-        if(en<0)symbol="-";
+        if(amnt<0)symbol="-";
         if((!infEnergy)||(infEnergy&&symbol=="+")){
-        enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(en).ToString();
-        energyUsedCount+=Mathf.Abs(en);
+        popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        energyUsedCount+=Mathf.Abs(amnt);
         }
         }else{Debug.LogWarning("EnergyPopUpHUD not present");}
+    }public void CoinsPopUpHUD(float amnt){
+        GameObject popupHud=GameObject.Find("CoinsDiffParrent");
+        if(popupHud!=null){
+        popupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //enpupupHud.GetComponent<Animator>().SetTrigger(0);
+        string symbol="+";
+        if(amnt<0)symbol="-";
+        popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        }else{Debug.LogWarning("CoinsPopUpHUD not present");}
+    }public void CoresPopUpHUD(float amnt){
+        GameObject popupHud=GameObject.Find("CoresDiffParrent");
+        if(popupHud!=null){
+        popupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        //enpupupHud.GetComponent<Animator>().SetTrigger(0);
+        string symbol="+";
+        if(amnt<0)symbol="-";
+        popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        }else{Debug.LogWarning("CoresPopUpHUD not present");}
     }/*public void EnergyPopUpHUDPlus(float en){
         GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
         enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
@@ -1750,7 +1768,29 @@ public class Player : MonoBehaviour{
             else{energy+=value;EnergyPopUpHUD(value);FindObjectOfType<DisruptersSpawner>().EnergyCountVortexWheel-=value;}
         }
     }
-    }public void Overheat(float value,bool add=true){
+    }
+    public void AddSubCoins(int value,bool add=false){
+    //if(energyOn){
+        if(inverter!=true){
+            if(add){gameSession.coins+=value;CoinsPopUpHUD(value);}
+            else{gameSession.coins-=value;CoinsPopUpHUD(-value);}
+        }else{
+            if(add){gameSession.coins-=value;CoinsPopUpHUD(-value);}
+            else{gameSession.coins+=value;CoinsPopUpHUD(value);}
+        }
+    //}
+    }public void AddSubCores(int value,bool add=false){
+    //if(energyOn){
+        if(inverter!=true){
+            if(add){gameSession.cores+=value;CoresPopUpHUD(value);}
+            else{gameSession.cores-=value;CoresPopUpHUD(-value);}
+        }else{
+            if(add){gameSession.cores-=value;CoresPopUpHUD(-value);}
+            else{gameSession.cores+=value;CoresPopUpHUD(value);}
+        }
+    //}
+    }
+    public void Overheat(float value,bool add=true){
         if(overheatOn){
         if(overheatTimerMax!=-4){
         if(overheated!=true){

@@ -21,17 +21,15 @@ public class LaunchRadialBullets : MonoBehaviour {
         moveSpeed=e.moveSpeed;
     }
     }
-	void Start () {
-		
-	}
 	void Update () {
-        startPoint=transform.position;
+        //startPoint=transform.position;
 		/*if (Input.GetButtonDown ("Fire1")) {
 			startPoint = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			SpawnProjectiles (numberOfProjectiles);
 		}*/
 	}
     public void Shoot(){
+		startPoint=transform.position;
         SpawnProjectiles(numberOfProjectiles);
     }
 
@@ -56,5 +54,7 @@ public class LaunchRadialBullets : MonoBehaviour {
 		}
 		//if(rotate==true){transform.Rotate(0.0f, 0.0f, angle, Space.Self);}
 	}
-
+	public void SetProjectile(GameObject proj){
+		projectile=proj;
+	}
 }

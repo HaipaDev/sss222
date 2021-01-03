@@ -198,12 +198,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 67368681014719523}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &206816174 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 678396440558229958, guid: db6f21db03d81e24fa8a1e4230da0599,
-    type: 3}
-  m_PrefabInstance: {fileID: 7293689707689345921}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &213951254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -285,7 +279,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
-  serializedVersion: 3
+  serializedVersion: 2
   m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 0
   m_EnableRealtimeLightmaps: 0
@@ -324,7 +318,7 @@ LightingSettings:
   m_PVREnvironmentReferencePointCount: 2048
   m_LightProbeSampleCountMultiplier: 4
   m_PVRBounces: 2
-  m_PVRMinBounces: 1
+  m_PVRRussianRouletteStartBounce: 2
   m_PVREnvironmentMIS: 0
   m_PVRFilteringMode: 2
   m_PVRDenoiserTypeDirect: 0
@@ -2539,11 +2533,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2350735508918303471, guid: eb870523f348c2e4fad6b2786bc46518,
-        type: 3}
-      propertyPath: cometSettings.lunarHealthMulti
-      value: 3.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb870523f348c2e4fad6b2786bc46518, type: 3}
 --- !u!1001 &2425515633694345662
@@ -3015,7 +3004,7 @@ PrefabInstance:
     - target: {fileID: 3660936485932447889, guid: 99e8818fb6d6d00489a2a8785bcf265f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3883901747946363773, guid: 99e8818fb6d6d00489a2a8785bcf265f,
         type: 3}
@@ -4341,15 +4330,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 0.9239751
       objectReference: {fileID: 0}
+    - target: {fileID: 436830269072225877, guid: db6f21db03d81e24fa8a1e4230da0599,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -29
+      objectReference: {fileID: 0}
     - target: {fileID: 4912173674846370992, guid: db6f21db03d81e24fa8a1e4230da0599,
         type: 3}
       propertyPath: m_Name
       value: HUD 9:16
-      objectReference: {fileID: 0}
-    - target: {fileID: 5524015897789310854, guid: db6f21db03d81e24fa8a1e4230da0599,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6644735265139863176, guid: db6f21db03d81e24fa8a1e4230da0599,
         type: 3}
@@ -4405,26 +4394,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7669714479871989009, guid: db6f21db03d81e24fa8a1e4230da0599,
-        type: 3}
-      propertyPath: timer
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7669714479871989009, guid: db6f21db03d81e24fa8a1e4230da0599,
-        type: 3}
-      propertyPath: showTime
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7669714479871989009, guid: db6f21db03d81e24fa8a1e4230da0599,
-        type: 3}
-      propertyPath: curwaveObj
-      value: 
-      objectReference: {fileID: 206816174}
-    - target: {fileID: 7669714479871989009, guid: db6f21db03d81e24fa8a1e4230da0599,
-        type: 3}
-      propertyPath: enableText
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db6f21db03d81e24fa8a1e4230da0599, type: 3}

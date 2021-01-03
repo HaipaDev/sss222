@@ -20,6 +20,8 @@ public class DisruptersSpawner : MonoBehaviour{
     [HeaderAttribute("Goblin Thief")]
     public bool spawnGoblin=true;
     [SerializeField] WaveConfig cfgGoblin;
+    [SerializeField] int mPowerupsGoblin=2;
+    [SerializeField] public int powerupsGoblin;
     [SerializeField] float mSTimeSpawnsGoblin = 40f;
     [SerializeField] float mETimeSpawnsGoblin = 50f;
     public float timeSpawnsGoblin = 0f;
@@ -71,6 +73,7 @@ public class DisruptersSpawner : MonoBehaviour{
             mSTimeSpawnsHlaser=i.mSTimeSpawnsHlaser;
             mETimeSpawnsHlaser=i.mETimeSpawnsHlaser;
             spawnGoblin=i.spawnGoblin;
+            mPowerupsGoblin=i.mPowerupsGoblin;
             mSTimeSpawnsGoblin=i.mSTimeSpawnsGoblin;
             mETimeSpawnsGoblin=i.mETimeSpawnsGoblin;
             spawnHealDrone=i.spawnHealDrone;
@@ -128,6 +131,7 @@ public class DisruptersSpawner : MonoBehaviour{
             if(GameObject.FindGameObjectWithTag("Powerups")!=null){
                 if(timeSpawnsGoblin<=0&&timeSpawnsGoblin>-4){
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGoblin));
+                    powerupsGoblin=0;
                     timeSpawnsGoblin=-4;
                 }
             }
@@ -238,7 +242,6 @@ public class DisruptersSpawner : MonoBehaviour{
         WaveConfig selected = WeightedRandomizer.From(weights).TakeOne(); // Strongly-typed object returned. No casting necessary.
     }*/
     //public string GetWaveName(){return currentWave.waveName;}
-    // Update is called once per frame
     void Update()
     {
         Mathf.Clamp(EnergyCountVortexWheel,0,mEnergyCountVortexWheel);
@@ -252,7 +255,7 @@ public class DisruptersSpawner : MonoBehaviour{
                 else if(timeSpawnsHlaser == -4){ timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser); }
             }
             if(spawnGoblin==true){
-                if(timeSpawnsGoblin > -0.01f){ timeSpawnsGoblin -= Time.deltaTime; }
+                if(powerupsGoblin>=mPowerupsGoblin&&timeSpawnsGoblin > -0.01f){ timeSpawnsGoblin -= Time.deltaTime; }
                 else if(timeSpawnsGoblin == -4){ timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin); }
             }
             if(spawnHealDrone==true && mEnemiesCountHealDrone!=0){

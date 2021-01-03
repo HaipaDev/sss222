@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 2349578145357705901}
   - component: {fileID: -8274517681537142345}
   - component: {fileID: 4325923379415193658}
-  - component: {fileID: -7040604340874076416}
   - component: {fileID: 5528135550288439540}
   - component: {fileID: -5706639723197656910}
   m_Layer: 8
@@ -56,6 +55,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -316,29 +317,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 100000, guid: ca3aaf22007374e48a8615ba741c137d, type: 3}
-  twice: 0
   xx: 0
   yy: -0.6
   time: 0.3
---- !u!114 &-7040604340874076416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63e45adc4c4318a49bc28e62def44eff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 10
-  ParabolaRoots:
-  - {fileID: 2003996184722177241, guid: dd1b80631b74c7640979b8a8c3fd870a, type: 3}
-  - {fileID: 1955137467874011893, guid: 6cd70fc9344d38a45a78ffec9cf8a73d, type: 3}
-  ParabolaRoot: {fileID: 0}
-  Autostart: 1
-  Animation: 1
+  stayStill: 1
+  BFlame: {fileID: 0}
 --- !u!114 &5528135550288439540
 MonoBehaviour:
   m_ObjectHideFlags: 0

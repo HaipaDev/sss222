@@ -177,6 +177,7 @@ public static GameRules instance;
     public float mSTimeSpawnsHlaser = 30f;
     public float mETimeSpawnsHlaser = 60f;
     public bool spawnGoblin=true;
+    public int mPowerupsGoblin=2;
     public float mSTimeSpawnsGoblin=40f;
     public float mETimeSpawnsGoblin=50f;
     public bool spawnHealDrone=true;

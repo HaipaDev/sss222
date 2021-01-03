@@ -2,6 +2,4 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LootItem : MonoBehaviour{
-
-}
+public class LootItem : MonoBehaviour{}

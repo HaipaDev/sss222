@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: -6171021230754350541}
   - component: {fileID: 4197360955643394306}
   - component: {fileID: 6905334083320018934}
-  - component: {fileID: -351982121849671072}
   - component: {fileID: 4305882262000766416}
   - component: {fileID: -6444293445127140414}
   - component: {fileID: -2469076448820819903}
@@ -223,24 +222,25 @@ MonoBehaviour:
       type: 3}
     dropChance: 8
   itemsPercentage:
-  - name: Armor PowerUp - 4.81% - 5/99
-  - name: ArmorU Powerup - 6.73% - 7/97
-  - name: Laser2 Powerup - 6.73% - 7/97
-  - name: Laser3 PowerUp - 7.69% - 8/96
-  - name: LSaber Powerup - 8.65% - 9/95
-  - name: HRockets Powerup - 8.65% - 9/95
-  - name: MLaser Powerup - 5.77% - 6/98
-  - name: Phaser Powerup - 5.77% - 6/98
-  - name: QRockets Powerup - 7.69% - 8/96
-  - name: PRockets Powerup - 2.88% - 3/101
-  - name: Scaler Powerup - 3.85% - 4/100
-  - name: Shadowdash Powerup - 6.73% - 7/97
-  - name: CStream Powerup - 5.77% - 6/98
-  - name: GClover Powerup - 1.35% - 1.4/102.6
-  - name: ShadowBT Powerup - 0.96% - 1/103
-  - name: Accelerator Powerup - 7.69% - 8/96
-  - name: Flip Powerup - 7.69% - 8/96
-  sum: 104
+  - name: Armor PowerUp - 4,49% - 5/106,4
+  - name: ArmorU Powerup - 6,28% - 7/104,4
+  - name: Laser2 Powerup - 6,28% - 7/104,4
+  - name: Laser3 PowerUp - 7,18% - 8/103,4
+  - name: LSaber Powerup - 8,08% - 9/102,4
+  - name: HRockets Powerup - 8,08% - 9/102,4
+  - name: MLaser Powerup - 5,39% - 6/105,4
+  - name: Phaser Powerup - 5,39% - 6/105,4
+  - name: QRockets Powerup - 7,18% - 8/103,4
+  - name: PRockets Powerup - 2,69% - 3/108,4
+  - name: Scaler Powerup - 3,59% - 4/107,4
+  - name: Shadowdash Powerup - 6,28% - 7/104,4
+  - name: CStream Powerup - 5,39% - 6/105,4
+  - name: GClover Powerup - 1,26% - 1,4/110
+  - name: ShadowBT Powerup - 0,9% - 1/110,4
+  - name: Accelerator Powerup - 7,18% - 8/103,4
+  - name: Flip Powerup - 7,18% - 8/103,4
+  - name: Magnet Powerup - 7,18% - 8/103,4
+  sum: 111.4
   restart: 0
 --- !u!114 &6905334083320018934
 MonoBehaviour:
@@ -256,18 +256,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   vspeed: 4
---- !u!114 &-351982121849671072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5649215481239408911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4952b1ae5d2056b4c83d38de0a65b91f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4305882262000766416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,3 +292,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPowerup: 1

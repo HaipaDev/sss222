@@ -217,12 +217,13 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name.Contains(enBallName)) { player.AddSubEnergy(player.energyBallGet,true);}
 
                 var CoinName = CoinPrefab.name;
-                if (other.gameObject.name.Contains(CoinName)) { gameSession.coins+=other.GetComponent<LCrystalDrop>().amnt;}//gameSession.coins += 1; }
+                if (other.gameObject.name.Contains(CoinName)) { player.AddSubCoins(other.GetComponent<LCrystalDrop>().amnt,true);}//gameSession.coins += 1; }
 
                 var powercoreName = powercorePrefab.name;
-                if (other.gameObject.name.Contains(powercoreName)) { gameSession.cores += 1; }
+                if (other.gameObject.name.Contains(powercoreName)) { player.AddSubCores(1,true); }
 
-                if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
+                if(other.GetComponent<Tag_Collectible>().isPowerup){//if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
+                    if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().powerupsGoblin++;
                     gameSession.AddXP(gameSession.xp_powerup);}//XP For powerups
 
                 var armorName = armorPwrupPrefab.name;

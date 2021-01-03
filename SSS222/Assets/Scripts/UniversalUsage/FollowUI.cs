@@ -35,6 +35,14 @@ public class FollowUI : MonoBehaviour{
         //selfPos = new Vector2(transform.position.x, transform.position.y);
         //dist=Vector2.Distance(targetPos, selfPos);
         transform.position = Camera.main.WorldToScreenPoint(targetPos);
+        }else{
+            DestroyIfNull();
+        }
+    }
+    IEnumerator DestroyIfNull(){
+        yield return new WaitForSeconds(0.5f);
+        if(targetObj==null){
+            Destroy(gameObject);
         }
     }
 }

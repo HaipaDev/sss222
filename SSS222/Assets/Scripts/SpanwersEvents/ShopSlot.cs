@@ -46,11 +46,12 @@ public class ShopSlot : MonoBehaviour{
     }
     public void Buy(){
         //if (gameSession.coins >= shopMenu.shopSlotIDs[ID].price)
-        if (gameSession.coins >= price){
+        if (gameSession.coins>=price){
             //gameSession.coins -= shopMenu.shopSlotIDs[ID].price;
             gameSession.gameSpeed=0.05f;
             //var price = item.lootItem.price;
-            gameSession.coins-=price;
+            player.AddSubCoins(price,false);//gameSession.coins-=price;
+            if(player.inverter){shopMenu.RepMinus(2);}
             shopMenu.purchasedNotTimes=0;
 
             shopVFX=GameAssets.instance.GetVFX("ShopVFX");
