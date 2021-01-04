@@ -3429,6 +3429,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
+      propertyPath: laserEn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
       propertyPath: powerup
       value: null
       objectReference: {fileID: 0}
@@ -3444,18 +3449,183 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
+      propertyPath: laser2En
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: laser3En
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: lclawsEn
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
       propertyPath: lsaberEn
-      value: 0.4
+      value: 0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: mlaserEn
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: phaserEn
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: plaserEn
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: shadowEn
+      value: 6.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: cbulletEn
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: hrocketOh
+      value: 5.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: procketEn
+      value: 1.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: procketOh
+      value: 0.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: qrocketOh
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: shipScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: shadowBTEn
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: flareHitVFX
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: gcloverOVFX
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: refillCostE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: refillCostS
+      value: 1121714176
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: refillCount
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: refillDelay
+      value: 3e-45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: mPressedTime
+      value: 0.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: medkitHpAmnt
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: shadowPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: energyBallGet
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: medkitUHpAmnt
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: laser2Duration
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
       propertyPath: lsaberEnPeriod
-      value: 0.15
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: pwrupEnergyGet
+      value: 62
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
       propertyPath: weaponsLimited
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: instantiateTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: medkitEnergyGet
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: enForPwrupRefill
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: enPwrupDuplicate
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: instantiateTimer
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: medkitUEnergyGet
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
@@ -3469,9 +3639,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
+      propertyPath: refillEnergyAmnt
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
       propertyPath: gameOverCanvasPrefab
       value: 
       objectReference: {fileID: 1900147637392445892}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: weaponProperties.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[0].cost
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[0].name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[0].assetName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[0].weaponType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[0].weaponTypeProperties
+      value: Assembly-CSharp weaponTypeBulletSingle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546529352650547398, guid: 66b81f7bdde32c745aab52038b28a5f4,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[0].weaponTypeProperties.isDouble
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4546529352650547399, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
       propertyPath: m_RootOrder

@@ -207,6 +207,7 @@ public class Player : MonoBehaviour{
 #endregion
 #region//Energy/Weapon Durations
     [Header("Energy Costs")]
+    [SerializeField] public WeaponProperties[] weaponProperties;
     //Weapons
     [SerializeField] public float laserEn=0.3f;
     [SerializeField] public float laser2En=1.25f;
@@ -941,8 +942,10 @@ public class Player : MonoBehaviour{
             if(overheated!=true&&electrc!=true){
                 //SetPrefabs();
                 if(powerup=="laser"){
-                    GameObject laserL = GameAssets.instance.Make("Laser", new Vector2(transform.position.x - 0.35f, transform.position.y)) as GameObject;
-                    GameObject laserR = Instantiate(laserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
+                    string laserPrefab=GetWeaponProperty("laser").assetName;
+                    float laserEn=GetWeaponProperty("laser").cost;
+                    GameObject laserL = GameAssets.instance.Make(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y)) as GameObject;
+                    GameObject laserR = GameAssets.instance.Make(laserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y)) as GameObject;
                     GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
                     GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flareL.gameObject, 0.3f);
@@ -1805,6 +1808,13 @@ public class Player : MonoBehaviour{
         }
         }
     }
+    public WeaponProperties GetWeaponProperty(string name){
+        foreach(WeaponProperties weapon in weaponProperties){
+            if(weapon.name==name){
+                return weapon;
+            }else{Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
+        }return null;
+    }
 
 
     public Enemy FindClosestEnemy(){
@@ -1846,16 +1856,6 @@ public class Player : MonoBehaviour{
             SetActiveAllChildren(child, value);
         }
     }
-    /*private void OnTriggerStay2D(Collider2D other)
-    {
-        DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
-        if (!damageDealer) { return; }
-        bool stay = false;
-        var dmg = damageDealer.GetDamage();
-        var cometName = cometPrefab.name; var cometName1 = cometPrefab.name + "(Clone)";
-        if (other.gameObject.name == cometName || other.gameObject.name == cometName1) { stay = false; }
-        if (stay!=true){if(other.GetComponent<Enemy>().health>0){ other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die();} }
-    }*/
     public float GetAmmo(){return energy;}
     public float GetFlipTimer(){ return flipTimer; }
     public float GetGCloverTimer(){ return gcloverTimer; }
