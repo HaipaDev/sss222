@@ -2,41 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class WeaponProperties:ISerializationCallbackReceiver {
+[CreateAssetMenu(menuName = "Weapon Config")]
+public class WeaponProperties:ScriptableObject{
     [SerializeField] public string name;
     [SerializeField] public string assetName;
     [SerializeField] public weaponType weaponType;
     [SerializeReference] public weaponTypeProperties weaponTypeProperties;
-    /*[SerializeField] public T GenericMethod<T>(T param){
-        if(weaponType==weaponType.held){}
-        return param;
-    }*/
     [SerializeField] public costType costType;
-    [SerializeField] public float ammoSize;
     [SerializeField] public float cost;
     [SerializeField] public float ovheat;
-    void ISerializationCallbackReceiver.OnBeforeSerialize()=>this.OnValidate();
-    void ISerializationCallbackReceiver.OnAfterDeserialize(){}
+    [SerializeField] public float ammoSize;
     void OnValidate(){
-        if(weaponType==weaponType.bulletSingle){weaponTypeProperties=new weaponTypeBulletSingle();}
-        if(weaponType==weaponType.bulletDouble){weaponTypeProperties=new weaponTypeBulletDouble();}
-        if(weaponType==weaponType.bulletMore){weaponTypeProperties=new weaponTypeBulletMore();}
-        if(weaponType==weaponType.held){weaponTypeProperties=new weaponTypeHeld();}
-        //weaponTypeProperties=GenericMethod<weaponType>(weaponType);
+        if(weaponType==weaponType.bullet&&weaponTypeProperties!=(weaponTypeBullet)weaponTypeProperties){weaponTypeProperties=new weaponTypeBullet();}
+        if(weaponType==weaponType.held&&weaponTypeProperties!=(weaponTypeHeld)weaponTypeProperties){weaponTypeProperties=new weaponTypeHeld();}
     }
 }
 public enum costType{energy,ammo}
-public enum weaponType{bulletSingle,bulletDouble,bulletMore,held}
+public enum weaponType{bullet,held}
 [System.Serializable]public class weaponTypeProperties{}
-[System.Serializable]public class weaponTypeBulletSingle:weaponTypeProperties{
-    public bool isDouble=false;
-}
-[System.Serializable]public class weaponTypeBulletDouble:weaponTypeProperties{
-    public bool isDouble=true;
-}
-[System.Serializable]public class weaponTypeBulletMore:weaponTypeProperties{
-    public int bulletAmmount;
+[System.Serializable]public class weaponTypeBullet:weaponTypeProperties{
+    public bool leftSide=true;
+    public Vector2 leftAnchor=new Vector2(-0.35f,0);
+    public bool rightSide=true;
+    public Vector2 rightAnchor=new Vector2(0.35f,0);
+    public bool randomSide=false;
+    public int bulletAmount=1;
+    public Vector2 speed=new Vector2(0,9);
+    public Vector2 serialOffsetSpeed=new Vector2(0.55f,0);
+    public float shootDelay=0.34f;
+    public float holdDelayMulti=0.65f;
+    public float tapDelayMulti=1;
+    public bool flare=true;
+    public float flareDur=0.3f;
 }
 [System.Serializable]public class weaponTypeHeld:weaponTypeProperties{
     

@@ -936,12 +936,44 @@ public class Player : MonoBehaviour{
 #region//Powerups
 //bool stopped=false;
     public IEnumerator ShootContinuously(){
-        while (true){
-        if (Time.timeScale>0.0001f){
-        if (energy>0||!energyOn){
+        while(true){
+        if(Time.timeScale>0.0001f){
+        if(energy>0||!energyOn){
             if(overheated!=true&&electrc!=true){
-                //SetPrefabs();
-                if(powerup=="laser"){
+                var w=GetWeaponProperty(powerup);
+                //var wp=w.weaponTypeProperties;
+                if(w.weaponType==weaponType.bullet){
+                    weaponTypeBullet wp=(weaponTypeBullet)w.weaponTypeProperties;
+                    string asset=w.assetName;
+                    GameObject bulletL=null;
+                    GameObject bulletR=null;
+                    GameObject flareL=null;
+                    GameObject flareR=null;
+                    Vector2 posL=(Vector2)transform.position+wp.leftAnchor;
+                    Vector2 posR=(Vector2)transform.position+wp.rightAnchor;
+                    Vector2 sL=new Vector2(-wp.speed.x,wp.speed.y);
+                    Vector2 sR=new Vector2(wp.speed.x,wp.speed.y);
+                    void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,sL=new Vector2(sL.x-=wp.serialOffsetSpeed.x,sL.y+=wp.serialOffsetSpeed.y)){
+                        bulletL=GameAssets.instance.Make(asset, posL) as GameObject;
+                        if(bulletL!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;}
+                        if(wp.flare){GameAssets.instance.VFX("FlareShoot",posL,wp.flareDur);}
+                    }
+                    void RightSide(){for(var i=0;i<wp.bulletAmount;i++,sR=new Vector2(sR.x+=wp.serialOffsetSpeed.x,sR.y+=wp.serialOffsetSpeed.y)){
+                        bulletR=GameAssets.instance.Make(asset, posR) as GameObject;
+                        if(bulletR!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;}
+                        if(wp.flare){GameAssets.instance.VFX("FlareShoot",posR,wp.flareDur);}
+                    }
+                    if(wp.leftSide)LeftSide();
+                    if(wp.rightSide)RightSide();
+                    if(wp.randomSide){if(UnityEngine.Random.Range(0,100)<50){LeftSide();}else{RightSide();}}
+                    if(flareL!=null)Destroy(flareL.gameObject, wp.flareDur);
+                    if(flareR!=null)Destroy(flareR.gameObject, wp.flareDur);
+                    if(w.costType==costType.energy)AddSubEnergy(w.cost,false);
+                    shootTimer=(wp.shootDelay*wp.holdDelayMulti)/shootMulti;
+                    yield return new WaitForSeconds((wp.shootDelay*wp.tapDelayMulti)/shootMulti);
+                }
+                #region OldPowerup System
+                /*if(powerup=="laser"){
                     string laserPrefab=GetWeaponProperty("laser").assetName;
                     float laserEn=GetWeaponProperty("laser").cost;
                     GameObject laserL = GameAssets.instance.Make(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y)) as GameObject;
@@ -1173,7 +1205,8 @@ public class Player : MonoBehaviour{
                         shootTimer = (plaserShootPeriod*plaserHoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(plaserShootPeriod/shootMulti);
                         //shootCoroutine=null;
-                }else {if(powerup!="lsaberA" && powerup!="lclawsA" &&powerup!="cstream"&&powerup!="shadowbt"&&powerup!="null"){/*if(losePwrupOutOfEn)*/ shootTimer = 1f; yield break;}else{ yield break;}}
+                }*/ //else {if(powerup!="lsaberA" && powerup!="lclawsA" &&powerup!="cstream"&&powerup!="shadowbt"&&powerup!="null"){/*if(losePwrupOutOfEn)*/ shootTimer = 1f; yield break;}else{ yield break;}}
+            #endregion
             }else{yield break;}/*if(overheatedTimer==-4){
                 //yield break;}
                 //if(powerup!="lclawsA"&&powerup!="cstream"&&powerup!="shadowbt"){}
