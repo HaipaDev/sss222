@@ -30,6 +30,7 @@ public class Player : MonoBehaviour{
     public float energy = 120f;
     //[SerializeField] public float maxEnergyStarting = 30f;
     [SerializeField] public float maxEnergy = 120f;
+    [SerializeField] public float ammo = 0;
     [SerializeField] public bool fuelOn=false;
     [SerializeField] public float fuelDrainAmnt=0.1f;
     [SerializeField] public float fuelDrainFreq=0.5f;
@@ -290,9 +291,8 @@ public class Player : MonoBehaviour{
     */
     #endregion
     [Header("Others")]
-    [SerializeField] GameObject gameOverCanvasPrefab;
     [SerializeField] GameObject shadowPrefab;
-    [SerializeField] public MeshRenderer bgSprite;
+    MeshRenderer bgSprite;
     const float flareShootYY = 0.2f;
     int moveDir = 1;
     const float DCLICK_TIME = 0.2f;
@@ -392,6 +392,7 @@ public class Player : MonoBehaviour{
         moveXwas=moveX;
         moveYwas=moveY;
 
+        bgSprite=GameObject.Find("BG ColorM").GetComponent<MeshRenderer>();
         //inputMaster.Player.Shoot.performed += _ => Shoot();
     }
     void SetPrefabs(){
@@ -913,13 +914,7 @@ public class Player : MonoBehaviour{
 
             GameObject explosion = GameAssets.instance.VFX("Explosion",transform.position,0.5f);//Destroy(explosion, 0.5f);
             AudioManager.instance.Play("Death");
-            gameOverCanvasPrefab.gameObject.SetActive(true);
-            var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
-            Destroy(GameObject.Find(lsaberName));
-            Destroy(GameObject.Find(lsaberName1));
-            var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
-            Destroy(GameObject.Find(lclawsName));
-            Destroy(GameObject.Find(lclawsName1));
+            GameOverCanvas.instance.OpenGameOverCanvas(true);
 
             foreach(Tag_DestroyPlayerDead go in FindObjectsOfType<Tag_DestroyPlayerDead>()){Destroy(go.gameObject);}
         }
@@ -935,32 +930,38 @@ public class Player : MonoBehaviour{
 
 #region//Powerups
 //bool stopped=false;
-    public IEnumerator ShootContinuously(){
-        while(true){
-        if(Time.timeScale>0.0001f){
-        if(energy>0||!energyOn){
-            if(overheated!=true&&electrc!=true){
-                var w=GetWeaponProperty(powerup);
-                //var wp=w.weaponTypeProperties;
-                if(w.weaponType==weaponType.bullet){
+    public IEnumerator ShootContinuously(){while(true){if(Time.timeScale>0.0001f){
+        WeaponProperties w=null;
+        if(GetWeaponProperty(powerup)!=null)w=GetWeaponProperty(powerup);else Debug.LogWarning(powerup+" not added to WeaponProperties List");
+        if(w!=null){
+        if(w.weaponType==weaponType.bullet){
+            if((w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){
+                if(overheated!=true&&electrc!=true){
                     weaponTypeBullet wp=(weaponTypeBullet)w.weaponTypeProperties;
                     string asset=w.assetName;
-                    GameObject bulletL=null;
-                    GameObject bulletR=null;
-                    GameObject flareL=null;
-                    GameObject flareR=null;
-                    Vector2 posL=(Vector2)transform.position+wp.leftAnchor;
-                    Vector2 posR=(Vector2)transform.position+wp.rightAnchor;
-                    Vector2 sL=new Vector2(-wp.speed.x,wp.speed.y);
-                    Vector2 sR=new Vector2(wp.speed.x,wp.speed.y);
-                    void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,sL=new Vector2(sL.x-=wp.serialOffsetSpeed.x,sL.y+=wp.serialOffsetSpeed.y)){
+                    GameObject bulletL=null,bulletR=null;
+                    GameObject flareL=null,flareR=null;
+                    Vector2 posL=(Vector2)transform.position+wp.leftAnchor,posR=(Vector2)transform.position+wp.rightAnchor;
+                    Vector2 sL=new Vector2(-wp.speed.x,wp.speed.y),sR=new Vector2(wp.speed.x,wp.speed.y);
+                    Vector3 rL=new Vector3(),rR=new Vector3();
+                    float soundIntervalL=0,soundIntervalR=0;
+                    
+                    void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,sL=new Vector2(sL.x-=wp.serialOffsetSpeed.x,sL.y+=wp.serialOffsetSpeed.y),rL=new Vector3(rL.x+=wp.serialOffsetAngle.x,0,rL.z+=wp.serialOffsetAngle.y),soundIntervalL+=wp.serialOffsetSound){
                         bulletL=GameAssets.instance.Make(asset, posL) as GameObject;
-                        if(bulletL!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;}
+                        if(bulletL!=null){
+                            bulletL.GetComponent<Rigidbody2D>().velocity=sL;
+                            bulletL.transform.Rotate(rL);
+                            if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalL;
+                        }}
                         if(wp.flare){GameAssets.instance.VFX("FlareShoot",posL,wp.flareDur);}
                     }
-                    void RightSide(){for(var i=0;i<wp.bulletAmount;i++,sR=new Vector2(sR.x+=wp.serialOffsetSpeed.x,sR.y+=wp.serialOffsetSpeed.y)){
+                    void RightSide(){for(var i=0;i<wp.bulletAmount;i++,sR=new Vector2(sR.x+=wp.serialOffsetSpeed.x,sR.y+=wp.serialOffsetSpeed.y),rR=new Vector3(rR.x-=wp.serialOffsetAngle.x,0,rR.z-=wp.serialOffsetAngle.y),soundIntervalR+=wp.serialOffsetSound){
                         bulletR=GameAssets.instance.Make(asset, posR) as GameObject;
-                        if(bulletR!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;}
+                        if(bulletR!=null){
+                            bulletR.GetComponent<Rigidbody2D>().velocity=sR;
+                            bulletR.transform.Rotate(rR);
+                            if(bulletR.GetComponent<IntervalSound>()!=null)bulletR.GetComponent<IntervalSound>().interval=soundIntervalR;
+                        }}
                         if(wp.flare){GameAssets.instance.VFX("FlareShoot",posR,wp.flareDur);}
                     }
                     if(wp.leftSide)LeftSide();
@@ -971,7 +972,8 @@ public class Player : MonoBehaviour{
                     if(w.costType==costType.energy)AddSubEnergy(w.cost,false);
                     shootTimer=(wp.shootDelay*wp.holdDelayMulti)/shootMulti;
                     yield return new WaitForSeconds((wp.shootDelay*wp.tapDelayMulti)/shootMulti);
-                }
+                }else{yield break;}
+                }else{if(!autoShoot){AudioManager.instance.Play("NoEnergy");} shootTimer=0f; shootCoroutine=null; yield break;}
                 #region OldPowerup System
                 /*if(powerup=="laser"){
                     string laserPrefab=GetWeaponProperty("laser").assetName;
@@ -1207,7 +1209,7 @@ public class Player : MonoBehaviour{
                         //shootCoroutine=null;
                 }*/ //else {if(powerup!="lsaberA" && powerup!="lclawsA" &&powerup!="cstream"&&powerup!="shadowbt"&&powerup!="null"){/*if(losePwrupOutOfEn)*/ shootTimer = 1f; yield break;}else{ yield break;}}
             #endregion
-            }else{yield break;}/*if(overheatedTimer==-4){
+            /*if(overheatedTimer==-4){
                 //yield break;}
                 //if(powerup!="lclawsA"&&powerup!="cstream"&&powerup!="shadowbt"){}
                 
@@ -1215,80 +1217,71 @@ public class Player : MonoBehaviour{
             }*/
                 //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
                 //else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup=powerupDefault; shootTimer=1f; yield return new WaitForSeconds(1f); }
-        }else{ if(!autoShoot){AudioManager.instance.Play("NoEnergy");} shootTimer = 0f; shootCoroutine=null; yield break; }
-        }
-        }
-    }
-    /*void SetShootTimer(){
-        if(powerup=="laser"||powerup=="laser2"||powerup=="laser3")shootTimer=laserShootPeriod * 0.75f;
-        if(powerup=="mlaser")shootTimer = mlaserShootPeriod;
-        if(powerup=="phaser")shootTimer = phaserShootPeriod;
-        if(powerup=="hrocket")shootTimer = hrocketShootPeriod;
-        if(powerup=="procket")shootTimer = procketShootPeriod;
-        if(powerup=="qrocket")shootTimer = qrocketShootPeriod;
-        if(powerup=="cstream")shootTimer = cbulletShootPeriod*0.825f;
-        if(powerup=="shadowbt")shootTimer = shadowBTShootPeriod;
-        if(powerup=="lclawsA")shootTimer = 0.5f;
-    }*/
+        }else{yield break;}
+        }else{yield break;}
+    }}}
     private void DrawOtherWeapons(){
-        GameObject lsaber;
-        GameObject lclaws;
-        var lsaberName = lsaberPrefab.name; var lsaberName1 = lsaberPrefab.name + "(Clone)";
-        var lclawsName = lclawsPrefab.name; var lclawsName1 = lclawsPrefab.name + "(Clone)";
-        var cargoDist=2.8f;
-        if(energy>0){
-            //yield return new WaitForSeconds(lsaberEnPeriod);
-            if (powerup == "lsaber"){
+        var cargoDist=2.8f*shipScale;
+        GameObject go=null;
+        WeaponProperties w=null;
+        if(GetWeaponProperty(powerup)!=null)w=GetWeaponProperty(powerup);else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}else Debug.LogWarning(powerup+" not added to WeaponProperties List");
+        if(w!=null&&w.weaponType==weaponType.held){
+            weaponTypeHeld wp=(weaponTypeHeld)w.weaponTypeProperties;
+            if(powerup!=wp.nameActive&&(w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){
+                GameObject asset=GameAssets.instance.Get(w.assetName);
+                if(transform.Find(asset.name)!=null){go=transform.Find(asset.name).gameObject;}
+                else{if(go==null){go=Instantiate(asset,transform);go.transform.localScale=Vector3.one;}}
+                powerup=wp.nameActive;
+                #region //Old Held Powerups system
                 //yield return new WaitForSeconds(lsaberEnPeriod);
-                //Destroy(GameObject.Find(lclawsName1));
-                lsaber = Instantiate(lsaberPrefab, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity) as GameObject;
-                moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
-                lsaberEnTimer=lsaberEnPeriod;
-                powerup = "lsaberA";
-            }else if (powerup == "lsaberA"){
-                if(Time.timeScale>0.0001f&&(FindObjectOfType<CargoShip>()==null||(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)>cargoDist))){
-                    if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
-                    if(lsaberEnTimer<=0){lsaberEnTimer=lsaberEnPeriod;AddSubEnergy(lsaberEn,false);}
-                    if(GameObject.Find(lsaberName)==null&&GameObject.Find(lsaberName1)==null){powerup="lsaber";}
+                /*if (powerup == "lsaber"){
+                    //yield return new WaitForSeconds(lsaberEnPeriod);
+                    //Destroy(GameObject.Find(lclawsName1));
+                    lsaber = Instantiate(lsaberPrefab, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity) as GameObject;
+                    moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
+                    lsaberEnTimer=lsaberEnPeriod;
+                    powerup = "lsaberA";
+                }else if (powerup == "lsaberA"){
+                    if(Time.timeScale>0.0001f&&(FindObjectOfType<CargoShip>()==null||(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)>cargoDist))){
+                        if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
+                        if(lsaberEnTimer<=0){lsaberEnTimer=lsaberEnPeriod;AddSubEnergy(lsaberEn,false);}
+                        if(GameObject.Find(lsaberName)==null&&GameObject.Find(lsaberName1)==null){powerup="lsaber";}
+                    }
                 }
-            }
-            if (powerup == "lclaws"){
-                //Destroy(GameObject.Find(lsaberName1));
-                lclaws = Instantiate(lclawsPrefab, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity) as GameObject;
-                lclaws.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -10);
-                moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
-                powerup = "lclawsA";
-            }else if (powerup == "lclawsA"){
-                if(Time.timeScale>0.0001f&&(FindObjectOfType<CargoShip>()==null||(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)>cargoDist))){
-                    //if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
-                    //if(lsaberEnTimer<=0){energy -= lsaberEn*4;lsaberEnTimer=lsaberEnPeriod*9;}//0.2
-                    if(GameObject.Find(lclawsName)==null&&GameObject.Find(lclawsName1)==null){powerup="lclaws";}
+                if (powerup == "lclaws"){
+                    //Destroy(GameObject.Find(lsaberName1));
+                    lclaws = Instantiate(lclawsPrefab, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity) as GameObject;
+                    lclaws.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -10);
+                    moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
+                    powerup = "lclawsA";
+                }else if (powerup == "lclawsA"){
+                    if(Time.timeScale>0.0001f&&(FindObjectOfType<CargoShip>()==null||(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)>cargoDist))){
+                        //if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
+                        //if(lsaberEnTimer<=0){energy -= lsaberEn*4;lsaberEnTimer=lsaberEnPeriod*9;}//0.2
+                        if(GameObject.Find(lclawsName)==null&&GameObject.Find(lclawsName1)==null){powerup="lclaws";}
+                    }
                 }
+                
+                if(powerup!="lsaberA" && powerup!="lsaber"){
+                    Destroy(GameObject.Find(lsaberName1));
+                }if(powerup!="lclawsA" && powerup!="lclaws"){
+                    Destroy(GameObject.Find(lclawsName1));
+                }
+                if(powerup!="lsaberA"&&powerup!="lclawsA"){
+                    Destroy(GameObject.Find(lsaberName1));
+                    Destroy(GameObject.Find(lclawsName1));
+                    moveSpeedCurrent = moveSpeed;
+                }*/
+                #endregion
+            }else{//energy=0; //yield return new WaitForSeconds(0.2f);
+                if(go!=null){Destroy(go);}
+                moveSpeedCurrent=moveSpeed;
+                if(powerup==wp.nameActive)powerup=w.name;
+                if(losePwrupOutOfEn)powerup=powerupDefault;
             }
-            
-            if(powerup!="lsaberA" && powerup!="lsaber"){
-                Destroy(GameObject.Find(lsaberName1));
-            }if(powerup!="lclawsA" && powerup!="lclaws"){
-                Destroy(GameObject.Find(lclawsName1));
+            if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
+                if(go!=null){Destroy(go);}
             }
-            if(powerup!="lsaberA"&&powerup!="lclawsA"){
-                Destroy(GameObject.Find(lsaberName1));
-                Destroy(GameObject.Find(lclawsName1));
-                moveSpeedCurrent = moveSpeed;
-            }
-        }else { energy=0; //yield return new WaitForSeconds(0.2f);
-            Destroy(GameObject.Find(lsaberName1));
-            Destroy(GameObject.Find(lclawsName1));
-            moveSpeedCurrent = moveSpeed;
-            if(powerup=="lsaberA")powerup="lsaber";
-            if(powerup=="lclawsA")powerup="lclaws";
-            if(losePwrupOutOfEn)powerup=powerupDefault;
-        }
-        if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
-            if(GameObject.Find(lsaberName)!=null)Destroy(GameObject.Find(lsaberName));
-            if(GameObject.Find(lsaberName1)!=null)Destroy(GameObject.Find(lsaberName1));
-            if(GameObject.Find(lclawsName)!=null)Destroy(GameObject.Find(lclawsName));
-            if(GameObject.Find(lclawsName1)!=null)Destroy(GameObject.Find(lclawsName1));
         }
     }
 #endregion
@@ -1842,10 +1835,23 @@ public class Player : MonoBehaviour{
         }
     }
     public WeaponProperties GetWeaponProperty(string name){
-        foreach(WeaponProperties weapon in weaponProperties){
-            if(weapon.name==name){
-                return weapon;
-            }else{Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
+        foreach(WeaponProperties w in weaponProperties){
+            if(w.weaponType==weaponType.bullet){
+                if(w.name==name){return w;}//else{Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
+            }else if(w.weaponType==weaponType.held){
+                weaponTypeHeld wp=(weaponTypeHeld)w.weaponTypeProperties;
+                if(w.name==name){return w;}
+                if(wp.nameActive==name){return null;}
+                //if(w.name!=name&&wp.nameActive!=name){Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
+            }
+        }return null;
+    }public WeaponProperties GetWeaponPropertyActive(string name){
+        foreach(WeaponProperties w in weaponProperties){
+            if(w.weaponType==weaponType.held){
+                weaponTypeHeld wp=(weaponTypeHeld)w.weaponTypeProperties;
+                if(wp.nameActive==name){return w;}
+                //if(w.name!=name&&wp.nameActive!=name){Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
+            }
         }return null;
     }
 
@@ -1889,7 +1895,7 @@ public class Player : MonoBehaviour{
             SetActiveAllChildren(child, value);
         }
     }
-    public float GetAmmo(){return energy;}
+    public float GetEnergy(){return energy;}
     public float GetFlipTimer(){ return flipTimer; }
     public float GetGCloverTimer(){ return gcloverTimer; }
     public float GetShadowTimer(){ return shadowTimer; }

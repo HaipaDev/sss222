@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74f905b4fa1c32244b5205d44cda0c7a, type: 3}
-  m_Name: Laser
+  m_Name: cstream
   m_EditorClassIdentifier: 
   validate: 0
-  name: laser
-  assetName: Laser
+  name: cstream
+  assetName: CBullet
   weaponType: 0
   weaponTypeProperties:
     id: 0
   costType: 0
-  cost: 0.33
+  cost: 2
   ovheat: 0
   ammoSize: 0
   references:

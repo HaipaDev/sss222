@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AmmoDisplay : MonoBehaviour{
+public class EnergyDisplay : MonoBehaviour{
     TMPro.TextMeshProUGUI scoreText;
     Player player;
 
@@ -15,6 +15,6 @@ public class AmmoDisplay : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        scoreText.text = player.GetAmmo().ToString();
+        scoreText.text = player.GetEnergy().ToString();
     }
 }

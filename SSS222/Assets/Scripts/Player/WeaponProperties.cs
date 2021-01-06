@@ -4,6 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Weapon Config")]
 public class WeaponProperties:ScriptableObject{
+    [SerializeField] bool validate;
     [SerializeField] public string name;
     [SerializeField] public string assetName;
     [SerializeField] public weaponType weaponType;
@@ -13,8 +14,11 @@ public class WeaponProperties:ScriptableObject{
     [SerializeField] public float ovheat;
     [SerializeField] public float ammoSize;
     void OnValidate(){
-        if(weaponType==weaponType.bullet&&weaponTypeProperties!=(weaponTypeBullet)weaponTypeProperties){weaponTypeProperties=new weaponTypeBullet();}
-        if(weaponType==weaponType.held&&weaponTypeProperties!=(weaponTypeHeld)weaponTypeProperties){weaponTypeProperties=new weaponTypeHeld();}
+        if(validate){
+        if(weaponType==weaponType.bullet){weaponTypeProperties=new weaponTypeBullet();}
+        if(weaponType==weaponType.held){weaponTypeProperties=new weaponTypeHeld();}
+        validate=false;
+        }
     }
 }
 public enum costType{energy,ammo}
@@ -29,6 +33,8 @@ public enum weaponType{bullet,held}
     public int bulletAmount=1;
     public Vector2 speed=new Vector2(0,9);
     public Vector2 serialOffsetSpeed=new Vector2(0.55f,0);
+    public Vector2 serialOffsetAngle=new Vector2(0,5);
+    public float serialOffsetSound=0.03f;
     public float shootDelay=0.34f;
     public float holdDelayMulti=0.65f;
     public float tapDelayMulti=1;
@@ -36,5 +42,6 @@ public enum weaponType{bullet,held}
     public float flareDur=0.3f;
 }
 [System.Serializable]public class weaponTypeHeld:weaponTypeProperties{
-    
+    [SerializeField] public string nameActive;
+    [SerializeField] public Vector2 offset=new Vector2(0,1);
 }
