@@ -220,7 +220,7 @@ public class DisruptersSpawner : MonoBehaviour{
             if(player!=null){
             for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
             {
-                var newEnemy = Instantiate(
+                GameObject newEnemy=null;newEnemy = Instantiate(
                     waveConfig.GetEnemyPrefab(),
                     new Vector2(player.transform.position.x, 7.2f+waveConfig.shipYY),
                 Quaternion.identity);

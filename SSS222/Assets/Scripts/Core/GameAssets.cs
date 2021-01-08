@@ -28,24 +28,24 @@ public class GameAssets : MonoBehaviour{
     public GameObject Make(string obj, Vector2 pos)
 	{
 		GObject o = Array.Find(objects, item => item.name == obj);
-        GameObject gobj=o.gobj;
 		if (o == null)
 		{
 			Debug.LogWarning("Object: " + name + " not found!");
 			return null;
 		}
+		GameObject gobj=o.gobj;
         GameObject objref = Instantiate(gobj,pos,Quaternion.identity);
         return objref;
 	}
     public GameObject VFX(string obj, Vector2 pos, float duration)
 	{
 		GObject o = Array.Find(vfx, item => item.name == obj);
-        GameObject gobj=o.gobj;
 		if (o == null)
 		{
 			Debug.LogWarning("Object: " + name + " not found!");
 			return null;
 		}
+		GameObject gobj=o.gobj;
         GameObject objref = Instantiate(gobj,pos,Quaternion.identity);
 		Destroy(objref,duration);
         return objref;
@@ -53,34 +53,34 @@ public class GameAssets : MonoBehaviour{
     public GameObject Get(string obj)
 	{
 		GObject o = Array.Find(objects, item => item.name == obj);
-        GameObject gobj=o.gobj;
 		if (o == null)
 		{
 			Debug.LogWarning("Object: " + name + " not found!");
 			return null;
 		}
+		GameObject gobj=o.gobj;
         return gobj;
 	}public GameObject GetVFX(string obj)
 	{
 		GObject o = Array.Find(vfx, item => item.name == obj);
-        GameObject gobj=o.gobj;
 		if (o == null)
 		{
 			Debug.LogWarning("Object: " + name + " not found!");
 			return null;
 		}
+		GameObject gobj=o.gobj;
         return gobj;
 	}
 
     public Sprite Spr(string spr)
 	{
 		GSprite s = Array.Find(sprites, item => item.name == spr);
-        Sprite gs=s.spr;
 		if (s == null)
 		{
 			Debug.LogWarning("Sprite: " + name + " not found!");
 			return null;
 		}
+		Sprite gs=s.spr;
         return gs;
 	}public Sprite GetSkin(int i)
 	{

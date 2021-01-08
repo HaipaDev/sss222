@@ -55,7 +55,6 @@ public class PlayerSkills : MonoBehaviour{
     void Update(){
         UseSkills(0);
         SkillsUpdate();
-        
     }
 
     private void OnValidate(){

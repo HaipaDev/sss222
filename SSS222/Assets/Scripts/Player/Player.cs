@@ -30,7 +30,8 @@ public class Player : MonoBehaviour{
     public float energy = 120f;
     //[SerializeField] public float maxEnergyStarting = 30f;
     [SerializeField] public float maxEnergy = 120f;
-    [SerializeField] public float ammo = 0;
+    [SerializeField] public bool ammoOn=true;
+    [SerializeField] public int ammo = 0;
     [SerializeField] public bool fuelOn=false;
     [SerializeField] public float fuelDrainAmnt=0.1f;
     [SerializeField] public float fuelDrainFreq=0.5f;
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public string powerupDefault = "laser";
     public float powerupTimer=-4;
     [SerializeField] public bool losePwrupOutOfEn;
+    [SerializeField] public bool losePwrupOutOfAmmo;
     [SerializeField] public int energyRefillUnlocked;
     [SerializeField] public bool overheatOn=true;
     public float overheatTimer = -4f;
@@ -152,42 +154,28 @@ public class Player : MonoBehaviour{
     [SerializeField] public float powerMulti=1.6f;
     [SerializeField] public float weaknsMulti=0.66f;
 #endregion
-#region//Weapon Prefabs
-    GameObject laserPrefab;
-    GameObject phaserPrefab;
-    GameObject hrocketPrefab;
-    GameObject mlaserPrefab;
-    [HideInInspector]public GameObject lsaberPrefab;
-    [HideInInspector]public GameObject lclawsPrefab;
-    GameObject lclawsVFX;
-    GameObject shadowBTPrefab;
-    GameObject qrocketPrefab;
-    GameObject procketPrefab;
-    GameObject cbulletPrefab;
-    GameObject plaserPrefab;
-#endregion
 #region//Weapon Values 
     [Header("Weapons")]
-    [SerializeField] float laserSpeed=9f;
+    //[SerializeField] float laserSpeed=9f;
     [SerializeField] public float laserShootPeriod=0.34f;
-    [SerializeField] public float laserHoldSpeed=0.65f;
+    /*[SerializeField] public float laserHoldSpeed=0.65f;
     [SerializeField] float laser2Speed=8.9f;
     [SerializeField] public float laser2ShootPeriod=0.35f;
     [SerializeField] public float laser2HoldSpeed=0.75f;
     [SerializeField] float laser3Speed=8.8f;
     [SerializeField] public float laser3ShootPeriod=0.36f;
     [SerializeField] public float laser3HoldSpeed=0.75f;
-    [SerializeField] float phaserSpeed=10.5f;
+    [SerializeField] float mlaserSpeedS=8.5f;
+    [SerializeField] float mlaserSpeedE=10f;
+    [SerializeField] float mlaserShootPeriod=0.1f;
+    [SerializeField] public float mlaserHoldSpeed=1f;*/
+    [SerializeField] public int mlaserBulletsAmmount=10;
+    /*[SerializeField] float phaserSpeed=10.5f;
     [SerializeField] float phaserShootPeriod=0.2f;
     [SerializeField] public float phaserHoldSpeed=1f;
     [SerializeField] float hrocketSpeed=6.5f;
     [SerializeField] float hrocketShootPeriod=0.3f;
     [SerializeField] public float hrocketHoldSpeed=1f;
-    [SerializeField] float mlaserSpeedS=8.5f;
-    [SerializeField] float mlaserSpeedE=10f;
-    [SerializeField] float mlaserShootPeriod=0.1f;
-    [SerializeField] public float mlaserHoldSpeed=1f;
-    [SerializeField] public int mlaserBulletsAmmount=10;
     [SerializeField] float shadowBTSpeed=9f;
     [SerializeField] float shadowBTShootPeriod=0.34f;
     [SerializeField] public float shadowBTHoldSpeed=0.5f;
@@ -204,21 +192,20 @@ public class Player : MonoBehaviour{
     [SerializeField] public float cbulletHoldSpeed=0.825f;
     [SerializeField] float plaserSpeed=9.55f;
     [SerializeField] float plaserShootPeriod=0.75f;
-    [SerializeField] public float plaserHoldSpeed=1f;
+    [SerializeField] public float plaserHoldSpeed=1f;*/
 #endregion
 #region//Energy/Weapon Durations
     [Header("Energy Costs")]
     [SerializeField] public WeaponProperties[] weaponProperties;
+    [SerializeField] public float shadowEn=5f;
     //Weapons
-    [SerializeField] public float laserEn=0.3f;
+    /*[SerializeField] public float laserEn=0.3f;
     [SerializeField] public float laser2En=1.25f;
     [SerializeField] public float laser3En=2.5f;
     [SerializeField] public float phaserEn=1.5f;
     [SerializeField] public float mlaserEn=0.075f;
     [SerializeField] public float lsaberEn=0.4f;
-    [SerializeField] public float lsaberEnPeriod=0.15f;
     [SerializeField] public float lclawsEn=6.3f;
-    [SerializeField] public float shadowEn=5f;
     [SerializeField] public float shadowBTEn=10f;
     [SerializeField] public float cbulletEn=1.3f;
     [SerializeField] public float plaserEn=5.6f;
@@ -226,7 +213,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public float hrocketOh=0.9f;//2.6
     [SerializeField] public float qrocketOh=1.63f;//5.5
     [SerializeField] public float procketEn=0.86f;//0.26
-    [SerializeField] public float procketOh=0.49f;
+    [SerializeField] public float procketOh=0.49f;*/
     [Header("Energy Gains")]//Collectibles
     [SerializeField] public float energyBallGet=9f;
     [SerializeField] public float medkitEnergyGet=40f;
@@ -269,27 +256,6 @@ public class Player : MonoBehaviour{
     [HideInInspector]public GameObject gcloverOVFX;
     GameObject crystalExplosionVFX;
     #endregion
-    #region//SFX
-    /*
-    //[SerializeField] AudioClip shootLaserSFX;
-    [SerializeField] public AudioClip shipHitSFX;
-    [SerializeField] public AudioClip explosionSFX;
-    [SerializeField] public AudioClip deathSFX;
-    [SerializeField] public AudioClip soundwaveHitSFX;
-    [SerializeField] public AudioClip powerupSFX;
-    [SerializeField] public AudioClip powerupOffSFX;
-    [SerializeField] public AudioClip gcloverSFX;
-    [SerializeField] public AudioClip gcloverOffSFX;
-    [SerializeField] public AudioClip shadowbtPwrupSFX;
-    [SerializeField] public AudioClip noEnergySFX;
-    [SerializeField] public AudioClip energyBallSFX;
-    [SerializeField] public AudioClip energyRefillSFX;
-    [SerializeField] public AudioClip coinSFX;
-    [SerializeField] public AudioClip leechBiteSFX;
-    [SerializeField] public AudioClip shadowdashSFX;
-    [SerializeField] public AudioClip matrixGetSFX;
-    */
-    #endregion
     [Header("Others")]
     [SerializeField] GameObject shadowPrefab;
     MeshRenderer bgSprite;
@@ -309,7 +275,7 @@ public class Player : MonoBehaviour{
     [HideInInspector]public float shootTimer = 2f;
     [HideInInspector]public float instantiateTime = 0.025f;
     [HideInInspector]public float instantiateTimer = 0f;
-    float lsaberEnTimer;
+    float weaponEnTimer;
     [HideInInspector]public Vector2 mousePos;
     [HideInInspector]public Vector2 mouseDir;
     [SerializeField]public float dist;
@@ -396,19 +362,6 @@ public class Player : MonoBehaviour{
         //inputMaster.Player.Shoot.performed += _ => Shoot();
     }
     void SetPrefabs(){
-        laserPrefab=GameAssets.instance.Get("Laser");
-        mlaserPrefab=GameAssets.instance.Get("MLaser");
-        hrocketPrefab=GameAssets.instance.Get("HRocket");
-        phaserPrefab=GameAssets.instance.Get("Phaser");
-        lsaberPrefab=GameAssets.instance.Get("LSaber");
-        lclawsPrefab=GameAssets.instance.Get("LClaws");
-        lclawsVFX=GameAssets.instance.Get("LClawsVFX");
-        shadowBTPrefab=GameAssets.instance.Get("ShadowBt");
-        qrocketPrefab=GameAssets.instance.Get("QRocket");
-        procketPrefab=GameAssets.instance.Get("PRocket");
-        cbulletPrefab=GameAssets.instance.Get("CBullet");
-        plaserPrefab=GameAssets.instance.Get("PLaser");
-
         explosionVFX=GameAssets.instance.GetVFX("Explosion");
         flareHitVFX=GameAssets.instance.GetVFX("FlareHit");
         flareShootVFX=GameAssets.instance.GetVFX("FlareShoot");
@@ -444,7 +397,7 @@ public class Player : MonoBehaviour{
         overheatOn=i.overheatOnPlayer;
         recoilOn=i.recoilOnPlayer;
         ///Weapons Values
-        laserSpeed=i.laserSpeed;
+        /*laserSpeed=i.laserSpeed;
         laserShootPeriod=i.laserShootPeriod;
         laser2Speed=i.laser2Speed;
         laser2ShootPeriod=i.laser2ShootPeriod;
@@ -458,7 +411,6 @@ public class Player : MonoBehaviour{
         mlaserSpeedE=i.mlaserSpeedE;
         mlaserShootPeriod=i.mlaserShootPeriod;
         mlaserBulletsAmmount=i.mlaserBulletsAmmount;
-        lsaberEnPeriod=i.lsaberEnPeriod;
         shadowBTSpeed=i.shadowBTSpeed;
         shadowBTShootPeriod=i.shadowBTShootPeriod;
         qrocketSpeed=i.qrocketSpeed;
@@ -470,7 +422,7 @@ public class Player : MonoBehaviour{
         cbulletSpeed=i.cbulletSpeed;
         cbulletShootPeriod=i.cbulletShootPeriod;
         plaserSpeed=i.plaserSpeed;
-        plaserShootPeriod=i.plaserShootPeriod;
+        plaserShootPeriod=i.plaserShootPeriod;*/
         ///State Defaults
         flipTime=i.flipTime;
         gcloverTime=i.gcloverTime;
@@ -495,15 +447,15 @@ public class Player : MonoBehaviour{
         powerMulti=i.powerMulti;
         weaknsMulti=i.weaknsMulti;
         ///Energy costs
+        shadowEn=i.shadowEn;
         //Weapons
-        laserEn=i.laserEn;
+        /*laserEn=i.laserEn;
         laser2En=i.laser2En;
         laser3En=i.laser3En;
         phaserEn=i.phaserEn;
         mlaserEn=i.mlaserEn;
         lsaberEn=i.lsaberEn;
         lclawsEn=i.lclawsEn;
-        shadowEn=i.shadowEn;
         shadowBTEn=i.shadowBTEn;
         cbulletEn=i.cbulletEn;
         plaserEn=i.plaserEn;
@@ -511,7 +463,7 @@ public class Player : MonoBehaviour{
         hrocketOh=i.hrocketOh;
         qrocketOh=i.qrocketOh;
         procketEn=i.procketEn;
-        procketOh=i.procketOh;
+        procketOh=i.procketOh;*/
         ///Energy gains
         energyBallGet=i.energyBallGet;
         medkitEnergyGet=i.medkitEnergyGet;
@@ -564,14 +516,15 @@ public class Player : MonoBehaviour{
         Die();
         CountTimeMovementPressed();
         RefillEnergy();
+        LosePowerup();
         if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
-            if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}
+            if(transform.GetChild(0)!=null)if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}
             if(moveByMouse!=true){ MovePlayer(); }//followMouse.enabled = false; }
             else{ MoveWithMouse(); }// followMouse.enabled = true; }
         }else{
             if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
-            if(transform.GetChild(0).gameObject.activeSelf==true){transform.GetChild(0).gameObject.SetActive(false);}
+            if(transform.GetChild(0)!=null)if(transform.GetChild(0).gameObject.activeSelf==true){transform.GetChild(0).gameObject.SetActive(false);}
         }
         shootTimer -= Time.deltaTime;
         instantiateTimer-=Time.deltaTime;
@@ -935,18 +888,22 @@ public class Player : MonoBehaviour{
         if(GetWeaponProperty(powerup)!=null)w=GetWeaponProperty(powerup);else Debug.LogWarning(powerup+" not added to WeaponProperties List");
         if(w!=null){
         if(w.weaponType==weaponType.bullet){
-            if((w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){
+            if((w.costType==costType.energy&&(energyOn&&energy>0)||(!energyOn))||(w.costType==costType.ammo&&ammo>0)){
                 if(overheated!=true&&electrc!=true){
                     weaponTypeBullet wp=(weaponTypeBullet)w.weaponTypeProperties;
                     string asset=w.assetName;
                     GameObject bulletL=null,bulletR=null;
                     GameObject flareL=null,flareR=null;
                     Vector2 posL=(Vector2)transform.position+wp.leftAnchor,posR=(Vector2)transform.position+wp.rightAnchor;
-                    Vector2 sL=new Vector2(-wp.speed.x,wp.speed.y),sR=new Vector2(wp.speed.x,wp.speed.y);
+                    float speedx=wp.speed.x,speedy=wp.speed.y;
+                    if(wp.speedE!=Vector2.zero){speedx=UnityEngine.Random.Range(wp.speed.x,wp.speedE.x);speedy=UnityEngine.Random.Range(wp.speed.y,wp.speedE.y);}
+                    float speedoffx=wp.speed.x,speedoffy=wp.speed.y;
+                    if(wp.speedE!=Vector2.zero){speedoffx=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffy=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
+                    Vector2 sL=new Vector2(-speedx,speedy),sR=new Vector2(speedx,speedy);
                     Vector3 rL=new Vector3(),rR=new Vector3();
                     float soundIntervalL=0,soundIntervalR=0;
                     
-                    void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,sL=new Vector2(sL.x-=wp.serialOffsetSpeed.x,sL.y+=wp.serialOffsetSpeed.y),rL=new Vector3(rL.x+=wp.serialOffsetAngle.x,0,rL.z+=wp.serialOffsetAngle.y),soundIntervalL+=wp.serialOffsetSound){
+                    void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,sL=new Vector2(sL.x-=speedoffx,sL.y+=speedoffy),rL=new Vector3(rL.x+=wp.serialOffsetAngle.x,0,rL.z+=wp.serialOffsetAngle.y),soundIntervalL+=wp.serialOffsetSound){
                         bulletL=GameAssets.instance.Make(asset, posL) as GameObject;
                         if(bulletL!=null){
                             bulletL.GetComponent<Rigidbody2D>().velocity=sL;
@@ -969,7 +926,9 @@ public class Player : MonoBehaviour{
                     if(wp.randomSide){if(UnityEngine.Random.Range(0,100)<50){LeftSide();}else{RightSide();}}
                     if(flareL!=null)Destroy(flareL.gameObject, wp.flareDur);
                     if(flareR!=null)Destroy(flareR.gameObject, wp.flareDur);
-                    if(w.costType==costType.energy)AddSubEnergy(w.cost,false);
+                    if(w.costType==costType.energy){AddSubEnergy(w.cost,false);}
+                    if(w.costType==costType.ammo){AddSubAmmo(w.cost,false);}
+                    Overheat(w.ovheat);
                     shootTimer=(wp.shootDelay*wp.holdDelayMulti)/shootMulti;
                     yield return new WaitForSeconds((wp.shootDelay*wp.tapDelayMulti)/shootMulti);
                 }else{yield break;}
@@ -1229,8 +1188,9 @@ public class Player : MonoBehaviour{
             weaponTypeHeld wp=(weaponTypeHeld)w.weaponTypeProperties;
             if(powerup!=wp.nameActive&&(w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){
                 GameObject asset=GameAssets.instance.Get(w.assetName);
-                if(transform.Find(asset.name)!=null){go=transform.Find(asset.name).gameObject;}
-                else{if(go==null){go=Instantiate(asset,transform);go.transform.localScale=Vector3.one;}}
+                if(transform.Find(asset.name)!=null){go=transform.Find(asset.name).gameObject;go.transform.position=new Vector3(transform.position.x+(wp.offset.x*shipScale),transform.position.y+(wp.offset.y*shipScale),transform.position.z);}
+                else{if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+=new Vector3(wp.offset.x,wp.offset.y*shipScale,0);go.transform.localScale=Vector3.one;}}
+                weaponEnTimer=wp.energyPeriod;
                 powerup=wp.nameActive;
                 #region //Old Held Powerups system
                 //yield return new WaitForSeconds(lsaberEnPeriod);
@@ -1273,16 +1233,23 @@ public class Player : MonoBehaviour{
                     moveSpeedCurrent = moveSpeed;
                 }*/
                 #endregion
-            }else{//energy=0; //yield return new WaitForSeconds(0.2f);
+            }else{
+                if(powerup==wp.nameActive){
+                    if(weaponEnTimer>0){weaponEnTimer-=Time.deltaTime;}
+                    if(weaponEnTimer<=0){weaponEnTimer=wp.energyPeriod;AddSubEnergy(w.cost,false);}
+                }
+                if(powerup!=wp.nameActive){//energy=0; //yield return new WaitForSeconds(0.2f);
                 if(go!=null){Destroy(go);}
                 moveSpeedCurrent=moveSpeed;
                 if(powerup==wp.nameActive)powerup=w.name;
                 if(losePwrupOutOfEn)powerup=powerupDefault;
+                }
             }
             if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
-                if(go!=null){Destroy(go);}
-            }
+                if(go!=null){go.SetActive(false);}
+            }else{if(go!=null){go.SetActive(true);}}
         }
+        DestroyHeldWeapons();
     }
 #endregion
  
@@ -1689,7 +1656,8 @@ public class Player : MonoBehaviour{
         energyUsedCount+=Mathf.Abs(amnt);
         }
         }else{Debug.LogWarning("EnergyPopUpHUD not present");}
-    }public void CoinsPopUpHUD(float amnt){
+    }
+    public void CoinsPopUpHUD(float amnt){
         GameObject popupHud=GameObject.Find("CoinsDiffParrent");
         if(popupHud!=null){
         popupHud.GetComponent<AnimationOn>().AnimationSet(true);
@@ -1698,7 +1666,8 @@ public class Player : MonoBehaviour{
         if(amnt<0)symbol="-";
         popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
         }else{Debug.LogWarning("CoinsPopUpHUD not present");}
-    }public void CoresPopUpHUD(float amnt){
+    }
+    public void CoresPopUpHUD(float amnt){
         GameObject popupHud=GameObject.Find("CoresDiffParrent");
         if(popupHud!=null){
         popupHud.GetComponent<AnimationOn>().AnimationSet(true);
@@ -1707,12 +1676,20 @@ public class Player : MonoBehaviour{
         if(amnt<0)symbol="-";
         popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
         }else{Debug.LogWarning("CoresPopUpHUD not present");}
-    }/*public void EnergyPopUpHUDPlus(float en){
-        GameObject enpopupHud=GameObject.Find("EnergyDiffParrent");
-        enpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+    }
+    public void AmmoPopUpHUD(float amnt){
+        GameObject popupHud=GameObject.Find("AmmoDiffParrent");
+        if(popupHud!=null){
+        popupHud.GetComponent<AnimationOn>().AnimationSet(true);
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
-        enpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+en.ToString();
-    }*/
+        string symbol="+";
+        if(amnt<0)symbol="-";
+        if((!infEnergy)||(infEnergy&&symbol=="+")){
+        popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        //energyUsedCount+=Mathf.Abs(amnt);
+        }
+        }else{Debug.LogWarning("AmmoPopUpHUD not present");}
+    }
 #endregion
 
 #region//Other Functions
@@ -1796,7 +1773,16 @@ public class Player : MonoBehaviour{
             if(add){energy-=value;EnergyPopUpHUD(-value);FindObjectOfType<DisruptersSpawner>().EnergyCountVortexWheel+=value;}
             else{energy+=value;EnergyPopUpHUD(value);FindObjectOfType<DisruptersSpawner>().EnergyCountVortexWheel-=value;}
         }
-    }
+    }}
+    public void AddSubAmmo(float value,bool add=false){
+        var v=(int)value;
+        if(inverter!=true){
+            if(add){ammo+=v;AmmoPopUpHUD(v);}
+            else{ammo-=v;AmmoPopUpHUD(-v);}
+        }else{
+            if(add){ammo-=v;AmmoPopUpHUD(-v);}
+            else{ammo+=v;AmmoPopUpHUD(v);}
+        }
     }
     public void AddSubCoins(int value,bool add=false){
     //if(energyOn){
@@ -1854,6 +1840,21 @@ public class Player : MonoBehaviour{
             }
         }return null;
     }
+    void DestroyHeldWeapons(){
+        foreach(WeaponProperties ws in weaponProperties){
+            if(ws.weaponType==weaponType.held){
+                var wpt=(weaponTypeHeld)ws.weaponTypeProperties;
+                if(powerup!=ws.name&&powerup!=wpt.nameActive){
+                    GameObject asset=GameAssets.instance.Get(ws.assetName);
+                    foreach(Transform t in transform){if(t.gameObject.name.Contains(ws.assetName)){Destroy(t.gameObject);}}
+                }
+            }
+        }
+    }
+    void LosePowerup(){
+        if(losePwrupOutOfEn&&energy<=0){powerup=powerupDefault;}
+        if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){powerup=powerupDefault;}
+    }
 
 
     public Enemy FindClosestEnemy(){
@@ -1895,14 +1896,5 @@ public class Player : MonoBehaviour{
             SetActiveAllChildren(child, value);
         }
     }
-    public float GetEnergy(){return energy;}
-    public float GetFlipTimer(){ return flipTimer; }
-    public float GetGCloverTimer(){ return gcloverTimer; }
-    public float GetShadowTimer(){ return shadowTimer; }
-    public float GetInverterTimer(){ return inverterTimer; }
-    public float GetMagnetTimer(){ return magnetTimer; }
-    public float GetScalerTimer(){ return scalerTimer; }
-    public float GetMatrixTimer(){ return matrixTimer; }
-    public float GetPMultiTimer(){ return pmultiTimer; }
 #endregion
 }

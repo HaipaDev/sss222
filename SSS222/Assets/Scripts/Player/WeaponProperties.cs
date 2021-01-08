@@ -32,11 +32,13 @@ public enum weaponType{bullet,held}
     public bool randomSide=false;
     public int bulletAmount=1;
     public Vector2 speed=new Vector2(0,9);
-    public Vector2 serialOffsetSpeed=new Vector2(0.55f,0);
+    public Vector2 speedE=new Vector2(0,0);
+    public Vector2 serialOffsetSpeed=new Vector2(0.48f,0);
+    public Vector2 serialOffsetSpeedE=new Vector2(0.52f,0);
     public Vector2 serialOffsetAngle=new Vector2(0,5);
     public float serialOffsetSound=0.03f;
     public float shootDelay=0.34f;
-    public float holdDelayMulti=0.65f;
+    public float holdDelayMulti=1;
     public float tapDelayMulti=1;
     public bool flare=true;
     public float flareDur=0.3f;
@@ -44,4 +46,5 @@ public enum weaponType{bullet,held}
 [System.Serializable]public class weaponTypeHeld:weaponTypeProperties{
     [SerializeField] public string nameActive;
     [SerializeField] public Vector2 offset=new Vector2(0,1);
+    [SerializeField] public float energyPeriod=0.15f;
 }

@@ -193,13 +193,13 @@ public class GameSession : MonoBehaviour{
         
         //Restart with R or Space/Resume with Space
         if(SceneManager.GetActiveScene().name=="Game"){
-        if((GameObject.Find("GameOverCanvas")==null||GameObject.Find("GameOverCanvas").activeSelf==false)&&PauseMenu.GameIsPaused==false){restartTimer=-4;}
+        if((GameOverCanvas.instance==null||GameOverCanvas.instance.gameOver==false)&&PauseMenu.GameIsPaused==false){restartTimer=-4;}
         if(PauseMenu.GameIsPaused==true){if(restartTimer==-4)restartTimer=0.5f;}
-        if(GameObject.Find("GameOverCanvas")!=null&&GameObject.Find("GameOverCanvas").activeSelf==true){if(restartTimer==-4)restartTimer=1f;}
+        if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true){if(restartTimer==-4)restartTimer=1f;}
         else if(PauseMenu.GameIsPaused==true&&Input.GetKeyDown(KeyCode.Space)){FindObjectOfType<PauseMenu>().Resume();}
         if(restartTimer>0)restartTimer-=Time.unscaledDeltaTime;
-        if(restartTimer<=0&&restartTimer!=-4){if(Input.GetKeyDown(KeyCode.R)||(GameObject.Find("GameOverCanvas")!=null&&GameObject.Find("GameOverCanvas").activeSelf==true&&Input.GetKeyDown(KeyCode.Space))){FindObjectOfType<Level>().RestartGame();restartTimer=-4;}}
-        if(GameObject.Find("GameOverCanvas")!=null&&GameObject.Find("GameOverCanvas").activeSelf==true&&Input.GetKeyDown(KeyCode.Escape)){FindObjectOfType<Level>().LoadStartMenu();}
+        if(restartTimer<=0&&restartTimer!=-4){if(Input.GetKeyDown(KeyCode.R)||(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Space))){FindObjectOfType<Level>().RestartGame();restartTimer=-4;}}
+        if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Escape)){FindObjectOfType<Level>().LoadStartMenu();}
         }
 
         //var inv=false;

@@ -19,7 +19,7 @@ MonoBehaviour:
   weaponTypeProperties:
     id: 0
   costType: 0
-  cost: 0
+  cost: 0.4
   ovheat: 0
   ammoSize: 0
   references:
@@ -29,3 +29,4 @@ MonoBehaviour:
       data:
         nameActive: lsaberA
         offset: {x: 0, y: 1}
+        energyPeriod: 0.15

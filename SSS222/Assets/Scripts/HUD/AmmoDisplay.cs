@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnergyDisplay : MonoBehaviour{
-    TMPro.TextMeshProUGUI scoreText;
+public class AmmoDisplay : MonoBehaviour{
+    TMPro.TextMeshProUGUI txt;
     Player player;
-
-    // Start is called before the first frame update
     void Start(){
-        scoreText = GetComponent<TMPro.TextMeshProUGUI>();
-        player = FindObjectOfType<Player>();
+        txt=GetComponent<TMPro.TextMeshProUGUI>();
+        player=FindObjectOfType<Player>();
     }
 
-    // Update is called once per frame
     void Update(){
-        scoreText.text = player.GetEnergy().ToString();
+        if(player.ammo>0){txt.alpha=1;txt.text=player.ammo.ToString();}
+        else{txt.alpha=0;}
     }
 }

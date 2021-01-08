@@ -57,6 +57,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -294,7 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chanceForR: 50
   hspeed: 1.2
-  randomSpeed: 0
+  randomSpeed: 1
   hspeedS: 0.8
   hspeedE: 1.2
   dynamicSpeed: 0
@@ -353,6 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7c0a6cd33104f458caa6bbc316b8c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energy: 0
+  charged: 0
 --- !u!114 &7858718171525832638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,3 +370,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
     type: 3}
+  cargoDrop: {fileID: 0}
+  delay: 1
