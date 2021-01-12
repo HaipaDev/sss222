@@ -14,19 +14,19 @@ public class Loader : MonoBehaviour{
     private void Load()
     {
         //FindObjectOfType<GameSession>().savableData.Load();
-        if(Application.platform == RuntimePlatform.Android){FindObjectOfType<SaveSerial>().pprocessing=false;FindObjectOfType<SaveSerial>().scbuttons=true;}
-        else{FindObjectOfType<SaveSerial>().pprocessing=true;FindObjectOfType<SaveSerial>().scbuttons=false;}
+        if(Application.platform == RuntimePlatform.Android){SaveSerial.instance.settingsData.pprocessing=false;SaveSerial.instance.settingsData.scbuttons=true;}
+        else{SaveSerial.instance.settingsData.pprocessing=true;SaveSerial.instance.settingsData.scbuttons=false;}
         if(!loaded){
-        FindObjectOfType<SaveSerial>().Load();
-        FindObjectOfType<SaveSerial>().LoadSettings();
+        SaveSerial.instance.Load();
+        SaveSerial.instance.LoadSettings();
         loaded=true;
         }
-        if (Application.platform != RuntimePlatform.Android){Screen.fullScreen = FindObjectOfType<SaveSerial>().fullscreen;if(SaveSerial.instance.fullscreen)Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);
-        QualitySettings.SetQualityLevel(FindObjectOfType<SaveSerial>().quality);}
-        if (Application.platform == RuntimePlatform.Android)FindObjectOfType<SaveSerial>().moveByMouse=false;
-        audioMixer.SetFloat("MasterVolume", FindObjectOfType<SaveSerial>().masterVolume);
-        audioMixer.SetFloat("SoundVolume", FindObjectOfType<SaveSerial>().soundVolume);
-        audioMixer.SetFloat("MusicVolume", FindObjectOfType<SaveSerial>().musicVolume);
+        if (Application.platform != RuntimePlatform.Android){Screen.fullScreen = SaveSerial.instance.settingsData.fullscreen;if(SaveSerial.instance.settingsData.fullscreen)Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);
+        QualitySettings.SetQualityLevel(SaveSerial.instance.settingsData.quality);}
+        if (Application.platform == RuntimePlatform.Android)SaveSerial.instance.settingsData.moveByMouse=false;
+        audioMixer.SetFloat("MasterVolume", SaveSerial.instance.settingsData.masterVolume);
+        audioMixer.SetFloat("SoundVolume", SaveSerial.instance.settingsData.soundVolume);
+        audioMixer.SetFloat("MusicVolume", SaveSerial.instance.settingsData.musicVolume);
 
         #if UNITY_ANDROID
             Application.runInBackground = true;

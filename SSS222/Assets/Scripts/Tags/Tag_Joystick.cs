@@ -7,10 +7,10 @@ public class Tag_Joystick : MonoBehaviour{
     [SerializeField] Vector2 fixedPosition;
     IEnumerator Start(){
         yield return new WaitForSeconds(0.05f);
-        joystickType=SaveSerial.instance.joystickType;
+        joystickType=SaveSerial.instance.settingsData.joystickType;
         var vj=GetComponent<VariableJoystick>();
         vj.fixedPosition=fixedPosition;
-        if(SaveSerial.instance.lefthand){vj.fixedPosition=new Vector2(-fixedPosition.x,fixedPosition.y);}
+        if(SaveSerial.instance.settingsData.lefthand){vj.fixedPosition=new Vector2(-fixedPosition.x,fixedPosition.y);}
         if(FindObjectOfType<Player>()!=null){
             var p=FindObjectOfType<Player>();
             if(p.moveX&&p.moveY)vj.AxisOptions=AxisOptions.Both;
@@ -18,7 +18,7 @@ public class Tag_Joystick : MonoBehaviour{
             else if(!p.moveX&&p.moveY)vj.AxisOptions=AxisOptions.Vertical;
         }
         vj.SetMode(joystickType);
-        var size=SaveSerial.instance.joystickSize;
+        var size=SaveSerial.instance.settingsData.joystickSize;
         transform.GetChild(0).localScale=new Vector2(size,size);
         Destroy(this);
     }

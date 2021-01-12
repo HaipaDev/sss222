@@ -31,7 +31,7 @@ public class Player : MonoBehaviour{
     //[SerializeField] public float maxEnergyStarting = 30f;
     [SerializeField] public float maxEnergy = 120f;
     [SerializeField] public bool ammoOn=true;
-    [SerializeField] public int ammo = 0;
+    [SerializeField] public int ammo = -4;
     [SerializeField] public bool fuelOn=false;
     [SerializeField] public float fuelDrainAmnt=0.1f;
     [SerializeField] public float fuelDrainFreq=0.5f;
@@ -157,7 +157,7 @@ public class Player : MonoBehaviour{
 #region//Weapon Values 
     [Header("Weapons")]
     //[SerializeField] float laserSpeed=9f;
-    [SerializeField] public float laserShootPeriod=0.34f;
+    //[SerializeField] public float laserShootPeriod=0.34f;
     /*[SerializeField] public float laserHoldSpeed=0.65f;
     [SerializeField] float laser2Speed=8.9f;
     [SerializeField] public float laser2ShootPeriod=0.35f;
@@ -169,7 +169,7 @@ public class Player : MonoBehaviour{
     [SerializeField] float mlaserSpeedE=10f;
     [SerializeField] float mlaserShootPeriod=0.1f;
     [SerializeField] public float mlaserHoldSpeed=1f;*/
-    [SerializeField] public int mlaserBulletsAmmount=10;
+    //[SerializeField] public int mlaserBulletsAmmount=10;
     /*[SerializeField] float phaserSpeed=10.5f;
     [SerializeField] float phaserShootPeriod=0.2f;
     [SerializeField] public float phaserHoldSpeed=1f;
@@ -197,7 +197,7 @@ public class Player : MonoBehaviour{
 #region//Energy/Weapon Durations
     [Header("Energy Costs")]
     [SerializeField] public WeaponProperties[] weaponProperties;
-    [SerializeField] public float shadowEn=5f;
+    [SerializeField] public float shadowCost=5f;
     //Weapons
     /*[SerializeField] public float laserEn=0.3f;
     [SerializeField] public float laser2En=1.25f;
@@ -293,8 +293,6 @@ public class Player : MonoBehaviour{
 
     Rigidbody2D rb;
     PlayerSkills pskills;
-    GameSession gameSession;
-    SaveSerial saveSerial;
     Shake shake;
     PauseMenu pauseMenu;
     GameObject refillUI;
@@ -334,8 +332,6 @@ public class Player : MonoBehaviour{
         
         rb = GetComponent<Rigidbody2D>();
         pskills=GetComponent<PlayerSkills>();
-        gameSession=FindObjectOfType<GameSession>();
-        saveSerial = FindObjectOfType<SaveSerial>();
         shake = GameObject.FindObjectOfType<Shake>();
         joystick=FindObjectOfType<VariableJoystick>();
         //if(SaveSerial.instance.joystickType==JoystickType.Dynamic)joystick=FindObjectOfType<DynamicJoystick>();
@@ -345,7 +341,7 @@ public class Player : MonoBehaviour{
         //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
         dashTime = startDashTime;
-        moveByMouse = saveSerial.moveByMouse;
+        moveByMouse = SaveSerial.instance.settingsData.moveByMouse;
         defaultShipScale=shipScale;
         shipScaleMin*=defaultShipScale;
         shipScaleMax*=defaultShipScale;
@@ -377,57 +373,33 @@ public class Player : MonoBehaviour{
     if(i!=null){
         ///Basic value
         transform.position=i.startingPosPlayer;
+        moveX=i.moveX;moveY=i.moveY;
+        paddingX=i.paddingX;paddingY=i.paddingY;
+        moveSpeedInit=i.moveSpeedPlayer;
         autoShoot=i.autoShootPlayer;
-        maxHP=i.maxHPPlayer;
         health=i.healthPlayer;
+        maxHP=i.maxHPPlayer;
         energyOn=i.energyOnPlayer;
-        maxEnergy=i.maxEnergyPlayer;
         energy=i.energyPlayer;
+        maxEnergy=i.maxEnergyPlayer;
+        ammoOn=i.ammoOn;
         fuelOn=i.fuelOn;
         fuelDrainAmnt=i.fuelDrainAmnt;
         fuelDrainFreq=i.fuelDrainFreq;
         powerup=i.powerupStarting;powerupDefault=i.powerupDefault;
-        moveX=i.moveX;moveY=i.moveY;
-        paddingX=i.paddingX;paddingY=i.paddingY;
-        moveSpeedInit=i.moveSpeedPlayer;
+        losePwrupOutOfEn=i.losePwrupOutOfEn;losePwrupOutOfAmmo=i.losePwrupOutOfAmmo;
         armorMultiInit=i.armorMultiPlayer;
         dmgMultiInit=i.dmgMultiPlayer;
         shootMultiInit=i.shootMultiPlayer;
         shipScaleDefault=i.shipScaleDefault;
         overheatOn=i.overheatOnPlayer;
         recoilOn=i.recoilOnPlayer;
-        ///Weapons Values
-        /*laserSpeed=i.laserSpeed;
-        laserShootPeriod=i.laserShootPeriod;
-        laser2Speed=i.laser2Speed;
-        laser2ShootPeriod=i.laser2ShootPeriod;
-        laser3Speed=i.laser3Speed;
-        laser3ShootPeriod=i.laser3ShootPeriod;
-        phaserSpeed=i.phaserSpeed;
-        phaserShootPeriod=i.phaserShootPeriod;
-        hrocketSpeed=i.hrocketSpeed;
-        hrocketShootPeriod=i.hrocketShootPeriod;
-        mlaserSpeedS=i.mlaserSpeedS;
-        mlaserSpeedE=i.mlaserSpeedE;
-        mlaserShootPeriod=i.mlaserShootPeriod;
-        mlaserBulletsAmmount=i.mlaserBulletsAmmount;
-        shadowBTSpeed=i.shadowBTSpeed;
-        shadowBTShootPeriod=i.shadowBTShootPeriod;
-        qrocketSpeed=i.qrocketSpeed;
-        qrocketShootPeriod=i.qrocketShootPeriod;
-        procketSpeedS=i.procketSpeedS;
-        procketSpeedE=i.procketSpeedE;
-        procketShootPeriod=i.procketShootPeriod;
-        procketsBulletsAmmount=i.procketsBulletsAmmount;
-        cbulletSpeed=i.cbulletSpeed;
-        cbulletShootPeriod=i.cbulletShootPeriod;
-        plaserSpeed=i.plaserSpeed;
-        plaserShootPeriod=i.plaserShootPeriod;*/
         ///State Defaults
         flipTime=i.flipTime;
         gcloverTime=i.gcloverTime;
         shadowTime=i.shadowTime;
         shadowLength=i.shadowLength;
+        shadowCost=i.shadowCost;
         dashSpeed=i.dashSpeed;
         startDashTime=i.startDashTime;
         inverterTime=i.inverterTime;
@@ -446,24 +418,8 @@ public class Player : MonoBehaviour{
         fragileMulti=i.fragileMulti;
         powerMulti=i.powerMulti;
         weaknsMulti=i.weaknsMulti;
-        ///Energy costs
-        shadowEn=i.shadowEn;
-        //Weapons
-        /*laserEn=i.laserEn;
-        laser2En=i.laser2En;
-        laser3En=i.laser3En;
-        phaserEn=i.phaserEn;
-        mlaserEn=i.mlaserEn;
-        lsaberEn=i.lsaberEn;
-        lclawsEn=i.lclawsEn;
-        shadowBTEn=i.shadowBTEn;
-        cbulletEn=i.cbulletEn;
-        plaserEn=i.plaserEn;
-        //Rockets
-        hrocketOh=i.hrocketOh;
-        qrocketOh=i.qrocketOh;
-        procketEn=i.procketEn;
-        procketOh=i.procketOh;*/
+        //
+        weaponProperties=i.weaponProperties;
         ///Energy gains
         energyBallGet=i.energyBallGet;
         medkitEnergyGet=i.medkitEnergyGet;
@@ -474,20 +430,6 @@ public class Player : MonoBehaviour{
         enForPwrupRefill=i.enForPwrupRefill;
         enPwrupDuplicate=i.enPwrupDuplicate;
         refillEnergyAmnt=i.refillEnergyAmnt;
-        ///Weapons Durations
-        weaponsLimited=i.weaponsLimited;
-        laser2Duration=i.laser2Duration;
-        laser3Duration=i.laser3Duration;
-        phaserDuration=i.phaserDuration;
-        mlaserDuration=i.mlaserDuration;
-        lsaberDuration=i.lsaberDuration;
-        lclawsDuration=i.lclawsDuration;
-        cstreamDuration=i.cstreamDuration;
-        hrocketDuration=i.hrocketDuration;
-        qrocketDuration=i.qrocketDuration;
-        procketDuration=i.procketDuration;
-        plaserDuration=i.plaserDuration;
-        shadowBtDuration=i.shadowBtDuration;
 
         yield return new WaitForSecondsRealtime(0.06f);
         var u=UpgradeMenu.instance;
@@ -501,6 +443,12 @@ public class Player : MonoBehaviour{
         shootMulti=shootMultiInit;
         dmgMulti=dmgMultiInit;
         armorMulti=armorMultiInit;
+
+        for(var w=0;w<weaponProperties.Length;w++){
+            var wp=weaponProperties[w];
+            var wi=Instantiate(wp);
+            weaponProperties[w]=wi;
+        }
     }
 
     void Update(){
@@ -833,7 +781,7 @@ public class Player : MonoBehaviour{
             }else{
                 dashed=true;
             }
-            AddSubEnergy(shadowEn,false);
+            AddSubEnergy(shadowCost,false);
             dashing = true;
             shadowed = true;
             //AudioSource.PlayClipAtPoint(shadowdashSFX, new Vector2(transform.position.x, transform.position.y));
@@ -850,7 +798,7 @@ public class Player : MonoBehaviour{
             Hide();
             Destroy(gameObject, 0.05f);//Kill player
             pskills.DeathSkills();
-            if(gameSession.analyticsOn==true){
+            if(GameSession.instance.analyticsOn==true){
             AnalyticsResult analyticsResult=Analytics.CustomEvent("Death",
             new Dictionary<string,object>{
                 { "Mode: ", GameRules.instance.cfgName },
@@ -882,40 +830,49 @@ public class Player : MonoBehaviour{
 #endregion
 
 #region//Powerups
-//bool stopped=false;
     public IEnumerator ShootContinuously(){while(true){if(Time.timeScale>0.0001f){
         WeaponProperties w=null;
-        if(GetWeaponProperty(powerup)!=null)w=GetWeaponProperty(powerup);else Debug.LogWarning(powerup+" not added to WeaponProperties List");
+        if(GetWeaponProperty(powerup)!=null){w=GetWeaponProperty(powerup);}else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}else Debug.LogWarning(powerup+" not added to WeaponProperties List");
         if(w!=null){
-        if(w.weaponType==weaponType.bullet){
+        if(w.weaponType==weaponType.bullet||w.weaponType==weaponType.hybrid){
             if((w.costType==costType.energy&&(energyOn&&energy>0)||(!energyOn))||(w.costType==costType.ammo&&ammo>0)){
                 if(overheated!=true&&electrc!=true){
-                    weaponTypeBullet wp=(weaponTypeBullet)w.weaponTypeProperties;
+                    weaponTypeBullet wp=null;
+                    if(w.weaponType==weaponType.bullet){wp=(weaponTypeBullet)w.weaponTypeProperties;}
                     string asset=w.assetName;
+                    if(w.weaponType==weaponType.hybrid){weaponTypeHybrid hybrid=(weaponTypeHybrid)w.weaponTypeProperties;wp=hybrid.b;asset=hybrid.bulletAsset;}
                     GameObject bulletL=null,bulletR=null;
                     GameObject flareL=null,flareR=null;
-                    Vector2 posL=(Vector2)transform.position+wp.leftAnchor,posR=(Vector2)transform.position+wp.rightAnchor;
+                    Vector2 posL=(Vector2)transform.position+wp.leftAnchor*shipScale,posR=(Vector2)transform.position+wp.rightAnchor*shipScale;
                     float speedx=wp.speed.x,speedy=wp.speed.y;
                     if(wp.speedE!=Vector2.zero){speedx=UnityEngine.Random.Range(wp.speed.x,wp.speedE.x);speedy=UnityEngine.Random.Range(wp.speed.y,wp.speedE.y);}
-                    float speedoffx=wp.speed.x,speedoffy=wp.speed.y;
-                    if(wp.speedE!=Vector2.zero){speedoffx=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffy=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
+                    float speedoffxL=wp.speed.x,speedoffyL=wp.speed.y;
+                    float speedoffxR=wp.speed.x,speedoffyR=wp.speed.y;
+                    if(wp.speedE!=Vector2.zero){speedoffxL=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyL=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
+                    if(wp.speedE!=Vector2.zero){speedoffxR=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyR=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
                     Vector2 sL=new Vector2(-speedx,speedy),sR=new Vector2(speedx,speedy);
                     Vector3 rL=new Vector3(),rR=new Vector3();
                     float soundIntervalL=0,soundIntervalR=0;
                     
-                    void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,sL=new Vector2(sL.x-=speedoffx,sL.y+=speedoffy),rL=new Vector3(rL.x+=wp.serialOffsetAngle.x,0,rL.z+=wp.serialOffsetAngle.y),soundIntervalL+=wp.serialOffsetSound){
+                    void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,
+                    sL=new Vector2(sL.x-=speedoffxL,sL.y+=speedoffyL),
+                    rL=new Vector3(rL.x+=wp.serialOffsetAngle.x,0,rL.z+=wp.serialOffsetAngle.y),soundIntervalL+=wp.serialOffsetSound){
+                        if(wp.leftAnchorE!=Vector2.zero){posL=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.leftAnchor.x,wp.leftAnchorE.x),UnityEngine.Random.Range(wp.leftAnchor.y,wp.leftAnchorE.y))*shipScale;}
                         bulletL=GameAssets.instance.Make(asset, posL) as GameObject;
                         if(bulletL!=null){
-                            bulletL.GetComponent<Rigidbody2D>().velocity=sL;
+                            if(bulletL.GetComponent<Rigidbody2D>()!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;
                             bulletL.transform.Rotate(rL);
                             if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalL;
                         }}
                         if(wp.flare){GameAssets.instance.VFX("FlareShoot",posL,wp.flareDur);}
                     }
-                    void RightSide(){for(var i=0;i<wp.bulletAmount;i++,sR=new Vector2(sR.x+=wp.serialOffsetSpeed.x,sR.y+=wp.serialOffsetSpeed.y),rR=new Vector3(rR.x-=wp.serialOffsetAngle.x,0,rR.z-=wp.serialOffsetAngle.y),soundIntervalR+=wp.serialOffsetSound){
+                    void RightSide(){for(var i=0;i<wp.bulletAmount;i++,
+                    sR=new Vector2(sR.x+=speedoffxR,sR.y+=speedoffyR),
+                    rR=new Vector3(rR.x-=wp.serialOffsetAngle.x,0,rR.z-=wp.serialOffsetAngle.y),soundIntervalR+=wp.serialOffsetSound){
+                        if(wp.rightAnchorE!=Vector2.zero){posR=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.rightAnchor.x,wp.rightAnchorE.x),UnityEngine.Random.Range(wp.rightAnchor.y,wp.rightAnchorE.y))*shipScale;}
                         bulletR=GameAssets.instance.Make(asset, posR) as GameObject;
                         if(bulletR!=null){
-                            bulletR.GetComponent<Rigidbody2D>().velocity=sR;
+                            if(bulletR.GetComponent<Rigidbody2D>()!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;
                             bulletR.transform.Rotate(rR);
                             if(bulletR.GetComponent<IntervalSound>()!=null)bulletR.GetComponent<IntervalSound>().interval=soundIntervalR;
                         }}
@@ -928,7 +885,8 @@ public class Player : MonoBehaviour{
                     if(flareR!=null)Destroy(flareR.gameObject, wp.flareDur);
                     if(w.costType==costType.energy){AddSubEnergy(w.cost,false);}
                     if(w.costType==costType.ammo){AddSubAmmo(w.cost,false);}
-                    Overheat(w.ovheat);
+                    if(w.ovheat!=0)Overheat(w.ovheat);
+                    if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
                     shootTimer=(wp.shootDelay*wp.holdDelayMulti)/shootMulti;
                     yield return new WaitForSeconds((wp.shootDelay*wp.tapDelayMulti)/shootMulti);
                 }else{yield break;}
@@ -949,9 +907,7 @@ public class Player : MonoBehaviour{
                     laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn/2;
                     laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn/2;
                         shootTimer = (laserShootPeriod*laserHoldSpeed)/shootMulti;
-                        //stopped=false;
                         yield return new WaitForSeconds((laserShootPeriod*1.7f)/shootMulti);
-                        //stopped=true;
                         //shootCoroutine=null;
                 }else if(powerup=="laser2"){
                     GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
@@ -1049,7 +1005,7 @@ public class Player : MonoBehaviour{
                     GameObject flareR = Instantiate(flareShootVFX, new Vector2(xxR, yyR - flareShootYY), Quaternion.identity) as GameObject;
                     Destroy(flareL.gameObject, 0.3f);
                     Destroy(flareR.gameObject, 0.3f);
-                    Recoil(1f*mlaserBulletsAmmount*0.75f,0.15f);
+                    Recoil(mlaserBulletsAmmount*0.75f,0.15f);
                         shootTimer = (mlaserShootPeriod*mlaserHoldSpeed)/shootMulti;
                         yield return new WaitForSeconds(mlaserShootPeriod/shootMulti);
                         //shootCoroutine=null;
@@ -1180,16 +1136,19 @@ public class Player : MonoBehaviour{
         }else{yield break;}
     }}}
     private void DrawOtherWeapons(){
-        var cargoDist=2.8f*shipScale;
+        var cargoDist=2.8f;
         GameObject go=null;
         WeaponProperties w=null;
         if(GetWeaponProperty(powerup)!=null)w=GetWeaponProperty(powerup);else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}else Debug.LogWarning(powerup+" not added to WeaponProperties List");
-        if(w!=null&&w.weaponType==weaponType.held){
-            weaponTypeHeld wp=(weaponTypeHeld)w.weaponTypeProperties;
+        if(w!=null&&(w.weaponType==weaponType.held||w.weaponType==weaponType.hybrid)){
+            weaponTypeHeld wp=null;
+            if(w.weaponType==weaponType.held){wp=(weaponTypeHeld)w.weaponTypeProperties;}
+            if(w.weaponType==weaponType.hybrid){weaponTypeHybrid hybrid=(weaponTypeHybrid)w.weaponTypeProperties;wp=hybrid.h;}
             if(powerup!=wp.nameActive&&(w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){
                 GameObject asset=GameAssets.instance.Get(w.assetName);
-                if(transform.Find(asset.name)!=null){go=transform.Find(asset.name).gameObject;go.transform.position=new Vector3(transform.position.x+(wp.offset.x*shipScale),transform.position.y+(wp.offset.y*shipScale),transform.position.z);}
-                else{if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+=new Vector3(wp.offset.x,wp.offset.y*shipScale,0);go.transform.localScale=Vector3.one;}}
+                foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
+                //if(go!=null){go.transform.position=go.transform.position+new Vector3(wp.offset.x,wp.offset.y,go.transform.position.z);}
+                if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+new Vector3(wp.offset.x,wp.offset.y,0);}
                 weaponEnTimer=wp.energyPeriod;
                 powerup=wp.nameActive;
                 #region //Old Held Powerups system
@@ -1236,20 +1195,22 @@ public class Player : MonoBehaviour{
             }else{
                 if(powerup==wp.nameActive){
                     if(weaponEnTimer>0){weaponEnTimer-=Time.deltaTime;}
-                    if(weaponEnTimer<=0){weaponEnTimer=wp.energyPeriod;AddSubEnergy(w.cost,false);}
+                    if(weaponEnTimer<=0){weaponEnTimer=wp.energyPeriod;AddSubEnergy((float)System.Math.Round(w.cost*shipScale,2),false);}
+                    GameObject asset=GameAssets.instance.Get(w.assetName);
+                    foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
+                    if(powerup==wp.nameActive&&go==null)powerup=w.name;
                 }
-                if(powerup!=wp.nameActive){//energy=0; //yield return new WaitForSeconds(0.2f);
+                else{
                 if(go!=null){Destroy(go);}
                 moveSpeedCurrent=moveSpeed;
-                if(powerup==wp.nameActive)powerup=w.name;
                 if(losePwrupOutOfEn)powerup=powerupDefault;
                 }
             }
-            if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
-                if(go!=null){go.SetActive(false);}
-            }else{if(go!=null){go.SetActive(true);}}
+            if(go!=null){if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(go.transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
+                go.SetActive(false);}else{go.SetActive(true);}
+            }
         }
-        DestroyHeldWeapons();
+    DestroyHeldWeapons();
     }
 #endregion
  
@@ -1330,25 +1291,25 @@ public class Player : MonoBehaviour{
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(moveByMouse==true && dist<1){
-                    gameSession.gameSpeed=dist;
-                    gameSession.gameSpeed=Mathf.Clamp(gameSession.gameSpeed,0.05f,gameSession.defaultGameSpeed);
+                    GameSession.instance.gameSpeed=dist;
+                    GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed);
                 }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
-                    //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,gameSession.defaultGameSpeed);
+                    //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed);
                 }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,gameSession.defaultGameSpeed);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed);
                 }else{
-                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=gameSession.defaultGameSpeed;
+                    if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
                 }
             }else{
-                gameSession.gameSpeed=0f;
+                GameSession.instance.gameSpeed=0f;
             }
         }
-        if(matrixTimer <=0 && matrixTimer>-4){gameSession.gameSpeed=gameSession.defaultGameSpeed; ResetStatus("matrix");}
+        if(matrixTimer <=0 && matrixTimer>-4){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; ResetStatus("matrix");}
 
         if(pmultiTimer>0){pmultiTimer-=Time.deltaTime;}
-        if(pmultiTimer <=0 && pmultiTimer>-4){gameSession.scoreMulti=gameSession.defaultGameSpeed; ResetStatus("pmulti");}
+        if(pmultiTimer <=0 && pmultiTimer>-4){GameSession.instance.scoreMulti=GameSession.instance.defaultGameSpeed; ResetStatus("pmulti");}
 
         if(accel==true&&matrix==false){
             if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
@@ -1356,22 +1317,22 @@ public class Player : MonoBehaviour{
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(moveByMouse==true && dist>0.35){
-                    gameSession.gameSpeed=dist+(1-0.35f);
-                    gameSession.gameSpeed=Mathf.Clamp(gameSession.gameSpeed,gameSession.defaultGameSpeed,gameSession.defaultGameSpeed*2);
+                    GameSession.instance.gameSpeed=dist+(1-0.35f);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
                 }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
-                    //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,gameSession.defaultGameSpeed,gameSession.defaultGameSpeed*2);
+                    //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
                 }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,gameSession.defaultGameSpeed,gameSession.defaultGameSpeed*2);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
                 }else{
-                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=gameSession.defaultGameSpeed;
+                    if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
                 }
             }else{
-                gameSession.gameSpeed=0f;
+                GameSession.instance.gameSpeed=0f;
             }
         }
-        if(accelTimer <=0 && accelTimer>-4){gameSession.gameSpeed=gameSession.defaultGameSpeed; ResetStatus("accel");}
+        if(accelTimer <=0 && accelTimer>-4){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; ResetStatus("accel");}
 
         if(accel==true&&matrix==true){
             if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
@@ -1380,19 +1341,19 @@ public class Player : MonoBehaviour{
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(moveByMouse==true){
-                    gameSession.gameSpeed=dist;
-                    gameSession.gameSpeed=Mathf.Clamp(gameSession.gameSpeed,0.05f,gameSession.defaultGameSpeed*2);
+                    GameSession.instance.gameSpeed=dist;
+                    GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed*2);
                 }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
-                    //gameSession.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,gameSession.defaultGameSpeed*2);
+                    //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed*2);
                 }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                    gameSession.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,gameSession.defaultGameSpeed*2);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed*2);
                 }else{
-                    if(gameSession.speedChanged!=true)gameSession.gameSpeed=gameSession.defaultGameSpeed;
+                    if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
                 }
             }else{
-                gameSession.gameSpeed=0f;
+                GameSession.instance.gameSpeed=0f;
             }
         }
 
@@ -1535,13 +1496,13 @@ public class Player : MonoBehaviour{
                 refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostE.ToString();
                 if(Input.GetButtonDown("Fire1")&&refillDelay==-4){
                     var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
-                    if(gameSession.coins>refillCost){
+                    if(GameSession.instance.coins>refillCost){
                         energy+=refillEnergyAmnt*0.75f;
                         Fragile(20,0.75f);
                         Damage(5,dmgType.normal);
                         EnergyPopUpHUD(refillEnergyAmnt);
                         //refillCount++;
-                        gameSession.coins-=refillCost;
+                        GameSession.instance.coins-=refillCost;
                         refillRandomized=false;
                         AudioManager.instance.Play("EnergyRefill");
                         GameObject crystalVFX = Instantiate(crystalExplosionVFX, new Vector2(0, 0), Quaternion.identity);
@@ -1608,11 +1569,11 @@ public class Player : MonoBehaviour{
                 refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostE.ToString();
                 if(Input.GetButtonDown("Fire1")&&refillDelay==-4){
                     var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
-                    if(gameSession.coins>refillCost){
+                    if(GameSession.instance.coins>refillCost){
                         energy+=refillEnergyAmnt;
                         EnergyPopUpHUD(refillEnergyAmnt);
                         refillCount++;
-                        gameSession.coins-=refillCost;
+                        GameSession.instance.coins-=refillCost;
                         refillRandomized=false;
                         AudioManager.instance.Play("EnergyRefill");
                         GameObject crystalVFX = Instantiate(crystalExplosionVFX, new Vector2(0, 0), Quaternion.identity);
@@ -1747,10 +1708,10 @@ public class Player : MonoBehaviour{
 
     public void SetPowerup(string name){
         powerup=name;
-        if(weaponsLimited){
-            var i=this.GetType().GetField(name+"Duration").GetValue(this);
-            this.GetType().GetField("powerupTimer").SetValue(this,i);
-        }
+        WeaponProperties w=null;if(GetWeaponProperty(powerup)!=null){w=GetWeaponProperty(powerup);}else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}
+        if(w!=null&&w.duration>0)powerupTimer=w.duration;else Debug.LogWarning("WeeaponProperty not existant");
+        //var i=this.GetType().GetField(name+"Duration").GetValue(this);
+        //this.GetType().GetField("powerupTimer").SetValue(this,i);
     }
 
     public void Damage(float dmg, dmgType type){
@@ -1787,21 +1748,21 @@ public class Player : MonoBehaviour{
     public void AddSubCoins(int value,bool add=false){
     //if(energyOn){
         if(inverter!=true){
-            if(add){gameSession.coins+=value;CoinsPopUpHUD(value);}
-            else{gameSession.coins-=value;CoinsPopUpHUD(-value);}
+            if(add){GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
+            else{GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
         }else{
-            if(add){gameSession.coins-=value;CoinsPopUpHUD(-value);}
-            else{gameSession.coins+=value;CoinsPopUpHUD(value);}
+            if(add){GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
+            else{GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
         }
     //}
     }public void AddSubCores(int value,bool add=false){
     //if(energyOn){
         if(inverter!=true){
-            if(add){gameSession.cores+=value;CoresPopUpHUD(value);}
-            else{gameSession.cores-=value;CoresPopUpHUD(-value);}
+            if(add){GameSession.instance.cores+=value;CoresPopUpHUD(value);}
+            else{GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
         }else{
-            if(add){gameSession.cores-=value;CoresPopUpHUD(-value);}
-            else{gameSession.cores+=value;CoresPopUpHUD(value);}
+            if(add){GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
+            else{GameSession.instance.cores+=value;CoresPopUpHUD(value);}
         }
     //}
     }
@@ -1829,7 +1790,12 @@ public class Player : MonoBehaviour{
                 if(w.name==name){return w;}
                 if(wp.nameActive==name){return null;}
                 //if(w.name!=name&&wp.nameActive!=name){Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
-            }
+            }else if(w.weaponType==weaponType.hybrid){
+                weaponTypeHybrid hybrid=(weaponTypeHybrid)w.weaponTypeProperties;
+                weaponTypeHeld wp=(weaponTypeHeld)hybrid.h;
+                if(w.name==name){return w;}
+                if(wp.nameActive==name){return null;}
+            }//else{Debug.LogWarning("Type not set in GetWeaponProperty();");}
         }return null;
     }public WeaponProperties GetWeaponPropertyActive(string name){
         foreach(WeaponProperties w in weaponProperties){
@@ -1837,7 +1803,11 @@ public class Player : MonoBehaviour{
                 weaponTypeHeld wp=(weaponTypeHeld)w.weaponTypeProperties;
                 if(wp.nameActive==name){return w;}
                 //if(w.name!=name&&wp.nameActive!=name){Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
-            }
+            }else if(w.weaponType==weaponType.hybrid){
+                weaponTypeHybrid hybrid=(weaponTypeHybrid)w.weaponTypeProperties;
+                weaponTypeHeld wp=(weaponTypeHeld)hybrid.h;
+                if(wp.nameActive==name){return w;}
+            }//else{Debug.LogWarning("Type not set in GetWeaponPropertyActive();");}
         }return null;
     }
     void DestroyHeldWeapons(){

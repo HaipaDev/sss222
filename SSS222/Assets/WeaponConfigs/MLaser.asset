@@ -22,17 +22,20 @@ MonoBehaviour:
   cost: 0.33
   ovheat: 0
   ammoSize: 0
+  duration: 10
   references:
     version: 1
     00000000:
       type: {class: weaponTypeBullet, ns: , asm: Assembly-CSharp}
       data:
         leftSide: 1
-        leftAnchor: {x: -0.35, y: 0}
+        leftAnchor: {x: -0.28, y: 0}
+        leftAnchorE: {x: -0.36, y: 0}
         rightSide: 1
-        rightAnchor: {x: 0.35, y: 0}
+        rightAnchor: {x: 0.28, y: 0}
+        rightAnchorE: {x: 0.36, y: 0}
         randomSide: 0
-        bulletAmount: 10
+        bulletAmount: 3
         speed: {x: 0, y: 8.5}
         speedE: {x: 0, y: 10}
         serialOffsetSpeed: {x: 0.46, y: 0}
@@ -42,5 +45,7 @@ MonoBehaviour:
         shootDelay: 0.1
         holdDelayMulti: 1
         tapDelayMulti: 1
+        recoilStrength: 10
+        recoilTime: 0.15
         flare: 1
         flareDur: 0.3

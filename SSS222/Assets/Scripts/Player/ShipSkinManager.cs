@@ -49,7 +49,7 @@ public class ShipSkinManager : MonoBehaviour{
         }
     }
     void LoadValues(){
-        skinID=saveSerial.skinID;
-        chameleonOvColor = Color.HSVToRGB(saveSerial.chameleonColor[0], saveSerial.chameleonColor[1], saveSerial.chameleonColor[2]);
+        skinID=saveSerial.playerData.skinID;
+        chameleonOvColor = Color.HSVToRGB(saveSerial.playerData.chameleonColor[0], saveSerial.playerData.chameleonColor[1], saveSerial.playerData.chameleonColor[2]);
     }
 }

@@ -10,7 +10,7 @@ public class Level : MonoBehaviour{
     //float prevGameSpeed;
     private void Awake()
     {
-        GameSession.instance = FindObjectOfType<GameSession>();
+        GameSession.instance = GameSession.instance;
         GameSession.instance.gameSpeed=1f;
         Time.timeScale = 1f;
         SetUpSingleton();
@@ -34,37 +34,37 @@ public class Level : MonoBehaviour{
     }
 
     public void LoadStartMenu(){
-        FindObjectOfType<SaveSerial>().Save();
-        FindObjectOfType<GameSession>().ResetMusicPitch();
+        SaveSerial.instance.Save();
+        GameSession.instance.ResetMusicPitch();
         SceneManager.LoadScene("Menu");
         //LoadLevel("Menu");
-        if(SceneManager.GetActiveScene().name=="Menu"){FindObjectOfType<GameSession>().speedChanged=false;FindObjectOfType<GameSession>().gameSpeed=1f;}
+        if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
     }
     public void LoadStartMenuGame(){FindObjectOfType<Level>().StartCoroutine(LoadStartMenuGameI());}
     IEnumerator LoadStartMenuGameI(){
         if(SceneManager.GetActiveScene().name=="Game"){
-            FindObjectOfType<GameSession>().SaveHighscore();
+            GameSession.instance.SaveHighscore();
             yield return new WaitForSecondsRealtime(0.01f);
-            FindObjectOfType<GameSession>().ResetScore();
+            GameSession.instance.ResetScore();
         }
         yield return new WaitForSecondsRealtime(0.05f);
-        FindObjectOfType<SaveSerial>().Save();
-        FindObjectOfType<GameSession>().ResetMusicPitch();
+        SaveSerial.instance.Save();
+        GameSession.instance.ResetMusicPitch();
         SceneManager.LoadScene("Menu");
         //LoadLevel("Menu");
-        if(SceneManager.GetActiveScene().name=="Menu"){FindObjectOfType<GameSession>().speedChanged=false;FindObjectOfType<GameSession>().gameSpeed=1f;}
+        if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
         
-        //FindObjectOfType<GameSession>().savableData.Save();
-        //FindObjectOfType<SaveSerial>().Save();
+        //GameSession.instance.savableData.Save();
+        //SaveSerial.instance.Save();
     }
     public void LoadGameScene(){
         //GameSession.instance.SetGameModeSelected(i);
         if(DamageValues.instance!=null)DamageValues.instance.StartCoroutine(DamageValues.instance.SetValues());
-        if(GameSession.instance.gameModeSelected==0){FindObjectOfType<SaveSerial>().LoadAdventure();GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
+        if(GameSession.instance.gameModeSelected==0){SaveSerial.instance.LoadAdventure();GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
         SceneManager.LoadScene("Game");
         //LoadLevel("Game");
-        FindObjectOfType<GameSession>().ResetScore();
-        FindObjectOfType<GameSession>().gameSpeed=1f;
+        GameSession.instance.ResetScore();
+        GameSession.instance.gameSpeed=1f;
         Time.timeScale = 1f;
     }
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");}
@@ -76,10 +76,10 @@ public class Level : MonoBehaviour{
     public void RestartGame(){FindObjectOfType<Level>().StartCoroutine(RestartGameI());}
     IEnumerator RestartGameI(){
         //PauseMenu.GameIsPaused=false;
-        FindObjectOfType<GameSession>().SaveHighscore();
+        GameSession.instance.SaveHighscore();
         yield return new WaitForSecondsRealtime(0.01f);
-        FindObjectOfType<GameSession>().ResetScore();
-        FindObjectOfType<GameSession>().ResetMusicPitch();
+        GameSession.instance.ResetScore();
+        GameSession.instance.ResetMusicPitch();
         yield return new WaitForSecondsRealtime(0.05f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameSession.instance.speedChanged=false;
@@ -111,8 +111,7 @@ public class Level : MonoBehaviour{
                     LoadStartMenu(); 
                 }
             }
-    }
-    }
+    }}
 
     void LoadLevel(string sceneName){
         //StartCoroutine(LoadTransition(sceneName));

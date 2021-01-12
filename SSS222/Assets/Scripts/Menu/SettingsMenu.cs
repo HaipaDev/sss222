@@ -44,67 +44,67 @@ public class SettingsMenu : MonoBehaviour{
         fullscreen = fullscreenToggle.GetComponent<Toggle>().isOn;
         moveByMouse = steeringToggle.GetComponent<Toggle>().isOn;*/
 
-        qualityDropdopwn.GetComponent<Dropdown>().value = SaveSerial.instance.quality;
-        fullscreenToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.fullscreen;
-        pprocessingToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.pprocessing;
-        scbuttonsToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.scbuttons;
-        steeringToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.moveByMouse;
-        lefthandToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.lefthand;
+        qualityDropdopwn.GetComponent<Dropdown>().value = SaveSerial.instance.settingsData.quality;
+        fullscreenToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.fullscreen;
+        pprocessingToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.pprocessing;
+        scbuttonsToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.scbuttons;
+        steeringToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.moveByMouse;
+        lefthandToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.lefthand;
 
-        masterSlider.GetComponent<Slider>().value = SaveSerial.instance.masterVolume;
-        soundSlider.GetComponent<Slider>().value = SaveSerial.instance.soundVolume;
-        musicSlider.GetComponent<Slider>().value = SaveSerial.instance.musicVolume;
+        masterSlider.GetComponent<Slider>().value = SaveSerial.instance.settingsData.masterVolume;
+        soundSlider.GetComponent<Slider>().value = SaveSerial.instance.settingsData.soundVolume;
+        musicSlider.GetComponent<Slider>().value = SaveSerial.instance.settingsData.musicVolume;
     }
     private void Update() {
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
-        if(SaveSerial.instance.pprocessing==true && postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
-        if(SaveSerial.instance.pprocessing==true && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume.enabled=true;}
-        if(SaveSerial.instance.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
+        if(SaveSerial.instance.settingsData.pprocessing==true && postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
+        if(SaveSerial.instance.settingsData.pprocessing==true && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume.enabled=true;}
+        if(SaveSerial.instance.settingsData.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
     }
     public void SetPanelActive(int i){
         foreach(GameObject p in panels){p.SetActive(false);}panels[i].SetActive(true);
     }
     public void SetMasterVolume(float volume){
         audioMixer.SetFloat("MasterVolume", volume);
-        SaveSerial.instance.masterVolume = volume;
+        SaveSerial.instance.settingsData.masterVolume = volume;
     }public void SetSoundVolume(float volume){
         audioMixer.SetFloat("SoundVolume", volume);
-        SaveSerial.instance.soundVolume = volume;
+        SaveSerial.instance.settingsData.soundVolume = volume;
     }
     public void SetMusicVolume(float volume){
         audioMixer.SetFloat("MusicVolume", volume);
-        SaveSerial.instance.musicVolume = volume;
+        SaveSerial.instance.settingsData.musicVolume = volume;
     }
     public void SetQuality(int qualityIndex){
         QualitySettings.SetQualityLevel(qualityIndex);
-        SaveSerial.instance.quality = qualityIndex;
+        SaveSerial.instance.settingsData.quality = qualityIndex;
     }
     public void SetFullscreen (bool isFullscreen){
         Screen.fullScreen = isFullscreen;
-        SaveSerial.instance.fullscreen = isFullscreen;
+        SaveSerial.instance.settingsData.fullscreen = isFullscreen;
         Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,isFullscreen,60);
     }public void SetPostProcessing (bool isPostprocessed){
         //gameSession.pprocessing = isPostprocessed;
-        SaveSerial.instance.pprocessing = isPostprocessed;
+        SaveSerial.instance.settingsData.pprocessing = isPostprocessed;
         if(isPostprocessed==true && postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}//FindObjectOfType<Level>().RestartScene();}
         if(isPostprocessed==true && postProcessVolume!=null){postProcessVolume.enabled=true;}
         if(isPostprocessed==false && FindObjectOfType<PostProcessVolume>()!=null){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
     }public void SetOnScreenButtons (bool onscbuttons){
-        SaveSerial.instance.scbuttons = onscbuttons;
+        SaveSerial.instance.settingsData.scbuttons = onscbuttons;
         //if(onscbuttons){Debug.Log(scbuttons);scbuttons=true;}
     }
     public void SetSteering(bool isMovingByMouse){
-        SaveSerial.instance.moveByMouse = isMovingByMouse;
+        SaveSerial.instance.settingsData.moveByMouse = isMovingByMouse;
         //SaveSerial.instance.moveByMouse = isMovingByMouse;
     }public void SetJoystick(){
         var s=SaveSerial.instance;
-        if(s.joystickType==(JoystickType)0){s.joystickType=(JoystickType)1;return;}
-        if(s.joystickType==(JoystickType)1){s.joystickType=(JoystickType)2;return;}
-        if(s.joystickType==(JoystickType)2){s.joystickType=(JoystickType)0;return;}
+        if(s.settingsData.joystickType==(JoystickType)0){s.settingsData.joystickType=(JoystickType)1;return;}
+        if(s.settingsData.joystickType==(JoystickType)1){s.settingsData.joystickType=(JoystickType)2;return;}
+        if(s.settingsData.joystickType==(JoystickType)2){s.settingsData.joystickType=(JoystickType)0;return;}
     }public void SetJoystickSize(float size){
-        SaveSerial.instance.joystickSize=size;
+        SaveSerial.instance.settingsData.joystickSize=size;
     }public void SetLefthand(bool lefthand){
-        SaveSerial.instance.lefthand=lefthand;
+        SaveSerial.instance.settingsData.lefthand=lefthand;
     }public void SetCheatmode(bool isCheatmode){
         GameSession.instance.cheatmode = isCheatmode;
     }

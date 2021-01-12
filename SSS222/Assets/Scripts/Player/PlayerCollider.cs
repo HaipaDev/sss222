@@ -297,8 +297,10 @@ public class PlayerCollider : MonoBehaviour{
     void PowerupCollect(string name){
         if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
         var w=player.GetWeaponProperty(name);
-        if(w.costType==costType.energy){player.ammo=-4;if(player.powerup==name){EnergyAddDupl();}}
-        else if(w.costType==costType.ammo){if(player.powerup==name){AmmoAddDupl(w);}else{AmmoAdd(w);}}
+        if(w!=null){
+            if(w.costType==costType.energy){player.ammo=-4;if(player.powerup==name){EnergyAddDupl();}}
+            else if(w.costType==costType.ammo){if(player.powerup==name){AmmoAddDupl(w);}else{AmmoAdd(w);}}
+        }else{Debug.LogWarning("WeaponProperty by name "+name+" does not exist");}
         player.SetPowerup(name);
     }
     void EnergyAdd(){

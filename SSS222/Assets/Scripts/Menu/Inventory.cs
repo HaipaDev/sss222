@@ -29,10 +29,10 @@ public class Inventory : MonoBehaviour{
         skins=FindObjectOfType<GameAssets>().skins;
         overlays=FindObjectOfType<GameAssets>().skinOverlays;
         saveSerial = FindObjectOfType<SaveSerial>();
-        skinID=saveSerial.skinID;
-        chameleonColorArr[0] = saveSerial.chameleonColor[0];
-        chameleonColorArr[1] = saveSerial.chameleonColor[1];
-        chameleonColorArr[2] = saveSerial.chameleonColor[2];
+        skinID=saveSerial.playerData.skinID;
+        chameleonColorArr[0] = saveSerial.playerData.chameleonColor[0];
+        chameleonColorArr[1] = saveSerial.playerData.chameleonColor[1];
+        chameleonColorArr[2] = saveSerial.playerData.chameleonColor[2];
         
         chameleonColor = Color.HSVToRGB(chameleonColorArr[0], chameleonColorArr[1], chameleonColorArr[2]);
         skinOverlay.color = chameleonColor;

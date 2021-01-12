@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class OnScreenButtons : MonoBehaviour{
     void Start(){
-        if(SaveSerial.instance.scbuttons==false){
+        if(SaveSerial.instance.settingsData.scbuttons==false){
             /*foreach(Transform child in transform){
                 if(child.GetComponent<Button>()!=null){
                     child.GetComponent<Button>().enabled=false;
@@ -31,7 +31,7 @@ public class OnScreenButtons : MonoBehaviour{
     }
 
     void Update(){
-        if(SaveSerial.instance!=null)if(SaveSerial.instance.scbuttons==false){
+        if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.scbuttons==false){
             /*foreach(Transform child in transform){
                 if(child.GetComponent<Button>()!=null){
                     if(child.GetComponent<Button>().enabled==true)child.GetComponent<Button>().enabled=false;

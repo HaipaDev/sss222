@@ -34,7 +34,9 @@ MonoBehaviour:
         randomSide: 0
         bulletAmount: 1
         speed: {x: 0, y: 9.5}
+        speedE: {x: 0, y: 0}
         serialOffsetSpeed: {x: 0.55, y: 0}
+        serialOffsetSpeedE: {x: 0, y: 0}
         serialOffsetAngle: {x: 0, y: 5}
         serialOffsetSound: 0.03
         shootDelay: 0.3

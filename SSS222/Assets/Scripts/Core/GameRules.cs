@@ -28,21 +28,24 @@ public static GameRules instance;
     [Header("Player")]
     public Vector2 startingPosPlayer=new Vector2(0.36f,-6.24f);
     public bool autoShootPlayer=false;
-    public float maxHPPlayer=150;
-    public float healthPlayer=150;
-    public bool energyOnPlayer=true;
-    public float maxEnergyPlayer=180;
-    public float energyPlayer=180;
-    public bool fuelOn=false;
-    public float fuelDrainAmnt=0.1f;
-    public float fuelDrainFreq=0.5f;
-    public string powerupStarting="laser";
-    public string powerupDefault="laser";
     public bool moveX=true;
     public bool moveY=true;
     public float paddingX=-0.125f;
     public float paddingY=0.45f;
     public float moveSpeedPlayer=5f;
+    public float healthPlayer=150;
+    public float maxHPPlayer=150;
+    public bool energyOnPlayer=true;
+    public float energyPlayer=180;
+    public float maxEnergyPlayer=180;
+    public bool ammoOn=false;
+    public bool fuelOn=false;
+    public float fuelDrainAmnt=0.1f;
+    public float fuelDrainFreq=0.5f;
+    public string powerupStarting="laser";
+    public string powerupDefault="laser";
+    public bool losePwrupOutOfEn;
+    public bool losePwrupOutOfAmmo;
     public float armorMultiPlayer=1f;
     public float dmgMultiPlayer=1f;
     public float shootMultiPlayer=1f;
@@ -52,11 +55,13 @@ public static GameRules instance;
     public float overheatCooldown = 0.65f;
     public float overheatedTime=3;
     public bool recoilOnPlayer=true;
+    public WeaponProperties[] weaponProperties;
     [Header("State Defaults")]
     public float flipTime = 7f;
     public float gcloverTime = 6f;
     public float shadowTime = 10f;
     public float shadowLength=0.33f;
+    public float shadowCost=5f;
     public float dashSpeed=10f;
     public float startDashTime=0.2f;
     public float inverterTime=10f;
@@ -75,52 +80,6 @@ public static GameRules instance;
     public float fragileMulti = 0.7f;
     public float powerMulti = 1.6f;
     public float weaknsMulti = 0.66f;
-    [Header("Player Weapons")]
-    public float laserSpeed=9f;
-    public float laserShootPeriod=0.34f;
-    public float laser2Speed=8.9f;
-    public float laser2ShootPeriod=0.35f;
-    public float laser3Speed=8.8f;
-    public float laser3ShootPeriod=0.36f;
-    public float phaserSpeed=10.5f;
-    public float phaserShootPeriod=0.2f;
-    public float hrocketSpeed=6.5f;
-    public float hrocketShootPeriod=0.3f;
-    public float mlaserSpeedS=8.5f;
-    public float mlaserSpeedE=10f;
-    public float mlaserShootPeriod=0.1f;
-    public int mlaserBulletsAmmount=10;
-    public float shadowBTSpeed=4f;
-    public float shadowBTShootPeriod=0.65f;
-    public float qrocketSpeed=9.5f;
-    public float qrocketShootPeriod=0.3f;
-    public float procketSpeedS=9.5f;
-    public float procketSpeedE=10.5f;
-    public float procketShootPeriod=0.5f;
-    public int procketsBulletsAmmount=10;
-    public float cbulletSpeed=8.25f;
-    public float cbulletShootPeriod=0.15f;
-    public float plaserSpeed=9.5f;
-    public float plaserShootPeriod=0.7f;
-    [Header("Energy Costs")]
-    //Weapons
-    public float laserEn=0.3f;
-    public float laser2En=1.25f;
-    public float laser3En=2.5f;
-    public float phaserEn=1.5f;
-    public float mlaserEn=0.075f;
-    public float lsaberEn=0.4f;
-    public float lsaberEnPeriod=0.1f;
-    public float lclawsEn=6.3f;
-    public float shadowEn=5f;
-    public float shadowBTEn=10f;
-    public float cbulletEn=1.3f;
-    public float plaserEn=7f;
-    //Rockets
-    public float hrocketOh=0.9f;//2.6
-    public float qrocketOh=2.23f;//5.5
-    public float procketEn=0.86f;//0.26
-    public float procketOh=0.09f;
     [Header("Energy Gains")]//Collectibles
     public float energyBallGet=9f;
     public float medkitEnergyGet=26f;
@@ -131,20 +90,6 @@ public static GameRules instance;
     public float enForPwrupRefill=25f;
     public float enPwrupDuplicate=42f;
     public float refillEnergyAmnt=110f;
-    [Header("Weapon Durations")]
-    public bool weaponsLimited=false;
-    public float laser2Duration=10f;
-    public float laser3Duration=10f;
-    public float phaserDuration=10f;
-    public float mlaserDuration=10f;
-    public float lsaberDuration=10f;
-    public float lclawsDuration=10f;
-    public float cstreamDuration=10f;
-    public float hrocketDuration=10f;
-    public float qrocketDuration=10f;
-    public float procketDuration=10f;
-    public float plaserDuration=10f;
-    public float shadowBtDuration=10f;
     [Header("Skills")]
     public Skill[] skillsPlayer;
     public float timeOverhaul=10;
@@ -317,30 +262,6 @@ public static GameRules instance;
     }
     private void OnValidate(){
         if(!shopOn)shopCargoOn=false;
-        /*foreach(ShopItem entry in shopList){
-            entry.name=entry.item.name;
-            entry.dropChance=entry.item.dropChance;
-            entry.price=entry.item.price;
-            entry.priceS=entry.item.priceS;
-            entry.priceE=entry.item.priceE;
-        }*/
-        /*foreach(LootTableEntryPowerup entry in pwrupStatusList){
-        entry.name=entry.lootItem.name;
-        entry.rarity=entry.lootItem.rarity;
-        entry.dropChance=entry.lootItem.dropChance;
-        entry.levelReq=entry.lootItem.levelReq;
-        }
-        foreach(LootTableEntryPowerup entry in pwrupWeaponList){
-        entry.name=entry.lootItem.name;
-        entry.rarity=entry.lootItem.rarity;
-        entry.dropChance=entry.lootItem.dropChance;
-        entry.levelReq=entry.lootItem.levelReq;
-        }
-        foreach(LootTableEntryWaves entry in waveList){
-        entry.name=entry.lootItem.name;
-        //entry.dropChance=entry.lootItem.dropChance;
-        //entry.levelReq=entry.lootItem.levelReq;
-        }*/
     }
     #region//Custom Events
     public void AdventureLvlEach(){
@@ -350,18 +271,18 @@ public static GameRules instance;
     }
     public void AdventureLvl1(){
         var p=FindObjectOfType<Player>();
-        p.laserShootPeriod=0.30f;
-        p.mlaserBulletsAmmount=5;
+        if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=0.30f;}
+        if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=5;}
     }
     public void AdventureLvl2(){
         var p=FindObjectOfType<Player>();
-        p.laserShootPeriod=0.26f;
-        p.mlaserBulletsAmmount=7;
+        if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=0.26f;}
+        if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=7;}
     }
     public void AdventureLvl4(){
         var p=FindObjectOfType<Player>();
-        p.laserShootPeriod=0.22f;
-        p.mlaserBulletsAmmount=10;
+        if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=0.22f;}
+        if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=10;}
     }
 
 

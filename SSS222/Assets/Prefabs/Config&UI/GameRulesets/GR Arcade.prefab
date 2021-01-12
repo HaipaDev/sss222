@@ -109,6 +109,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: weaponProperties.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: b365b34ef3f6bed4b852bce204bfe8f3,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 390ccedfd644e144ebfac9dbe0d34fb0,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: pwrupStatusList.Array.data[2].levelReq
       value: 1
       objectReference: {fileID: 0}

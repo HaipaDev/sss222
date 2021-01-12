@@ -101,8 +101,8 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "waveScoreGR") scoreText.text = GameRules.instance.EVscoreMax.ToString();
         }
         if(SaveSerial.instance!=null){
-        if (value == "joystickType"){scoreText.text = SaveSerial.instance.joystickType.ToString();}
-        else if (value == "joystickSize"){scoreText.text = System.Math.Round(SaveSerial.instance.joystickSize,2).ToString();}
+        if (value == "joystickType"){scoreText.text = SaveSerial.instance.settingsData.joystickType.ToString();}
+        else if (value == "joystickSize"){scoreText.text = System.Math.Round(SaveSerial.instance.settingsData.joystickSize,2).ToString();}
         }
         
         /*else if (value == "state"){

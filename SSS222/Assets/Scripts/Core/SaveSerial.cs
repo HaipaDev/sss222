@@ -17,43 +17,26 @@ public class SaveSerial : MonoBehaviour{
 	[SerializeField] string filenameSettings = "gameSettings.cfg";
 	bool settingsEncode=false;
 #region//Player Data
-	[HeaderAttribute("PlayerData")]
-	public int[] highscore=new int[GameSession.gameModeMaxID];
-	public int skinID;
-	public float[] chameleonColor = new float[3];
-	public class PlayerData{
+	public PlayerData playerData=new PlayerData();
+	[System.Serializable]public class PlayerData{
 		public int[] highscore=new int[GameSession.gameModeMaxID];
 		public int skinID;
 		public float[] chameleonColor=new float[3];
 	}
 	public void Save(){
-		PlayerData data = new PlayerData();
-		data.highscore = highscore;
-		data.skinID = skinID;
-		data.chameleonColor[0] = chameleonColor[0];
-		data.chameleonColor[1] = chameleonColor[1];
-		data.chameleonColor[2] = chameleonColor[2];
-		
-
-		// Saving the data
 		SaveGame.Encode = dataEncode;
 		SaveGame.Serializer = new SaveGameJsonSerializer();
-		SaveGame.Save(filename, data);
+		SaveGame.Save(filename, playerData);
 		Debug.Log("Game Data saved");
 	}
 	public void Load(){
 		if (File.Exists(Application.persistentDataPath + "/"+filename)){
-			PlayerData data = new PlayerData();
 			SaveGame.Encode = dataEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
-			data = SaveGame.Load<PlayerData>(filename);
+			playerData = SaveGame.Load<PlayerData>(filename);
 
-			var hi=-1;foreach(int h in data.highscore){hi++;if(h!=0)highscore[hi] = h;}
-			skinID = data.skinID;
-			chameleonColor[0] = data.chameleonColor[0];
-			chameleonColor[1] = data.chameleonColor[1];
-			chameleonColor[2] = data.chameleonColor[2];
-			Debug.Log("Adventure Data loaded");
+			var hi=-1;foreach(int h in playerData.highscore){hi++;if(h!=0)playerData.highscore[hi] = h;}
+			Debug.Log("Game Data loaded");
 		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
 	}
 	public void Delete(){
@@ -63,131 +46,56 @@ public class SaveSerial : MonoBehaviour{
 	}
 #endregion
 #region //Adventure Data
-	[HeaderAttribute("AdventureData")]
-	public float xp;
-	public int total_UpgradesCount;
-	public int total_UpgradesLvl;
-	public int maxHealth_UpgradesCount;
-	public int maxHealth_UpgradesLvl;
-	public int maxEnergy_UpgradesCount;
-	public int maxEnergy_UpgradesLvl;
-	public int speed_UpgradesCount;
-	public int speed_UpgradesLvl;
-	public int hpRegen_UpgradesCount;
-	public int hpRegen_UpgradesLvl;
-	public int enRegen_UpgradesCount;
-	public int enRegen_UpgradesLvl;
-	public int luck_UpgradesCount;
-	public int luck_UpgradesLvl;
-	public int defaultPowerup_upgradeCount;
-	public int energyRefill_upgraded;
-	public int magneticPulse_upgraded;
-	public int teleport_upgraded;
-	public int overhaul_upgraded;
-	public class AdventureData{
-		public float xp;
-		public int total_UpgradesCount;
-		public int total_UpgradesLvl;
-		public int maxHealth_UpgradesCount;
-		public int maxHealth_UpgradesLvl;
-		public int maxEnergy_UpgradesCount;
-		public int maxEnergy_UpgradesLvl;
-		public int speed_UpgradesCount;
-		public int speed_UpgradesLvl;
-		public int hpRegen_UpgradesCount;
-		public int hpRegen_UpgradesLvl;
-		public int enRegen_UpgradesCount;
-		public int enRegen_UpgradesLvl;
-		public int luck_UpgradesCount;
-		public int luck_UpgradesLvl;
-		public int defaultPowerup_upgradeCount;
-		public int energyRefill_upgraded;
-		public int magneticPulse_upgraded;
-		public int teleport_upgraded;
-		public int overhaul_upgraded;
+	public AdventureData adv=new AdventureData();
+	[System.Serializable]public class AdventureData{
+		public float xp=0;
+		public int total_UpgradesCount=0;
+		public int total_UpgradesLvl=0;
+		public int maxHealth_UpgradesCount=0;
+		public int maxHealth_UpgradesLvl=0;
+		public int maxEnergy_UpgradesCount=0;
+		public int maxEnergy_UpgradesLvl=0;
+		public int speed_UpgradesCount=0;
+		public int speed_UpgradesLvl=0;
+		public int hpRegen_UpgradesCount=0;
+		public int hpRegen_UpgradesLvl=0;
+		public int enRegen_UpgradesCount=0;
+		public int enRegen_UpgradesLvl=0;
+		public int luck_UpgradesCount=0;
+		public int luck_UpgradesLvl=0;
+		public int defaultPowerup_upgradeCount=0;
+		public int energyRefill_upgraded=0;
+		public int magneticPulse_upgraded=0;
+		public int teleport_upgraded=0;
+		public int overhaul_upgraded=0;
 	}
 	public void SaveAdventure(){
-		AdventureData data = new AdventureData();
-		data.xp=xp;
-		data.total_UpgradesCount=total_UpgradesCount;
-		data.total_UpgradesLvl=total_UpgradesLvl;
-		data.maxHealth_UpgradesCount=maxHealth_UpgradesCount;
-		data.maxHealth_UpgradesLvl=maxHealth_UpgradesLvl;
-		data.maxEnergy_UpgradesCount=maxEnergy_UpgradesCount;
-		data.maxEnergy_UpgradesLvl=maxEnergy_UpgradesLvl;
-		data.speed_UpgradesCount=speed_UpgradesCount;
-		data.speed_UpgradesLvl=speed_UpgradesLvl;
-		data.hpRegen_UpgradesCount=hpRegen_UpgradesCount;
-		data.hpRegen_UpgradesLvl=hpRegen_UpgradesLvl;
-		data.enRegen_UpgradesCount=enRegen_UpgradesCount;
-		data.enRegen_UpgradesLvl=enRegen_UpgradesLvl;
-		data.luck_UpgradesCount=luck_UpgradesCount;
-		data.luck_UpgradesLvl=luck_UpgradesLvl;
-
-		data.defaultPowerup_upgradeCount=defaultPowerup_upgradeCount;
-		data.energyRefill_upgraded=energyRefill_upgraded;
-		data.magneticPulse_upgraded=magneticPulse_upgraded;
-		data.teleport_upgraded=teleport_upgraded;
-		data.overhaul_upgraded=overhaul_upgraded;
-		
-		// Saving the data
 		SaveGame.Encode = adventureEncode;
 		SaveGame.Serializer = new SaveGameJsonSerializer();
-		SaveGame.Save(filenameAdventure, data);
+		SaveGame.Save(filenameAdventure, adv);
 		Debug.Log("Adventure Data saved");
 	}
 	public void LoadAdventure(){
 		if (File.Exists(Application.persistentDataPath + "/"+filenameAdventure)){
-			AdventureData data = new AdventureData();
 			SaveGame.Encode = adventureEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
-			data = SaveGame.Load<AdventureData>(filenameAdventure);
-
-			xp=data.xp;
-			total_UpgradesCount=data.total_UpgradesCount;
-			total_UpgradesLvl=data.total_UpgradesLvl;
-			maxHealth_UpgradesCount=data.maxHealth_UpgradesCount;
-			maxHealth_UpgradesLvl=data.maxHealth_UpgradesLvl;
-			maxEnergy_UpgradesCount=data.maxEnergy_UpgradesCount;
-			maxEnergy_UpgradesLvl=data.maxEnergy_UpgradesLvl;
-			speed_UpgradesCount=data.speed_UpgradesCount;
-			speed_UpgradesLvl=data.speed_UpgradesLvl;
-			hpRegen_UpgradesCount=data.hpRegen_UpgradesCount;
-			hpRegen_UpgradesLvl=data.hpRegen_UpgradesLvl;
-			enRegen_UpgradesCount=data.enRegen_UpgradesCount;
-			enRegen_UpgradesLvl=data.enRegen_UpgradesLvl;
-			luck_UpgradesCount=data.luck_UpgradesCount;
-			luck_UpgradesLvl=data.luck_UpgradesLvl;
-
-			defaultPowerup_upgradeCount=data.defaultPowerup_upgradeCount;
-			energyRefill_upgraded=data.energyRefill_upgraded;
-			magneticPulse_upgraded=data.magneticPulse_upgraded;
-			teleport_upgraded=data.teleport_upgraded;
-			overhaul_upgraded=data.overhaul_upgraded;
+			adv=SaveGame.Load<AdventureData>(filenameAdventure);
 			Debug.Log("Adventure Data loaded");
 		}else Debug.Log("Adventure Data file not found in "+Application.persistentDataPath+"/"+filenameAdventure);
 	}
 	public void DeleteAdventure(){
-		if (File.Exists(Application.persistentDataPath + "/"+filenameAdventure)){
+		adv=null;
+		//GC.Collect();
+		Debug.Log("Adventure Data reset");
+		if(File.Exists(Application.persistentDataPath + "/"+filenameAdventure)){
 			File.Delete(Application.persistentDataPath + "/"+filenameAdventure);
+			Debug.Log("Adventure Data deleted");
 		}else Debug.Log("Adventure Data file not found in "+Application.persistentDataPath+"/"+filenameAdventure);
 	}
 #endregion
 #region//Settings Data
-	[HeaderAttribute("SettingsData")]
-	public string gameVersion;
-	public bool moveByMouse;
-	public bool fullscreen;
-	public bool pprocessing;
-	public bool scbuttons;
-	public int quality;
-	public float masterVolume;
-	public float soundVolume;
-	public float musicVolume;
-	public JoystickType joystickType=JoystickType.Dynamic;
-	public float joystickSize=1f;
-	public bool lefthand;
-	public class SettingsData{
+	public SettingsData settingsData;
+	[System.Serializable]public class SettingsData{
 		public string gameVersion;
 		public bool moveByMouse;
 		public bool fullscreen;
@@ -202,24 +110,9 @@ public class SaveSerial : MonoBehaviour{
 		public bool lefthand;
 	}	
 	public void SaveSettings(){
-		SettingsData data = new SettingsData();
-		data.gameVersion=gameVersion;
-		data.moveByMouse = moveByMouse;
-		data.fullscreen = fullscreen;
-		data.pprocessing = pprocessing;
-		data.scbuttons = scbuttons;
-		data.quality = quality;
-		data.masterVolume = masterVolume;
-		data.soundVolume = soundVolume;
-		data.musicVolume = musicVolume;
-		data.joystickType=joystickType;
-		data.joystickSize=joystickSize;
-		data.lefthand=lefthand;
-
-		// Saving the data
 		SaveGame.Encode = settingsEncode;
 		SaveGame.Serializer = new SaveGameJsonSerializer();
-		SaveGame.Save(filenameSettings, data);
+		SaveGame.Save(filenameSettings, settingsData);
 		Debug.Log("Settings saved");
 	}
 	public void LoadSettings(){
@@ -227,20 +120,7 @@ public class SaveSerial : MonoBehaviour{
 			SettingsData data = new SettingsData();
 			SaveGame.Encode = settingsEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
-			data = SaveGame.Load<SettingsData>(filenameSettings);
-
-			gameVersion=data.gameVersion;
-			moveByMouse = data.moveByMouse;
-			fullscreen = data.fullscreen;
-			pprocessing = data.pprocessing;
-			scbuttons = data.scbuttons;
-			quality = data.quality;
-			masterVolume = data.masterVolume;
-			soundVolume = data.soundVolume;
-			musicVolume = data.musicVolume;
-			joystickType=data.joystickType;
-			joystickSize=data.joystickSize;
-			lefthand=data.lefthand;
+			settingsData = SaveGame.Load<SettingsData>(filenameSettings);
 			Debug.Log("Settings loaded");
 		}
 		else Debug.Log("Settings file not found in " + Application.persistentDataPath + "/" + filenameSettings);
@@ -256,7 +136,7 @@ public class SaveSerial : MonoBehaviour{
 	{
 		SetUpSingleton();
 		instance=this;
-		highscore=new int[GameSession.gameModeMaxID];
+		playerData.highscore=new int[GameSession.gameModeMaxID];
 	}
 	private void SetUpSingleton()
 	{

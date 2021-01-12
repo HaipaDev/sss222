@@ -58,21 +58,24 @@ MonoBehaviour:
   luckMulti: 1
   startingPosPlayer: {x: 0.36, y: -6.24}
   autoShootPlayer: 0
-  maxHPPlayer: 75
-  healthPlayer: 75
-  energyOnPlayer: 1
-  maxEnergyPlayer: 180
-  energyPlayer: 100
-  fuelOn: 0
-  fuelDrainAmnt: 0.1
-  fuelDrainFreq: 0.5
-  powerupStarting: laser
-  powerupDefault: laser
   moveX: 1
   moveY: 1
   paddingX: -0.125
   paddingY: 0.45
   moveSpeedPlayer: 5
+  healthPlayer: 75
+  maxHPPlayer: 75
+  energyOnPlayer: 1
+  energyPlayer: 100
+  maxEnergyPlayer: 180
+  ammoOn: 0
+  fuelOn: 0
+  fuelDrainAmnt: 0.1
+  fuelDrainFreq: 0.5
+  powerupStarting: laser
+  powerupDefault: laser
+  losePwrupOutOfEn: 0
+  losePwrupOutOfAmmo: 0
   armorMultiPlayer: 1
   dmgMultiPlayer: 1
   shootMultiPlayer: 1
@@ -82,10 +85,25 @@ MonoBehaviour:
   overheatCooldown: 0.65
   overheatedTime: 3
   recoilOnPlayer: 1
+  weaponProperties:
+  - {fileID: 11400000, guid: c02591e544d31e44c9fecff122d832be, type: 2}
+  - {fileID: 11400000, guid: 466aaf3a96073854faf4eafb373c65f1, type: 2}
+  - {fileID: 11400000, guid: c2cd77c9677e9534d8469763df8aeeb3, type: 2}
+  - {fileID: 11400000, guid: 49cc28bde08a8444d925542f523215f2, type: 2}
+  - {fileID: 11400000, guid: b154f23a4342bb34db4c4811ecf62a91, type: 2}
+  - {fileID: 11400000, guid: 06682e2bb692b854cb933bc149bc8fa6, type: 2}
+  - {fileID: 11400000, guid: 44fef545084b37043a427b9fa004d1c6, type: 2}
+  - {fileID: 11400000, guid: 282b02d64fc493b40905744ad32dcccd, type: 2}
+  - {fileID: 11400000, guid: dbf3681dcbec09945ad44292f5d3a124, type: 2}
+  - {fileID: 11400000, guid: 58363aed9654ce94ba9cb6630ba14d49, type: 2}
+  - {fileID: 11400000, guid: 3e8bb0a8b7a347245a4e8a410ed28efe, type: 2}
+  - {fileID: 11400000, guid: e913b426dcd9a2c46872469ef76d3b27, type: 2}
+  - {fileID: 11400000, guid: 873e180e33e72a84a95efe650b9264be, type: 2}
   flipTime: 7
   gcloverTime: 6
   shadowTime: 10
   shadowLength: 0.33
+  shadowCost: 5
   dashSpeed: 10
   startDashTime: 0.2
   inverterTime: 10
@@ -104,48 +122,6 @@ MonoBehaviour:
   fragileMulti: 0.7
   powerMulti: 1.6
   weaknsMulti: 0.66
-  laserSpeed: 9
-  laserShootPeriod: 0.34
-  laser2Speed: 8.9
-  laser2ShootPeriod: 0.35
-  laser3Speed: 8.8
-  laser3ShootPeriod: 0.36
-  phaserSpeed: 10.5
-  phaserShootPeriod: 0.2
-  hrocketSpeed: 6.5
-  hrocketShootPeriod: 0.3
-  mlaserSpeedS: 8.5
-  mlaserSpeedE: 10
-  mlaserShootPeriod: 0.1
-  mlaserBulletsAmmount: 3
-  shadowBTSpeed: 9
-  shadowBTShootPeriod: 0.34
-  qrocketSpeed: 9.5
-  qrocketShootPeriod: 0.3
-  procketSpeedS: 9.5
-  procketSpeedE: 10.5
-  procketShootPeriod: 0.5
-  procketsBulletsAmmount: 10
-  cbulletSpeed: 8.25
-  cbulletShootPeriod: 0.15
-  plaserSpeed: 9.75
-  plaserShootPeriod: 0.75
-  laserEn: 0.3
-  laser2En: 1.25
-  laser3En: 2.5
-  phaserEn: 1.5
-  mlaserEn: 0.075
-  lsaberEn: 0.4
-  lsaberEnPeriod: 0.15
-  lclawsEn: 6.3
-  shadowEn: 5
-  shadowBTEn: 10
-  cbulletEn: 1.3
-  plaserEn: 5.6
-  hrocketOh: 0.9
-  qrocketOh: 1.63
-  procketEn: 0.86
-  procketOh: 0.49
   energyBallGet: 9
   medkitEnergyGet: 40
   medkitUEnergyGet: 26
@@ -155,19 +131,6 @@ MonoBehaviour:
   enForPwrupRefill: 25
   enPwrupDuplicate: 42
   refillEnergyAmnt: 110
-  weaponsLimited: 0
-  laser2Duration: 10
-  laser3Duration: 10
-  phaserDuration: 10
-  mlaserDuration: 10
-  lsaberDuration: 10
-  lclawsDuration: 10
-  cstreamDuration: 10
-  hrocketDuration: 10
-  qrocketDuration: 10
-  procketDuration: 10
-  plaserDuration: 10
-  shadowBtDuration: 10
   skillsPlayer:
   - name: Magnetic Pulse
     ID: 0
@@ -355,6 +318,7 @@ MonoBehaviour:
   mSTimeSpawnsHlaser: 30
   mETimeSpawnsHlaser: 60
   spawnGoblin: 1
+  mPowerupsGoblin: 2
   mSTimeSpawnsGoblin: 40
   mETimeSpawnsGoblin: 50
   spawnHealDrone: 1

@@ -30,7 +30,7 @@ public class SwitchPlacesCanvas : MonoBehaviour{
         Destroy(this);
     }
     private void Update() {
-        if(lefthandSwitch){if(FindObjectOfType<SaveSerial>().lefthand){Set();}}
+        if(lefthandSwitch){if(SaveSerial.instance.settingsData.lefthand){Set();}}
     }
     [System.Serializable]class PosSetTransform{
         [SerializeField]RectTransform rectTransform;

@@ -24,7 +24,7 @@ public class GameCreator : MonoBehaviour{
         if (FindObjectOfType<AudioManager>() == null){Instantiate(audioManagerPrefab);}
         if (FindObjectOfType<GameRules>() == null&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Instantiate(gamerulesetsPrefabs[GameSession.instance.gameModeSelected]);}
         //if (FindObjectOfType<GameRules>() == null&&SceneManager.GetActiveScene().name=="SandboxMenu"){Instantiate(gamerulesetsPrefabs[4].GetGamerules());}
-        if (FindObjectOfType<PostProcessVolume>() != null && FindObjectOfType<SaveSerial>().pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
+        if (FindObjectOfType<PostProcessVolume>() != null && FindObjectOfType<SaveSerial>().settingsData.pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
         Destroy(gameObject);
     }
 }

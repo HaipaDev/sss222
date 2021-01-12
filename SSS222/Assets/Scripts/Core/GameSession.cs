@@ -111,7 +111,7 @@ public class GameSession : MonoBehaviour{
         }
     }
     private void Start(){
-        Array.Clear(FindObjectOfType<SaveSerial>().highscore,0,FindObjectOfType<SaveSerial>().highscore.Length);
+        Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);
         //SetGameRulesValues();
     }
     IEnumerator SetGameRulesValues(){
@@ -176,8 +176,10 @@ public class GameSession : MonoBehaviour{
         if(coresXpTotal<0)coresXpTotal=0;
         if(xpOn&&coresXp>=xp_forCore){
             //cores++;
-            if(upgradesOn)GameAssets.instance.Make("PowerCore",new Vector2(UnityEngine.Random.Range(-3.5f, 3.5f),7.4f));
-            FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
+            if(upgradesOn){
+                GameAssets.instance.Make("PowerCore",new Vector2(UnityEngine.Random.Range(-3.5f, 3.5f),7.4f));
+                FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
+            }
             //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             coresXp=0;
             //AudioManager.instance.Play("LvlUp");
@@ -235,8 +237,8 @@ public class GameSession : MonoBehaviour{
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
         if(SaveSerial.instance!=null){
         //if(SaveSerial.instance.pprocessing==true && postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
-        if(SaveSerial.instance.pprocessing==true && postProcessVolume!=null){postProcessVolume.GetComponent<PostProcessVolume>().enabled=true;}
-        if(SaveSerial.instance.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
+        if(SaveSerial.instance.settingsData.pprocessing==true && postProcessVolume!=null){postProcessVolume.GetComponent<PostProcessVolume>().enabled=true;}
+        if(SaveSerial.instance.settingsData.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
         }
 
         if(UpgradeMenu.instance!=null)CalculateLuck();
@@ -251,8 +253,8 @@ public class GameSession : MonoBehaviour{
     public float GetCoresXP(){return coresXp;}
     public int GetEVScore(){return EVscore;}
     public int GetShopScore(){return shopScore; }
-    public int GetHighscore(int i){return FindObjectOfType<SaveSerial>().highscore[i];}
-    public string GetVersion(){return FindObjectOfType<SaveSerial>().gameVersion;}
+    public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
+    public string GetVersion(){return SaveSerial.instance.settingsData.gameVersion;}
 
     public void AddToScore(int scoreValue){
         score += Mathf.RoundToInt(scoreValue*scoreMulti);
@@ -292,61 +294,71 @@ public class GameSession : MonoBehaviour{
         legendPwrupMulti=1;
         gameSessionTime=0;
     }
-    public void SaveHighscore()
-    {
-        if(score>FindObjectOfType<SaveSerial>().highscore[GameSession.instance.gameModeSelected]){FindObjectOfType<SaveSerial>().highscore[GameSession.instance.gameModeSelected]=score;}
+    public void SaveHighscore(){
+        if(score>SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]){SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]=score;}
         if(GameSession.instance.gameModeSelected==0){StartCoroutine(SaveAdventureI());}
         //FindObjectOfType<DataSavable>().highscore = highscore;
     }
     IEnumerator SaveAdventureI(){
         yield return new WaitForSecondsRealtime(0.02f);
         var u=UpgradeMenu.instance;
-        var s=FindObjectOfType<SaveSerial>();
-        if(u!=null&&s!=null){
-        s.xp=coresXp;
-        s.total_UpgradesCount=u.total_UpgradesCount;
-        s.total_UpgradesLvl=u.total_UpgradesLvl;
-        s.maxHealth_UpgradesCount=u.maxHealth_UpgradesCount;
-        s.maxHealth_UpgradesLvl=u.maxHealth_UpgradesLvl;
-        s.maxEnergy_UpgradesCount=u.maxEnergy_UpgradesCount;
-        s.maxEnergy_UpgradesLvl=u.maxEnergy_UpgradesLvl;
-        s.speed_UpgradesCount=u.speed_UpgradesCount;
-        s.speed_UpgradesLvl=u.speed_UpgradesLvl;
-        s.hpRegen_UpgradesCount=u.hpRegen_UpgradesCount;
-        s.hpRegen_UpgradesLvl=u.hpRegen_UpgradesLvl;
-        s.enRegen_UpgradesCount=u.enRegen_UpgradesCount;
-        s.enRegen_UpgradesLvl=u.enRegen_UpgradesLvl;
-        s.luck_UpgradesCount=u.luck_UpgradesCount;
-        s.luck_UpgradesLvl=u.luck_UpgradesLvl;
+        var s=SaveSerial.instance;
+        if(u!=null&&s!=null&&s.adv!=null){
+        s.adv.xp=coresXp;
+        s.adv.total_UpgradesCount=u.total_UpgradesCount;
+        s.adv.total_UpgradesLvl=u.total_UpgradesLvl;
+        s.adv.maxHealth_UpgradesCount=u.maxHealth_UpgradesCount;
+        s.adv.maxHealth_UpgradesLvl=u.maxHealth_UpgradesLvl;
+        s.adv.maxEnergy_UpgradesCount=u.maxEnergy_UpgradesCount;
+        s.adv.maxEnergy_UpgradesLvl=u.maxEnergy_UpgradesLvl;
+        s.adv.speed_UpgradesCount=u.speed_UpgradesCount;
+        s.adv.speed_UpgradesLvl=u.speed_UpgradesLvl;
+        s.adv.hpRegen_UpgradesCount=u.hpRegen_UpgradesCount;
+        s.adv.hpRegen_UpgradesLvl=u.hpRegen_UpgradesLvl;
+        s.adv.enRegen_UpgradesCount=u.enRegen_UpgradesCount;
+        s.adv.enRegen_UpgradesLvl=u.enRegen_UpgradesLvl;
+        s.adv.luck_UpgradesCount=u.luck_UpgradesCount;
+        s.adv.luck_UpgradesLvl=u.luck_UpgradesLvl;
         yield return new WaitForSecondsRealtime(0.02f);
         s.SaveAdventure();
-        }else{Debug.LogError("UpgradeMenu not present");}
+        }//else{Debug.LogError("UpgradeMenu not present");}
     }
     public IEnumerator LoadAdventureI(){
         yield return new WaitForSecondsRealtime(0.04f);
         var u=UpgradeMenu.instance;
-        var s=FindObjectOfType<SaveSerial>();
-        if(u!=null&&s!=null){
-        coresXp=s.xp;
-        u.total_UpgradesCount=s.total_UpgradesCount;
-        u.total_UpgradesLvl=s.total_UpgradesLvl;
-        u.maxHealth_UpgradesCount=s.maxHealth_UpgradesCount;
-        u.maxHealth_UpgradesLvl=s.maxHealth_UpgradesLvl;
-        u.maxEnergy_UpgradesCount=s.maxEnergy_UpgradesCount;
-        u.maxEnergy_UpgradesLvl=s.maxEnergy_UpgradesLvl;
-        u.speed_UpgradesCount=s.speed_UpgradesCount;
-        u.speed_UpgradesLvl=s.speed_UpgradesLvl;
-        u.hpRegen_UpgradesCount=s.hpRegen_UpgradesCount;
-        u.hpRegen_UpgradesLvl=s.hpRegen_UpgradesLvl;
-        u.enRegen_UpgradesCount=s.enRegen_UpgradesCount;
-        u.enRegen_UpgradesLvl=s.enRegen_UpgradesLvl;
-        u.luck_UpgradesCount=s.luck_UpgradesCount;
-        u.luck_UpgradesLvl=s.luck_UpgradesLvl;
+        var s=SaveSerial.instance;
+        if(u!=null&&s!=null&&s.adv!=null){
+        coresXp=s.adv.xp;
+        u.total_UpgradesCount=s.adv.total_UpgradesCount;
+        u.total_UpgradesLvl=s.adv.total_UpgradesLvl;
+        u.maxHealth_UpgradesCount=s.adv.maxHealth_UpgradesCount;
+        u.maxHealth_UpgradesLvl=s.adv.maxHealth_UpgradesLvl;
+        u.maxEnergy_UpgradesCount=s.adv.maxEnergy_UpgradesCount;
+        u.maxEnergy_UpgradesLvl=s.adv.maxEnergy_UpgradesLvl;
+        u.speed_UpgradesCount=s.adv.speed_UpgradesCount;
+        u.speed_UpgradesLvl=s.adv.speed_UpgradesLvl;
+        u.hpRegen_UpgradesCount=s.adv.hpRegen_UpgradesCount;
+        u.hpRegen_UpgradesLvl=s.adv.hpRegen_UpgradesLvl;
+        u.enRegen_UpgradesCount=s.adv.enRegen_UpgradesCount;
+        u.enRegen_UpgradesLvl=s.adv.enRegen_UpgradesLvl;
+        u.luck_UpgradesCount=s.adv.luck_UpgradesCount;
+        u.luck_UpgradesLvl=s.adv.luck_UpgradesLvl;
+
+        yield return new WaitForSeconds(0.1f);
+        if(UpgradeMenu.instance!=null){
+            for(var i=UpgradeMenu.instance.total_UpgradesLvl;i>0;i--){
+                var g=GameRules.instance;
+                var player=FindObjectOfType<Player>();
+                if(g!=null&&player!=null){
+                if(g.lvlEvents.Length>0){g.lvlEvents[0].Invoke();}
+                var d=0;foreach(int id in g.lvlEventsIDs){if(d<g.lvlEventsIDs.Length-1){d++;}if(UpgradeMenu.instance.total_UpgradesLvl==g.lvlEventsIDs[d])g.lvlEvents[d].Invoke();}}
+            }
+        }
         //Debug.Log("Adventure Data loaded");
-        }else{Debug.LogError("UpgradeMenu not present");}
+        }//else if(u==null){Debug.LogError("UpgradeMenu not present");}
     }
     public void SaveSettings(){
-        /*var ss=FindObjectOfType<SaveSerial>();
+        /*var ss=SaveSerial.instance;
         var sm=FindObjectOfType<SettingsMenu>();
         ss.moveByMouse = sm.moveByMouse;
         ss.quality = sm.quality;
@@ -361,21 +373,21 @@ public class GameSession : MonoBehaviour{
         SaveSerial.instance.SaveSettings();
     }
     public void SaveInventory(){
-        FindObjectOfType<SaveSerial>().skinID = FindObjectOfType<Inventory>().skinID;
-        FindObjectOfType<SaveSerial>().chameleonColor[0] = FindObjectOfType<Inventory>().chameleonColorArr[0];
-        FindObjectOfType<SaveSerial>().chameleonColor[1] = FindObjectOfType<Inventory>().chameleonColorArr[1];
-        FindObjectOfType<SaveSerial>().chameleonColor[2] = FindObjectOfType<Inventory>().chameleonColorArr[2];
+        SaveSerial.instance.playerData.skinID = FindObjectOfType<Inventory>().skinID;
+        SaveSerial.instance.playerData.chameleonColor[0] = FindObjectOfType<Inventory>().chameleonColorArr[0];
+        SaveSerial.instance.playerData.chameleonColor[1] = FindObjectOfType<Inventory>().chameleonColorArr[1];
+        SaveSerial.instance.playerData.chameleonColor[2] = FindObjectOfType<Inventory>().chameleonColorArr[2];
     }
-    public void Save(){ FindObjectOfType<SaveSerial>().Save(); FindObjectOfType<SaveSerial>().SaveSettings(); }
-    public void Load(){ FindObjectOfType<SaveSerial>().Load(); FindObjectOfType<SaveSerial>().LoadSettings(); }
+    public void Save(){ SaveSerial.instance.Save(); SaveSerial.instance.SaveSettings(); }
+    public void Load(){ SaveSerial.instance.Load(); SaveSerial.instance.LoadSettings(); }
     public void DeleteAllShowConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((false)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((true)); }
     public void DeleteAllHideConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((true)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((false)); }
-    public void DeleteAll(){ FindObjectOfType<SaveSerial>().Delete();FindObjectOfType<SaveSerial>().DeleteAdventure(); ResetSettings(); FindObjectOfType<Level>().LoadStartMenu();//FindObjectOfType<Level>().Restart();
-    /*Destroy(FindObjectOfType<SaveSerial>().gameObject);Destroy(this.gameObject); SaveSerial.instance=null;GameSession.instance=null;DamageValues.instance=null;*/}
+    public void DeleteAll(){ SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure(); ResetSettings(); FindObjectOfType<Level>().LoadStartMenu();//FindObjectOfType<Level>().Restart();
+    /*Destroy(SaveSerial.instance.gameObject);Destroy(this.gameObject); SaveSerial.instance=null;GameSession.instance=null;DamageValues.instance=null;*/}
     public void ResetSettings(){
-        FindObjectOfType<SaveSerial>().ResetSettings();
+        SaveSerial.instance.ResetSettings();
         FindObjectOfType<Level>().RestartScene();
-        FindObjectOfType<SaveSerial>().SaveSettings();
+        SaveSerial.instance.SaveSettings();
         /*var s=FindObjectOfType<SettingsMenu>();
         s.moveByMouse=true;
         s.quality=4;
@@ -387,12 +399,6 @@ public class GameSession : MonoBehaviour{
         if(FindObjectOfType<MusicPlayer>()!=null)FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;
     }
 
-    void OnApplicationQuit(){
-        /*var skills=player.GetComponent<PlayerSkills>().skills;
-        foreach(SkillSlotID skill in skills){
-            skill.keySet=skillKeyBind.Disabled;
-        }*/
-    }
     void CalculateLuck(){
         //ref float multiAmnt = ref enballMultiAmnt;
         //1+(0.08*((1.05-1)/0.05))

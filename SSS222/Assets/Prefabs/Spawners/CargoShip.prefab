@@ -229,10 +229,11 @@ GameObject:
   - component: {fileID: 4546529352650547392}
   - component: {fileID: 8713774842259422738}
   - component: {fileID: 153409864}
-  - component: {fileID: 502397296}
   - component: {fileID: 1143734159}
   - component: {fileID: -6090966606146515074}
   - component: {fileID: -2754935484836143089}
+  - component: {fileID: 502397296}
+  - component: {fileID: 4979044037410903986}
   m_Layer: 0
   m_Name: CargoShip
   m_TagString: Untagged
@@ -354,24 +355,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &502397296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4546529352650547393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: {fileID: 100000, guid: 081b45b1b47b4094f818a7a47a0c69b6, type: 3}
-  xx: 0
-  yy: 0.6
-  time: 0.3
-  stayStill: 0
-  BFlame: {fileID: 0}
 --- !u!82 &1143734159
 AudioSource:
   m_ObjectHideFlags: 0
@@ -501,6 +484,43 @@ MonoBehaviour:
     type: 3}
   cargoDrop: {fileID: 1056705403108089519, guid: eebb358fa9ff6af419cd68bd020a4289,
     type: 3}
+  delay: 1
+--- !u!114 &502397296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4546529352650547393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: {fileID: 100000, guid: 0f7e2bf3d8f33c5408bfbf96c2047b91, type: 3}
+  xx: -0.3
+  yy: 0.4
+  time: 0.3
+  stayStill: 0
+  BFlame: {fileID: 0}
+--- !u!114 &4979044037410903986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4546529352650547393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: {fileID: 100000, guid: 0f7e2bf3d8f33c5408bfbf96c2047b91, type: 3}
+  xx: 0.3
+  yy: 0.4
+  time: 0.3
+  stayStill: 1
+  BFlame: {fileID: 0}
 --- !u!1 &8300030818994398507
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,7 +610,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -602,9 +622,9 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
-  m_textAlignment: 258
+  m_textAlignment: 65535
   m_characterSpacing: -20
   m_wordSpacing: 0
   m_lineSpacing: -25
