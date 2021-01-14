@@ -13,17 +13,18 @@ public class WeaponProperties:ScriptableObject{
     [SerializeField] public float cost;
     [SerializeField] public float ovheat;
     [SerializeField] public float ammoSize;
-    [SerializeField] public float duration=0;
+    [SerializeField] public float duration=10;
     void OnValidate(){
         if(validate){
         if(weaponType==weaponType.bullet){weaponTypeProperties=new weaponTypeBullet();}
         if(weaponType==weaponType.held){weaponTypeProperties=new weaponTypeHeld();}
         if(weaponType==weaponType.hybrid){weaponTypeProperties=new weaponTypeHybrid();}
+        //if(costType==costType.boomerang){cost=1;}
         validate=false;
         }
     }
 }
-public enum costType{energy,ammo}
+public enum costType{energy,ammo,boomerang}
 public enum weaponType{bullet,held,hybrid}
 [System.Serializable]public class weaponTypeProperties{}
 [System.Serializable]public class weaponTypeBullet:weaponTypeProperties{

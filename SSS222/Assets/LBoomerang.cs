@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BounceFromEnemies : MonoBehaviour{
-    [SerializeField] public float speed=9f;
+public class LBoomerang : MonoBehaviour{
+    [SerializeField] float speed=9f;
     [SerializeField] List<Enemy> enemiesHit;
-
     void Update(){
         float step = speed * Time.deltaTime;
-        var target=FindClosestEnemy();
-        if(target!=null)transform.position = Vector2.MoveTowards(transform.position, target.transform.position, step);
+        if((FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().ammo==-1)||FindObjectOfType<Player>()==null){
+            var target=FindClosestEnemy();
+            if(target!=null)transform.position = Vector2.MoveTowards(transform.position, target.transform.position, step);
+        }else if(FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().ammo!=-1){
+            transform.position = Vector2.MoveTowards(transform.position, FindObjectOfType<Player>().transform.position, step);
+        }
     }
     public Enemy FindClosestEnemy(){
         KdTree<Enemy> Enemies = new KdTree<Enemy>();

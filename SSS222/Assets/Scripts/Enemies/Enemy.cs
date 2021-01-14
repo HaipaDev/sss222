@@ -276,7 +276,7 @@ public class Enemy : MonoBehaviour{
         if(!other.CompareTag(tag)&&!other.CompareTag("EnemyBullet")&&other.GetComponent<Tag_OutsideZone>()==null){
             DamageDealer damageDealer=other.GetComponent<DamageDealer>();
             DamageValues damageValues=DamageValues.instance;
-            if(gameObject!=null&&other.gameObject!=null)if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
+            if(gameObject!=null&&other.gameObject!=null)if(!damageDealer||!damageValues){/*Debug.LogWarning("No DamageDealer component or DamageValues instance")*/;return;}
             var dmg = damageValues.GetDmg();
 
             if(other.GetComponent<Player>()!=null){if(other.GetComponent<Player>().dashing==true){Die();}}
@@ -304,7 +304,7 @@ public class Enemy : MonoBehaviour{
             //if (other.gameObject.name != Pname && other.gameObject.name != Pname1){dmg=0;}
 
             var LClawsname = lclawsPrefab.name;
-            if (other.gameObject.name.Contains(LClawsname)){ dmg = (float)System.Math.Round(damageValues.GetDmgLSaber()/3,2); AudioManager.instance.Play("LClawsHit"); FindObjectOfType<Player>().energy-=1f;}
+            if (other.gameObject.name.Contains(LClawsname)){ dmg = (float)System.Math.Round(damageValues.GetDmgLSaber()/3,2); AudioManager.instance.Play("LClawsHit"); if(FindObjectOfType<Player>()!=null)FindObjectOfType<Player>().energy-=1f;}
             var LClawsPartname = lclawsPartPrefab.name;
             if (other.gameObject.name.Contains(LClawsPartname)){ dmg = damageValues.GetDmgLClaws(); AudioManager.instance.Play("LClawsHit"); }
 
@@ -373,7 +373,7 @@ public class Enemy : MonoBehaviour{
         {
             DamageDealer damageDealer=other.GetComponent<DamageDealer>();
             DamageValues damageValues=DamageValues.instance;
-            if(gameObject!=null&&other.gameObject!=null)if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
+            if(gameObject!=null&&other.gameObject!=null)if(!damageDealer||!damageValues){/*Debug.LogWarning("No DamageDealer component or DamageValues instance");*/return;}
             float dmg = damageValues.GetDmg();
 
             var Pname = phaserPrefab.name; var Pname1 = phaserPrefab.name + "(Clone)";

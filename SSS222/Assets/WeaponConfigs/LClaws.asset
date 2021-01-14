@@ -18,21 +18,24 @@ MonoBehaviour:
   weaponType: 2
   weaponTypeProperties:
     id: 0
-  costType: 0
-  cost: 0.4
-  ovheat: 0
+  costType: 2
+  cost: 1
+  ovheat: 1
   ammoSize: 0
+  duration: 0
   references:
     version: 1
     00000000:
       type: {class: weaponTypeHybrid, ns: , asm: Assembly-CSharp}
       data:
-        bulletAsset: LClawsVFX
+        bulletAsset: LClaws
         b:
           leftSide: 1
           leftAnchor: {x: -0.35, y: 0}
+          leftAnchorE: {x: 0, y: 0}
           rightSide: 1
           rightAnchor: {x: 0.35, y: 0}
+          rightAnchorE: {x: 0, y: 0}
           randomSide: 0
           bulletAmount: 1
           speed: {x: 0, y: 9}
@@ -44,9 +47,11 @@ MonoBehaviour:
           shootDelay: 0.34
           holdDelayMulti: 1
           tapDelayMulti: 1
+          recoilStrength: 0
+          recoilTime: 0
           flare: 1
           flareDur: 0.3
         h:
           nameActive: lclawsA
           offset: {x: 0, y: 1}
-          energyPeriod: 0.15
+          energyPeriod: -1

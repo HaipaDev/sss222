@@ -22,8 +22,4 @@ public class Tag_Joystick : MonoBehaviour{
         transform.GetChild(0).localScale=new Vector2(size,size);
         Destroy(this);
     }
-
-    void Update(){
-        
-    }
 }

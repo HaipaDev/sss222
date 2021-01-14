@@ -8,11 +8,7 @@ public class Loader : MonoBehaviour{
     public float timer=1f;
     public AudioMixer audioMixer;
     bool loaded;
-    private void Awake() {
-        //if(Application.platform == RuntimePlatform.Android)timer=1.2f;
-    }
-    private void Load()
-    {
+    private void Load(){
         //FindObjectOfType<GameSession>().savableData.Load();
         if(Application.platform == RuntimePlatform.Android){SaveSerial.instance.settingsData.pprocessing=false;SaveSerial.instance.settingsData.scbuttons=true;}
         else{SaveSerial.instance.settingsData.pprocessing=true;SaveSerial.instance.settingsData.scbuttons=false;}

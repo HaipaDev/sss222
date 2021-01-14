@@ -153,7 +153,7 @@ public class DisruptersSpawner : MonoBehaviour{
                 }
             }
         }if(spawnGlareDevil==true){
-            if(EnergyCountGlareDevil>=mEnergyCountGlareDevil||(mEnergyCountGlareDevil==0 && timeSpawnsGlareDevil <= 0 && timeSpawnsGlareDevil > -4)){
+            if(EnergyCountGlareDevil>=mEnergyCountGlareDevil&&timeSpawnsGlareDevil<=0&&timeSpawnsGlareDevil!=-4||(mEnergyCountGlareDevil==0 && timeSpawnsGlareDevil <= 0 && timeSpawnsGlareDevil > -4)){
                 if(FindObjectOfType<GlareDevil>()==null){
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGlareDevil));
                     timeSpawnsGlareDevil = -4;
@@ -242,8 +242,7 @@ public class DisruptersSpawner : MonoBehaviour{
         WaveConfig selected = WeightedRandomizer.From(weights).TakeOne(); // Strongly-typed object returned. No casting necessary.
     }*/
     //public string GetWaveName(){return currentWave.waveName;}
-    void Update()
-    {
+    void Update(){
         Mathf.Clamp(EnergyCountVortexWheel,0,mEnergyCountVortexWheel);
         if(Time.timeScale>0.0001f){
             if(spawnLeech==true){
@@ -258,15 +257,15 @@ public class DisruptersSpawner : MonoBehaviour{
                 if(powerupsGoblin>=mPowerupsGoblin&&timeSpawnsGoblin > -0.01f){ timeSpawnsGoblin -= Time.deltaTime; }
                 else if(timeSpawnsGoblin == -4){ timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin); }
             }
-            if(spawnHealDrone==true && mEnemiesCountHealDrone!=0){
+            if(spawnHealDrone==true){//} && mEnemiesCountHealDrone!=0){
                 if(timeSpawnsHealDrone > -0.01f){ timeSpawnsHealDrone -= Time.deltaTime; }
                 else if(timeSpawnsHealDrone == -4){ timeSpawnsHealDrone = Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone); }
             }
-            if(spawnVortexWheel==true && mEnergyCountVortexWheel!=0){
+            if(spawnVortexWheel==true){//} && mEnergyCountVortexWheel!=0){
                 if(timeSpawnsVortexWheel > -0.01f){ timeSpawnsVortexWheel -= Time.deltaTime; }
                 else if(timeSpawnsVortexWheel == -4){ timeSpawnsVortexWheel = Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel); }
             }
-            if(spawnGlareDevil==true && mEnergyCountGlareDevil!=0){
+            if(spawnGlareDevil==true){//} && mEnergyCountGlareDevil!=0){
                 if(timeSpawnsGlareDevil > -0.01f){ timeSpawnsGlareDevil -= Time.deltaTime; }
                 else if(timeSpawnsGlareDevil == -4){ timeSpawnsGlareDevil = Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil); }
             }

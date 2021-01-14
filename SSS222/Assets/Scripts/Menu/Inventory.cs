@@ -23,8 +23,7 @@ public class Inventory : MonoBehaviour{
     public float[] chameleonColorArr = new float[3];
 
     SaveSerial saveSerial;
-    void Start()
-    {
+    void Start(){
         //if(skinID<1){skinID=1;}
         skins=FindObjectOfType<GameAssets>().skins;
         overlays=FindObjectOfType<GameAssets>().skinOverlays;
@@ -47,8 +46,7 @@ public class Inventory : MonoBehaviour{
     }
 
     // Invoked when the value of the slider changes.
-    public void ValueChangeCheck()
-    {
+    public void ValueChangeCheck(){
         chameleonColor = Color.HSVToRGB(Hslider.value, Sslider.value, Vslider.value);
         skinOverlay.color = chameleonColor;
         SsliderIMG.material.SetColor("_Color2", Color.HSVToRGB(Hslider.value,1,1));

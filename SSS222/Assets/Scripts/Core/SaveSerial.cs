@@ -40,13 +40,16 @@ public class SaveSerial : MonoBehaviour{
 		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
 	}
 	public void Delete(){
+		playerData=new PlayerData();
+		GC.Collect();
 		if (File.Exists(Application.persistentDataPath + "/"+filename)){
 			File.Delete(Application.persistentDataPath + "/"+filename);
+			Debug.Log("Game Data deleted");
 		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
 	}
 #endregion
 #region //Adventure Data
-	public AdventureData adv=new AdventureData();
+	public AdventureData advD=new AdventureData();
 	[System.Serializable]public class AdventureData{
 		public float xp=0;
 		public int total_UpgradesCount=0;
@@ -72,21 +75,25 @@ public class SaveSerial : MonoBehaviour{
 	public void SaveAdventure(){
 		SaveGame.Encode = adventureEncode;
 		SaveGame.Serializer = new SaveGameJsonSerializer();
-		SaveGame.Save(filenameAdventure, adv);
+		SaveGame.Save(filename, advD);
 		Debug.Log("Adventure Data saved");
 	}
 	public void LoadAdventure(){
 		if (File.Exists(Application.persistentDataPath + "/"+filenameAdventure)){
 			SaveGame.Encode = adventureEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
-			adv=SaveGame.Load<AdventureData>(filenameAdventure);
+			advD = SaveGame.Load<AdventureData>(filenameAdventure);
 			Debug.Log("Adventure Data loaded");
 		}else Debug.Log("Adventure Data file not found in "+Application.persistentDataPath+"/"+filenameAdventure);
 	}
-	public void DeleteAdventure(){
-		adv=null;
-		//GC.Collect();
+	public void ResetAdventure(){
+		if(advD==null){Debug.LogError("AdventureData null");}else{Debug.Log("AdventureData not empty");}
+		advD=new AdventureData();
+		GC.Collect();
 		Debug.Log("Adventure Data reset");
+	}
+	public void DeleteAdventure(){
+		ResetAdventure();
 		if(File.Exists(Application.persistentDataPath + "/"+filenameAdventure)){
 			File.Delete(Application.persistentDataPath + "/"+filenameAdventure);
 			Debug.Log("Adventure Data deleted");
@@ -94,19 +101,19 @@ public class SaveSerial : MonoBehaviour{
 	}
 #endregion
 #region//Settings Data
-	public SettingsData settingsData;
+	public SettingsData settingsData=new SettingsData();
 	[System.Serializable]public class SettingsData{
-		public string gameVersion;
-		public bool moveByMouse;
-		public bool fullscreen;
+		public string gameVersion="0.4";
+		public bool moveByMouse=true;
+		public bool fullscreen=true;
 		public bool pprocessing;
 		public bool scbuttons;
-		public int quality;
-		public float masterVolume;
-		public float soundVolume;
-		public float musicVolume;
+		public int quality=4;
+		public float masterVolume=0;
+		public float soundVolume=0;
+		public float musicVolume=-25;
 		public JoystickType joystickType;
-		public float joystickSize;
+		public float joystickSize=1;
 		public bool lefthand;
 	}	
 	public void SaveSettings(){
@@ -126,20 +133,21 @@ public class SaveSerial : MonoBehaviour{
 		else Debug.Log("Settings file not found in " + Application.persistentDataPath + "/" + filenameSettings);
 	}
 	public void ResetSettings(){
+		settingsData=new SettingsData();
+		GC.Collect();
 		if (File.Exists(Application.persistentDataPath + "/"+filenameSettings)){
 			File.Delete(Application.persistentDataPath + "/"+filenameSettings);
+			Debug.Log("Settings Data deleted");
 		}else Debug.Log("Settings file not found in "+Application.persistentDataPath+"/"+filenameSettings);
 	}
-	#endregion
+#endregion
 #region//Singleton
-	private void Awake()
-	{
+	private void Awake(){
 		SetUpSingleton();
 		instance=this;
 		playerData.highscore=new int[GameSession.gameModeMaxID];
 	}
-	private void SetUpSingleton()
-	{
+	private void SetUpSingleton(){
 		int numberOfObj = FindObjectsOfType<GameSession>().Length;
 		if (numberOfObj > 1)
 		{
@@ -150,55 +158,5 @@ public class SaveSerial : MonoBehaviour{
 			DontDestroyOnLoad(gameObject);
 		}
 	}
-#endregion
-#region//Old
-	/*public int highscore;
-    public void SaveGame()
-	{
-		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Open(Application.persistentDataPath
-					 + "/SaveData.dat", FileMode.OpenOrCreate);
-		SaveData data = new SaveData();
-		data.savedHscore = highscore;
-		bf.Serialize(file, data);
-		file.Close();
-		Debug.Log("Game data saved!");
-	}
-	public void LoadGame()
-	{
-		if (File.Exists(Application.persistentDataPath
-					   + "/SaveData.dat"))
-		{
-			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file =
-					   File.Open(Application.persistentDataPath
-					   + "/SaveData.dat", FileMode.Open);
-			SaveData data = (SaveData)bf.Deserialize(file);
-			file.Close();
-			highscore = data.savedHscore;
-			Debug.Log("Game data loaded!");
-		}
-		else
-			Debug.LogError("There is no save data!");
-	}
-	public void ResetData()
-	{
-		if (File.Exists(Application.persistentDataPath
-					  + "/SaveData.dat"))
-		{
-			File.Delete(Application.persistentDataPath
-							  + "/MySaveData.dat");
-			highscore = 0;
-			Debug.Log("Data reset complete!");
-		}
-		else
-			Debug.LogError("No save data to delete.");
-	}
-
-
-[Serializable]
-class SaveData{
-    public int savedHscore;
-}*/
 #endregion
 }

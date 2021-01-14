@@ -204,10 +204,7 @@ public class GameSession : MonoBehaviour{
         if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Escape)){FindObjectOfType<Level>().LoadStartMenu();}
         }
 
-        //var inv=false;
         if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().inverter==true)){
-            //inv=true;
-            //FindObjectOfType<Player>().inverter=false;
             foreach(AudioSource sound in FindObjectsOfType<AudioSource>()){
                 if(sound!=null){
                     GameObject snd=sound.gameObject;
@@ -218,8 +215,7 @@ public class GameSession : MonoBehaviour{
                     }
                 }
             }
-        }/*else if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
-        FindObjectOfType<Player>()!=null&&inv==true){FindObjectOfType<Player>().inverter=true;}*/
+        }
         if(FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().inverter==false){
             foreach(AudioSource sound in FindObjectsOfType<AudioSource>()){
                 if(sound!=null){
@@ -236,7 +232,6 @@ public class GameSession : MonoBehaviour{
         //Postprocessing
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
         if(SaveSerial.instance!=null){
-        //if(SaveSerial.instance.pprocessing==true && postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
         if(SaveSerial.instance.settingsData.pprocessing==true && postProcessVolume!=null){postProcessVolume.GetComponent<PostProcessVolume>().enabled=true;}
         if(SaveSerial.instance.settingsData.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
         }
@@ -244,7 +239,6 @@ public class GameSession : MonoBehaviour{
         if(UpgradeMenu.instance!=null)CalculateLuck();
 
         CheckCodes(0,0);
-        //if(SaveSerial.instance.fullscreen){Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);}
     }
 
     public int GetScore(){return score;}
@@ -277,8 +271,7 @@ public class GameSession : MonoBehaviour{
         if(p.enemiesCountReq!=-1){
             p.enemiesCount++;
         }    
-    }
-    }
+    }}
 
     public void ResetScore(){
         score=0;
@@ -303,46 +296,47 @@ public class GameSession : MonoBehaviour{
         yield return new WaitForSecondsRealtime(0.02f);
         var u=UpgradeMenu.instance;
         var s=SaveSerial.instance;
-        if(u!=null&&s!=null&&s.adv!=null){
-        s.adv.xp=coresXp;
-        s.adv.total_UpgradesCount=u.total_UpgradesCount;
-        s.adv.total_UpgradesLvl=u.total_UpgradesLvl;
-        s.adv.maxHealth_UpgradesCount=u.maxHealth_UpgradesCount;
-        s.adv.maxHealth_UpgradesLvl=u.maxHealth_UpgradesLvl;
-        s.adv.maxEnergy_UpgradesCount=u.maxEnergy_UpgradesCount;
-        s.adv.maxEnergy_UpgradesLvl=u.maxEnergy_UpgradesLvl;
-        s.adv.speed_UpgradesCount=u.speed_UpgradesCount;
-        s.adv.speed_UpgradesLvl=u.speed_UpgradesLvl;
-        s.adv.hpRegen_UpgradesCount=u.hpRegen_UpgradesCount;
-        s.adv.hpRegen_UpgradesLvl=u.hpRegen_UpgradesLvl;
-        s.adv.enRegen_UpgradesCount=u.enRegen_UpgradesCount;
-        s.adv.enRegen_UpgradesLvl=u.enRegen_UpgradesLvl;
-        s.adv.luck_UpgradesCount=u.luck_UpgradesCount;
-        s.adv.luck_UpgradesLvl=u.luck_UpgradesLvl;
+        if(u!=null&&s!=null&&s.advD!=null){
+        s.advD.xp=coresXp;
+        s.advD.total_UpgradesCount=u.total_UpgradesCount;
+        s.advD.total_UpgradesLvl=u.total_UpgradesLvl;
+        s.advD.maxHealth_UpgradesCount=u.maxHealth_UpgradesCount;
+        s.advD.maxHealth_UpgradesLvl=u.maxHealth_UpgradesLvl;
+        s.advD.maxEnergy_UpgradesCount=u.maxEnergy_UpgradesCount;
+        s.advD.maxEnergy_UpgradesLvl=u.maxEnergy_UpgradesLvl;
+        s.advD.speed_UpgradesCount=u.speed_UpgradesCount;
+        s.advD.speed_UpgradesLvl=u.speed_UpgradesLvl;
+        s.advD.hpRegen_UpgradesCount=u.hpRegen_UpgradesCount;
+        s.advD.hpRegen_UpgradesLvl=u.hpRegen_UpgradesLvl;
+        s.advD.enRegen_UpgradesCount=u.enRegen_UpgradesCount;
+        s.advD.enRegen_UpgradesLvl=u.enRegen_UpgradesLvl;
+        s.advD.luck_UpgradesCount=u.luck_UpgradesCount;
+        s.advD.luck_UpgradesLvl=u.luck_UpgradesLvl;
         yield return new WaitForSecondsRealtime(0.02f);
         s.SaveAdventure();
-        }//else{Debug.LogError("UpgradeMenu not present");}
+        Debug.Log("Adventure data saved in GameSession");
+        }else{if(u==null){Debug.LogError("UpgradeMenu not present");}else if(s==null){Debug.LogError("SaveSerial not present");}else if(s.advD==null){Debug.LogError("Adventure Data null");}}
     }
     public IEnumerator LoadAdventureI(){
         yield return new WaitForSecondsRealtime(0.04f);
         var u=UpgradeMenu.instance;
         var s=SaveSerial.instance;
-        if(u!=null&&s!=null&&s.adv!=null){
-        coresXp=s.adv.xp;
-        u.total_UpgradesCount=s.adv.total_UpgradesCount;
-        u.total_UpgradesLvl=s.adv.total_UpgradesLvl;
-        u.maxHealth_UpgradesCount=s.adv.maxHealth_UpgradesCount;
-        u.maxHealth_UpgradesLvl=s.adv.maxHealth_UpgradesLvl;
-        u.maxEnergy_UpgradesCount=s.adv.maxEnergy_UpgradesCount;
-        u.maxEnergy_UpgradesLvl=s.adv.maxEnergy_UpgradesLvl;
-        u.speed_UpgradesCount=s.adv.speed_UpgradesCount;
-        u.speed_UpgradesLvl=s.adv.speed_UpgradesLvl;
-        u.hpRegen_UpgradesCount=s.adv.hpRegen_UpgradesCount;
-        u.hpRegen_UpgradesLvl=s.adv.hpRegen_UpgradesLvl;
-        u.enRegen_UpgradesCount=s.adv.enRegen_UpgradesCount;
-        u.enRegen_UpgradesLvl=s.adv.enRegen_UpgradesLvl;
-        u.luck_UpgradesCount=s.adv.luck_UpgradesCount;
-        u.luck_UpgradesLvl=s.adv.luck_UpgradesLvl;
+        if(u!=null&&s!=null&&s.advD!=null){
+        coresXp=s.advD.xp;
+        u.total_UpgradesCount=s.advD.total_UpgradesCount;
+        u.total_UpgradesLvl=s.advD.total_UpgradesLvl;
+        u.maxHealth_UpgradesCount=s.advD.maxHealth_UpgradesCount;
+        u.maxHealth_UpgradesLvl=s.advD.maxHealth_UpgradesLvl;
+        u.maxEnergy_UpgradesCount=s.advD.maxEnergy_UpgradesCount;
+        u.maxEnergy_UpgradesLvl=s.advD.maxEnergy_UpgradesLvl;
+        u.speed_UpgradesCount=s.advD.speed_UpgradesCount;
+        u.speed_UpgradesLvl=s.advD.speed_UpgradesLvl;
+        u.hpRegen_UpgradesCount=s.advD.hpRegen_UpgradesCount;
+        u.hpRegen_UpgradesLvl=s.advD.hpRegen_UpgradesLvl;
+        u.enRegen_UpgradesCount=s.advD.enRegen_UpgradesCount;
+        u.enRegen_UpgradesLvl=s.advD.enRegen_UpgradesLvl;
+        u.luck_UpgradesCount=s.advD.luck_UpgradesCount;
+        u.luck_UpgradesLvl=s.advD.luck_UpgradesLvl;
 
         yield return new WaitForSeconds(0.1f);
         if(UpgradeMenu.instance!=null){
@@ -354,8 +348,8 @@ public class GameSession : MonoBehaviour{
                 var d=0;foreach(int id in g.lvlEventsIDs){if(d<g.lvlEventsIDs.Length-1){d++;}if(UpgradeMenu.instance.total_UpgradesLvl==g.lvlEventsIDs[d])g.lvlEvents[d].Invoke();}}
             }
         }
-        //Debug.Log("Adventure Data loaded");
-        }//else if(u==null){Debug.LogError("UpgradeMenu not present");}
+        Debug.Log("Adventure data laoded in GameSession");
+        }else{if(u==null){Debug.LogError("UpgradeMenu not present");}else if(s==null){Debug.LogError("SaveSerial not present");}else if(s.advD==null){Debug.LogError("Adventure Data null");}}
     }
     public void SaveSettings(){
         /*var ss=SaveSerial.instance;
@@ -384,17 +378,21 @@ public class GameSession : MonoBehaviour{
     public void DeleteAllHideConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((true)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((false)); }
     public void DeleteAll(){ SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure(); ResetSettings(); FindObjectOfType<Level>().LoadStartMenu();//FindObjectOfType<Level>().Restart();
     /*Destroy(SaveSerial.instance.gameObject);Destroy(this.gameObject); SaveSerial.instance=null;GameSession.instance=null;DamageValues.instance=null;*/}
+    public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}//FindObjectOfType<Level>().LoadStartMenu();}
+    
     public void ResetSettings(){
         SaveSerial.instance.ResetSettings();
         FindObjectOfType<Level>().RestartScene();
         SaveSerial.instance.SaveSettings();
-        /*var s=FindObjectOfType<SettingsMenu>();
-        s.moveByMouse=true;
-        s.quality=4;
-        s.fullscreen=true;
-        s.masterVolume=1;
-        s.soundVolume=1;
-        s.musicVolume=1;*/
+        var s=FindObjectOfType<SettingsMenu>();
+        /*SaveSerial.instance.settingsData.gameVersion="0.4";
+        SaveSerial.instance.settingsData.moveByMouse=true;
+        SaveSerial.instance.settingsData.quality=4;
+        SaveSerial.instance.settingsData.fullscreen=true;
+        SaveSerial.instance.settingsData.masterVolume=0;
+        SaveSerial.instance.settingsData.soundVolume=0;
+        SaveSerial.instance.settingsData.musicVolume=-25;
+        SaveSerial.instance.settingsData.joystickSize=1;*/
     }public void ResetMusicPitch(){
         if(FindObjectOfType<MusicPlayer>()!=null)FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;
     }
