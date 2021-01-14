@@ -5,7 +5,11 @@ using UnityEngine;
 public class Tag_Joystick : MonoBehaviour{
     [SerializeField] JoystickType joystickType;
     [SerializeField] Vector2 fixedPosition;
-    IEnumerator Start(){
+    void Start(){
+        StartCoroutine(ChangeType());
+        //Destroy(this);
+    }
+    public IEnumerator ChangeType(){
         yield return new WaitForSeconds(0.05f);
         joystickType=SaveSerial.instance.settingsData.joystickType;
         var vj=GetComponent<VariableJoystick>();
@@ -20,6 +24,5 @@ public class Tag_Joystick : MonoBehaviour{
         vj.SetMode(joystickType);
         var size=SaveSerial.instance.settingsData.joystickSize;
         transform.GetChild(0).localScale=new Vector2(size,size);
-        Destroy(this);
     }
 }

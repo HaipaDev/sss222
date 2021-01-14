@@ -104,7 +104,7 @@ public class SaveSerial : MonoBehaviour{
 	public SettingsData settingsData=new SettingsData();
 	[System.Serializable]public class SettingsData{
 		public string gameVersion="0.4";
-		public bool moveByMouse=true;
+		public InputType inputType;
 		public bool fullscreen=true;
 		public bool pprocessing;
 		public bool scbuttons;
@@ -115,7 +115,8 @@ public class SaveSerial : MonoBehaviour{
 		public JoystickType joystickType;
 		public float joystickSize=1;
 		public bool lefthand;
-	}	
+	}
+	
 	public void SaveSettings(){
 		SaveGame.Encode = settingsEncode;
 		SaveGame.Serializer = new SaveGameJsonSerializer();
@@ -160,3 +161,4 @@ public class SaveSerial : MonoBehaviour{
 	}
 #endregion
 }
+public enum InputType{mouse,touch,keyboard}

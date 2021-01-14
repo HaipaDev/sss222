@@ -10,10 +10,12 @@ public class SwitchPlacesCanvas : MonoBehaviour{
     [SerializeField] PosSetTransform[] placeSwitchSpec;
     [SerializeField] RectTransform[] anchorSwitchItemsL;
     [SerializeField] RectTransform[] anchorSwitchItemsR;
+    //bool switched;
     void Start(){
         if(setStart){Set();}
     }
     public void Set(){
+    //if(!switched){
         for(var i=0;i<placeSwitchItemsL.Length&&i<placeSwitchItemsR.Length;i++){
             var posL=placeSwitchItemsL[i].localPosition;var posR=placeSwitchItemsR[i].localPosition;
             placeSwitchItemsL[i].localPosition=posR;placeSwitchItemsR[i].localPosition=posL;
@@ -27,10 +29,15 @@ public class SwitchPlacesCanvas : MonoBehaviour{
         for(var i=0;i<placeSwitchSpec.Length;i++){
             placeSwitchSpec[i].SetPos(placeSwitchSpec[i].GetPos());
         }
-        Destroy(this);
+        RectTransform[] placeSwitchL=placeSwitchItemsL,placeSwitchR=placeSwitchItemsR;
+        RectTransform[] anchorSwitchL=anchorSwitchItemsL,anchorSwitchR=anchorSwitchItemsR;
+        placeSwitchItemsR=placeSwitchL;placeSwitchItemsL=placeSwitchR;
+        anchorSwitchItemsR=anchorSwitchL;anchorSwitchItemsL=anchorSwitchR;
+        //Destroy(this);
+        //switched=true;}
     }
     private void Update() {
-        if(lefthandSwitch){if(SaveSerial.instance.settingsData.lefthand){Set();}}
+        //if(lefthandSwitch){if(SaveSerial.instance.settingsData.lefthand){Set();}else{switched=false;}}
     }
     [System.Serializable]class PosSetTransform{
         [SerializeField]RectTransform rectTransform;

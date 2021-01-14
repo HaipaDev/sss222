@@ -374,8 +374,8 @@ public class GameSession : MonoBehaviour{
     }
     public void Save(){ SaveSerial.instance.Save(); SaveSerial.instance.SaveSettings(); }
     public void Load(){ SaveSerial.instance.Load(); SaveSerial.instance.LoadSettings(); }
-    public void DeleteAllShowConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((false)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((true)); }
-    public void DeleteAllHideConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((true)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((false)); }
+    //public void DeleteAllShowConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((false)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((true)); }
+    //public void DeleteAllHideConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((true)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((false)); }
     public void DeleteAll(){ SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure(); ResetSettings(); FindObjectOfType<Level>().LoadStartMenu();//FindObjectOfType<Level>().Restart();
     /*Destroy(SaveSerial.instance.gameObject);Destroy(this.gameObject); SaveSerial.instance=null;GameSession.instance=null;DamageValues.instance=null;*/}
     public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}//FindObjectOfType<Level>().LoadStartMenu();}
@@ -393,9 +393,15 @@ public class GameSession : MonoBehaviour{
         SaveSerial.instance.settingsData.soundVolume=0;
         SaveSerial.instance.settingsData.musicVolume=-25;
         SaveSerial.instance.settingsData.joystickSize=1;*/
-    }public void ResetMusicPitch(){
+    }
+    public void ResetMusicPitch(){
         if(FindObjectOfType<MusicPlayer>()!=null)FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;
     }
+    public void CloseSettings(){
+    if(GameSession.instance!=null){
+        if(SceneManager.GetActiveScene().name=="Options"){if(FindObjectOfType<Level>()!=null)FindObjectOfType<Level>().LoadStartMenu();}
+        else if(SceneManager.GetActiveScene().name=="Game"){if(FindObjectOfType<SettingsMenu>()!=null)FindObjectOfType<SettingsMenu>().Close();if(FindObjectOfType<PauseMenu>()!=null)FindObjectOfType<PauseMenu>().Pause();}
+    }}
 
     void CalculateLuck(){
         //ref float multiAmnt = ref enballMultiAmnt;

@@ -137,7 +137,7 @@ public class DisruptersSpawner : MonoBehaviour{
             }
         }
         if(spawnHealDrone==true){
-            if(EnemiesCountHealDrone>=mEnemiesCountHealDrone||(mEnemiesCountHealDrone==0 && timeSpawnsHealDrone <= 0 && timeSpawnsHealDrone > -4)){
+            if((EnemiesCountHealDrone>=mEnemiesCountHealDrone)||(mEnemiesCountHealDrone==0&&timeSpawnsHealDrone<=0&&timeSpawnsHealDrone>-4)){
                 if(FindObjectOfType<HealingDrone>()==null){
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHealDrone));
                     timeSpawnsHealDrone = -4;
@@ -145,7 +145,7 @@ public class DisruptersSpawner : MonoBehaviour{
                 }
             }
         }if(spawnVortexWheel==true){
-            if(EnergyCountVortexWheel>=mEnergyCountVortexWheel||(mEnergyCountVortexWheel==0 && timeSpawnsVortexWheel <= 0 && timeSpawnsVortexWheel > -4)){
+            if((EnergyCountVortexWheel>=mEnergyCountVortexWheel)||(mEnergyCountVortexWheel==0&&timeSpawnsVortexWheel<=0&&timeSpawnsVortexWheel>-4)){
                 if(FindObjectOfType<VortexWheel>()==null){
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgVortexWheel));
                     timeSpawnsVortexWheel = -4;
@@ -153,7 +153,7 @@ public class DisruptersSpawner : MonoBehaviour{
                 }
             }
         }if(spawnGlareDevil==true){
-            if(EnergyCountGlareDevil>=mEnergyCountGlareDevil&&timeSpawnsGlareDevil<=0&&timeSpawnsGlareDevil!=-4||(mEnergyCountGlareDevil==0 && timeSpawnsGlareDevil <= 0 && timeSpawnsGlareDevil > -4)){
+            if((EnergyCountGlareDevil>=mEnergyCountGlareDevil&&timeSpawnsGlareDevil<=0&&timeSpawnsGlareDevil!=-4)||(mEnergyCountGlareDevil==0&&timeSpawnsGlareDevil<=0&&timeSpawnsGlareDevil>-4)){
                 if(FindObjectOfType<GlareDevil>()==null){
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGlareDevil));
                     timeSpawnsGlareDevil = -4;

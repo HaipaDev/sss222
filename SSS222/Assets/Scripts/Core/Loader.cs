@@ -19,7 +19,7 @@ public class Loader : MonoBehaviour{
         }
         if (Application.platform != RuntimePlatform.Android){Screen.fullScreen = SaveSerial.instance.settingsData.fullscreen;if(SaveSerial.instance.settingsData.fullscreen)Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);
         QualitySettings.SetQualityLevel(SaveSerial.instance.settingsData.quality);}
-        if (Application.platform == RuntimePlatform.Android)SaveSerial.instance.settingsData.moveByMouse=false;
+        //if (Application.platform == RuntimePlatform.Android)SaveSerial.instance.settingsData.moveByMouse=false;
         audioMixer.SetFloat("MasterVolume", SaveSerial.instance.settingsData.masterVolume);
         audioMixer.SetFloat("SoundVolume", SaveSerial.instance.settingsData.soundVolume);
         audioMixer.SetFloat("MusicVolume", SaveSerial.instance.settingsData.musicVolume);

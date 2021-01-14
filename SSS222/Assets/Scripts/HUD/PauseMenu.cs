@@ -6,61 +6,65 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour{
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
+    public GameObject optionsUI;
     public float prevGameSpeed = 1f;
-
-    GameSession gameSession;
     IEnumerator slowDownCo;
     //Shop shop;
     void Start(){
-        gameSession = FindObjectOfType<GameSession>();
         Resume();
         //shop=FindObjectOfType<Shop>();
     }
     void Update(){
-        if(gameSession==null)gameSession = FindObjectOfType<GameSession>();
         if(Input.GetKeyDown(KeyCode.Escape)){
             if(GameIsPaused){
-                Resume();
+                if(pauseMenuUI.activeSelf)Resume();
+                if(optionsUI.transform.GetChild(0).gameObject.activeSelf){GameSession.instance.SaveSettings();GameSession.instance.CloseSettings();pauseMenuUI.SetActive(true);}
             }else{
-                if((Shop.instance!=null&&Shop.shopOpened!=true) && (UpgradeMenu.instance!=null&&UpgradeMenu.UpgradeMenuIsOpen!=true)||(Shop.instance==null||UpgradeMenu.instance==null))Pause();
+                if(((Shop.instance!=null&&Shop.shopOpened!=true)||(Shop.instance==null))&&
+                ((UpgradeMenu.instance!=null&&UpgradeMenu.UpgradeMenuIsOpen!=true)||(UpgradeMenu.instance==null)))Pause();
             }
         }//if(Input.GetKeyDown(KeyCode.R)){//in GameSession}
     }
     public void Resume(){
         pauseMenuUI.SetActive(false);
+        if(optionsUI.transform.GetChild(0).gameObject.activeSelf){GameSession.instance.CloseSettings();}
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
-        gameSession.gameSpeed=1;
+        GameSession.instance.gameSpeed=1;
         //StartCoroutine(SpeedUp());
         GameIsPaused = false;
         slowDownCo=null;
     }
     public void Pause(){
-        prevGameSpeed = gameSession.gameSpeed;
+        prevGameSpeed = GameSession.instance.gameSpeed;
         pauseMenuUI.SetActive(true);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         GameIsPaused = true;
-        if(gameSession.slowingPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
-        else{gameSession.gameSpeed=0;}
+        if(GameSession.instance.slowingPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
+        else{GameSession.instance.gameSpeed=0;}
         
         //ParticleSystem.Stop();
         //var ptSystems = FindObjectOfType<ParticleSystem>();
         //foreach(ptSystem in ptSystems){ParticleSystem.Pause();}
     }
     IEnumerator SlowDown(){
-        while(gameSession.gameSpeed>0){
-        gameSession.speedChanged=true; gameSession.gameSpeed -= 0.075f;
+        while(GameSession.instance.gameSpeed>0){
+        GameSession.instance.speedChanged=true; GameSession.instance.gameSpeed -= 0.075f;
         yield return new WaitForEndOfFrame();
         }
     }IEnumerator SpeedUp(){
-        while(gameSession.gameSpeed<1){
-        gameSession.speedChanged=true; gameSession.gameSpeed += 0.075f;
+        while(GameSession.instance.gameSpeed<1){
+        GameSession.instance.speedChanged=true; GameSession.instance.gameSpeed += 0.075f;
         yield return new WaitForEndOfFrame();
         }
     }
     public void Menu(){
-        //gameSession.gameSpeed = prevGameSpeed;
-        gameSession.gameSpeed = 1f;
+        //GameSession.instance.gameSpeed = prevGameSpeed;
+        GameSession.instance.gameSpeed = 1f;
         SceneManager.LoadScene("Menu");
     }
-    public void PreviousGameSpeed(){gameSession.gameSpeed = prevGameSpeed;}
+    public void OpenOptions(){
+        optionsUI.GetComponent<SettingsMenu>().OpenSettings();
+        pauseMenuUI.SetActive(false);
+    }
+    public void PreviousGameSpeed(){GameSession.instance.gameSpeed = prevGameSpeed;}
 }

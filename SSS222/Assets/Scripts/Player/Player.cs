@@ -341,7 +341,7 @@ public class Player : MonoBehaviour{
         //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
         dashTime = startDashTime;
-        moveByMouse = SaveSerial.instance.settingsData.moveByMouse;
+        if(SaveSerial.instance.settingsData.inputType==InputType.mouse)moveByMouse=true;else moveByMouse=false;
         defaultShipScale=shipScale;
         shipScaleMin*=defaultShipScale;
         shipScaleMax*=defaultShipScale;
@@ -452,6 +452,7 @@ public class Player : MonoBehaviour{
     }
 
     void Update(){
+        if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.inputType==InputType.mouse)moveByMouse=true;else moveByMouse=false;
         HandleInput(false);
         energy=Mathf.Clamp(energy,0,maxEnergy);
         health=Mathf.Clamp(health,0,maxHP);
@@ -465,12 +466,12 @@ public class Player : MonoBehaviour{
         RefillEnergy();
         if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
-            if(transform.GetChild(0)!=null)if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}
+            if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}}
             if(moveByMouse!=true){ MovePlayer(); }
             else{ MoveWithMouse(); }
         }else{
             if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
-            if(transform.GetChild(0)!=null)if(transform.GetChild(0).gameObject.activeSelf==true){transform.GetChild(0).gameObject.SetActive(false);}
+            if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==true){transform.GetChild(0).gameObject.SetActive(false);}}
         }
         if(shootTimer>0)shootTimer -= Time.deltaTime;
         if(instantiateTimer>0)instantiateTimer-=Time.deltaTime;
@@ -497,7 +498,7 @@ public class Player : MonoBehaviour{
         //if((autoShoot&&energyOn&&energy>0)&&(shootTimer<=0||shootCoroutine==null)){Shoot();}
         //Debug.Log(shootTimer);
         //Debug.LogWarning(shootCoroutine);
-        if(Application.platform==RuntimePlatform.Android)mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+        if(Application.platform==RuntimePlatform.Android)/*if(SaveSerial.instance.settingsData.inputType==InputType.touch)*/mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
         if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
     }
@@ -522,7 +523,8 @@ public class Player : MonoBehaviour{
         /* Perform any instantaneous actions, using Time.fixedDeltaTime where necessary */
     }
     void CountTimeMovementPressed(){
-        if (Application.platform == RuntimePlatform.Android){
+        if(SaveSerial.instance.settingsData.inputType==InputType.touch){
+        //if (Application.platform == RuntimePlatform.Android){
             if(joystick.Horizontal>0.2f || joystick.Horizontal<-0.2f){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(joystick.Vertical>0.2f || joystick.Vertical<-0.2f){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(((joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f)||(joystick.Vertical>0.2f||joystick.Vertical<-0.2f))&&Time.timeScale>0.01f){moving=true;}//Add to total time flying
@@ -541,22 +543,22 @@ public class Player : MonoBehaviour{
         }
     }
     
-    private void MovePlayer()
-    {
+    private void MovePlayer(){
         var deltaX=0f;
         var deltaY=0f;
         if (Input.GetButtonDown("Horizontal")){
             float timeSinceLastClick = Time.time - lastClickTime;
-            if (timeSinceLastClick <= DCLICK_TIME&&(dashDir==0||(dashDir<-1||dashDir>1))) {dashDir=(int)Input.GetAxisRaw("Horizontal")*2; Debug.Log(dashDir); DClick(dashDir); Debug.Log(dashDir); deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir; }
+            if (timeSinceLastClick <= DCLICK_TIME&&(dashDir==0||(dashDir<-1||dashDir>1))) {dashDir=(int)Input.GetAxisRaw("Horizontal")*2; /*Debug.Log(dashDir);*/ DClick(dashDir); /*Debug.Log(dashDir);*/ deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir; }
             else{ deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir; }
             lastClickTime = Time.time;  }
         if(Input.GetButtonDown("Vertical")){
             float timeSinceLastClick = Time.time - lastClickTime;
-            if(timeSinceLastClick<=DCLICK_TIME&&(dashDir==0||((dashDir<0&&dashDir>-2)||(dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical"); Debug.Log(dashDir); DClick(dashDir); Debug.Log(dashDir); deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
+            if(timeSinceLastClick<=DCLICK_TIME&&(dashDir==0||((dashDir<0&&dashDir>-2)||(dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical"); /*Debug.Log(dashDir);*/ DClick(dashDir); /*Debug.Log(dashDir);*/ deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
             else{ deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
             lastClickTime = Time.time; }
 
-        if(Application.platform==RuntimePlatform.Android){
+        //if(Application.platform==RuntimePlatform.Android){
+        if(SaveSerial.instance.settingsData.inputType==InputType.touch){
             deltaX = joystick.Horizontal * Time.deltaTime * moveSpeedCurrent * moveDir;
             deltaY = joystick.Vertical * Time.deltaTime * moveSpeedCurrent * moveDir;
         }else{
@@ -640,7 +642,8 @@ public class Player : MonoBehaviour{
 
     private void Shoot(){
         if(Time.timeScale>0.0001f){
-            if(Application.platform != RuntimePlatform.Android){
+            if(SaveSerial.instance.settingsData.inputType!=InputType.touch){
+            //if(Application.platform != RuntimePlatform.Android){
                 if(!autoShoot){
                     if(Input.GetButtonDown("Fire1")){
                         if(shootCoroutine!=null){return;}
@@ -696,7 +699,8 @@ public class Player : MonoBehaviour{
     public void DClick(int dir){
         //Debug.Log("DClick");
         if(shadow==true && (energy>0||!energyOn)){
-            if(Application.platform!=RuntimePlatform.Android){
+            if(SaveSerial.instance.settingsData.inputType!=InputType.touch){
+            //if(Application.platform!=RuntimePlatform.Android){
                 if(moveByMouse!=true){
                     if(dir<0&&dir>-2) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
                     if(dir>0&&dir<2){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
@@ -847,8 +851,6 @@ public class Player : MonoBehaviour{
                     if(wp.speedE!=Vector2.zero){speedx=UnityEngine.Random.Range(wp.speed.x,wp.speedE.x);speedy=UnityEngine.Random.Range(wp.speed.y,wp.speedE.y);}
                     float speedoffxL=wp.serialOffsetSpeed.x,speedoffyL=wp.serialOffsetSpeed.y;
                     float speedoffxR=wp.serialOffsetSpeed.x,speedoffyR=wp.serialOffsetSpeed.y;
-                    
-                    
                     Vector2 sL=new Vector2(-speedx,speedy),sR=new Vector2(speedx,speedy);
                     Vector3 rL=new Vector3(),rR=new Vector3();
                     float soundIntervalL=0,soundIntervalR=0;
@@ -856,14 +858,14 @@ public class Player : MonoBehaviour{
                     void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,
                     rL=new Vector3(rL.x+=wp.serialOffsetAngle.x,0,rL.z+=wp.serialOffsetAngle.y),soundIntervalL+=wp.serialOffsetSound){
                         if(wp.leftAnchorE!=Vector2.zero){posL=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.leftAnchor.x,wp.leftAnchorE.x),UnityEngine.Random.Range(wp.leftAnchor.y,wp.leftAnchorE.y))*shipScale;}
-                        sL=new Vector2(sL.x-=speedoffxL,sL.y+=speedoffyL);
                         bulletL=GameAssets.instance.Make(asset, posL) as GameObject;
                         if(bulletL!=null){
-                            if(wp.speedE!=Vector2.zero){speedoffxL=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyL=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
+                            if(i>1){if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxL=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyL=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
+                            sR=new Vector2(sL.x+=speedoffxL,sL.y+=speedoffyL);}
                             if(bulletL.GetComponent<Rigidbody2D>()!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;
                             if(bulletL.GetComponent<BounceFromEnemies>()!=null)bulletL.GetComponent<BounceFromEnemies>().speed=sL.y;
                             bulletL.transform.Rotate(rL);
-                            if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalL;
+                            if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalR;
                             if(bulletL.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletL.GetComponent<Tag_PlayerWeaponBlockable>().energy=w.cost;}
                         }}
                         if(wp.flare){GameAssets.instance.VFX("FlareShoot",posL,wp.flareDur);}
@@ -873,8 +875,8 @@ public class Player : MonoBehaviour{
                         if(wp.rightAnchorE!=Vector2.zero){posR=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.rightAnchor.x,wp.rightAnchorE.x),UnityEngine.Random.Range(wp.rightAnchor.y,wp.rightAnchorE.y))*shipScale;}
                         bulletR=GameAssets.instance.Make(asset, posR) as GameObject;
                         if(bulletR!=null){
-                            if(wp.speedE!=Vector2.zero){speedoffxR=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyR=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
-                            sR=new Vector2(sR.x+=speedoffxR,sR.y+=speedoffyR);
+                            if(i>1){if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxR=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyR=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
+                            sR=new Vector2(sR.x+=speedoffxR,sR.y+=speedoffyR);}
                             if(bulletR.GetComponent<Rigidbody2D>()!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;
                             if(bulletR.GetComponent<BounceFromEnemies>()!=null)bulletR.GetComponent<BounceFromEnemies>().speed=sR.y;
                             bulletR.transform.Rotate(rR);
@@ -1299,11 +1301,11 @@ public class Player : MonoBehaviour{
                 if(moveByMouse==true && dist<1){
                     GameSession.instance.gameSpeed=dist;
                     GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed);
-                }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType!=InputType.touch /*(Application.platform != RuntimePlatform.Android)*/ && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed);
-                }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType==InputType.touch /*(Application.platform == RuntimePlatform.Android)*/ && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed);
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
@@ -1325,11 +1327,11 @@ public class Player : MonoBehaviour{
                 if(moveByMouse==true && dist>0.35){
                     GameSession.instance.gameSpeed=dist+(1-0.35f);
                     GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
-                }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType!=InputType.touch /*(Application.platform != RuntimePlatform.Android)*/ && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
-                }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType==InputType.touch /*(Application.platform == RuntimePlatform.Android)*/ && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
@@ -1349,11 +1351,11 @@ public class Player : MonoBehaviour{
                 if(moveByMouse==true){
                     GameSession.instance.gameSpeed=dist;
                     GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed*2);
-                }else if(moveByMouse==false && (Application.platform != RuntimePlatform.Android) && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType!=InputType.touch /*(Application.platform != RuntimePlatform.Android)*/ && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed*2);
-                }else if(moveByMouse==false && (Application.platform == RuntimePlatform.Android) && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType==InputType.touch /*(Application.platform == RuntimePlatform.Android)*/ && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed*2);
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
