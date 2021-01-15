@@ -8,15 +8,13 @@ public class Level : MonoBehaviour{
     [SerializeField]Animator transitioner;
     [SerializeField]float transitionTime=0.35f;
     //float prevGameSpeed;
-    private void Awake()
-    {
-        GameSession.instance = GameSession.instance;
+    private void Awake(){
         GameSession.instance.gameSpeed=1f;
-        Time.timeScale = 1f;
+        Time.timeScale=1f;
         SetUpSingleton();
     }
     private void SetUpSingleton(){
-        int numberOfObj = FindObjectsOfType<GameSession>().Length;
+        int numberOfObj = FindObjectsOfType<Level>().Length;
         if(numberOfObj > 1){
             Destroy(gameObject);
         }else{
@@ -104,12 +102,13 @@ public class Level : MonoBehaviour{
             if(scene=="GameModeChoose"||scene=="Inventory"||scene=="Credits"){
                 LoadStartMenu();
             }if(scene=="Options"){
-                if(GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.activeSelf==true){
-                    GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive(false);
-                    GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive(true);
+            if(FindObjectOfType<SettingsMenu>()!=null){
+                if(FindObjectOfType<SettingsMenu>().transform.GetChild(1).gameObject.activeSelf==true){
+                    FindObjectOfType<SettingsMenu>().OpenSettings();
                 }else{
                     LoadStartMenu(); 
                 }
+            }else Debug.LogError("No SettingsMenu");
             }
     }}
 

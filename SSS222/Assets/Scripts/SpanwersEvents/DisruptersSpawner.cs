@@ -91,8 +91,7 @@ public class DisruptersSpawner : MonoBehaviour{
             mETimeSpawnsGlareDevil=i.mETimeSpawnsGlareDevil;
         }
     }
-    IEnumerator Start()
-    {
+    IEnumerator Start(){
         //waveDisplay = FindObjectOfType<WaveDisplay>();
         gameSession = FindObjectOfType<GameSession>();
         player = FindObjectOfType<Player>();
@@ -102,8 +101,7 @@ public class DisruptersSpawner : MonoBehaviour{
         if(spawnHealDrone==true)if(mEnemiesCountHealDrone==-1)timeSpawnsHealDrone = Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone);
         if(spawnVortexWheel==true)if(EnergyCountVortexWheel==-1)timeSpawnsVortexWheel = Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel);
         if(spawnGlareDevil==true)if(EnergyCountGlareDevil==-1)timeSpawnsGlareDevil = Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil);
-        do
-        {
+        do{
             yield return StartCoroutine(SpawnWaves());
         }
         while (looping);
@@ -140,7 +138,7 @@ public class DisruptersSpawner : MonoBehaviour{
             if((EnemiesCountHealDrone>=mEnemiesCountHealDrone)||(mEnemiesCountHealDrone==0&&timeSpawnsHealDrone<=0&&timeSpawnsHealDrone>-4)){
                 if(FindObjectOfType<HealingDrone>()==null){
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHealDrone));
-                    timeSpawnsHealDrone = -4;
+                    timeSpawnsHealDrone=-4;
                     EnemiesCountHealDrone=0;
                 }
             }
@@ -148,7 +146,7 @@ public class DisruptersSpawner : MonoBehaviour{
             if((EnergyCountVortexWheel>=mEnergyCountVortexWheel)||(mEnergyCountVortexWheel==0&&timeSpawnsVortexWheel<=0&&timeSpawnsVortexWheel>-4)){
                 if(FindObjectOfType<VortexWheel>()==null){
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgVortexWheel));
-                    timeSpawnsVortexWheel = -4;
+                    timeSpawnsVortexWheel=-4;
                     EnergyCountVortexWheel=0;
                 }
             }
@@ -156,7 +154,7 @@ public class DisruptersSpawner : MonoBehaviour{
             if((EnergyCountGlareDevil>=mEnergyCountGlareDevil&&timeSpawnsGlareDevil<=0&&timeSpawnsGlareDevil!=-4)||(mEnergyCountGlareDevil==0&&timeSpawnsGlareDevil<=0&&timeSpawnsGlareDevil>-4)){
                 if(FindObjectOfType<GlareDevil>()==null){
                     yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGlareDevil));
-                    timeSpawnsGlareDevil = -4;
+                    timeSpawnsGlareDevil=-4;
                     EnergyCountGlareDevil=0;
                 }
             }
@@ -251,23 +249,23 @@ public class DisruptersSpawner : MonoBehaviour{
             }
             if(spawnHlaser==true){
                 if(timeSpawnsHlaser>-0.01f){ timeSpawnsHlaser -= Time.deltaTime; }
-                else if(timeSpawnsHlaser == -4){ timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser); }
+                else if(timeSpawnsHlaser==-4){ timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser); }
             }
             if(spawnGoblin==true){
-                if(powerupsGoblin>=mPowerupsGoblin&&timeSpawnsGoblin > -0.01f){ timeSpawnsGoblin -= Time.deltaTime; }
-                else if(timeSpawnsGoblin == -4){ timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin); }
+                if(powerupsGoblin>=mPowerupsGoblin&&timeSpawnsGoblin>=0){ timeSpawnsGoblin -= Time.deltaTime; }
+                else if(timeSpawnsGoblin==-4){ timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin); }
             }
             if(spawnHealDrone==true){//} && mEnemiesCountHealDrone!=0){
-                if(timeSpawnsHealDrone > -0.01f){ timeSpawnsHealDrone -= Time.deltaTime; }
-                else if(timeSpawnsHealDrone == -4){ timeSpawnsHealDrone = Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone); }
+                if(timeSpawnsHealDrone>=0){ timeSpawnsHealDrone -= Time.deltaTime; }
+                else if(timeSpawnsHealDrone==-4){ timeSpawnsHealDrone = Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone); }
             }
             if(spawnVortexWheel==true){//} && mEnergyCountVortexWheel!=0){
-                if(timeSpawnsVortexWheel > -0.01f){ timeSpawnsVortexWheel -= Time.deltaTime; }
-                else if(timeSpawnsVortexWheel == -4){ timeSpawnsVortexWheel = Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel); }
+                if(timeSpawnsVortexWheel>=0){ timeSpawnsVortexWheel -= Time.deltaTime; }
+                else if(timeSpawnsVortexWheel==-4){ timeSpawnsVortexWheel = Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel); }
             }
             if(spawnGlareDevil==true){//} && mEnergyCountGlareDevil!=0){
-                if(timeSpawnsGlareDevil > -0.01f){ timeSpawnsGlareDevil -= Time.deltaTime; }
-                else if(timeSpawnsGlareDevil == -4){ timeSpawnsGlareDevil = Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil); }
+                if(timeSpawnsGlareDevil>=0){ timeSpawnsGlareDevil -= Time.deltaTime; }
+                else if(timeSpawnsGlareDevil==-4){ timeSpawnsGlareDevil = Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil); }
             }
             /*if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
             else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;

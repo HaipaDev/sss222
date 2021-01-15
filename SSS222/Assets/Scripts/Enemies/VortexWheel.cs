@@ -13,7 +13,7 @@ public class VortexWheel : MonoBehaviour{
     [Header("Values")]
     Tag_PlayerWeaponBlockable[] WeapsArr;
     KdTree<Tag_PlayerWeaponBlockable> Weaps;
-    public float chargeEnergy;
+    //public float chargeEnergy;
     public float timer=-4;
     
     float timeToDie;
@@ -31,6 +31,7 @@ public class VortexWheel : MonoBehaviour{
     void Start(){
         spr=GetComponent<SpriteRenderer>().sprite;
         timeToDie=UnityEngine.Random.Range(timeToDieMin,timeToDieMax);
+        if(timer==-4){timer=startTimer;}
     }
 
     void Update(){
@@ -45,20 +46,19 @@ public class VortexWheel : MonoBehaviour{
     }
     public KdTree<Tag_PlayerWeaponBlockable> FindAllLaserWeapons(){
         KdTree<Tag_PlayerWeaponBlockable> Weaps = new KdTree<Tag_PlayerWeaponBlockable>();
-        Tag_PlayerWeaponBlockable[] WeapsArr;
-        WeapsArr = FindObjectsOfType<Tag_PlayerWeaponBlockable>();
         //List<string> sublist = Enemies.FindAll(isHealingDrone);
-        foreach(Tag_PlayerWeaponBlockable weap in WeapsArr){
+        foreach(Tag_PlayerWeaponBlockable weap in FindObjectsOfType<Tag_PlayerWeaponBlockable>()){
             if(weap.charged==false){Weaps.Add(weap);
             //chargeEnergy++;
-            chargeEnergy+=weap.energy;
-            weap.charged=true;
+            //chargeEnergy+=weap.energy;
+            
                 if(timer==-4){timer=startTimer;}
                 else{if(timer>-4){
-                    if(weap.energy>1.5){timer-=weap.energy*chargeMultip;}else{timer-=weap.energy*chargeMultipS;}
+                    if(weap.energy>1.5){timer-=weap.energy*chargeMultip;}else{timer-=weap.energy*chargeMultipS;if(timer<-4){timer=0;Shoot();}}
                     }
                 }
             }
+            weap.charged=true;
             //if(enemy.GetComponent<HealingDrone>()!=null){Enemies.RemoveAt(System.Array.IndexOf(EnemiesArr, this));}
             //Debug.Log(System.Array.IndexOf(EnemiesArr, this));
             //Enemies.Find(this.GetComponent<HealingDrone>() healDrone);
@@ -69,10 +69,10 @@ public class VortexWheel : MonoBehaviour{
     }
 
     void Discharge(){
-        if(Time.timeScale>0.0001f)chargeEnergy+=0.01f;
+        //if(Time.timeScale>0.0001f)chargeEnergy+=0.01f;
         //if(timer>0)
         if(timer>-4)timer+=Time.deltaTime;
-        if(timer<-4)timer=-4;
+        //if(timer<-4)timer=-4;
         //if(timer<=0 && timer>-4){StartCoroutine(Die());}
         if(timer>timeToDie){StartCoroutine(Die());}
         

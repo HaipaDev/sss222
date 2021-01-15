@@ -10,7 +10,8 @@ public class PauseMenu : MonoBehaviour{
     public float prevGameSpeed = 1f;
     IEnumerator slowDownCo;
     //Shop shop;
-    void Start(){
+    IEnumerator Start(){
+        yield return new WaitForSeconds(0.05f);
         Resume();
         //shop=FindObjectOfType<Shop>();
     }
@@ -18,7 +19,8 @@ public class PauseMenu : MonoBehaviour{
         if(Input.GetKeyDown(KeyCode.Escape)){
             if(GameIsPaused){
                 if(pauseMenuUI.activeSelf)Resume();
-                if(optionsUI.transform.GetChild(0).gameObject.activeSelf){GameSession.instance.SaveSettings();GameSession.instance.CloseSettings();pauseMenuUI.SetActive(true);}
+                if(optionsUI.transform.GetChild(0).gameObject.activeSelf){GameSession.instance.SaveSettings();GameSession.instance.CloseSettings(true);pauseMenuUI.SetActive(true);}
+                if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();PauseEmpty();}
             }else{
                 if(((Shop.instance!=null&&Shop.shopOpened!=true)||(Shop.instance==null))&&
                 ((UpgradeMenu.instance!=null&&UpgradeMenu.UpgradeMenuIsOpen!=true)||(UpgradeMenu.instance==null)))Pause();
@@ -27,21 +29,24 @@ public class PauseMenu : MonoBehaviour{
     }
     public void Resume(){
         pauseMenuUI.SetActive(false);
-        if(optionsUI.transform.GetChild(0).gameObject.activeSelf){GameSession.instance.CloseSettings();}
+        if(optionsUI.transform.GetChild(0).gameObject.activeSelf){GameSession.instance.CloseSettings(false);}
+        //if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();}
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         GameSession.instance.gameSpeed=1;
         //StartCoroutine(SpeedUp());
         GameIsPaused = false;
         slowDownCo=null;
     }
-    public void Pause(){
-        prevGameSpeed = GameSession.instance.gameSpeed;
-        pauseMenuUI.SetActive(true);
+    public void PauseEmpty(){
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         GameIsPaused = true;
         if(GameSession.instance.slowingPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
         else{GameSession.instance.gameSpeed=0;}
-        
+    }
+    public void Pause(){
+        prevGameSpeed = GameSession.instance.gameSpeed;
+        pauseMenuUI.SetActive(true);
+        PauseEmpty();
         //ParticleSystem.Stop();
         //var ptSystems = FindObjectOfType<ParticleSystem>();
         //foreach(ptSystem in ptSystems){ParticleSystem.Pause();}

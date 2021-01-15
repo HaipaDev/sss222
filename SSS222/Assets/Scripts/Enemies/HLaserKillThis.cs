@@ -6,14 +6,16 @@ public class HLaserKillThis : MonoBehaviour{
     [SerializeField] GameObject hlaserPrefab;
     [SerializeField] GameObject cargoDrop;
     [SerializeField] float delay=1f;
-    private void OnTriggerEnter2D(Collider2D other)
-    {
+    private void OnTriggerEnter2D(Collider2D other){
         var hlaserName = hlaserPrefab.name;
         if(other.gameObject.name.Contains(hlaserName)){
             StartCoroutine(KillDelay());
             //if(!gameObject.name.Contains("Cargo"))Destroy(gameObject);
             //else StartCoroutine(Cargo());
         }
+    }
+    private void OnTriggerExit2D(Collider2D other) {
+        StopCoroutine(KillDelay());
     }
     IEnumerator KillDelay(){
         yield return new WaitForSeconds(delay);

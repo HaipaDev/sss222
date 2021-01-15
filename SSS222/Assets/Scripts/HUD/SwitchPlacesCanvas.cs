@@ -14,7 +14,7 @@ public class SwitchPlacesCanvas : MonoBehaviour{
     void Start(){
         if(setStart){Set();}
     }
-    public void Set(){
+    [ContextMenu("Set")]public void Set(){
     //if(!switched){
         for(var i=0;i<placeSwitchItemsL.Length&&i<placeSwitchItemsR.Length;i++){
             var posL=placeSwitchItemsL[i].localPosition;var posR=placeSwitchItemsR[i].localPosition;

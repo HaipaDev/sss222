@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
 //using UnityEngine.InputSystem;
+//using UnityEditor;
 
 public class Player : MonoBehaviour{
 #region Vars
@@ -196,7 +197,7 @@ public class Player : MonoBehaviour{
 #endregion
 #region//Energy/Weapon Durations
     [Header("Energy Costs")]
-    [SerializeField] public WeaponProperties[] weaponProperties;
+    [SerializeField] public List<WeaponProperties> weaponProperties;
     [SerializeField] public float shadowCost=5f;
     //Weapons
     /*[SerializeField] public float laserEn=0.3f;
@@ -341,7 +342,7 @@ public class Player : MonoBehaviour{
         //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
         dashTime = startDashTime;
-        if(SaveSerial.instance.settingsData.inputType==InputType.mouse)moveByMouse=true;else moveByMouse=false;
+        if(SaveSerial.instance.settingsData.inputType==InputType.mouse)SetMoveByMouse(true);else SetMoveByMouse(false);
         defaultShipScale=shipScale;
         shipScaleMin*=defaultShipScale;
         shipScaleMax*=defaultShipScale;
@@ -418,8 +419,24 @@ public class Player : MonoBehaviour{
         fragileMulti=i.fragileMulti;
         powerMulti=i.powerMulti;
         weaknsMulti=i.weaknsMulti;
-        //
-        weaponProperties=i.weaponProperties;
+        //WeaponProperties
+        //GameRules gr = (GameRules)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Config&UI/GameRulesets/GRDef.prefab", typeof(GameRules));
+        GameRules gr=null;
+        if(FindObjectOfType<GameCreator>()!=null)gr=FindObjectOfType<GameCreator>().gamerulesetsPrefabs[0];
+        if(gr!=null){
+        foreach(WeaponProperties wi in gr.weaponProperties){
+            if(!weaponProperties.Contains(wi)){weaponProperties.Add(wi);}
+        }}
+        foreach(WeaponProperties wi in i.weaponProperties){
+        for(var t=0;t<weaponProperties.Count;t++){
+            if(weaponProperties[t].name==wi.name){weaponProperties[t]=wi;}
+        }}
+        yield return new WaitForSecondsRealtime(0.04f);
+        for(var w=0;w<weaponProperties.Count;w++){
+            var wp=weaponProperties[w];
+            var wc=Instantiate(wp);
+            weaponProperties[w]=wc;
+        }
         ///Energy gains
         energyBallGet=i.energyBallGet;
         medkitEnergyGet=i.medkitEnergyGet;
@@ -443,16 +460,10 @@ public class Player : MonoBehaviour{
         shootMulti=shootMultiInit;
         dmgMulti=dmgMultiInit;
         armorMulti=armorMultiInit;
-
-        for(var w=0;w<weaponProperties.Length;w++){
-            var wp=weaponProperties[w];
-            var wi=Instantiate(wp);
-            weaponProperties[w]=wi;
-        }
     }
 
     void Update(){
-        if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.inputType==InputType.mouse)moveByMouse=true;else moveByMouse=false;
+        //if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.inputType==InputType.mouse)moveByMouse=true;else moveByMouse=false;
         HandleInput(false);
         energy=Mathf.Clamp(energy,0,maxEnergy);
         health=Mathf.Clamp(health,0,maxHP);
@@ -502,6 +513,7 @@ public class Player : MonoBehaviour{
 
         if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
     }
+    public void SetMoveByMouse(bool set){moveByMouse=set;}
     void FixedUpdate()
     {
         // If we're first at-bat, handle the input immediately and mark it already-handled.
@@ -849,8 +861,8 @@ public class Player : MonoBehaviour{
                     Vector2 posL=(Vector2)transform.position+wp.leftAnchor*shipScale,posR=(Vector2)transform.position+wp.rightAnchor*shipScale;
                     float speedx=wp.speed.x,speedy=wp.speed.y;
                     if(wp.speedE!=Vector2.zero){speedx=UnityEngine.Random.Range(wp.speed.x,wp.speedE.x);speedy=UnityEngine.Random.Range(wp.speed.y,wp.speedE.y);}
-                    float speedoffxL=wp.serialOffsetSpeed.x,speedoffyL=wp.serialOffsetSpeed.y;
-                    float speedoffxR=wp.serialOffsetSpeed.x,speedoffyR=wp.serialOffsetSpeed.y;
+                    float speedoffxL,speedoffyL;
+                    float speedoffxR,speedoffyR;
                     Vector2 sL=new Vector2(-speedx,speedy),sR=new Vector2(speedx,speedy);
                     Vector3 rL=new Vector3(),rR=new Vector3();
                     float soundIntervalL=0,soundIntervalR=0;
@@ -860,13 +872,15 @@ public class Player : MonoBehaviour{
                         if(wp.leftAnchorE!=Vector2.zero){posL=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.leftAnchor.x,wp.leftAnchorE.x),UnityEngine.Random.Range(wp.leftAnchor.y,wp.leftAnchorE.y))*shipScale;}
                         bulletL=GameAssets.instance.Make(asset, posL) as GameObject;
                         if(bulletL!=null){
-                            if(i>1){if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxL=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyL=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
-                            sR=new Vector2(sL.x+=speedoffxL,sL.y+=speedoffyL);}
-                            if(bulletL.GetComponent<Rigidbody2D>()!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;
+                            if(i>0){speedoffxL=wp.serialOffsetSpeed.x;speedoffyL=wp.serialOffsetSpeed.y;
+                                if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxL=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyL=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
+                                sL=new Vector2(sL.x-=speedoffxL,sL.y+=speedoffyL);}
+                            if(w.costType!=costType.boomerang)if(bulletL.GetComponent<Rigidbody2D>()!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;
+                            else{if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();}
                             if(bulletL.GetComponent<BounceFromEnemies>()!=null)bulletL.GetComponent<BounceFromEnemies>().speed=sL.y;
                             bulletL.transform.Rotate(rL);
                             if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalR;
-                            if(bulletL.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletL.GetComponent<Tag_PlayerWeaponBlockable>().energy=w.cost;}
+                            if(bulletL.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletL.GetComponent<Tag_PlayerWeaponBlockable>().energy=w.cost/wp.bulletAmount;}
                         }}
                         if(wp.flare){GameAssets.instance.VFX("FlareShoot",posL,wp.flareDur);}
                     }
@@ -875,13 +889,15 @@ public class Player : MonoBehaviour{
                         if(wp.rightAnchorE!=Vector2.zero){posR=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.rightAnchor.x,wp.rightAnchorE.x),UnityEngine.Random.Range(wp.rightAnchor.y,wp.rightAnchorE.y))*shipScale;}
                         bulletR=GameAssets.instance.Make(asset, posR) as GameObject;
                         if(bulletR!=null){
-                            if(i>1){if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxR=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyR=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
-                            sR=new Vector2(sR.x+=speedoffxR,sR.y+=speedoffyR);}
-                            if(bulletR.GetComponent<Rigidbody2D>()!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;
+                            if(i>0){speedoffxR=wp.serialOffsetSpeed.x;speedoffyR=wp.serialOffsetSpeed.y;
+                                if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxR=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyR=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
+                                sR=new Vector2(sR.x+=speedoffxR,sR.y+=speedoffyR);}
+                            if(w.costType!=costType.boomerang)if(bulletR.GetComponent<Rigidbody2D>()!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;
+                            else{if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();}
                             if(bulletR.GetComponent<BounceFromEnemies>()!=null)bulletR.GetComponent<BounceFromEnemies>().speed=sR.y;
                             bulletR.transform.Rotate(rR);
                             if(bulletR.GetComponent<IntervalSound>()!=null)bulletR.GetComponent<IntervalSound>().interval=soundIntervalR;
-                            if(bulletR.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletR.GetComponent<Tag_PlayerWeaponBlockable>().energy=w.cost;}
+                            if(bulletR.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletR.GetComponent<Tag_PlayerWeaponBlockable>().energy=w.cost/wp.bulletAmount;}
                         }}
                         if(wp.flare){GameAssets.instance.VFX("FlareShoot",posR,wp.flareDur);}
                     }
@@ -895,8 +911,8 @@ public class Player : MonoBehaviour{
                     if(w.ovheat!=0&&w.costType!=costType.boomerang)Overheat(w.ovheat);
                     if(w.costType==costType.boomerang){ammo=-1;instantiateTimer=w.ovheat;}
                     if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
-                    shootTimer=(wp.shootDelay*wp.holdDelayMulti)/shootMulti;
-                    yield return new WaitForSeconds((wp.shootDelay*wp.tapDelayMulti)/shootMulti);
+                    shootTimer=(wp.shootDelay*wp.tapDelayMulti)/shootMulti;
+                    yield return new WaitForSeconds((wp.shootDelay*wp.holdDelayMulti)/shootMulti);
                 }else{yield break;}
                 }else{if(!autoShoot){AudioManager.instance.Play("NoEnergy");} shootTimer=0f; shootCoroutine=null; yield break;}
                 #region OldPowerup System
@@ -1830,7 +1846,7 @@ public class Player : MonoBehaviour{
     }
     void LosePowerup(){
         if(losePwrupOutOfEn&&energy<=0){SetPowerup(powerupDefault);}
-        if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){SetPowerup(powerup=powerupDefault);ammo=-4;}
+        if((GetWeaponProperty(powerup)!=null&&GetWeaponProperty(powerup).costType!=costType.boomerang)||(GetWeaponPropertyActive(powerup)!=null&&GetWeaponPropertyActive(powerup).costType!=costType.boomerang))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){SetPowerup(powerup=powerupDefault);ammo=-4;}
     }
 
 

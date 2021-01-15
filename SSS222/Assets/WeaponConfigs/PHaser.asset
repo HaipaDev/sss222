@@ -22,6 +22,7 @@ MonoBehaviour:
   cost: 1.5
   ovheat: 0
   ammoSize: 0
+  duration: 10
   references:
     version: 1
     00000000:
@@ -29,18 +30,22 @@ MonoBehaviour:
       data:
         leftSide: 1
         leftAnchor: {x: -0.35, y: 0}
+        leftAnchorE: {x: 0, y: 0}
         rightSide: 1
         rightAnchor: {x: 0.35, y: 0}
+        rightAnchorE: {x: 0, y: 0}
         randomSide: 0
         bulletAmount: 1
-        speed: {x: 0, y: 10.5}
-        speedE: {x: 0, y: 0}
-        serialOffsetSpeed: {x: 0.55, y: 0}
-        serialOffsetSpeedE: {x: 0, y: 0}
+        speed: {x: 0, y: 8}
+        speedE: {x: 0, y: 12}
+        serialOffsetSpeed: {x: 0.6, y: -1}
+        serialOffsetSpeedE: {x: 0.8, y: 1}
         serialOffsetAngle: {x: 0, y: 5}
         serialOffsetSound: 0.03
         shootDelay: 0.2
         holdDelayMulti: 1
         tapDelayMulti: 1
+        recoilStrength: 0
+        recoilTime: 0
         flare: 1
         flareDur: 0.3

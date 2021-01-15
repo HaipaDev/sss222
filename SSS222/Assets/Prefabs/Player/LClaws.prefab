@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: -4609015006554659745}
   - component: {fileID: -393988683514688926}
   - component: {fileID: -666085093926352585}
+  - component: {fileID: 187051419354476101}
+  - component: {fileID: 4678851650050105784}
   m_Layer: 8
   m_Name: LClaws
   m_TagString: PlayerWeapons
@@ -329,8 +331,48 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4755926375889011706}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25e6c6b832c560e49ba53e12e39b219f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 9
+  enemiesHit: []
+--- !u!114 &187051419354476101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4755926375889011706}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d511bedfb301343be90de0073ddb0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 9
+  gravity: 9
+  firingAngle: 45
+  Target: {fileID: 0}
+  target_Distance: 0
+--- !u!114 &4678851650050105784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4755926375889011706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fce45689e3e8647ba71eda4d77c077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadow: {fileID: 0}
+  speed: 1
+  p0: {x: 0, y: 0, z: 0}
+  p1: {x: 0, y: 0, z: 0}
+  h: 1
+  s: 0
+  UP: {x: 0, y: 0, z: 1}
+  pc: {x: 0, y: 0, z: 0}
+  CameraNormal: {x: 0, y: 0.70710677, z: -0.70710677}

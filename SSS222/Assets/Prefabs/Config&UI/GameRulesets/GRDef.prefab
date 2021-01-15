@@ -238,7 +238,7 @@ MonoBehaviour:
   - name: LClaws
     lootItem: {fileID: 11400000, guid: 48ec4756caf9fcb4fab471d62d339935, type: 2}
     rarity: 1
-    dropChance: 1.5
+    dropChance: 0
     levelReq: 3
   - name: LSaber
     lootItem: {fileID: 11400000, guid: 58529076849c1924e91e0633da503bfc, type: 2}
@@ -623,7 +623,7 @@ MonoBehaviour:
     chargeMultipS: 1.3
     projectile: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2,
       type: 3}
-    numberOfProjectiles: 4
+    numberOfProjectiles: 12
     radius: 5
     moveSpeed: 5
   glareDevilSettings:

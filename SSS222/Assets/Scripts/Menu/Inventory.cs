@@ -17,21 +17,19 @@ public class Inventory : MonoBehaviour{
     [SerializeField] Slider Vslider;
     [SerializeField] Image SsliderIMG;
     [SerializeField] Image VsliderIMG;
+    [SerializeField] Material gradientShader;
     [HeaderAttribute("Properties")]
     public int chameleonOverlayID;
     public Color chameleonColor;
     public float[] chameleonColorArr = new float[3];
-
-    SaveSerial saveSerial;
     void Start(){
         //if(skinID<1){skinID=1;}
         skins=FindObjectOfType<GameAssets>().skins;
         overlays=FindObjectOfType<GameAssets>().skinOverlays;
-        saveSerial = FindObjectOfType<SaveSerial>();
-        skinID=saveSerial.playerData.skinID;
-        chameleonColorArr[0] = saveSerial.playerData.chameleonColor[0];
-        chameleonColorArr[1] = saveSerial.playerData.chameleonColor[1];
-        chameleonColorArr[2] = saveSerial.playerData.chameleonColor[2];
+        skinID=SaveSerial.instance.playerData.skinID;
+        chameleonColorArr[0] = SaveSerial.instance.playerData.chameleonColor[0];
+        chameleonColorArr[1] = SaveSerial.instance.playerData.chameleonColor[1];
+        chameleonColorArr[2] = SaveSerial.instance.playerData.chameleonColor[2];
         
         chameleonColor = Color.HSVToRGB(chameleonColorArr[0], chameleonColorArr[1], chameleonColorArr[2]);
         skinOverlay.color = chameleonColor;
@@ -43,6 +41,10 @@ public class Inventory : MonoBehaviour{
         Hslider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         Sslider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         Vslider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+
+        //SsliderIMG.material = Instantiate(Resources.Load("Shaders/SpriteGradient.shader") as Material);
+        SsliderIMG.material = Instantiate(gradientShader) as Material;
+        VsliderIMG.material = SsliderIMG.material;
     }
 
     // Invoked when the value of the slider changes.

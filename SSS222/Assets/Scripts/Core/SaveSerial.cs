@@ -149,13 +149,11 @@ public class SaveSerial : MonoBehaviour{
 		playerData.highscore=new int[GameSession.gameModeMaxID];
 	}
 	private void SetUpSingleton(){
-		int numberOfObj = FindObjectsOfType<GameSession>().Length;
-		if (numberOfObj > 1)
-		{
+		int numberOfObj = FindObjectsOfType<SaveSerial>().Length;
+		if (numberOfObj > 1){
 			Destroy(gameObject);
 		}
-		else
-		{
+		else{
 			DontDestroyOnLoad(gameObject);
 		}
 	}

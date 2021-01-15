@@ -10,8 +10,8 @@ public class Loader : MonoBehaviour{
     bool loaded;
     private void Load(){
         //FindObjectOfType<GameSession>().savableData.Load();
-        if(Application.platform == RuntimePlatform.Android){SaveSerial.instance.settingsData.pprocessing=false;SaveSerial.instance.settingsData.scbuttons=true;}
-        else{SaveSerial.instance.settingsData.pprocessing=true;SaveSerial.instance.settingsData.scbuttons=false;}
+        if(Application.platform == RuntimePlatform.Android){SaveSerial.instance.settingsData.inputType=InputType.touch;SaveSerial.instance.settingsData.pprocessing=false;SaveSerial.instance.settingsData.scbuttons=true;}
+        else{SaveSerial.instance.settingsData.inputType=InputType.mouse;SaveSerial.instance.settingsData.pprocessing=true;SaveSerial.instance.settingsData.scbuttons=false;}
         if(!loaded){
         SaveSerial.instance.Load();
         SaveSerial.instance.LoadSettings();

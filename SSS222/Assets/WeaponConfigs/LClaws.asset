@@ -30,7 +30,7 @@ MonoBehaviour:
       data:
         bulletAsset: LClaws
         b:
-          leftSide: 1
+          leftSide: 0
           leftAnchor: {x: -0.35, y: 0}
           leftAnchorE: {x: 0, y: 0}
           rightSide: 1
@@ -49,7 +49,7 @@ MonoBehaviour:
           tapDelayMulti: 1
           recoilStrength: 0
           recoilTime: 0
-          flare: 1
+          flare: 0
           flareDur: 0.3
         h:
           nameActive: lclawsA

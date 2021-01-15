@@ -397,10 +397,11 @@ public class GameSession : MonoBehaviour{
     public void ResetMusicPitch(){
         if(FindObjectOfType<MusicPlayer>()!=null)FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;
     }
-    public void CloseSettings(){
+    float settingsOpenTimer;
+    public void CloseSettings(bool goToPause){
     if(GameSession.instance!=null){
         if(SceneManager.GetActiveScene().name=="Options"){if(FindObjectOfType<Level>()!=null)FindObjectOfType<Level>().LoadStartMenu();}
-        else if(SceneManager.GetActiveScene().name=="Game"){if(FindObjectOfType<SettingsMenu>()!=null)FindObjectOfType<SettingsMenu>().Close();if(FindObjectOfType<PauseMenu>()!=null)FindObjectOfType<PauseMenu>().Pause();}
+        else if(SceneManager.GetActiveScene().name=="Game"&&PauseMenu.GameIsPaused){if(FindObjectOfType<SettingsMenu>()!=null)FindObjectOfType<SettingsMenu>().Close();if(FindObjectOfType<PauseMenu>()!=null&&goToPause)FindObjectOfType<PauseMenu>().Pause();}
     }}
 
     void CalculateLuck(){

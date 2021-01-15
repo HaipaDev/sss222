@@ -82,6 +82,7 @@ public class CometRandomProperties : MonoBehaviour{
 
         //Lunar Comets
         //if(GameSession.instance.shopOn){
+        //if(GameSession.instance.gameModeSelected!=2){
             if(Random.Range(0,100)<lunarCometChance)isLunar=true;
             if(isLunar==true){
                 spriteIndex=Random.Range(0,spritesLunar.Length);spriteRenderer.sprite=spritesLunar[spriteIndex];
@@ -92,8 +93,8 @@ public class CometRandomProperties : MonoBehaviour{
                 enemy.health*=lunarHealthMulti;
                 rb.velocity*=lunarSpeedMulti;
                 if(GameSession.instance.shopOn)enemy.coinChance=1;
-                
             }
+        //}
         //}
         //rotationSpeed=Random.Range(2,8);
         //Destroy(this,0.3f);
