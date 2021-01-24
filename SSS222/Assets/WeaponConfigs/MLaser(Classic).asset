@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74f905b4fa1c32244b5205d44cda0c7a, type: 3}
+  m_Name: MLaser(Classic)
+  m_EditorClassIdentifier: 
+  validate: 0
+  name: mlaser
+  assetName: MLaserC
+  weaponType: 0
+  weaponTypeProperties:
+    id: 0
+  costType: 0
+  cost: 0.33
+  ovheat: 0
+  ammoSize: 0
+  duration: 10
+  references:
+    version: 1
+    00000000:
+      type: {class: weaponTypeBullet, ns: , asm: Assembly-CSharp}
+      data:
+        leftSide: 1
+        leftAnchor: {x: -0.28, y: 0}
+        leftAnchorE: {x: -0.36, y: 0}
+        rightSide: 1
+        rightAnchor: {x: 0.28, y: 0}
+        rightAnchorE: {x: 0.36, y: 0}
+        randomSide: 0
+        bulletAmount: 8
+        speed: {x: 0, y: 9}
+        speedE: {x: 0, y: 10}
+        serialOffsetSpeed: {x: 0.4, y: -0.1}
+        serialOffsetSpeedE: {x: 0.16, y: 0.1}
+        serialOffsetAngle: {x: 0, y: 0}
+        serialOffsetSound: 0
+        shootDelay: 0.12
+        holdDelayMulti: 1
+        tapDelayMulti: 1
+        recoilStrength: 0
+        recoilTime: 0
+        flare: 1
+        flareDur: 0.3

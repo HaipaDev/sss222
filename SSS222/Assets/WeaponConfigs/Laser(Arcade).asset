@@ -42,9 +42,9 @@ MonoBehaviour:
         serialOffsetSpeedE: {x: 0, y: 0}
         serialOffsetAngle: {x: 0, y: 5}
         serialOffsetSound: 0.03
-        shootDelay: 0.3
-        holdDelayMulti: 0.75
-        tapDelayMulti: 0.5
+        shootDelay: 0.24
+        holdDelayMulti: 1
+        tapDelayMulti: 1.5
         recoilStrength: 0
         recoilTime: 0
         flare: 1

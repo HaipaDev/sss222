@@ -15,6 +15,7 @@ public class Shake : MonoBehaviour{
         camAnim.SetTrigger("shake");
         camAnim.speed=speed;
         mult=multiplier;
+        if(SaveSerial.instance.settingsData.vibrations)Vibrator.Vibrate((int)(22*(mult/speed)));
         if(debug==true)Debug.Log("Mult After: "+mult);
         }
         //camAnim.transform.position=new Vector3(x,y,10);

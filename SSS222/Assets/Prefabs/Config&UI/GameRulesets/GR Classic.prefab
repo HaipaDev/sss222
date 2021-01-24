@@ -249,13 +249,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: mPowerupsGoblin
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: maxEnergyPlayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: moveSpeedPlayer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -311,6 +316,11 @@ PrefabInstance:
         type: 3}
       propertyPath: waveList.Array.size
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: enShipSettings.distY
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -384,6 +394,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: weaponProperties.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: enemies.Array.data[0].bullet
+      value: 
+      objectReference: {fileID: 5313808222654050488, guid: d97f098552bac2e429e3463929028901,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: enemies.Array.data[0].health
       value: 7
       objectReference: {fileID: 0}
@@ -449,6 +470,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: weaponProperties.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: da916730931875347ab349643d645f00,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 39cc985f12878e34ab0b890ac4b1bcbf,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: ff79e4bf5a90ac14fbd6733d23b917c0,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: ec50b4ba40db4c24b81300129f10d2e3,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: e8c1a786afa19d14a92cd6e67a85ce8f,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: cometSettings.damageBySpeedSize
       value: 0
       objectReference: {fileID: 0}
@@ -460,9 +511,21 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: waveList.Array.data[1].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: e343078d848a6c9478c64c8b59d92021,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: waveList.Array.data[2].lootItem
       value: 
       objectReference: {fileID: 11400000, guid: 7ff674ba09f3c2d4a95c751103079f54,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: waveList.Array.data[4].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 2908b83377a92ec48baf12cc596f1805,
         type: 2}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -614,12 +677,12 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: enemies.Array.data[0].maxTimeBtwnShots
-      value: 1
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: enemies.Array.data[0].minTimeBtwnShots
-      value: 0.4
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

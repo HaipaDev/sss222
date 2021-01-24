@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HLaserKillThis : MonoBehaviour{
-    [SerializeField] GameObject hlaserPrefab;
     [SerializeField] GameObject cargoDrop;
     [SerializeField] float delay=1f;
     private void OnTriggerEnter2D(Collider2D other){
-        var hlaserName = hlaserPrefab.name;
+        var hlaserName = GameAssets.instance.Get("HLaser").name;
         if(other.gameObject.name.Contains(hlaserName)){
             StartCoroutine(KillDelay());
             //if(!gameObject.name.Contains("Cargo"))Destroy(gameObject);

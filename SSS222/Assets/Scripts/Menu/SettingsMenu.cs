@@ -16,6 +16,8 @@ public class SettingsMenu : MonoBehaviour{
     [SerializeField]GameObject scbuttonsToggle;
     [SerializeField]GameObject steeringToggle;
     [SerializeField]GameObject lefthandToggle;
+    [SerializeField]GameObject cheatToggle;
+    [SerializeField]GameObject vibrationsToggle;
     [SerializeField]GameObject masterSlider;
     [SerializeField]GameObject soundSlider;
     [SerializeField]GameObject musicSlider;
@@ -33,12 +35,19 @@ public class SettingsMenu : MonoBehaviour{
             scbuttonsToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.scbuttons;
             //steeringToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.moveByMouse;
             lefthandToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.lefthand;
+            cheatToggle.GetComponent<Toggle>().isOn = GameSession.instance.cheatmode;
+            vibrationsToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.vibrations;
 
             masterSlider.GetComponent<Slider>().value = SaveSerial.instance.settingsData.masterVolume;
             soundSlider.GetComponent<Slider>().value = SaveSerial.instance.settingsData.soundVolume;
             musicSlider.GetComponent<Slider>().value = SaveSerial.instance.settingsData.musicVolume;
         }
         if(SceneManager.GetActiveScene().name=="Options")OpenSettings();
+
+        if(SaveSerial.instance!=null){
+            foreach(Transform t in steeringToggle.transform.GetChild(0)){t.gameObject.SetActive(false);}
+            steeringToggle.transform.GetChild(0).GetChild((int)SaveSerial.instance.settingsData.inputType).gameObject.SetActive(true);
+        }
     }
     private void Update() {
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
@@ -87,6 +96,8 @@ public class SettingsMenu : MonoBehaviour{
     }}
     public void SetOnScreenButtons (bool onscbuttons){
         if(GameSession.instance!=null)if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.scbuttons = onscbuttons;
+    }public void SetVibrations (bool vibrations){
+        if(GameSession.instance!=null)if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.vibrations = vibrations;
     }
     public void SetSteering(){//bool isMovingByMouse){
     if(GameSession.instance!=null){
@@ -141,6 +152,6 @@ public class SettingsMenu : MonoBehaviour{
         if(GameSession.instance!=null)GameSession.instance.cheatmode = isCheatmode;
     }
     public void PlayDing(){
-        audioSource.Play();
+        if(GameSession.instance!=null)audioSource.Play();
     }
 }

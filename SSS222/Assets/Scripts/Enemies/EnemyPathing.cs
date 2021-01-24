@@ -10,54 +10,50 @@ public class EnemyPathing : MonoBehaviour{
     public List<Transform> waypointsL;
     public int waypointIndex = 0;
     public int enemyIndex = 0;
-
     Rigidbody2D rb;
     Player player;
-    // Start is called before the first frame update
     void Start(){
-        rb = GetComponent<Rigidbody2D>();
-        player = FindObjectOfType<Player>();
+        rb=GetComponent<Rigidbody2D>();
+        if(FindObjectOfType<Player>()!=null)player=FindObjectOfType<Player>();
         if(waveConfig!=null){
-            if (waveConfig.startToEndPath == true) {
-                waypointsS = waveConfig.GetWaypoints();
-                waypointsE = waveConfig.GetWaypointsEnd();
-                waypointIndex = enemyIndex;
+            if(waveConfig.startToEndPath==true) {
+                waypointsS=waveConfig.GetWaypoints();
+                waypointsE=waveConfig.GetWaypointsEnd();
+                waypointIndex=enemyIndex;
             }else{
                 if(waveConfig.randomPath==true){
-                    waypointsR = waveConfig.GetWaypointsRandomPath(enemyIndex);
+                    waypointsR=waveConfig.GetWaypointsRandomPath(enemyIndex);
                 }else if(waveConfig.randomPathEach==true){
-                    waypointsR = waveConfig.GetWaypointsRandomPathEach();
-                }else if (waveConfig.randomPoint == true){
-                    waypointsR = waveConfig.GetWaypointsRandomPoint();
+                    waypointsR=waveConfig.GetWaypointsRandomPathEach();
+                }else if(waveConfig.randomPoint==true){
+                    waypointsR=waveConfig.GetWaypointsRandomPoint();
                     if(waveConfig.loopPath==true){waypointsL=waveConfig.GetWaypointsLoop();}
                 //}else if(waveConfig.loopPath==true){waypointsL=waveConfig.GetWaypointsLoop();
                 }else{if(waveConfig.shipPlace!=true){
-                    waypointsS = waveConfig.GetWaypoints();
+                    waypointsS=waveConfig.GetWaypoints();
                 }}
             }
             if(waveConfig.loopPath!=true){
-            if (waveConfig.randomPath == true || waveConfig.randomPathEach==true || waveConfig.randomPoint==true){ transform.position = waypointsR[waypointIndex].transform.position; 
+            if(waveConfig.randomPath==true || waveConfig.randomPathEach==true || waveConfig.randomPoint==true){ transform.position = waypointsR[waypointIndex].transform.position; 
                 if(waveConfig.randomPoint==true && (waveConfig.GetMoveSpeed()!=0 || waveConfig.randomSpeed==true)){
-                    if(waveConfig.randomSpeed==false){rb.velocity = new Vector2(0f, -waveConfig.GetMoveSpeed()); }
-                    else{ rb.velocity = new Vector2(0f, Random.Range(-waveConfig.GetMoveSpeedS(), -waveConfig.GetMoveSpeedE())); }
+                    if(waveConfig.randomSpeed==false){rb.velocity=new Vector2(0f, -waveConfig.GetMoveSpeed());}
+                    else{rb.velocity=new Vector2(0f, Random.Range(-waveConfig.GetMoveSpeedS(), -waveConfig.GetMoveSpeedE()));}
                 }
             }
             else if(waveConfig.between2PtsPath==true){ var p0 = waypointsS[0].transform.position; var p1 = waypointsS[1].transform.position;
-                Vector3 v = p1 - p0;
-                transform.position = p0 + Random.value * v;
-                if(waveConfig.randomSpeed==false){rb.velocity = new Vector2(0f, -waveConfig.GetMoveSpeed()); }
-                else{ rb.velocity = new Vector2(0f, Random.Range(-waveConfig.GetMoveSpeedS(), -waveConfig.GetMoveSpeedE())); }
+                Vector3 v=p1-p0;
+                transform.position=p0+Random.value*v;
+                if(waveConfig.randomSpeed==false){rb.velocity = new Vector2(0f, -waveConfig.GetMoveSpeed());}
+                else{rb.velocity=new Vector2(0f, Random.Range(-waveConfig.GetMoveSpeedS(), -waveConfig.GetMoveSpeedE()));}
             }
-            else if(waveConfig.shipPlace==true){ transform.position = new Vector2(player.transform.position.x, 7.2f);
-                if (waveConfig.randomSpeed == false) { rb.velocity = new Vector2(0f, -waveConfig.GetMoveSpeed()); }
-                else { rb.velocity = new Vector2(0f, Random.Range(-waveConfig.GetMoveSpeedS(), -waveConfig.GetMoveSpeedE())); }
+            else if(waveConfig.shipPlace==true){transform.position = new Vector2(player.transform.position.x, 7.2f);
+                if(waveConfig.randomSpeed==false){rb.velocity = new Vector2(0f, -waveConfig.GetMoveSpeed());}
+                else{rb.velocity=new Vector2(0f, Random.Range(-waveConfig.GetMoveSpeedS(), -waveConfig.GetMoveSpeedE()));}
             }
-            else { transform.position = waypointsS[waypointIndex].transform.position; }
+            else{transform.position=waypointsS[waypointIndex].transform.position;}
             }
         }
     }
-
-    // Update is called once per frame
     void Update(){
         if(waveConfig!=null)Move();
         else{Debug.LogWarning(gameObject.name+" WaveConfig not found.");}
@@ -67,47 +63,41 @@ public class EnemyPathing : MonoBehaviour{
         this.waveConfig = waveConfig;
     }
 
-    private void Move()
-    {
-        if(waveConfig.startToEndPath==true)//Start-End Path
-        {
-            if (transform.position!= waypointsE[waypointIndex].transform.position)
-            {
+    void Move(){
+        if(waveConfig.startToEndPath==true){//Start-End Path
+            if (transform.position!= waypointsE[waypointIndex].transform.position){
                 var targetPos = waypointsE[waypointIndex].transform.position;
                 var step = waveConfig.GetMoveSpeed() * Time.deltaTime;
                 transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
                 //if (transform.position == targetPos)waypointIndex++;
-            }
-            else{ Destroy(gameObject); }
+            }else{Destroy(gameObject);}
         }else if(waveConfig.between2PtsPath==true){//Between 2 points
-            if(transform.position.y<-7.5f){ Destroy(gameObject); }
-        }else{
+            if(transform.position.y<-7.5f){Destroy(gameObject);}
+        }else if(waveConfig.randomPoint!=true){
             if(waveConfig.randomPath==true || waveConfig.randomPathEach==true){//Random Path
-                if (waypointIndex < waypointsR.Count)
-                {
-                    var targetPos = waypointsR[waypointIndex].transform.position;
-                    var step = waveConfig.GetMoveSpeed() * Time.deltaTime;
-                    transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
-                    if (transform.position == targetPos)waypointIndex++;
-                }else { Destroy(gameObject); }
+                if (waypointIndex<waypointsR.Count){
+                    var targetPos=waypointsR[waypointIndex].transform.position;
+                    var step=waveConfig.GetMoveSpeed()*Time.deltaTime;
+                    transform.position=Vector2.MoveTowards(transform.position, targetPos, step);
+                    if(transform.position==targetPos)waypointIndex++;
+                }else{Destroy(gameObject);}
             }//else if(waveConfig.randomPoint==true){}
             else{
                 if(waveConfig.shipPlace==false && waveConfig.loopPath==false){//Random Point
-                    if (waypointIndex < waypointsR.Count)
-                    {
-                        var targetPos = waypointsR[waypointIndex].transform.position;
-                        var step = waveConfig.GetMoveSpeed() * Time.deltaTime;
-                        transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
-                        if (transform.position == targetPos) waypointIndex++;
+                    if(waypointIndex<waypointsR.Count){
+                        var targetPos=waypointsR[waypointIndex].transform.position;
+                        var step=waveConfig.GetMoveSpeed()*Time.deltaTime;
+                        transform.position=Vector2.MoveTowards(transform.position, targetPos, step);
+                        if (transform.position==targetPos)waypointIndex++;
                     }
-                    else { Destroy(gameObject); }
+                    else{Destroy(gameObject);}
                 }if(waveConfig.loopPath==true){//Loop Path
-                    if (waypointIndex < waypointsL.Count){
-                        var targetPos = waypointsL[waypointIndex].transform.position;
-                        var step = waveConfig.GetMoveSpeed() * Time.deltaTime;
-                        transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
+                    if(waypointIndex<waypointsL.Count){
+                        var targetPos=waypointsL[waypointIndex].transform.position;
+                        var step=waveConfig.GetMoveSpeed()*Time.deltaTime;
+                        transform.position=Vector2.MoveTowards(transform.position, targetPos, step);
                         //GetComponent<Enemy>().curSpeed=step;
-                        if (transform.position == targetPos) waypointIndex++;
+                        if (transform.position==targetPos) waypointIndex++;
                         if(waypointIndex>=waypointsL.Count){waypointIndex=0;}
                     }else{waypointIndex=0;}
                 }

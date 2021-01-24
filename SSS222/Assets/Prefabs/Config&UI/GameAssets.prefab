@@ -126,6 +126,8 @@ MonoBehaviour:
     gobj: {fileID: 5313808222654050488, guid: db9b3ada35b914645a69d79ef0800df7, type: 3}
   - name: MLaser
     gobj: {fileID: 6041420664094412071, guid: 293c7e02b2b001849bb8df6402127050, type: 3}
+  - name: MLaserC
+    gobj: {fileID: 6041420664094412071, guid: bb4222f7cb788f74089e739f90e48fe6, type: 3}
   - name: Phaser
     gobj: {fileID: 5313808222654050488, guid: eeaf92f603acb7940b5e4aaf74fdcded, type: 3}
   - name: LSaber
@@ -186,6 +188,10 @@ MonoBehaviour:
     gobj: {fileID: 3147796775416149952, guid: 92194164acca2da419099a7a32b0924b, type: 3}
   - name: InfEnergyPwrup
     gobj: {fileID: 274471404120805607, guid: ac10109722a6fba46982fc73bae4abd7, type: 3}
+  - name: SpeedPwrup
+    gobj: {fileID: 274471404120805607, guid: 132ee9fb56a439247829a6de4942d64b, type: 3}
+  - name: SlowPwrup
+    gobj: {fileID: 274471404120805607, guid: b1a2eb5ef656b1845b6f9e2df9ca6261, type: 3}
   vfx:
   - name: Explosion
     gobj: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
@@ -207,6 +213,8 @@ MonoBehaviour:
     gobj: {fileID: 100000, guid: 35ccc4700eeeef8478e15d16ff7eed67, type: 3}
   - name: DMGPopup
     gobj: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3, type: 3}
+  - name: BFlameDMG
+    gobj: {fileID: 100000, guid: e2ce195318a38844aa897f96496098c8, type: 3}
   sprites:
   - name: armorPwrup
     spr: {fileID: 21300000, guid: 0aec6e8aedd36884fb81df377f1676ba, type: 3}
@@ -286,6 +294,10 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 47881baafc97c97489e76584de5acbb2, type: 3}
   - name: infEnergyPwrup
     spr: {fileID: 21300000, guid: 9f9e2a0fedbee33418433a4663aee1b5, type: 3}
+  - name: speedPwrup
+    spr: {fileID: 21300000, guid: 73f39eb4bd532e545a46ffde2d09e7c0, type: 3}
+  - name: slowPwrup
+    spr: {fileID: 21300000, guid: c22c1bc479d29714293c5b01dfbc1aa1, type: 3}
   skins:
   - {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}
   - {fileID: 21300000, guid: 8c3dccef1eacea141a8d89d0bd965366, type: 3}

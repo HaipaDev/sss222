@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6361041040622666652}
   - component: {fileID: 182006974740199065}
   - component: {fileID: -4076050431880435700}
+  - component: {fileID: 4548800055037187618}
   - component: {fileID: 801518567914847888}
   - component: {fileID: 6543032046267015800}
   - component: {fileID: 1490166543656379823}
@@ -195,10 +196,20 @@ MonoBehaviour:
   powercoreChance: 0
   specialDrop: {fileID: 0}
   yeeted: 0
-  dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
-    type: 3}
   dmgCounted: 0
   dmgCount: 0
+--- !u!114 &4548800055037187618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147796775416149952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9957469ac0c594981c65e4fda467ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &801518567914847888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,8 +254,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeMin: 0.4
   sizeMax: 1.4
+  size: 0
   healthBySize: 1
   damageBySpeedSize: 1
+  scoreBySize: 0
+  scoreSizes: []
   sprites:
   - {fileID: 21300000, guid: 99983d2108c82d9488eb046ba733b402, type: 3}
   - {fileID: 21300000, guid: 9a41682c86a2e8646ab244683f0ab5e5, type: 3}
@@ -256,10 +270,16 @@ MonoBehaviour:
   lunarCometChance: 10
   lunarHealthMulti: 2.5
   lunarSpeedMulti: 0.415
+  lunarScore: -1
+  lunarScoreS: 0
+  lunarScoreE: 0
+  lunarDrop: {fileID: 0}
+  lunarDropChance: 0
   spritesLunar:
   - {fileID: 21300000, guid: d77e60d2555e3794bb7b3751fc12984a, type: 3}
   - {fileID: 21300000, guid: 9707760d56d495d49ad28413a26f324c, type: 3}
   lunarPart: {fileID: 100000, guid: 3d92ff3b8ca41e040a35a255a84248e0, type: 3}
+  isLunar: 0
 --- !u!82 &1306324344444208931
 AudioSource:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -883894064529381646}
   - component: {fileID: -8452501916580590681}
   - component: {fileID: -9032015677107698449}
+  - component: {fileID: 7677142013132378562}
   m_Layer: 9
   m_Name: Soundwave
   m_TagString: EnemyBullet
@@ -53,6 +54,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -123,7 +125,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0013533533, y: 0.0010986328}
+  m_Offset: {x: 0, y: 0.14}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -134,7 +136,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.29064763, y: 0.40333468}
+  m_Size: {x: 0.28, y: 0.12}
   m_EdgeRadius: 0
 --- !u!114 &-1475010090061264466
 MonoBehaviour:
@@ -200,6 +202,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
     type: 3}
+  cargoDrop: {fileID: 0}
+  delay: 1
 --- !u!82 &-9032015677107698449
 AudioSource:
   m_ObjectHideFlags: 0
@@ -297,3 +301,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7677142013132378562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3443ef3e1dbb9be42b2c38ea223031c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentID: -1
+  hitboxValues:
+  - offset: {x: 0, y: 0.14}
+    size: {x: 0.28, y: 0.12}
+  - offset: {x: 0, y: 0}
+    size: {x: 0.24, y: 0.12}
+  - offset: {x: 0, y: -0.13}
+    size: {x: 0.16, y: 0.14}

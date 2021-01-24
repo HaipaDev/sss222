@@ -38,14 +38,21 @@ public class ShipSkinManager : MonoBehaviour{
     }
 
     void Update(){
-        if (skinID==1){
-            spr.sprite=skins[skinID];
-            overlay.sprite = overlays[chameleonOverlayID];
+        if(skinID==1){
+            SetSkin(skins[skinID]);
+            SetOverlay(overlays[chameleonOverlayID],chameleonOvColor);
             //chameleonOvColor.a = chameleonOvAlpha;
-            overlay.color = chameleonOvColor;
+        }else{
+            SetSkin(skins[skinID]);
         }
-        else{
-            spr.sprite=skins[skinID];
+    }
+    void SetSkin(Sprite sprite){
+        if(spr!=null)spr.sprite=sprite;
+    }
+    void SetOverlay(Sprite sprite, Color color){
+        if(overlay!=null){
+        overlay.sprite=sprite;
+        overlay.color=color;
         }
     }
     void LoadValues(){

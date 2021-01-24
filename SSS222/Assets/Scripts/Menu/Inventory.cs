@@ -42,9 +42,10 @@ public class Inventory : MonoBehaviour{
         Sslider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         Vslider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
 
-        //SsliderIMG.material = Instantiate(Resources.Load("Shaders/SpriteGradient.shader") as Material);
         SsliderIMG.material = Instantiate(gradientShader) as Material;
         VsliderIMG.material = SsliderIMG.material;
+        SsliderIMG.material.SetColor("_Color2", Color.HSVToRGB(Hslider.value,1,1));
+        VsliderIMG.color = Color.HSVToRGB(Hslider.value, 1, 1);
     }
 
     // Invoked when the value of the slider changes.

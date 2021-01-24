@@ -34,6 +34,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public bool ammoOn=true;
     [SerializeField] public int ammo = -4;
     [SerializeField] public string powerupDefault = "laser";
+    public bool weaponsLimited=false;
     public float powerupTimer=-4;
     [SerializeField] public bool losePwrupOutOfEn;
     [SerializeField] public bool losePwrupOutOfAmmo;
@@ -131,6 +132,15 @@ public class Player : MonoBehaviour{
     public float infEnergyTimer=-4;
     public float infPrevEnergy;
     [HideInInspector]public float infEnergyTime=-4;
+    [SerializeField] public bool speed=false;
+    public float speedPrev;
+    public float speedTimer=-4;
+    [HideInInspector]public float speedTime=-4;
+    [HideInInspector]public float speedStrength=1;
+    [SerializeField] public bool slow=false;
+    public float slowTimer=-4;
+    [HideInInspector]public float slowTime=-4;
+    [HideInInspector]public float slowStrength=1;
     [Header("State Defaults")]
     [SerializeField] public float flipTime=7f;
     [SerializeField] public float gcloverTime=6f;
@@ -230,21 +240,6 @@ public class Player : MonoBehaviour{
     public float refillDelay=1.6f;
     public float refillCount;
     [HideInInspector]public bool refillRandomized;
-
-    [Header("Weapon Durations")]
-    public bool weaponsLimited=false;
-    public float laser2Duration=10f;
-    public float laser3Duration=10f;
-    public float phaserDuration=10f;
-    public float mlaserDuration=10f;
-    public float lsaberDuration=10f;
-    public float lclawsDuration=10f;
-    public float cstreamDuration=10f;
-    public float hrocketDuration=10f;
-    public float qrocketDuration=10f;
-    public float procketDuration=10f;
-    public float plaserDuration=10f;
-    public float shadowBtDuration=10f;
 #endregion
 #region//Other
     [Header("Effects")]
@@ -357,6 +352,7 @@ public class Player : MonoBehaviour{
 
         bgSprite=GameObject.Find("BG ColorM").GetComponent<MeshRenderer>();
         //inputMaster.Player.Shoot.performed += _ => Shoot();
+        //if(!speeded&&!slowed){speedPrev=moveSpeedInit;}
     }
     void SetPrefabs(){
         explosionVFX=GameAssets.instance.GetVFX("Explosion");
@@ -388,6 +384,7 @@ public class Player : MonoBehaviour{
         fuelDrainAmnt=i.fuelDrainAmnt;
         fuelDrainFreq=i.fuelDrainFreq;
         powerup=i.powerupStarting;powerupDefault=i.powerupDefault;
+        weaponsLimited=i.weaponsLimited;
         losePwrupOutOfEn=i.losePwrupOutOfEn;losePwrupOutOfAmmo=i.losePwrupOutOfAmmo;
         armorMultiInit=i.armorMultiPlayer;
         dmgMultiInit=i.dmgMultiPlayer;
@@ -450,10 +447,12 @@ public class Player : MonoBehaviour{
 
         yield return new WaitForSecondsRealtime(0.06f);
         var u=UpgradeMenu.instance;
-        if(u!=null&&GameSession.instance.gameModeSelected==0){
+        if(GameSession.instance.gameModeSelected==0){
+        if(u!=null){
             maxHP+=(Mathf.Clamp(u.maxHealth_UpgradesLvl-1,0,999)*(u.maxHealth_UpgradesCountMax*u.maxHealth_UpgradeAmnt))+(u.maxHealth_UpgradeAmnt*u.maxHealth_UpgradesCount);/*if(u.total_UpgradesLvl>0)*/health=maxHP;
             maxEnergy+=(Mathf.Clamp(u.maxEnergy_UpgradesLvl-1,0,999)*(u.maxEnergy_UpgradesCountMax*u.maxEnergy_UpgradeAmnt))+(u.maxEnergy_UpgradeAmnt*u.maxEnergy_UpgradesCount);if(u.total_UpgradesLvl>0)energy=maxEnergy;
-        }else if(u==null){Debug.LogError("UpgradeMenu not found");}
+        }else{Debug.LogError("UpgradeMenu not found");}
+        }
     }
         moveSpeed=moveSpeedInit;
         moveSpeedCurrent=moveSpeed;
@@ -468,6 +467,7 @@ public class Player : MonoBehaviour{
         energy=Mathf.Clamp(energy,0,maxEnergy);
         health=Mathf.Clamp(health,0,maxHP);
         LosePowerup();
+        if(!ammoOn)ammo=-4;
         DrawOtherWeapons();
         if(GetComponent<PlayerSkills>()!=null){if(GetComponent<PlayerSkills>().timerTeleport==-4){Shoot();}}else{Shoot();}
         States();
@@ -478,8 +478,8 @@ public class Player : MonoBehaviour{
         if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
             if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}}
-            if(moveByMouse!=true){ MovePlayer(); }
-            else{ MoveWithMouse(); }
+            if(moveByMouse!=true){MovePlayer();}
+            else{MoveWithMouse();}
         }else{
             if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
             if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==true){transform.GetChild(0).gameObject.SetActive(false);}}
@@ -514,8 +514,7 @@ public class Player : MonoBehaviour{
         if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
     }
     public void SetMoveByMouse(bool set){moveByMouse=set;}
-    void FixedUpdate()
-    {
+    void FixedUpdate(){
         // If we're first at-bat, handle the input immediately and mark it already-handled.
         //HandleInput(true);
         //MovePlayer();
@@ -911,251 +910,10 @@ public class Player : MonoBehaviour{
                     if(w.ovheat!=0&&w.costType!=costType.boomerang)Overheat(w.ovheat);
                     if(w.costType==costType.boomerang){ammo=-1;instantiateTimer=w.ovheat;}
                     if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
-                    shootTimer=(wp.shootDelay*wp.tapDelayMulti)/shootMulti;
-                    yield return new WaitForSeconds((wp.shootDelay*wp.holdDelayMulti)/shootMulti);
+                    shootTimer=(wp.shootDelay/wp.tapDelayMulti)/shootMulti;
+                    yield return new WaitForSeconds((wp.shootDelay/wp.holdDelayMulti)/shootMulti);
                 }else{yield break;}
                 }else{if(!autoShoot){AudioManager.instance.Play("NoEnergy");} shootTimer=0f; shootCoroutine=null; yield break;}
-                #region OldPowerup System
-                /*if(powerup=="laser"){
-                    string laserPrefab=GetWeaponProperty("laser").assetName;
-                    float laserEn=GetWeaponProperty("laser").cost;
-                    GameObject laserL = GameAssets.instance.Make(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y)) as GameObject;
-                    GameObject laserR = GameAssets.instance.Make(laserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y)) as GameObject;
-                    GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flareL.gameObject, 0.3f);
-                    Destroy(flareR.gameObject, 0.3f);
-                    laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    AddSubEnergy(laserEn,false);
-                    laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn/2;
-                    laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laserEn/2;
-                        shootTimer = (laserShootPeriod*laserHoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds((laserShootPeriod*1.7f)/shootMulti);
-                        //shootCoroutine=null;
-                }else if(powerup=="laser2"){
-                    GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserL2 = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.4f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserR = Instantiate(laserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserR2 = Instantiate(laserPrefab, new Vector2(transform.position.x + 0.4f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flareL.gameObject, 0.3f);
-                    Destroy(flareR.gameObject, 0.3f);
-                    laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    laserL2.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.55f, laserSpeed);
-                    laserR2.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.55f, laserSpeed);
-                    laserL2.GetComponent<IntervalSound>().interval = 0.03f;
-                    laserR2.GetComponent<IntervalSound>().interval = 0.03f;
-                    laserL2.transform.eulerAngles=new Vector3(0,0,10f);
-                    laserR2.transform.eulerAngles=new Vector3(0,0,-10f);
-                    AddSubEnergy(laser2En,false);
-                    laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser2En/4;
-                    laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser2En/4;
-                    laserL2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser2En/4;
-                    laserR2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser2En/4;
-                        shootTimer = (laser2ShootPeriod*laser2HoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds(laser2ShootPeriod/shootMulti);
-                        //shootCoroutine=null;
-                }
-                else if (powerup == "laser3"){
-                    GameObject laserL = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.3f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserL2 = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.36f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserL3 = Instantiate(laserPrefab, new Vector2(transform.position.x - 0.43f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserR = Instantiate(laserPrefab, new Vector2(transform.position.x + 0.3f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserR2 = Instantiate(laserPrefab, new Vector2(transform.position.x + 0.36f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserR3 = Instantiate(laserPrefab, new Vector2(transform.position.x + 0.43f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flareL.gameObject, 0.3f);
-                    Destroy(flareR.gameObject, 0.3f);
-                    laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    laserL2.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.55f, laserSpeed);
-                    laserL3.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.65f, laserSpeed);
-                    laserR2.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.55f, laserSpeed);
-                    laserR3.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.65f, laserSpeed);
-                    laserL2.GetComponent<IntervalSound>().interval = 0.03f;
-                    laserL3.GetComponent<IntervalSound>().interval = 0.06f;
-                    laserR2.GetComponent<IntervalSound>().interval = 0.03f;
-                    laserR3.GetComponent<IntervalSound>().interval = 0.06f;
-                    laserL2.transform.eulerAngles = new Vector3(0, 0, 8f);
-                    laserL3.transform.eulerAngles = new Vector3(0, 0, 13f);
-                    laserR2.transform.eulerAngles = new Vector3(0, 0, -8f);
-                    laserR3.transform.eulerAngles = new Vector3(0, 0, -13f);
-                    AddSubEnergy(laser3En,false);
-                    laserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
-                    laserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
-                    laserL2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
-                    laserR2.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
-                    laserL3.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
-                    laserR3.GetComponent<Tag_PlayerWeaponBlockable>().energy=laser3En/6;
-                        shootTimer = (laser3ShootPeriod*laser3HoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds(laser3ShootPeriod/shootMulti);
-                        //shootCoroutine=null;
-                }else if (powerup == "phaser"){
-                    GameObject phaserL = Instantiate(phaserPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject phaserR = Instantiate(phaserPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flareL.gameObject, 0.3f);
-                    Destroy(flareR.gameObject, 0.3f);
-                    phaserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, phaserSpeed);
-                    phaserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, phaserSpeed);
-                    AddSubEnergy(phaserEn,false);
-                    phaserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=phaserEn/2;
-                    phaserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=phaserEn/2;
-                        shootTimer = (phaserShootPeriod*phaserHoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds(phaserShootPeriod/shootMulti);
-                        //shootCoroutine=null;
-                }else if (powerup == "mlaser"){
-                    var xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); var xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
-                    var yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); var yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
-                    for (var i=0; i<mlaserBulletsAmmount; i++){
-                        xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
-                        yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
-                        GameObject mlaserL = Instantiate(mlaserPrefab, new Vector2(xxL, yyL), Quaternion.identity) as GameObject;
-                        GameObject mlaserR = Instantiate(mlaserPrefab, new Vector2(xxR, yyR), Quaternion.identity) as GameObject;
-                        Rigidbody2D rbL = mlaserL.GetComponent<Rigidbody2D>(); rbL.velocity = new Vector2(rbL.velocity.x, UnityEngine.Random.Range(mlaserSpeedS, mlaserSpeedE));
-                        Rigidbody2D rbR = mlaserR.GetComponent<Rigidbody2D>(); rbR.velocity = new Vector2(rbR.velocity.x, UnityEngine.Random.Range(mlaserSpeedS, mlaserSpeedE));
-                        //AddSubEnergy(mlaserEn,false);
-                        mlaserL.GetComponent<Tag_PlayerWeaponBlockable>().energy=mlaserEn/mlaserBulletsAmmount;
-                        mlaserR.GetComponent<Tag_PlayerWeaponBlockable>().energy=mlaserEn/mlaserBulletsAmmount;
-                    }
-                    AddSubEnergy(mlaserEn*mlaserBulletsAmmount,false);
-                    //EnergyPopUpHUD(mlaserEn*mlaserBulletsAmmount);
-                    GameObject flareL = Instantiate(flareShootVFX, new Vector2(xxL, yyL - flareShootYY), Quaternion.identity) as GameObject;
-                    GameObject flareR = Instantiate(flareShootVFX, new Vector2(xxR, yyR - flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flareL.gameObject, 0.3f);
-                    Destroy(flareR.gameObject, 0.3f);
-                    Recoil(mlaserBulletsAmmount*0.75f,0.15f);
-                        shootTimer = (mlaserShootPeriod*mlaserHoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds(mlaserShootPeriod/shootMulti);
-                        //shootCoroutine=null;
-                //Rockets
-                }else if (powerup == "hrocket"){
-                    var xx = transform.position.x - 0.35f;
-                    if (UnityEngine.Random.Range(0f,1f)>0.5f){ xx = transform.position.x + 0.35f; }
-                    GameObject hrocket = Instantiate(hrocketPrefab, new Vector2(xx, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject flare = Instantiate(flareShootVFX, new Vector2(xx, transform.position.y+flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flare.gameObject, 0.3f);
-                    hrocket.GetComponent<Rigidbody2D>().velocity = new Vector2(0, hrocketSpeed);
-                    //AddSubEnergy(hrocketEn,false);
-                    Overheat(hrocketOh,true);
-                        shootTimer = (hrocketShootPeriod*hrocketHoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds(hrocketShootPeriod/shootMulti);
-                        //shootCoroutine=null;
-                }else if (powerup == "qrocket"){
-                    GameObject hrocketL = Instantiate(qrocketPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject hrocketR = Instantiate(qrocketPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flareL.gameObject, 0.3f);
-                    Destroy(flareR.gameObject, 0.3f);
-                    hrocketL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
-                    hrocketR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, qrocketSpeed);
-                    //AddSubEnergy(qrocketEn,false);
-                    Overheat(qrocketOh,true);
-                        shootTimer = (qrocketShootPeriod*qrocketHoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds(qrocketShootPeriod/shootMulti);
-                        //shootCoroutine=null;
-                }else if (powerup == "procket"){
-                    var xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); var xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
-                    var yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); var yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
-                    for (var i=0; i<procketsBulletsAmmount; i++){
-                        xxL = transform.position.x - 0.35f + UnityEngine.Random.Range(0.05f, 0.1f); xxR = transform.position.x + 0.35f + UnityEngine.Random.Range(0.05f, 0.1f);
-                        yyL = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f); yyR = transform.position.y + 0.1f + UnityEngine.Random.Range(0.25f, 0.45f);
-                        GameObject procketL = Instantiate(procketPrefab, new Vector2(xxL, yyL), Quaternion.identity) as GameObject;
-                        GameObject procketR = Instantiate(procketPrefab, new Vector2(xxR, yyR), Quaternion.identity) as GameObject;
-                        Rigidbody2D rbL = procketL.GetComponent<Rigidbody2D>(); rbL.velocity = new Vector2(rbL.velocity.x, UnityEngine.Random.Range(procketSpeedS, procketSpeedE));
-                        Rigidbody2D rbR = procketR.GetComponent<Rigidbody2D>(); rbR.velocity = new Vector2(rbR.velocity.x, UnityEngine.Random.Range(procketSpeedS, procketSpeedE));
-                        //AddSubEnergy(procketEn,false);
-                    }
-                        AddSubEnergy(procketEn*procketsBulletsAmmount,false);
-                        Overheat(procketOh*procketsBulletsAmmount,true);
-                        //EnergyPopUpHUD(procketEn*procketsBulletsAmmount);
-                        shootTimer = (procketShootPeriod*procketHoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds(procketShootPeriod/shootMulti);
-                        //shootCoroutine=null;
-                }else if(powerup=="lclawsA"){
-                    var enemy = FindClosestEnemy();
-                    if(enemy!=null){
-                        //AudioSource.PlayClipAtPoint(enemy.lsaberHitSFX, transform.position);
-                        GameObject clawsPart = Instantiate(lclawsVFX, enemy.transform.position, Quaternion.identity) as GameObject;
-                        Destroy(clawsPart, 0.15f);
-                        //enemy.health -= FindObjectOfType<DamageDealer>().GetDamageLCLaws();
-                    }else{ AudioManager.instance.Play("NoEnergy"); }
-                    AddSubEnergy(lclawsEn,false);
-                        shootTimer = 0.5f/shootMulti;
-                        yield return new WaitForSeconds(0.5f/shootMulti);
-                        //shootCoroutine=null;
-                }else if (powerup=="cstream"){
-                    var xx = transform.position.x - 0.35f;
-                    if (UnityEngine.Random.Range(0f,1f)>0.5f){ xx = transform.position.x + 0.35f; }
-                    GameObject cbullet = Instantiate(cbulletPrefab, new Vector2(xx, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject flare = Instantiate(flareShootVFX, new Vector2(xx, transform.position.y+flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flare.gameObject, 0.3f);
-                    cbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
-                    AddSubEnergy(cbulletEn,false);
-                    cbullet.GetComponent<Tag_PlayerWeaponBlockable>().energy=cbulletEn;
-                        shootTimer = (cbulletShootPeriod*cbulletHoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds(cbulletShootPeriod/shootMulti);
-                        //shootCoroutine=null;
-                }else if (powerup == "shadowbt"){
-                    GameObject laserL = Instantiate(shadowBTPrefab, new Vector2(transform.position.x - 0.35f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserR = Instantiate(shadowBTPrefab, new Vector2(transform.position.x + 0.35f, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject flareL = Instantiate(shadowShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    GameObject flareR = Instantiate(shadowShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flareL.gameObject, 0.3f);
-                    Destroy(flareR.gameObject, 0.3f);
-                    //laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
-                    //laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, shadowBTSpeed);
-                    AddSubEnergy(shadowBTEn,false);
-                        shootTimer = (shadowBTShootPeriod*shadowBTHoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds(shadowBTShootPeriod/shootMulti);
-                        //shootCoroutine=null;
-                }else if (powerup == "plaser"){
-                    float xx=0.2f;
-                    GameObject laserL = Instantiate(plaserPrefab, new Vector2(transform.position.x - 0.3f+xx, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserL2 = Instantiate(plaserPrefab, new Vector2(transform.position.x - 0.36f+xx, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserL3 = Instantiate(plaserPrefab, new Vector2(transform.position.x - 0.43f+xx, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserR = Instantiate(plaserPrefab, new Vector2(transform.position.x + 0.3f-xx, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserR2 = Instantiate(plaserPrefab, new Vector2(transform.position.x + 0.36f-xx, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject laserR3 = Instantiate(plaserPrefab, new Vector2(transform.position.x + 0.43f-xx, transform.position.y), Quaternion.identity) as GameObject;
-                    GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                    Destroy(flareL.gameObject, 0.3f);
-                    Destroy(flareR.gameObject, 0.3f);
-                    laserL.GetComponent<Rigidbody2D>().velocity = new Vector2(0, plaserSpeed);
-                    laserR.GetComponent<Rigidbody2D>().velocity = new Vector2(0, plaserSpeed);
-                    laserL2.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.45f, plaserSpeed);
-                    laserL3.GetComponent<Rigidbody2D>().velocity = new Vector2(-0.55f, plaserSpeed);
-                    laserR2.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.45f, plaserSpeed);
-                    laserR3.GetComponent<Rigidbody2D>().velocity = new Vector2(+0.55f, plaserSpeed);
-                    laserL2.GetComponent<IntervalSound>().interval = 0.03f;
-                    laserL3.GetComponent<IntervalSound>().interval = 0.06f;
-                    laserR2.GetComponent<IntervalSound>().interval = 0.03f;
-                    laserR3.GetComponent<IntervalSound>().interval = 0.06f;
-                    laserL2.transform.eulerAngles = new Vector3(0, 0, 8f);
-                    laserL3.transform.eulerAngles = new Vector3(0, 0, 13f);
-                    laserR2.transform.eulerAngles = new Vector3(0, 0, -8f);
-                    laserR3.transform.eulerAngles = new Vector3(0, 0, -13f);
-                    AddSubEnergy(plaserEn,false);
-                    Recoil(10f,0.2f);
-                        shootTimer = (plaserShootPeriod*plaserHoldSpeed)/shootMulti;
-                        yield return new WaitForSeconds(plaserShootPeriod/shootMulti);
-                        //shootCoroutine=null;
-                }*/ //else {if(powerup!="lsaberA" && powerup!="lclawsA" &&powerup!="cstream"&&powerup!="shadowbt"&&powerup!="null"){/*if(losePwrupOutOfEn)*/ shootTimer = 1f; yield break;}else{ yield break;}}
-            #endregion
-            /*if(overheatedTimer==-4){
-                //yield break;}
-                //if(powerup!="lclawsA"&&powerup!="cstream"&&powerup!="shadowbt"){}
-                
-                else if(powerup!="lsaberA" && powerup!="lclawsA" &&powerup!="cstream"&&powerup!="shadowbt"){yield break;}
-            }*/
-                //else if (powerup != "lsaber" && powerup != "lsaberA"){ yield return new WaitForSeconds(lsaberEnPeriod); }
-                //else {if(powerup!="lsaberA" && powerup!="lclawsA")/*if(losePwrupOutOfEn)*/powerup=powerupDefault; shootTimer=1f; yield return new WaitForSeconds(1f); }
         }else{yield break;}
         }else{yield break;}
     }}}
@@ -1226,7 +984,7 @@ public class Player : MonoBehaviour{
                 }
                 else{
                 if(go!=null){Destroy(go);}
-                moveSpeedCurrent=moveSpeed;
+                if(!speed&&!slow)moveSpeedCurrent=moveSpeed;
                 if(losePwrupOutOfEn)powerup=powerupDefault;
                 }
             }
@@ -1385,12 +1143,14 @@ public class Player : MonoBehaviour{
         if(decayTimer>0){decayTimer-=Time.deltaTime;}else{if(decayTimer>-4)ResetStatus("decay");}
         if(electrcTimer>0){electrcTimer-=Time.deltaTime;}else{if(electrcTimer>-4)ResetStatus("electrc");}
         if(frozenTimer>0){frozenTimer-=Time.deltaTime;}else{if(frozenTimer>-4)ResetStatus("frozen");}
-        if(armoredTimer>0){armoredTimer-=Time.deltaTime;}else{if(armoredTimer>-4)ResetStatus("armored");armoredMulti=1;}
-        if(fragileTimer>0){fragileTimer-=Time.deltaTime;}else{if(fragileTimer>-4)ResetStatus("fragile");fragileMulti=1;}
-        if(powerTimer>0){powerTimer-=Time.deltaTime;}else{if(powerTimer>-4)ResetStatus("power");powerMulti=1;}
-        if(weaknsTimer>0){weaknsTimer-=Time.deltaTime;}else{if(weaknsTimer>-4)ResetStatus("weakns");weaknsMulti=1;}
+        if(armoredTimer>0){armoredTimer-=Time.deltaTime;}else{if(armoredTimer>-4)if(armored){armoredStrength=1;}ResetStatus("armored");}
+        if(fragileTimer>0){fragileTimer-=Time.deltaTime;}else{if(fragileTimer>-4)if(fragile){fragileStrength=1;}ResetStatus("fragile");}
+        if(powerTimer>0){powerTimer-=Time.deltaTime;}else{if(powerTimer>-4)if(power){powerStrength=1;}ResetStatus("power");}
+        if(weaknsTimer>0){weaknsTimer-=Time.deltaTime;}else{if(weaknsTimer>-4)if(weakns){weaknsStrength=1;}ResetStatus("weakns");}
         if(hackedTimer>0){hackedTimer-=Time.deltaTime;}else{if(hackedTimer>-4)ResetStatus("hacked");}
         if(blindTimer>0){blindTimer-=Time.deltaTime;}else{if(blindTimer>-4)ResetStatus("blind");}
+        if(speedTimer>0){speedTimer-=Time.deltaTime;}else{if(speedTimer>-4)if(speed){speedStrength=1;moveSpeedCurrent=speedPrev;}ResetStatus("speed");}
+        if(slowTimer>0){slowTimer-=Time.deltaTime;}else{if(slowTimer>-4)if(slow){slowStrength=1;moveSpeedCurrent=speedPrev;}ResetStatus("slow");}
         if(armored==true&&fragile!=true){armorMulti=armoredMulti*armoredStrength;}else if(fragile==true&&armored!=true){armorMulti=fragileMulti/fragileStrength;}
         if(armored!=true&&fragile!=true){armorMulti=1;}if(armored==true&&fragile==true){armorMulti=fragileStrength*armoredStrength;}
         if(power==true&&weakns!=true){dmgMulti=powerMulti*powerStrength;}else if(weakns==true&&power!=true){dmgMulti=weaknsMulti/weaknsStrength;}
@@ -1398,6 +1158,8 @@ public class Player : MonoBehaviour{
         if(onfire){if(frozen){ResetStatus("frozen");/*Damage(1,dmgType.silent);*/}}
         if(infEnergyTimer>0){infEnergyTimer-=Time.deltaTime;}else{if(infEnergyTimer>-4){ResetStatus("infEnergy");}}
         if(infEnergy){energy=infPrevEnergy;}
+        if(speed==true&&slow!=true){moveSpeedCurrent=speedPrev*(1.25f*speedStrength);}else if(slow==true&&speed!=true){moveSpeedCurrent=speedPrev/(2*slowStrength);}else if(speed&&slow){moveSpeedCurrent=moveSpeed;}
+        //if(speeded!=true&&slowed!=true){moveSpeedCurrent=moveSpeed;}if(speeded==true&&slowed==true){}
     }
     
     private void Shadow(){
@@ -1420,6 +1182,7 @@ public class Player : MonoBehaviour{
     }
     IEnumerator RecoilI(float strength,float time){
         shake.CamShake(0.1f,1/(time*4));
+        if(SaveSerial.instance.settingsData.vibrations)Vibrator.Vibrate(2);
         rb.velocity = Vector2.down*strength;
         yield return new WaitForSeconds(time);
         rb.velocity=Vector2.zero;
@@ -1499,6 +1262,16 @@ public class Player : MonoBehaviour{
         infPrevEnergy=energy;
         infEnergyTime=duration;
         SetStatus("infEnergy");
+    }public void Speed(float duration,float strength){
+        speedPrev=moveSpeedCurrent;
+        speedTime=duration;
+        speedStrength=strength;
+        SetStatus("speed");
+    }public void Slow(float duration,float strength){
+        speedPrev=moveSpeedCurrent;
+        slowTime=duration;
+        slowStrength=strength;
+        SetStatus("slow");
     }
 #endregion
 
@@ -1548,7 +1321,7 @@ public class Player : MonoBehaviour{
                     //refilltxtS=GameObject.Find("RefillText1");
                     //refilltxtE=GameObject.Find("RefillText2");
                     if(refillCount==0){
-                        ////GameObject.Find("HUD 9:16/Game Canvas/RefillUI/RandomArrows").SetActive(false);\
+                        ///GameObject.Find("HUD 9:16/Game Canvas/RefillUI/RandomArrows").SetActive(false);\
                         //GameObject.Find("RandomArrows").SetActive(false);
                         //refilltxtE.SetActive(false);
                         refillCostS=5;
@@ -1846,7 +1619,7 @@ public class Player : MonoBehaviour{
     }
     void LosePowerup(){
         if(losePwrupOutOfEn&&energy<=0){SetPowerup(powerupDefault);}
-        if((GetWeaponProperty(powerup)!=null&&GetWeaponProperty(powerup).costType!=costType.boomerang)||(GetWeaponPropertyActive(powerup)!=null&&GetWeaponPropertyActive(powerup).costType!=costType.boomerang))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){SetPowerup(powerup=powerupDefault);ammo=-4;}
+        if(ammoOn&&((GetWeaponProperty(powerup)!=null&&GetWeaponProperty(powerup).costType!=costType.boomerang)||(GetWeaponPropertyActive(powerup)!=null&&GetWeaponPropertyActive(powerup).costType!=costType.boomerang)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){SetPowerup(powerup=powerupDefault);ammo=-4;}
     }
 
 

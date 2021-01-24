@@ -56,6 +56,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -125,7 +126,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0008440837, y: -0.002699852}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -136,7 +137,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.22032945, y: 1.3462591}
+  m_Size: {x: 0.15, y: 1.35}
   m_EdgeRadius: 0
 --- !u!114 &6933774967642700524
 MonoBehaviour:
@@ -295,6 +296,7 @@ MonoBehaviour:
   targetTag: 
   xx: 0
   yy: -1.12
+  targetObj: {fileID: 0}
 --- !u!114 &-6549206056605608955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f6045237e60644b821afbacc05e85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lsaberBlockSFX: {fileID: 8300000, guid: 0fb708057a45abc4d9164ef3cf2bac0e, type: 3}
   enemy: 1
 --- !u!114 &-3757006707862222013
 MonoBehaviour:

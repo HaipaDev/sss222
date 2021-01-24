@@ -701,8 +701,9 @@ MonoBehaviour:
   placeSwitchSpec:
   - rectTransform: {fileID: 2891871714886297027}
     pos: {x: 0, y: -473}
-  anchorSwitchItemsL:
-  - {fileID: 8429984816886233568}
+  - rectTransform: {fileID: 8429984816886233568}
+    pos: {x: 0, y: 0}
+  anchorSwitchItemsL: []
   anchorSwitchItemsR:
   - {fileID: 2891871714886297027}
 --- !u!1 &5012690594239242795
@@ -1192,7 +1193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystickType: 0
-  fixedPosition: {x: 256, y: 348}
+  fixedPosition: {x: -15, y: -92}
 --- !u!1 &8764870380245557216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,8 +1544,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087803815115471, guid: ec536a7718376554185e4a856d5ae230,
+        type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 348
+      value: -92
       objectReference: {fileID: 0}
     - target: {fileID: 3881087804030458057, guid: ec536a7718376554185e4a856d5ae230,
         type: 3}

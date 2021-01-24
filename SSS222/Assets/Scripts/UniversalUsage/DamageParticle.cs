@@ -11,10 +11,6 @@ public class DamageParticle : MonoBehaviour{
     void Start(){
         //Destroy(gameObject,0.07f);
     }
-    void Update(){
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.CompareTag("Enemy")&&other.gameObject.GetComponent<VortexWheel>()==null&&enemies==true){
             var enemy=other.GetComponent<Enemy>();
@@ -26,7 +22,7 @@ public class DamageParticle : MonoBehaviour{
             var player=other.GetComponent<Player>();
             player.Damage(dmgPlayer,dmgType);
             if(FindObjectOfType<GameSession>().dmgPopups==true){
-                GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(other.GetComponent<PlayerCollider>().dmgPopupPrefab,transform.position);
+                GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(GameAssets.instance.GetVFX("DMGPopup"),transform.position);
                 dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
                 dmgpopup.transform.localScale=new Vector2(2,2);
                 dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmgPlayer.ToString();

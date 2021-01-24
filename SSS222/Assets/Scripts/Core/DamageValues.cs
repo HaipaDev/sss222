@@ -14,6 +14,7 @@ public enum dmgType{
 public class DamageValues : MonoBehaviour{
     public static DamageValues instance;
     float dmg = 5;
+    float dmgFlame = 1;
     float dmgZone = 2;
     float dmgLaser = 5f;
     float dmgPhaser = 0.5f;
@@ -27,7 +28,7 @@ public class DamageValues : MonoBehaviour{
     float dmgPRocketExpl = 0.5f;
     float dmgCBullet = 2f;
     float dmgPlaser = 6.78f;
-    ////PLaser damage is inside the obj
+    //PLaser damage is inside the obj
     float dmgMPulse = 130f;
 
     float dmgComet = 10f;
@@ -56,6 +57,7 @@ yield return new WaitForSeconds(0.08f);
 var i=GameRules.instance;
 if(i!=null){
     dmg=i.dmg;
+    //dmgFlame=i.dmgFlame;
     dmgZone=i.dmgZone;
     dmgLaser=i.dmgLaser;
     dmgPhaser=i.dmgPhaser;
@@ -92,6 +94,7 @@ if(i!=null){
 #endregion
 #region//Get Functions
     public float GetDmg(){return dmg;}
+    public float GetDmgFlame(){return dmgFlame;}
     public float GetDmgZone(){return dmgZone;}
 
     public float GetDmgLaser(){return dmgLaser;}

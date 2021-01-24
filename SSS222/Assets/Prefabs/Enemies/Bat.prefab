@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 3147796775416149953}
   - component: {fileID: 1660825313398597713}
   - component: {fileID: 8262457775497264122}
+  - component: {fileID: 7597395048608942855}
   - component: {fileID: 6361041040622666652}
   - component: {fileID: 182006974740199065}
   - component: {fileID: -4076050431880435700}
+  - component: {fileID: 5591061404143185748}
   - component: {fileID: 801518567914847888}
   - component: {fileID: 2836206252358398912}
   m_Layer: 9
@@ -117,13 +119,13 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3147796775416149952}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.12682092}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -134,8 +136,39 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9408169, y: 0.5096257}
+  m_Size: {x: 0.94, y: 0.5}
   m_EdgeRadius: 0
+--- !u!60 &7597395048608942855
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147796775416149952}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.15316705, y: 0.37169635}
+      - {x: -0.4927375, y: 0.003517434}
+      - {x: -0.49273753, y: -0.183755}
+      - {x: 0.49515837, y: -0.18177554}
+      - {x: 0.49031666, y: -0.020249382}
+      - {x: 0.15845022, y: 0.37169635}
 --- !u!114 &6361041040622666652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,10 +236,20 @@ MonoBehaviour:
   powercoreChance: 0
   specialDrop: {fileID: 0}
   yeeted: 0
-  dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
-    type: 3}
   dmgCounted: 0
   dmgCount: 0
+--- !u!114 &5591061404143185748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147796775416149952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9957469ac0c594981c65e4fda467ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &801518567914847888
 MonoBehaviour:
   m_ObjectHideFlags: 0

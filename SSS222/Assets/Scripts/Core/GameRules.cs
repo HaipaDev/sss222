@@ -44,6 +44,7 @@ public static GameRules instance;
     public float fuelDrainFreq=0.5f;
     public string powerupStarting="laser";
     public string powerupDefault="laser";
+    public bool weaponsLimited;
     public bool losePwrupOutOfEn;
     public bool losePwrupOutOfAmmo;
     public float armorMultiPlayer=1f;

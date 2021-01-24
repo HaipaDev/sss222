@@ -108,6 +108,7 @@ public class SaveSerial : MonoBehaviour{
 		public bool fullscreen=true;
 		public bool pprocessing;
 		public bool scbuttons;
+		public bool vibrations;
 		public int quality=4;
 		public float masterVolume=0;
 		public float soundVolume=0;

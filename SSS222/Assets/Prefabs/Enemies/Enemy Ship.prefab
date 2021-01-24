@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -29170155039583692}
   - component: {fileID: -3061252192134034468}
   - component: {fileID: 3322887099283394469}
+  - component: {fileID: 5004634516315193596}
   - component: {fileID: 1234536692577487592}
   - component: {fileID: -5264164664935737425}
   - component: {fileID: 8981922279404870772}
@@ -190,10 +191,20 @@ MonoBehaviour:
   powercoreChance: 0
   specialDrop: {fileID: 0}
   yeeted: 0
-  dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
-    type: 3}
   dmgCounted: 0
   dmgCount: 0
+--- !u!114 &5004634516315193596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6432250634095115783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9957469ac0c594981c65e4fda467ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1234536692577487592
 MonoBehaviour:
   m_ObjectHideFlags: 0
