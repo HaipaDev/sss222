@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: HLaser
   m_EditorClassIdentifier: 
   waveName: Homing Laser
-  spawnRate: 100
   enemies:
   - {fileID: 2323431598858436006, guid: db2419d6bf8ee5b49a9f2f24600d3ef8, type: 3}
   timeSpawn: 0
@@ -24,13 +23,12 @@ MonoBehaviour:
   randomSpeed: 0
   moveSpeedS: 0
   moveSpeedE: 0
-  startToEndPath: 0
-  between2PtsPath: 0
-  pathStartPrefab: {fileID: 0}
-  pathEndPrefab: {fileID: 0}
-  randomPath: 0
-  randomPathEach: 0
-  randomPoint: 0
-  pathsRandom: []
-  shipPlace: 1
-  shipYY: -1.1
+  wavePathType: 5
+  wavePaths:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: WaveConfig/shipPlace, ns: , asm: Assembly-CSharp}
+      data:
+        shipYY: -1.1

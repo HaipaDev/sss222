@@ -55,8 +55,6 @@ public class DisruptersSpawner : MonoBehaviour{
     //[SerializeField] bool progressiveWaves = false;
 
     //WaveDisplay waveDisplay;
-    GameSession gameSession;
-    Player player;
 
     private void Awake() {
         StartCoroutine(SetValues());
@@ -93,42 +91,36 @@ public class DisruptersSpawner : MonoBehaviour{
     }
     IEnumerator Start(){
         //waveDisplay = FindObjectOfType<WaveDisplay>();
-        gameSession = FindObjectOfType<GameSession>();
-        player = FindObjectOfType<Player>();
         if(spawnLeech==true)timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech,mETimeSpawnsLeech);
         if(spawnHlaser==true)timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser);
         if(spawnGoblin==true)timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin);
         if(spawnHealDrone==true)if(mEnemiesCountHealDrone==-1)timeSpawnsHealDrone = Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone);
         if(spawnVortexWheel==true)if(EnergyCountVortexWheel==-1)timeSpawnsVortexWheel = Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel);
         if(spawnGlareDevil==true)if(EnergyCountGlareDevil==-1)timeSpawnsGlareDevil = Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil);
-        do{
-            yield return StartCoroutine(SpawnWaves());
-        }
-        while (looping);
+        do{yield return StartCoroutine(SpawnWaves());}while (looping);
     }
 
-    public IEnumerator SpawnWaves()
-    {
+    public IEnumerator SpawnWaves(){
         if(spawnLeech==true){
-        if(timeSpawnsLeech<=0&&timeSpawnsLeech>-4&&FindObjectOfType<Player>()!=null){
-            //currentWave = cfgLeech;
-            yield return StartCoroutine(SpawnAllEnemiesInWave(cfgLeech));
-            timeSpawnsLeech=-4;
-        }
-        //if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
-        //else{if(gameSession.EVscore>=50){ /*WaveRandomize();*/
-        //waveIndex = Random.Range(0, waveConfigs.Count); gameSession.EVscore = 0; } }
+            if(timeSpawnsLeech<=0&&timeSpawnsLeech>-4&&FindObjectOfType<Player>()!=null){
+                //currentWave = cfgLeech;
+                yield return StartCoroutine(SpawnWave(cfgLeech));
+                timeSpawnsLeech=-4;
+            }
+            //if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
+            //else{if(GameSession.instace.EVscore>=50){ /*WaveRandomize();*/
+            //waveIndex = Random.Range(0, waveConfigs.Count); GameSession.instace.EVscore = 0; } }
         }
         if(spawnHlaser==true){
             if(timeSpawnsHlaser<=0&&timeSpawnsHlaser>-4){
-                yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHlaser));
+                yield return StartCoroutine(SpawnWave(cfgHlaser));
                 timeSpawnsHlaser=-4;
             }
         }
         if(spawnGoblin==true){
             if(GameObject.FindGameObjectWithTag("Powerups")!=null){
                 if(timeSpawnsGoblin<=0&&timeSpawnsGoblin>-4){
-                    yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGoblin));
+                    yield return StartCoroutine(SpawnWave(cfgGoblin));
                     powerupsGoblin=0;
                     timeSpawnsGoblin=-4;
                 }
@@ -137,7 +129,7 @@ public class DisruptersSpawner : MonoBehaviour{
         if(spawnHealDrone==true){
             if((EnemiesCountHealDrone>=mEnemiesCountHealDrone)||(mEnemiesCountHealDrone==0&&timeSpawnsHealDrone<=0&&timeSpawnsHealDrone>-4)){
                 if(FindObjectOfType<HealingDrone>()==null){
-                    yield return StartCoroutine(SpawnAllEnemiesInWave(cfgHealDrone));
+                    yield return StartCoroutine(SpawnWave(cfgHealDrone));
                     timeSpawnsHealDrone=-4;
                     EnemiesCountHealDrone=0;
                 }
@@ -145,7 +137,7 @@ public class DisruptersSpawner : MonoBehaviour{
         }if(spawnVortexWheel==true){
             if((EnergyCountVortexWheel>=mEnergyCountVortexWheel)||(mEnergyCountVortexWheel==0&&timeSpawnsVortexWheel<=0&&timeSpawnsVortexWheel>-4)){
                 if(FindObjectOfType<VortexWheel>()==null){
-                    yield return StartCoroutine(SpawnAllEnemiesInWave(cfgVortexWheel));
+                    yield return StartCoroutine(SpawnWave(cfgVortexWheel));
                     timeSpawnsVortexWheel=-4;
                     EnergyCountVortexWheel=0;
                 }
@@ -153,7 +145,7 @@ public class DisruptersSpawner : MonoBehaviour{
         }if(spawnGlareDevil==true){
             if((EnergyCountGlareDevil>=mEnergyCountGlareDevil&&timeSpawnsGlareDevil<=0&&timeSpawnsGlareDevil!=-4)||(mEnergyCountGlareDevil==0&&timeSpawnsGlareDevil<=0&&timeSpawnsGlareDevil>-4)){
                 if(FindObjectOfType<GlareDevil>()==null){
-                    yield return StartCoroutine(SpawnAllEnemiesInWave(cfgGlareDevil));
+                    yield return StartCoroutine(SpawnWave(cfgGlareDevil));
                     timeSpawnsGlareDevil=-4;
                     EnergyCountGlareDevil=0;
                 }
@@ -161,73 +153,8 @@ public class DisruptersSpawner : MonoBehaviour{
         }
     }
 
-    public IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig)
-    {
-        var RpathIndex = Random.Range(0, waveConfig.pathsRandom.Count);
-        if (waveConfig.randomPath == false && waveConfig.between2PtsPath==false && waveConfig.shipPlace==false && waveConfig.randomPoint==false){
-            for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
-            {
-                var newEnemy = Instantiate(
-                    waveConfig.GetEnemyPrefab(),
-                    waveConfig.GetWaypoints()[enCount].transform.position,
-                    Quaternion.identity);
-                newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                newEnemy.GetComponent<EnemyPathing>().enemyIndex = enCount;
-                yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
-            }
-        }else if (waveConfig.randomPath == true || waveConfig.between2PtsPath == true) {
-            if(waveConfig.between2PtsPath==true){
-                for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
-                {
-                    var newEnemy = Instantiate(
-                        waveConfig.GetEnemyPrefab(),
-                        waveConfig.GetWaypoints()[0].transform.position,
-                        Quaternion.identity);
-                    newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                   // newEnemy.GetComponent<EnemyPathing>().enemyIndex = enCount;
-                    yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
-                }
-            }
-            if(waveConfig.randomPath == true){
-                for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
-                {
-                    var newEnemy = Instantiate(
-                        waveConfig.GetEnemyPrefab(),
-                        waveConfig.GetWaypointsRandomPath(RpathIndex)[0].transform.position,
-                        Quaternion.identity);
-                    newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                    newEnemy.GetComponent<EnemyPathing>().enemyIndex = RpathIndex;
-                    yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
-                }
-            }
-        }else if(waveConfig.randomPoint==true){
-            for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
-            {
-                var waveWaypoints = new List<Transform>();
-                foreach (Transform child in waveConfig.pathsRandom[0].transform){waveWaypoints.Add(child);}
-                var pointIndex = Random.Range(0, waveWaypoints.Count);
-                var newEnemy = Instantiate(
-                    waveConfig.GetEnemyPrefab(),
-                    waveWaypoints[Random.Range(0, pointIndex)].transform.position,
-                    Quaternion.identity);
-                newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                newEnemy.GetComponent<EnemyPathing>().waypointIndex = pointIndex;
-                yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
-            }
-        }else if(waveConfig.shipPlace==true){
-            if(player!=null){
-            for (int enCount = 0; enCount < waveConfig.GetNumberOfEnemies(); enCount++)
-            {
-                GameObject newEnemy=null;newEnemy = Instantiate(
-                    waveConfig.GetEnemyPrefab(),
-                    new Vector2(player.transform.position.x, 7.2f+waveConfig.shipYY),
-                Quaternion.identity);
-                if(newEnemy!=null)newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
-            }
-            }
-        }
-        else { yield return new WaitForSeconds(waveConfig.GetTimeSpawn()); }
+    IEnumerator SpawnWave(WaveConfig waveConfig){
+        yield return StartCoroutine(FindObjectOfType<Waves>().SpawnAllEnemiesInWave(waveConfig));
     }
 
     /*public void WaveRandomize()
@@ -244,33 +171,33 @@ public class DisruptersSpawner : MonoBehaviour{
         Mathf.Clamp(EnergyCountVortexWheel,0,mEnergyCountVortexWheel);
         if(Time.timeScale>0.0001f){
             if(spawnLeech==true){
-                if(timeSpawnsLeech>-0.01f){timeSpawnsLeech -= Time.deltaTime; }
-                else if(timeSpawnsLeech==-4){ timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech, mETimeSpawnsLeech); }
+                if(timeSpawnsLeech>-0.01f){timeSpawnsLeech-=Time.deltaTime;}
+                else if(timeSpawnsLeech==-4){timeSpawnsLeech=Random.Range(mSTimeSpawnsLeech, mETimeSpawnsLeech);}
             }
             if(spawnHlaser==true){
-                if(timeSpawnsHlaser>-0.01f){ timeSpawnsHlaser -= Time.deltaTime; }
-                else if(timeSpawnsHlaser==-4){ timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser); }
+                if(timeSpawnsHlaser>-0.01f){timeSpawnsHlaser-=Time.deltaTime;}
+                else if(timeSpawnsHlaser==-4){timeSpawnsHlaser=Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser);}
             }
             if(spawnGoblin==true){
-                if(powerupsGoblin>=mPowerupsGoblin&&timeSpawnsGoblin>=0){ timeSpawnsGoblin -= Time.deltaTime; }
-                else if(timeSpawnsGoblin==-4){ timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin); }
+                if(powerupsGoblin>=mPowerupsGoblin&&timeSpawnsGoblin>=0){timeSpawnsGoblin-=Time.deltaTime;}
+                else if(timeSpawnsGoblin==-4){timeSpawnsGoblin=Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin);}
             }
             if(spawnHealDrone==true){//} && mEnemiesCountHealDrone!=0){
-                if(timeSpawnsHealDrone>=0){ timeSpawnsHealDrone -= Time.deltaTime; }
-                else if(timeSpawnsHealDrone==-4){ timeSpawnsHealDrone = Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone); }
+                if(timeSpawnsHealDrone>=0){timeSpawnsHealDrone-=Time.deltaTime;}
+                else if(timeSpawnsHealDrone==-4){timeSpawnsHealDrone=Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone);}
             }
             if(spawnVortexWheel==true){//} && mEnergyCountVortexWheel!=0){
-                if(timeSpawnsVortexWheel>=0){ timeSpawnsVortexWheel -= Time.deltaTime; }
-                else if(timeSpawnsVortexWheel==-4){ timeSpawnsVortexWheel = Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel); }
+                if(timeSpawnsVortexWheel>=0){timeSpawnsVortexWheel-=Time.deltaTime; }
+                else if(timeSpawnsVortexWheel==-4){timeSpawnsVortexWheel=Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel);}
             }
             if(spawnGlareDevil==true){//} && mEnergyCountGlareDevil!=0){
-                if(timeSpawnsGlareDevil>=0){ timeSpawnsGlareDevil -= Time.deltaTime; }
-                else if(timeSpawnsGlareDevil==-4){ timeSpawnsGlareDevil = Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil); }
+                if(timeSpawnsGlareDevil>=0){timeSpawnsGlareDevil-=Time.deltaTime;}
+                else if(timeSpawnsGlareDevil==-4){timeSpawnsGlareDevil=Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil);}
             }
             /*if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
-            else{if (gameSession.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
+            else{if (GameSession.instace.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
                     timeSpawns = 0; waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
-                    gameSession.EVscore = 0; } }*/
+                    GameSession.instace.EVscore = 0; } }*/
             //if (timeSpawns <= 0) {timeSpawns = mTimeSpawns; }
             //Debug.Log(timeSpawns);
         }

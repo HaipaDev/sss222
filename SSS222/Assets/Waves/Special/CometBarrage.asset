@@ -23,15 +23,10 @@ MonoBehaviour:
   randomSpeed: 1
   moveSpeedS: 5.87
   moveSpeedE: 8.96
-  startToEndPath: 0
-  between2PtsPath: 0
-  pathStartPrefab: {fileID: 0}
-  pathEndPrefab: {fileID: 0}
-  randomPath: 0
-  randomPathEach: 0
-  randomPoint: 0
-  pathsRandom: []
-  shipPlace: 1
-  shipYY: 0
-  loopPath: 0
-  loopPathPrefab: {fileID: 0}
+  wavePathType: 5
+  wavePaths:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }

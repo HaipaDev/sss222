@@ -23,17 +23,13 @@ MonoBehaviour:
   randomSpeed: 0
   moveSpeedS: 1.25
   moveSpeedE: 1.55
-  startToEndPath: 0
-  between2PtsPath: 0
-  pathStartPrefab: {fileID: 0}
-  pathEndPrefab: {fileID: 0}
-  randomPath: 0
-  randomPathEach: 0
-  randomPoint: 1
-  pathsRandom:
-  - {fileID: 8905110873301240939, guid: f235575c07da45c4aae19a45c981762b, type: 3}
-  shipPlace: 0
-  shipYY: 0
-  loopPath: 1
-  loopPathPrefab: {fileID: 201913218438449064, guid: ed3506d1b9c57c8448022995094c70d4,
-    type: 3}
+  wavePathType: 6
+  wavePaths:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: WaveConfig/pathSingle, ns: , asm: Assembly-CSharp}
+      data:
+        path: {fileID: 201913218438449064, guid: ed3506d1b9c57c8448022995094c70d4,
+          type: 3}

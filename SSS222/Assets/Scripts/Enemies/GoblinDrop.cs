@@ -75,13 +75,13 @@ public class GoblinDrop : MonoBehaviour{
 
     private void OnTriggerEnter2D(Collider2D other){
         if(bossForm!=true){
-            if(other.CompareTag("Powerups")&&(!other.gameObject.name.Contains(GameAssets.instance.Get("EnergyBall").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name))){
+            if(other.CompareTag("Powerups")&&(!other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name))){
                 AudioManager.instance.Play("GoblinSteal");
                 powerup.Add(other.gameObject);
                 other.gameObject.SetActive(false);
                 questionMarkObj.SetActive(false);
                 confused=false;
-            }else if(other.gameObject.name.Contains("EnergyBall")||other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){
+            }else if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)||other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){
                 if(confused==false){
                     AudioManager.instance.Play("GoblinConfused");
                     questionMarkObj.SetActive(true);

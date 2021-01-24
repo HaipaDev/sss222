@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: MechaLeech
   m_EditorClassIdentifier: 
   waveName: Mecha Leech
-  spawnRate: 100
   enemies:
   - {fileID: 3147796775416149952, guid: c720f3d821454e2429194e37df8ad1a3, type: 3}
   timeSpawn: 0
@@ -24,14 +23,13 @@ MonoBehaviour:
   randomSpeed: 0
   moveSpeedS: 0
   moveSpeedE: 0
-  startToEndPath: 0
-  between2PtsPath: 0
-  pathStartPrefab: {fileID: 0}
-  pathEndPrefab: {fileID: 0}
-  randomPath: 0
-  randomPathEach: 0
-  randomPoint: 1
-  pathsRandom:
-  - {fileID: 7846228419670946794, guid: 3fcaf365c5e1d1a45adb3f83965c778b, type: 3}
-  shipPlace: 0
-  shipYY: 0
+  wavePathType: 4
+  wavePaths:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: WaveConfig/pathSingle, ns: , asm: Assembly-CSharp}
+      data:
+        path: {fileID: 7846228419670946794, guid: 3fcaf365c5e1d1a45adb3f83965c778b,
+          type: 3}

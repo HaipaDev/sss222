@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Weapon Config")]
 public class WeaponProperties:ScriptableObject{
-    [SerializeField] bool validate;
+    //[SerializeField] bool validate;
     [SerializeField] public string name;
     [SerializeField] public string assetName;
     [SerializeField] public weaponType weaponType;
@@ -14,14 +14,13 @@ public class WeaponProperties:ScriptableObject{
     [SerializeField] public float ovheat;
     [SerializeField] public float ammoSize;
     [SerializeField] public float duration=10;
-    void OnValidate(){
-        if(validate){
+    [ContextMenu("Validate")]void Vaildate(){
+        //if(validate){
         if(weaponType==weaponType.bullet){weaponTypeProperties=new weaponTypeBullet();}
         if(weaponType==weaponType.held){weaponTypeProperties=new weaponTypeHeld();}
         if(weaponType==weaponType.hybrid){weaponTypeProperties=new weaponTypeHybrid();}
         //if(costType==costType.boomerang){cost=1;}
-        validate=false;
-        }
+        //validate=false;}
     }
 }
 public enum costType{energy,ammo,boomerang}

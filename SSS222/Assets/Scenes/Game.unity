@@ -1367,7 +1367,7 @@ PrefabInstance:
     - target: {fileID: 4167427443564996294, guid: 7e9e87f726e731749a3651acd2b5bd51,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4538937345520321834, guid: 7e9e87f726e731749a3651acd2b5bd51,
         type: 3}
@@ -1782,7 +1782,7 @@ PrefabInstance:
     - target: {fileID: 487614370575032915, guid: ca3033287e590d342a08fba6475c39f0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8309328320980297117, guid: ca3033287e590d342a08fba6475c39f0,
         type: 3}
@@ -2784,7 +2784,7 @@ PrefabInstance:
     - target: {fileID: 8208501240122099510, guid: 1fbc6c007726b8d44a202066bc8ec67b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fbc6c007726b8d44a202066bc8ec67b, type: 3}
@@ -3052,7 +3052,7 @@ PrefabInstance:
     - target: {fileID: 3660936485932447889, guid: 99e8818fb6d6d00489a2a8785bcf265f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3883901747946363773, guid: 99e8818fb6d6d00489a2a8785bcf265f,
         type: 3}
@@ -4188,6 +4188,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DisruptersSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 471278204608894438, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92f24eb5dc9e6364d8a7c051cc6f759d, type: 3}
