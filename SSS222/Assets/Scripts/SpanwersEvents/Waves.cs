@@ -10,8 +10,7 @@ public class Waves : MonoBehaviour{
     [SerializeField] public bool startingWaveRandom=false;
     public int waveIndex=0;
     public WaveConfig currentWave;
-    [SerializeField] bool looping=true;
-    [SerializeField] bool progressiveWaves=false;
+    //[SerializeField] bool progressiveWaves=false;
     [SerializeField] public bool uniqueWaves=true;//Unique Wave Randomization?
     [SerializeField] float mTimeSpawns=2f;
     public float timeSpawns=0f;
@@ -26,7 +25,7 @@ public class Waves : MonoBehaviour{
         waveDisplay=FindObjectOfType<WaveDisplay>();
         lootTable=GetComponent<LootTableWaves>();
         if(startingWaveRandom){currentWave=GetRandomWave();startingWave=waveIndex;}//Random.Range(0,lootTable.itemList.Count-1);}
-        do{yield return StartCoroutine(SpawnWaves());}while(looping);
+        do{yield return StartCoroutine(SpawnWaves());}while(true);
     }
     public WaveConfig GetRandomWave(){
         if(currentWave==null&&!startingWaveRandom)return lootTable.itemList[startingWave].lootItem;
@@ -62,8 +61,8 @@ public class Waves : MonoBehaviour{
             //currentWave=GetRandomWave();
             yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
             timeSpawns=-4;
-            if(progressiveWaves==true){if(waveIndex<GetComponent<LootTableWaves>().itemList.Count){waveIndex++;}}
-            else{}//if(GameSession.instance.EVscore>=GameSession.instance.EVscoreMax){ GameSession.instance.AddXP(GameSession.instance.xp_wave); currentWave=GetRandomWave(); GameSession.instance.EVscore=0;} }//waveIndex=Random.Range(0, waveConfigs.Count);  } }
+            //if(progressiveWaves==true){if(waveIndex<GetComponent<LootTableWaves>().itemList.Count){waveIndex++;}}
+            //else{}//if(GameSession.instance.EVscore>=GameSession.instance.EVscoreMax){ GameSession.instance.AddXP(GameSession.instance.xp_wave); currentWave=GetRandomWave(); GameSession.instance.EVscore=0;} }//waveIndex=Random.Range(0, waveConfigs.Count);  } }
         }
     }
 
@@ -122,14 +121,16 @@ public class Waves : MonoBehaviour{
             }
             break;
         case wavePathType.shipPlace:
-            var pS=(WaveConfig.shipPlace)waveConfig.wavePaths;
-            for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
-                var newEnemy=Instantiate(
-                    waveConfig.GetEnemyPrefab(),
-                    new Vector2(FindObjectOfType<Player>().transform.position.x, 7.2f+pS.shipYY),
-                Quaternion.identity);
-                if(GetComponent<EnemyPathing>()!=null)newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
+            if(FindObjectOfType<Player>()!=null){
+                var pS=(WaveConfig.shipPlace)waveConfig.wavePaths;
+                for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
+                    var newEnemy=Instantiate(
+                        waveConfig.GetEnemyPrefab(),
+                        new Vector2(FindObjectOfType<Player>().transform.position.x, 7.2f+pS.shipYY),
+                    Quaternion.identity);
+                    if(GetComponent<EnemyPathing>()!=null)newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                    yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
+                }
             }
             break;
         case wavePathType.loopPath:
@@ -162,12 +163,13 @@ public class Waves : MonoBehaviour{
             else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
             else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){SpawnAllEnemiesInWave(currentWave);timeSpawns=currentWave.timeSpawnWave;}
         }
-        if(progressiveWaves==true){if(waveIndex>=GetComponent<LootTableWaves>().itemList.Count){waveIndex=startingWave;}}
-        else{if(GameSession.instance!=null)if(GameSession.instance.EVscoreMax!=-5&&GameSession.instance.EVscore>=GameSession.instance.EVscoreMax){if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
+        //if(progressiveWaves==true){if(waveIndex>=GetComponent<LootTableWaves>().itemList.Count){waveIndex=startingWave;}}
+        //else{
+        if(GameSession.instance!=null)if(GameSession.instance.EVscoreMax!=-5&&GameSession.instance.EVscore>=GameSession.instance.EVscoreMax){if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
             timeSpawns=0; currentWave=GetRandomWave();//waveIndex=Random.Range(0, waveConfigs.Count); currentWave=waveConfigs[waveIndex];
             GameSession.instance.EVscore=0; GameSession.instance.AddXP(GameSession.instance.xp_wave);//XP For Wave
             }
-        }
+        //}
         //if (timeSpawns <= 0) {timeSpawns=mTimeSpawns; }
         //Debug.Log(timeSpawns);
     }

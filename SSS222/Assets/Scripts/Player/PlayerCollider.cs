@@ -105,7 +105,7 @@ public class PlayerCollider : MonoBehaviour{
                 if (other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(1,true);}
 
                 if(other.GetComponent<Tag_Collectible>().isPowerup){//if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
-                    if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().powerupsGoblin++;
+                    if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddPwrups(1);//powerupsGoblin++;
                     GameSession.instance.AddXP(GameSession.instance.xp_powerup);}//XP For powerups
 
                 if (other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)){if(player.health>(player.maxHP-25)){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} HPAdd(); player.AddSubEnergy(player.medkitEnergyGet,true);}//EnergyPopUpHUDPlus(player.medkitEnergyGet); player.healed=true;}

@@ -74,6 +74,7 @@ public class Level : MonoBehaviour{
     public void RestartGame(){FindObjectOfType<Level>().StartCoroutine(RestartGameI());}
     IEnumerator RestartGameI(){
         //PauseMenu.GameIsPaused=false;
+        //if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().DestroyAll();Destroy(FindObjectOfType<DisruptersSpawner>().gameObject);
         GameSession.instance.SaveHighscore();
         yield return new WaitForSecondsRealtime(0.01f);
         GameSession.instance.ResetScore();
@@ -82,6 +83,7 @@ public class Level : MonoBehaviour{
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameSession.instance.speedChanged=false;
         GameSession.instance.gameSpeed=1f;
+        //if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().StartCoroutine(FindObjectOfType<DisruptersSpawner>().SetValues());
     }
     public void RestartScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

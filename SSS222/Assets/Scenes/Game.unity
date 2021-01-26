@@ -1356,8 +1356,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5087835662967572, guid: 7e9e87f726e731749a3651acd2b5bd51, type: 3}
-      propertyPath: startingWave
-      value: 5
+      propertyPath: disruptersList.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4167427443564996294, guid: 7e9e87f726e731749a3651acd2b5bd51,
         type: 3}
@@ -2554,11 +2554,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2350735508918303471, guid: eb870523f348c2e4fad6b2786bc46518,
-        type: 3}
-      propertyPath: cfgName
-      value: Meteor Madness
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb870523f348c2e4fad6b2786bc46518, type: 3}
 --- !u!1001 &2425515633694345662
@@ -3027,23 +3022,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
-        type: 3}
-      propertyPath: weaponProperties.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
-        type: 3}
-      propertyPath: weaponProperties.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: b365b34ef3f6bed4b852bce204bfe8f3,
-        type: 2}
-    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
-        type: 3}
-      propertyPath: weaponProperties.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 390ccedfd644e144ebfac9dbe0d34fb0,
-        type: 2}
     - target: {fileID: 3660936485932447889, guid: 99e8818fb6d6d00489a2a8785bcf265f,
         type: 3}
       propertyPath: m_Name

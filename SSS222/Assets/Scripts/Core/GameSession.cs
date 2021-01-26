@@ -265,7 +265,7 @@ public class GameSession : MonoBehaviour{
 
     public void AddToScoreNoEV(int scoreValue){score += scoreValue;ScorePopUpHUD(scoreValue);}
     public void AddXP(float xpValue){if(xpOn){coresXp += xpValue;XPPopUpHUD(xpValue);}coresXpTotal+=xpValue;}
-    public void AddEnemyCount(){enemiesCount++;if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().EnemiesCountHealDrone++;
+    public void AddEnemyCount(){enemiesCount++;if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddKills(1);//EnemiesCountHealDrone++;
     var ps=FindObjectsOfType<PowerupsSpawner>();
     foreach(PowerupsSpawner p in ps){
         if(p.enemiesCountReq!=-1){

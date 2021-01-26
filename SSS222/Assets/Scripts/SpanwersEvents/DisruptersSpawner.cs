@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DisruptersSpawner : MonoBehaviour{
-    //[SerializeField] int[] waveConfigsWeights;
-    //[SerializeField] int startingWave = 0;
-    [HeaderAttribute("Mecha Leech")]
+    public List<DisrupterConfig> disruptersList;
+    /*[HeaderAttribute("Mecha Leech")]
     public bool spawnLeech=true;
     [SerializeField] WaveConfig cfgLeech;
     [SerializeField] float mSTimeSpawnsLeech = 55f;
@@ -48,23 +47,17 @@ public class DisruptersSpawner : MonoBehaviour{
     public float EnergyCountGlareDevil = 0;
     [SerializeField] float mSTimeSpawnsGlareDevil = 40f;
     [SerializeField] float mETimeSpawnsGlareDevil = 50f;
-    public float timeSpawnsGlareDevil = 0f;
-    //public int waveIndex = 0;
-    //WaveConfig currentWave;
-    bool looping = true;
-    //[SerializeField] bool progressiveWaves = false;
-
-    //WaveDisplay waveDisplay;
-
+    public float timeSpawnsGlareDevil = 0f;*/
     private void Awake() {
         StartCoroutine(SetValues());
     }
-    IEnumerator SetValues(){
+    public IEnumerator SetValues(){
         //Set values
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
         var i=GameRules.instance;
         if(i!=null){
-            spawnLeech=i.spawnLeech;
+            disruptersList=i.disrupterList;
+            /*spawnLeech=i.spawnLeech;
             mSTimeSpawnsLeech=i.mSTimeSpawnsLeech;
             mETimeSpawnsLeech=i.mETimeSpawnsLeech;
             spawnHlaser=i.spawnHlaser;
@@ -86,29 +79,68 @@ public class DisruptersSpawner : MonoBehaviour{
             spawnGlareDevil=i.spawnGlareDevil;
             mEnergyCountGlareDevil=i.mEnergyCountGlareDevil;
             mSTimeSpawnsGlareDevil=i.mSTimeSpawnsGlareDevil;
-            mETimeSpawnsGlareDevil=i.mETimeSpawnsGlareDevil;
+            mETimeSpawnsGlareDevil=i.mETimeSpawnsGlareDevil;*/
         }
+        yield return new WaitForSecondsRealtime(0.05f);
+        var di=0;
+        List<DisrupterConfig> dcs=new List<DisrupterConfig>();
+        foreach(DisrupterConfig dc in disruptersList){
+            Debug.Log(dc.name+di);
+            var da=Instantiate(dc);
+            dcs.Add(da);
+            di++;
+        }
+        this.disruptersList=dcs;
+        yield return new WaitForSecondsRealtime(0.01f);
+        foreach(DisrupterConfig dc in disruptersList){var d=dc.spawnProps;if(d.timeEnabled){RestartTime(d);}}
     }
     IEnumerator Start(){
-        //waveDisplay = FindObjectOfType<WaveDisplay>();
-        if(spawnLeech==true)timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech,mETimeSpawnsLeech);
+        /*if(spawnLeech==true)timeSpawnsLeech = Random.Range(mSTimeSpawnsLeech,mETimeSpawnsLeech);
         if(spawnHlaser==true)timeSpawnsHlaser = Random.Range(mSTimeSpawnsHlaser, mETimeSpawnsHlaser);
         if(spawnGoblin==true)timeSpawnsGoblin = Random.Range(mSTimeSpawnsGoblin, mETimeSpawnsGoblin);
         if(spawnHealDrone==true)if(mEnemiesCountHealDrone==-1)timeSpawnsHealDrone = Random.Range(mSTimeSpawnsHealDrone, mETimeSpawnsHealDrone);
         if(spawnVortexWheel==true)if(EnergyCountVortexWheel==-1)timeSpawnsVortexWheel = Random.Range(mSTimeSpawnsVortexWheel, mETimeSpawnsVortexWheel);
-        if(spawnGlareDevil==true)if(EnergyCountGlareDevil==-1)timeSpawnsGlareDevil = Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil);
-        do{yield return StartCoroutine(SpawnWaves());}while (looping);
+        if(spawnGlareDevil==true)if(EnergyCountGlareDevil==-1)timeSpawnsGlareDevil = Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil);*/
+        do{yield return StartCoroutine(CheckSpawns());}while(true);
     }
 
-    public IEnumerator SpawnWaves(){
-        if(spawnLeech==true){
+    public IEnumerator CheckSpawns(){
+        foreach(DisrupterConfig dc in disruptersList){
+            var d=dc.spawnProps;
+            var dt=dc.disrupterType;
+            if(d.timeEnabled&&d.time<=0&&d.time>-4&&!d.bothNeeded){yield return StartCoroutine(SpawnWave(dc));}
+            else if((d.secondEnabled&&!d.bothNeeded)||(d.secondEnabled&&d.bothNeeded&&d.timeEnabled&&d.time<=0&&d.time>-4)){
+                if(dt==disrupterType.energy||dt==disrupterType.missed){
+                    var ds=(DisrupterConfig.spawnEnergy)d;
+                    if(ds.energy>=ds.energyNeeded){ds.energy=0;yield return StartCoroutine(SpawnWave(dc));}
+                }
+                else if(dt==disrupterType.pwrups){
+                    var ds=(DisrupterConfig.spawnPwrups)d;
+                    if(ds.pwrups>=ds.pwrupsNeeded){ds.pwrups=0;yield return StartCoroutine(SpawnWave(dc));}
+                }
+                else if(dt==disrupterType.kills){
+                    var ds=(DisrupterConfig.spawnKills)d;
+                    if(ds.kills>=ds.killsNeeded){ds.kills=0;yield return StartCoroutine(SpawnWave(dc));}
+                }
+                else if(dt==disrupterType.dmg){
+                    var ds=(DisrupterConfig.spawnDmg)d;
+                    if(ds.dmg>=ds.dmgNeeded){ds.dmg=0;yield return StartCoroutine(SpawnWave(dc));}
+                }
+                else if(dt==disrupterType.counts){
+                    var ds=(DisrupterConfig.spawnCounts)d;
+                    if(ds.counts>=ds.countsNeeded){ds.counts=0;yield return StartCoroutine(SpawnWave(dc));}
+                }
+            }
+        }
+        #region//Old
+        /*if(spawnLeech==true){
             if(timeSpawnsLeech<=0&&timeSpawnsLeech>-4&&FindObjectOfType<Player>()!=null){
                 //currentWave = cfgLeech;
                 yield return StartCoroutine(SpawnWave(cfgLeech));
                 timeSpawnsLeech=-4;
             }
-            //if (progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
-            //else{if(GameSession.instace.EVscore>=50){ /*WaveRandomize();*/
+            //if(progressiveWaves == true){if (waveIndex<waveConfigs.Count){ waveIndex++; } }
+            //else{if(GameSession.instace.EVscore>=50){ //WaveRandomize();
             //waveIndex = Random.Range(0, waveConfigs.Count); GameSession.instace.EVscore = 0; } }
         }
         if(spawnHlaser==true){
@@ -150,25 +182,19 @@ public class DisruptersSpawner : MonoBehaviour{
                     EnergyCountGlareDevil=0;
                 }
             }
-        }
+        }*/
+        #endregion
     }
-
-    IEnumerator SpawnWave(WaveConfig waveConfig){
-        yield return StartCoroutine(FindObjectOfType<Waves>().SpawnAllEnemiesInWave(waveConfig));
+    void RestartTime(DisrupterConfig.disrupterSpawnProps d){d.time=Random.Range(d.timeS,d.timeE);}
+    IEnumerator SpawnWave(DisrupterConfig dc){
+        var d=dc.spawnProps;
+        if(d.timeEnabled&&d.time<=0){RestartTime(d);}
+        yield return StartCoroutine(FindObjectOfType<Waves>().SpawnAllEnemiesInWave(dc.waveConfig));
     }
-
-    /*public void WaveRandomize()
-    {
-        var weights = new Dictionary<WaveConfig, int>();
-        for (int index = 0; index < waveConfigs.Count; index++){
-            weights.Add(waveConfigs[index], waveConfigsWeights[index]);
-        }
-
-        WaveConfig selected = WeightedRandomizer.From(weights).TakeOne(); // Strongly-typed object returned. No casting necessary.
-    }*/
-    //public string GetWaveName(){return currentWave.waveName;}
     void Update(){
-        Mathf.Clamp(EnergyCountVortexWheel,0,mEnergyCountVortexWheel);
+        if(Time.timeScale>0.0001f){foreach(DisrupterConfig dc in disruptersList){var d=dc.spawnProps;if(d.timeEnabled){if(d.time>0)d.time-=Time.deltaTime;}}}
+        #region//Old
+        /*Mathf.Clamp(EnergyCountVortexWheel,0,mEnergyCountVortexWheel);
         if(Time.timeScale>0.0001f){
             if(spawnLeech==true){
                 if(timeSpawnsLeech>-0.01f){timeSpawnsLeech-=Time.deltaTime;}
@@ -194,12 +220,13 @@ public class DisruptersSpawner : MonoBehaviour{
                 if(timeSpawnsGlareDevil>=0){timeSpawnsGlareDevil-=Time.deltaTime;}
                 else if(timeSpawnsGlareDevil==-4){timeSpawnsGlareDevil=Random.Range(mSTimeSpawnsGlareDevil, mETimeSpawnsGlareDevil);}
             }
-            /*if(progressiveWaves==true){if (waveIndex >= waveConfigs.Count) { waveIndex = startingWave; } }
-            else{if (GameSession.instace.EVscore >= 50) { waveDisplay.enableText = true; waveDisplay.timer = waveDisplay.showTime;
-                    timeSpawns = 0; waveIndex = Random.Range(0, waveConfigs.Count); currentWave = waveConfigs[waveIndex];
-                    GameSession.instace.EVscore = 0; } }*/
-            //if (timeSpawns <= 0) {timeSpawns = mTimeSpawns; }
-            //Debug.Log(timeSpawns);
-        }
-    }
+        }*/
+        #endregion
+    }public void AddEnergy(float val){foreach(DisrupterConfig dc in disruptersList){if(dc.disrupterType==disrupterType.energy){var ds=(DisrupterConfig.spawnEnergy)dc.spawnProps;ds.energy+=val;}}}
+    public void AddMissed(float val){foreach(DisrupterConfig dc in disruptersList){if(dc.disrupterType==disrupterType.missed){var ds=(DisrupterConfig.spawnEnergy)dc.spawnProps;ds.energy+=val;}}}
+    public void AddPwrups(int val){foreach(DisrupterConfig dc in disruptersList){if(dc.disrupterType==disrupterType.pwrups){var ds=(DisrupterConfig.spawnPwrups)dc.spawnProps;ds.pwrups+=val;}}}
+    public void AddKills(int val){foreach(DisrupterConfig dc in disruptersList){if(dc.disrupterType==disrupterType.kills){var ds=(DisrupterConfig.spawnKills)dc.spawnProps;ds.kills+=val;}}}
+    public void AddDmg(float val){foreach(DisrupterConfig dc in disruptersList){if(dc.disrupterType==disrupterType.dmg){var ds=(DisrupterConfig.spawnDmg)dc.spawnProps;ds.dmg+=val;}}}
+    public void AddCounts(float val){foreach(DisrupterConfig dc in disruptersList){if(dc.disrupterType==disrupterType.counts){var ds=(DisrupterConfig.spawnCounts)dc.spawnProps;ds.counts+=val;}}}
+    public void DestroyAll(){foreach(DisrupterConfig dc in disruptersList){Destroy(dc);}disruptersList.Clear();}
 }

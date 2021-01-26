@@ -9,22 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: lvlEvents.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: lvlEventsIDs.Array.size
+      propertyPath: fuelOn
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
@@ -34,8 +19,68 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: xp_wave
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: dmgLaser
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: flipTime
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: paddingX
+      value: -0.325
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: barrierOn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: luckMulti
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: EVscoreMax
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: laserSpeed
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: xp_forCore
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: maxHPPlayer
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: crystalDropE
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: crystalDropS
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: energyPlayer
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -44,13 +89,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: shopScoreMax
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: energyBallGet
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: shopScoreMaxE
+      value: 550
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: shopScoreMaxS
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: maxEnergyPlayer
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: moveSpeedPlayer
       value: 7.25
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: shipScaleDefault
+      propertyPath: armorMultiPlayer
       value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: laserShootPeriod
+      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -59,8 +134,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: laserShootPeriod
-      value: 0.27
+      propertyPath: overheatTimerMax
+      value: 11.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: shipScaleDefault
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -74,23 +154,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: energyPlayer
-      value: 70
+      propertyPath: startingWaveRandom
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: maxHPPlayer
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: maxEnergyPlayer
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: xp_forCore
-      value: 120
+      propertyPath: lvlEvents.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -99,82 +169,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: overheatTimerMax
-      value: 11.44
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 795444042786618691}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameRules, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ArcadeLvlEach
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      propertyPath: lvlEventsIDs.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 795444042786618691}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameRules, Assembly-CSharp
+      propertyPath: unlockableSkills.Array.data[0]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ArcadeLvl1
+      propertyPath: unlockableSkills.Array.data[1]
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      propertyPath: waveList.Array.data[5].levelReq
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: pwrupStatusList.Array.data[8].levelReq
+      propertyPath: waveList.Array.data[6].levelReq
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: pwrupStatusList.Array.data[8].dropChance
+      propertyPath: waveList.Array.data[7].levelReq
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: waveList.Array.data[5].dropChance
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: waveList.Array.data[6].dropChance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: waveList.Array.data[7].dropChance
+      value: 6.8
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: pwrupStatusList.Array.data[2].levelReq
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: pwrupStatusList.Array.data[7].levelReq
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: pwrupStatusList.Array.data[6].levelReq
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
@@ -184,8 +224,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: pwrupStatusList.Array.data[11].levelReq
+      propertyPath: pwrupStatusList.Array.data[6].levelReq
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: pwrupStatusList.Array.data[7].levelReq
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: pwrupStatusList.Array.data[8].levelReq
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -219,128 +269,78 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: pwrupStatusList.Array.data[11].levelReq
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: pwrupWeaponList.Array.data[10].levelReq
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: unlockableSkills.Array.data[0]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: unlockableSkills.Array.data[1]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: barrierOn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: shopScoreMax
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: luckMulti
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: paddingX
-      value: -0.325
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: armorMultiPlayer
-      value: 0.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: flipTime
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: laserSpeed
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: energyBallGet
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: startingWaveRandom
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: xp_wave
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: crystalDropE
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: crystalDropS
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: dmgLaser
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: waveList.Array.data[5].levelReq
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: waveList.Array.data[7].levelReq
+      propertyPath: pwrupStatusList.Array.data[8].dropChance
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: fuelOn
+      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: waveList.Array.data[6].levelReq
+      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: waveList.Array.data[6].dropChance
-      value: 2
+      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 795444042786618691}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 795444042786618691}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: waveList.Array.data[5].dropChance
-      value: 3.5
+      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: waveList.Array.data[7].dropChance
-      value: 6.8
+      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ArcadeLvlEach
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: shopScoreMaxS
-      value: 350
+      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ArcadeLvl1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: shopScoreMaxE
-      value: 550
+      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameRules, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameRules, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: lvlEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: lvlEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -351,6 +351,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -369,6 +374,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -380,16 +390,6 @@ PrefabInstance:
     - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,

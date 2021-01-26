@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName="Enemy Wave Config")]
+[CreateAssetMenu(menuName="Wave Config")]
 public class WaveConfig:ScriptableObject{
     [HeaderAttribute("Properties")]
     [SerializeField] public string waveName="";
@@ -20,18 +20,18 @@ public class WaveConfig:ScriptableObject{
     public wavePathType wavePathType;
     [SerializeReference]public wavePathTypeProps wavePaths;
     [System.Serializable]public class wavePathTypeProps{}
-    [System.Serializable]public class pathSingle:wavePathTypeProps{//For
-        [SerializeField] public GameObject path;
+    [System.Serializable]public class pathSingle:wavePathTypeProps{
+        public GameObject path;
     }
     [System.Serializable]public class pathStartToEnd:wavePathTypeProps{
-        [SerializeField] public GameObject pathStartPrefab;
-        [SerializeField] public GameObject pathEndPrefab;
+        public GameObject pathStartPrefab;
+        public GameObject pathEndPrefab;
     }
     [System.Serializable]public class pathRandom:wavePathTypeProps{
-        [SerializeField] public List<GameObject> pathsRandom;
+        public List<GameObject> pathsRandom;
     }
     [System.Serializable]public class shipPlace:wavePathTypeProps{
-        [SerializeField] public float shipYY;
+        public float shipYY;
     }
     
     [ContextMenu("Validate")]void Vaildate(){

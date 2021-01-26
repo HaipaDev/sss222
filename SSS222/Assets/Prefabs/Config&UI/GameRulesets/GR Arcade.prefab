@@ -129,6 +129,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: weaponProperties.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: unlockableSkills.Array.data[0]
       value: 2
       objectReference: {fileID: 0}
@@ -137,6 +142,18 @@ PrefabInstance:
       propertyPath: unlockableSkills.Array.data[1]
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: b365b34ef3f6bed4b852bce204bfe8f3,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: weaponProperties.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 390ccedfd644e144ebfac9dbe0d34fb0,
+        type: 2}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: weaponProperties.Array.data[2]

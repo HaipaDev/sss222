@@ -74,6 +74,7 @@ MonoBehaviour:
   fuelDrainFreq: 0.5
   powerupStarting: laser
   powerupDefault: laser
+  weaponsLimited: 0
   losePwrupOutOfEn: 0
   losePwrupOutOfAmmo: 0
   armorMultiPlayer: 1
@@ -311,29 +312,13 @@ MonoBehaviour:
   startingWave: 0
   startingWaveRandom: 0
   uniqueWaves: 1
-  spawnLeech: 1
-  mSTimeSpawnsLeech: 55
-  mETimeSpawnsLeech: 80
-  spawnHlaser: 1
-  mSTimeSpawnsHlaser: 30
-  mETimeSpawnsHlaser: 60
-  spawnGoblin: 1
-  mPowerupsGoblin: 2
-  mSTimeSpawnsGoblin: 40
-  mETimeSpawnsGoblin: 50
-  spawnHealDrone: 1
-  mEnemiesCountHealDrone: 50
-  mSTimeSpawnsHealDrone: 40
-  mETimeSpawnsHealDrone: 50
-  spawnVortexWheel: 1
-  mEnergyCountVortexWheel: 200
-  EnergyCountVortexWheel: 0
-  mSTimeSpawnsVortexWheel: 40
-  mETimeSpawnsVortexWheel: 50
-  spawnGlareDevil: 1
-  mEnergyCountGlareDevil: 20
-  mSTimeSpawnsGlareDevil: 40
-  mETimeSpawnsGlareDevil: 50
+  disrupterList:
+  - {fileID: 11400000, guid: d9eb91805a3041c4da5fe9fd53487598, type: 2}
+  - {fileID: 11400000, guid: 94fb1e161b67c8c42ac78517bba5d656, type: 2}
+  - {fileID: 11400000, guid: f76994eb4643acc4fb95ad8c4d97deb8, type: 2}
+  - {fileID: 11400000, guid: 67796b4b135ab994c9d4cbf15e0a728b, type: 2}
+  - {fileID: 11400000, guid: feed16e0d91c8bc49a5039c0f5de5bae, type: 2}
+  - {fileID: 11400000, guid: 313e63b1f688ca74d8fe6fc05250006d, type: 2}
   enemies:
   - name: Bat
     size: {x: 1, y: 1}

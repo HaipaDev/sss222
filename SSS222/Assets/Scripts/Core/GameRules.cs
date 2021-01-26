@@ -116,7 +116,8 @@ public static GameRules instance;
     public int startingWave=0;
     public bool startingWaveRandom=false;
     public bool uniqueWaves=true;
-    public bool spawnLeech=true;
+    public List<DisrupterConfig> disrupterList;
+    /*public bool spawnLeech=true;
     public float mSTimeSpawnsLeech=55f;
     public float mETimeSpawnsLeech=80f;
     public bool spawnHlaser=true;
@@ -138,7 +139,7 @@ public static GameRules instance;
     public bool spawnGlareDevil=true;
     public float mEnergyCountGlareDevil=20;
     public float mSTimeSpawnsGlareDevil=40f;
-    public float mETimeSpawnsGlareDevil=50f;
+    public float mETimeSpawnsGlareDevil=50f;*/
     [Header("Enemies")]
     public EnemyClass[] enemies;
     public CometSettings cometSettings;
