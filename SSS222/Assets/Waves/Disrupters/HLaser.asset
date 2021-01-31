@@ -10,27 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27a14c5dde1fe9e4aaf080d5453ad783, type: 3}
-  m_Name: MechaLeech
+  m_Name: HLaser
   m_EditorClassIdentifier: 
-  waveName: Mecha Leech
+  waveName: Horizontal Laser
   enemies:
-  - {fileID: 3147796775416149952, guid: c720f3d821454e2429194e37df8ad1a3, type: 3}
+  - {fileID: 2323431598858436006, guid: 40f1f2c220a30d04b9b38a617f834928, type: 3}
   timeSpawn: 0
   timeSpawnWave: -4
   spawnRandomFactor: 0
   numberOfEnemies: 1
-  moveSpeed: 2
+  moveSpeed: 0
   randomSpeed: 0
   moveSpeedS: 0
   moveSpeedE: 0
-  wavePathType: 4
+  wavePathType: 5
   wavePaths:
     id: 0
   references:
     version: 1
     00000000:
-      type: {class: WaveConfig/pathRandomPoint, ns: , asm: Assembly-CSharp}
+      type: {class: WaveConfig/shipPlace, ns: , asm: Assembly-CSharp}
       data:
-        path: {fileID: 7846228419670946794, guid: 3fcaf365c5e1d1a45adb3f83965c778b,
-          type: 3}
-        closestToPlayer: 1
+        _spawnSide: 3
+        coords: {x: 3.6, y: 0}

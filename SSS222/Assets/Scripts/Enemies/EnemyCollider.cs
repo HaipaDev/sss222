@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyCollider : MonoBehaviour{
+    public float dmgTimer;
     void OnTriggerEnter2D(Collider2D other){
         //if(FindObjectOfType<Player>().shadowRaycast[FindObjectOfType<Player>().shadowRaycast.FindIndex(FindObjectOfType<Player>().shadowRaycast.Count,(x) => x == this)]==this){Die();}
         if(!other.CompareTag(tag)&&!other.CompareTag("EnemyBullet")&&other.GetComponent<Tag_OutsideZone>()==null){
@@ -65,7 +66,8 @@ public class EnemyCollider : MonoBehaviour{
         }
     }
     void OnTriggerStay2D(Collider2D other){
-        if(!other.CompareTag(tag)&&other.GetComponent<Tag_OutsideZone>()==null){
+    if(!other.CompareTag(tag)&&other.GetComponent<Tag_OutsideZone>()==null){
+    if(dmgTimer<=0){
             DamageDealer damageDealer=other.GetComponent<DamageDealer>();
             DamageValues damageValues=DamageValues.instance;
             if(gameObject!=null&&other.gameObject!=null)if(!damageDealer||!damageValues){/*Debug.LogWarning("No DamageDealer component or DamageValues instance");*/return;}
@@ -77,7 +79,6 @@ public class EnemyCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("CBullet").name)){dmg=damageValues.GetDmgCBullet(); AudioManager.instance.Play("CStreamHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){ dmg=(float)System.Math.Round(damageValues.GetDmgLSaber()/3,2); FindObjectOfType<Player>().energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y));}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=0; AudioManager.instance.Play("PRocketHit");}
-
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.GetDmgFlame();}
 
             if(FindObjectOfType<Player>()!=null)dmg*=FindObjectOfType<Player>().dmgMulti;
@@ -90,6 +91,8 @@ public class EnemyCollider : MonoBehaviour{
                 GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(GameAssets.instance.GetVFX("DMGPopup"),transform.position);
                 dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg,2).ToString();
             }
-        }
+            if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;
+    }else{dmgTimer-=Time.deltaTime;}
+    }
     }
 }

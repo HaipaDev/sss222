@@ -6,8 +6,7 @@ public class HLaserKillThis : MonoBehaviour{
     [SerializeField] GameObject cargoDrop;
     [SerializeField] float delay=1f;
     private void OnTriggerEnter2D(Collider2D other){
-        var hlaserName = GameAssets.instance.Get("HLaser").name;
-        if(other.gameObject.name.Contains(hlaserName)){
+        if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)||other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){
             StartCoroutine(KillDelay());
             //if(!gameObject.name.Contains("Cargo"))Destroy(gameObject);
             //else StartCoroutine(Cargo());

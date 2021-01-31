@@ -41,7 +41,8 @@ public class DamageValues : MonoBehaviour{
     float dmgHealDrone = 75f;
     float dmgVortex = 70f;
     float dmgLeech = 4f;
-    float dmgHLaser = 90f;
+    float dmgVLaser = 90f;
+    float dmgHLaser = 16f;
     float dmgStinger = 33.3f;
     Vector2 efxStinger = new Vector2(20,1);
     float dmgGoblinBt = 7f;
@@ -83,6 +84,7 @@ if(i!=null){
     dmgHealDrone=i.dmgHealDrone;
     dmgVortex=i.dmgVortex;
     dmgLeech=i.dmgLeech;
+    dmgVLaser=i.dmgVLaser;
     dmgHLaser=i.dmgHLaser;
     dmgStinger=i.dmgStinger;
     efxStinger=i.efxStinger;
@@ -123,6 +125,7 @@ if(i!=null){
     public float GetDmgHealDrone(){return dmgHealDrone;}
     public float GetDmgVortex(){return dmgVortex;}
     public float GetDmgLeech(){return dmgLeech;}
+    public float GetDmgVLaser(){return dmgVLaser;}
     public float GetDmgHLaser(){return dmgHLaser;}
     public float GetDmgStinger(){return dmgStinger;}
     public Vector2 GetEfxStinger(){return efxStinger;}

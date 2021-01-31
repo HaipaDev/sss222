@@ -7,7 +7,9 @@ public class Shredder : MonoBehaviour{
         if(!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Player")){
             if(other.gameObject.CompareTag("PlayerWeapons")){}
             if(FindObjectOfType<DisruptersSpawner>()!=null&&other.GetComponent<Tag_PlayerWeaponBlockable>()!=null){
-            FindObjectOfType<DisruptersSpawner>().AddMissed(other.GetComponent<Tag_PlayerWeaponBlockable>().energy);}
+                var en=other.GetComponent<Tag_PlayerWeaponBlockable>().energy;
+                if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){en=0.05f;}
+                FindObjectOfType<DisruptersSpawner>().AddMissed(en);}
             Destroy(other.gameObject,0.02f);
         }
     }

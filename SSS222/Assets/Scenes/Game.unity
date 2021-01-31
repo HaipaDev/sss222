@@ -1782,7 +1782,7 @@ PrefabInstance:
     - target: {fileID: 487614370575032915, guid: ca3033287e590d342a08fba6475c39f0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8309328320980297117, guid: ca3033287e590d342a08fba6475c39f0,
         type: 3}
@@ -2779,7 +2779,7 @@ PrefabInstance:
     - target: {fileID: 8208501240122099510, guid: 1fbc6c007726b8d44a202066bc8ec67b,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fbc6c007726b8d44a202066bc8ec67b, type: 3}
@@ -3022,6 +3022,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
+        type: 3}
+      propertyPath: disrupterList.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
+        type: 3}
+      propertyPath: disrupterList.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 62a29b7fc10a69b45bf9ff41b6cda95a,
+        type: 2}
     - target: {fileID: 3660936485932447889, guid: 99e8818fb6d6d00489a2a8785bcf265f,
         type: 3}
       propertyPath: m_Name
@@ -4147,30 +4158,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 471278204608894437, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
-        type: 3}
-      propertyPath: mETimeSpawnsGlareDevil
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 471278204608894437, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
-        type: 3}
-      propertyPath: mEnergyCountGlareDevil
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 471278204608894437, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
-        type: 3}
-      propertyPath: mSTimeSpawnsGlareDevil
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 471278204608894438, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
         type: 3}
       propertyPath: m_Name
       value: DisruptersSpawner
-      objectReference: {fileID: 0}
-    - target: {fileID: 471278204608894438, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92f24eb5dc9e6364d8a7c051cc6f759d, type: 3}

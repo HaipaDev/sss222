@@ -3,49 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HLaser : MonoBehaviour{
-    [SerializeField] GameObject exclamationPrefab;
-    [SerializeField] GameObject hlaserChargingPrefab;
-    [SerializeField] GameObject hlaserPrefab;
-    [SerializeField] float timerExcl=1f;
-    [SerializeField] float timerHlaserCharging=1.12f;
+    [SerializeField] int stage=0;
+    [SerializeField] float timerExcl=0.8f;
+    [SerializeField] float timerHlaserCharging=1f;
     [SerializeField] float timerHlaser=3.3f;
     public float timer=-4;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        if(gameObject.name==exclamationPrefab.name || gameObject.name==exclamationPrefab.name+"(Clone)"){
-            timer = timerExcl;
-        }else if (gameObject.name == hlaserPrefab.name || gameObject.name == hlaserPrefab.name + "(Clone)"){
-            timer = timerHlaserCharging;
-        }else if(gameObject.name== hlaserPrefab.name || gameObject.name== hlaserPrefab.name+"(Clone)"){
-            timer = timerHlaser;
-        }
+    void Awake(){
+        DisableAllChildren();
+        transform.GetChild(stage).gameObject.SetActive(true);
+        if(stage==0){timer=timerExcl;}
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (gameObject.name == exclamationPrefab.name || gameObject.name == exclamationPrefab.name + "(Clone)"){
-            timer -= Time.deltaTime;
-            if(timer <= 0 && timer>-4){
-                GameObject obj = Instantiate(hlaserChargingPrefab, new Vector2(transform.position.x,transform.position.y+0.24f),Quaternion.identity);
-                obj.GetComponent<HLaser>().timer = timerHlaserCharging;
-                Destroy(gameObject);
-            }
-        }else if (gameObject.name == hlaserChargingPrefab.name || gameObject.name == hlaserChargingPrefab.name + "(Clone)"){
-            timer -= Time.deltaTime;
-            if (timer <= 0 && timer > -4)
-            {
-                GameObject obj = Instantiate(hlaserPrefab, new Vector2(transform.position.x, transform.position.y+0.74f), Quaternion.identity);
-                obj.GetComponent<HLaser>().timer = timerHlaser;
-                Destroy(gameObject);
-            }
-        }else if (gameObject.name == hlaserPrefab.name || gameObject.name == hlaserPrefab.name + "(Clone)"){
-            timer -= Time.deltaTime;
-            if (timer <= 0 && timer > -4)
-            {
-                Destroy(gameObject);
-            }
-        }
+    void Update(){
+    if(timer>0)timer-=Time.deltaTime;
+    if(timer<=0&&timer>-4){
+        DisableAllChildren();
+        if(stage<2){
+            transform.GetChild(stage+1).gameObject.SetActive(true);
+            stage++;
+        }else if(stage==2){stage=3;}
+        if(stage==1){timer=timerHlaserCharging;}
+        else if(stage==2){timer=timerHlaser;}
+        else if(stage==3){Destroy(gameObject);}
     }
+    }
+    void DisableAllChildren(){foreach(Transform t in transform){t.gameObject.SetActive(false);}}
 }

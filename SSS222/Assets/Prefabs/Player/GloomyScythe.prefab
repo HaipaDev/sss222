@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -9072771260210855088}
   - component: {fileID: -1996952101110769926}
   - component: {fileID: 2657704310505367730}
+  - component: {fileID: -2505882778043258903}
   m_Layer: 8
   m_Name: GloomyScythe
   m_TagString: PlayerWeapons
@@ -55,6 +56,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -295,6 +297,7 @@ MonoBehaviour:
   yy: -0.6
   time: 0.2
   stayStill: 1
+  BFlame: {fileID: 0}
 --- !u!114 &-1996952101110769926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,3 +327,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2505882778043258903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmgFreq: 0.16

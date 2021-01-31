@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: -666085093926352585}
   - component: {fileID: 187051419354476101}
   - component: {fileID: 4678851650050105784}
+  - component: {fileID: -2991956195045945366}
   m_Layer: 8
   m_Name: LClaws
   m_TagString: PlayerWeapons
@@ -367,7 +368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fce45689e3e8647ba71eda4d77c077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadow: {fileID: 0}
   speed: 1
   p0: {x: 0, y: 0, z: 0}
   p1: {x: 0, y: 0, z: 0}
@@ -376,3 +376,16 @@ MonoBehaviour:
   UP: {x: 0, y: 0, z: 1}
   pc: {x: 0, y: 0, z: 0}
   CameraNormal: {x: 0, y: 0.70710677, z: -0.70710677}
+--- !u!114 &-2991956195045945366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4755926375889011706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmgFreq: 0.001

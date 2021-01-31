@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79d422e32c874b4f990eb161a8699ea, type: 3}
   m_Name: HLaser
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: 07030a6f28712f64591fc019f8fc58d8, type: 2}
+  waveConfig: {fileID: 11400000, guid: 09b00df44a9ac9d4e96a9d1fd120108e, type: 2}
   disrupterType: 6
   spawnProps:
     id: 0
@@ -22,11 +22,14 @@ MonoBehaviour:
       type: {class: DisrupterConfig/spawnCounts, ns: , asm: Assembly-CSharp}
       data:
         timeEnabled: 1
-        timeS: 20
-        timeE: 50
+        timeS: 5
+        timeE: 40
         time: -4
+        repeat: 3
+        repeatInterval: 0.5
         secondEnabled: 1
         bothNeeded: 1
-        countsWave: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
+        startTimeAfterSecond: 1
+        countsWave: {fileID: 11400000, guid: 07030a6f28712f64591fc019f8fc58d8, type: 2}
         countsNeeded: 3
         counts: 0

@@ -29,7 +29,8 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: WaveConfig/pathSingle, ns: , asm: Assembly-CSharp}
+      type: {class: WaveConfig/pathRandomPoint, ns: , asm: Assembly-CSharp}
       data:
         path: {fileID: 887107107128442422, guid: 686abfac1a5bb4e439793ee318eafe04,
           type: 3}
+        closestToPlayer: 0

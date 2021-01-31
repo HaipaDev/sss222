@@ -25,7 +25,7 @@ public class EnemyPathing : MonoBehaviour{
                 if(waveConfig.wavePathType==wavePathType.btwn2Pts){waypointsS=waveConfig.GetWaypointsSingle();}
                 else if(waveConfig.wavePathType==wavePathType.randomPath){waypointsR=waveConfig.GetWaypointsRandomPath(enemyIndex);}
                 else if(waveConfig.wavePathType==wavePathType.randomPathEach){waypointsR=waveConfig.GetWaypointsRandomPathEach();}
-                else if(waveConfig.wavePathType==wavePathType.randomPoint){waypointsR=waveConfig.GetWaypointsRandomPoint();}
+                //else if(waveConfig.wavePathType==wavePathType.randomPoint){waypointsR=waveConfig.GetWaypointsRandomPoint();}
                 //}else if(waveConfig.loopPath==true){waypointsL=waveConfig.GetWaypointsLoop();
                 else if(waveConfig.wavePathType==wavePathType.loopPath){waypointsL=waveConfig.GetWaypointsSingle();}
                 else{if(waveConfig.wavePathType!=wavePathType.shipPlace){
@@ -33,13 +33,13 @@ public class EnemyPathing : MonoBehaviour{
                 }}
             }
             if(waveConfig.wavePathType!=wavePathType.loopPath){
-            if(waveConfig.wavePathType==wavePathType.randomPath || waveConfig.wavePathType==wavePathType.randomPathEach || waveConfig.wavePathType==wavePathType.randomPoint){transform.position=waypointsR[waypointIndex].transform.position;
-                if(waveConfig.wavePathType==wavePathType.randomPoint && (waveConfig.GetMoveSpeed()!=0 || waveConfig.randomSpeed==true)){
+            if(waveConfig.wavePathType==wavePathType.randomPath||waveConfig.wavePathType==wavePathType.randomPathEach||waveConfig.wavePathType==wavePathType.randomPoint){transform.position=waypointsR[waypointIndex].transform.position;
+                if(waveConfig.wavePathType==wavePathType.randomPoint&&(waveConfig.GetMoveSpeed()!=0||waveConfig.randomSpeed==true)){
                     if(waveConfig.randomSpeed==false){rb.velocity=new Vector2(0f, -waveConfig.GetMoveSpeed());}
                     else{rb.velocity=new Vector2(0f, Random.Range(-waveConfig.GetMoveSpeedS(), -waveConfig.GetMoveSpeedE()));}
                 }
             }
-            else if(waveConfig.wavePathType==wavePathType.btwn2Pts){ var p0 = waypointsS[0].transform.position; var p1 = waypointsS[1].transform.position;
+            else if(waveConfig.wavePathType==wavePathType.btwn2Pts){var p0=waypointsS[0].transform.position; var p1=waypointsS[1].transform.position;
                 Vector3 v=p1-p0;
                 transform.position=p0+Random.value*v;
                 if(waveConfig.randomSpeed==false){rb.velocity = new Vector2(0f, -waveConfig.GetMoveSpeed());}
@@ -69,16 +69,16 @@ public class EnemyPathing : MonoBehaviour{
         }else if(waveConfig.wavePathType==wavePathType.btwn2Pts){//Between 2 points
             if(transform.position.y<-7.5f){Destroy(gameObject);}
         }else if(waveConfig.wavePathType!=wavePathType.randomPoint){
-            if(waveConfig.wavePathType==wavePathType.randomPath || waveConfig.wavePathType==wavePathType.randomPathEach){//Random Path
+            if(waveConfig.wavePathType==wavePathType.randomPath||waveConfig.wavePathType==wavePathType.randomPathEach){//Random Path
                 if (waypointIndex<waypointsR.Count){
                     var targetPos=waypointsR[waypointIndex].transform.position;
                     var step=waveConfig.GetMoveSpeed()*Time.deltaTime;
                     transform.position=Vector2.MoveTowards(transform.position, targetPos, step);
                     if(transform.position==targetPos)waypointIndex++;
                 }else{Destroy(gameObject);}
-            }//else if(waveConfig.randomPoint==true){}
+            }
             else{
-                if(waveConfig.wavePathType!=wavePathType.shipPlace && waveConfig.wavePathType!=wavePathType.loopPath){//Random Point
+                if(waveConfig.wavePathType!=wavePathType.shipPlace&&waveConfig.wavePathType!=wavePathType.loopPath){//Random Point
                     if(waypointIndex<waypointsR.Count){
                         var targetPos=waypointsR[waypointIndex].transform.position;
                         var step=waveConfig.GetMoveSpeed()*Time.deltaTime;

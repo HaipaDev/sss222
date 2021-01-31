@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3335024609016532008}
   - component: {fileID: -4609015006554659745}
   - component: {fileID: 1699225988743725034}
+  - component: {fileID: 2924709680038836347}
   m_Layer: 8
   m_Name: LSaber
   m_TagString: PlayerWeapons
@@ -321,3 +322,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2924709680038836347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4755926375889011706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmgFreq: 0.001

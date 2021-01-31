@@ -25,7 +25,10 @@ MonoBehaviour:
         timeS: 5
         timeE: 25
         time: -4
+        repeat: 1
+        repeatInterval: 0.75
         secondEnabled: 1
         bothNeeded: 1
+        startTimeAfterSecond: 0
         energyNeeded: 30
         energy: 0

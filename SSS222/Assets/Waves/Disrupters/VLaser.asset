@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a14c5dde1fe9e4aaf080d5453ad783, type: 3}
   m_Name: VLaser
   m_EditorClassIdentifier: 
-  waveName: Homing Laser
+  waveName: Vertical Laser
   enemies:
-  - {fileID: 2323431598858436006, guid: db2419d6bf8ee5b49a9f2f24600d3ef8, type: 3}
+  - {fileID: 2323431598858436006, guid: 5ab45030287a7d940b1def65ccf49bd0, type: 3}
   timeSpawn: 0
   timeSpawnWave: -4
   spawnRandomFactor: 0
@@ -31,4 +31,5 @@ MonoBehaviour:
     00000000:
       type: {class: WaveConfig/shipPlace, ns: , asm: Assembly-CSharp}
       data:
-        shipYY: -1.1
+        _spawnSide: 0
+        coords: {x: 0, y: 6.2}

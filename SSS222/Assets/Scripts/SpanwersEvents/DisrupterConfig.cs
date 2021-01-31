@@ -13,8 +13,11 @@ public class DisrupterConfig:ScriptableObject{
         public float timeS=20;
         public float timeE=50;
         public float time=-4;
+        public int repeat=1;
+        public float repeatInterval=0.75f;
         public bool secondEnabled=true;
         public bool bothNeeded=true;
+        public bool startTimeAfterSecond=false;
     }
     [System.Serializable]public class spawnEnergy:disrupterSpawnProps{
         public float energyNeeded=100;

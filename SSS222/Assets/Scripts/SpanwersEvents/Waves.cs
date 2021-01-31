@@ -67,6 +67,7 @@ public class Waves : MonoBehaviour{
     }
 
     public IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig){
+        if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddCounts(waveConfig);
     switch(waveConfig.wavePathType){
         case wavePathType.startToEnd:
             for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
@@ -108,15 +109,18 @@ public class Waves : MonoBehaviour{
             break;
         case wavePathType.randomPoint:
             for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
-                var waveWaypoints=new List<Transform>();
-                foreach(Transform child in waveConfig.GetWaypointsSingle()){waveWaypoints.Add(child);}
-                var pointIndex=Random.Range(0, waveWaypoints.Count);
+                //var waveWaypoints=new List<Transform>();
+                //foreach(Transform child in waveConfig.GetWaypointsRandomPoint()){waveWaypoints.Add(child);}
+                //var pointIndex=Random.Range(0, waveWaypoints.Count);
+                var pos=waveConfig.GetWaypointRandomPoint().position;
+                var w=(WaveConfig.pathRandomPoint)waveConfig.wavePaths;
+                if(w.closestToPlayer&&FindObjectOfType<Player>()!=null){pos=waveConfig.GetWaypointClosestToPlayer().position;}
                 var newEnemy=Instantiate(
                     waveConfig.GetEnemyPrefab(),
-                    waveWaypoints[Random.Range(0, pointIndex)].transform.position,
+                    pos,
                     Quaternion.identity);
                 newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                newEnemy.GetComponent<EnemyPathing>().waypointIndex=pointIndex;
+                newEnemy.GetComponent<EnemyPathing>().waypointIndex=enCount;
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             break;
@@ -126,7 +130,7 @@ public class Waves : MonoBehaviour{
                 for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
                     var newEnemy=Instantiate(
                         waveConfig.GetEnemyPrefab(),
-                        new Vector2(FindObjectOfType<Player>().transform.position.x, 7.2f+pS.shipYY),
+                        waveConfig.GetShipPlaceCoords(waveConfig),
                     Quaternion.identity);
                     if(GetComponent<EnemyPathing>()!=null)newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
                     yield return new WaitForSeconds(waveConfig.GetTimeSpawn());

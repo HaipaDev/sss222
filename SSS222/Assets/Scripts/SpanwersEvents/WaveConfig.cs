@@ -30,16 +30,30 @@ public class WaveConfig:ScriptableObject{
     [System.Serializable]public class pathRandom:wavePathTypeProps{
         public List<GameObject> pathsRandom;
     }
+    [System.Serializable]public class pathRandomPoint:wavePathTypeProps{
+        public GameObject path;
+        public bool closestToPlayer;
+    }
     [System.Serializable]public class shipPlace:wavePathTypeProps{
-        public float shipYY;
+        public spawnSide _spawnSide;
+        public enum spawnSide{up,down,left,right,lOrR}
+        public Vector2 coords;
     }
     
     [ContextMenu("Validate")]void Vaildate(){
         //if(validate){
-        if(wavePathType==wavePathType.btwn2Pts||wavePathType==wavePathType.randomPoint||wavePathType==wavePathType.loopPath){wavePaths=new pathSingle();}
+        if(wavePathType==wavePathType.btwn2Pts||wavePathType==wavePathType.loopPath){wavePaths=new pathSingle();}
         if(wavePathType==wavePathType.startToEnd){wavePaths=new pathStartToEnd();}
         if(wavePathType==wavePathType.randomPath||wavePathType==wavePathType.randomPathEach){wavePaths=new pathRandom();}
-        if(wavePathType==wavePathType.shipPlace){wavePaths=new shipPlace();}
+        if(wavePathType==wavePathType.randomPoint){wavePaths=new pathRandomPoint();}
+        if(wavePathType==wavePathType.shipPlace){if(!typeof(shipPlace).IsInstanceOfType(wavePaths))wavePaths=new shipPlace();
+        var w=(shipPlace)wavePaths;
+        if(w._spawnSide==shipPlace.spawnSide.up){w.coords=new Vector2(0,7.2f);}
+        else if(w._spawnSide==shipPlace.spawnSide.down){w.coords=new Vector2(0,-7.2f);}
+        else if(w._spawnSide==shipPlace.spawnSide.left||w._spawnSide==shipPlace.spawnSide.lOrR){w.coords=new Vector2(-3.9f,0);}
+        else if(w._spawnSide==shipPlace.spawnSide.right){w.coords=new Vector2(3.9f,0);}
+        
+        }
         //if(costType==costType.boomerang){cost=1;}
         //validate=false;}
     }
@@ -49,7 +63,7 @@ public class WaveConfig:ScriptableObject{
     public List<Transform> GetWaypointsSingle(){
         var waveWaypoints=new List<Transform>();
         var p=(pathSingle)wavePaths;
-        foreach (Transform child in p.path.transform){waveWaypoints.Add(child);}
+        foreach(Transform child in p.path.transform){waveWaypoints.Add(child);}
         return waveWaypoints;
     }
     public List<Transform> GetWaypointsStart(){
@@ -62,7 +76,7 @@ public class WaveConfig:ScriptableObject{
     public List<Transform> GetWaypointsEnd(){
         var waveWaypoints=new List<Transform>();
         var p=(pathStartToEnd)wavePaths;
-        foreach (Transform child in p.pathEndPrefab.transform){waveWaypoints.Add(child);}
+        foreach(Transform child in p.pathEndPrefab.transform){waveWaypoints.Add(child);}
         return waveWaypoints;
     }
 
@@ -79,12 +93,28 @@ public class WaveConfig:ScriptableObject{
         foreach(Transform child in p.pathsRandom[pathIndex].transform){waveWaypoints.Add(child);}
         return waveWaypoints;
     }
-    public List<Transform> GetWaypointsRandomPoint(){
+    public Transform GetWaypointRandomPoint(){
         var waveWaypoints=new List<Transform>();
-        var p=(pathSingle)wavePaths;
+        var p=(pathRandomPoint)wavePaths;
         //var pathIndex=Random.Range(0, waveWaypoints.Count);
-        foreach (Transform child in p.path.transform){waveWaypoints.Add(child);}
-        return waveWaypoints;
+        foreach(Transform child in p.path.transform){waveWaypoints.Add(child);}
+        return waveWaypoints[Random.Range(0, waveWaypoints.Count)];
+    }
+    public Transform GetWaypointClosestToPlayer(){
+        KdTree<Transform> waveWaypoints=new KdTree<Transform>();
+        var p=(pathRandomPoint)wavePaths;
+        //var pathIndex=Random.Range(0, waveWaypoints.Count);
+        foreach(Transform child in p.path.transform){waveWaypoints.Add(child);}
+        Transform closest=waveWaypoints.FindClosest(FindObjectOfType<Player>().transform.position);
+        return closest;
+    }
+    public Vector2 GetShipPlaceCoords(WaveConfig waveConfig){
+        var w=(shipPlace)wavePaths;
+        Vector2 coords=w.coords;
+        if(w._spawnSide==shipPlace.spawnSide.up||w._spawnSide==shipPlace.spawnSide.down){coords.x=FindObjectOfType<Player>().transform.position.x;}
+        else if(w._spawnSide==shipPlace.spawnSide.left||w._spawnSide==shipPlace.spawnSide.right||w._spawnSide==shipPlace.spawnSide.lOrR){coords.y=FindObjectOfType<Player>().transform.position.y;}
+        else if(w._spawnSide==shipPlace.spawnSide.lOrR){if(Random.Range(0,100)<50){w.coords.x*=-1;}}
+        return coords;
     }
     public float GetTimeSpawn(){return timeSpawn;}
     public float GetTimeSpawnWave(){return timeSpawnWave;}
