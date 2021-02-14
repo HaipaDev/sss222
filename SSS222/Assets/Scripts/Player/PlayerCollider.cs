@@ -81,18 +81,24 @@ public class PlayerCollider : MonoBehaviour{
                     if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddPwrups(1);//powerupsGoblin++;
                     GameSession.instance.AddXP(GameSession.instance.xp_powerup);//XP For powerups
                 }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)){if(player.health>(player.maxHP-25)){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} HPAdd(); player.AddSubEnergy(player.medkitEnergyGet,true);}//EnergyPopUpHUDPlus(player.medkitEnergyGet); player.healed=true;}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorUPwrup").name)){if(player.health>(player.maxHP-30)) {GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP - player.health)*2);} HPAddU(); player.AddSubEnergy(player.medkitUEnergyGet,true);}//EnergyPopUpHUDPlus(player.medkitUEnergyGet); player.healed=true;}
-
-                void HPAdd(){
-                    player.Damage(player.medkitHpAmnt,dmgType.heal);
-                    //player.health += player.medkitHpAmnt;
-                    //HPPopUpHUD(player.medkitHpAmnt);
-                }void HPAddU(){
-                    player.Damage(player.medkitUHpAmnt,dmgType.heal);
-                    //player.health += player.medkitUHpAmnt;
-                    //HPPopUpHUD(player.medkitUHpAmnt);
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)){
+                    if(player.health==player.maxHP){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}
+                    else if(player.health!=player.maxHP&&player.health>(player.maxHP-player.medkitHpAmnt)){
+                        int val=Mathf.RoundToInt(player.medkitHpAmnt-(player.maxHP-player.health));
+                        if(val>0)GameSession.instance.AddToScoreNoEV(val);}
+                    HPAdd(player.medkitHpAmnt);
+                    player.AddSubEnergy(player.medkitEnergyGet,true);
                 }
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorUPwrup").name)){
+                    if(player.health==player.maxHP){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitUHpAmnt*1.1f));}
+                    else if(player.health!=player.maxHP&&player.health>(player.maxHP-player.medkitUHpAmnt)){
+                        int val=Mathf.RoundToInt(player.medkitUHpAmnt-(player.maxHP-player.health)*0.75f);
+                        if(val>0)GameSession.instance.AddToScoreNoEV(val);}
+                    HPAdd(player.medkitUHpAmnt);
+                    player.AddSubEnergy(player.medkitUEnergyGet,true);
+                }
+                void HPAdd(float hp){player.Damage(hp,dmgType.heal);}
+                
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("FlipPwrup").name)) {
                     if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
                     if(player.flip==true){EnergyAddDupl();}

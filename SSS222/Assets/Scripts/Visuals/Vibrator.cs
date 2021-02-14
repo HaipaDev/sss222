@@ -15,9 +15,12 @@ public static class Vibrator{
     public static void Vibrate(long milliseconds=250){
         if(IsAndroid()){
             vibrator.Call("vibrate",milliseconds);
-        }else{
-            Handheld.Vibrate();
         }
+        #if !UNITY_WINDOWS&&!UNITY_EDITOR
+        else{
+            //Handheld.Vibrate();
+        }
+        #endif
     }
     public static void Cancel(){
         if(IsAndroid()){

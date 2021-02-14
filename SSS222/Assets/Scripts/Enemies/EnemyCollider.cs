@@ -62,7 +62,7 @@ public class EnemyCollider : MonoBehaviour{
                 }
             }
         }else if(other.CompareTag(tag)){
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){GetComponent<Enemy>().givePts=false; GetComponent<Enemy>().health=-1; GetComponent<Enemy>().Die();}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)||other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){GetComponent<Enemy>().givePts=false; GetComponent<Enemy>().health=-1; GetComponent<Enemy>().Die();}
         }
     }
     void OnTriggerStay2D(Collider2D other){

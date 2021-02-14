@@ -20,30 +20,26 @@ public class PowerupDisplay : MonoBehaviour{
     Sprite sprite;
     Image bg;
     void Start(){
-        player=FindObjectOfType<Player>();
+        if(FindObjectOfType<Player>()!=null)player=FindObjectOfType<Player>();
         //if(player!=null)pwrup = player.powerup;
         spr=GetComponent<Image>();
         //if(powerups!=true){
         //if(powerups!=true||(player!=null&&player.weaponsLimited)){
         if(textObj==null){if(transform.GetComponentInChildren<TMPro.TextMeshProUGUI>()!=null)textObj=transform.GetComponentInChildren<TMPro.TextMeshProUGUI>().gameObject;}
         if(textObj!=null){TMP=textObj.GetComponent<TMPro.TextMeshProUGUI>();}
-        bg=transform.GetChild(0).GetComponent<Image>();
+        if(transform.GetChild(0)!=null){bg=transform.GetChild(0).GetComponent<Image>();}
         //}
-        color = spr.color;
-        if(bg!=null)color2 = bg.color;
-        if(GameRules.instance!=null){pwrup=GameRules.instance.powerupStarting;spr.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");}//?
+        color=spr.color;
+        if(bg!=null)color2=bg.color;
+        if(GameRules.instance!=null){pwrup=GameRules.instance.powerupStarting;spr.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");}
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if(player==null){player=FindObjectOfType<Player>();}
-        spr.color = color;
-        if(bg!=null)bg.color = color2;
+    void Update(){
+        spr.color=color;
+        if(bg!=null)bg.color=color2;
 
         if(powerups==true){
             if(player!=null){
-                pwrup = player.powerup;
+                pwrup=player.powerup;
                 if(TMP!=null){
                     var timer=player.powerupTimer;
                     if((float)timer<10f&&(float)timer>=0){value=(float)System.Math.Round((float)timer, 1);TMP.characterSpacing=-25f;}
@@ -55,19 +51,15 @@ public class PowerupDisplay : MonoBehaviour{
                     if(value<=-5){TMP.text="∞";}
                     else {TMP.text=value.ToString();}
                 }
-                /*var sprr=this.GetType().GetField(pwrup+"Sprite").GetValue(this);
-                this.GetType().GetField("sprite").SetValue(this,sprr);
-                spr.sprite=sprite;*/
-                var name=pwrup;
-                if(pwrup.Contains("A")){name=pwrup.Trim('A');}
-                spr.sprite=GameAssets.instance.Spr(name+"Pwrup");
-                /*if(pwrup!="lsaberA"&&pwrup!="lclawsA"&&pwrup!="null"){if(GameAssets.instance!=null)spr.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");}
-                //else if(pwrup=="laser")spr.sprite=GameAssets.instance.Spr("laser");
-                else if(pwrup=="lsaberA")spr.sprite=GameAssets.instance.Spr("lsaberPwrup");
-                else if(pwrup=="lclawsA")spr.sprite=GameAssets.instance.Spr("lclawsPwrup");*/
-                if(pwrup=="null")color.a=0;
-                else color.a=1;
+            }else{
+                pwrup=GameRules.instance.powerupStarting;
+                spr.color=Color.white;
             }
+            var name=pwrup;
+            if(pwrup.Contains("A")){name=pwrup.Trim('A');}
+            spr.sprite=GameAssets.instance.Spr(name+"Pwrup");
+            if(pwrup=="null")color.a=0;
+            else color.a=1;
         }else{
             if(player!=null){
                 if(player.statuses.Count>number){if(player.statuses[number]!=""){state=player.statuses[number];}else state="";}else state="";
@@ -76,7 +68,7 @@ public class PowerupDisplay : MonoBehaviour{
                 if(number==3){state=player.status3;}*/
                 //var s=this.GetType().GetField(state+"Sprite").SetValue(this,false);
                 //spr.sprite=s;
-                if (state == "" || state == null){
+                if(state==""||state==null){
                     Destroy(gameObject);
                     /*color.a = 0f;
                     color2.a = 0f;

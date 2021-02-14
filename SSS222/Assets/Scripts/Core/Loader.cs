@@ -23,33 +23,6 @@ public class Loader : MonoBehaviour{
         audioMixer.SetFloat("MasterVolume", SaveSerial.instance.settingsData.masterVolume);
         audioMixer.SetFloat("SoundVolume", SaveSerial.instance.settingsData.soundVolume);
         audioMixer.SetFloat("MusicVolume", SaveSerial.instance.settingsData.musicVolume);
-
-        #if UNITY_ANDROID
-            Application.runInBackground = true;
-            //Application.targetFrameRate = 30;
-            //QualitySettings.SetQualityLevel(2);
-            //QualitySettings.vSyncCount = 0; 
-            
-            //if (QualitySettings.GetQualityLevel() <= 1){
-                //QualitySettings.SetQualityLevel(3);
-                //QualitySettings.shadowCascades = 0;
-                //QualitySettings.shadowDistance = 15;
-            //}
-            
-            /*else if (QualitySettings.GetQualityLevel() == 5){
-                QualitySettings.shadowCascades = 2;
-                QualitySettings.shadowDistance = 70;
-            }*/
-            
-            Screen.sleepTimeout = SleepTimeout.NeverSleep;
-            
-        #endif
-
-        #if UNITY_STANDALONE_WIN
-            Application.targetFrameRate = 60;
-            QualitySettings.vSyncCount = 1;
-            //QualitySettings.SetQualityLevel(4);
-        #endif
     }
     void Update()
     {
