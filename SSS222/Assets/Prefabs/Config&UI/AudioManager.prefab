@@ -505,3 +505,21 @@ MonoBehaviour:
     loop: 1
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: ButtonSelect
+    clip: {fileID: 8300000, guid: db9e4506456cfbe428d98dcacffeea94, type: 3}
+    volume: 0.4
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.05
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: ButtonPress
+    clip: {fileID: 8300000, guid: c059e6a5aa53e0f4c99b093e759b5924, type: 3}
+    volume: 0.4
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.05
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

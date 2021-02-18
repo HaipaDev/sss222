@@ -7,29 +7,27 @@ using UnityEngine.EventSystems;
 public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHandler, IPointerExitHandler{
     [SerializeField]EventSystem es;
     [SerializeField]Button btn;
+    [SerializeField]Button btnLast;
+    [SerializeField]GameObject currentSelected;
+    [SerializeField]GameObject lastSelected;
     [SerializeField]bool inputSelecting=true;
     //[SerializeField]Vector2 mousePosCanv;
     [SerializeField]Vector2 mousePosPrev;
-    //float inputSelectingTime=2;
-    //[SerializeField]float inputSelectingTimer=-4;
     void Start(){
         es=FindObjectOfType<EventSystem>();
         if(es!=null)btn=es.firstSelectedGameObject.GetComponent<Button>();mousePosPrev=Input.mousePosition;
     }
     public void SetSelected(){
         es.SetSelectedGameObject(null);
-        if(es!=null&&btn!=null)es.SetSelectedGameObject(btn.gameObject);
+        if(es!=null&&btn!=null){es.SetSelectedGameObject(btn.gameObject);btnLast=btn;}
     }
     void Update(){
-        //over=IsPointerOverUIObject();
-        //mousePosCanv=MousePosToCanvas();
-        if(Input.GetButtonDown("Horizontal")||Input.GetButtonDown("Vertical")){inputSelecting=true;mousePosPrev=Input.mousePosition;}//inputSelectingTimer=inputSelectingTime;}
+        if(Input.GetButtonDown("Horizontal")||Input.GetButtonDown("Vertical")){inputSelecting=true;mousePosPrev=Input.mousePosition;}
         else{if((Vector2)Input.mousePosition!=mousePosPrev){inputSelecting=false;}}
-        //else{if(inputSelectingTimer==-4){inputSelectingTimer=inputSelectingTime;}else{if(inputSelectingTimer>0){inputSelectingTimer-=Time.unscaledDeltaTime;}else if(inputSelectingTimer<=0&&inputSelectingTimer!=-4){inputSelecting=false;}}}
-        if(this.gameObject==es.gameObject&&!inputSelecting){if(GetButtonUnderMouse()!=null)btn=GetButtonUnderMouse();SetSelected();}
-        /*Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit2D hit=Physics2D.GetRayIntersection(ray,Mathf.Infinity);
-        if(hit.collider!=null&&hit.collider.GetComponent<Button>()!=null){btn=hit.collider.GetComponent<Button>();SetSelected();}*/
+        if(!inputSelecting){if(GetButtonUnderMouse()!=null)btn=GetButtonUnderMouse();if(btn!=btnLast)SetSelected();}
+        currentSelected=es.currentSelectedGameObject;
+        if(currentSelected!=null&&currentSelected.GetComponent<ButtonScript>()==null){currentSelected.AddComponent<ButtonScript>();}
+        if(currentSelected!=lastSelected||lastSelected==null){/*AudioManager.instance.Play("ButtonSelect");*/lastSelected=currentSelected;}
     }
     public Button FindClosestButton(){
         KdTree<Button> Buttons=new KdTree<Button>();
@@ -47,10 +45,6 @@ public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHa
         Button btn=null;
         foreach(RaycastResult rr in results){if(rr.gameObject.GetComponent<Button>()!=null){btn=rr.gameObject.GetComponent<Button>();}}//else{btn=null;}}
         return btn;
-        /*Button btn=null;
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.forward, out hit, 2.0F)){if(hit.transform.GetComponent<Button>()!=null){btn=hit.transform.GetComponent<Button>();}}else{}
-        return btn;*/
     }
     Vector3 MousePosToCanvas(){return CanvasPositioningExtensions.ScreenToCanvasPosition(FindObjectOfType<Canvas>(),Input.mousePosition);}
     public void OnPointerEnter(PointerEventData eventData){

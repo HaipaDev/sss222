@@ -101,7 +101,7 @@ public class Level : MonoBehaviour{
     void CheckESC(){
     if(Input.GetKeyDown(KeyCode.Escape)){
             var scene=SceneManager.GetActiveScene().name;
-            if(scene=="GameModeChoose"||scene=="Inventory"||scene=="Credits"){
+            if(scene=="ChooseGameMode"||scene=="Inventory"||scene=="Credits"){
                 LoadStartMenu();
             }if(scene=="Options"){
             if(FindObjectOfType<SettingsMenu>()!=null){
