@@ -476,7 +476,7 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: enemies.Array.data[5].shooting
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -632,7 +632,7 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: pwrupStatusList.Array.data[9].name
-      value: Shadowdash
+      value: HRockets
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -686,6 +686,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: pwrupStatusList.Array.data[9].rarity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: enemies.Array.data[0].maxTimeBtwnShots
       value: 1.1
       objectReference: {fileID: 0}
@@ -713,7 +718,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pwrupStatusList.Array.data[0].lootItem
       value: 
-      objectReference: {fileID: 11400000, guid: 8ee29e2bede3b904bb2b52557eb0f6b9,
+      objectReference: {fileID: 11400000, guid: 2650301666c6e9d4b8719cd07986fecb,
         type: 2}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -806,13 +811,13 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: pwrupStatusList.Array.data[9].levelReq
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: pwrupStatusList.Array.data[9].lootItem
       value: 
-      objectReference: {fileID: 11400000, guid: 9b409de821cfef24e850bac7ad821f16,
+      objectReference: {fileID: 11400000, guid: f75229abe571c5f4780d84f66fa08b5b,
         type: 2}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

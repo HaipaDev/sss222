@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
   colorGlow: {r: 0.2863564, g: 0.8392157, b: 0.6156863, a: 1}
-  sizeGlow: 1
+  sizeGlow: 0.8
   alphaGlow: 0.7
   emissionSpeed: 7.63
   xx: 0
@@ -170,7 +170,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 45b5d050af163dc439ba8781a7208027, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.165
+  m_Volume: 0.115
   m_Pitch: 1
   Loop: 0
   Mute: 0

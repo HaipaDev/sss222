@@ -58,7 +58,8 @@ public class Enemy : MonoBehaviour{
             EnemyClass e=null;
             foreach(EnemyClass enemy in i.enemies){if(enemy.name==Name){e=enemy;}}
             if(e!=null){
-            if(GetComponent<CometRandomProperties>()==null){size=e.size;transform.localScale=size;spr=e.spr;GetComponent<SpriteRenderer>().sprite=spr;}
+            size=e.size;
+            if(GetComponent<CometRandomProperties>()==null){transform.localScale=size;spr=e.spr;GetComponent<SpriteRenderer>().sprite=spr;}
             health=e.health;
             shooting=e.shooting;
             minTimeBtwnShots=e.minTimeBtwnShots;

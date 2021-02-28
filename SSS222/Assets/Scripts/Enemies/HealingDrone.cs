@@ -9,6 +9,7 @@ public class HealingDrone : MonoBehaviour{
     [SerializeField] float speedBullet=4f;
     [Header("Values")]
     public Enemy closestEnemy;
+    public Tag_LivingEnemy closestLivingEnemy;
     int shoot;
     void Awake(){
     //Set Values
@@ -23,6 +24,7 @@ public class HealingDrone : MonoBehaviour{
 
     void Update(){
         closestEnemy=FindClosestEnemy();
+        closestLivingEnemy=FindClosestLivingEnemy();
         //if(closestEnemy!=null){
             if(shoot==0)shoot=1;
             var shootHealBullets=ShootHealBullets();
@@ -33,11 +35,10 @@ public class HealingDrone : MonoBehaviour{
 
     IEnumerator ShootHealBullets(){
         yield return new WaitForSeconds(shootFrequency);
-        var healBall = Instantiate(healBallPrefab, new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
-        float step = speedBullet * Time.deltaTime;
-        //healBall.transform.position=Vector2.MoveTowards(transform.position, closestEnemy.transform.position, step);
-        if(closestEnemy!=null){
-            healBall.GetComponent<FollowOneObject>().targetObj=closestEnemy.gameObject;
+        var healBall=Instantiate(healBallPrefab,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+        float step=speedBullet*Time.deltaTime;
+        if(closestLivingEnemy!=null){
+            healBall.GetComponent<FollowOneObject>().targetObj=closestLivingEnemy.gameObject;
             healBall.GetComponent<FollowOneObject>().speedFollow=4f;}
         else{healBall.GetComponent<FollowOneObject>().targetObj=this.gameObject;}
         
@@ -60,6 +61,21 @@ public class HealingDrone : MonoBehaviour{
             //Enemies.RemoveAll(this.GetComponent<HealingDrone>() healDrone);
         }
         Enemy closest = Enemies.FindClosest(transform.position);
+        return closest;
+    }
+    public Tag_LivingEnemy FindClosestLivingEnemy(){
+        KdTree<Tag_LivingEnemy> Enemies = new KdTree<Tag_LivingEnemy>();
+        Tag_LivingEnemy[] EnemiesArr;
+        EnemiesArr = FindObjectsOfType<Tag_LivingEnemy>();
+        //List<string> sublist = Enemies.FindAll(isHealingDrone);
+        foreach(Tag_LivingEnemy enemy in EnemiesArr){
+            if(enemy.GetComponent<HealingDrone>()==null)Enemies.Add(enemy);
+            //if(enemy.GetComponent<HealingDrone>()!=null){Enemies.RemoveAt(System.Array.IndexOf(EnemiesArr, this));}
+            //Debug.Log(System.Array.IndexOf(EnemiesArr, this));
+            //Enemies.Find(this.GetComponent<HealingDrone>() healDrone);
+            //Enemies.RemoveAll(this.GetComponent<HealingDrone>() healDrone);
+        }
+        Tag_LivingEnemy closest = Enemies.FindClosest(transform.position);
         return closest;
     }
 

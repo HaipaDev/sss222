@@ -1152,9 +1152,9 @@ public class Player : MonoBehaviour{
         if(speedTimer>0){speedTimer-=Time.deltaTime;}else{if(speedTimer>-4)if(speed){speedStrength=1;moveSpeedCurrent=speedPrev;}ResetStatus("speed");}
         if(slowTimer>0){slowTimer-=Time.deltaTime;}else{if(slowTimer>-4)if(slow){slowStrength=1;moveSpeedCurrent=speedPrev;}ResetStatus("slow");}
         if(armored==true&&fragile!=true){armorMulti=armoredMulti*armoredStrength;}else if(fragile==true&&armored!=true){armorMulti=fragileMulti/fragileStrength;}
-        if(armored!=true&&fragile!=true){armorMulti=1;}if(armored==true&&fragile==true){armorMulti=fragileStrength*armoredStrength;}
+        if(armored!=true&&fragile!=true){armorMulti=armorMultiInit;}if(armored==true&&fragile==true){armorMulti=fragileStrength*armoredStrength;}
         if(power==true&&weakns!=true){dmgMulti=powerMulti*powerStrength;}else if(weakns==true&&power!=true){dmgMulti=weaknsMulti/weaknsStrength;}
-        if(power!=true&&weakns!=true){dmgMulti=1;}if(power==true&&weakns==true){dmgMulti=weaknsStrength*powerStrength;}
+        if(power!=true&&weakns!=true){dmgMulti=dmgMultiInit;}if(power==true&&weakns==true){dmgMulti=weaknsStrength*powerStrength;}
         if(onfire){if(frozen){ResetStatus("frozen");/*Damage(1,dmgType.silent);*/}}
         if(infEnergyTimer>0){infEnergyTimer-=Time.deltaTime;}else{if(infEnergyTimer>-4){ResetStatus("infEnergy");}}
         if(infEnergy){energy=infPrevEnergy;}

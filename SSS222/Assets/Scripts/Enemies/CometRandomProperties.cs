@@ -10,22 +10,24 @@ public class CometRandomProperties : MonoBehaviour{
     [SerializeField] bool healthBySize=true;
     [SerializeField] public bool damageBySpeedSize=true;
     [SerializeField] public bool scoreBySize=false;
+    [SerializeField] public bool randomAngle=true;
     [SerializeField] public CometScoreSize[] scoreSizes;
     [SerializeField] Sprite[] sprites;
     [SerializeField] GameObject bflamePart;
     [Header("Lunar")]
     [SerializeField] float sizeMinLunar=0.88f;
     [SerializeField] float sizeMaxLunar=1.55f;
-    [SerializeField] int lunarCometChance = 10;
-    [SerializeField] float lunarHealthMulti = 2.5f;
-    [SerializeField] float lunarSpeedMulti = 0.415f;
-    [SerializeField] int lunarScore = -1;
-    [SerializeField] int lunarScoreS = 0;
-    [SerializeField] int lunarScoreE = 0;
+    [SerializeField] int lunarCometChance=10;
+    [SerializeField] float lunarHealthMulti=2.5f;
+    [SerializeField] float lunarSpeedMulti=0.415f;
+    [SerializeField] int lunarScore=-1;
+    [SerializeField] int lunarScoreS=0;
+    [SerializeField] int lunarScoreE=0;
     [SerializeField] GameObject lunarDrop;
     [SerializeField] int lunarDropChance;
     [SerializeField] Sprite[] spritesLunar;
     [SerializeField] GameObject lunarPart;
+    public int healhitCount;
     public bool isLunar;
 
     SpriteRenderer spriteRenderer;
@@ -69,15 +71,15 @@ public class CometRandomProperties : MonoBehaviour{
         bFlame.enabled=true;
         spriteRenderer=GetComponent<SpriteRenderer>();
         rb=GetComponent<Rigidbody2D>();
+        enemy=GetComponent<Enemy>();
         var spriteIndex=Random.Range(0, sprites.Length);
         spriteRenderer.sprite=sprites[spriteIndex];
         size=Random.Range(sizeMin, sizeMax);
-        transform.localScale=new Vector2(size,size);
+        transform.localScale=new Vector2(enemy.size.x*size,enemy.size.y*size);
 
         var angle=Random.Range(0f,360f);
-        transform.rotation=Quaternion.AngleAxis(angle,Vector3.forward);
+        if(randomAngle)transform.rotation=Quaternion.AngleAxis(angle,Vector3.forward);
 
-        enemy=GetComponent<Enemy>();
         if(healthBySize)enemy.health*=size;
 
         //Lunar Comets
@@ -85,23 +87,14 @@ public class CometRandomProperties : MonoBehaviour{
         //if(GameSession.instance.gameModeSelected!=2){
             if(Random.Range(0,100)<lunarCometChance)isLunar=true;
             if(isLunar==true){
-                spriteIndex=Random.Range(0,spritesLunar.Length);spriteRenderer.sprite=spritesLunar[spriteIndex];
-                bFlame.part=lunarPart;
-                var sizeA=Random.Range(sizeMinLunar, sizeMaxLunar);
-                transform.localScale=new Vector2(sizeA, sizeA);
-
-                enemy.health*=lunarHealthMulti;
-                rb.velocity*=lunarSpeedMulti;
-                if(GameSession.instance.shopOn)enemy.coinChance=1;
+                TransformIntoLunar();
             }
         //}
         //}
         //rotationSpeed=Random.Range(2,8);
         //Destroy(this,0.3f);
     }
-    public float Size(){
-        return size;
-    }
+    public float Size(){return size;}
     public int LunarScore(){
         if(lunarScore==-1)if(lunarScoreE>0)lunarScore=Random.Range(lunarScoreS,lunarScoreE);
         return lunarScore;
@@ -111,10 +104,25 @@ public class CometRandomProperties : MonoBehaviour{
     }public GameObject GetLunarDrop(){
         return lunarDrop;
     }
+    void Update(){
+        if(healhitCount>=2&&!isLunar){MakeLunar();}
+        //transform.Rotate(new Vector3(0,0,rotationSpeed));
+    }
+    [ContextMenu("MakeLunar")]public void MakeLunar(){
+        isLunar=true;
+        bFlame.ClearBFlame();
+        TransformIntoLunar();
+    }
+    void TransformIntoLunar(){
+        var spriteIndex=Random.Range(0,spritesLunar.Length);spriteRenderer.sprite=spritesLunar[spriteIndex];
+        bFlame.part=lunarPart;
+        var sizeA=Random.Range(sizeMinLunar, sizeMaxLunar);
+        transform.localScale=new Vector2(enemy.size.x*sizeA, enemy.size.y*sizeA);
 
-    /*void Update(){
-        transform.Rotate(new Vector3(0,0,rotationSpeed));
-    }*/
+        enemy.health*=lunarHealthMulti;
+        rb.velocity*=lunarSpeedMulti;
+        if(GameSession.instance.shopOn)enemy.coinChance=1;
+    }
 }
 [System.Serializable]public class CometScoreSize{
     public float size;

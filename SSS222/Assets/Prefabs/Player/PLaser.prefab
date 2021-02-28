@@ -35,7 +35,7 @@ Transform:
   m_GameObject: {fileID: 5313808222654050488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85, y: 0.85, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -55,6 +55,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -162,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0.3137255, g: 0.74509805, b: 0.57327664, a: 1}
+  colorGlow: {r: 0.28627452, g: 0.07450981, b: 0.44705886, a: 1}
   sizeGlow: 1.7
   alphaGlow: 0.55
   emissionSpeed: 7.63
@@ -302,8 +303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
-    type: 3}
+  cargoDrop: {fileID: 0}
+  delay: 1
 --- !u!114 &4869733932467409640
 MonoBehaviour:
   m_ObjectHideFlags: 0

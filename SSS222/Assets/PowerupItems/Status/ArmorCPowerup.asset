@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
-  m_Name: ArmorUPowerup
+  m_Name: ArmorCPowerup
   m_EditorClassIdentifier: 
-  name: ArmorU
+  name: ArmorC
   item: {fileID: 530782707432221319, guid: 79e3a62b1e44c5c42afcffa470e5736a, type: 3}
-  dropChance: 1.75
-  rarity: 1
-  levelReq: 1
+  dropChance: 2
+  rarity: 0
+  levelReq: 0

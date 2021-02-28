@@ -11,13 +11,13 @@ public class FollowOneObject : MonoBehaviour{
     [SerializeField] float particleDestroyTime=0.05f;
     Rigidbody2D rb;
     void Start(){
-        rb = GetComponent<Rigidbody2D>();
+        rb=GetComponent<Rigidbody2D>();
     }
 
     void Update(){
-        float step = speedFollow * Time.deltaTime;
+        float step=speedFollow*Time.deltaTime;
         if(targetObj!=null){var targetPos=targetObj.transform.position;
-        transform.position = Vector2.MoveTowards(transform.position, targetPos, step);}
+        transform.position=Vector2.MoveTowards(transform.position,targetPos,step);}
         if(targetObj==null){
             if(destroyAfter==true){Destroy(gameObject,0.001f);
                 if(particlesOnDeath==true){

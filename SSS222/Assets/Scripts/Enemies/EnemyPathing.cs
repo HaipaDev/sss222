@@ -7,7 +7,7 @@ public class EnemyPathing : MonoBehaviour{
     List<Transform> waypointsS;
     List<Transform> waypointsE;
     List<Transform> waypointsR;
-    public List<Transform> waypointsL;
+    [HideInInspector]public List<Transform> waypointsL;
     public int waypointIndex = 0;
     public int enemyIndex = 0;
     Rigidbody2D rb;
@@ -25,7 +25,7 @@ public class EnemyPathing : MonoBehaviour{
                 if(waveConfig.wavePathType==wavePathType.btwn2Pts){waypointsS=waveConfig.GetWaypointsSingle();}
                 else if(waveConfig.wavePathType==wavePathType.randomPath){waypointsR=waveConfig.GetWaypointsRandomPath(enemyIndex);}
                 else if(waveConfig.wavePathType==wavePathType.randomPathEach){waypointsR=waveConfig.GetWaypointsRandomPathEach();}
-                //else if(waveConfig.wavePathType==wavePathType.randomPoint){waypointsR=waveConfig.GetWaypointsRandomPoint();}
+                else if(waveConfig.wavePathType==wavePathType.randomPoint){waypointsR=waveConfig.GetWaypointsRandomPoint();}
                 //}else if(waveConfig.loopPath==true){waypointsL=waveConfig.GetWaypointsLoop();
                 else if(waveConfig.wavePathType==wavePathType.loopPath){waypointsL=waveConfig.GetWaypointsSingle();}
                 else{if(waveConfig.wavePathType!=wavePathType.shipPlace){

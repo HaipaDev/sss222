@@ -93,6 +93,13 @@ public class WaveConfig:ScriptableObject{
         foreach(Transform child in p.pathsRandom[pathIndex].transform){waveWaypoints.Add(child);}
         return waveWaypoints;
     }
+    public List<Transform> GetWaypointsRandomPoint(){
+        var waveWaypoints=new List<Transform>();
+        var p=(pathRandomPoint)wavePaths;
+        //var pathIndex=Random.Range(0, waveWaypoints.Count);
+        foreach(Transform child in p.path.transform){waveWaypoints.Add(child);}
+        return waveWaypoints;
+    }
     public Transform GetWaypointRandomPoint(){
         var waveWaypoints=new List<Transform>();
         var p=(pathRandomPoint)wavePaths;

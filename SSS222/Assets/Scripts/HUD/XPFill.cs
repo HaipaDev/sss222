@@ -20,6 +20,11 @@ public class XPFill : MonoBehaviour{
         img=GetComponent<Image>();
         upgradeMenu=FindObjectOfType<UpgradeMenu>();
         if(shop==true)shopMenu=FindObjectOfType<Shop>();
+        if(transform.root.gameObject.name.Contains("UpgradeCanvas")){
+            emptySprite=GameAssets.instance.Spr("upgradeEmpty");
+            fillSprite=GameAssets.instance.Spr("upgradeFill");
+            particlePrefab=GameAssets.instance.GetVFX("UpgradeVFX");
+        }
         //shake = GameObject.FindObjectOfType<Shake>().GetComponent<Shake>();
     }
 

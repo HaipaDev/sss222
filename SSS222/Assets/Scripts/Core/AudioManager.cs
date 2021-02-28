@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
 //AudioManager.instance.Play("");
 	public static AudioManager instance;
 
+	public AudioMixer audioMixer;
 	public AudioMixerGroup mixerGroup;
 
 	public Sound[] sounds;
@@ -80,5 +81,10 @@ public class AudioManager : MonoBehaviour
 			Debug.LogWarning("Sound: " + sound + " not found!");
 			return null;
 		}else{return s.source;}
+	}
+	private void Update(){
+		audioMixer.SetFloat("MasterVolume", SaveSerial.instance.settingsData.masterVolume);
+		audioMixer.SetFloat("SoundVolume", SaveSerial.instance.settingsData.soundVolume);
+		audioMixer.SetFloat("MusicVolume", SaveSerial.instance.settingsData.musicVolume);
 	}
 }

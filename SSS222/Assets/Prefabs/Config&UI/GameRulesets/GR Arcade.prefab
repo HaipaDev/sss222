@@ -129,9 +129,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: disrupterList.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: enemies.Array.data[2].spr
+      value: 
+      objectReference: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: enemies.Array.data[3].spr
+      value: 
+      objectReference: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: disrupterList.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 62a29b7fc10a69b45bf9ff41b6cda95a,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: weaponProperties.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: enemies.Array.data[3].bullet
+      value: 
+      objectReference: {fileID: 5313808222654050488, guid: 7ee89741fb82f0a45a71870919d506a7,
+        type: 3}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: unlockableSkills.Array.data[0]
@@ -233,12 +262,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: cometSettings.spritesLunar.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8f5604571a603dc4ca74f76f5a8c070e,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cometSettings.spritesLunar.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 4ca5f58d98a9d514e98f96344392f882,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: pwrupStatusList.Array.data[3].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: pwrupStatusList.Array.data[7].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: pwrupStatusList.Array.data[8].dropChance
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: pwrupWeaponList.Array.data[4].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: pwrupWeaponList.Array.data[7].dropChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: pwrupWeaponList.Array.data[8].dropChance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: pwrupWeaponList.Array.data[10].dropChance
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,

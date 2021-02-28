@@ -11,10 +11,10 @@ For any updates follow me [@HyperLemonPL on Twitter](https://twitter.com/HyperLe
 Roadmap:
 - [x] 0.1 - Basic Functionality from SSS77 + energy system
 - [x] 0.2 - Shop System & New Powerups
-- [x] 0.3 - Biggest Gameplay Update - Stats, Upgrades, Skills, New Enemies & Balancing
+- [x] 0.3 - Stats, Upgrades, Skills, New Enemies & Balancing
 - [x] 0.4 - Gamemodes, project optimization
-- [ ] 0.5 - Gameplay(Shop & Lore) & UI Overhauls
-- [ ] 0.6 - Adventure Overhaul
+- [ ] 0.5 - Huge Gameplay, Lore & UI Overhauls
+- [ ] 0.6 - Adventure Mode Update
 - [ ] 0.7 - Cosmetics, Stats
 - [ ] 1.0 - Initial Release
 

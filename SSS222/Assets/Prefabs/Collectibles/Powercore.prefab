@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 36ccb2acfad7dc142aeaf432d4a80397, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b296ec8c0b3d7504c859a64f4f71eb1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,7 +108,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.36666667, y: 0.6666667}
+    oldSize: {x: 0.43333334, y: 0.6666667}
     newSize: {x: 0.08, y: 0.08}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0.050980397, g: 0.6666667, b: 0.56078434, a: 1}
+  colorGlow: {r: 0.6526381, g: 0.18614274, b: 0.8396226, a: 1}
   sizeGlow: 1.34
   alphaGlow: 0.8
   emissionSpeed: 7.63
@@ -210,8 +210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
-    type: 3}
   cargoDrop: {fileID: 0}
   delay: 1
 --- !u!114 &-7903156690704822508

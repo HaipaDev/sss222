@@ -37,6 +37,7 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "cores") txt.text = GameSession.instance.GetCores().ToString();
         else if (value.Contains("highscore")) txt.text = GameSession.instance.GetHighscore(/*int.Parse(value.Split('e')[1])*/GameSession.instance.gameModeSelected).ToString();
         else if (value == "version") txt.text = GameSession.instance.GetVersion();
+        else if (value == "timePlayed") txt.text = GameSession.instance.GetGameSessionTimeFormat();
         }
         if(player!=null){
         if (value == "hpOffMax") txt.text = Mathf.RoundToInt(player.health).ToString()+"/"+player.maxHP.ToString();

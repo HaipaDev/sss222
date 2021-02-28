@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -4204476924176818017}
   - component: {fileID: 7810611016273777585}
   - component: {fileID: 637602792}
+  - component: {fileID: 3661790324503242065}
   m_Layer: 9
   m_Name: GlareDevil
   m_TagString: Enemy
@@ -218,6 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9957469ac0c594981c65e4fda467ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dmgTimer: 0
 --- !u!82 &-4204476924176818017
 AudioSource:
   m_ObjectHideFlags: 0
@@ -348,3 +350,15 @@ MonoBehaviour:
   emissionSpeed: 8.63
   xx: 0.41
   yy: 0.255
+--- !u!114 &3661790324503242065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147796775416149952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf5c64c69fc85e458ab96b639ada4ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

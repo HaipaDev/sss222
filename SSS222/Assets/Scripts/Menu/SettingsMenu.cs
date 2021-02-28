@@ -49,11 +49,14 @@ public class SettingsMenu : MonoBehaviour{
             steeringToggle.transform.GetChild(0).GetChild((int)SaveSerial.instance.settingsData.inputType).gameObject.SetActive(true);
         }
     }
-    private void Update() {
+    private void Update(){
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
-        if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.pprocessing==true && postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
-        if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.pprocessing==true && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume.enabled=true;}
-        if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
+        if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.pprocessing==true&&postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
+        if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.pprocessing==true&&FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume.enabled=true;}
+        if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.pprocessing==false&&FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
+        if(SaveSerial.instance.settingsData.masterVolume==-60){SaveSerial.instance.settingsData.masterVolume=-80;}
+        if(SaveSerial.instance.settingsData.soundVolume==-60){SaveSerial.instance.settingsData.soundVolume=-80;}
+        if(SaveSerial.instance.settingsData.musicVolume==-60){SaveSerial.instance.settingsData.musicVolume=-80;}
     }
     public void SetPanelActive(int i){
         foreach(GameObject p in panels){p.SetActive(false);}panels[i].SetActive(true);
@@ -63,16 +66,13 @@ public class SettingsMenu : MonoBehaviour{
     public void Close(){transform.GetChild(0).gameObject.SetActive(false);transform.GetChild(1).gameObject.SetActive(false);}
     public void SetMasterVolume(float volume){
     if(GameSession.instance!=null){
-        audioMixer.SetFloat("MasterVolume", volume);
         if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.masterVolume = volume;
     }}public void SetSoundVolume(float volume){
     if(GameSession.instance!=null){
-        audioMixer.SetFloat("SoundVolume", volume);
         if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.soundVolume = volume;
     }}
     public void SetMusicVolume(float volume){
     if(GameSession.instance!=null){
-        audioMixer.SetFloat("MusicVolume", volume);
         if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.musicVolume = volume;
     }}
     public void SetQuality(int qualityIndex){

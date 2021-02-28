@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0ebe99a85b6b43c44a0263085f0cc469, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea13507973a904d488a23bafa522a868, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0.46659088, g: 0, b: 1, a: 1}
+  colorGlow: {r: 0, g: 1, b: 0.6677432, a: 1}
   sizeGlow: 1.24
   alphaGlow: 0.7
   emissionSpeed: 7.63
@@ -210,8 +210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
-    type: 3}
   cargoDrop: {fileID: 0}
   delay: 1
 --- !u!114 &-5383710884614058826

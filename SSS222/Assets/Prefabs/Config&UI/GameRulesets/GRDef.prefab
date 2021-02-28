@@ -51,9 +51,9 @@ MonoBehaviour:
   xpOn: 1
   barrierOn: 0
   EVscoreMax: 40
-  shopScoreMax: 200
-  shopScoreMaxS: 200
-  shopScoreMaxE: 500
+  shopScoreMax: 300
+  shopScoreMaxS: 300
+  shopScoreMaxE: 550
   scoreMulti: 1
   luckMulti: 1
   startingPosPlayer: {x: 0.36, y: -6.24}
@@ -160,11 +160,6 @@ MonoBehaviour:
     rarity: 0
     dropChance: 3
     levelReq: 0
-  - name: ArmorU
-    lootItem: {fileID: 11400000, guid: 2650301666c6e9d4b8719cd07986fecb, type: 2}
-    rarity: 1
-    dropChance: 1.75
-    levelReq: 2
   - name: Flip
     lootItem: {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
     rarity: 0
@@ -173,7 +168,7 @@ MonoBehaviour:
   - name: GCLover
     lootItem: {fileID: 11400000, guid: f6a560a419dccd647bb79ae520e69ddf, type: 2}
     rarity: 2
-    dropChance: 0.3
+    dropChance: 0
     levelReq: 4
   - name: Inverter
     lootItem: {fileID: 11400000, guid: 836e8441bd1a4e1468be0e689364fb14, type: 2}
@@ -254,7 +249,7 @@ MonoBehaviour:
   - name: Phaser
     lootItem: {fileID: 11400000, guid: 96f99f90403e530478f4d3e9bd04b50f, type: 2}
     rarity: 1
-    dropChance: 2.5
+    dropChance: 0
     levelReq: 2
   - name: PLaser
     lootItem: {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
@@ -269,7 +264,7 @@ MonoBehaviour:
   - name: ShadowBT
     lootItem: {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
     rarity: 2
-    dropChance: 0.05
+    dropChance: 0
     levelReq: 4
   mTimePowerupWeaponsSpawns: -1
   mTimePowerupWeaponsSpawnsS: -1

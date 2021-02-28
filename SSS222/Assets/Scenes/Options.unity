@@ -673,6 +673,21 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1908248649064306564, guid: b72002d00f11d264d874c0d82f3a8a94,
+        type: 3}
+      propertyPath: m_MinValue
+      value: -60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908248650122009625, guid: b72002d00f11d264d874c0d82f3a8a94,
+        type: 3}
+      propertyPath: m_MinValue
+      value: -60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908248650231154034, guid: b72002d00f11d264d874c0d82f3a8a94,
+        type: 3}
+      propertyPath: m_MinValue
+      value: -60
+      objectReference: {fileID: 0}
     - target: {fileID: 7347657155336693382, guid: b72002d00f11d264d874c0d82f3a8a94,
         type: 3}
       propertyPath: postProcessVolume
