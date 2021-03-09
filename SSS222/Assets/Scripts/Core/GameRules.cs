@@ -84,9 +84,8 @@ public static GameRules instance;
     [Header("Energy Gains")]//Collectibles
     public float energyBallGet=9f;
     public float medkitEnergyGet=26f;
-    public float medkitUEnergyGet=40f;
+    public float microMedkitHpAmnt=10f;
     public float medkitHpAmnt=25f;
-    public float medkitUHpAmnt=62f;
     public float pwrupEnergyGet=36f;
     public float enForPwrupRefill=25f;
     public float enPwrupDuplicate=42f;

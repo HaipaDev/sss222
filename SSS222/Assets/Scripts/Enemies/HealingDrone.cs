@@ -10,7 +10,7 @@ public class HealingDrone : MonoBehaviour{
     [Header("Values")]
     public Enemy closestEnemy;
     public Tag_LivingEnemy closestLivingEnemy;
-    int shoot;
+    bool shoot=true;
     void Awake(){
     //Set Values
     var i=GameRules.instance;
@@ -25,12 +25,8 @@ public class HealingDrone : MonoBehaviour{
     void Update(){
         closestEnemy=FindClosestEnemy();
         closestLivingEnemy=FindClosestLivingEnemy();
-        //if(closestEnemy!=null){
-            if(shoot==0)shoot=1;
-            var shootHealBullets=ShootHealBullets();
-            //if(shootHealBullets==null)
-            if(shoot==1){StartCoroutine(shootHealBullets);shoot=-1;}
-        //}else{shoot=0;}
+        var shootHealBullets=ShootHealBullets();
+        if(shoot==true&&GetComponent<Enemy>().shooting){StartCoroutine(shootHealBullets);shoot=false;}
     }
 
     IEnumerator ShootHealBullets(){
@@ -42,7 +38,7 @@ public class HealingDrone : MonoBehaviour{
             healBall.GetComponent<FollowOneObject>().speedFollow=4f;}
         else{healBall.GetComponent<FollowOneObject>().targetObj=this.gameObject;}
         
-        StartCoroutine(ShootHealBullets());
+        shoot=true;
     }
 
 
@@ -54,13 +50,13 @@ public class HealingDrone : MonoBehaviour{
         EnemiesArr = FindObjectsOfType<Enemy>();
         //List<string> sublist = Enemies.FindAll(isHealingDrone);
         foreach(Enemy enemy in EnemiesArr){
-            if(enemy.GetComponent<HealingDrone>()==null)Enemies.Add(enemy);
+            if(enemy.GetComponent<HealingDrone>()==null&&enemy.health<enemy.healthStart*1.5f)Enemies.Add(enemy);
             //if(enemy.GetComponent<HealingDrone>()!=null){Enemies.RemoveAt(System.Array.IndexOf(EnemiesArr, this));}
             //Debug.Log(System.Array.IndexOf(EnemiesArr, this));
             //Enemies.Find(this.GetComponent<HealingDrone>() healDrone);
             //Enemies.RemoveAll(this.GetComponent<HealingDrone>() healDrone);
         }
-        Enemy closest = Enemies.FindClosest(transform.position);
+        Enemy closest=Enemies.FindClosest(transform.position);
         return closest;
     }
     public Tag_LivingEnemy FindClosestLivingEnemy(){

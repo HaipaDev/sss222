@@ -369,6 +369,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: enemies.Array.data[5].spr
+      value: 
+      objectReference: {fileID: 21300000, guid: 7ebf289a99896f343aad150ee91c120e,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: mTimePowerupStatusSpawnsE
       value: 15
       objectReference: {fileID: 0}

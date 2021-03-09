@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f905b4fa1c32244b5205d44cda0c7a, type: 3}
   m_Name: LSaber
   m_EditorClassIdentifier: 
-  validate: 0
   name: lsaber
   assetName: LSaber
   weaponType: 1
   weaponTypeProperties:
     id: 0
   costType: 0
-  cost: 0.4
+  costTypeProperties:
+    id: 1
   ovheat: 0
-  ammoSize: 0
+  duration: 10
   references:
     version: 1
     00000000:
@@ -30,3 +30,7 @@ MonoBehaviour:
         nameActive: lsaberA
         offset: {x: 0, y: 1}
         energyPeriod: 0.15
+    00000001:
+      type: {class: costTypeEnergy, ns: , asm: Assembly-CSharp}
+      data:
+        cost: 0.4

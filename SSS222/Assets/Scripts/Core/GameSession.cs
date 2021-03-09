@@ -70,29 +70,9 @@ public class GameSession : MonoBehaviour{
     public float gameSessionTime=0;
     //[SerializeField] InputMaster inputMaster;
     [Range(0,2)]public static int maskMode=1;
-    
     //public string gameVersion;
-    //public bool moveByMouse = true;
 
-    /*public SavableData savableData;
-    [System.Serializable]
-    public class SavableData{
-        public int highscore;
-        public SavableData(SavableData data)
-        {
-            highscore = data.highscore;
-        }
-        public void Save()
-        {
-            SaveSystem.SaveData(this);
-        }
-        public void Load(){
-            SavableData data = SaveSystem.LoadData();
-            highscore = data.highscore;
-        }
-    }*/
-
-    private void Awake(){
+    void Awake(){
         SetUpSingleton();
         instance=this;
         StartCoroutine(SetGameRulesValues());
@@ -102,18 +82,8 @@ public class GameSession : MonoBehaviour{
         cheatmode=false;
         #endif
     }
-    private void SetUpSingleton(){
-        int numberOfObj = FindObjectsOfType<GameSession>().Length;
-        if(numberOfObj > 1){
-            Destroy(gameObject);
-        }else{
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-    private void Start(){
-        Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);
-        //SetGameRulesValues();
-    }
+    void SetUpSingleton(){int numberOfObj=FindObjectsOfType<GameSession>().Length;if(numberOfObj>1){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);}}
+    void Start(){Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);}
     IEnumerator SetGameRulesValues(){
     yield return new WaitForSeconds(0.03f);
     //Set values
@@ -141,8 +111,7 @@ public class GameSession : MonoBehaviour{
         stayingTimeReq=i.stayingTimeReq;
     }
     }
-    private void Update()
-    {
+    void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
 
         //Set values on Enter Game Room
@@ -150,11 +119,11 @@ public class GameSession : MonoBehaviour{
             StartCoroutine(SetGameRulesValues());
             setValues=true;
         }
-        if(SceneManager.GetActiveScene().name=="Game"&&FindObjectOfType<Player>()!=null){gameSessionTime+=Time.unscaledDeltaTime;}
+        if(SceneManager.GetActiveScene().name=="Game"&&FindObjectOfType<Player>()!=null&&gameSpeed>0.0001f){gameSessionTime+=Time.unscaledDeltaTime;}
         if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
 
-        if(shopOn&&(shopScore>=shopScoreMax && coins>0))
-        {
+        //Open Shop
+        if(shopOn&&(shopScore>=shopScoreMax&&coins>0)){
             if(shopCargoOn){Shop.instance.SpawnCargo();}
             else{Shop.shopOpen = true;
             foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
@@ -184,6 +153,7 @@ public class GameSession : MonoBehaviour{
             coresXp=0;
             //AudioManager.instance.Play("LvlUp");
             AudioManager.instance.Play("LvlUp2");
+            
         }
 
         //Set speed to normal
@@ -251,20 +221,23 @@ public class GameSession : MonoBehaviour{
     public string GetVersion(){return SaveSerial.instance.settingsData.gameVersion;}
 
     public void AddToScore(int scoreValue){
-        score += Mathf.RoundToInt(scoreValue*scoreMulti);
-        EVscore += scoreValue;
-        if(shopOn)shopScore += Mathf.RoundToInt(scoreValue*scoreMulti);
-        ScorePopUpHUD(scoreValue*scoreMulti);
+        score+=Mathf.RoundToInt(scoreValue*scoreMulti);
+        EVscore+=scoreValue;
+        if(shopOn)shopScore+=Mathf.RoundToInt(scoreValue*scoreMulti);
+        GameCanvas.instance.ScorePopupSwitch(scoreValue*scoreMulti);
     }
 
-    public void MultiplyScore(float multipl)
-    {
-        int result=Mathf.RoundToInt(score * multipl);
-        score = result;
+    public void MultiplyScore(float multipl){
+        score=Mathf.RoundToInt(score*multipl);
     }
 
-    public void AddToScoreNoEV(int scoreValue){score += scoreValue;ScorePopUpHUD(scoreValue);}
-    public void AddXP(float xpValue){if(xpOn){coresXp += xpValue;XPPopUpHUD(xpValue);}coresXpTotal+=xpValue;}
+    public void AddToScoreNoEV(int scoreValue){score+=scoreValue;GameCanvas.instance.ScorePopupSwitch(scoreValue);}
+    public void AddXP(float xpValue){if(xpOn){coresXp+=xpValue;GameCanvas.instance.XpPopupSwitch(xpValue);}coresXpTotal+=xpValue;}
+    public void DropXP(float xpAmnt, Vector2 pos, float rangeX=0.5f, float rangeY=0.5f){
+        var amnt=Mathf.RoundToInt(xpAmnt);
+        SpreadObjects.SpreadGO(GameAssets.instance.Get("BlackEnBall"),pos,amnt,rangeX,rangeY);
+        if(xpAmnt-amnt!=0)GameSession.instance.AddXP(xpAmnt-amnt);
+    }
     public void AddEnemyCount(){enemiesCount++;if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddKills(1);//EnemiesCountHealDrone++;
     var ps=FindObjectsOfType<PowerupsSpawner>();
     foreach(PowerupsSpawner p in ps){
@@ -471,27 +444,6 @@ public class GameSession : MonoBehaviour{
             }
         }
     }
-
-    public void ScorePopUpHUD(float score){
-        GameObject scpopupHud=GameObject.Find("ScoreDiffParrent");
-        if(scpopupHud!=null){
-        scpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
-        //scpupupHud.GetComponent<Animator>().SetTrigger(0);
-        string symbol="+";
-        if(score<0)symbol="-";
-        scpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(score).ToString();
-        }else{Debug.LogWarning("ScorePopUpHUD not present");}
-    }public void XPPopUpHUD(float xp){
-        GameObject xppopupHud=GameObject.Find("XPDiffParrent");
-        if(xppopupHud!=null){
-        xppopupHud.GetComponent<AnimationOn>().AnimationSet(true);
-        //xppopupHud.GetComponent<Animator>().SetTrigger(0);
-        string symbol="+";
-        if(xp<0)symbol="-";
-        xppopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(xp).ToString();
-        }else{Debug.LogWarning("XPPopUpHUD not present");}
-    }
-    //public void PlayDenySFX(){AudioManager.instance.Play("Deny");}
     public string FormatTime(float time){
         int minutes = (int) time / 60 ;
         int seconds = (int) time - 60 * minutes;

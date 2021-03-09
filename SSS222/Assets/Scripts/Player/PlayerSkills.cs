@@ -28,7 +28,6 @@ public class PlayerSkills : MonoBehaviour{
     
     //References
     Player player;
-    GameSession gameSession;
     UpgradeMenu umenu;
     void Awake() {
         StartCoroutine(SetValues());
@@ -44,7 +43,6 @@ public class PlayerSkills : MonoBehaviour{
     ResizeSet();
     }
     void Start(){
-        gameSession=FindObjectOfType<GameSession>();
         umenu=FindObjectOfType<UpgradeMenu>();
         player=GetComponent<Player>();
         timerUI=GameObject.Find("SkillTimerUI");
@@ -112,24 +110,24 @@ public class PlayerSkills : MonoBehaviour{
             if(i==0){//Magnetic Pulse
                 GameObject mPulse=Instantiate(mPulsePrefab, transform.position,Quaternion.identity);
             }if(i==1){//Teleport
-                gameSession.gameSpeed=0.025f;
-                gameSession.speedChanged=true;
+                GameSession.instance.gameSpeed=0.025f;
+                GameSession.instance.speedChanged=true;
                 SetActiveAllChildren(timerUI.transform,true);
                 currentSkillID=i;
             }
         }else{AudioManager.instance.Play("Deny");}
         }else if(i==2){//Overhaul
-        if(gameSession.coresXp>0){
+        if(GameSession.instance.coresXp>0){
                 if(key==skillKeyBind.Q){cooldownQ=cooldown;}
                 if(key==skillKeyBind.E){cooldownE=cooldown;}
                 if(key==skillKeyBind.Disabled){}
                 if(player.energy<1){player.AddSubEnergy(20);}
-                var ratio=(gameSession.coresXp/gameSession.xp_forCore);
-                gameSession.XPPopUpHUD(-gameSession.coresXp);
+                var ratio=(GameSession.instance.coresXp/GameSession.instance.xp_forCore);
+                GameCanvas.instance.XPPopUpHUD(-GameSession.instance.coresXp);
                 player.InfEnergy(ratio*33);
                 player.Power(16,Mathf.Clamp(3f*ratio,1.1f,2.2f));
                 timerOverhaul=timeOverhaul;
-                gameSession.coresXp=0;
+                GameSession.instance.coresXp=0;
                 AudioManager.instance.Play("Overhaul");
                 AudioManager.instance.GetSource("Overhaul").loop=true;
                 //if(overhaulAudio==null){overhaulAudio=gameObject.AddComponent(typeof(AudioSource)) as AudioSource;}
@@ -157,10 +155,10 @@ public class PlayerSkills : MonoBehaviour{
                     Destroy(tp1,1.25f);Destroy(tp2,1.25f);
                     transform.position=player.mousePos;
                     SetActiveAllChildren(timerUI.transform,false);
-                    gameSession.speedChanged=false;gameSession.gameSpeed=1f;timerTeleport=-4;currentSkillID=-1;}
+                    GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;timerTeleport=-4;currentSkillID=-1;}
             }else if(timerTeleport<0 && timerTeleport!=-4){
                 SetActiveAllChildren(timerUI.transform,false);
-                gameSession.speedChanged=false;gameSession.gameSpeed=1f;timerTeleport=-4;currentSkillID=-1;
+                GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;timerTeleport=-4;currentSkillID=-1;
             }
         }
         if(timerOverhaul>0&&player.infEnergy){

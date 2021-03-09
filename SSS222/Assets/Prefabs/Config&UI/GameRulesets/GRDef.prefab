@@ -429,7 +429,7 @@ MonoBehaviour:
     specialDrop: {fileID: 0}
   - name: Goblin Thief
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 40f2dc524d630924491ca3d1aa85e6d1, type: 3}
+    spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
     health: 16
     shooting: 0
     minTimeBtwnShots: 1.8
@@ -454,7 +454,7 @@ MonoBehaviour:
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
     health: 115
-    shooting: 0
+    shooting: 1
     minTimeBtwnShots: 0
     maxTimeBtwnShots: 0
     bullet: {fileID: 0}
@@ -471,7 +471,7 @@ MonoBehaviour:
     coinChanceInit: 3
     powercoreChanceInit: 15
     xpAmnt: 2.5
-    specialDrop: {fileID: 5649215481239408911, guid: b68538418da2b5943be6fd26f9e0ddec,
+    specialDrop: {fileID: 1056705403108089519, guid: 2b95db0bd9edebc4b97375103e5a2d9a,
       type: 3}
   - name: Mecha Leech
     size: {x: 1, y: 1}

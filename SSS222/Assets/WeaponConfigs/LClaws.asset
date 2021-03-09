@@ -12,16 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f905b4fa1c32244b5205d44cda0c7a, type: 3}
   m_Name: LClaws
   m_EditorClassIdentifier: 
-  validate: 0
   name: lclaws
   assetName: LClaws
   weaponType: 2
   weaponTypeProperties:
     id: 0
   costType: 2
-  cost: 1
+  costTypeProperties:
+    id: 1
   ovheat: 1
-  ammoSize: 0
   duration: 0
   references:
     version: 1
@@ -55,3 +54,5 @@ MonoBehaviour:
           nameActive: lclawsA
           offset: {x: 0, y: 1}
           energyPeriod: -1
+    00000001:
+      type: {class: , ns: , asm: }

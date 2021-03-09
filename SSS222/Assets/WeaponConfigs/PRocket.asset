@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f905b4fa1c32244b5205d44cda0c7a, type: 3}
   m_Name: PRocket
   m_EditorClassIdentifier: 
-  validate: 0
   name: procket
   assetName: PRocket
   weaponType: 0
   weaponTypeProperties:
     id: 0
   costType: 1
-  cost: 10
+  costTypeProperties:
+    id: 1
   ovheat: 2.22
-  ammoSize: 200
+  duration: 10
   references:
     version: 1
     00000000:
@@ -29,8 +29,10 @@ MonoBehaviour:
       data:
         leftSide: 1
         leftAnchor: {x: -0.35, y: 0}
+        leftAnchorE: {x: 0, y: 0}
         rightSide: 1
         rightAnchor: {x: 0.35, y: 0}
+        rightAnchorE: {x: 0, y: 0}
         randomSide: 0
         bulletAmount: 5
         speed: {x: 0, y: 9.5}
@@ -42,5 +44,12 @@ MonoBehaviour:
         shootDelay: 0.3
         holdDelayMulti: 0.9
         tapDelayMulti: 1
+        recoilStrength: 0
+        recoilTime: 0
         flare: 1
         flareDur: 0.3
+    00000001:
+      type: {class: costTypeAmmo, ns: , asm: Assembly-CSharp}
+      data:
+        cost: 10
+        ammoSize: 200

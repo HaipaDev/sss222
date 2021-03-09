@@ -10,7 +10,8 @@ public class Enemy : MonoBehaviour{
     [SerializeField] public string Name;
     [SerializeField] public Vector2 size=Vector2.one;
     [SerializeField] public Sprite spr;
-    [SerializeField] public float health=100f;
+    [SerializeField] public float healthStart=100f;
+    public float health=100f;
     float shotCounter;
     [SerializeField] public bool shooting=false;
     [SerializeField] float minTimeBtwnShots=0.2f;
@@ -60,7 +61,7 @@ public class Enemy : MonoBehaviour{
             if(e!=null){
             size=e.size;
             if(GetComponent<CometRandomProperties>()==null){transform.localScale=size;spr=e.spr;GetComponent<SpriteRenderer>().sprite=spr;}
-            health=e.health;
+            healthStart=e.health;
             shooting=e.shooting;
             minTimeBtwnShots=e.minTimeBtwnShots;
             maxTimeBtwnShots=e.maxTimeBtwnShots;
@@ -81,6 +82,7 @@ public class Enemy : MonoBehaviour{
             xpAmnt=e.xpAmnt;
             specialDrop=e.specialDrop;
             }
+            health=healthStart;
         }
     }
     void Start(){
@@ -124,21 +126,21 @@ public class Enemy : MonoBehaviour{
     private void Shoot(){
         shotCounter -= Time.deltaTime;
         if(shotCounter<=0f){
-        if(GetComponent<LaunchRadialBullets>()==null){
-            if(DBullets!=true){
-                var bt=Instantiate(bullet, transform.position,Quaternion.identity) as GameObject;
-                bt.GetComponent<Rigidbody2D>().velocity=new Vector2(0, -bulletSpeed);
-            }else{
-                var pos1=new Vector2(transform.position.x+bulletDist,transform.position.y);
-                var bt1=Instantiate(bullet, pos1, Quaternion.identity) as GameObject;
-                bt1.GetComponent<Rigidbody2D>().velocity=new Vector2(0, -bulletSpeed);
-                var pos2=new Vector2(transform.position.x - bulletDist, transform.position.y);
-                var bt2=Instantiate(bullet, pos2, Quaternion.identity) as GameObject;
-                bt2.GetComponent<Rigidbody2D>().velocity=new Vector2(0, -bulletSpeed);
-            }
-        }else{
-            GetComponent<LaunchRadialBullets>().Shoot();
-        }
+        if(GetComponent<LaunchRadialBullets>()==null&&GetComponent<HealingDrone>()==null){
+            if(bullet!=null){
+                if(DBullets!=true){
+                    var bt=Instantiate(bullet, transform.position,Quaternion.identity) as GameObject;
+                    bt.GetComponent<Rigidbody2D>().velocity=new Vector2(0, -bulletSpeed);
+                }else{
+                    var pos1=new Vector2(transform.position.x+bulletDist,transform.position.y);
+                    var bt1=Instantiate(bullet, pos1, Quaternion.identity) as GameObject;
+                    bt1.GetComponent<Rigidbody2D>().velocity=new Vector2(0, -bulletSpeed);
+                    var pos2=new Vector2(transform.position.x - bulletDist, transform.position.y);
+                    var bt2=Instantiate(bullet, pos2, Quaternion.identity) as GameObject;
+                    bt2.GetComponent<Rigidbody2D>().velocity=new Vector2(0, -bulletSpeed);
+                }
+            }else{Debug.LogWarning("Bullet not asigned");}
+        }else if(GetComponent<LaunchRadialBullets>()!=null){GetComponent<LaunchRadialBullets>().Shoot();}
         shotCounter=Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
         }
     }
@@ -169,7 +171,7 @@ public class Enemy : MonoBehaviour{
                 if(coinChance==1){GameAssets.instance.Make("Coin",transform.position);}
                 if(powercoreChance==1){GameAssets.instance.Make("PowerCore",transform.position);}
                 GameSession.instance.AddEnemyCount();
-                if(xpAmnt!=0)GameSession.instance.AddXP(xpAmnt);
+                if(xpAmnt!=0)GameSession.instance.DropXP(xpAmnt,transform.position);//GameSession.instance.AddXP(xpAmnt);
                 givePts=false;
             }
             AudioManager.instance.Play("Explosion");
@@ -192,18 +194,14 @@ public class Enemy : MonoBehaviour{
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true; health=-1; Die();} else{Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){foreach(GameObject obj in GetComponent<GoblinDrop>().powerup)Destroy(obj);/*obj.SetActive(true);*/}}}
     }
     //Collisions in EnemyCollider
-    public void DispDmgCount(Vector2 pos){
-        StartCoroutine(DispDmgCountI(pos));
-    }
+    public void DispDmgCount(Vector2 pos){StartCoroutine(DispDmgCountI(pos));}
     IEnumerator DispDmgCountI(Vector2 pos){
         dmgCounted=true;
         //In Update, DispDmgCountUp
-        dmgCountPopup=CreateOnUI.CreateOnUIFunc(GameAssets.instance.GetVFX("DMGPopup"),pos);
+        dmgCountPopup=GameCanvas.instance.DMGPopupReturn(0,pos,Color.yellow);
         yield return new WaitForSeconds(0.2f);
         dmgCounted=false;
         dmgCount=0;
     }
-    void DispDmgCountUp(){
-        if(dmgCountPopup!=null)dmgCountPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmgCount,1).ToString();
-    }
+    void DispDmgCountUp(){if(dmgCountPopup!=null)dmgCountPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmgCount,1).ToString();}
 }

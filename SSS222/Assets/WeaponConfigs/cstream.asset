@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f905b4fa1c32244b5205d44cda0c7a, type: 3}
   m_Name: CStream
   m_EditorClassIdentifier: 
-  validate: 0
   name: cstream
   assetName: CBullet
   weaponType: 0
   weaponTypeProperties:
     id: 0
-  costType: 0
-  cost: 0.33
+  costType: 3
+  costTypeProperties:
+    id: 1
   ovheat: 0
-  ammoSize: 0
+  duration: 10
   references:
     version: 1
     00000000:
@@ -29,8 +29,10 @@ MonoBehaviour:
       data:
         leftSide: 0
         leftAnchor: {x: -0.35, y: 0}
+        leftAnchorE: {x: 0, y: 0}
         rightSide: 0
         rightAnchor: {x: 0.35, y: 0}
+        rightAnchorE: {x: 0, y: 0}
         randomSide: 1
         bulletAmount: 1
         speed: {x: 0, y: 8.25}
@@ -42,5 +44,14 @@ MonoBehaviour:
         shootDelay: 0.15
         holdDelayMulti: 0.825
         tapDelayMulti: 1
+        recoilStrength: 0
+        recoilTime: 0
         flare: 1
         flareDur: 0.3
+    00000001:
+      type: {class: costTypeCrystalAmmo, ns: , asm: Assembly-CSharp}
+      data:
+        cost: 1
+        regularEnergyCost: 0.33
+        crystalCost: 1
+        crystalAmmoCrafted: 20

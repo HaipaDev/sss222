@@ -228,9 +228,8 @@ public class Player : MonoBehaviour{
     [Header("Energy Gains")]//Collectibles
     [SerializeField] public float energyBallGet=9f;
     [SerializeField] public float medkitEnergyGet=40f;
-    [SerializeField] public float medkitUEnergyGet=26f;
+    [SerializeField] public float microMedkitHpAmnt=10f;
     [SerializeField] public float medkitHpAmnt=25f;
-    [SerializeField] public float medkitUHpAmnt=62f;
     [SerializeField] public float pwrupEnergyGet=36f;
     [SerializeField] public float enForPwrupRefill=25f;
     [SerializeField] public float enPwrupDuplicate=42f;
@@ -307,7 +306,7 @@ public class Player : MonoBehaviour{
     bool hasHandledInputThisFrame = false;
     bool scaleUp;
     public bool moving;
-    public float energyUsedCount;
+    //public float energyUsedCount;
 
     bool moveXwas;
     bool moveYwas;
@@ -320,23 +319,16 @@ public class Player : MonoBehaviour{
     //public @InputMaster inputMaster;
 #endregion
 #endregion
-    private void Awake() {
-        StartCoroutine(SetGameRuleValues());
-    }
+    private void Awake() {StartCoroutine(SetGameRuleValues());}
     void Start(){
         if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
         
-        rb = GetComponent<Rigidbody2D>();
+        rb=GetComponent<Rigidbody2D>();
         pskills=GetComponent<PlayerSkills>();
-        shake = GameObject.FindObjectOfType<Shake>();
+        shake=GameObject.FindObjectOfType<Shake>();
         joystick=FindObjectOfType<VariableJoystick>();
-        //if(SaveSerial.instance.joystickType==JoystickType.Dynamic)joystick=FindObjectOfType<DynamicJoystick>();
-        //if(SaveSerial.instance.joystickType==JoystickType.Fixed)joystick=FindObjectOfType<FixedJoystick>();
-        //if(SaveSerial.instance.joystickType==JoystickType.Floating)joystick=FindObjectOfType<FloatingJoystick>();
-        //settings = FindObjectOfType<Settings>();
-        //followMouse = GetComponent<FollowMouse>();
         SetUpMoveBoundaries();
-        dashTime = startDashTime;
+        dashTime=startDashTime;
         if(SaveSerial.instance.settingsData.inputType==InputType.mouse)SetMoveByMouse(true);else SetMoveByMouse(false);
         defaultShipScale=shipScale;
         shipScaleMin*=defaultShipScale;
@@ -437,9 +429,8 @@ public class Player : MonoBehaviour{
         ///Energy gains
         energyBallGet=i.energyBallGet;
         medkitEnergyGet=i.medkitEnergyGet;
-        medkitUEnergyGet=i.medkitUEnergyGet;
+        microMedkitHpAmnt=i.microMedkitHpAmnt;
         medkitHpAmnt=i.medkitHpAmnt;
-        medkitUHpAmnt=i.medkitUHpAmnt;
         pwrupEnergyGet=i.pwrupEnergyGet;
         enForPwrupRefill=i.enForPwrupRefill;
         enPwrupDuplicate=i.enPwrupDuplicate;
@@ -847,9 +838,19 @@ public class Player : MonoBehaviour{
         WeaponProperties w=null;
         if(GetWeaponProperty(powerup)!=null){w=GetWeaponProperty(powerup);}else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}else Debug.LogWarning(powerup+" not added to WeaponProperties List");
         if(w!=null){
+        costTypeProperties wc=null;
+        costTypeCrystalAmmo wcCA=null;
+        costTypeBlackEnergy wcBE=null;
+        if(w.costType==costType.energy){wc=(costTypeEnergy)w.costTypeProperties;}
+        if(w.costType==costType.ammo){wc=(costTypeAmmo)w.costTypeProperties;}
+        if(w.costType==costType.crystalAmmo){wc=(costTypeCrystalAmmo)w.costTypeProperties;wcCA=(costTypeCrystalAmmo)wc;}
+        if(w.costType==costType.blackEnergy){wc=(costTypeBlackEnergy)w.costTypeProperties;wcBE=(costTypeBlackEnergy)wc;}
         if(w.weaponType==weaponType.bullet||w.weaponType==weaponType.hybrid){
             if(w.costType==costType.boomerang&&instantiateTimer<=0){ammo=1;}
-            if((w.costType==costType.energy&&(energyOn&&energy>0)||(!energyOn))||(w.costType==costType.ammo&&ammo>0)||(w.costType==costType.boomerang&&ammo==1)){
+            if((w.costType==costType.energy&&((energyOn&&energy>0)||(!energyOn)))
+            ||((w.costType==costType.ammo&&ammo>0)||(w.costType==costType.boomerang&&ammo==1))
+            ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(ammo>0||GameSession.instance.coins>0))
+            ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(GameSession.instance.coresXp>0))){
                 if(overheated!=true&&electrc!=true){
                     weaponTypeBullet wp=null;
                     if(w.weaponType==weaponType.bullet){wp=(weaponTypeBullet)w.weaponTypeProperties;}
@@ -879,7 +880,7 @@ public class Player : MonoBehaviour{
                             if(bulletL.GetComponent<BounceFromEnemies>()!=null)bulletL.GetComponent<BounceFromEnemies>().speed=sL.y;
                             bulletL.transform.Rotate(rL);
                             if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalR;
-                            if(bulletL.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletL.GetComponent<Tag_PlayerWeaponBlockable>().energy=w.cost/wp.bulletAmount;}
+                            if(bulletL.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletL.GetComponent<Tag_PlayerWeaponBlockable>().energy=wc.cost/wp.bulletAmount;}
                         }}
                         if(wp.flare){GameAssets.instance.VFX("FlareShoot",posL,wp.flareDur);}
                     }
@@ -896,7 +897,7 @@ public class Player : MonoBehaviour{
                             if(bulletR.GetComponent<BounceFromEnemies>()!=null)bulletR.GetComponent<BounceFromEnemies>().speed=sR.y;
                             bulletR.transform.Rotate(rR);
                             if(bulletR.GetComponent<IntervalSound>()!=null)bulletR.GetComponent<IntervalSound>().interval=soundIntervalR;
-                            if(bulletR.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletR.GetComponent<Tag_PlayerWeaponBlockable>().energy=w.cost/wp.bulletAmount;}
+                            if(bulletR.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletR.GetComponent<Tag_PlayerWeaponBlockable>().energy=wc.cost/wp.bulletAmount;}
                         }}
                         if(wp.flare){GameAssets.instance.VFX("FlareShoot",posR,wp.flareDur);}
                     }
@@ -905,8 +906,10 @@ public class Player : MonoBehaviour{
                     if(wp.randomSide){if(UnityEngine.Random.Range(0,100)<50){LeftSide();}else{RightSide();}}
                     if(flareL!=null)Destroy(flareL.gameObject, wp.flareDur);
                     if(flareR!=null)Destroy(flareR.gameObject, wp.flareDur);
-                    if(w.costType==costType.energy){AddSubEnergy(w.cost,false);}
-                    if(w.costType==costType.ammo){AddSubAmmo(w.cost,false);}
+                    if(w.costType==costType.energy){AddSubEnergy(wc.cost,false);}
+                    if(w.costType==costType.ammo){if(ammo>=wc.cost)AddSubAmmo(wc.cost,false);else{AddSubAmmo(ammo-wc.cost,false);}}
+                    if(w.costType==costType.crystalAmmo){if(ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,true);AddSubCoins(wcCA.crystalCost,false);}AddSubEnergy(wcCA.regularEnergyCost);}
+                    if(w.costType==costType.blackEnergy){if(GameSession.instance.coresXp>=wc.cost){AddSubXP(wc.cost,false);}if(w.costType==costType.blackEnergy){AddSubEnergy(wcBE.regularEnergyCost);}}
                     if(w.ovheat!=0&&w.costType!=costType.boomerang)Overheat(w.ovheat);
                     if(w.costType==costType.boomerang){ammo=-1;instantiateTimer=w.ovheat;}
                     if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
@@ -926,6 +929,8 @@ public class Player : MonoBehaviour{
             weaponTypeHeld wp=null;
             if(w.weaponType==weaponType.held){wp=(weaponTypeHeld)w.weaponTypeProperties;}
             if(w.weaponType==weaponType.hybrid){weaponTypeHybrid hybrid=(weaponTypeHybrid)w.weaponTypeProperties;wp=hybrid.h;}
+            costTypeProperties wc=null;
+            if(w.costType==costType.energy){wc=(costTypeEnergy)w.costTypeProperties;}
             if(powerup!=wp.nameActive&&(w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){
                 GameObject asset=GameAssets.instance.Get(w.assetName);
                 foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
@@ -933,51 +938,10 @@ public class Player : MonoBehaviour{
                 if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+new Vector3(wp.offset.x,wp.offset.y,0);}
                 weaponEnTimer=wp.energyPeriod;
                 powerup=wp.nameActive;
-                #region //Old Held Powerups system
-                //yield return new WaitForSeconds(lsaberEnPeriod);
-                /*if (powerup == "lsaber"){
-                    //yield return new WaitForSeconds(lsaberEnPeriod);
-                    //Destroy(GameObject.Find(lclawsName1));
-                    lsaber = Instantiate(lsaberPrefab, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity) as GameObject;
-                    moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
-                    lsaberEnTimer=lsaberEnPeriod;
-                    powerup = "lsaberA";
-                }else if (powerup == "lsaberA"){
-                    if(Time.timeScale>0.0001f&&(FindObjectOfType<CargoShip>()==null||(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)>cargoDist))){
-                        if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
-                        if(lsaberEnTimer<=0){lsaberEnTimer=lsaberEnPeriod;AddSubEnergy(lsaberEn,false);}
-                        if(GameObject.Find(lsaberName)==null&&GameObject.Find(lsaberName1)==null){powerup="lsaber";}
-                    }
-                }
-                if (powerup == "lclaws"){
-                    //Destroy(GameObject.Find(lsaberName1));
-                    lclaws = Instantiate(lclawsPrefab, new Vector2(transform.position.x, transform.position.y + 0.8f), Quaternion.identity) as GameObject;
-                    lclaws.transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -10);
-                    moveSpeedCurrent = moveSpeed*lsaberSpeedMulti;
-                    powerup = "lclawsA";
-                }else if (powerup == "lclawsA"){
-                    if(Time.timeScale>0.0001f&&(FindObjectOfType<CargoShip>()==null||(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(transform.position,FindObjectOfType<CargoShip>().transform.position)>cargoDist))){
-                        //if(lsaberEnTimer>0){lsaberEnTimer-=Time.deltaTime;}
-                        //if(lsaberEnTimer<=0){energy -= lsaberEn*4;lsaberEnTimer=lsaberEnPeriod*9;}//0.2
-                        if(GameObject.Find(lclawsName)==null&&GameObject.Find(lclawsName1)==null){powerup="lclaws";}
-                    }
-                }
-                
-                if(powerup!="lsaberA" && powerup!="lsaber"){
-                    Destroy(GameObject.Find(lsaberName1));
-                }if(powerup!="lclawsA" && powerup!="lclaws"){
-                    Destroy(GameObject.Find(lclawsName1));
-                }
-                if(powerup!="lsaberA"&&powerup!="lclawsA"){
-                    Destroy(GameObject.Find(lsaberName1));
-                    Destroy(GameObject.Find(lclawsName1));
-                    moveSpeedCurrent = moveSpeed;
-                }*/
-                #endregion
             }else{
                 if(powerup==wp.nameActive){
                     if(weaponEnTimer>0){weaponEnTimer-=Time.deltaTime;}
-                    if(weaponEnTimer<=0){weaponEnTimer=wp.energyPeriod;AddSubEnergy((float)System.Math.Round(w.cost*shipScale,2),false);}
+                    if(weaponEnTimer<=0){weaponEnTimer=wp.energyPeriod;AddSubEnergy((float)System.Math.Round(wc.cost*shipScale,2),false);}
                     GameObject asset=GameAssets.instance.Get(w.assetName);
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
                     if(powerup==wp.nameActive&&go==null)powerup=w.name;
@@ -998,26 +962,26 @@ public class Player : MonoBehaviour{
  
 #region//States
     private void States(){
-        if (flip == true) { flipTimer -= Time.deltaTime; moveDir = -1; } else { moveDir = 1; }
-        if(flipTimer<= 0 && flipTimer>-4) { ResetStatus("flip"); AudioManager.instance.Play("PowerupOff"); }
+        if(flip==true){flipTimer-=Time.deltaTime;moveDir=-1;}else{moveDir=1;}
+        if(flipTimer<=0&&flipTimer>-4){ResetStatus("flip");AudioManager.instance.Play("PowerupOff");}
 
-        if (gclover == true) {
-            health = maxHP;
-            FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover = true;
-            gcloverTimer -= Time.deltaTime;
+        if(gclover==true){
+            health=maxHP;
+            FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover=true;
+            gcloverTimer-=Time.deltaTime;
         }
         else{
-            FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover = false;
+            FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover=false;
         }
-        if (gcloverTimer <= 0 && gcloverTimer>-4) { ResetStatus("gclover"); AudioManager.instance.Play("GCloverOff"); }
+        if(gcloverTimer<=0&&gcloverTimer>-4){ResetStatus("gclover");AudioManager.instance.Play("GCloverOff");}
 
-        if (shadow==true){shadowTimer-=Time.deltaTime;}
-        if (shadowTimer <= 0 && shadowTimer > -4){ResetStatus("shadow");AudioManager.instance.Play("PowerupOff");}
-        if (shadow==true){Shadow();if(GetComponent<BackflameEffect>().enabled==true)GetComponent<BackflameEffect>().enabled=false;}
-        else{ dashTime=-4; if(GetComponent<BackflameEffect>().enabled==false)GetComponent<BackflameEffect>().enabled=true;}
-        if (shadow==true&&dashTime<=0&&dashTime!=-4) { rb.velocity=Vector2.zero; dashing=false; /*moveX=moveXwas;moveY=moveYwas;*/ dashTime=-4;}
-        else{ dashTime -= Time.deltaTime; if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}/*if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);*/}
-        if(energy<=0){ shadow=false; }
+        if(shadow==true){shadowTimer-=Time.deltaTime;}
+        if(shadowTimer<=0&&shadowTimer>-4){ResetStatus("shadow");AudioManager.instance.Play("PowerupOff");}
+        if(shadow==true){Shadow();if(GetComponent<BackflameEffect>().enabled==true)GetComponent<BackflameEffect>().enabled=false;}
+        else{dashTime=-4;if(GetComponent<BackflameEffect>().enabled==false)GetComponent<BackflameEffect>().enabled=true;}
+        if(shadow==true&&dashTime<=0&&dashTime!=-4){rb.velocity=Vector2.zero; dashing=false; /*moveX=moveXwas;moveY=moveYwas;*/ dashTime=-4;}
+        else{dashTime-=Time.deltaTime; if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}/*if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);*/}
+        if(energy<=0){shadow=false;}
         if(shadow==false){dashing=false;}
 
         if(inverter==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){
@@ -1044,7 +1008,7 @@ public class Player : MonoBehaviour{
                 }
             }
         }
-        if(magnetTimer <=0 && magnetTimer>-4){ResetStatus("magnet");}
+        if(magnetTimer<=0&&magnetTimer>-4){ResetStatus("magnet");}
         
         if(scaler==true){
             scalerTimer-=Time.deltaTime;
@@ -1163,8 +1127,8 @@ public class Player : MonoBehaviour{
     }
     
     private void Shadow(){
-        if (Time.timeScale > 0.0001f && instantiateTimer<=0){
-            GameObject shadow = Instantiate(shadowPrefab,new Vector2(transform.position.x,transform.position.y), Quaternion.identity);
+        if(Time.timeScale>0.0001f&&instantiateTimer<=0){
+            GameObject shadow=Instantiate(shadowPrefab,new Vector2(transform.position.x,transform.position.y), Quaternion.identity);
             shadow.transform.localScale=new Vector3(shipScale,shipScale,1);
             Destroy(shadow.gameObject, shadowLength);
             instantiateTimer=instantiateTime;
@@ -1172,8 +1136,8 @@ public class Player : MonoBehaviour{
         }
     }
     void Regen(){
-        if(timerHpRegen>=freqHpRegen && hpRegenEnabled==true){Damage(hpRegenAmnt,dmgType.heal);timerHpRegen=0;}
-        if(energyOn)if(timerEnRegen>=freqEnRegen && enRegenEnabled==true && energy>energyForRegen){AddSubEnergy(enRegenAmnt,true);timerEnRegen=0;}
+        if(hpRegenEnabled==true&&timerHpRegen>=freqHpRegen){Damage(hpRegenAmnt,dmgType.heal);timerHpRegen=0;}
+        if(energyOn)if(enRegenEnabled==true&&timerEnRegen>=freqEnRegen&&energy>energyForRegen){AddSubEnergy(enRegenAmnt,true);timerEnRegen=0;}
     }
     public void Recoil(float strength, float time){
         //rb.velocity = Vector2.down*strength;
@@ -1385,70 +1349,6 @@ public class Player : MonoBehaviour{
     }
 #endregion
 
-#region//Pop-Ups
-    public void DMGPopUpHUD(float amnt){
-        GameObject popupHud=GameObject.Find("HPDiffParrent");
-        if(popupHud!=null){
-        popupHud.GetComponent<AnimationOn>().AnimationSet(true);
-        //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
-        string symbol="+";
-        if(amnt<0)symbol="-";
-        popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
-        }else{Debug.LogWarning("DMGPopUpHUD not present");}
-    }/*public void HPPopUpHUD(float dmg){
-        GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
-        dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
-        //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
-        dmgpopupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text="+"+dmg.ToString();
-    }*/
-    public void EnergyPopUpHUD(float amnt){
-        GameObject popupHud=GameObject.Find("EnergyDiffParrent");
-        if(popupHud!=null){
-        popupHud.GetComponent<AnimationOn>().AnimationSet(true);
-        //enpupupHud.GetComponent<Animator>().SetTrigger(0);
-        string symbol="+";
-        if(amnt<0)symbol="-";
-        if((!infEnergy)||(infEnergy&&symbol=="+")){
-        popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
-        energyUsedCount+=Mathf.Abs(amnt);
-        }
-        }else{Debug.LogWarning("EnergyPopUpHUD not present");}
-    }
-    public void CoinsPopUpHUD(float amnt){
-        GameObject popupHud=GameObject.Find("CoinsDiffParrent");
-        if(popupHud!=null){
-        popupHud.GetComponent<AnimationOn>().AnimationSet(true);
-        //enpupupHud.GetComponent<Animator>().SetTrigger(0);
-        string symbol="+";
-        if(amnt<0)symbol="-";
-        popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
-        }else{Debug.LogWarning("CoinsPopUpHUD not present");}
-    }
-    public void CoresPopUpHUD(float amnt){
-        GameObject popupHud=GameObject.Find("CoresDiffParrent");
-        if(popupHud!=null){
-        popupHud.GetComponent<AnimationOn>().AnimationSet(true);
-        //enpupupHud.GetComponent<Animator>().SetTrigger(0);
-        string symbol="+";
-        if(amnt<0)symbol="-";
-        popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
-        }else{Debug.LogWarning("CoresPopUpHUD not present");}
-    }
-    public void AmmoPopUpHUD(float amnt){
-        GameObject popupHud=GameObject.Find("AmmoDiffParrent");
-        if(popupHud!=null){
-        popupHud.GetComponent<AnimationOn>().AnimationSet(true);
-        //enpupupHud.GetComponent<Animator>().SetTrigger(0);
-        string symbol="+";
-        if(amnt<0)symbol="-";
-        if((!infEnergy)||(infEnergy&&symbol=="+")){
-        popupHud.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
-        //energyUsedCount+=Mathf.Abs(amnt);
-        }
-        }else{Debug.LogWarning("AmmoPopUpHUD not present");}
-    }
-#endregion
-
 #region//Other Functions
     public void SetStatus(string status){
         statusc=status;
@@ -1511,7 +1411,7 @@ public class Player : MonoBehaviour{
     }
 
     public void Damage(float dmg, dmgType type){
-        if(type!=dmgType.heal&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;DMGPopUpHUD(-dmgTot);}
+        if(type!=dmgType.heal&&type!=dmgType.healSilent&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;HPPopUpHUD(-dmgTot);}
         else if(gclover){AudioManager.instance.Play("GCloverHit");}
         if(type==dmgType.silent){damaged=true;}
         if(type==dmgType.normal){damaged=true;AudioManager.instance.Play("ShipHit");}
@@ -1519,7 +1419,8 @@ public class Player : MonoBehaviour{
         if(type==dmgType.decay){damaged=true;AudioManager.instance.Play("Decay");}
         if(type==dmgType.electr){electricified=true;Electrc(4f);}//electricified=true;AudioManager.instance.Play("Electric");}
         if(type==dmgType.shadow){shadowed=true;AudioManager.instance.Play("ShadowHit");}
-        if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;DMGPopUpHUD(dmg);}}
+        if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);}}
+        if(type==dmgType.healSilent){if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);}}
     }
     public void AddSubEnergy(float value,bool add=false){
     if(energyOn){
@@ -1542,25 +1443,29 @@ public class Player : MonoBehaviour{
         }
     }
     public void AddSubCoins(int value,bool add=false){
-    //if(energyOn){
-        if(inverter!=true){
-            if(add){GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
-            else{GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
-        }else{
-            if(add){GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
-            else{GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
-        }
-    //}
+    if(inverter!=true){
+        if(add){GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
+        else{GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
+    }else{
+        if(add){GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
+        else{GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
+    }
+    }public void AddSubXP(float value,bool add=false){
+    if(inverter!=true){
+        if(add){GameSession.instance.AddXP(value);}
+        else{GameSession.instance.AddXP(-value);}
+    }else{
+        if(add){GameSession.instance.AddXP(-value);}
+        else{GameSession.instance.AddXP(value);}
+    }
     }public void AddSubCores(int value,bool add=false){
-    //if(energyOn){
-        if(inverter!=true){
-            if(add){GameSession.instance.cores+=value;CoresPopUpHUD(value);}
-            else{GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
-        }else{
-            if(add){GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
-            else{GameSession.instance.cores+=value;CoresPopUpHUD(value);}
-        }
-    //}
+    if(inverter!=true){
+        if(add){GameSession.instance.cores+=value;CoresPopUpHUD(value);}
+        else{GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
+    }else{
+        if(add){GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
+        else{GameSession.instance.cores+=value;CoresPopUpHUD(value);}
+    }
     }
     public void Overheat(float value,bool add=true){
         if(overheatOn){
@@ -1619,48 +1524,27 @@ public class Player : MonoBehaviour{
     }
     void LosePowerup(){
         if(losePwrupOutOfEn&&energy<=0){SetPowerup(powerupDefault);}
-        if(ammoOn&&((GetWeaponProperty(powerup)!=null&&GetWeaponProperty(powerup).costType!=costType.boomerang)||(GetWeaponPropertyActive(powerup)!=null&&GetWeaponPropertyActive(powerup).costType!=costType.boomerang)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){SetPowerup(powerup=powerupDefault);ammo=-4;}
+        if(ammoOn&&((GetWeaponProperty(powerup)!=null&&GetWeaponProperty(powerup).costType==costType.ammo)||(GetWeaponPropertyActive(powerup)!=null&&GetWeaponPropertyActive(powerup).costType!=costType.boomerang)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){SetPowerup(powerup=powerupDefault);ammo=-4;}
     }
 
 
     public Enemy FindClosestEnemy(){
-        KdTree<Enemy> Enemies = new KdTree<Enemy>();
+        KdTree<Enemy> Enemies=new KdTree<Enemy>();
         Enemy[] EnemiesArr;
-        EnemiesArr = FindObjectsOfType<Enemy>();
-        foreach(Enemy enemy in EnemiesArr){
-            Enemies.Add(enemy);
-        }
-        Enemy closest = Enemies.FindClosest(transform.position);
+        EnemiesArr=FindObjectsOfType<Enemy>();
+        foreach(Enemy enemy in EnemiesArr){Enemies.Add(enemy);}
+        Enemy closest=Enemies.FindClosest(transform.position);
         return closest;
     }
-    /*public Enemy FindClosestEnemy()
-    {
-        Enemy[] gos;
-        gos = Enemy.FindObjectsOfType<Enemy>();
-        Enemy closest;
-        float distance = 44f;
-        Vector3 position = transform.position;
-        foreach (Enemy go in gos)
-        {
-            Vector3 diff = go.transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
-            {
-                closest = go;
-                distance = curDistance;
-                return closest;
-            }else { return null; }
-        }
-        return null;
-    }*/
-    private void SetActiveAllChildren(Transform transform, bool value)
-    {
-        foreach (Transform child in transform)
-        {
-            child.gameObject.SetActive(value);
-
-            SetActiveAllChildren(child, value);
-        }
-    }
+    private void SetActiveAllChildren(Transform transform, bool value){foreach (Transform child in transform){child.gameObject.SetActive(value);SetActiveAllChildren(child, value);}}
+#endregion
+#region//Pop-Ups
+void HPPopUpHUD(float amnt){GameCanvas.instance.HpPopupSwitch(amnt);}
+void EnergyPopUpHUD(float amnt){GameCanvas.instance.EnPopupSwitch(amnt);}
+void AmmoPopUpHUD(float amnt){GameCanvas.instance.AmmoPopupSwitch(amnt);}
+void CoinsPopUpHUD(float amnt){GameCanvas.instance.CoinPopupSwitch(amnt);}
+void CoresPopUpHUD(float amnt){GameCanvas.instance.CorePopupSwitch(amnt);}
+void ScorePopUpHUD(float amnt){GameCanvas.instance.ScorePopupSwitch(amnt);}
+void XPPopUpHUD(float amnt){GameCanvas.instance.XpPopupSwitch(amnt);}
 #endregion
 }

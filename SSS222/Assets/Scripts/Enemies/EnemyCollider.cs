@@ -30,32 +30,24 @@ public class EnemyCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("LClawsVFX").name)){ dmg=damageValues.GetDmgLClaws(); AudioManager.instance.Play("LClawsHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowBt").name)){dmg=damageValues.GetDmgShadowBT(); FindObjectOfType<Player>().Damage(1,dmgType.shadow);}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("CBullet").name)){dmg=damageValues.GetDmgCBullet(); AudioManager.instance.Play("CStreamHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("QRocket").name)){dmg=damageValues.GetDmgQRocket(); Destroy(other.gameObject); AudioManager.instance.Play("QRocketHit");
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("QRocket").name)){dmg=damageValues.GetDmgQRocket();Destroy(other.gameObject);AudioManager.instance.Play("QRocketHit");
                 GameAssets.instance.VFX("ExplosionSmall", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
             }
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("PRocket").name)){dmg=damageValues.GetDmgPRocket(); /*AudioSource.PlayClipAtPoint(hrocketHitSFX, new Vector2(transform.position.x, transform.position.y));*/}
-                //var explosionSmall=Instantiate(explosionSmallVFX, new Vector2(transform.position.x, transform.position.y - 0.5f), Quaternion.identity); Destroy(explosionSmall.gameObject, 0.3f);
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("PLaser").name)){dmg=other.GetComponent<DamageOverDist>().dmg; Destroy(other.gameObject); AudioManager.instance.Play("PLaserHit");//AudioSource.PlayClipAtPoint(hrocketHitSFX, new Vector2(transform.position.x, transform.position.y));
-                //var explosionSmall=Instantiate(explosionSmallVFX, new Vector2(transform.position.x, transform.position.y - 0.5f), Quaternion.identity); Destroy(explosionSmall.gameObject, 0.3f);
-            }
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Plasma").name)){dmg=damageValues.GetDmgPRocketExpl(); GetComponent<Rigidbody2D>().velocity=Vector2.up*6f; GetComponent<Enemy>().yeeted=true;}// AudioSource.PlayClipAtPoint(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=damageValues.GetDmgMPulse(); AudioManager.instance.Play("MLaserHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("PRocket").name)){dmg=damageValues.GetDmgPRocket();}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("PLaser").name)){dmg=other.GetComponent<DamageOverDist>().dmg;if(gameObject.GetComponent<EnemyHacked>()==null){gameObject.AddComponent<EnemyHacked>();}Destroy(other.gameObject,0.01f);AudioManager.instance.Play("PLaserHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Plasma").name)){dmg=damageValues.GetDmgPRocketExpl();GetComponent<Rigidbody2D>().velocity=Vector2.up*6f;GetComponent<Enemy>().yeeted=true;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=damageValues.GetDmgMPulse();AudioManager.instance.Play("MLaserHit");}
 
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.GetDmgFlame();}
 
-            if(GetComponent<VortexWheel>()!=null){
-                if(!other.gameObject.name.Contains(GameAssets.instance.Get("HRocket").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("QRocket").name)){
-                    dmg/=3;
-                }
-            }
+            if(GetComponent<VortexWheel>()!=null){if(!other.gameObject.name.Contains(GameAssets.instance.Get("HRocket").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("QRocket").name)){dmg/=3;}}
             if(FindObjectOfType<Player>()!=null)dmg*=FindObjectOfType<Player>().dmgMulti;
             GetComponent<Enemy>().health-=dmg;
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
             GameAssets.instance.VFX("FlareHit", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
             if(GameSession.instance.dmgPopups==true&&dmg!=0){
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("PLaser").name)){
-                    GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(GameAssets.instance.GetVFX("DMGPopup"),other.transform.position);
-                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg,1).ToString();
+                    GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgColor));
                 }else{
                     GetComponent<Enemy>().dmgCount+=dmg;
                     if(GetComponent<Enemy>().dmgCounted==false)GetComponent<Enemy>().DispDmgCount(other.transform.position);
@@ -88,8 +80,7 @@ public class EnemyCollider : MonoBehaviour{
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
             GameAssets.instance.VFX("FlareHit", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
             if(GameSession.instance.dmgPopups==true&&dmg!=0){
-                GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(GameAssets.instance.GetVFX("DMGPopup"),transform.position);
-                dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg,2).ToString();
+                GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPhaseColor));
             }
             if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;
     }else{dmgTimer-=Time.deltaTime;}

@@ -9,7 +9,8 @@ public enum dmgType{
     shadow,
     decay,
     electr,
-    heal
+    heal,
+    healSilent
 }
 public class DamageValues : MonoBehaviour{
     public static DamageValues instance;

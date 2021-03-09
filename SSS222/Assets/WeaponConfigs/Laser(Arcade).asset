@@ -12,16 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f905b4fa1c32244b5205d44cda0c7a, type: 3}
   m_Name: Laser(Arcade)
   m_EditorClassIdentifier: 
-  validate: 0
   name: laser
   assetName: Laser
   weaponType: 0
   weaponTypeProperties:
     id: 0
   costType: 0
-  cost: 0.33
+  costTypeProperties:
+    id: 1
   ovheat: 0
-  ammoSize: 0
   duration: 0
   references:
     version: 1
@@ -49,3 +48,7 @@ MonoBehaviour:
         recoilTime: 0
         flare: 1
         flareDur: 0.3
+    00000001:
+      type: {class: costTypeEnergy, ns: , asm: Assembly-CSharp}
+      data:
+        cost: 0.33

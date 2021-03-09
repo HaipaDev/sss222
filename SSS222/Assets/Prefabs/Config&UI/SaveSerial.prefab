@@ -53,7 +53,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-  adv:
+  advD:
     xp: 0
     total_UpgradesCount: 0
     total_UpgradesLvl: 0
@@ -76,10 +76,11 @@ MonoBehaviour:
     overhaul_upgraded: 0
   settingsData:
     gameVersion: 0.4
-    moveByMouse: 1
+    inputType: 0
     fullscreen: 1
     pprocessing: 0
     scbuttons: 0
+    vibrations: 0
     quality: 4
     masterVolume: 0
     soundVolume: 0
@@ -87,3 +88,11 @@ MonoBehaviour:
     joystickType: 0
     joystickSize: 1
     lefthand: 0
+    popupSumTime: 0.25
+    hpPopupsSum: 1
+    enPopupsSum: 1
+    ammoPopupsSum: 0
+    xpPopupsSum: 1
+    coinPopupsSum: 1
+    corePopupsSum: 1
+    scorePopupsSum: 0

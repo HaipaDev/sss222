@@ -105,7 +105,7 @@ public class CometRandomProperties : MonoBehaviour{
         return lunarDrop;
     }
     void Update(){
-        if(healhitCount>=2&&!isLunar){MakeLunar();}
+        if(healhitCount>=3&&!isLunar){MakeLunar();}
         //transform.Rotate(new Vector3(0,0,rotationSpeed));
     }
     [ContextMenu("MakeLunar")]public void MakeLunar(){

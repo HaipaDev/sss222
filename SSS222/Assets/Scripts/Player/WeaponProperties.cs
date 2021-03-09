@@ -4,27 +4,32 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Weapon Config")]
 public class WeaponProperties:ScriptableObject{
-    //[SerializeField] bool validate;
     [SerializeField] public string name;
     [SerializeField] public string assetName;
     [SerializeField] public weaponType weaponType;
     [SerializeReference] public weaponTypeProperties weaponTypeProperties;
     [SerializeField] public costType costType;
-    [SerializeField] public float cost;
+    [SerializeReference] public costTypeProperties costTypeProperties;
     [SerializeField] public float ovheat;
-    [SerializeField] public float ammoSize;
     [SerializeField] public float duration=10;
     [ContextMenu("Validate")]void Vaildate(){
-        //if(validate){
         if(weaponType==weaponType.bullet){weaponTypeProperties=new weaponTypeBullet();}
         if(weaponType==weaponType.held){weaponTypeProperties=new weaponTypeHeld();}
         if(weaponType==weaponType.hybrid){weaponTypeProperties=new weaponTypeHybrid();}
-        //if(costType==costType.boomerang){cost=1;}
-        //validate=false;}
+    }[ContextMenu("ValidateCost")]void VaildateCost(){
+        if(costType==costType.energy){costTypeProperties=new costTypeEnergy();}
+        if(costType==costType.ammo){costTypeProperties=new costTypeAmmo();}
+        if(costType==costType.crystalAmmo){costTypeProperties=new costTypeCrystalAmmo();}
+        if(costType==costType.blackEnergy){costTypeProperties=new costTypeBlackEnergy();}
     }
 }
-public enum costType{energy,ammo,boomerang}
-public enum weaponType{bullet,held,hybrid}
+public enum costType{energy,ammo,boomerang,crystalAmmo,blackEnergy}
+[System.Serializable]public class costTypeProperties{public float cost;}
+[System.Serializable]public class costTypeEnergy:costTypeProperties{}
+[System.Serializable]public class costTypeAmmo:costTypeProperties{public int ammoSize=20;}
+[System.Serializable]public class costTypeCrystalAmmo:costTypeProperties{public float regularEnergyCost=0;public int crystalCost=1;public int crystalAmmoCrafted=20;}
+[System.Serializable]public class costTypeBlackEnergy:costTypeProperties{public float regularEnergyCost=0;}
+[System.Serializable]public enum weaponType{bullet,held,hybrid}
 [System.Serializable]public class weaponTypeProperties{}
 [System.Serializable]public class weaponTypeBullet:weaponTypeProperties{
     public bool leftSide=true;

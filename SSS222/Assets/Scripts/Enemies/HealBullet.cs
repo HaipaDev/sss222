@@ -23,7 +23,10 @@ public class HealBullet : MonoBehaviour{
         if(other.GetComponent<CometRandomProperties>()!=null){other.GetComponent<CometRandomProperties>().healhitCount++;}
         if(targetObj!=null){
             if(targetObj.GetComponent<HealingDrone>()!=null || other.GetComponent<HealingDrone>()==null){
-                targetObj.GetComponent<Enemy>().health+=healAmnt;
+                if(targetObj.GetComponent<Enemy>().health<targetObj.GetComponent<Enemy>().healthStart*1.5f){
+                    targetObj.GetComponent<Enemy>().health+=healAmnt;
+                    GameCanvas.instance.DMGPopup(healAmnt,transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1,false);
+                }
                 GetComponent<FollowOneObject>().targetObj=null;
                 targetObj=null;
                 AudioManager.instance.Play("Heal");

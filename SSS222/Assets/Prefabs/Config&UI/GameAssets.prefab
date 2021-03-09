@@ -50,8 +50,12 @@ MonoBehaviour:
     gobj: {fileID: 1056705403108089519, guid: eebb358fa9ff6af419cd68bd020a4289, type: 3}
   - name: EnBall
     gobj: {fileID: 1056705403108089519, guid: b02c0de83bb50b44aadff0efec44e73f, type: 3}
+  - name: BlackEnBall
+    gobj: {fileID: 1056705403108089519, guid: 6a1e5463a6bee1d41ad4a51d34ef22af, type: 3}
   - name: PowerCore
     gobj: {fileID: 1056705403108089519, guid: 0311d6b525027ad43918a62b48acaba8, type: 3}
+  - name: MicroMedkit
+    gobj: {fileID: 1056705403108089519, guid: 2b95db0bd9edebc4b97375103e5a2d9a, type: 3}
   - name: ArmorPwrup
     gobj: {fileID: 5649215481239408911, guid: b68538418da2b5943be6fd26f9e0ddec, type: 3}
   - name: ArmorUPwrup
@@ -105,7 +109,7 @@ MonoBehaviour:
   - name: EnShip
     gobj: {fileID: 6432250634095115783, guid: 37903edfff6f26349954ed2b719c593a, type: 3}
   - name: EnBt
-    gobj: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1, type: 3}
+    gobj: {fileID: 5313808222654050488, guid: 7ee89741fb82f0a45a71870919d506a7, type: 3}
   - name: EnComb
     gobj: {fileID: 6432250634095115783, guid: 952ed2444cd0f874592ef3f85ca7a108, type: 3}
   - name: EnSaber
@@ -313,5 +317,7 @@ MonoBehaviour:
   skins:
   - {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}
   - {fileID: 21300000, guid: 8c3dccef1eacea141a8d89d0bd965366, type: 3}
+  - {fileID: 21300000, guid: 50d957dbcbb2637498ea21443c1e3c81, type: 3}
+  - {fileID: 21300000, guid: d28a8e7a0b538fc4ca72d5deb5d6acb0, type: 3}
   skinOverlays:
   - {fileID: 21300000, guid: 823400051cf2dd84495c524fba381fef, type: 3}

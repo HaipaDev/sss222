@@ -29,7 +29,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Bat").name)){dmg=damageValues.GetDmgBat();}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Soundwave").name)){dmg=damageValues.GetDmgSoundwave(); AudioManager.instance.Play("SoundwaveHit");en=false;}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("EnShip").name)){dmg=damageValues.GetDmgEnemyShip1();}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBt").name)){dmg=damageValues.GetDmgEBt();en=false;}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBt").name)){dmg=damageValues.GetDmgEBt();en=false;player.Hack(4);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("EnComb").name)){destroy=false;}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=damageValues.GetDmgEnSaber();en=false;}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Goblin").name)){dmg=damageValues.GetDmgGoblin();}
@@ -63,12 +63,7 @@ public class PlayerCollider : MonoBehaviour{
                     //else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
                 }
                 var name=other.gameObject.name.Split('(')[0];lastHitObj=name;lastHitDmg=dmg;
-                if(GameSession.instance.dmgPopups==true&&dmg!=0&&!player.gclover){
-                    GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(GameAssets.instance.GetVFX("DMGPopup"),transform.position);
-                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
-                    dmgpopup.transform.localScale=new Vector2(2,2);
-                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg/player.armorMulti,2).ToString();
-                }
+                if(GameSession.instance.dmgPopups==true&&dmg!=0&&!player.gclover&&!player.dashing){GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPlayerColor),2,true);}
                 //DMGPopUpHud(dmg);
             }
             #endregion
@@ -77,10 +72,12 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){player.AddSubEnergy(player.energyBallGet,true);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){player.AddSubCoins(other.GetComponent<LCrystalDrop>().amnt,true);}//GameSession.instance.coins += 1;}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(1,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("BlackEnBall").name)){player.AddSubXP(1,true);}
                 if(other.GetComponent<Tag_Collectible>().isPowerup){//if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
                     if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddPwrups(1);//powerupsGoblin++;
                     GameSession.instance.AddXP(GameSession.instance.xp_powerup);//XP For powerups
                 }
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("MicroMedkit").name)){HPAdd(player.microMedkitHpAmnt);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)){
                     if(player.health==player.maxHP){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}
                     else if(player.health!=player.maxHP&&player.health>(player.maxHP-player.medkitHpAmnt)){
@@ -88,14 +85,6 @@ public class PlayerCollider : MonoBehaviour{
                         if(val>0)GameSession.instance.AddToScoreNoEV(val);}
                     HPAdd(player.medkitHpAmnt);
                     player.AddSubEnergy(player.medkitEnergyGet,true);
-                }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorUPwrup").name)){
-                    if(player.health==player.maxHP){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitUHpAmnt*1.1f));}
-                    else if(player.health!=player.maxHP&&player.health>(player.maxHP-player.medkitUHpAmnt)){
-                        int val=Mathf.RoundToInt(player.medkitUHpAmnt-(player.maxHP-player.health)*0.75f);
-                        if(val>0)GameSession.instance.AddToScoreNoEV(val);}
-                    HPAdd(player.medkitUHpAmnt);
-                    player.AddSubEnergy(player.medkitUEnergyGet,true);
                 }
                 void HPAdd(float hp){player.Damage(hp,dmgType.heal);}
                 
@@ -182,6 +171,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){AudioManager.instance.Play("EnergyBall");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){AudioManager.instance.Play("Coin");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){AudioManager.instance.Play("LvlUp");}
+                else if(other.gameObject.name.Contains(GameAssets.instance.Get("BlackEnBall").name)){AudioManager.instance.Play("BlackEnBall");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("GCloverPwrup").name)){AudioManager.instance.Play("GClover");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowBtPwrup").name)){AudioManager.instance.Play("ShadowGet");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("MatrixPwrup").name)){AudioManager.instance.Play("MatrixGet");}
@@ -203,8 +193,8 @@ public class PlayerCollider : MonoBehaviour{
     }
     void EnergyAdd(){player.AddSubEnergy(player.pwrupEnergyGet,true);}
     void EnergyAddDupl(){player.AddSubEnergy(player.enPwrupDuplicate,true);}
-    void AmmoAdd(WeaponProperties w){player.AddSubAmmo(w.ammoSize,true);}
-    void AmmoAddDupl(WeaponProperties w){player.AddSubAmmo(w.ammoSize,true);}
+    void AmmoAdd(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
+    void AmmoAddDupl(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
     private void OnTriggerStay2D(Collider2D other){
     if(!other.CompareTag(tag)){
     if(dmgTimer<=0){
@@ -225,12 +215,7 @@ public class PlayerCollider : MonoBehaviour{
                 //if(other.gameObject.name.Contains(leechName)){}
                 //var flare=Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
                 //Destroy(flare.gameObject, 0.3f);
-                if(GameSession.instance.dmgPopups==true&&dmg!=0){
-                    GameObject dmgpopup=CreateOnUI.CreateOnUIFunc(GameAssets.instance.GetVFX("DMGPopup"),transform.position);
-                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
-                    dmgpopup.transform.localScale=new Vector2(2,2);
-                    dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg/player.armorMulti,2).ToString();
-                }
+                if(GameSession.instance.dmgPopups==true&&dmg!=0&&!player.gclover&&!player.dashing){GameCanvas.instance.DMGPopup(dmg,other.transform.position,Color.red,2,true);}
                 if(dmg!=0)player.Damage(dmg,dmgType.silent);
                 if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;
     }else{dmgTimer-=Time.deltaTime;}

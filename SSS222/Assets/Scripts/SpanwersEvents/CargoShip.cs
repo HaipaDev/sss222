@@ -19,10 +19,13 @@ public class CargoShip : MonoBehaviour{
             visited=true;
             tagged=true;
             GetComponentInChildren<TMPro.TextMeshProUGUI>().enabled=false;
-        }if(other.CompareTag("PlayerWeapons")){
+        }if(other.CompareTag("PlayerWeapons")&&other.GetComponent<HealthLeech>()==null){
             Destroy(other.gameObject);
             if(tagged==false){Shop.instance.RepMinus(repMinus);tagged=true;AudioManager.instance.Play("CargoHit");gameObject.transform.GetChild(0).gameObject.SetActive(true);}
-        }if(other.GetComponent<Shredder>()!=null){Destroy(gameObject);}
+        }else if(other.GetComponent<HealthLeech>()!=null){
+            if(tagged==false){Shop.instance.reputation+=3;tagged=true;}
+        }
+        if(other.GetComponent<Shredder>()!=null){Destroy(gameObject);}
     }
     private void OnDestroy() {
         if(visited==false&&Shop.instance.subbed==false){

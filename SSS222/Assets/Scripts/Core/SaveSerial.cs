@@ -116,6 +116,14 @@ public class SaveSerial : MonoBehaviour{
 		public JoystickType joystickType;
 		public float joystickSize=1;
 		public bool lefthand;
+		public float popupSumTime=0.25f;
+		public bool hpPopupsSum;
+		public bool enPopupsSum;
+		public bool ammoPopupsSum;
+		public bool xpPopupsSum;
+		public bool coinPopupsSum;
+		public bool corePopupsSum;
+		public bool scorePopupsSum;
 	}
 	
 	public void SaveSettings(){

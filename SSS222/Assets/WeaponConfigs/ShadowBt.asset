@@ -12,16 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f905b4fa1c32244b5205d44cda0c7a, type: 3}
   m_Name: ShadowBt
   m_EditorClassIdentifier: 
-  validate: 0
   name: shadowbt
   assetName: ShadowBt
   weaponType: 0
   weaponTypeProperties:
     id: 0
-  costType: 0
-  cost: 10
+  costType: 4
+  costTypeProperties:
+    id: 1
   ovheat: 2
-  ammoSize: 0
   duration: 10
   references:
     version: 1
@@ -49,3 +48,8 @@ MonoBehaviour:
         recoilTime: 0
         flare: 0
         flareDur: 0.3
+    00000001:
+      type: {class: costTypeBlackEnergy, ns: , asm: Assembly-CSharp}
+      data:
+        cost: 3
+        regularEnergyCost: 10

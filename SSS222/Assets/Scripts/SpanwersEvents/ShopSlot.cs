@@ -72,11 +72,11 @@ public class ShopSlot : MonoBehaviour{
                 if(ID!=-1){
                 if(item.item.pwrupName!=""){
                     player.powerup=item.item.pwrupName;
-                    player.energy += player.pwrupEnergyGet;
+                    player.energy+=player.pwrupEnergyGet;
                 }else if(ID==4){
-                    if (player.health>(player.maxHP-30)) { gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP-player.health)*2); }
-                    player.health += player.medkitUHpAmnt;
-                    player.energy += player.medkitUEnergyGet;
+                    if (player.health>(player.maxHP-player.medkitHpAmnt)){gameSession.AddToScoreNoEV(Mathf.RoundToInt(player.maxHP-player.health)*2);}
+                    player.health+=player.medkitHpAmnt;
+                    player.energy+=player.medkitEnergyGet;
                 }else if(ID==8){
                     player.SetStatus("magnet");
                 }else if(ID==9){
@@ -90,9 +90,9 @@ public class ShopSlot : MonoBehaviour{
                     //AudioSource.PlayClipAtPoint(gameSession.lvlUpSFX,player.transform.position);
                     AudioManager.instance.Play("LvlUp");
                 }else if(ID==12){
-                    player.health += 12;
+                    player.health+=10;
                 }else if(ID==13){
-                    player.energy += 24;
+                    player.energy+=24;
                 }
                 }else{ResetState();}
 
