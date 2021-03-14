@@ -125,9 +125,8 @@ MonoBehaviour:
   weaknsMulti: 0.66
   energyBallGet: 9
   medkitEnergyGet: 40
-  medkitUEnergyGet: 26
+  microMedkitHpAmnt: 10
   medkitHpAmnt: 25
-  medkitUHpAmnt: 62
   pwrupEnergyGet: 36
   enForPwrupRefill: 25
   enPwrupDuplicate: 42
@@ -654,17 +653,6 @@ MonoBehaviour:
     price: -1
     priceS: 25
     priceE: 35
-  - name: 1Phaser
-    item: {fileID: 11400000, guid: 3dbde611149621a41921a182d1909a6c, type: 2}
-    dropChance:
-    - 1
-    - 2
-    - 3.5
-    - 4
-    - 4.5
-    price: -1
-    priceS: 22
-    priceE: 25
   - name: 2HRockets
     item: {fileID: 11400000, guid: a28047dfde9ced14a9903f48debcca04, type: 2}
     dropChance:
@@ -874,13 +862,13 @@ MonoBehaviour:
   other_UpgradesCountMax: 10
   maxHealth_UpgradeAmnt: 5
   maxHealth_UpgradeCost: 1
-  maxHealth_UpgradesCountMax: 5
+  maxHealth_UpgradesCountMax: 3
   maxEnergy_UpgradeAmnt: 5
   maxEnergy_UpgradeCost: 1
   maxEnergy_UpgradesCountMax: 4
   speed_UpgradeAmnt: 0.1
   speed_UpgradeCost: 1
-  speed_UpgradesCountMax: 5
+  speed_UpgradesCountMax: 6
   hpRegen_UpgradeAmnt: 0.2
   hpRegen_UpgradeCost: 1
   hpRegen_UpgradesCountMax: 2
