@@ -681,15 +681,20 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3540480326612021006, guid: 8a784139e3e9e63488fc974d2b0c6329,
+    - target: {fileID: 2746787838317246531, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
-      propertyPath: m_margin.w
-      value: -1.8166351
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6202006154109846343, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202006154109846343, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 850.84204
       objectReference: {fileID: 0}
     - target: {fileID: 6955439429379832065, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}

@@ -60,17 +60,16 @@ public class SaveSerial : MonoBehaviour{
 		public int maxEnergy_UpgradesLvl=0;
 		public int speed_UpgradesCount=0;
 		public int speed_UpgradesLvl=0;
-		public int hpRegen_UpgradesCount=0;
-		public int hpRegen_UpgradesLvl=0;
-		public int enRegen_UpgradesCount=0;
-		public int enRegen_UpgradesLvl=0;
 		public int luck_UpgradesCount=0;
 		public int luck_UpgradesLvl=0;
+		//
 		public int defaultPowerup_upgradeCount=0;
 		public int energyRefill_upgraded=0;
 		public int magneticPulse_upgraded=0;
 		public int teleport_upgraded=0;
 		public int overhaul_upgraded=0;
+		public int crystalMend_upgraded;
+		public int energyDiss_upgraded;
 	}
 	public void SaveAdventure(){
 		SaveGame.Encode = adventureEncode;

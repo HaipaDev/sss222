@@ -89,7 +89,6 @@ public static GameRules instance;
     public float pwrupEnergyGet=36f;
     public float enForPwrupRefill=25f;
     public float enPwrupDuplicate=42f;
-    public float refillEnergyAmnt=110f;
     [Header("Skills")]
     public Skill[] skillsPlayer;
     public float timeOverhaul=10;
@@ -272,7 +271,7 @@ public static GameRules instance;
     }
     public void ArcadeLvl1(){
         var p=FindObjectOfType<Player>();
-        p.maxEnergy*=2;
+        p.maxEnergy*=1.5f;
     }
     #endregion
 }

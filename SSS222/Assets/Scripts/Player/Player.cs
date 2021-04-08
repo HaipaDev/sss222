@@ -54,14 +54,18 @@ public class Player : MonoBehaviour{
     [SerializeField] public bool recoilOn=true;
 
     public bool enRegenEnabled;
+    public float enAbsorpAmnt;
+    public float energyDissAbsorp=18;
     public float timerEnRegen;
     [SerializeField] public float freqEnRegen=1f;
     [SerializeField] public float enRegenAmnt=2f;
     [SerializeField] public float energyForRegen=10f;
     public bool hpRegenEnabled;
+    public float hpAbsorpAmnt;
+    public float crystalMendAbsorp=10;
     public float timerHpRegen;
-    [SerializeField] public float freqHpRegen=1f;
-    [SerializeField] public float hpRegenAmnt=0.1f;
+    [SerializeField] public float freqHpRegen=2f;
+    [SerializeField] public float hpRegenAmnt=0.5f;
     //[SerializeField] public float hpForRegen=0f;
     [SerializeField] public float armorMultiInit=1f;
     [SerializeField] public float dmgMultiInit=1f;
@@ -165,66 +169,11 @@ public class Player : MonoBehaviour{
     [SerializeField] public float powerMulti=1.6f;
     [SerializeField] public float weaknsMulti=0.66f;
 #endregion
-#region//Weapon Values 
-    [Header("Weapons")]
-    //[SerializeField] float laserSpeed=9f;
-    //[SerializeField] public float laserShootPeriod=0.34f;
-    /*[SerializeField] public float laserHoldSpeed=0.65f;
-    [SerializeField] float laser2Speed=8.9f;
-    [SerializeField] public float laser2ShootPeriod=0.35f;
-    [SerializeField] public float laser2HoldSpeed=0.75f;
-    [SerializeField] float laser3Speed=8.8f;
-    [SerializeField] public float laser3ShootPeriod=0.36f;
-    [SerializeField] public float laser3HoldSpeed=0.75f;
-    [SerializeField] float mlaserSpeedS=8.5f;
-    [SerializeField] float mlaserSpeedE=10f;
-    [SerializeField] float mlaserShootPeriod=0.1f;
-    [SerializeField] public float mlaserHoldSpeed=1f;*/
-    //[SerializeField] public int mlaserBulletsAmmount=10;
-    /*[SerializeField] float phaserSpeed=10.5f;
-    [SerializeField] float phaserShootPeriod=0.2f;
-    [SerializeField] public float phaserHoldSpeed=1f;
-    [SerializeField] float hrocketSpeed=6.5f;
-    [SerializeField] float hrocketShootPeriod=0.3f;
-    [SerializeField] public float hrocketHoldSpeed=1f;
-    [SerializeField] float shadowBTSpeed=9f;
-    [SerializeField] float shadowBTShootPeriod=0.34f;
-    [SerializeField] public float shadowBTHoldSpeed=0.5f;
-    [SerializeField] float qrocketSpeed=9.5f;
-    [SerializeField] float qrocketShootPeriod=0.3f;
-    [SerializeField] public float qrocketHoldSpeed=0.9f;
-    [SerializeField] float procketSpeedS=9.5f;
-    [SerializeField] float procketSpeedE=10.5f;
-    [SerializeField] float procketShootPeriod=0.5f;
-    [SerializeField] int procketsBulletsAmmount=10;
-    [SerializeField] public float procketHoldSpeed=0.8f;
-    [SerializeField] float cbulletSpeed=8.25f;
-    [SerializeField] float cbulletShootPeriod=0.15f;
-    [SerializeField] public float cbulletHoldSpeed=0.825f;
-    [SerializeField] float plaserSpeed=9.55f;
-    [SerializeField] float plaserShootPeriod=0.75f;
-    [SerializeField] public float plaserHoldSpeed=1f;*/
-#endregion
+
 #region//Energy/Weapon Durations
     [Header("Energy Costs")]
     [SerializeField] public List<WeaponProperties> weaponProperties;
     [SerializeField] public float shadowCost=5f;
-    //Weapons
-    /*[SerializeField] public float laserEn=0.3f;
-    [SerializeField] public float laser2En=1.25f;
-    [SerializeField] public float laser3En=2.5f;
-    [SerializeField] public float phaserEn=1.5f;
-    [SerializeField] public float mlaserEn=0.075f;
-    [SerializeField] public float lsaberEn=0.4f;
-    [SerializeField] public float lclawsEn=6.3f;
-    [SerializeField] public float shadowBTEn=10f;
-    [SerializeField] public float cbulletEn=1.3f;
-    [SerializeField] public float plaserEn=5.6f;
-    //Rockets
-    [SerializeField] public float hrocketOh=0.9f;//2.6
-    [SerializeField] public float qrocketOh=1.63f;//5.5
-    [SerializeField] public float procketEn=0.86f;//0.26
-    [SerializeField] public float procketOh=0.49f;*/
     [Header("Energy Gains")]//Collectibles
     [SerializeField] public float energyBallGet=9f;
     [SerializeField] public float medkitEnergyGet=40f;
@@ -233,12 +182,8 @@ public class Player : MonoBehaviour{
     [SerializeField] public float pwrupEnergyGet=36f;
     [SerializeField] public float enForPwrupRefill=25f;
     [SerializeField] public float enPwrupDuplicate=42f;
-    public float refillEnergyAmnt=110f;
-    public int refillCostS=1;
-    public int refillCostE=2;
-    public float refillDelay=1.6f;
-    public float refillCount;
-    [HideInInspector]public bool refillRandomized;
+    [SerializeField] public int crystalMend_refillCost=2;
+    [SerializeField] public float energyDiss_refillCost=3.3f;
 #endregion
 #region//Other
     [Header("Effects")]
@@ -290,9 +235,6 @@ public class Player : MonoBehaviour{
     PlayerSkills pskills;
     Shake shake;
     PauseMenu pauseMenu;
-    GameObject refillUI;
-    GameObject refilltxtS;
-    GameObject refilltxtE;
     [HideInInspector]public Joystick joystick;
     //Settings settings;
     IEnumerator shootCoroutine;
@@ -334,9 +276,6 @@ public class Player : MonoBehaviour{
         shipScaleMin*=defaultShipScale;
         shipScaleMax*=defaultShipScale;
         pauseMenu=FindObjectOfType<PauseMenu>();
-        refillUI=GameObject.Find("RefillUI");
-        refilltxtS=GameObject.Find("RefillText1");
-        refilltxtE=GameObject.Find("RefillText2");
 
         SetPrefabs();
         moveXwas=moveX;
@@ -434,7 +373,6 @@ public class Player : MonoBehaviour{
         pwrupEnergyGet=i.pwrupEnergyGet;
         enForPwrupRefill=i.enForPwrupRefill;
         enPwrupDuplicate=i.enPwrupDuplicate;
-        refillEnergyAmnt=i.refillEnergyAmnt;
 
         yield return new WaitForSecondsRealtime(0.06f);
         var u=UpgradeMenu.instance;
@@ -465,7 +403,6 @@ public class Player : MonoBehaviour{
         Regen();
         Die();
         CountTimeMovementPressed();
-        RefillEnergy();
         if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
             if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}}
@@ -1136,8 +1073,18 @@ public class Player : MonoBehaviour{
         }
     }
     void Regen(){
-        if(hpRegenEnabled==true&&timerHpRegen>=freqHpRegen){Damage(hpRegenAmnt,dmgType.heal);timerHpRegen=0;}
-        if(energyOn)if(enRegenEnabled==true&&timerEnRegen>=freqEnRegen&&energy>energyForRegen){AddSubEnergy(enRegenAmnt,true);timerEnRegen=0;}
+        if(UpgradeMenu.instance.crystalMend_upgraded>0){hpRegenEnabled=true;}
+        if(UpgradeMenu.instance.energyDiss_upgraded>0){enRegenEnabled=true;}
+        if(Time.timeScale>0.0001f){
+            if(hpAbsorpAmnt<0){hpAbsorpAmnt=0;}
+            if(enAbsorpAmnt<0){enAbsorpAmnt=0;}
+            if(hpRegenEnabled&&hpAbsorpAmnt==0){if(GameSession.instance.coins>=crystalMend_refillCost){hpAbsorpAmnt+=crystalMendAbsorp;GameSession.instance.coins-=crystalMend_refillCost;}}
+            if(enRegenEnabled&&enAbsorpAmnt==0){if(GameSession.instance.coresXp>=energyDiss_refillCost){enAbsorpAmnt+=energyDissAbsorp;GameSession.instance.coresXp-=energyDiss_refillCost;}}
+            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<maxHP)Damage(hpRegenAmnt,dmgType.heal);hpAbsorpAmnt-=hpRegenAmnt;timerHpRegen=0;}
+            if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<maxEnergy)AddSubEnergy(enRegenAmnt,true);enAbsorpAmnt-=enRegenAmnt;timerEnRegen=0;}
+            //if(hpRegenEnabled==true&&timerHpRegen>=freqHpRegen){Damage(hpRegenAmnt,dmgType.heal);timerHpRegen=0;}
+            //if(energyOn)if(enRegenEnabled==true&&timerEnRegen>=freqEnRegen&&energy>energyForRegen){AddSubEnergy(enRegenAmnt,true);timerEnRegen=0;}
+        }
     }
     public void Recoil(float strength, float time){
         //rb.velocity = Vector2.down*strength;
@@ -1236,116 +1183,6 @@ public class Player : MonoBehaviour{
         slowTime=duration;
         slowStrength=strength;
         SetStatus("slow");
-    }
-#endregion
-
-#region//Skills
-    //Skills are in PlayerSkills
-    private void RefillEnergy(){
-        if(energyOn&&energy<=0&&hacked!=true){
-            if(energyRefillUnlocked==1){
-                if(refillDelay>0)refillDelay-=Time.deltaTime;
-                if(refillDelay<=0){refillDelay=-4;}
-                SetActiveAllChildren(refillUI.transform,true);
-
-                refillCostS=1;
-                refillCostE=3;
-
-                //refillRandomized=true;
-                refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostS.ToString();
-                refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostE.ToString();
-                if(Input.GetButtonDown("Fire1")&&refillDelay==-4){
-                    var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
-                    if(GameSession.instance.coins>refillCost){
-                        energy+=refillEnergyAmnt*0.75f;
-                        Fragile(20,0.75f);
-                        Damage(5,dmgType.normal);
-                        EnergyPopUpHUD(refillEnergyAmnt);
-                        //refillCount++;
-                        GameSession.instance.coins-=refillCost;
-                        refillRandomized=false;
-                        AudioManager.instance.Play("EnergyRefill");
-                        GameObject crystalVFX = Instantiate(crystalExplosionVFX, new Vector2(0, 0), Quaternion.identity);
-                        Destroy(crystalVFX,0.1f);
-                    }else{
-                        refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCost.ToString();
-                        refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text="";
-                    }
-                    refillDelay=1.6f;
-                }
-            }else if(energyRefillUnlocked==2){
-                if(refillDelay>0)refillDelay-=Time.deltaTime;
-                if(refillDelay<=0){refillDelay=-4;}
-                //refillUI.gameObject.SetActive(true);
-                //refilltxtE.SetActive(false);
-                //refillCostS=1;
-                //refillCostE=2;
-                if(refillRandomized==false){
-                    SetActiveAllChildren(refillUI.transform,true);
-                    //refilltxtS=GameObject.Find("RefillText1");
-                    //refilltxtE=GameObject.Find("RefillText2");
-                    if(refillCount==0){
-                        ///GameObject.Find("HUD 9:16/Game Canvas/RefillUI/RandomArrows").SetActive(false);\
-                        //GameObject.Find("RandomArrows").SetActive(false);
-                        //refilltxtE.SetActive(false);
-                        refillCostS=5;
-                        refillCostE=10;
-                    }else if(refillCount>0 && refillCount<=2){
-                        refillCostS=8;
-                        refillCostE=13;
-                    }else if(refillCount>=3 && refillCount<=5){
-                        var choose=UnityEngine.Random.Range(1,3);
-                        if(choose==1){
-                            refillCostS=8;
-                            refillCostE=15;
-                        }else if(choose==2){
-                            refillCostS=16;
-                            refillCostE=19;
-                        }if(choose==3){
-                            //GameObject.Find("RandomArrows").SetActive(false);
-                            //refilltxtE.SetActive(false);
-                            refillCostS=20;
-                            refillCostE=22;
-                        }
-                    }else if(refillCount>5){
-                        var choose=UnityEngine.Random.Range(1,3);
-                        if(choose==1){
-                            refillCostS=19;
-                            refillCostE=23;
-                        }else if(choose==2){
-                            refillCostS=24;
-                            refillCostE=26;
-                        }if(choose==3){
-                            //GameObject.Find("RandomArrows").SetActive(false);
-                            //refilltxtE.SetActive(false);
-                            refillCostS=27;
-                            refillCostE=30;
-                        }
-                    }
-                    refillRandomized=true;
-                }
-
-                refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostS.ToString();
-                refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text=refillCostE.ToString();
-                if(Input.GetButtonDown("Fire1")&&refillDelay==-4){
-                    var refillCost=UnityEngine.Random.Range(refillCostS,refillCostE);
-                    if(GameSession.instance.coins>refillCost){
-                        energy+=refillEnergyAmnt;
-                        EnergyPopUpHUD(refillEnergyAmnt);
-                        refillCount++;
-                        GameSession.instance.coins-=refillCost;
-                        refillRandomized=false;
-                        AudioManager.instance.Play("EnergyRefill");
-                        GameObject crystalVFX = Instantiate(crystalExplosionVFX, new Vector2(0, 0), Quaternion.identity);
-                        Destroy(crystalVFX,0.1f);
-                    }else{
-                        refilltxtS.GetComponent<TMPro.TextMeshProUGUI>().text=refillCost.ToString();
-                        refilltxtE.GetComponent<TMPro.TextMeshProUGUI>().text="";
-                    }
-                    refillDelay=1.6f;
-                }
-            }
-        }else{if(refillUI.gameObject.activeSelf==true)SetActiveAllChildren(refillUI.transform,false);/*refillUI.gameObject.SetActive(false);*/}
     }
 #endregion
 

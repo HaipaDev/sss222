@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class UpgradeMenu : MonoBehaviour{
     public static UpgradeMenu instance;
-    public static bool UpgradeMenuIsOpen = false;
+    public static bool UpgradeMenuIsOpen=false;
     public GameObject upgradeMenuUI;
     public GameObject upgradeMenu2UI;
     public GameObject lvltreeUI;
@@ -16,10 +16,9 @@ public class UpgradeMenu : MonoBehaviour{
     public GameObject skills1Menu;
     public GameObject skills2Menu;
     public XPBars lvlbar;
-    public float prevGameSpeed = 1f;
+    public float prevGameSpeed=1f;
     [Header("Upgrade Values")]
     public int total_UpgradesCountMax=5;
-    public int other_UpgradesCountMax=10;
     public float maxHealth_UpgradeAmnt=5f;
     public int maxHealth_UpgradeCost=1;
     public int maxHealth_UpgradesCountMax=5;
@@ -29,15 +28,10 @@ public class UpgradeMenu : MonoBehaviour{
     public float speed_UpgradeAmnt=0.1f;
     public int speed_UpgradeCost=1;
     public int speed_UpgradesCountMax=5;
-    public float hpRegen_UpgradeAmnt=0.2f;
-    public int hpRegen_UpgradeCost=1;
-    public int hpRegen_UpgradesCountMax=2;
-    public float enRegen_UpgradeAmnt=1;
-    public int enRegen_UpgradeCost=1;
-    public int enRegen_UpgradesCountMax=2;
     public float luck_UpgradeAmnt=0.05f;
     public int luck_UpgradeCost=1;
     public int luck_UpgradesCountMax=5;
+    //Modules
     public int defaultPowerup_upgradeCost1=1;
     public int defaultPowerup_upgradeCost2=1;
     public int defaultPowerup_upgradeCost3=4;
@@ -47,6 +41,8 @@ public class UpgradeMenu : MonoBehaviour{
     public int postMortem_upgradeCost=1;
     public int teleport_upgradeCost=2;
     public int overhaul_upgradeCost=3;
+    public int crystalMend_upgradeCost=5;
+    public int energyDiss_upgradeCost=4;
     [Header("Upgrade Counts")]
     public int total_UpgradesCount;
     public int total_UpgradesLvl=0;
@@ -56,18 +52,15 @@ public class UpgradeMenu : MonoBehaviour{
     public int maxEnergy_UpgradesLvl=1;
     public int speed_UpgradesCount;
     public int speed_UpgradesLvl=1;
-    public int hpRegen_UpgradesCount;
-    public int hpRegen_UpgradesLvl=0;
-    public int enRegen_UpgradesCount;
-    public int enRegen_UpgradesLvl=0;
     public int luck_UpgradesCount;
     public int luck_UpgradesLvl=1;
+    //Modules
     public int defaultPowerup_upgradeCount;
-    public int energyRefill_upgraded;
     public int magneticPulse_upgraded;
     public int teleport_upgraded;
     public int overhaul_upgraded;
-    GameSession gameSession;
+    public int crystalMend_upgraded;
+    public int energyDiss_upgraded;
     Player player;
     PlayerSkills pskills;
     IEnumerator co;
@@ -75,25 +68,25 @@ public class UpgradeMenu : MonoBehaviour{
     int lvlID;
     int lvlcr;
     float startTimer=0.5f;
-    private void Awake() {
-        StartCoroutine(SetValues());
-    }
+    private void Awake(){StartCoroutine(SetValues());}
     IEnumerator SetValues(){
     yield return new WaitForSeconds(0.07f);
     var i=GameRules.instance;
     if(i!=null){
+        total_UpgradesCountMax=i.total_UpgradesCountMax;
         maxHealth_UpgradeAmnt=i.maxHealth_UpgradeAmnt;
         maxHealth_UpgradeCost=i.maxHealth_UpgradeCost;
+        maxHealth_UpgradesCountMax=i.maxHealth_UpgradesCountMax;
         maxEnergy_UpgradeAmnt=i.maxEnergy_UpgradeAmnt;
         maxEnergy_UpgradeCost=i.maxEnergy_UpgradeCost;
+        maxEnergy_UpgradesCountMax=i.maxEnergy_UpgradesCountMax;
         speed_UpgradeAmnt=i.speed_UpgradeAmnt;
         speed_UpgradeCost=i.speed_UpgradeCost;
-        hpRegen_UpgradeAmnt=i.hpRegen_UpgradeAmnt;
-        hpRegen_UpgradeCost=i.hpRegen_UpgradeCost;
-        enRegen_UpgradeAmnt=i.enRegen_UpgradeAmnt;
-        enRegen_UpgradeCost=i.enRegen_UpgradeCost;
+        speed_UpgradesCountMax=i.speed_UpgradesCountMax;
         luck_UpgradeAmnt=i.luck_UpgradeAmnt;
         luck_UpgradeCost=i.luck_UpgradeCost;
+        luck_UpgradesCountMax=i.luck_UpgradesCountMax;
+        //Modules
         defaultPowerup_upgradeCost1=i.defaultPowerup_upgradeCost1;
         defaultPowerup_upgradeCost2=i.defaultPowerup_upgradeCost2;
         defaultPowerup_upgradeCost3=i.defaultPowerup_upgradeCost3;
@@ -103,32 +96,18 @@ public class UpgradeMenu : MonoBehaviour{
         postMortem_upgradeCost=i.postMortem_upgradeCost;
         teleport_upgradeCost=i.teleport_upgradeCost;
         overhaul_upgradeCost=i.overhaul_upgradeCost;
-        //
-        total_UpgradesCountMax=i.total_UpgradesCountMax;
-        other_UpgradesCountMax=i.other_UpgradesCountMax;
-        maxHealth_UpgradesCountMax=i.maxHealth_UpgradesCountMax;
-        maxEnergy_UpgradesCountMax=i.maxEnergy_UpgradesCountMax;
-        speed_UpgradesCountMax=i.speed_UpgradesCountMax;
-        hpRegen_UpgradesCountMax=i.hpRegen_UpgradesCountMax;
-        enRegen_UpgradesCountMax=i.enRegen_UpgradesCountMax;
-        luck_UpgradesCountMax=i.luck_UpgradesCountMax;
     }
     }
     void Start(){
         instance=this;
-        gameSession = FindObjectOfType<GameSession>();
-        player = FindObjectOfType<Player>();
-        pskills = FindObjectOfType<PlayerSkills>();
+        player=FindObjectOfType<Player>();
+        pskills=FindObjectOfType<PlayerSkills>();
         Resume();
     }
     void Update(){
-        if(gameSession==null)gameSession = FindObjectOfType<GameSession>();
         if(Input.GetKeyDown(KeyCode.F)){
-            if(UpgradeMenuIsOpen){
-                Resume();
-            }else{
-                if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && FindObjectOfType<Player>()!=null)Open();
-            }
+            if(UpgradeMenuIsOpen){Resume();
+            }else{if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && FindObjectOfType<Player>()!=null)Open();}
         }
         if (Input.GetKeyDown(KeyCode.Escape) && UpgradeMenuIsOpen)Resume();
 
@@ -140,21 +119,21 @@ public class UpgradeMenu : MonoBehaviour{
         upgradeMenu2UI.SetActive(false);
         lvltreeUI.SetActive(false);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
-        gameSession.gameSpeed = prevGameSpeed;
-        UpgradeMenuIsOpen = false;
+        GameSession.instance.gameSpeed=prevGameSpeed;
+        UpgradeMenuIsOpen=false;
     }
     public void Open(){
-        prevGameSpeed = gameSession.gameSpeed;
+        prevGameSpeed=GameSession.instance.gameSpeed;
         upgradeMenuUI.SetActive(true);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
-        gameSession.gameSpeed = 0f;
-        UpgradeMenuIsOpen = true;
+        GameSession.instance.gameSpeed=0f;
+        UpgradeMenuIsOpen=true;
         //ParticleSystem.Stop();
         //var ptSystems = FindObjectOfType<ParticleSystem>();
         //foreach(ptSystem in ptSystems){ParticleSystem.Pause();}
     }
 
-    public void PreviousGameSpeed(){gameSession.gameSpeed = prevGameSpeed;}
+    public void PreviousGameSpeed(){GameSession.instance.gameSpeed=prevGameSpeed;}
 
     public void OpenStats(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
         //skillsMenu.SetActive(false);
@@ -184,7 +163,7 @@ public class UpgradeMenu : MonoBehaviour{
     }
 
     public void UnlockSkillUni(int ID, ref int value,int number,int cost){
-        if(gameSession.cores>=cost && value==number-1){value=number;gameSession.cores-=cost;GetComponent<AudioSource>().Play();
+        if(GameSession.instance.cores>=cost && value==number-1){value=number;GameSession.instance.cores-=cost;GetComponent<AudioSource>().Play();
         var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
         for(var i=0;i<skills.Length;i++){if(i!=ID)if(skills[i]==skillKeyBind.Q && skills[i]!=skillKeyBind.E){skills[ID]=skillKeyBind.E;}}//Set to E if Q is occuppied
         for(var i=0;i<skills.Length;i++){if(i!=ID)if(skills[i]!=skillKeyBind.Q){skills[ID]=skillKeyBind.Q;}}//Set to Q by default
@@ -195,8 +174,6 @@ public class UpgradeMenu : MonoBehaviour{
         if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,1,mPulse_upgradeCost);}
         if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,1,teleport_upgradeCost);}
         if(ID==2){UnlockSkillUni(ID,ref overhaul_upgraded,1,overhaul_upgradeCost);}
-
-        
     }
     public void UpgradeSkill(int ID){
         if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,2,postMortem_upgradeCost);}
@@ -263,44 +240,44 @@ public class UpgradeMenu : MonoBehaviour{
     }
 
     public void UpgradeFloat(ref float value,float amnt,int cost,bool add,ref float value2,ref int countValue, ref int countLvl,bool bypass){
-        if(gameSession.cores>=cost&&(bypass==true||(bypass==false&&countLvl<=total_UpgradesLvl))){value+=amnt;value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;/*total_UpgradesCount++;*/
+        if(GameSession.instance.cores>=cost&&(bypass==true||(bypass==false&&countLvl<=total_UpgradesLvl))){value+=amnt;value=(float)System.Math.Round(value,2);GameSession.instance.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;/*total_UpgradesCount++;*/
         GetComponent<AudioSource>().Play();}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=new Color(79,169,107); go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=new Color(49,188,80);}
         else{AudioManager.instance.Play("Deny");}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=Color.red; go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;}
-    }public void UpgradeAfterStartingVal(ref bool valueEnable,ref float value,float startingVal,float secondVal,float amnt,int cost,bool add,ref float value2,ref int countValue,ref int countLvl, bool bypass){
-        if(gameSession.cores>=cost&&(bypass==true||(bypass==false&&countLvl<=total_UpgradesLvl&&total_UpgradesLvl>0))){if(valueEnable!=true){valueEnable=true;}if(value>=secondVal){value+=amnt;}else{if(value==startingVal&&(countLvl>1))value=secondVal;}value=(float)System.Math.Round(value,2);gameSession.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;/*total_UpgradesCount++;*/
-        GetComponent<AudioSource>().Play();}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=new Color(79,169,107); go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=new Color(49,188,80);}
-        else{AudioManager.instance.Play("Deny");}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=Color.red; go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;}
-    }
-    //public void AddFloat(ref float value,float amnt,int cost){if(gameSession.cores>=cost){value+=amnt;}}
-    //if(gameSession.cores>=maxHealth_UpgradeCost)player.maxHP+=maxHealth_UpgradeAmnt;gameSession.cores-=maxHealth_UpgradeCost;
+    }/*public void UpgradeAfterStartingVal(ref bool valueEnable,ref float value,float startingVal,float secondVal,float amnt,int cost,bool add,ref float value2,ref int countValue,ref int countLvl, bool bypass){
+        if(GameSession.instance.cores>=cost&&(bypass==true||(bypass==false&&countLvl<=total_UpgradesLvl&&total_UpgradesLvl>0))){if(valueEnable!=true){valueEnable=true;}if(value>=secondVal){value+=amnt;}else{if(value==startingVal&&(countLvl>1))value=secondVal;}value=(float)System.Math.Round(value,2);GameSession.instance.cores-=cost;if(add==true){value2+=amnt*2;}countValue++;/*total_UpgradesCount++;*/
+    //    GetComponent<AudioSource>().Play();}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=new Color(79,169,107); go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=new Color(49,188,80);}
+    //    else{AudioManager.instance.Play("Deny");}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=Color.red; go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;}
+    //}*/
+    //public void AddFloat(ref float value,float amnt,int cost){if(GameSession.instance.cores>=cost){value+=amnt;}}
+    //if(GameSession.instance.cores>=maxHealth_UpgradeCost)player.maxHP+=maxHealth_UpgradeAmnt;GameSession.instance.cores-=maxHealth_UpgradeCost;
     public void AddMaxHP(){UpgradeFloat(ref player.maxHP,maxHealth_UpgradeAmnt,maxHealth_UpgradeCost, true, ref player.health,ref maxHealth_UpgradesCount, ref maxHealth_UpgradesLvl,false);}
     public void AddMaxEnergy(){UpgradeFloat(ref player.maxEnergy,maxEnergy_UpgradeAmnt,maxEnergy_UpgradeCost, true, ref player.energy,ref maxEnergy_UpgradesCount, ref maxEnergy_UpgradesLvl,false);}
     public void AddSpeed(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt,speed_UpgradeCost, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount, ref speed_UpgradesLvl,false);}
     public void AddSpeedBypass(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt/2,0, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount, ref speed_UpgradesLvl,true);}
-    public void AddHpRegen(){UpgradeAfterStartingVal(ref player.hpRegenEnabled,ref player.hpRegenAmnt,0.1f,0.2f,hpRegen_UpgradeAmnt,hpRegen_UpgradeCost, false, ref player.hpRegenAmnt,ref hpRegen_UpgradesCount,ref hpRegen_UpgradesLvl,false);}
-    public void AddEnRegen(){UpgradeAfterStartingVal(ref player.enRegenEnabled,ref player.enRegenAmnt,0.5f,1f,enRegen_UpgradeAmnt,enRegen_UpgradeCost, false, ref player.enRegenAmnt,ref enRegen_UpgradesCount,ref enRegen_UpgradesLvl,false);}
-    public void AddLuck(){UpgradeFloat(ref gameSession.luckMulti,luck_UpgradeAmnt,luck_UpgradeCost, false, ref gameSession.luckMulti,ref luck_UpgradesCount, ref luck_UpgradesLvl,false);}
+    //public void AddHpRegen(){UpgradeAfterStartingVal(ref player.hpRegenEnabled,ref player.hpRegenAmnt,0.1f,0.2f,hpRegen_UpgradeAmnt,hpRegen_UpgradeCost, false, ref player.hpRegenAmnt,ref hpRegen_UpgradesCount,ref hpRegen_UpgradesLvl,false);}
+    //public void AddEnRegen(){UpgradeAfterStartingVal(ref player.enRegenEnabled,ref player.enRegenAmnt,0.5f,1f,enRegen_UpgradeAmnt,enRegen_UpgradeCost, false, ref player.enRegenAmnt,ref enRegen_UpgradesCount,ref enRegen_UpgradesLvl,false);}
+    public void AddLuck(){UpgradeFloat(ref GameSession.instance.luckMulti,luck_UpgradeAmnt,luck_UpgradeCost, false, ref GameSession.instance.luckMulti,ref luck_UpgradesCount, ref luck_UpgradesLvl,false);}
 
     public void DefaultPowerupChange(string prevPowerup,string powerup,int cost,bool add,ref float value,float amnt,bool permament,int upgradeXPamnt){
-        if(gameSession.cores>=cost && player.powerupDefault==prevPowerup){player.powerupDefault=powerup;if(permament!=true){player.powerup=powerup;}gameSession.cores-=cost;if(add==true){value+=amnt;}defaultPowerup_upgradeCount++;/*total_UpgradesCount+=upgradeXPamnt;*/if(permament==true){player.losePwrupOutOfEn=false;}GetComponent<AudioSource>().Play();}
+        if(GameSession.instance.cores>=cost && player.powerupDefault==prevPowerup){player.powerupDefault=powerup;if(permament!=true){player.powerup=powerup;}GameSession.instance.cores-=cost;if(add==true){value+=amnt;}defaultPowerup_upgradeCount++;/*total_UpgradesCount+=upgradeXPamnt;*/if(permament==true){player.losePwrupOutOfEn=false;}GetComponent<AudioSource>().Play();}
         else{AudioManager.instance.Play("Deny");}
     }
-    //public void DefaultPowerupL2(){if(gameSession.cores>powerupDefaultL2_UpgradeCost){player.powerupDefault="laser2";gameSession.cores-=powerupDefaultL2_UpgradeCost;total_UpgradesCount++;}else{GetComponent<AudioSource>().Play();}}
+    //public void DefaultPowerupL2(){if(GameSession.instance.cores>powerupDefaultL2_UpgradeCost){player.powerupDefault="laser2";GameSession.instance.cores-=powerupDefaultL2_UpgradeCost;total_UpgradesCount++;}else{GetComponent<AudioSource>().Play();}}
     public void DefaultPowerupL2(){DefaultPowerupChange("laser","laser2",defaultPowerup_upgradeCost1,true,ref player.energy,100,false,0);}//defaultPowerup_upgradeCost1+1);}
     public void DefaultPowerupL3(){DefaultPowerupChange("laser2","laser3",defaultPowerup_upgradeCost2,true,ref player.energy,115,false,0);}//defaultPowerup_upgradeCost2);}
     public void DefaultPowerupPerma(){DefaultPowerupChange("laser3","perma",defaultPowerup_upgradeCost3,true,ref player.energy,130,true,0);}//defaultPowerup_upgradeCost3);}
+    public void UnlockCrystalMend(){crystalMend_upgraded=1;GameSession.instance.cores-=crystalMend_upgradeCost;}
+    public void UnlockEnergyDiss(){energyDiss_upgraded=1;GameSession.instance.cores-=energyDiss_upgradeCost;}
 
-    public void UnlockEnergyRefill(){
-        if(gameSession.cores>=energyRefill_upgradeCost && energyRefill_upgraded!=1){player.energyRefillUnlocked=1;gameSession.cores-=energyRefill_upgradeCost;energyRefill_upgraded=1;/*total_UpgradesCount+=energyRefill_upgradeCost;*/GetComponent<AudioSource>().Play();}
+    /*public void UnlockEnergyRefill(){
+        if(GameSession.instance.cores>=energyRefill_upgradeCost && energyRefill_upgraded!=1){player.energyRefillUnlocked=1;GameSession.instance.cores-=energyRefill_upgradeCost;energyRefill_upgraded=1;GetComponent<AudioSource>().Play();}
         else{AudioManager.instance.Play("Deny");}
     }public void UnlockEnergyRefill2(){
-        if(gameSession.cores>=energyRefill_upgradeCost2 && energyRefill_upgraded==1){player.energyRefillUnlocked=2;gameSession.cores-=energyRefill_upgradeCost;energyRefill_upgraded=2;/*total_UpgradesCount+=energyRefill_upgradeCost;*/GetComponent<AudioSource>().Play();}
+        if(GameSession.instance.cores>=energyRefill_upgradeCost2 && energyRefill_upgraded==1){player.energyRefillUnlocked=2;GameSession.instance.cores-=energyRefill_upgradeCost;energyRefill_upgraded=2;GetComponent<AudioSource>().Play();}
         else{AudioManager.instance.Play("Deny");}
-    }
+    }*/
 
     [SerializeField]XPBars barr;
-    [SerializeField]XPBars hpreg;
-    [SerializeField]XPBars enreg;
     void LevelEverything(){
     if(startTimer>0){startTimer-=Time.unscaledDeltaTime;}
     if(startTimer<=0){
@@ -340,61 +317,25 @@ public class UpgradeMenu : MonoBehaviour{
             if(g!=null&&player!=null){
                 if(g.lvlEvents.Length>0){g.lvlEvents[0].Invoke();}
                 var i=0;foreach(int id in g.lvlEventsIDs){if(i<g.lvlEventsIDs.Length-1){i++;}if(total_UpgradesLvl==g.lvlEventsIDs[i])g.lvlEvents[i].Invoke();}
-                //if(total_UpgradesLvl>0){if(g.lvlEvents.Length<total_UpgradesLvl){return;}else{g.lvlEvents[total_UpgradesLvl].Invoke();}}
-                /*if(g.laserSpeedChangePerLv==true){
-                    if(total_UpgradesLvl==g.laserSpeed_stage1&&player.laserShootPeriod!=g.laserSpeed_st1){player.laserShootPeriod=g.laserSpeed_st1;}
-                    if(total_UpgradesLvl==g.laserSpeed_stage2&&player.laserShootPeriod!=g.laserSpeed_st2){player.laserShootPeriod=g.laserSpeed_st2;}
-                    if(total_UpgradesLvl==g.laserSpeed_stage3&&player.laserShootPeriod!=g.laserSpeed_st3){player.laserShootPeriod=g.laserSpeed_st3;}
-                }
-                if(g.shootSpeedChangePerLv==true){player.shootMulti+=g.shootSpeedAmntPerLv;}
-                if(g.armorChangePerLv==true){player.armorMultiInit+=g.armorAmntPerLv;}*/
             }
-            }//AudioManager.instance.Play("LvlUp2");}
+            }
         if(lvlbar.current==null)lvlbar.created=2;
         if(barr==lvlbar){lvlbar.ID=lvlID;lvlbar.created=lvlcr;}
-        /*if(statsMenu.activeSelf==true){
-            if(hpreg==null)hpreg=GameObject.Find("LvlBarHPReg").GetComponent<XPBars>();
-            if(enreg==null)enreg=GameObject.Find("LvlBarEnReg").GetComponent<XPBars>();
-            if(barr==hpreg){hpreg.ID=lvlID;hpreg.created=lvlcr;}
-            else if(barr==enreg){enreg.ID=lvlID;enreg.created=lvlcr;}
-            if(hpreg!=null){
-                if(hpRegen_UpgradesLvl>=1&&hpreg.ID!=2){
-                    hpRegen_UpgradesCountMax=2;
-                    if(co==null){ChangeLvlBar(2,hpreg);}
-                }
-            }else{Debug.LogError("HPReg Lvl Bar Not Found");}
-            if(enreg!=null){
-                if(enRegen_UpgradesLvl>=1&&enreg.ID!=2){
-                    enRegen_UpgradesCountMax=2;
-                    if(co==null){ChangeLvlBar(2,enreg);}
-                }
-            }else{Debug.LogError("EnReg Lvl Bar Not Found");}
-        }*/
+        
 
-        /*maxHealth_UpgradeCost=Mathf.Clamp(maxHealth_UpgradeCost,1,999);
-        maxEnergy_UpgradeCost=Mathf.Clamp(maxEnergy_UpgradeCost,1,999);
-        speed_UpgradeCost=Mathf.Clamp(speed_UpgradeCost,1,999);
-        luck_UpgradeCost=Mathf.Clamp(luck_UpgradeCost,1,999);*/
-
-        if(maxHealth_UpgradesCount==1 && maxHealth_UpgradesLvl==0){maxHealth_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
-        if(maxHealth_UpgradesCount>=maxHealth_UpgradesCountMax){LastBar(maxHealth_UpgradesCountMax,"maxHealth_UpgradesCount");maxHealth_UpgradesCount=0;maxHealth_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        if(maxEnergy_UpgradesCount==1 && maxEnergy_UpgradesLvl==0){maxEnergy_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
-        if(maxEnergy_UpgradesCount>=maxEnergy_UpgradesCountMax){LastBar(maxEnergy_UpgradesCountMax,"maxEnergy_UpgradesCount");maxEnergy_UpgradesCount=0;maxEnergy_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        if(speed_UpgradesCount==1 && speed_UpgradesLvl==0){speed_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
-        if(speed_UpgradesCount>=speed_UpgradesCountMax){LastBar(speed_UpgradesCountMax,"speed_UpgradesCount");speed_UpgradesCount=0;speed_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        /**/if(hpRegen_UpgradesCount==1 && hpRegen_UpgradesLvl==0){hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
-        if(hpRegen_UpgradesCount>=hpRegen_UpgradesCountMax){LastBar(hpRegen_UpgradesCountMax,"hpRegen_UpgradesCount");hpRegen_UpgradesCount=0;hpRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        /**/if(enRegen_UpgradesCount==1 && enRegen_UpgradesLvl==0){enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
-        if(enRegen_UpgradesCount>=enRegen_UpgradesCountMax){LastBar(enRegen_UpgradesCountMax,"enRegen_UpgradesCount");enRegen_UpgradesCount=0;enRegen_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
-        if(luck_UpgradesCount==1 && luck_UpgradesLvl==0){luck_UpgradesLvl++;gameSession.AddToScoreNoEV(15);}
-        if(luck_UpgradesCount>=luck_UpgradesCountMax){LastBar(luck_UpgradesCountMax,"luck_UpgradesCount");luck_UpgradesCount=0;luck_UpgradesLvl++;gameSession.AddToScoreNoEV(75);}
+        if(maxHealth_UpgradesCount==1 && maxHealth_UpgradesLvl==0){maxHealth_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}
+        if(maxHealth_UpgradesCount>=maxHealth_UpgradesCountMax){LastBar(maxHealth_UpgradesCountMax,"maxHealth_UpgradesCount");maxHealth_UpgradesCount=0;maxHealth_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(75);}
+        if(maxEnergy_UpgradesCount==1 && maxEnergy_UpgradesLvl==0){maxEnergy_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}
+        if(maxEnergy_UpgradesCount>=maxEnergy_UpgradesCountMax){LastBar(maxEnergy_UpgradesCountMax,"maxEnergy_UpgradesCount");maxEnergy_UpgradesCount=0;maxEnergy_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(75);}
+        if(speed_UpgradesCount==1 && speed_UpgradesLvl==0){speed_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}
+        if(speed_UpgradesCount>=speed_UpgradesCountMax){LastBar(speed_UpgradesCountMax,"speed_UpgradesCount");speed_UpgradesCount=0;speed_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(75);}
+        if(luck_UpgradesCount==1 && luck_UpgradesLvl==0){luck_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}
+        if(luck_UpgradesCount>=luck_UpgradesCountMax){LastBar(luck_UpgradesCountMax,"luck_UpgradesCount");luck_UpgradesCount=0;luck_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(75);}
 
 
         if(maxHealth_UpgradesLvl>0)maxHealth_UpgradeCost=maxHealth_UpgradesLvl;
         if(maxEnergy_UpgradesLvl>0)maxEnergy_UpgradeCost=maxEnergy_UpgradesLvl;
         if(speed_UpgradesLvl>0)speed_UpgradeCost=speed_UpgradesLvl;
-        if(hpRegen_UpgradesLvl>0)hpRegen_UpgradeCost=hpRegen_UpgradesLvl;
-        if(enRegen_UpgradesLvl>0)enRegen_UpgradeCost=enRegen_UpgradesLvl;
         if(luck_UpgradesLvl>0)luck_UpgradeCost=luck_UpgradesLvl;
     }
     }
@@ -408,15 +349,14 @@ public class UpgradeMenu : MonoBehaviour{
         bar.Recreate();
     }
 
+
     public void CheatCores(){
-        gameSession.CheckCodes(-1,0);
-        gameSession.CheckCodes(2,6);
-        //gameSession.CheckCodes(-1,9);
+        GameSession.instance.CheckCodes(-1,0);
+        GameSession.instance.CheckCodes(2,6);
+        //GameSession.instance.CheckCodes(-1,9);
     }public void CheatLevels(){
-        gameSession.CheckCodes(-1,0);
-        gameSession.CheckCodes(2,7);
-        //gameSession.CheckCodes(-1,9);
-    }public void CheatXP(){
-        gameSession.coresXp=gameSession.xp_forCore;
-    }
+        GameSession.instance.CheckCodes(-1,0);
+        GameSession.instance.CheckCodes(2,7);
+        //GameSession.instance.CheckCodes(-1,9);
+    }public void CheatXP(){GameSession.instance.coresXp=GameSession.instance.xp_forCore;}
 }

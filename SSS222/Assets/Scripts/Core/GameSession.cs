@@ -279,12 +279,11 @@ public class GameSession : MonoBehaviour{
         s.advD.maxEnergy_UpgradesLvl=u.maxEnergy_UpgradesLvl;
         s.advD.speed_UpgradesCount=u.speed_UpgradesCount;
         s.advD.speed_UpgradesLvl=u.speed_UpgradesLvl;
-        s.advD.hpRegen_UpgradesCount=u.hpRegen_UpgradesCount;
-        s.advD.hpRegen_UpgradesLvl=u.hpRegen_UpgradesLvl;
-        s.advD.enRegen_UpgradesCount=u.enRegen_UpgradesCount;
-        s.advD.enRegen_UpgradesLvl=u.enRegen_UpgradesLvl;
         s.advD.luck_UpgradesCount=u.luck_UpgradesCount;
         s.advD.luck_UpgradesLvl=u.luck_UpgradesLvl;
+        //
+        s.advD.crystalMend_upgraded=u.crystalMend_upgraded;
+        s.advD.energyDiss_upgraded=u.energyDiss_upgraded;
         yield return new WaitForSecondsRealtime(0.02f);
         s.SaveAdventure();
         Debug.Log("Adventure data saved in GameSession");
@@ -304,12 +303,11 @@ public class GameSession : MonoBehaviour{
         u.maxEnergy_UpgradesLvl=s.advD.maxEnergy_UpgradesLvl;
         u.speed_UpgradesCount=s.advD.speed_UpgradesCount;
         u.speed_UpgradesLvl=s.advD.speed_UpgradesLvl;
-        u.hpRegen_UpgradesCount=s.advD.hpRegen_UpgradesCount;
-        u.hpRegen_UpgradesLvl=s.advD.hpRegen_UpgradesLvl;
-        u.enRegen_UpgradesCount=s.advD.enRegen_UpgradesCount;
-        u.enRegen_UpgradesLvl=s.advD.enRegen_UpgradesLvl;
         u.luck_UpgradesCount=s.advD.luck_UpgradesCount;
         u.luck_UpgradesLvl=s.advD.luck_UpgradesLvl;
+        //
+        u.crystalMend_upgraded=s.advD.crystalMend_upgraded;
+        u.energyDiss_upgraded=s.advD.energyDiss_upgraded;
 
         yield return new WaitForSeconds(0.1f);
         if(UpgradeMenu.instance!=null){
