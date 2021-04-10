@@ -4,6 +4,7 @@ body{
 	background-size:100% 100%;
 	cursor: url("img/cursor.png"), auto;	
 	font-family: "moonhouseregular";
+	color: white;
 }
 @font-face {
     font-family: "moonhouseregular";
@@ -23,12 +24,14 @@ div.latestRelease{
 	height:30%;
 }
 button.latestRelease{
-	//background-color: rgba(0,0,0,0.05);
+	width:450px;
+	background-color: rgba(0,0,0,0);
 	background:url("img/button.png") no-repeat;
 	background-position:-24px -12px;
 	background-size:112% 130%;
 	border:none;
 	font-family: "moonhouseregular";
+	color: white;
 	letter-spacing:3px;
 	line-height:24px;
 }
