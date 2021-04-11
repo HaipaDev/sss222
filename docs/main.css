@@ -20,11 +20,12 @@ div.logo{
 img.logo{
 	width:calc(348px*1.25);height:calc(234px*1.25);
 }
-div.latestRelease{
-	height:30%;
+div.release{
+	margin-top:2%;
+	height:10%;
 }
-button.latestRelease{
-	width:450px;
+button.release{
+	width:500px;
 	background-color: rgba(0,0,0,0);
 	background:url("img/button.png") no-repeat;
 	background-position:-24px -12px;

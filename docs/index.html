@@ -9,8 +9,14 @@
 <body>
 <center>
 <div class="logo"><img class="logo" src="img/sss222Logo.png"></div>
-<div class="latestRelease"><button class="latestRelease" onclick="location.href='https://github.com/HyperGamesDev/sss222/releases/latest';">
-<h1>Latest Stable Release <br><script>document.write(getLatestReleaseName());</script></h1>
+<div class="release"><button class="release" onclick="downloadLauncher();">
+<h1>Autoupdate Launcher<br>for PC</h1>
+</button></div>
+<div class="release"><button class="release" onclick="goToStableRelease();">
+<h1>Latest Stable Release <br><br><span id="stableText"></span></h1>
+</button></div>
+<div class="release"><button class="release" onclick="goToLatestRelease();">
+<h1>Latest PreRelease <br><br><span id="latestText"></span></h1>
 </button></div>
 </center>
 </body>
