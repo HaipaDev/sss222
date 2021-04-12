@@ -16,11 +16,14 @@ body{
     font-style: normal;
 
 }
+button{cursor:pointer;}
+
 div.logo{
 	width:100%;height:25%;
+	margin-top:-50px;
 }
 img.logo{
-	width:calc(348px*1.25);height:calc(234px*1.25);
+	width:calc(348px*1.55);height:calc(234px*1.55);
 }
 div.release{
 	margin-top:20px;
