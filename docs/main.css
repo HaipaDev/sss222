@@ -1,7 +1,9 @@
 body{
 	background-image:url("img/sss222bg.png");
-	background-repeat:no-repeat;
-	background-size:100% 100%;
+	//background-repeat:repeat;
+	background-color: rgb(49,9,49);
+	//background-blend-mode: screen;
+	background-size:160% 120%;
 	cursor: url("img/cursor.png"), auto;	
 	font-family: "moonhouseregular";
 	color: white;
@@ -21,7 +23,7 @@ img.logo{
 	width:calc(348px*1.25);height:calc(234px*1.25);
 }
 div.release{
-	margin-top:2%;
+	margin-top:20px;
 	height:10%;
 }
 button.release{
@@ -35,4 +37,8 @@ button.release{
 	color: white;
 	letter-spacing:3px;
 	line-height:24px;
+}
+div.footer{
+	//background-color: rgb(49,9,49);
+	//background-size:100% 100%;
 }
