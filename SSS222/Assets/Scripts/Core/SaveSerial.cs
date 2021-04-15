@@ -65,11 +65,11 @@ public class SaveSerial : MonoBehaviour{
 		//
 		public int defaultPowerup_upgradeCount=0;
 		public int energyRefill_upgraded=0;
-		public int magneticPulse_upgraded=0;
+		public int mPulse_upgraded=0;
 		public int teleport_upgraded=0;
 		public int overhaul_upgraded=0;
-		public int crystalMend_upgraded;
-		public int energyDiss_upgraded;
+		public int crMend_upgraded;
+		public int enDiss_upgraded;
 	}
 	public void SaveAdventure(){
 		SaveGame.Encode = adventureEncode;

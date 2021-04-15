@@ -282,8 +282,8 @@ public class GameSession : MonoBehaviour{
         s.advD.luck_UpgradesCount=u.luck_UpgradesCount;
         s.advD.luck_UpgradesLvl=u.luck_UpgradesLvl;
         //
-        s.advD.crystalMend_upgraded=u.crystalMend_upgraded;
-        s.advD.energyDiss_upgraded=u.energyDiss_upgraded;
+        s.advD.crMend_upgraded=u.crMend_upgraded;
+        s.advD.enDiss_upgraded=u.enDiss_upgraded;
         yield return new WaitForSecondsRealtime(0.02f);
         s.SaveAdventure();
         Debug.Log("Adventure data saved in GameSession");
@@ -306,8 +306,8 @@ public class GameSession : MonoBehaviour{
         u.luck_UpgradesCount=s.advD.luck_UpgradesCount;
         u.luck_UpgradesLvl=s.advD.luck_UpgradesLvl;
         //
-        u.crystalMend_upgraded=s.advD.crystalMend_upgraded;
-        u.energyDiss_upgraded=s.advD.energyDiss_upgraded;
+        u.crMend_upgraded=s.advD.crMend_upgraded;
+        u.enDiss_upgraded=s.advD.enDiss_upgraded;
 
         yield return new WaitForSeconds(0.1f);
         if(UpgradeMenu.instance!=null){

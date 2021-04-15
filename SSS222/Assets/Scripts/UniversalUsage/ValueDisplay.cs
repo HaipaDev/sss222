@@ -75,13 +75,13 @@ public class ValueDisplay : MonoBehaviour{
         else if (value == "defaultPowerup_upgradeCost1") txt.text = UpgradeMenu.instance.defaultPowerup_upgradeCost1.ToString();
         else if (value == "defaultPowerup_upgradeCost2") txt.text = UpgradeMenu.instance.defaultPowerup_upgradeCost2.ToString();
         else if (value == "defaultPowerup_upgradeCost3") txt.text = UpgradeMenu.instance.defaultPowerup_upgradeCost3.ToString();
-        else if (value == "energyRefill_upgradeCost") txt.text = UpgradeMenu.instance.energyRefill_upgradeCost.ToString();
+        //else if (value == "energyRefill_upgradeCost") txt.text = UpgradeMenu.instance.energyRefill_upgradeCost.ToString();
         else if (value == "mPulse_upgradeCost") txt.text = UpgradeMenu.instance.mPulse_upgradeCost.ToString();
         else if (value == "postMortem_upgradeCost") txt.text = UpgradeMenu.instance.postMortem_upgradeCost.ToString();
         else if (value == "teleport_upgradeCost") txt.text = UpgradeMenu.instance.teleport_upgradeCost.ToString();
         else if (value == "overhaul_upgradeCost") txt.text = UpgradeMenu.instance.overhaul_upgradeCost.ToString();
-        else if (value == "crystalMend_upgradeCost") txt.text = UpgradeMenu.instance.crystalMend_upgradeCost.ToString();
-        else if (value == "energyDiss_upgradeCost") txt.text = UpgradeMenu.instance.energyDiss_upgradeCost.ToString();
+        else if (value == "crMend_upgradeCost") txt.text = UpgradeMenu.instance.crMend_upgradeCost.ToString();
+        else if (value == "enDiss_upgradeCost") txt.text = UpgradeMenu.instance.enDiss_upgradeCost.ToString();
         }
         if(GameRules.instance!=null){
         if (value == "cfgName")if(GameRules.instance!=null){txt.text = GameRules.instance.cfgName;}else{Debug.LogError("GameRules Not Present");}

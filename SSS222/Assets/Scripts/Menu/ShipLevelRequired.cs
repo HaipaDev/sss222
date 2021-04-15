@@ -6,22 +6,20 @@ using UnityEngine.UI;
 public class ShipLevelRequired : MonoBehaviour{
     //[SerializeField] 
     TMPro.TextMeshProUGUI textObj;
-    [SerializeField] int unlockableID;
-    [SerializeField] int level;
-    [SerializeField] string txt="LEVEL REQUIRED: ";
-    UpgradeMenu upgradeMenu;
+    [SerializeField] string valueName;
+    [SerializeField] int value;
+    [SerializeField] string txt="LVL ";
     void Start(){
         var i=GameRules.instance;
         if(i!=null){
-            level=i.unlockableSkills[unlockableID];
+            value=(int)UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance);
         }
 
-        upgradeMenu=FindObjectOfType<UpgradeMenu>();
         textObj=this.gameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
-        textObj.text=txt+level;
-        if(upgradeMenu.total_UpgradesLvl>=level){this.gameObject.SetActive(false);}
+        textObj.text=txt+value;
+        if(UpgradeMenu.instance.total_UpgradesLvl>=value){this.gameObject.SetActive(false);}
     }
     void Update(){
-        if(upgradeMenu.total_UpgradesLvl>=level){this.gameObject.SetActive(false);}
+        if(UpgradeMenu.instance.total_UpgradesLvl>=value){this.gameObject.SetActive(false);}
     }
 }

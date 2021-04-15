@@ -35,14 +35,20 @@ public class UpgradeMenu : MonoBehaviour{
     public int defaultPowerup_upgradeCost1=1;
     public int defaultPowerup_upgradeCost2=1;
     public int defaultPowerup_upgradeCost3=4;
-    public int energyRefill_upgradeCost=2;
-    public int energyRefill_upgradeCost2=3;
+    //public int energyRefill_upgradeCost=2;
+    //public int energyRefill_upgradeCost2=3;
     public int mPulse_upgradeCost=3;
-    public int postMortem_upgradeCost=1;
+    public int mPulse_lvlReq=2;
+    public int postMortem_upgradeCost=0;
+    public int postMortem_lvlReq=5;
     public int teleport_upgradeCost=2;
+    public int teleport_lvlReq=3;
     public int overhaul_upgradeCost=3;
-    public int crystalMend_upgradeCost=5;
-    public int energyDiss_upgradeCost=4;
+    public int overhaul_lvlReq=4;
+    public int crMend_upgradeCost=5;
+    public int crMend_lvlReq=5;
+    public int enDiss_upgradeCost=4;
+    public int enDiss_lvlReq=5;
     [Header("Upgrade Counts")]
     public int total_UpgradesCount;
     public int total_UpgradesLvl=0;
@@ -56,11 +62,11 @@ public class UpgradeMenu : MonoBehaviour{
     public int luck_UpgradesLvl=1;
     //Modules
     public int defaultPowerup_upgradeCount;
-    public int magneticPulse_upgraded;
+    public int mPulse_upgraded;
     public int teleport_upgraded;
     public int overhaul_upgraded;
-    public int crystalMend_upgraded;
-    public int energyDiss_upgraded;
+    public int crMend_upgraded;
+    public int enDiss_upgraded;
     Player player;
     PlayerSkills pskills;
     IEnumerator co;
@@ -90,12 +96,20 @@ public class UpgradeMenu : MonoBehaviour{
         defaultPowerup_upgradeCost1=i.defaultPowerup_upgradeCost1;
         defaultPowerup_upgradeCost2=i.defaultPowerup_upgradeCost2;
         defaultPowerup_upgradeCost3=i.defaultPowerup_upgradeCost3;
-        energyRefill_upgradeCost=i.energyRefill_upgradeCost;
-        energyRefill_upgradeCost2=i.energyRefill_upgradeCost2;
+        //energyRefill_upgradeCost=i.energyRefill_upgradeCost;
+        //energyRefill_upgradeCost2=i.energyRefill_upgradeCost2;
         mPulse_upgradeCost=i.mPulse_upgradeCost;
+        mPulse_lvlReq=i.mPulse_lvlReq;
         postMortem_upgradeCost=i.postMortem_upgradeCost;
+        postMortem_lvlReq=i.postMortem_lvlReq;
         teleport_upgradeCost=i.teleport_upgradeCost;
+        teleport_lvlReq=i.teleport_lvlReq;
         overhaul_upgradeCost=i.overhaul_upgradeCost;
+        overhaul_lvlReq=i.overhaul_lvlReq;
+        crMend_upgradeCost=i.crMend_upgradeCost;
+        crMend_lvlReq=i.crMend_lvlReq;
+        enDiss_upgradeCost=i.enDiss_upgradeCost;
+        enDiss_lvlReq=i.enDiss_lvlReq;
     }
     }
     void Start(){
@@ -171,13 +185,13 @@ public class UpgradeMenu : MonoBehaviour{
         else{AudioManager.instance.Play("Deny");}
     }
     public void UnlockSkill(int ID){
-        if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,1,mPulse_upgradeCost);}
+        if(ID==0){UnlockSkillUni(ID,ref mPulse_upgraded,1,mPulse_upgradeCost);}
         if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,1,teleport_upgradeCost);}
         if(ID==2){UnlockSkillUni(ID,ref overhaul_upgraded,1,overhaul_upgradeCost);}
     }
     public void UpgradeSkill(int ID){
-        if(ID==0){UnlockSkillUni(ID,ref magneticPulse_upgraded,2,postMortem_upgradeCost);}
-        if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,2,1);}
+        if(ID==0){UnlockSkillUni(ID,ref mPulse_upgraded,2,postMortem_upgradeCost);}
+        //if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,2,1);}
     }
     public void SetSkillQ(int ID){
         var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
@@ -266,8 +280,8 @@ public class UpgradeMenu : MonoBehaviour{
     public void DefaultPowerupL2(){DefaultPowerupChange("laser","laser2",defaultPowerup_upgradeCost1,true,ref player.energy,100,false,0);}//defaultPowerup_upgradeCost1+1);}
     public void DefaultPowerupL3(){DefaultPowerupChange("laser2","laser3",defaultPowerup_upgradeCost2,true,ref player.energy,115,false,0);}//defaultPowerup_upgradeCost2);}
     public void DefaultPowerupPerma(){DefaultPowerupChange("laser3","perma",defaultPowerup_upgradeCost3,true,ref player.energy,130,true,0);}//defaultPowerup_upgradeCost3);}
-    public void UnlockCrystalMend(){crystalMend_upgraded=1;GameSession.instance.cores-=crystalMend_upgradeCost;}
-    public void UnlockEnergyDiss(){energyDiss_upgraded=1;GameSession.instance.cores-=energyDiss_upgradeCost;}
+    public void UnlockCrystalMend(){crMend_upgraded=1;GameSession.instance.cores-=crMend_upgradeCost;}
+    public void UnlockEnergyDiss(){enDiss_upgraded=1;GameSession.instance.cores-=enDiss_upgradeCost;}
 
     /*public void UnlockEnergyRefill(){
         if(GameSession.instance.cores>=energyRefill_upgradeCost && energyRefill_upgraded!=1){player.energyRefillUnlocked=1;GameSession.instance.cores-=energyRefill_upgradeCost;energyRefill_upgraded=1;GetComponent<AudioSource>().Play();}
@@ -337,6 +351,8 @@ public class UpgradeMenu : MonoBehaviour{
         if(maxEnergy_UpgradesLvl>0)maxEnergy_UpgradeCost=maxEnergy_UpgradesLvl;
         if(speed_UpgradesLvl>0)speed_UpgradeCost=speed_UpgradesLvl;
         if(luck_UpgradesLvl>0)luck_UpgradeCost=luck_UpgradesLvl;
+
+        if(total_UpgradesLvl>=postMortem_lvlReq&&mPulse_upgraded==1){mPulse_upgraded=2;}
     }
     }
     void LastBar(int max,string name){

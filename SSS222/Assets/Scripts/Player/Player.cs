@@ -1073,8 +1073,8 @@ public class Player : MonoBehaviour{
         }
     }
     void Regen(){
-        if(UpgradeMenu.instance.crystalMend_upgraded>0){hpRegenEnabled=true;}
-        if(UpgradeMenu.instance.energyDiss_upgraded>0){enRegenEnabled=true;}
+        if(UpgradeMenu.instance.crMend_upgraded>0){hpRegenEnabled=true;}
+        if(UpgradeMenu.instance.enDiss_upgraded>0){enRegenEnabled=true;}
         if(Time.timeScale>0.0001f){
             if(hpAbsorpAmnt<0){hpAbsorpAmnt=0;}
             if(enAbsorpAmnt<0){enAbsorpAmnt=0;}

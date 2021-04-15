@@ -213,13 +213,21 @@ public static GameRules instance;
     public int defaultPowerup_upgradeCost1=1;
     public int defaultPowerup_upgradeCost2=1;
     public int defaultPowerup_upgradeCost3=4;
-    public int energyRefill_upgradeCost=2;
-    public int energyRefill_upgradeCost2=3;
+    //public int energyRefill_upgradeCost=2;
+    //public int energyRefill_upgradeCost2=3;
     public int mPulse_upgradeCost=3;
-    public int postMortem_upgradeCost=1;
+    public int mPulse_lvlReq=2;
+    public int postMortem_upgradeCost=0;
+    public int postMortem_lvlReq=5;
     public int teleport_upgradeCost=2;
+    public int teleport_lvlReq=3;
     public int overhaul_upgradeCost=3;
-    public int[] unlockableSkills;
+    public int overhaul_lvlReq=3;
+    public int crMend_upgradeCost=5;
+    public int crMend_lvlReq=5;
+    public int enDiss_upgradeCost=4;
+    public int enDiss_lvlReq=4;
+    //public int[] unlockableSkills;
 #endregion
 #endregion
 #region//Voids

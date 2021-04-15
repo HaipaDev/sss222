@@ -96,7 +96,7 @@ public class PlayerSkills : MonoBehaviour{
     }
     }
     public void DeathSkills(){
-        if(umenu.magneticPulse_upgraded==2)Skills(skillKeyBind.Disabled,0,0,0);//PostMortem MagneticPulse
+        if(umenu.mPulse_upgraded==2)Skills(skillKeyBind.Disabled,0,0,0);//PostMortem MagneticPulse
     }
     
     #region//Skills

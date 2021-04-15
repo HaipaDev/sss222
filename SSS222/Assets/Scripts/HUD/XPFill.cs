@@ -13,13 +13,9 @@ public class XPFill : MonoBehaviour{
     [SerializeField] public int valueReq;
     public int value;
     Image img;
-    UpgradeMenu upgradeMenu;
-    Shop shopMenu;
     //Shake shake;
     void Start(){
         img=GetComponent<Image>();
-        upgradeMenu=FindObjectOfType<UpgradeMenu>();
-        if(shop==true)shopMenu=FindObjectOfType<Shop>();
         if(transform.root.gameObject.name.Contains("UpgradeCanvas")){
             emptySprite=GameAssets.instance.Spr("upgradeEmpty");
             fillSprite=GameAssets.instance.Spr("upgradeFill");
@@ -29,8 +25,8 @@ public class XPFill : MonoBehaviour{
     }
 
     void Update(){
-        if(shop!=true)value=(int)upgradeMenu.GetType().GetField(valueName).GetValue(upgradeMenu);
-        else value=(int)shopMenu.GetType().GetField(valueName).GetValue(shopMenu);
+        if(shop!=true)value=(int)UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance);
+        else value=(int)Shop.instance.GetType().GetField(valueName).GetValue(Shop.instance);
         if(value>=valueReq){
             if(changed==false){
                 img.sprite=fillSprite;
