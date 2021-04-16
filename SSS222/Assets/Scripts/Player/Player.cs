@@ -194,7 +194,7 @@ public class Player : MonoBehaviour{
     GameObject shadowShootVFX;
     GameObject gcloverVFX;
     [HideInInspector]public GameObject gcloverOVFX;
-    GameObject crystalExplosionVFX;
+    //GameObject crystalExplosionVFX;
     #endregion
     [Header("Others")]
     [SerializeField] GameObject shadowPrefab;
@@ -289,10 +289,10 @@ public class Player : MonoBehaviour{
         explosionVFX=GameAssets.instance.GetVFX("Explosion");
         flareHitVFX=GameAssets.instance.GetVFX("FlareHit");
         flareShootVFX=GameAssets.instance.GetVFX("FlareShoot");
-        shadowShootVFX=GameAssets.instance.GetVFX("ShadowTrail");
-        gcloverVFX=GameAssets.instance.GetVFX("GCloverVFX");
-        gcloverOVFX=GameAssets.instance.GetVFX("GCloverOutVFX");
-        crystalExplosionVFX=GameAssets.instance.GetVFX("CExplVFX");
+        //shadowShootVFX=GameAssets.instance.GetVFX("ShadowTrail");
+        //gcloverVFX=GameAssets.instance.GetVFX("GCloverVFX");
+        //gcloverOVFX=GameAssets.instance.GetVFX("GCloverOutVFX");
+        //crystalExplosionVFX=GameAssets.instance.GetVFX("CExplVFX");
     }
     IEnumerator SetGameRuleValues(){
     yield return new WaitForSecondsRealtime(0.07f);
@@ -415,9 +415,9 @@ public class Player : MonoBehaviour{
         if(shootTimer>0)shootTimer -= Time.deltaTime;
         if(instantiateTimer>0)instantiateTimer-=Time.deltaTime;
         velocity=rb.velocity;
-        if(moving==false){stayingTimer+=Time.deltaTime;stayingTimerCore+=Time.deltaTime;stayingTimerTotal+=Time.deltaTime;if(hpRegenEnabled)timerHpRegen+=Time.deltaTime;}
+        if(moving==false){stayingTimer+=Time.deltaTime;stayingTimerCore+=Time.deltaTime;stayingTimerTotal+=Time.deltaTime;/*if(hpRegenEnabled)*/timerHpRegen+=Time.deltaTime;}
         if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;stayingTimerCore=0;
-        if(fuelOn){if(fuelDrainTimer<=0){if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt);}fuelDrainTimer=fuelDrainFreq;}else{fuelDrainTimer-=Time.deltaTime;}}
+        if(fuelOn){if(fuelDrainTimer<=0){if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt,false);}fuelDrainTimer=fuelDrainFreq;}else{fuelDrainTimer-=Time.deltaTime;}}
         }
 
         
@@ -427,10 +427,10 @@ public class Player : MonoBehaviour{
             if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);
             overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
             if(overheated==true&&overheatedTimer>0&&Time.timeScale>0.0001f){overheatedTimer-=Time.deltaTime;
-                GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                GameObject flareR = Instantiate(flareShootVFX, new Vector2(transform.position.x + 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                Destroy(flareL.gameObject, 0.04f);
-                Destroy(flareR.gameObject, 0.04f);
+                //GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
+                //Destroy(flareL.gameObject, 0.04f);
+                GameAssets.instance.VFX("Flare",new Vector2((transform.position.x+0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
+                GameAssets.instance.VFX("Flare",new Vector2((transform.position.x-0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
                 }
             if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
         }//else{}
@@ -592,21 +592,21 @@ public class Player : MonoBehaviour{
                         shootCoroutine=null;
                         //if(shootCoroutine!=null){
                             //StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());StopCoroutine("ShootContinuously");//}
-                        if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
+                        if(moving==true)/*if(enRegenEnabled)*/timerEnRegen+=Time.deltaTime;
                     }
                     //if (Input.GetButtonUp("Fire1")){StopCoroutine(shootCoroutine);}
                 }else{
                     if(shootCoroutine!=null){return;}
                     else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     //shootCoroutine=null;
-                    if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
+                    if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
             }else{
                 if(autoShoot){//Autoshoot on Android
                     if(shootCoroutine!=null){return;}
                     else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     //shootCoroutine=null;
-                    if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
+                    if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
             }
         }
@@ -620,7 +620,7 @@ public class Player : MonoBehaviour{
             }else if(pressed==false||shootTimer<-1f){
                 if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                 shootCoroutine=null;
-                if(moving==true)if(enRegenEnabled)timerEnRegen+=Time.deltaTime;
+                if(moving==true)timerEnRegen+=Time.deltaTime;
             }
         }else{return;}//Autoshoot in Shoot()
     }
@@ -1073,13 +1073,13 @@ public class Player : MonoBehaviour{
         }
     }
     void Regen(){
-        if(UpgradeMenu.instance.crMend_upgraded>0){hpRegenEnabled=true;}
-        if(UpgradeMenu.instance.enDiss_upgraded>0){enRegenEnabled=true;}
+        //if(UpgradeMenu.instance.crMend_upgraded>0){hpRegenEnabled=true;}
+        //if(UpgradeMenu.instance.enDiss_upgraded>0){enRegenEnabled=true;}
         if(Time.timeScale>0.0001f){
             if(hpAbsorpAmnt<0){hpAbsorpAmnt=0;}
             if(enAbsorpAmnt<0){enAbsorpAmnt=0;}
-            if(hpRegenEnabled&&hpAbsorpAmnt==0){if(GameSession.instance.coins>=crystalMend_refillCost){hpAbsorpAmnt+=crystalMendAbsorp;GameSession.instance.coins-=crystalMend_refillCost;}}
-            if(enRegenEnabled&&enAbsorpAmnt==0){if(GameSession.instance.coresXp>=energyDiss_refillCost){enAbsorpAmnt+=energyDissAbsorp;GameSession.instance.coresXp-=energyDiss_refillCost;}}
+            if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt==0){if(GameSession.instance.coins>=crystalMend_refillCost){hpAbsorpAmnt+=crystalMendAbsorp;GameSession.instance.coins-=crystalMend_refillCost;}}
+            if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt==0){if(GameSession.instance.coresXp>=energyDiss_refillCost){enAbsorpAmnt+=energyDissAbsorp;GameSession.instance.coresXp-=energyDiss_refillCost;}}
             if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<maxHP)Damage(hpRegenAmnt,dmgType.heal);hpAbsorpAmnt-=hpRegenAmnt;timerHpRegen=0;}
             if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<maxEnergy)AddSubEnergy(enRegenAmnt,true);enAbsorpAmnt-=enRegenAmnt;timerEnRegen=0;}
             //if(hpRegenEnabled==true&&timerHpRegen>=freqHpRegen){Damage(hpRegenAmnt,dmgType.heal);timerHpRegen=0;}

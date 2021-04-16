@@ -66,7 +66,9 @@ public class UpgradeMenu : MonoBehaviour{
     public int teleport_upgraded;
     public int overhaul_upgraded;
     public int crMend_upgraded;
+    public bool crMendEnabled;
     public int enDiss_upgraded;
+    public bool enDissEnabled;
     Player player;
     PlayerSkills pskills;
     IEnumerator co;
@@ -280,8 +282,10 @@ public class UpgradeMenu : MonoBehaviour{
     public void DefaultPowerupL2(){DefaultPowerupChange("laser","laser2",defaultPowerup_upgradeCost1,true,ref player.energy,100,false,0);}//defaultPowerup_upgradeCost1+1);}
     public void DefaultPowerupL3(){DefaultPowerupChange("laser2","laser3",defaultPowerup_upgradeCost2,true,ref player.energy,115,false,0);}//defaultPowerup_upgradeCost2);}
     public void DefaultPowerupPerma(){DefaultPowerupChange("laser3","perma",defaultPowerup_upgradeCost3,true,ref player.energy,130,true,0);}//defaultPowerup_upgradeCost3);}
-    public void UnlockCrystalMend(){crMend_upgraded=1;GameSession.instance.cores-=crMend_upgradeCost;}
-    public void UnlockEnergyDiss(){enDiss_upgraded=1;GameSession.instance.cores-=enDiss_upgradeCost;}
+    public void UnlockCrystalMend(){if(crMend_upgraded<=0){crMend_upgraded=1;crMendEnabled=true;GameSession.instance.cores-=crMend_upgradeCost;}}
+    public void SwitchCrMend(){if(crMend_upgraded>=1){if(crMendEnabled==true){crMendEnabled=false;return;}if(crMendEnabled==false){crMendEnabled=true;FindObjectOfType<Player>().Damage(5,dmgType.silent);return;}}}
+    public void UnlockEnergyDiss(){if(enDiss_upgraded<=0){enDiss_upgraded=1;enDissEnabled=true;GameSession.instance.cores-=enDiss_upgradeCost;}}
+    public void SwitchEnDiss(){if(enDiss_upgraded>=1){if(enDissEnabled==true){enDissEnabled=false;return;}if(enDissEnabled==false){enDissEnabled=true;FindObjectOfType<Player>().AddSubEnergy(10,false);return;}}}
 
     /*public void UnlockEnergyRefill(){
         if(GameSession.instance.cores>=energyRefill_upgradeCost && energyRefill_upgraded!=1){player.energyRefillUnlocked=1;GameSession.instance.cores-=energyRefill_upgradeCost;energyRefill_upgraded=1;GetComponent<AudioSource>().Play();}

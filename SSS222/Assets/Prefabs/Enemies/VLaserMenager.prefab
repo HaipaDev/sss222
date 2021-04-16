@@ -113,7 +113,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3890399063776090835}
   - component: {fileID: 1931764213089458399}
+  - component: {fileID: 8803346440941003721}
   - component: {fileID: 1830534001080659245}
+  - component: {fileID: 2552558352131752913}
   m_Layer: 9
   m_Name: VLaserExclamation
   m_TagString: Untagged
@@ -186,6 +188,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &8803346440941003721
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3053376030239355070}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.0333333, y: 1.3666667}
+    newSize: {x: 0.31, y: 0.41}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.0333333, y: 1.3666667}
+  m_EdgeRadius: 0
 --- !u!82 &1830534001080659245
 AudioSource:
   m_ObjectHideFlags: 0
@@ -283,6 +311,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2552558352131752913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3053376030239355070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8488082b468d7b6488b9f96c83345952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8112162855438566480
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +338,7 @@ GameObject:
   - component: {fileID: 8662698040201135491}
   - component: {fileID: 5100845521976585217}
   - component: {fileID: 6248964710803957018}
+  - component: {fileID: 35971218642252253}
   m_Layer: 9
   m_Name: VLaserCharging
   m_TagString: Untagged
@@ -418,7 +459,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8112162855438566480}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -544,6 +585,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &35971218642252253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8112162855438566480}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8488082b468d7b6488b9f96c83345952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &717135942499063092

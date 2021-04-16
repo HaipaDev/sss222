@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class XPFill : MonoBehaviour{
+    [SerializeField] bool replaceSprites=true;
     [SerializeField] Sprite emptySprite;
     [SerializeField] Sprite fillSprite;
     [SerializeField] GameObject particlePrefab;
@@ -16,25 +18,39 @@ public class XPFill : MonoBehaviour{
     //Shake shake;
     void Start(){
         img=GetComponent<Image>();
-        if(transform.root.gameObject.name.Contains("UpgradeCanvas")){
-            emptySprite=GameAssets.instance.Spr("upgradeEmpty");
-            fillSprite=GameAssets.instance.Spr("upgradeFill");
-            particlePrefab=GameAssets.instance.GetVFX("UpgradeVFX");
+        if(replaceSprites){
+            if(transform.root.gameObject.name.Contains("UpgradeCanvas")){
+                emptySprite=GameAssets.instance.Spr("upgradeEmpty");
+                fillSprite=GameAssets.instance.Spr("upgradeFill");
+                particlePrefab=GameAssets.instance.GetVFX("UpgradeVFX");
+            }
         }
         //shake = GameObject.FindObjectOfType<Shake>().GetComponent<Shake>();
     }
 
     void Update(){
-        if(shop!=true)value=(int)UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance);
-        else value=(int)Shop.instance.GetType().GetField(valueName).GetValue(Shop.instance);
-        if(value>=valueReq){
-            if(changed==false){
-                img.sprite=fillSprite;
-                UpgradeParticles();
-                //shake.CamShake();
-                changed=true;
-            }
-        }else{img.sprite=emptySprite;changed=false;}
+        if(valueReq!=0){
+            if(shop!=true)value=(int)UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance);
+            else value=(int)Shop.instance.GetType().GetField(valueName).GetValue(Shop.instance);
+            if(value>=valueReq){
+                if(changed==false){
+                    img.sprite=fillSprite;
+                    UpgradeParticles();
+                    //shake.CamShake();
+                    changed=true;
+                }
+            }else{img.sprite=emptySprite;changed=false;}
+        }else{
+            if(shop!=true)value=Convert.ToInt32(UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance));
+            else value=Convert.ToInt32(Shop.instance.GetType().GetField(valueName).GetValue(Shop.instance));
+            if(value==1){
+                if(changed==false){
+                    img.sprite=fillSprite;
+                    UpgradeParticles();
+                    changed=true;
+                }
+            }else{img.sprite=emptySprite;changed=false;}
+        }
     }
     public void UpgradeParticles(){
         var pt=Instantiate(particlePrefab,transform);
