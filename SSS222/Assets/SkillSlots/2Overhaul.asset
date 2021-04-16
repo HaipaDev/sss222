@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21fab347b30673d498850dec5e9b780c, type: 3}
   m_Name: 2Overhaul
   m_EditorClassIdentifier: 
-  skillName: Teleport
+  skillName: Overhaul
   sprite: {fileID: 21300000, guid: db867b7e2dba31b42a87f692e549511a, type: 3}
   ID: 2
-  enCost: 0
+  costType: 0
+  costTypeProperties:
+    cost: 15
   cooldown: 90

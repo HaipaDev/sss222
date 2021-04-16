@@ -15,5 +15,7 @@ MonoBehaviour:
   skillName: Teleport
   sprite: {fileID: 21300000, guid: 3540a37b856007c428851ab6e773fffc, type: 3}
   ID: 1
-  enCost: 20
+  costType: 0
+  costTypeProperties:
+    cost: 20
   cooldown: 40

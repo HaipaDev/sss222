@@ -220,9 +220,9 @@ public class UpgradeMenu : MonoBehaviour{
             if(skills[ID]!=skillKeyBind.Q){
                 var Q=pskills.cooldownQ;
                 var E=pskills.cooldownE;
-                pskills.cooldownE=Q;
-                pskills.cooldownQ=E;
-                }
+                //pskills.cooldownE=Q;
+                //pskills.cooldownQ=E;
+            }
         }
         /*if(skills[ID]!=skillKeyBind.E){
             var Q=pskills.cooldownQ;
@@ -248,8 +248,8 @@ public class UpgradeMenu : MonoBehaviour{
             if(skills[ID]!=skillKeyBind.E){
                 var Q=pskills.cooldownQ;
                 var E=pskills.cooldownE;
-                pskills.cooldownE=Q;
-                pskills.cooldownQ=E;
+                //pskills.cooldownE=Q;
+                //pskills.cooldownQ=E;
             }
         }
         skills[ID]=skillKeyBind.E;

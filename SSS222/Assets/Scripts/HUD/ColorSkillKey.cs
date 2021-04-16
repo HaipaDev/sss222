@@ -27,8 +27,8 @@ public class ColorSkillKey : MonoBehaviour{
     }
 
     void Update(){
-        if(ID>0&&ID<skillsBinds.Length)if(skillsBinds[ID]==key){color=Color.green;on=true;}
-        else{color=Color.white;on=false;}
+        if(ID>=0&&ID<skillsBinds.Length)if(skillsBinds[ID]==key){color=Color.green;on=true;}
+        else{color=new Color(255,255,255,255);on=false;}
         img.color=color;
         txt.color=color;
     }

@@ -12,35 +12,32 @@ using UnityEngine;
 public class PlayerSkills : MonoBehaviour{
     [SerializeField] public Skill[] skills;
     [SerializeField] public skillKeyBind[] skillsBinds;
-    public float cooldownQ;
-    public float cooldownE;
+    public float[] cooldowns;
     [SerializeField] GameObject timerUI;
     [HeaderAttribute("Prefabs etc")]
     GameObject mPulsePrefab;
     [SerializeField] GameObject portalVFX;
-    //[SerializeField] AudioClip portalSFX;
     [HeaderAttribute("Timers etc")]
+    public float cooldownQ;
+    public float cooldownE;
     public int currentSkillID=-1;
     public float timerTeleport=-4;
     public float timerOverhaul=-4;
     public float timeOverhaul=10;
-    //[SerializeField] AudioSource overhaulAudio;
     
     //References
     Player player;
     UpgradeMenu umenu;
-    void Awake() {
-        StartCoroutine(SetValues());
-    }
+    void Awake(){StartCoroutine(SetValues());}
     IEnumerator SetValues(){
-    yield return new WaitForSecondsRealtime(0.15f);
-    //Set values
-    var i=GameRules.instance;
-    if(i!=null){
-        skills=i.skillsPlayer;
-        timeOverhaul=i.timeOverhaul;
-    }
-    ResizeSet();
+        yield return new WaitForSecondsRealtime(0.15f);
+        //Set values
+        var i=GameRules.instance;
+        if(i!=null){
+            skills=i.skillsPlayer;
+            timeOverhaul=i.timeOverhaul;
+        }
+        ResizeSet();
     }
     void Start(){
         umenu=FindObjectOfType<UpgradeMenu>();
@@ -62,12 +59,20 @@ public class PlayerSkills : MonoBehaviour{
     private void ResizeSet(){
         System.Array.Resize(ref skillsBinds, skills.Length);
         for(var i=0;i<skills.Length;i++){skills[i].ID=i;}
+        System.Array.Resize(ref cooldowns, skills.Length);
     }
 
     public void UseSkills(int key){
-    if(player.hacked!=true){
-        if(cooldownQ>0)cooldownQ-=Time.deltaTime;
-        if(cooldownE>0)cooldownE-=Time.deltaTime;
+        for(var i=0;i<cooldowns.Length;i++){
+            if(cooldowns[i]>0)cooldowns[i]-=Time.deltaTime;
+
+            if(skillsBinds[i]==skillKeyBind.Q){cooldownQ=cooldowns[i];}
+            else if(skillsBinds[i]==skillKeyBind.E){cooldownE=cooldowns[i];}
+        }
+    if(Time.deltaTime>0.0001&&player.hacked!=true){
+        
+        //if(cooldownQ>0)cooldownQ-=Time.deltaTime;
+        //if(cooldownE>0)cooldownE-=Time.deltaTime;
         if(Input.GetKeyDown(KeyCode.Q) || key==1){
             foreach(Skill skill in skills){
                 var i=skill.ID;
@@ -101,11 +106,14 @@ public class PlayerSkills : MonoBehaviour{
     
     #region//Skills
     public void Skills(skillKeyBind key,int i,float enCost,float cooldown){
+        cooldowns[i]=skills[i].cooldown;
+        //if(skillsBinds[i]==skillKeyBind.Q){cooldownQ=skills[i].cooldown;}
+        //else if(skillsBinds[i]==skillKeyBind.E){cooldownE=skills[i].cooldown;}
         if(i!=2){
         if(player.energy>0){
             player.AddSubEnergy(enCost,false);
-            if(key==skillKeyBind.Q){cooldownQ=cooldown;}
-            if(key==skillKeyBind.E){cooldownE=cooldown;}
+            //if(key==skillKeyBind.Q){cooldownQ=cooldown;}
+            //if(key==skillKeyBind.E){cooldownE=cooldown;}
             if(key==skillKeyBind.Disabled){}
             if(i==0){//Magnetic Pulse
                 GameObject mPulse=Instantiate(mPulsePrefab, transform.position,Quaternion.identity);
@@ -113,13 +121,13 @@ public class PlayerSkills : MonoBehaviour{
                 GameSession.instance.gameSpeed=0.025f;
                 GameSession.instance.speedChanged=true;
                 SetActiveAllChildren(timerUI.transform,true);
-                currentSkillID=i;
+                currentSkillID=1;
             }
         }else{AudioManager.instance.Play("Deny");}
         }else if(i==2){//Overhaul
         if(GameSession.instance.coresXp>0){
-                if(key==skillKeyBind.Q){cooldownQ=cooldown;}
-                if(key==skillKeyBind.E){cooldownE=cooldown;}
+                //if(key==skillKeyBind.Q){cooldownQ=cooldown;}
+                //if(key==skillKeyBind.E){cooldownE=cooldown;}
                 if(key==skillKeyBind.Disabled){}
                 if(player.energy<1){player.AddSubEnergy(20);}
                 var ratio=(GameSession.instance.coresXp/GameSession.instance.xp_forCore);
@@ -168,12 +176,9 @@ public class PlayerSkills : MonoBehaviour{
     }
     #endregion
 
-    private void SetActiveAllChildren(Transform transform, bool value)
-    {
-        foreach (Transform child in transform)
-        {
+    private void SetActiveAllChildren(Transform transform, bool value){
+        foreach (Transform child in transform){
             child.gameObject.SetActive(value);
-
             SetActiveAllChildren(child, value);
         }
     }

@@ -22,13 +22,11 @@ public class EnableChildOnUpgrade : MonoBehaviour{
         }else{SetActiveAllChildren(transform,false);}
     }
 
-    private void SetActiveAllChildren(Transform transform, bool value)
-    {
-         foreach (Transform child in transform)
-         {
-             child.gameObject.SetActive(value);
+    private void SetActiveAllChildren(Transform transform, bool value){
+        foreach (Transform child in transform){
+            child.gameObject.SetActive(value);
  
-             SetActiveAllChildren(child, value);
-         }
-     }
+            SetActiveAllChildren(child, value);
+        }
+    }
 }

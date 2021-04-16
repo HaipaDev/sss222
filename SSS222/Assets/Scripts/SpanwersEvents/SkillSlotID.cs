@@ -14,9 +14,14 @@ public class SkillSlotID : ScriptableObject{
     [SerializeField] public Sprite sprite;
     //[SerializeField] public string pwrupName = "";
     [SerializeField] public int ID;
-    [SerializeField] public float enCost;
+    [SerializeField] public costType costType;
+    [SerializeField] public costTypeProperties costTypeProperties;
     [SerializeField] public float cooldown;
-    //public skillKeyBind skillKeyBind;
-    //[SerializeField] public skillKeyBind keySet=skillKeyBind.Disabled;
-    //[SerializeField] public Sprite sprite;
+
+    [ContextMenu("ValidateCost")]void VaildateCost(){
+        if(costType==costType.energy){costTypeProperties=new costTypeEnergy();}
+        if(costType==costType.ammo){costTypeProperties=new costTypeAmmo();}
+        if(costType==costType.crystalAmmo){costTypeProperties=new costTypeCrystalAmmo();}
+        if(costType==costType.blackEnergy){costTypeProperties=new costTypeBlackEnergy();}
+    }
 }

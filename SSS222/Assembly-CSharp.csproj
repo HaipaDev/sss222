@@ -341,6 +341,7 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\02_CellEventHandling\Example02CellDto.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\UICircleProgress\UICircleChangeDensity.cs" />
+     <Compile Include="Assets\Scripts\Enemies\HLaserCollision.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\CurlyUI\CUIMisc.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\LCrystalDrop.cs" />
      <Compile Include="Assets\Scripts\HUD\XpUI_Destroy.cs" />
@@ -488,7 +489,7 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Primitives\DiamondGraph.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIMultiplyEffect.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\01_Basic\Example01CellDto.cs" />
-     <Compile Include="Assets\Scripts\Enemies\HLaserCollision.cs" />
+     <Compile Include="Assets\Scripts\Menu\ToggleObject_GameRules.cs" />
      <None Include="Assets\Other\unity-ui-extensions\Resources\Shaders\UIAdditive.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
