@@ -68,8 +68,8 @@ public class SaveSerial : MonoBehaviour{
 		public int mPulse_upgraded=0;
 		public int teleport_upgraded=0;
 		public int overhaul_upgraded=0;
-		public int crMend_upgraded;
-		public int enDiss_upgraded;
+		public int crMend_upgraded=0;
+		public int enDiss_upgraded=0;
 	}
 	public void SaveAdventure(){
 		SaveGame.Encode = adventureEncode;

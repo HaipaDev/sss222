@@ -424,7 +424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000021457672, y: 850.84216}
+  m_AnchoredPosition: {x: -0.000021457672, y: 850.84204}
   m_SizeDelta: {x: 1073.7246, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &828070021082844330
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 975335096973494820}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1559,7 +1559,7 @@ GameObject:
   - component: {fileID: 979331269215847304}
   - component: {fileID: 3540480326612021006}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2469,7 +2469,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3796344145703097159}
   m_HandleRect: {fileID: 6955439429379832065}
   m_Direction: 2
-  m_Value: 0.9999998
+  m_Value: 1
   m_Size: 0.56620723
   m_NumberOfSteps: 0
   m_OnValueChanged:
