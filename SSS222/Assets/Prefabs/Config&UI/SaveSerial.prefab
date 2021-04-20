@@ -63,19 +63,17 @@ MonoBehaviour:
     maxEnergy_UpgradesLvl: 0
     speed_UpgradesCount: 0
     speed_UpgradesLvl: 0
-    hpRegen_UpgradesCount: 0
-    hpRegen_UpgradesLvl: 0
-    enRegen_UpgradesCount: 0
-    enRegen_UpgradesLvl: 0
     luck_UpgradesCount: 0
     luck_UpgradesLvl: 0
     defaultPowerup_upgradeCount: 0
     energyRefill_upgraded: 0
-    magneticPulse_upgraded: 0
+    mPulse_upgraded: 0
     teleport_upgraded: 0
     overhaul_upgraded: 0
+    crMend_upgraded: 0
+    enDiss_upgraded: 0
   settingsData:
-    gameVersion: 0.4
+    gameVersion: 0.5t3
     inputType: 0
     fullscreen: 1
     pprocessing: 0

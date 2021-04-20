@@ -218,7 +218,7 @@ public class GameSession : MonoBehaviour{
     public int GetEVScore(){return EVscore;}
     public int GetShopScore(){return shopScore; }
     public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
-    public string GetVersion(){return SaveSerial.instance.settingsData.gameVersion;}
+    public string GetGameVersion(){return SaveSerial.instance.settingsData.gameVersion;}
 
     public void AddToScore(int scoreValue){
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);

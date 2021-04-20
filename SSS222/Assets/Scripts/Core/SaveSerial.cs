@@ -102,7 +102,7 @@ public class SaveSerial : MonoBehaviour{
 #region//Settings Data
 	public SettingsData settingsData=new SettingsData();
 	[System.Serializable]public class SettingsData{
-		public string gameVersion="0.4";
+		public string gameVersion="0.5t3";
 		public InputType inputType;
 		public bool fullscreen=true;
 		public bool pprocessing;

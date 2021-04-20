@@ -24,8 +24,11 @@ public class DBAccess : MonoBehaviour{
     }
 
     public async void SaveScoreToDB(string name, int score){
-        Model_Score document=new Model_Score { name=name, score=score, version="0.5t3", date=System.DateTime.Now };
-        await scores_arcade.InsertOneAsync(document);    
+        ObjectId id;
+        var sameIDscore=await scores_arcade.FindAsync(e => e.name==name);
+        id=sameIDscore.ToList()[0]._id;
+        Model_Score document=new Model_Score { _id=id, name=name, score=score, version=GameSession.instance.GetGameVersion(), date=System.DateTime.Now };
+        await scores_arcade.FindOneAndReplaceAsync(e => e.name==document.name, document);
     }
     public async Task<List<Model_Score>> GetScoresFromDB(){
         var allScoresTask=scores_arcade.FindAsync<Model_Score>(FilterDefinition<Model_Score>.Empty);

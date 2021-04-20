@@ -234,6 +234,7 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Layout\ScrollSnap.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\Cooldown\CooldownEffect_Image.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\SelectionBox\ExampleSelectable.cs" />
+     <Compile Include="Assets\Scripts\Lederboard.cs" />
      <Compile Include="Assets\Scripts\Tags\Tag_RepBar.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\04_FocusOn\Example04ScrollViewContext.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\UILineRenderer\TestAddingPoints.cs" />
@@ -431,6 +432,7 @@
      <Compile Include="Assets\Scripts\Tags\Tag_DmgPhaseFreq.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Layout\FlowLayoutGroup.cs" />
      <Compile Include="Assets\Scripts\HUD\SwitchPlacesCanvas.cs" />
+     <Compile Include="Assets\Scripts\DisplayLeaderboard.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\UISelectableExtension.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\EnableDisableObject.cs" />
      <Compile Include="Assets\Scripts\Enemies\GlareDevil.cs" />
@@ -491,8 +493,8 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Primitives\DiamondGraph.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIMultiplyEffect.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\01_Basic\Example01CellDto.cs" />
-     <Compile Include="Assets\Scripts\Lederboard.cs" />
-     <Compile Include="Assets\Scripts\DisplayLeaderboard.cs" />
+     <Compile Include="Assets\Scripts\GameModeDestroy.cs" />
+     <Compile Include="Assets\Scripts\SubmitScore.cs" />
      <None Include="Assets\Other\unity-ui-extensions\Resources\Shaders\UIAdditive.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
