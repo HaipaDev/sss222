@@ -69,6 +69,8 @@ public class Level : MonoBehaviour{
     public void LoadGameModeInfoScene(int i){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGameModeSelected(i);}
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
     public void LoadInventoryScene(){SceneManager.LoadScene("Inventory");}
+    public void LoadLoginScene(){SceneManager.LoadScene("Login");}
+    public void LoadLeaderboardScene(){SceneManager.LoadScene("Leaderboard");}
     public void LoadCreditsScene(){SceneManager.LoadScene("Credits");}
     public void LoadWebsite(string url){Application.OpenURL(url);}
     public void RestartGame(){FindObjectOfType<Level>().StartCoroutine(RestartGameI());}

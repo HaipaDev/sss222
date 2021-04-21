@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 
-public class Lederboard : MonoBehaviour{
+public class Leaderboard : MonoBehaviour{
     DBAccess dBAccess;
     //TextMeshProUGUI txt;
     [SerializeField] GameObject container;

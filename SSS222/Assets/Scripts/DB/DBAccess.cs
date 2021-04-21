@@ -9,15 +9,24 @@ using System.Threading.Tasks;
 
 public class DBAccess : MonoBehaviour{
     const string MONGO_URI = "mongodb+srv://sss222db:ElBpPfSw8tHOEYi2@cluster0.9rrjl.mongodb.net/Cluster0";
-    const string DATABASE_NAME = "sss222";
-    MongoClient client;
-    IMongoDatabase db;
+    const string DATABASE_NAME_SSS222 = "sss222";
+    MongoClient client_SSS222;
+    IMongoDatabase db_SSS222;
+    const string DATABASE_NAME_hyperGamers = "hyperGamerLogin";
+    MongoClient client_hyperGamers;
+    IMongoDatabase db_hyperGamers;
     
     IMongoCollection<Model_Score> scores_arcade;
+    IMongoCollection<HyperGamer> hyperGamerLogin;
     void Start(){
-        client=new MongoClient(MONGO_URI);
-        db=client.GetDatabase(DATABASE_NAME);
-        scores_arcade = db.GetCollection<Model_Score>("scores_arcade");
+        client_SSS222=new MongoClient(MONGO_URI);
+        db_SSS222=client_SSS222.GetDatabase(DATABASE_NAME_SSS222);
+        scores_arcade=db_SSS222.GetCollection<Model_Score>("scores_arcade");
+
+        
+        client_hyperGamers=new MongoClient(MONGO_URI);
+        db_hyperGamers=client_hyperGamers.GetDatabase(DATABASE_NAME_hyperGamers);
+        hyperGamerLogin=db_hyperGamers.GetCollection<HyperGamer>("userdata");
 
         //SaveScoreToDB("testname",100);
         //GetScoresFromDB();
@@ -52,18 +61,34 @@ public class DBAccess : MonoBehaviour{
         Debug.Log("Deserialized: "+highScore);*/
         return highScore;
     }
+
+
+
+    public async void RegisterHyperGamer(string username, string password){
+        HyperGamer document=new HyperGamer { username=username, password=password, dateRegister=System.DateTime.Now };
+        await hyperGamerLogin.InsertOneAsync(document);
+    }
 }
 // Model_User Sample
 [System.Serializable]
 public class Model_Score {
-        public ObjectId _id { set; get; }
+    public ObjectId _id { set; get; }
+    
+    //public int id { set; get; }
+    public string name {  set; get; }
+    public int score { set; get; }
+    public string version { set; get; }
+    public System.DateTime date { set; get; }
+    
+    //Possible Methods ...
         
-        //public int id { set; get; }
-        public string name {  set; get; }
-        public int score { set; get; }
-        public string version { set; get; }
-        public System.DateTime date { set; get; }
-        
-        //Possible Methods ...
-        
+}
+[System.Serializable]
+public class HyperGamer {
+    public ObjectId _id { set; get; }
+    
+    public string username {  set; get; }
+    public string password { set; get; }
+    public System.DateTime dateLastLogin { set; get; }
+    public System.DateTime dateRegister { set; get; }
 }

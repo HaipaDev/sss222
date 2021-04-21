@@ -15,6 +15,7 @@ public class UpgradeMenu : MonoBehaviour{
     public GameObject skillsMenu;
     public GameObject skills1Menu;
     public GameObject skills2Menu;
+    public GameObject backButton;
     public XPBars lvlbar;
     public float prevGameSpeed=1f;
     [Header("Upgrade Values")]
@@ -125,8 +126,8 @@ public class UpgradeMenu : MonoBehaviour{
             if(UpgradeMenuIsOpen){Resume();
             }else{if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && FindObjectOfType<Player>()!=null)Open();}
         }
-        if (Input.GetKeyDown(KeyCode.Escape) && UpgradeMenuIsOpen)Resume();
-
+        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Backspace)){if(upgradeMenu2UI.activeSelf || lvltreeUI.activeSelf){Back();Open();return;}
+        else if(!(upgradeMenu2UI.activeSelf && lvltreeUI.activeSelf) && upgradeMenuUI.activeSelf){Resume();return;}}
         LevelEverything();
     }
 
@@ -153,7 +154,7 @@ public class UpgradeMenu : MonoBehaviour{
 
     public void OpenStats(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
         //skillsMenu.SetActive(false);
-        if(skillsMenu.activeSelf!=true)statsMenu.SetActive(true);
+        if(skillsMenu.activeSelf!=true)statsMenu.SetActive(true);backButton.SetActive(true);
     }
     public void OpenSkills(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
         //statsMenu.SetActive(false);

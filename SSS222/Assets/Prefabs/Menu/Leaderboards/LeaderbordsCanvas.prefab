@@ -420,6 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 0}
+  containerChildCount: 0
   leaderboardElement: {fileID: 0}
   result: []
   resultSorted: []
@@ -536,7 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 878bcf9dc3b472045b12e80f4da14273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  rank: 0
   username: 
   score: 0
 --- !u!1 &4556867966550291124
@@ -655,6 +656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 4556867967840950507}
+  containerChildCount: 0
   leaderboardElement: {fileID: 5365311072834811577, guid: cf51dc09819f6184198b45a07a0600b1,
     type: 3}
   result: []
@@ -1003,6 +1005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 0}
+  containerChildCount: 0
   leaderboardElement: {fileID: 0}
   result: []
   resultSorted: []
@@ -1314,10 +1317,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1110796801287457597, guid: 2187d17e87e167843a47ecaa776cb1b9,
+      - m_Target: {fileID: 4201300888754685035, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SaveSettings
+        m_TargetAssemblyTypeName: Level, Assembly-CSharp
+        m_MethodName: LoadStartMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1326,19 +1329,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
-      - m_Target: {fileID: 1110796801287457597, guid: 2187d17e87e167843a47ecaa776cb1b9,
-          type: 3}
-        m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
-        m_MethodName: CloseSettings
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 1
 --- !u!1 &4556867967840950507
 GameObject:
