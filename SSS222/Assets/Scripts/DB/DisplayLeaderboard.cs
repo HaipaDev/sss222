@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public class DisplayLeaderboard : MonoBehaviour{
+    public bool currentUser;
     public int rank;
     public string username;
     public int score;

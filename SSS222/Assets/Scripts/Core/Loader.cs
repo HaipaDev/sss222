@@ -14,6 +14,7 @@ public class Loader : MonoBehaviour{
         else{SaveSerial.instance.settingsData.inputType=InputType.mouse;SaveSerial.instance.settingsData.pprocessing=true;SaveSerial.instance.settingsData.scbuttons=false;}
         if(!loaded){
         SaveSerial.instance.Load();
+        SaveSerial.instance.LoadLogin();
         SaveSerial.instance.LoadSettings();
         loaded=true;
         }

@@ -10,12 +10,50 @@ using BayatGames.SaveGameFree.Serializers;
 
 public class SaveSerial : MonoBehaviour{
 	public static SaveSerial instance;
+	[SerializeField] string filenameLogin = "hyperGamerLogin";
+	bool loginEncode=false;
 	[SerializeField] string filename = "playerData";
 	bool dataEncode=true;
 	[SerializeField] string filenameAdventure = "adventureData";
 	bool adventureEncode=false;
 	[SerializeField] string filenameSettings = "gameSettings.cfg";
 	bool settingsEncode=false;
+	public int maxRegisteredHyperGamers=3;
+
+#region//HyperGamerLogin
+	public HyperGamerLoginData hyperGamerLoginData=new HyperGamerLoginData();
+	[System.Serializable]public class HyperGamerLoginData{
+		public int registeredCount;
+		public bool loggedIn;
+		public string username;
+		public string password;
+	}
+	public void SetLogin(string username, string password){
+		hyperGamerLoginData.loggedIn=true;
+		hyperGamerLoginData.username=username;
+		hyperGamerLoginData.password=password;
+	}
+	public void LogOut(){
+		hyperGamerLoginData.loggedIn=false;
+		hyperGamerLoginData.username="";
+		hyperGamerLoginData.password="";
+	}
+	public void SaveLogin(){
+		SaveGame.Encode = loginEncode;
+		SaveGame.Serializer = new SaveGameJsonSerializer();
+		SaveGame.Save(filenameLogin, hyperGamerLoginData);
+		Debug.Log("Login saved");
+	}
+	public void LoadLogin(){
+		if(File.Exists(Application.persistentDataPath + "/"+filenameLogin)){
+			SaveGame.Encode = loginEncode;
+			SaveGame.Serializer = new SaveGameJsonSerializer();
+			hyperGamerLoginData = SaveGame.Load<HyperGamerLoginData>(filenameLogin);
+
+			Debug.Log("Login loaded");
+		}else Debug.Log("Login Data file not found in "+Application.persistentDataPath+"/"+filename);
+	}
+#endregion
 #region//Player Data
 	public PlayerData playerData=new PlayerData();
 	[System.Serializable]public class PlayerData{

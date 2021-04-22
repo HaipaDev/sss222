@@ -13,6 +13,7 @@ public class GameCreator : MonoBehaviour{
     [SerializeField] GameObject gameAssetsPrefab;
     [SerializeField] GameObject levelPrefab;
     [SerializeField] GameObject audioManagerPrefab;
+    [SerializeField] GameObject dbaccessPrefab;
     //[SerializeField] int gamerulesetsID;
     [SerializeField] public GameRules[] gamerulesetsPrefabs;
     private void Awake(){
@@ -25,6 +26,7 @@ public class GameCreator : MonoBehaviour{
         if(FindObjectOfType<GameAssets>()==null){Instantiate(gameAssetsPrefab);}
         if(FindObjectOfType<Level>()==null){Instantiate(levelPrefab);}
         if(FindObjectOfType<AudioManager>()==null){Instantiate(audioManagerPrefab);}
+        if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
         if(FindObjectOfType<GameRules>()==null&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Instantiate(gamerulesetsPrefabs[GameSession.instance.gameModeSelected]);}
         //if(FindObjectOfType<GameRules>()==null&&SceneManager.GetActiveScene().name=="SandboxMenu"){Instantiate(gamerulesetsPrefabs[4].GetGamerules());}
         if(FindObjectOfType<PostProcessVolume>()!=null&& FindObjectOfType<SaveSerial>().settingsData.pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}

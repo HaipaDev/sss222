@@ -102,6 +102,7 @@
      <Compile Include="Assets\Scripts\Core\DataSavable.cs" />
      <Compile Include="Assets\Other\ZBayatGames\SaveGameFree\Scripts\SaveGameWeb.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\MenuSystem\Menu.cs" />
+     <Compile Include="Assets\Scripts\DB\Login.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\ToggleValue.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Primitives\UIPrimitiveBase.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\ReturnKeyTriggersButton.cs" />
@@ -495,7 +496,6 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Primitives\DiamondGraph.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIMultiplyEffect.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\01_Basic\Example01CellDto.cs" />
-     <Compile Include="Assets\Scripts\DB\Login.cs" />
      <None Include="Assets\Other\unity-ui-extensions\Resources\Shaders\UIAdditive.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

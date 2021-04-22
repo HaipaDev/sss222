@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 
 public class SubmitScore : MonoBehaviour{
-    [SerializeField]TextMeshProUGUI txtInput;
+    //[SerializeField]TextMeshProUGUI txtInput;
     public void SubmitScoreFunc(int gamemodeID){
         var db=FindObjectOfType<DBAccess>();
-        db.SaveScoreToDB(txtInput.text,GameSession.instance.GetHighscore(gamemodeID));
+        if(SaveSerial.instance.hyperGamerLoginData.username!="")db.SaveScoreToDB(SaveSerial.instance.hyperGamerLoginData.username,GameSession.instance.GetHighscore(gamemodeID));
     }
 }

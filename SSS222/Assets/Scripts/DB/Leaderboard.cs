@@ -12,6 +12,7 @@ public class Leaderboard : MonoBehaviour{
     [SerializeField] GameObject container;
     [SerializeField] int containerChildCount;
     [SerializeField] GameObject leaderboardElement;
+    [SerializeField] GameObject currentUser;
     [SerializeReference] List<Model_Score> result;
     [SerializeReference] List<Model_Score> resultSorted;
     //[SerializeField] List<int> scores;
@@ -45,6 +46,25 @@ public class Leaderboard : MonoBehaviour{
             go.GetComponent<DisplayLeaderboard>().rank=i+1;
             go.GetComponent<DisplayLeaderboard>().username=resultSorted[i].name;
             go.GetComponent<DisplayLeaderboard>().score=resultSorted[i].score;
+        }
+
+        int currentUserRank=0;
+        string currentUserName="";
+        int currentUserScore=0;
+        if(SaveSerial.instance.hyperGamerLoginData.loggedIn){
+            for(var i=0;i<resultSorted.Count;i++){if(resultSorted[i].name==SaveSerial.instance.hyperGamerLoginData.username){
+                currentUserRank=i;currentUserName=SaveSerial.instance.hyperGamerLoginData.username;currentUserScore=resultSorted[i].score;}}
+            if(currentUserScore>0){
+                currentUser.GetComponent<DisplayLeaderboard>().rank=currentUserRank+1;
+            }else{
+                currentUserName=SaveSerial.instance.hyperGamerLoginData.username;
+            }
+            currentUser.GetComponent<DisplayLeaderboard>().username=currentUserName;
+            currentUser.GetComponent<DisplayLeaderboard>().score=currentUserScore;
+        }else{
+            currentUser.GetComponent<DisplayLeaderboard>().rank=0;
+            currentUser.GetComponent<DisplayLeaderboard>().username="Not logged in";
+            currentUser.GetComponent<DisplayLeaderboard>().score=currentUserScore;
         }
         
         //foreach(var element in resultSorted){output+=element.name+": "+element.score+"\n";}

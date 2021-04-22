@@ -95,7 +95,10 @@ public class ValueDisplay : MonoBehaviour{
         if (value == "inputType"){txt.text = SaveSerial.instance.settingsData.inputType.ToString();}
         else if (value == "joystickType"){txt.text = SaveSerial.instance.settingsData.joystickType.ToString();}
         else if (value == "joystickSize"){txt.text = System.Math.Round(SaveSerial.instance.settingsData.joystickSize,2).ToString();}
+        else if (value == "loginUsername"){txt.text = SaveSerial.instance.hyperGamerLoginData.username.ToString();}
         }
+        if (value == "registerMessage"){txt.text = DBAccess.instance.registerMessage;}
+        else if (value == "loginMessage"){txt.text = DBAccess.instance.loginMessage;}
         
         /*else if (value == "state"){
             var value = System.Math.Round(player.GetGCloverTimer(),1);
