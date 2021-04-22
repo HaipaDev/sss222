@@ -18,15 +18,22 @@ public class DBAccess : MonoBehaviour{
     IMongoDatabase db_hyperGamers;
     
     IMongoCollection<Model_Score> scores_arcade;
+    IMongoCollection<Model_Score> scores_classic;
+    IMongoCollection<Model_Score> scores_meteormadness;
+    IMongoCollection<Model_Score> scores_hardcore;
     IMongoCollection<HyperGamer> hyperGamers;
     public string registerMessage;
     public string loginMessage;
+    public string submitMessage;
     void Awake(){instance=this;SetUpSingleton();}
     void SetUpSingleton(){int numberOfObj=FindObjectsOfType<GameSession>().Length;if(numberOfObj>1){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);}}
     void Start(){
         client_SSS222=new MongoClient(MONGO_URI);
         db_SSS222=client_SSS222.GetDatabase(DATABASE_NAME_SSS222);
         scores_arcade=db_SSS222.GetCollection<Model_Score>("scores_arcade");
+        scores_hardcore=db_SSS222.GetCollection<Model_Score>("scores_hardcore");
+        scores_classic=db_SSS222.GetCollection<Model_Score>("scores_classic");
+        scores_meteormadness=db_SSS222.GetCollection<Model_Score>("scores_meteormadness");
 
         
         client_hyperGamers=new MongoClient(MONGO_URI);
@@ -37,22 +44,24 @@ public class DBAccess : MonoBehaviour{
         //GetScoresFromDB();
     }
 
-    public async void SaveScoreToDB(string name, int score){
-        var sameNameScore=await scores_arcade.FindAsync(e => e.name==name);
+    public async void SaveScoreToDB(int gamemodeID,string name, int score){
+        var scores=GetGamemodeCollection(gamemodeID);
+        var sameNameScore=await scores.FindAsync(e => e.name==name);
         //if(sameIDscore.ToList().Count>0){Debug.Log(id);}else{Debug.Log("Score with name "+name+" not found");}
         if(sameNameScore.ToList().Count>0){
-            sameNameScore=await scores_arcade.FindAsync(e => e.name==name);
-            Debug.Log("Score with name "+name+" was found!");
-            if(score>sameNameScore.ToList()[0].score)await scores_arcade.FindOneAndUpdateAsync(e => e.name==name, Builders<Model_Score>.Update.Set(e => e.score, score));
-            else Debug.Log("Score with name "+name+" was bigger than the one submitting");
+            sameNameScore=await scores.FindAsync(e => e.name==name);
+            if(score==0){SetSubmitMessage("Score is equals 0!");}
+            else if(score<sameNameScore.ToList()[0].score){SetSubmitMessage("Score is lower than submitted");}
+            else{await scores.FindOneAndUpdateAsync(e => e.name==name, Builders<Model_Score>.Update.Set(e => e.score, score));SetSubmitMessage("Score overwritten!");}
         }else{
-            Debug.Log("Score with name "+name+" NOT found");
             Model_Score document=new Model_Score { name=name, score=score, version=GameSession.instance.GetGameVersion(), date=System.DateTime.Now };
-            await scores_arcade.InsertOneAsync(document);
+            await scores.InsertOneAsync(document);
+            SetSubmitMessage("New score submitted!");
         }
     }
-    public async Task<List<Model_Score>> GetScoresFromDB(){
-        var allScoresTask=scores_arcade.FindAsync<Model_Score>(FilterDefinition<Model_Score>.Empty);
+    public async Task<List<Model_Score>> GetScoresFromDB(int gamemodeID){
+        var scores=GetGamemodeCollection(gamemodeID);
+        var allScoresTask=scores.FindAsync<Model_Score>(FilterDefinition<Model_Score>.Empty);
         var scoresAwaited=await allScoresTask;
         List<Model_Score> highscores=new List<Model_Score>();
         foreach(var score in scoresAwaited.ToList()){
@@ -63,15 +72,14 @@ public class DBAccess : MonoBehaviour{
         //Debug.Log("Highscores: "+highscores.ToString());
         return highscores;
     }
-    private Model_Score Deserialize(string rawJson){
-        var highScore=new Model_Score();
-        /*var stringWithoutID=rawJson.Substring(rawJson.IndexOf("),")+4);
-        var username=stringWithoutID.Substring(0,stringWithoutID.IndexOf(":")-2);
-        var score=stringWithoutID.Substring(stringWithoutID.IndexOf(":")+2);
-        highScore.name=username;
-        highScore.score=Convert.ToInt32(score);
-        Debug.Log("Deserialized: "+highScore);*/
-        return highScore;
+    IMongoCollection<Model_Score> GetGamemodeCollection(int ID){
+        var collection=scores_arcade;
+        //for(var i=0;i<GameCreator.instance.gamerulesetsPrefabs.Length;i++){
+            if(GameCreator.instance.gamerulesetsPrefabs[ID].cfgName.Contains("Classic")){collection=scores_classic;}
+            else if(GameCreator.instance.gamerulesetsPrefabs[ID].cfgName.Contains("Hardcore")){collection=scores_hardcore;}
+            else if(GameCreator.instance.gamerulesetsPrefabs[ID].cfgName.Contains("Meteor")){collection=scores_meteormadness;}
+        //}
+        return collection;
     }
 
 
@@ -104,9 +112,11 @@ public class DBAccess : MonoBehaviour{
 
     
     public void SetRegisterMessage(string msg){StartCoroutine(SetRegisterMessageI(msg));}
-    IEnumerator SetRegisterMessageI(string msg){DBAccess.instance.registerMessage=msg;yield return new WaitForSeconds(2);DBAccess.instance.registerMessage="";}
+    IEnumerator SetRegisterMessageI(string msg){DBAccess.instance.registerMessage=msg;yield return new WaitForSecondsRealtime(2);DBAccess.instance.registerMessage="";}
     public void SetLoginMessage(string msg){StartCoroutine(SetLoginMessageI(msg));}
-    IEnumerator SetLoginMessageI(string msg){DBAccess.instance.loginMessage=msg;yield return new WaitForSeconds(2);DBAccess.instance.loginMessage="";}
+    IEnumerator SetLoginMessageI(string msg){DBAccess.instance.loginMessage=msg;yield return new WaitForSecondsRealtime(2);DBAccess.instance.loginMessage="";}
+    public void SetSubmitMessage(string msg){StartCoroutine(SetSubmitMessageI(msg));}
+    IEnumerator SetSubmitMessageI(string msg){DBAccess.instance.submitMessage=msg;yield return new WaitForSecondsRealtime(2);DBAccess.instance.submitMessage="";}
 }
 // Model_User Sample
 [System.Serializable]

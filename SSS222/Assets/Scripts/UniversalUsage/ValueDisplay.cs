@@ -85,6 +85,7 @@ public class ValueDisplay : MonoBehaviour{
         }
         if(GameRules.instance!=null){
         if (value == "cfgName")if(GameRules.instance!=null){txt.text = GameRules.instance.cfgName;}else{Debug.LogError("GameRules Not Present");}
+        if (value == "cfgNameCurrent")txt.text = GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.gameModeSelected].cfgName;
         else if (value == "speedPlayerGR") txt.text = GameRules.instance.moveSpeedPlayer.ToString();
         else if (value == "healthPlayerGR") txt.text = GameRules.instance.healthPlayer.ToString();
         else if (value == "energyPlayerGR") txt.text = GameRules.instance.energyPlayer.ToString();
@@ -99,6 +100,7 @@ public class ValueDisplay : MonoBehaviour{
         }
         if (value == "registerMessage"){txt.text = DBAccess.instance.registerMessage;}
         else if (value == "loginMessage"){txt.text = DBAccess.instance.loginMessage;}
+        else if (value == "submitMessage"){txt.text = DBAccess.instance.submitMessage;}
         
         /*else if (value == "state"){
             var value = System.Math.Round(player.GetGCloverTimer(),1);

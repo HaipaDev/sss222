@@ -6,7 +6,7 @@ using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.EventSystems;
 
 public class GameCreator : MonoBehaviour{
-    //Create important managers if they don't exist ;)
+    public static GameCreator instance;
     [SerializeField] GameObject gameSessionPrefab;
     [SerializeField] GameObject loaderPrefab;
     [SerializeField] GameObject saveSerialPrefab;
@@ -17,9 +17,12 @@ public class GameCreator : MonoBehaviour{
     //[SerializeField] int gamerulesetsID;
     [SerializeField] public GameRules[] gamerulesetsPrefabs;
     private void Awake(){
-        StartCoroutine(LoadI());
+        instance=this;
+        Load();
+        //StartCoroutine(LoadI());
     }
-    IEnumerator LoadI(){
+    //IEnumerator LoadI(){
+    void Load(){
         if(FindObjectOfType<GameSession>()==null){Instantiate(gameSessionPrefab);}
         //if(FindObjectOfType<Loader>()==null){Instantiate(loaderPrefab);}
         if(FindObjectOfType<SaveSerial>()==null){Instantiate(saveSerialPrefab);}
@@ -27,11 +30,11 @@ public class GameCreator : MonoBehaviour{
         if(FindObjectOfType<Level>()==null){Instantiate(levelPrefab);}
         if(FindObjectOfType<AudioManager>()==null){Instantiate(audioManagerPrefab);}
         if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
-        if(FindObjectOfType<GameRules>()==null&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Instantiate(gamerulesetsPrefabs[GameSession.instance.gameModeSelected]);}
+        if(FindObjectOfType<GameRules>()==null&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Instantiate(GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.gameModeSelected]);}
         //if(FindObjectOfType<GameRules>()==null&&SceneManager.GetActiveScene().name=="SandboxMenu"){Instantiate(gamerulesetsPrefabs[4].GetGamerules());}
         if(FindObjectOfType<PostProcessVolume>()!=null&& FindObjectOfType<SaveSerial>().settingsData.pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
         if(FindObjectOfType<EventSystem>()!=null){if(FindObjectOfType<EventSystem>().GetComponent<UIInputSystem>()==null)FindObjectOfType<EventSystem>().gameObject.AddComponent<UIInputSystem>();}
-        yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
+        //yield return new WaitForSeconds(0.5f);
+        //Destroy(gameObject);
     }
 }

@@ -350,7 +350,7 @@ public class Player : MonoBehaviour{
         //WeaponProperties
         //GameRules gr = (GameRules)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Config&UI/GameRulesets/GRDef.prefab", typeof(GameRules));
         GameRules gr=null;
-        if(FindObjectOfType<GameCreator>()!=null)gr=FindObjectOfType<GameCreator>().gamerulesetsPrefabs[0];
+        if(FindObjectOfType<GameCreator>()==null)gr=GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.gameModeSelected];
         if(gr!=null){
         foreach(WeaponProperties wi in gr.weaponProperties){
             if(!weaponProperties.Contains(wi)){weaponProperties.Add(wi);}

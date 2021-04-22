@@ -66,13 +66,16 @@ public class Level : MonoBehaviour{
         Time.timeScale = 1f;
     }
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");}
-    public void LoadGameModeInfoScene(int i){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGameModeSelected(i);}
+    public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}
+    public void LoadGameModeInfoSceneSet(int i){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGameModeSelected(i);}
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
     public void LoadInventoryScene(){SceneManager.LoadScene("Inventory");}
     public void LoadLoginScene(){SceneManager.LoadScene("Login");}
     public void LoadLeaderboardScene(){SceneManager.LoadScene("Leaderboard");}
+    public void LoadScoreSubmitScene(){SceneManager.LoadScene("ScoreSubmit");}
     public void LoadCreditsScene(){SceneManager.LoadScene("Credits");}
     public void LoadWebsite(string url){Application.OpenURL(url);}
+    public void SubmitScore(){if(SaveSerial.instance.hyperGamerLoginData.loggedIn){LoadScoreSubmitScene();}else{LoadLoginScene();}}
     public void RestartGame(){FindObjectOfType<Level>().StartCoroutine(RestartGameI());}
     IEnumerator RestartGameI(){
         //PauseMenu.GameIsPaused=false;
@@ -105,14 +108,16 @@ public class Level : MonoBehaviour{
             var scene=SceneManager.GetActiveScene().name;
             if(scene=="ChooseGameMode"||scene=="Inventory"||scene=="Credits"||scene=="Leaderboards"||scene=="Login"){
                 LoadStartMenu();
-            }if(scene=="Options"){
-            if(FindObjectOfType<SettingsMenu>()!=null){
-                if(FindObjectOfType<SettingsMenu>().transform.GetChild(1).gameObject.activeSelf==true){
-                    FindObjectOfType<SettingsMenu>().OpenSettings();
-                }else{
-                    LoadStartMenu(); 
-                }
-            }else Debug.LogError("No SettingsMenu");
+            }else if(scene=="ScoreSubmit"){
+                LoadGameModeInfoScene();
+            }else if(scene=="Options"){
+                if(FindObjectOfType<SettingsMenu>()!=null){
+                    if(FindObjectOfType<SettingsMenu>().transform.GetChild(1).gameObject.activeSelf==true){
+                        FindObjectOfType<SettingsMenu>().OpenSettings();
+                    }else{
+                        LoadStartMenu(); 
+                    }
+                }else Debug.LogError("No SettingsMenu");
             }
     }}
 
