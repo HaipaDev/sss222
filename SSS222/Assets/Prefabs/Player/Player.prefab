@@ -50,6 +50,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -179,6 +180,7 @@ MonoBehaviour:
   ammoOn: 1
   ammo: -4
   powerupDefault: laser
+  weaponsLimited: 0
   powerupTimer: -4
   losePwrupOutOfEn: 1
   losePwrupOutOfAmmo: 1
@@ -197,14 +199,18 @@ MonoBehaviour:
   overheatedTimer: -4
   recoilOn: 1
   enRegenEnabled: 0
+  enAbsorpAmnt: 0
+  energyDissAbsorp: 18
   timerEnRegen: 0
   freqEnRegen: 1
   enRegenAmnt: 0.5
   energyForRegen: 10
   hpRegenEnabled: 0
+  hpAbsorpAmnt: 0
+  crystalMendAbsorp: 10
   timerHpRegen: 0
   freqHpRegen: 1
-  hpRegenAmnt: 0.1
+  hpRegenAmnt: 0.5
   armorMultiInit: 1
   dmgMultiInit: 1
   shootMultiInit: 1
@@ -271,6 +277,15 @@ MonoBehaviour:
   infEnergyTimer: -4
   infPrevEnergy: 0
   infEnergyTime: -4
+  speed: 0
+  speedPrev: 0
+  speedTimer: -4
+  speedTime: -4
+  speedStrength: 1
+  slow: 0
+  slowTimer: -4
+  slowTime: -4
+  slowStrength: 1
   flipTime: 8.5
   gcloverTime: 8
   shadowTime: 12
@@ -297,31 +312,13 @@ MonoBehaviour:
   shadowCost: 5
   energyBallGet: 9
   medkitEnergyGet: 40
-  medkitUEnergyGet: 26
+  microMedkitHpAmnt: 10
   medkitHpAmnt: 25
-  medkitUHpAmnt: 62
   pwrupEnergyGet: 36
   enForPwrupRefill: 25
   enPwrupDuplicate: 42
-  refillEnergyAmnt: 110
-  refillCostS: 1
-  refillCostE: 2
-  refillDelay: 1.6
-  refillCount: 0
-  refillRandomized: 0
-  weaponsLimited: 0
-  laser2Duration: 10
-  laser3Duration: 10
-  phaserDuration: 10
-  mlaserDuration: 10
-  lsaberDuration: 10
-  lclawsDuration: 10
-  cstreamDuration: 10
-  hrocketDuration: 10
-  qrocketDuration: 10
-  procketDuration: 10
-  plaserDuration: 10
-  shadowBtDuration: 10
+  crystalMend_refillCost: 2
+  energyDiss_refillCost: 3.3
   flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
   gcloverOVFX: {fileID: 100000, guid: 41fbf007ac904dd48afafa7a6655e3ef, type: 3}
   shadowPrefab: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699,
@@ -348,7 +345,6 @@ MonoBehaviour:
   stayingTimerTotal: 0
   joystick: {fileID: 0}
   moving: 0
-  energyUsedCount: 0
   tpPos: {x: 0, y: 0}
 --- !u!114 &1949430517914965929
 MonoBehaviour:
@@ -362,9 +358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8c9cd822c43524fa7cc236eae2a36c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmgPopupPrefab: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3,
-    type: 3}
-  dmgFreq: 0.38
   dmgTimer: 0
   lastHitObj: 
   lastHitDmg: 0
@@ -397,10 +390,14 @@ MonoBehaviour:
     enCost: 0
     cooldown: 0
   skillsBinds: 000000000000000000000000
-  cooldownQ: 0
-  cooldownE: 0
+  cooldowns:
+  - 0
+  - 0
+  - 0
   timerUI: {fileID: 0}
   portalVFX: {fileID: 100000, guid: 1ee2c03a099f4cb4b8f86c863bfedf81, type: 3}
+  cooldownQ: 0
+  cooldownE: 0
   currentSkillID: -1
   timerTeleport: -4
   timerOverhaul: -4
