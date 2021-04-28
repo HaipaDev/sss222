@@ -18,7 +18,9 @@ public class GameModeDropdown : MonoBehaviour{
         dd.AddOptions(options);
     }
     public void SetGamemode(){
-        if(!valueChanged){dd.value=GameSession.instance.gameModeSelected+startAt;dd.RefreshShownValue();valueChanged=true;return;}
-        else{GameSession.instance.gameModeSelected=dd.value+startAt;}
+        //if(!valueChanged){dd.value=GameSession.instance.gameModeSelected+startAt;dd.RefreshShownValue();valueChanged=true;return;}
+        //else{
+            GameSession.instance.gameModeSelected=dd.value+startAt;
+            //}
     }
 }

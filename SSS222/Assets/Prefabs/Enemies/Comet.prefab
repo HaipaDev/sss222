@@ -51,6 +51,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -159,6 +160,7 @@ MonoBehaviour:
   Name: Comet
   size: {x: 1, y: 1}
   spr: {fileID: 0}
+  healthStart: 100
   health: 15
   shooting: 0
   minTimeBtwnShots: 2.25
@@ -196,6 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9957469ac0c594981c65e4fda467ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dmgTimer: 0
 --- !u!114 &801518567914847888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +227,9 @@ MonoBehaviour:
   xx: 0
   yy: 0.4
   time: 0.4
+  onTop: 0
   stayStill: 1
+  angle: 0
   BFlame: {fileID: 0}
 --- !u!114 &1490166543656379823
 MonoBehaviour:
@@ -244,6 +249,7 @@ MonoBehaviour:
   healthBySize: 1
   damageBySpeedSize: 1
   scoreBySize: 0
+  randomAngle: 1
   scoreSizes: []
   sprites:
   - {fileID: 21300000, guid: 99983d2108c82d9488eb046ba733b402, type: 3}
@@ -264,7 +270,8 @@ MonoBehaviour:
   spritesLunar:
   - {fileID: 21300000, guid: d77e60d2555e3794bb7b3751fc12984a, type: 3}
   - {fileID: 21300000, guid: 9707760d56d495d49ad28413a26f324c, type: 3}
-  lunarPart: {fileID: 100000, guid: 3d92ff3b8ca41e040a35a255a84248e0, type: 3}
+  lunarPart: {fileID: 100000, guid: c9a649e528b32914aa6bb629e3597592, type: 3}
+  healhitCount: 0
   isLunar: 0
 --- !u!82 &1306324344444208931
 AudioSource:

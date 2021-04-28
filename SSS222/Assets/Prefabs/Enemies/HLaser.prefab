@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1690200251157227999}
   - component: {fileID: 1690200251157227968}
-  - component: {fileID: 1690200251157227969}
   - component: {fileID: 5892270347175722509}
   - component: {fileID: 2294840158062716945}
+  - component: {fileID: 1690200251157227969}
+  - component: {fileID: -9076983521213079095}
   - component: {fileID: 2389488310671507859}
   - component: {fileID: 3555650474774595720}
   - component: {fileID: 2039410060127780732}
@@ -48,6 +49,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -89,25 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &1690200251157227969
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1690200251157227970}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 64d66b7c328eef6449e06a1c71f2dce2, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!50 &5892270347175722509
 Rigidbody2D:
   serializedVersion: 4
@@ -146,7 +129,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 1}
-    oldSize: {x: 3.2, y: 9.6}
+    oldSize: {x: 6.4, y: 9.6}
     newSize: {x: 0.32, y: 0.96}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -155,6 +138,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.1896749, y: 9.579161}
   m_EdgeRadius: 0
+--- !u!95 &1690200251157227969
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690200251157227970}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 64d66b7c328eef6449e06a1c71f2dce2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!111 &-9076983521213079095
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690200251157227970}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 4ebbfe78e6fb61a439ede4c20f85e8f6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 4ebbfe78e6fb61a439ede4c20f85e8f6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!82 &2389488310671507859
 AudioSource:
   m_ObjectHideFlags: 0
@@ -166,9 +184,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 4eed6e83de0b5114eabed60d800bca56, type: 3}
+  m_audioClip: {fileID: 8300000, guid: df5e4c30c9f508443afd3c0673ff1ac0, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

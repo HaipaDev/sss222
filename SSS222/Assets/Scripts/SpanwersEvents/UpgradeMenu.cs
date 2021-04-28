@@ -330,6 +330,7 @@ public class UpgradeMenu : MonoBehaviour{
         }
         if(total_UpgradesCount>=total_UpgradesCountMax){
             LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=Mathf.Clamp(total_UpgradesCount-total_UpgradesCountMax,0,99);
+            LevelUp();
             total_UpgradesLvl++;
             var g=GameRules.instance;
             var player=FindObjectOfType<Player>();
@@ -369,7 +370,10 @@ public class UpgradeMenu : MonoBehaviour{
         bar.ID=ID;
         bar.Recreate();
     }
-
+    void LevelUp(){
+        AudioManager.instance.Play("LvlUp2");
+        FindObjectOfType<OnScreenButtons>().transform.GetChild(0).GetComponent<Animator>().SetTrigger("on");
+    }
 
     public void CheatCores(){
         GameSession.instance.CheckCodes(-1,0);

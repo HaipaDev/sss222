@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3147796775416149954}
   - component: {fileID: 3147796775416149953}
   - component: {fileID: 1660825313398597713}
-  - component: {fileID: 8262457775497264122}
+  - component: {fileID: 4699524762836716423}
   - component: {fileID: 6361041040622666652}
   - component: {fileID: -4076050431880435700}
   - component: {fileID: 3202909624295444156}
@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 2836206252358398912}
   - component: {fileID: -942159007773227235}
   m_Layer: 9
-  m_Name: Bat BulletHell
+  m_Name: Bat BulletHell BossTest
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 3147796775416149952}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -50,6 +50,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -79,9 +80,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8647823593821616703, guid: 25e136b99c763054f9832f861ee503c8,
-    type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -112,8 +112,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &8262457775497264122
-BoxCollider2D:
+--- !u!60 &4699524762836716423
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -125,7 +125,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.12682092}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -135,9 +135,30 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.9408169, y: 0.5096257}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.15316705, y: 0.37169635}
+      - {x: -0.49893615, y: -0.0026812456}
+      - {x: -0.50079584, y: -0.18685433}
+      - {x: -0.31341597, y: -0.18553166}
+      - {x: -0.31404552, y: -0.1233018}
+      - {x: -0.250377, y: -0.124785826}
+      - {x: -0.24928544, y: -0.18755056}
+      - {x: -0.18674098, y: -0.1870654}
+      - {x: -0.18597746, y: -0.24962309}
+      - {x: -0.06379384, y: -0.24892196}
+      - {x: -0.062382042, y: -0.18744501}
+      - {x: 0.06321387, y: -0.18616787}
+      - {x: 0.06324505, y: -0.24998628}
+      - {x: 0.18782715, y: -0.25051618}
+      - {x: 0.1882917, y: -0.18671393}
+      - {x: 0.24946454, y: -0.18743788}
+      - {x: 0.24953902, y: -0.124190226}
+      - {x: 0.31200585, y: -0.12395871}
+      - {x: 0.31317496, y: -0.187746}
+      - {x: 0.4994975, y: -0.18735436}
+      - {x: 0.4989948, y: -0.0010334644}
+      - {x: 0.15845022, y: 0.37169635}
 --- !u!114 &6361041040622666652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,14 +187,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  size: {x: 1, y: 1}
+  Name: BatBoss
+  size: {x: 3, y: 3}
   spr: {fileID: 0}
-  health: 17
+  healthStart: 250
+  health: 250
   shooting: 1
-  minTimeBtwnShots: 1.75
-  maxTimeBtwnShots: 2.8
-  bullet: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2, type: 3}
+  minTimeBtwnShots: 0.75
+  maxTimeBtwnShots: 1.15
+  bullet: {fileID: 0}
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
@@ -181,8 +203,8 @@ MonoBehaviour:
   flyOff: 0
   freezefxTime: 0
   givePts: 1
-  scoreValueStart: 3
-  scoreValueEnd: 7
+  scoreValueStart: 50
+  scoreValueEnd: 100
   enBallChanceInit: 30
   coinChanceInit: 3
   powercoreChanceInit: 1
@@ -206,6 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9957469ac0c594981c65e4fda467ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dmgTimer: 0
 --- !u!114 &801518567914847888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +352,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
     type: 3}
-  numberOfProjectiles: 6
-  radius: 5
+  numberOfProjectiles: 38
+  radius: 3
   moveSpeed: 5

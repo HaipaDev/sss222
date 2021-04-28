@@ -171,7 +171,7 @@ public class Enemy : MonoBehaviour{
                 if(coinChance==1){GameAssets.instance.Make("Coin",transform.position);}
                 if(powercoreChance==1){GameAssets.instance.Make("PowerCore",transform.position);}
                 GameSession.instance.AddEnemyCount();
-                if(xpAmnt!=0)GameSession.instance.DropXP(xpAmnt,transform.position);//GameSession.instance.AddXP(xpAmnt);
+                if(xpAmnt!=0)if(GameRules.instance.xpOn){GameSession.instance.DropXP(xpAmnt,transform.position);}else{GameSession.instance.AddXP(xpAmnt);}
                 givePts=false;
             }
             AudioManager.instance.Play("Explosion");

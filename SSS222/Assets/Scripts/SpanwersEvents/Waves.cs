@@ -171,7 +171,7 @@ public class Waves : MonoBehaviour{
         //else{
         if(GameSession.instance!=null)if(GameSession.instance.EVscoreMax!=-5&&GameSession.instance.EVscore>=GameSession.instance.EVscoreMax){if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
             timeSpawns=0; currentWave=GetRandomWave();//waveIndex=Random.Range(0, waveConfigs.Count); currentWave=waveConfigs[waveIndex];
-            GameSession.instance.EVscore=0; GameSession.instance.DropXP(GameSession.instance.xp_wave,new Vector2(0,7),3f);//GameSession.instance.AddXP(GameSession.instance.xp_wave);//XP For Wave
+            GameSession.instance.EVscore=0; if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameSession.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameSession.instance.xp_wave);}
             }
         //}
         //if (timeSpawns <= 0) {timeSpawns=mTimeSpawns; }

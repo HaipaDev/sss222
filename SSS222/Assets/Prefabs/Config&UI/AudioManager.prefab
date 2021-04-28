@@ -65,8 +65,26 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
-  - name: LvlUp
+  - name: CoreCollect
     clip: {fileID: 8300000, guid: 8231a6668c1568d488c0dcb0e1519036, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: LvlUp
+    clip: {fileID: 8300000, guid: 7c710bdca2c590649a73d66fb1368ec9, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: LvlUp2
+    clip: {fileID: 8300000, guid: 20ab6cb7a4bc9da469d6770fe1ceb3f3, type: 3}
     volume: 1
     volumeVariance: 0
     pitch: 1
@@ -409,15 +427,6 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Overheat
     clip: {fileID: 8300000, guid: 5f725a352fd458c4e9b1a86d2a531e8b, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0.1
-    loop: 0
-    mixerGroup: {fileID: 0}
-    source: {fileID: 0}
-  - name: LvlUp2
-    clip: {fileID: 8300000, guid: e329319501a448643bb4ef6394bb7da3, type: 3}
     volume: 1
     volumeVariance: 0
     pitch: 1

@@ -72,6 +72,7 @@ public class EnemyCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){ dmg=(float)System.Math.Round(damageValues.GetDmgLSaber()/3,2); FindObjectOfType<Player>().energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y));}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=0; AudioManager.instance.Play("PRocketHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.GetDmgFlame();}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!gameObject.name.Contains("Comet")){dmg=-damageValues.GetDmgBlueFlame();}
 
             if(FindObjectOfType<Player>()!=null)dmg*=FindObjectOfType<Player>().dmgMulti;
             GetComponent<Enemy>().health-=dmg;
@@ -79,8 +80,10 @@ public class EnemyCollider : MonoBehaviour{
 
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
             GameAssets.instance.VFX("FlareHit", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
-            if(GameSession.instance.dmgPopups==true&&dmg!=0){
+            if(GameSession.instance.dmgPopups==true&&dmg>0){
                 GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPhaseColor));
+            }else if(GameSession.instance.dmgPopups==true&&dmg<0){
+                GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor));
             }
             if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;
     }else{dmgTimer-=Time.deltaTime;}

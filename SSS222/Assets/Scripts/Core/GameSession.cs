@@ -126,11 +126,11 @@ public class GameSession : MonoBehaviour{
         if(shopOn&&(shopScore>=shopScoreMax&&coins>0)){
             if(shopCargoOn){Shop.instance.SpawnCargo();}
             else{Shop.shopOpen = true;
-            foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
+            /*foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
                 enemy.givePts = false;
                 enemy.health = -1;
                 enemy.Die();
-            }
+            }*/
             gameSpeed=0f;}
             shopScoreMax=UnityEngine.Random.Range(shopScoreMaxS,shopScoreMaxE);
             shopScore=0;
@@ -152,7 +152,7 @@ public class GameSession : MonoBehaviour{
             //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
             coresXp=0;
             //AudioManager.instance.Play("LvlUp");
-            AudioManager.instance.Play("LvlUp2");
+            AudioManager.instance.Play("LvlUp");
             
         }
 
@@ -456,3 +456,4 @@ public class GameSession : MonoBehaviour{
     public void SetGameModeSelected(int i){gameModeSelected=i;}
     public void SetCheatmode(){if(!cheatmode){cheatmode=true;return;}else{cheatmode=false;return;}}
 }
+public enum dir{up,down,left,right}

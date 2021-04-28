@@ -74,6 +74,7 @@ public class Player : MonoBehaviour{
     public float dmgMulti=1f;
     public float shootMulti=1f;
     [SerializeField] public float shipScaleDefault=0.89f;
+    [SerializeField] public bool bulletResize;
 #endregion
 #region//States
     [Header("States")]
@@ -155,8 +156,9 @@ public class Player : MonoBehaviour{
     [SerializeField] public float inverterTime=10f;
     [SerializeField] public float magnetTime=15f;
     [SerializeField] public float scalerTime=15f;
-    [SerializeField] public float shipScaleMin=0.45f;
-    [SerializeField] public float shipScaleMax=2.5f;
+    [SerializeField] public float[] scalerSizes={0.45f,0.75f,1.2f,1.5f,1.75f,2f,2.5f};
+    //[SerializeField] public float shipScaleMin=0.45f;
+    //[SerializeField] public float shipScaleMax=2.5f;
     [SerializeField] public float matrixTime=7f;
     [SerializeField] public float pmultiTime=24f;
     [SerializeField] public float accelTime=7f;
@@ -221,7 +223,6 @@ public class Player : MonoBehaviour{
     [SerializeField]public float dist;
     [HideInInspector]public Vector2 velocity;
     public float shipScale=1f;
-    float defaultShipScale=1f;
     float hPressedTime;
     float vPressedTime;
     public float mPressedTime;
@@ -272,9 +273,6 @@ public class Player : MonoBehaviour{
         SetUpMoveBoundaries();
         dashTime=startDashTime;
         if(SaveSerial.instance.settingsData.inputType==InputType.mouse)SetMoveByMouse(true);else SetMoveByMouse(false);
-        defaultShipScale=shipScale;
-        shipScaleMin*=defaultShipScale;
-        shipScaleMax*=defaultShipScale;
         pauseMenu=FindObjectOfType<PauseMenu>();
 
         SetPrefabs();
@@ -321,6 +319,7 @@ public class Player : MonoBehaviour{
         dmgMultiInit=i.dmgMultiPlayer;
         shootMultiInit=i.shootMultiPlayer;
         shipScaleDefault=i.shipScaleDefault;
+        bulletResize=i.bulletResize;
         overheatOn=i.overheatOnPlayer;
         recoilOn=i.recoilOnPlayer;
         ///State Defaults
@@ -334,8 +333,7 @@ public class Player : MonoBehaviour{
         inverterTime=i.inverterTime;
         magnetTime=i.magnetTime;
         scalerTime=i.scalerTime;
-        shipScaleMin=i.shipScaleMin;
-        shipScaleMax=i.shipScaleMax;
+        scalerSizes=i.scalerSizes;
         matrixTime=i.matrixTime;
         pmultiTime=i.pmultiTime;
         accelTime=i.accelTime;
@@ -809,6 +807,7 @@ public class Player : MonoBehaviour{
                         if(wp.leftAnchorE!=Vector2.zero){posL=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.leftAnchor.x,wp.leftAnchorE.x),UnityEngine.Random.Range(wp.leftAnchor.y,wp.leftAnchorE.y))*shipScale;}
                         bulletL=GameAssets.instance.Make(asset, posL) as GameObject;
                         if(bulletL!=null){
+                            if(bulletResize){bulletL.transform.localScale*=shipScale;}
                             if(i>0){speedoffxL=wp.serialOffsetSpeed.x;speedoffyL=wp.serialOffsetSpeed.y;
                                 if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxL=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyL=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
                                 sL=new Vector2(sL.x-=speedoffxL,sL.y+=speedoffyL);}
@@ -826,6 +825,7 @@ public class Player : MonoBehaviour{
                         if(wp.rightAnchorE!=Vector2.zero){posR=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.rightAnchor.x,wp.rightAnchorE.x),UnityEngine.Random.Range(wp.rightAnchor.y,wp.rightAnchorE.y))*shipScale;}
                         bulletR=GameAssets.instance.Make(asset, posR) as GameObject;
                         if(bulletR!=null){
+                            if(bulletResize){bulletR.transform.localScale*=shipScale;}
                             if(i>0){speedoffxR=wp.serialOffsetSpeed.x;speedoffyR=wp.serialOffsetSpeed.y;
                                 if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxR=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyR=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
                                 sR=new Vector2(sR.x+=speedoffxR,sR.y+=speedoffyR);}
@@ -949,19 +949,7 @@ public class Player : MonoBehaviour{
         
         if(scaler==true){
             scalerTimer-=Time.deltaTime;
-            /*var i=0;
-            if(Time.timeScale>0.0001f){// && instantiateTimer<=0){
-                for(i=0; i<100; i++){
-                    if(UnityEngine.Random.Range(0,100)>50){scaleUp=true;}else{scaleUp=false;}
-                    if(i>99)i=0;
-                }
-
-                if(scaleUp==false && shipScale>shipScaleMin){shipScale-=2f*Time.deltaTime;}
-                if(scaleUp==true && shipScale<shipScaleMax){shipScale+=2f*Time.deltaTime;}
-                //if(shipScale<=0.45){scaleUp=true;}
-                //if(shipScale>=1.64){scaleUp=false;}
-                //instantiateTimer=instantiateTime;
-            }*/
+            //Scaler function in PlayerCollider
         }else{
             shipScale=shipScaleDefault;
         }

@@ -33,6 +33,7 @@ public class DamageValues : MonoBehaviour{
     float dmgMPulse = 130f;
 
     float dmgComet = 10f;
+    float dmgBlueFlame = 0.2f;
     float dmgBat = 36f;
     float dmgSoundwave = 16.5f;
     float dmgEnemyShip1 = 80f;
@@ -117,6 +118,7 @@ if(i!=null){
 
 
     public float GetDmgComet(){return dmgComet;}
+    public float GetDmgBlueFlame(){return dmgBlueFlame;}
     public float GetDmgBat(){return dmgBat;}
     public float GetDmgSoundwave(){return dmgSoundwave;}
     public float GetDmgEnemyShip1(){return dmgEnemyShip1;}

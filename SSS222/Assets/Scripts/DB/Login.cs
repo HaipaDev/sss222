@@ -6,7 +6,9 @@ using UnityEngine.UI;
 using TMPro;
 
 public class Login : MonoBehaviour{
+    [SerializeField] GameObject bothPanel;
     [SerializeField] GameObject logInPanel;
+    [SerializeField] GameObject registerPanel;
     [SerializeField] GameObject logOutPanel;
     [SerializeField] TMPro.TMP_InputField registerUsername;
     [SerializeField] TMPro.TMP_InputField registerPassword;
@@ -17,8 +19,8 @@ public class Login : MonoBehaviour{
         db=FindObjectOfType<DBAccess>();
     }
     void Update() {
-        if(SaveSerial.instance.hyperGamerLoginData.loggedIn){if(!logOutPanel.activeSelf){logOutPanel.SetActive(true);logInPanel.SetActive(false);}}
-        else{if(!logInPanel.activeSelf){logInPanel.SetActive(true);logOutPanel.SetActive(false);}}
+        if(SaveSerial.instance.hyperGamerLoginData.loggedIn){if(!logOutPanel.activeSelf){logOutPanel.SetActive(true);bothPanel.SetActive(false);}}
+        else{if(!bothPanel.activeSelf){bothPanel.SetActive(true);logOutPanel.SetActive(false);}}
     }
     public void Register(){
         if(registerUsername.text!=""&&registerPassword.text!=""){
@@ -32,4 +34,6 @@ public class Login : MonoBehaviour{
     }
     public void LogIn(){if(loginUsername.text!=""&&loginPassword.text!=""){db.LoginHyperGamer(loginUsername.text,loginPassword.text);}else{DBAccess.instance.SetLoginMessage("You cant login to an empty account");}}
     public void LogOut(){SaveSerial.instance.LogOut();}
+    public void LoginPanel(){logInPanel.SetActive(true);registerPanel.SetActive(false);}
+    public void RegisterPanel(){logInPanel.SetActive(false);registerPanel.SetActive(true);}
 }

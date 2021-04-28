@@ -68,10 +68,19 @@ public class Shop : MonoBehaviour{
         if(shopTimeMax!=-5&&shopTimer<=0&&shopTimer!=-4){Resume();}
     }
     public void SpawnCargo(){
+        var cargoDir=dir.up;
         float xx=3.45f;
-        if(UnityEngine.Random.value<0.5f){xx=-3.45f;}//else{xx=3.45f;}
-        //xx=Random.Range(-3.45f,3.45f);
-        GameAssets.instance.Make("CargoShip",new Vector2(xx,7.4f));
+        float yy=7.4f;
+        GameObject go;
+        if(UnityEngine.Random.value<0.5f){cargoDir=dir.right;}else{cargoDir=dir.left;}
+        if(cargoDir==dir.up){yy=7.4f;}
+        if(cargoDir==dir.down){yy=-7.4f;}
+        if(cargoDir==dir.left){xx=-4.55f;}
+        if(cargoDir==dir.right){xx=4.55f;}
+        if(cargoDir==dir.up||cargoDir==dir.down){if(UnityEngine.Random.value<0.5f){xx=-3.45f;}}
+        if(cargoDir==dir.left||cargoDir==dir.right){yy=Random.Range(3.6f,-4.15f);}
+        go=GameAssets.instance.Make("CargoShip",new Vector2(xx,yy));
+        go.GetComponent<CargoShip>().SetCargoSpawnDir(cargoDir);
     }
     public void OpenShop(){
         purchased=false;

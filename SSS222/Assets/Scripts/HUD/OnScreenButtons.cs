@@ -4,22 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class OnScreenButtons : MonoBehaviour{
-    void Start(){
-        if(SaveSerial.instance.settingsData.scbuttons==false){
-            foreach(Button bt in GetComponentsInChildren<Button>()){
-                bt.enabled=false;
-                bt.GetComponent<Image>().enabled=false;
-            }
-        }else{
-            foreach(Button bt in GetComponentsInChildren<Button>()){
-                bt.enabled=true;
-                bt.GetComponent<Image>().enabled=true;
-            }
-        }
-    }
-
     void Update(){
-        if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.scbuttons==false){
+        if(SaveSerial.instance.settingsData.scbuttons==false&&!transform.GetChild(0).GetComponent<Animator>().GetBool("on")){
             foreach(Button bt in GetComponentsInChildren<Button>()){
                 bt.enabled=false;
                 bt.GetComponent<Image>().enabled=false;

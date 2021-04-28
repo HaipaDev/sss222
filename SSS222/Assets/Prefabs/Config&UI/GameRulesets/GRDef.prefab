@@ -130,7 +130,6 @@ MonoBehaviour:
   pwrupEnergyGet: 36
   enForPwrupRefill: 25
   enPwrupDuplicate: 42
-  refillEnergyAmnt: 110
   skillsPlayer:
   - name: Magnetic Pulse
     ID: 0
@@ -361,7 +360,7 @@ MonoBehaviour:
     specialDrop: {fileID: 0}
   - name: Enemy Combatant
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: ec5062004304d664a832f10560d73d6d, type: 3}
+    spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
     health: 95
     shooting: 0
     minTimeBtwnShots: 0
@@ -383,12 +382,12 @@ MonoBehaviour:
     specialDrop: {fileID: 0}
   - name: Enemy Ship
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 5f4813d488c7595449d8bc4a9ca0247a, type: 3}
+    spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
     health: 120
     shooting: 1
     minTimeBtwnShots: 0.65
     maxTimeBtwnShots: 0.93
-    bullet: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1,
+    bullet: {fileID: 5313808222654050488, guid: 7ee89741fb82f0a45a71870919d506a7,
       type: 3}
     bulletSpeed: 8
     DBullets: 1
@@ -565,7 +564,7 @@ MonoBehaviour:
     spritesLunar:
     - {fileID: 21300000, guid: d77e60d2555e3794bb7b3751fc12984a, type: 3}
     - {fileID: 21300000, guid: 9707760d56d495d49ad28413a26f324c, type: 3}
-    lunarPart: {fileID: 100000, guid: 3d92ff3b8ca41e040a35a255a84248e0, type: 3}
+    lunarPart: {fileID: 100000, guid: c9a649e528b32914aa6bb629e3597592, type: 3}
   enCombatantSettings:
     speedFollowX: 3.5
     speedFollowY: 4
@@ -861,30 +860,39 @@ MonoBehaviour:
   total_UpgradesCountMax: 5
   other_UpgradesCountMax: 10
   maxHealth_UpgradeAmnt: 5
+  hpStat_enabled: 1
   maxHealth_UpgradeCost: 1
   maxHealth_UpgradesCountMax: 3
+  energyStat_enabled: 1
   maxEnergy_UpgradeAmnt: 5
   maxEnergy_UpgradeCost: 1
   maxEnergy_UpgradesCountMax: 4
+  speedStat_enabled: 1
   speed_UpgradeAmnt: 0.1
   speed_UpgradeCost: 1
   speed_UpgradesCountMax: 6
-  hpRegen_UpgradeAmnt: 0.2
-  hpRegen_UpgradeCost: 1
-  hpRegen_UpgradesCountMax: 2
-  enRegen_UpgradeAmnt: 1
-  enRegen_UpgradeCost: 1
-  enRegen_UpgradesCountMax: 2
+  luckStat_enabled: 1
   luck_UpgradeAmnt: 0.05
   luck_UpgradeCost: 1
   luck_UpgradesCountMax: 5
   defaultPowerup_upgradeCost1: 1
   defaultPowerup_upgradeCost2: 1
   defaultPowerup_upgradeCost3: 4
-  energyRefill_upgradeCost: 2
-  energyRefill_upgradeCost2: 3
+  mPulse_enabled: 1
   mPulse_upgradeCost: 3
+  mPulse_lvlReq: 2
+  postMortem_enabled: 1
   postMortem_upgradeCost: 1
+  postMortem_lvlReq: 5
+  teleport_enabled: 1
   teleport_upgradeCost: 2
+  teleport_lvlReq: 3
+  overhaul_enabled: 0
   overhaul_upgradeCost: 3
-  unlockableSkills: 03000000040000000100000002000000020000000300000004000000
+  overhaul_lvlReq: 3
+  crMend_enabled: 1
+  crMend_upgradeCost: 5
+  crMend_lvlReq: 5
+  enDiss_enabled: 1
+  enDiss_upgradeCost: 4
+  enDiss_lvlReq: 4
