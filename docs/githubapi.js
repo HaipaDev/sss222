@@ -32,6 +32,7 @@ async function getapiReleases(){
 	
 	//sleep(100);
 	setReleasesText();
+	setReleasesHref();
 }
 async function getapiStable(){
 	const responseStable=await fetch(stableUrl);
@@ -46,6 +47,12 @@ getapiReleases();
 function setReleasesText(){
 	document.getElementById("stableText").innerHTML=stableName;
 	document.getElementById("latestText").innerHTML=latestName;
+}
+function setReleasesHref(){
+	document.getElementById("launcher").href=launcherUrl;
+	document.getElementById("stable").href=stableUrlGoto;
+	latestUrlGoto=latestUrlGoto.concat(latestTag);
+	document.getElementById("latest").href=latestUrlGoto;
 }
 
 function downloadLauncher(){
