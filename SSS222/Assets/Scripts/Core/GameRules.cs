@@ -166,8 +166,7 @@ public static GameRules instance;
 #endregion
 #region//Shop
 [Header("Shop")]
-    public ShopItem[] shopList;
-    public int defSlots=1;
+    public List<LootTableEntryShop> shopList;
     public bool repEnabled=true;
      public const int repLength=4;
     public int[] reputationThresh=new int[repLength];

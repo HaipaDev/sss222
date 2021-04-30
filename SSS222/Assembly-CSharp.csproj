@@ -44,7 +44,6 @@
      <Compile Include="Assets\Scripts\Enemies\EnCombatant.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ColorPicker\ColorSliderImage.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Primitives\UILineRendererList.cs" />
-     <Compile Include="Assets\Scripts\SpanwersEvents\ShopSlot.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FollowMouse.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ReorderableList\ReorderableListContent.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\CurvedText.cs" />
@@ -97,7 +96,6 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\ToolTips\TooltipTrigger.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\SelectionBox\SelectionBox.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FallDown.cs" />
-     <Compile Include="Assets\Scripts\SpanwersEvents\ShopSlotID.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\ToolTips\BoundTooltip\BoundTooltipTrigger.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ComboBox\ComboBox.cs" />
      <Compile Include="Assets\Scripts\HUD\GameCanvas.cs" />
@@ -191,7 +189,6 @@
      <Compile Include="Assets\Scripts\UniversalUsage\AlwaysUpsideUp.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\CooldownButton.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
-     <Compile Include="Assets\Scripts\SpanwersEvents\LootTableShop.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\ShineEffector.cs" />
      <Compile Include="Assets\Other\ZBayatGames\SaveGameFree\Scripts\Types\Color32Save.cs" />
      <Compile Include="Assets\Scripts\HUD\ScoreUI.cs" />
@@ -262,6 +259,7 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Primitives\DiamondGraph.cs" />
      <Compile Include="Assets\Scripts\Player\ShipSkinManager.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\02_CellEventHandling\Example02CellDto.cs" />
+     <Compile Include="Assets\Scripts\SpanwersEvents\ShopQueue.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\PowerupItem.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\MenuExample\Scripts\Menus\AwesomeMenu.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\Enlarge.cs" />
@@ -294,6 +292,7 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\Stepper.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\Accordion\Tweening\ITweenValue.cs" />
      <Compile Include="Assets\Scripts\Enemies\HealBullet.cs" />
+     <Compile Include="Assets\Scripts\SpanwersEvents\ShopSlot.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIScreenEffect.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ColorPicker\SVBoxSlider.cs" />
      <Compile Include="Assets\Other\ZBayatGames\SaveGameFree\Examples\Save Custom\ExampleSaveCustom.cs" />
@@ -305,7 +304,6 @@
      <Compile Include="Assets\Scripts\Enemies\HLaserCollision.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\ExtensionsToggleGroup.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ColorPicker\Events\ColorChangedEvent.cs" />
-     <Compile Include="Assets\Scripts\SpanwersEvents\LootTableShop2.cs" />
      <Compile Include="Assets\Other\ZExtendableSaveSystem\Core\ISavableComponent.cs" />
      <Compile Include="Assets\Scripts\HUD\GameOverCanvas.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\Gradient2.cs" />
@@ -378,6 +376,7 @@
      <Compile Include="Assets\Scripts\HUD\EnableChildOnPlayer.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\UIScrollToSelectionXY.cs" />
      <Compile Include="Assets\Scripts\HUD\FixScrollRect.cs" />
+     <Compile Include="Assets\Scripts\SpanwersEvents\ShopItemID.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\ReadOnlyAttribute.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\CurlyUI\CUIMisc.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Layout\HorizontalScrollSnap.cs" />
@@ -453,6 +452,7 @@
      <Compile Include="Assets\Scripts\Tags\Tag_MagnetAffected.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\ExtentionMethods.cs" />
      <Compile Include="Assets\Scripts\HUD\PowerupDisplay.cs" />
+     <Compile Include="Assets\Scripts\SpanwersEvents\LootTableShop.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\SkillSlotID.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\01_Basic\Example01ScrollViewCell.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ComboBox\DropDownListButton.cs" />

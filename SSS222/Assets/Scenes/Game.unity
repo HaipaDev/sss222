@@ -2958,6 +2958,22 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
         type: 3}
+      propertyPath: shopList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
+        type: 3}
+      propertyPath: shopList.Array.data[0].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: b082a4e514cd17e45aadeb523cbde903,
+        type: 2}
+    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
+        type: 3}
+      propertyPath: shopList.Array.data[0].dropChance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 795444042786618691, guid: 99e8818fb6d6d00489a2a8785bcf265f,
+        type: 3}
       propertyPath: pwrupStatusList.Array.data[1].rarity
       value: 1
       objectReference: {fileID: 0}
@@ -3960,6 +3976,109 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 330221192202664180, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 330221192202664180, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 468110974213669193, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 468110974213669193, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 468110974213669193, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 534.9838
+      objectReference: {fileID: 0}
+    - target: {fileID: 468110974213669193, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -193.74046
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: sum
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: currentQueue
+      value: 
+      objectReference: {fileID: 11400000, guid: b082a4e514cd17e45aadeb523cbde903,
+        type: 2}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: itemList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: itemsPercentage.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: itemList.Array.data[0].name
+      value: ArcadeQueue1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: itemList.Array.data[1].name
+      value: ArcadeQueue1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: itemList.Array.data[0].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: b082a4e514cd17e45aadeb523cbde903,
+        type: 2}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: itemList.Array.data[1].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: b082a4e514cd17e45aadeb523cbde903,
+        type: 2}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: itemList.Array.data[0].dropChance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: itemList.Array.data[1].dropChance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: itemsPercentage.Array.data[0].name
+      value: ArcadeQueue1 - 100% - 1/0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227156221995543344, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: itemsPercentage.Array.data[1].name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675485551208921737, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 387.48093
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679422391047689949, guid: 152a40c0d5152554692a15ae8364a540,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3679422391987501171, guid: 152a40c0d5152554692a15ae8364a540,
         type: 3}
       propertyPath: m_Name

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ecb9aadf7f8084e90fda5db25c342c, type: 3}
+  m_Name: ArcadeQueue1
+  m_EditorClassIdentifier: 
+  slotList:
+  - itemList:
+    - name: Laser 2
+      lootItem: {fileID: 11400000, guid: bc76ce6cd259aad4a853d94976673358, type: 2}
+      dropChance: 3
+  - itemList:
+    - name: Laser 3
+      lootItem: {fileID: 11400000, guid: 187414193757906429e075a6a4c93829, type: 2}
+      dropChance: 4
+    - name: Laser 2
+      lootItem: {fileID: 11400000, guid: bc76ce6cd259aad4a853d94976673358, type: 2}
+      dropChance: 2
+  itemsPercentage:
+  - list:
+    - Laser 2 - 100% - 3/0
+  - list:
+    - Laser 3 - 100% - 4/0
+    - Laser 2 - 33,33% - 2/4
+  sum:
+  - 3
+  - 6
