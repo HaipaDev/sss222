@@ -7,15 +7,17 @@
 </script>
 </head>
 <body>
+<script>setAudio();</script>
 <center>
-<div class="logo"><img class="logo" src="img/sss222Logo.png"></div>
+<div class="page">
+<div class="logo"></div>
 <div class="desc">
 <h1>Super Space Shooter 2222</h1>
 <h3>Is a sequel to my first game I made back in 2017 as a 14 year old.</h3>
 Now reworked by a 17 year old in Unity since March 2020
 
 <h3>A dynamic fast-paced space shooter with a fresh take!</h3>
-For any updates follow me <a href="https://twitter.com/HyperLemonPL" target="_blank">@HyperLemonPL on Twitter</a>
+For any updates follow me <a href="https://twitter.com/HyperLemonPL" target="_blank" onclick="playClick();" allow="autoplay">@HyperLemonPL on Twitter</a>
 </div>
 <br><br>
 <div class="images">
@@ -26,19 +28,21 @@ src="https://www.youtube.com/embed/k4oCxKsmDOg">
 <img src="img/screenshot1.png">
 <img src="img/screenshot2.png">
 </div>
-<div class="release"><a class="release" id="launcher">
+
+<div class="release"><a class="release" id="launcher" onclick="playClick();">
 <h1>Autoupdate Launcher<br>for PC</h1>
 </a></div>
-<div class="release"><a class="release" id="stable">
+<div class="release"><a class="release" id="stable" target="_blank" onclick="playClick();" allow="autoplay">
 <h1>Stable Release <br><br><span id="stableText"></span></h1>
 </a></div>
-<div class="release"><a class="release" id="latest">
+<div class="release"><a class="release" id="latest" target="_blank" onclick="playClick();" allow="autoplay">
 <h1>Latest PreRelease <br><br><span id="latestText"></span></h1>
 </a></div>
 <br><br><br><br>
 <div class="footer">
-<footer><p><a href="http://hypergamesdev.github.io" target="_blank">Author: HyperGamesDev</a></p></footer>
-</div
+<footer><p><a href="http://hypergamesdev.github.io" target="_blank" onclick="playClick();" allow="autoplay">Author: HyperGamesDev</a></p></footer>
+</div>
+</div>
 </center>
 </body>
 </html>

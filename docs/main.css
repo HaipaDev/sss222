@@ -16,17 +16,23 @@ body{
     font-style: normal;
 
 }
-button{cursor:pointer;}
+a{cursor:url("img/cursor.png"), auto;}
 
 div.logo{
 	width:100%;height:25%;
-	margin-top:-50px;
+	background-image:url('img/sss222Logo.png');
+	background-repeat:no-repeat;
+	background-position:center;
+	background-size:calc(348px*1.55) calc(234px*1.55);
 }
 img.logo{
-	width:calc(348px*1.55);height:calc(234px*1.55);
+	
+}
+div.desc{
+	
 }
 div.release{
-	margin-top:20px;
+	margin-top:4vmin;
 	height:10%;
 }
 a.release{
@@ -43,6 +49,8 @@ a.release{
 	display:inline-block;
 }
 div.footer{
+	margin-top:4vmin;
+	height:2%;
 	//background-color: rgb(49,9,49);
 	//background-size:100% 100%;
 }

@@ -25,6 +25,7 @@ async function getapiReleases(){
 	console.log(latestData);
 	latestTag=latestData.tag_name;
 	latestName=(latestData.name).replace("SSS222","");
+	latestName=latestName.replace("(","<br>(");
 	
 	console.log("Stable Data");
 	console.log(stableData);
@@ -33,16 +34,10 @@ async function getapiReleases(){
 	//sleep(100);
 	setReleasesText();
 	setReleasesHref();
-}
-async function getapiStable(){
-	const responseStable=await fetch(stableUrl);
-	stableData=await responseStable.json();
-	console.log("Stable Data");
-	console.log(stableData);
-	stableName=(stableData.name).replace("SSS222","");
-	
+	setAudio();
 }
 getapiReleases();
+
 
 function setReleasesText(){
 	document.getElementById("stableText").innerHTML=stableName;
@@ -65,6 +60,21 @@ function goToLatestRelease(){
 	latestUrlGoto=latestUrlGoto.concat(latestTag);
 	location.href=latestUrlGoto;
 }
+
+function setAudio(){
+	var a=document.getElementsByTagName("a");
+	a[0].onmouseover="playHover();";a[0].onclick="playClick();";a[0].allow="autoplay";
+	//for(var i=0;i<a.length;i++){a[i].onmouseover="playHover();";a[i].onclick="playClick();";a[i].allow="autoplay";}
+}
+function playHover(){
+	var audio = new Audio('audio/ButtonHover.wav');
+	audio.currentTime=0;
+	audio.play();
+}function playClick(){
+	var audio = new Audio('audio/ButtonClick.wav');
+	audio.play();
+}
+
 
 function sleep(milliseconds) {
   const date = Date.now();
