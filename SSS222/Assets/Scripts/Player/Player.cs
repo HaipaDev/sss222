@@ -769,7 +769,7 @@ public class Player : MonoBehaviour{
 #endregion
 
 #region//Powerups
-    public IEnumerator ShootContinuously(){while(true){if(Time.timeScale>0.0001f){
+    public IEnumerator ShootContinuously(){while(true){if(Time.timeScale>0.0001f&&!PauseMenu.GameIsPaused&&!UpgradeMenu.UpgradeMenuIsOpen&&!Shop.shopOpened){
         WeaponProperties w=null;
         if(GetWeaponProperty(powerup)!=null){w=GetWeaponProperty(powerup);}else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}else Debug.LogWarning(powerup+" not added to WeaponProperties List");
         if(w!=null){

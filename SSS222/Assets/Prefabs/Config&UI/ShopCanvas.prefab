@@ -694,15 +694,9 @@ MonoBehaviour:
   slotsContainer: {fileID: 4396388954008070026}
   slotPrefab: {fileID: 4955086252991357872, guid: f7f563039b7d3b44d860e2dfc4fd692d,
     type: 3}
-  slotsChoose:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   slotUnlock: 0200000003000000040000000500000006000000
   shopTimeMax: 10
+  currentSlotID: 0
   purchases: 0
   purchased: 0
   subbed: 0
@@ -713,6 +707,7 @@ MonoBehaviour:
   sum: 0
   shopTimer: -4
   lootTable: {fileID: 1227156221995543344}
+  purchaseTimer: -4
 --- !u!114 &1227156221995543344
 MonoBehaviour:
   m_ObjectHideFlags: 0

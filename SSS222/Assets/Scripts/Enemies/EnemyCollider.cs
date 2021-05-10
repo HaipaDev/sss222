@@ -39,19 +39,22 @@ public class EnemyCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=damageValues.GetDmgMPulse();AudioManager.instance.Play("MLaserHit");}
 
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.GetDmgFlame();}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!gameObject.name.Contains("Comet")){dmg=-damageValues.GetDmgBlueFlame();}else if(gameObject.name.Contains("Comet")){dmg=0;}
 
             if(GetComponent<VortexWheel>()!=null){if(!other.gameObject.name.Contains(GameAssets.instance.Get("HRocket").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("QRocket").name)){dmg/=3;}}
             if(FindObjectOfType<Player>()!=null)dmg*=FindObjectOfType<Player>().dmgMulti;
             GetComponent<Enemy>().health-=dmg;
             //AudioSource.PlayClipAtPoint(enemyHitSFX, new Vector2(transform.position.x, transform.position.y));
             GameAssets.instance.VFX("FlareHit", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
-            if(GameSession.instance.dmgPopups==true&&dmg!=0){
+            if(GameSession.instance.dmgPopups==true&&dmg>0){
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("PLaser").name)){
                     GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgColor));
                 }else{
                     GetComponent<Enemy>().dmgCount+=dmg;
                     if(GetComponent<Enemy>().dmgCounted==false)GetComponent<Enemy>().DispDmgCount(other.transform.position);
                 }
+            }else if(GameSession.instance.dmgPopups==true&&dmg<0){
+                GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor));
             }
         }else if(other.CompareTag(tag)){
             if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)||other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){GetComponent<Enemy>().givePts=false; GetComponent<Enemy>().health=-1; GetComponent<Enemy>().Die();}
@@ -72,7 +75,7 @@ public class EnemyCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){ dmg=(float)System.Math.Round(damageValues.GetDmgLSaber()/3,2); FindObjectOfType<Player>().energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y));}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=0; AudioManager.instance.Play("PRocketHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.GetDmgFlame();}
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!gameObject.name.Contains("Comet")){dmg=-damageValues.GetDmgBlueFlame();}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!gameObject.name.Contains("Comet")){dmg=-damageValues.GetDmgBlueFlame();}else if(gameObject.name.Contains("Comet")){dmg=0;}
 
             if(FindObjectOfType<Player>()!=null)dmg*=FindObjectOfType<Player>().dmgMulti;
             GetComponent<Enemy>().health-=dmg;
@@ -83,7 +86,7 @@ public class EnemyCollider : MonoBehaviour{
             if(GameSession.instance.dmgPopups==true&&dmg>0){
                 GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPhaseColor));
             }else if(GameSession.instance.dmgPopups==true&&dmg<0){
-                GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor));
+                GameCanvas.instance.DMGPopup(-dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor));
             }
             if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;
     }else{dmgTimer-=Time.deltaTime;}

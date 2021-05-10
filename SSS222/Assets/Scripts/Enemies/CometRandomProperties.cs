@@ -80,7 +80,7 @@ public class CometRandomProperties : MonoBehaviour{
         var angle=Random.Range(0f,360f);
         if(randomAngle)transform.rotation=Quaternion.AngleAxis(angle,Vector3.forward);
 
-        if(healthBySize)enemy.health*=size;
+        if(healthBySize)enemy.healthStart=Mathf.RoundToInt(enemy.health*size);enemy.health=enemy.healthStart;
 
         //Lunar Comets
         //if(GameSession.instance.shopOn){

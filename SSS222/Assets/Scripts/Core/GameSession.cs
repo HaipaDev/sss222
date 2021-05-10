@@ -160,7 +160,6 @@ public class GameSession : MonoBehaviour{
         if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
         (FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().matrix==false&&FindObjectOfType<Player>().accel==false)&&speedChanged!=true){gameSpeed=defaultGameSpeed;}
         if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
-        //if(Shop.shopOpen==false&&Shop.shopOpened==false){gameSpeed=1;}
         if(FindObjectOfType<Player>()==null){gameSpeed=defaultGameSpeed;}
         
         //Restart with R or Space/Resume with Space
@@ -437,8 +436,8 @@ public class GameSession : MonoBehaviour{
                 if(Input.GetKeyDown(KeyCode.Alpha1) || nkey==1){player.powerup="laser3";}
                 if(Input.GetKeyDown(KeyCode.Alpha2) || nkey==2){player.powerup="mlaser";}
                 if(Input.GetKeyDown(KeyCode.Alpha3) || nkey==3){player.powerup="lsaber";}
-                if(Input.GetKeyDown(KeyCode.Alpha4) || nkey==4){player.powerup="lclaws";}
-                if(Input.GetKeyDown(KeyCode.Alpha5) || nkey==5){player.powerup="cstream";}
+                if(Input.GetKeyDown(KeyCode.Alpha4) || nkey==4){player.powerup="cstream";}
+                if(Input.GetKeyDown(KeyCode.Alpha5) || nkey==5){player.powerup="plaser";}
             }
         }
     }

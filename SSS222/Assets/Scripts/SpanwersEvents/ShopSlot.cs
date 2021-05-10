@@ -12,13 +12,15 @@ public class ShopSlot : MonoBehaviour{
     [SerializeField] Image itemImg;
     [SerializeField] bool itemCloned;
     [SerializeField] bool priceSet;
-    void Start(){
-        
+    public void SetItem(ShopItemID item){
+        itemCloned=false;
+        priceSet=false;
+        this.item=item;
     }
     void Update(){
         if(item!=null){
             if(!itemCloned){item=Instantiate(item);itemCloned=true;}
-            if(!priceSet){item.price=Random.Range(item.priceS,item.priceE);priceSet=true;}
+            if(!priceSet&&item.price==0){item.price=Random.Range(item.priceS,item.priceE);priceSet=true;}
             nameTxt.text=item.name;
             descTxt.text=item.desc;
             priceTxt.text=item.price.ToString();
@@ -26,8 +28,9 @@ public class ShopSlot : MonoBehaviour{
         }
     }
     public void Purchase(){
-        if(GameSession.instance.coins>=item.price){
-            Shop.instance.Purchase();
-        }
+    //if(GameSession.instance.coins>=item.price){
+        //GameSession.instance.coins-=item.price;
+        Shop.instance.Purchase();
+    //}
     }
 }

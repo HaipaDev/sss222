@@ -24,6 +24,7 @@ public class Shop : MonoBehaviour{
     public float sum;
     public float shopTimer=-4;
     public LootTableShop lootTable;
+    public float purchaseTimer=-4;
 
     private void Awake(){instance=this;}
     void Start(){
@@ -33,10 +34,8 @@ public class Shop : MonoBehaviour{
             repEnabled=g.repEnabled;
             if(g.shopTimeLimitEnabled){shopTimeMax=g.shopTimeLimit;}else{shopTimeMax=-5;}
         }
-        for(var go=0;go<slotsContainer.transform.childCount;go++){Destroy(slotsContainer.transform.GetChild(go).gameObject);};//Clear placeholder slots
         lootTable=GetComponent<LootTableShop>();
-        lootTable.currentQueue=lootTable.GetQueue();
-        CreateSlot();//Create first slot
+        NewQueue();//First queue
         shopMenuUI.SetActive(false);
         shopTimer=shopTimeMax;
     }
@@ -47,6 +46,8 @@ public class Shop : MonoBehaviour{
         if(repEnabled)LevelRep();
         if(shopTimeMax!=-5&&shopOpened&&shopTimer>0){shopTimer-=Time.unscaledDeltaTime;}
         if(shopTimeMax!=-5&&shopTimer<=0&&shopTimer!=-4){Resume();}
+        if(purchaseTimer>0){purchaseTimer-=Time.unscaledDeltaTime;}
+        if(purchaseTimer<=0&&purchaseTimer!=-4){GameSession.instance.gameSpeed=0;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=true;}purchaseTimer=-4;}
     }
     public void SpawnCargo(){
         var cargoDir=dir.up;
@@ -68,8 +69,8 @@ public class Shop : MonoBehaviour{
         shopMenuUI.SetActive(true);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         //RandomizeShop();
-        shopOpen = false;
-        FindObjectOfType<GameSession>().gameSpeed=0;
+        shopOpen=false;
+        GameSession.instance.gameSpeed=0;
         shopOpened=true;
         shopTimer=shopTimeMax;
     }
@@ -81,35 +82,55 @@ public class Shop : MonoBehaviour{
         shopMenuUI.SetActive(false);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         shopOpened=false;
-        FindObjectOfType<GameSession>().gameSpeed=1f;
+        GameSession.instance.gameSpeed=1f;
     }
-    public void RandomizeShop(){
-        
+
+
+    public void NewQueue(){
+        ClearSlots();
+        lootTable.currentQueue=lootTable.GetQueue();
+        CreateSlot();
+    }
+    public void ClearSlots(){
+        for(var go=0;go<slotsContainer.transform.childCount;go++){Destroy(slotsContainer.transform.GetChild(go).gameObject);}
     }
     public void CreateSlot(){
         if(currentSlotID<lootTable.currentQueue.slotList.Count){
             var go=Instantiate(slotPrefab,slotsContainer.transform);
             var slot=go.GetComponent<ShopSlot>();
-            slot.item=lootTable.currentQueue.GetItem(currentSlotID);
+            slot.SetItem(lootTable.currentQueue.GetItem(currentSlotID));
             currentSlotID++;
         }else{Debug.LogWarning("ShopSlot limit");}
         
     }
     public void CreateSlotDelay(){StartCoroutine(CreateSlotDelayI());}
-    IEnumerator CreateSlotDelayI(){
-        yield return new WaitForSecondsRealtime(0.1f);
-        CreateSlot();
-    }
+    IEnumerator CreateSlotDelayI(){yield return new WaitForSecondsRealtime(0.1f);CreateSlot();}
     void LevelRep(){
         if(GetComponentInChildren<XPBars>()!=null){
         var bar=GetComponentInChildren<XPBars>();
         for(var i=0;i<slotUnlock.Length;i++){if(reputationSlot==slotUnlock[i]){var xp=slotUnlock[i+1];bar.ID=xp;if(bar.current==null){bar.Recreate();}CreateSlot();reputationSlot=0;}}}
     }
+
+    //[SerializeReference]IEnumerator pco=null;
     public void Purchase(){
-        purchases+=1;
-        purchased=true;
-        RepPlus(1);
+        //Actual purchasing is in ShopSlot
+        if(purchaseTimer==-4){
+            purchases+=1;
+            RepPlus(1);
+            if(!purchased)purchased=true;
+            //GameSession.instance.gameSpeed=0.05f;purchaseTimer=0.3f;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=false;}
+        }
     }
+        /*if(pco!=null&&purchaseTimer>0){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=0;StopCoroutine(pco);pco=null;}
+        if(pco==null){pco=PurchaseTimeI(0.02f);}if(pco!=null&&purchaseTimer<=0){StartCoroutine(pco);}
+    }
+    public IEnumerator PurchaseTimeI(float time){
+        GameSession.instance.speedChanged=true;GameSession.instance.gameSpeed=0.05f;
+        purchaseTimer=0.5f;
+        yield return new WaitForSecondsRealtime(time);
+        GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=0;
+    }*/
+
     public void RepPlus(int amnt){
         if(repEnabled){
         reputation+=amnt;

@@ -21,15 +21,15 @@ MonoBehaviour:
     - name: Laser 3
       lootItem: {fileID: 11400000, guid: 187414193757906429e075a6a4c93829, type: 2}
       dropChance: 4
-    - name: Laser 2
-      lootItem: {fileID: 11400000, guid: bc76ce6cd259aad4a853d94976673358, type: 2}
+    - name: Medkit
+      lootItem: {fileID: 11400000, guid: 6bb27783a3898934ea601fbd6d3b6689, type: 2}
       dropChance: 2
   itemsPercentage:
   - list:
     - Laser 2 - 100% - 3/0
   - list:
     - Laser 3 - 100% - 4/0
-    - Laser 2 - 33,33% - 2/4
+    - Medkit - 33,33% - 2/4
   sum:
   - 3
   - 6
