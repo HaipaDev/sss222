@@ -50,8 +50,12 @@ MonoBehaviour:
     gobj: {fileID: 1056705403108089519, guid: eebb358fa9ff6af419cd68bd020a4289, type: 3}
   - name: EnBall
     gobj: {fileID: 1056705403108089519, guid: b02c0de83bb50b44aadff0efec44e73f, type: 3}
+  - name: Battery
+    gobj: {fileID: 1056705403108089519, guid: 40c1b09ed4e143144bff57da67d04666, type: 3}
   - name: BlackEnBall
     gobj: {fileID: 1056705403108089519, guid: 6a1e5463a6bee1d41ad4a51d34ef22af, type: 3}
+  - name: BlackFiol
+    gobj: {fileID: 1056705403108089519, guid: ede186f4c97da394c8ec2106f7e700f4, type: 3}
   - name: PowerCore
     gobj: {fileID: 1056705403108089519, guid: 0311d6b525027ad43918a62b48acaba8, type: 3}
   - name: MicroMedkit
@@ -202,6 +206,12 @@ MonoBehaviour:
     gobj: {fileID: 274471404120805607, guid: 132ee9fb56a439247829a6de4942d64b, type: 3}
   - name: SlowPwrup
     gobj: {fileID: 274471404120805607, guid: b1a2eb5ef656b1845b6f9e2df9ca6261, type: 3}
+  - name: AssassinPwrup
+    gobj: {fileID: 274471404120805607, guid: 4de07d3342d3e834d94e1bd7dd58fd22, type: 3}
+  - name: TankPwrup
+    gobj: {fileID: 274471404120805607, guid: b7f3e8671d1e8984b831d4911ecc1200, type: 3}
+  - name: OverwritePwrup
+    gobj: {fileID: 274471404120805607, guid: cabc69c5bb4dfbb4f99a5652d65ccac6, type: 3}
   vfx:
   - name: Explosion
     gobj: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}

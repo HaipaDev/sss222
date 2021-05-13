@@ -14,22 +14,78 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotList:
   - itemList:
+    - name: Micro Mender
+      lootItem: {fileID: 11400000, guid: a57502b4bd18a7a4c97bb6c7b30fd0f9, type: 2}
+      dropChance: 3
+    - name: Battery
+      lootItem: {fileID: 11400000, guid: f95fecd3c84703640870657a366da511, type: 2}
+      dropChance: 3
     - name: Laser 2
       lootItem: {fileID: 11400000, guid: bc76ce6cd259aad4a853d94976673358, type: 2}
+      dropChance: 1
+  - itemList:
+    - name: Magnet
+      lootItem: {fileID: 11400000, guid: d55de636b0711e54687954c8fa6676f0, type: 2}
+      dropChance: 4
+    - name: Accelerator
+      lootItem: {fileID: 11400000, guid: 4ef1ce05d74a7174b9a1dc1049e41130, type: 2}
+      dropChance: 2
+  - itemList:
+    - name: Inverter
+      lootItem: {fileID: 11400000, guid: 404e04e9116ac494a8f22c5730b6c7c2, type: 2}
+      dropChance: 4
+    - name: Matrix
+      lootItem: {fileID: 11400000, guid: 55064a2d497ac6946890686e8769607d, type: 2}
+      dropChance: 2
+    - name: Saber
+      lootItem: {fileID: 11400000, guid: d00d4cd4b50aa9547a57ae0db24fa4cd, type: 2}
+      dropChance: 2
+  - itemList:
+    - name: Scaler
+      lootItem: {fileID: 11400000, guid: 0c3e8c7aa556520418db99d4ac17f78b, type: 2}
       dropChance: 3
+    - name: Randomizer
+      lootItem: {fileID: 11400000, guid: d6bb61cea746feb4498df90835f7d8c0, type: 2}
+      dropChance: 2
   - itemList:
     - name: Laser 3
       lootItem: {fileID: 11400000, guid: 187414193757906429e075a6a4c93829, type: 2}
       dropChance: 4
-    - name: Medkit
+    - name: Mender
       lootItem: {fileID: 11400000, guid: 6bb27783a3898934ea601fbd6d3b6689, type: 2}
+      dropChance: 2
+  - itemList:
+    - name: Crystal Stream
+      lootItem: {fileID: 11400000, guid: f9a140876750da6458b96409451f456d, type: 2}
+      dropChance: 3
+    - name: Mini Lasers
+      lootItem: {fileID: 11400000, guid: 6dac1c090a2da0545b45d6e22af1518c, type: 2}
       dropChance: 2
   itemsPercentage:
   - list:
-    - Laser 2 - 100% - 3/0
+    - Micro Mender - 42,86% - 3/4
+    - Battery - 42,86% - 3/4
+    - Laser 2 - 14,29% - 1/6
   - list:
-    - Laser 3 - 100% - 4/0
-    - Medkit - 33,33% - 2/4
+    - Magnet - 66,67% - 4/2
+    - Accelerator - 33,33% - 2/4
+  - list:
+    - Inverter - 50% - 4/4
+    - Matrix - 25% - 2/6
+    - Saber - 25% - 2/6
+  - list:
+    - Scaler - 60% - 3/2
+    - Randomizer - 40% - 2/3
+  - list:
+    - Laser 3 - 66,67% - 4/2
+    - Mender - 33,33% - 2/4
+  - list:
+    - Crystal Stream - 60% - 3/2
+    - Mini Lasers - 40% - 2/3
   sum:
-  - 3
+  - 7
   - 6
+  - 8
+  - 5
+  - 6
+  - 5

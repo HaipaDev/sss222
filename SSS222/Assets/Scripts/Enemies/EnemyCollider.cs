@@ -39,7 +39,7 @@ public class EnemyCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=damageValues.GetDmgMPulse();AudioManager.instance.Play("MLaserHit");}
 
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.GetDmgFlame();}
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!gameObject.name.Contains("Comet")){dmg=-damageValues.GetDmgBlueFlame();}else if(gameObject.name.Contains("Comet")){dmg=0;}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!gameObject.name.Contains("Comet")){dmg=-damageValues.GetDmgBlueFlame();}else if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&gameObject.name.Contains("Comet")){dmg=0;}
 
             if(GetComponent<VortexWheel>()!=null){if(!other.gameObject.name.Contains(GameAssets.instance.Get("HRocket").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("QRocket").name)){dmg/=3;}}
             if(FindObjectOfType<Player>()!=null)dmg*=FindObjectOfType<Player>().dmgMulti;
@@ -75,7 +75,7 @@ public class EnemyCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){ dmg=(float)System.Math.Round(damageValues.GetDmgLSaber()/3,2); FindObjectOfType<Player>().energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y));}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=0; AudioManager.instance.Play("PRocketHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.GetDmgFlame();}
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!gameObject.name.Contains("Comet")){dmg=-damageValues.GetDmgBlueFlame();}else if(gameObject.name.Contains("Comet")){dmg=0;}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!gameObject.name.Contains("Comet")){dmg=-damageValues.GetDmgBlueFlame();}else if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&gameObject.name.Contains("Comet")){dmg=0;}
 
             if(FindObjectOfType<Player>()!=null)dmg*=FindObjectOfType<Player>().dmgMulti;
             GetComponent<Enemy>().health-=dmg;

@@ -24,7 +24,7 @@ public class ShopQueue:ScriptableObject{
     [SerializeField] ItemPercentageSlotsQueue[] itemsPercentage;
     public float[] sum;
     
-    void OnValidate(){SumUp();}//foreach(KeyValuePair<ShopItemID, float> d in itemTable)Debug.Log("Key = "+d.Key+" Value = "+d.Value+"");}
+    void OnValidate(){SumUp();}
     public ShopItemID GetItem(int currentSlotID){
         float randomWeight = 0;
         do{
@@ -38,21 +38,23 @@ public class ShopQueue:ScriptableObject{
         }
         return null;
     }
-    void SumUp(){
+    [ContextMenu("SumUp")]void SumUp(){
         System.Array.Resize(ref itemsPercentage, slotList.Count);
         System.Array.Resize(ref itemTable, slotList.Count);
         System.Array.Resize(ref sum, slotList.Count);
         for(var it=0;it<itemTable.Length;it++){itemTable[it]=new Dictionary<ShopItemID, float>();}
         for(var p=0;p<itemsPercentage.Length;p++){System.Array.Resize(ref itemsPercentage[p].list, slotList[p].itemList.Count);}
         for(var q=0;q<slotList.Count;q++){
-            var i=-1;
             foreach(LootTableEntryShopQueue entry in slotList[q].itemList){
                 entry.name=entry.lootItem.name;
                 itemTable[q].Add(entry.lootItem,entry.dropChance);
-                sum[q]=itemTable[q].Values.Sum();
+                sum[q]=itemTable[q].Values.Sum();   
+            }
+            var i=-1;
+            foreach(LootTableEntryShopQueue entry in slotList[q].itemList){
                 var value=System.Convert.ToSingle(System.Math.Round((entry.dropChance/sum[q]*100),2));
-                    i++;
-                    itemsPercentage[q].list[i]=entry.name+" - "+value+"%"+" - "+entry.dropChance+"/"+(sum[q]-entry.dropChance);
+                i++;
+                if(i>=0)itemsPercentage[q].list[i]=entry.name+" - "+value+"%"+" - "+entry.dropChance+"/"+(sum[q]-entry.dropChance);
             }
         }
         

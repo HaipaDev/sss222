@@ -73,6 +73,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){player.AddSubCoins(other.GetComponent<LCrystalDrop>().amnt,true);}//GameSession.instance.coins += 1;}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(1,true);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("BlackEnBall").name)){player.AddSubXP(1,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("Battery").name)){player.AddSubEnergy(player.energyBatteryGet,true);}
                 if(other.GetComponent<Tag_Collectible>().isPowerup){//if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
                     if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddPwrups(1);//powerupsGoblin++;
                     GameSession.instance.AddXP(GameSession.instance.xp_powerup);//XP For powerups
@@ -115,9 +116,7 @@ public class PlayerCollider : MonoBehaviour{
                     player.SetStatus("gclover");
                     GameSession.instance.MultiplyScore(1.25f);
                     player.energy=player.maxEnergy;
-                    //GameObject gcloverexVFX=Instantiate(gcloverVFX, new Vector2(0, 0), Quaternion.identity);
                     GameObject gcloverexOVFX=Instantiate(player.gcloverOVFX, new Vector2(0, 0), Quaternion.identity);
-                    //Destroy(gcloverexVFX, 1f);
                     Destroy(gcloverexOVFX, 1f);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowPwrup").name)){
@@ -125,10 +124,23 @@ public class PlayerCollider : MonoBehaviour{
                     if(player.shadow==true){EnergyAddDupl();}
                     player.SetStatus("shadow");
                     player.shadowed=true;
-                    //GameObject gcloverexVFX=Instantiate(gcloverVFX, new Vector2(0, 0), Quaternion.identity);
-                    //GameObject gcloverexOVFX=Instantiate(shadowEVFX, new Vector2(0, 0), Quaternion.identity);
-                    //Destroy(gcloverexVFX, 1f);
-                    //Destroy(gcloverexOVFX, 1f);
+                }
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("AssassinPwrup").name)){
+                    if(player.energy<=player.enForPwrupRefill){player.AddSubEnergy(player.pwrupEnergyGet,true);}
+                    player.Speed(13,1.4f);
+                    player.Power(13,1.2f);
+                    player.Fragile(13,1.2f);
+                }
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("TankPwrup").name)){
+                    if(player.energy<=player.enForPwrupRefill){player.AddSubEnergy(player.pwrupEnergyGet,true);}
+                    player.Slow(13,1.4f);
+                    player.Armor(13,1.2f);
+                }
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("OverwritePwrup").name)){
+                    if(player.energy<=player.enForPwrupRefill){player.AddSubEnergy(player.pwrupEnergyGet,true);}
+                    player.Hack(13);
+                    player.InfEnergy(13);
+                    player.GetComponent<PlayerSkills>().ResetSkillCooldowns();
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("MatrixPwrup").name)){player.SetStatus("matrix");}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("AccelPwrup").name)){player.SetStatus("accel");}
@@ -182,7 +194,7 @@ public class PlayerCollider : MonoBehaviour{
             #endregion
     }
     }
-    void PowerupCollect(string name){
+    public void PowerupCollect(string name){
         if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
         var w=player.GetWeaponProperty(name);
         if(w!=null){

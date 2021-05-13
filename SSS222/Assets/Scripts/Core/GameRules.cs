@@ -79,12 +79,9 @@ public static GameRules instance;
     public float onfireDmg = 1f;
     public float decayTickrate = 0.5f;
     public float decayDmg = 0.5f;
-    public float armoredMulti = 2f;
-    public float fragileMulti = 0.7f;
-    public float powerMulti = 1.6f;
-    public float weaknsMulti = 0.66f;
     [Header("Energy Gains")]//Collectibles
-    public float energyBallGet=9f;
+    public float energyBallGet=6f;
+    public float energyBatteryGet=11f;
     public float medkitEnergyGet=26f;
     public float microMedkitHpAmnt=10f;
     public float medkitHpAmnt=25f;

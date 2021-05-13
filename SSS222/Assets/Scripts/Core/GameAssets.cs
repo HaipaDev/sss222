@@ -106,3 +106,18 @@ public class GameAssets : MonoBehaviour{
         return s;
 	}
 }
+
+[System.Serializable]
+public class GObject {
+
+	public string name;
+
+	public GameObject gobj;
+}
+[System.Serializable]
+public class GSprite {
+
+	public string name;
+
+	public Sprite spr;
+}

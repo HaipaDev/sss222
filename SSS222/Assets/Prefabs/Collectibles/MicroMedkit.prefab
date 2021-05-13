@@ -49,6 +49,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -178,9 +179,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0.21698111, g: 0.13817194, b: 0.14809294, a: 1}
-  sizeGlow: 1.15
-  alphaGlow: 0.3
+  colorGlow: {r: 0.6148985, g: 0.8867924, b: 0.834695, a: 1}
+  sizeGlow: 1.05
+  alphaGlow: 0.2
   emissionSpeed: 7.63
   xx: 0
   yy: 0

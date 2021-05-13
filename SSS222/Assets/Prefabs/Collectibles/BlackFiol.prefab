@@ -18,8 +18,9 @@ GameObject:
   - component: {fileID: 6178429609194885632}
   - component: {fileID: -7162176373737096900}
   - component: {fileID: -3365304752130786154}
+  - component: {fileID: -58683458582889640}
   m_Layer: 0
-  m_Name: EnergyBall
+  m_Name: BlackFiol
   m_TagString: Powerups
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +35,7 @@ Transform:
   m_GameObject: {fileID: 1056705403108089519}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5393683, y: -3.1433494, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 871dab6c8ed58084b912b8f246e1ef5f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9b41932acbee54b4f911fbcdcae37bed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -146,8 +147,8 @@ MonoBehaviour:
   targetTag: 
   targetObj: {fileID: 0}
   dist: 0
-  distReq: 5
-  speedFollow: 5
+  distReq: 20
+  speedFollow: 8
   vspeed: 2.4
   hspeed: 0
   rotateTowards: 0
@@ -170,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0, g: 0.84305, b: 1, a: 1}
+  colorGlow: {r: 0.3031197, g: 0.15686272, b: 0.81960785, a: 1}
   sizeGlow: 1.15
   alphaGlow: 0.5
   emissionSpeed: 7.63
@@ -227,3 +228,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04326831ef30704a84404316f25314d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-58683458582889640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056705403108089519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: {fileID: 100000, guid: c4c1d093c2811664aa894979eab321ce, type: 3}
+  xx: 0
+  yy: -0.6
+  time: 0.3
+  onTop: 1
+  stayStill: 1
+  angle: 0
+  BFlame: {fileID: 0}

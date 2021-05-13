@@ -24,10 +24,7 @@ public class PlayerSkills : MonoBehaviour{
     public float timerTeleport=-4;
     public float timerOverhaul=-4;
     public float timeOverhaul=10;
-    
-    //References
     Player player;
-    UpgradeMenu umenu;
     void Awake(){StartCoroutine(SetValues());}
     IEnumerator SetValues(){
         yield return new WaitForSecondsRealtime(0.15f);
@@ -40,7 +37,6 @@ public class PlayerSkills : MonoBehaviour{
         ResizeSet();
     }
     void Start(){
-        umenu=FindObjectOfType<UpgradeMenu>();
         player=GetComponent<Player>();
         timerUI=GameObject.Find("SkillTimerUI");
         mPulsePrefab=GameAssets.instance.Get("MPulse");
@@ -53,7 +49,7 @@ public class PlayerSkills : MonoBehaviour{
     }
 
     private void OnValidate(){
-        if(skills.Length>0){foreach(Skill s in skills){/*s.ID=s.item.ID;*/if(s.item!=null)s.name=s.item.name;  /*s.enCost=s.item.enCost;s.cooldown=s.item.cooldown;*/}}
+        if(skills.Length>0){foreach(Skill s in skills){if(s.item!=null)s.name=s.item.name;}}
         ResizeSet();
     }
     private void ResizeSet(){
@@ -70,50 +66,37 @@ public class PlayerSkills : MonoBehaviour{
             else if(skillsBinds[i]==skillKeyBind.E){cooldownE=cooldowns[i];}
         }
     if(Time.deltaTime>0.0001&&player.hacked!=true){
-        
-        //if(cooldownQ>0)cooldownQ-=Time.deltaTime;
-        //if(cooldownE>0)cooldownE-=Time.deltaTime;
         if(Input.GetKeyDown(KeyCode.Q) || key==1){
             foreach(Skill skill in skills){
                 var i=skill.ID;
-                //if(skill.keySet==skillKeyBind.Q){
                 if(skillsBinds[i]==skillKeyBind.Q){
-                    //if(i==0){
                     if(cooldownQ<=0 && Time.deltaTime>0.0001f){
                         Skills(skillKeyBind.Q,i,skill.enCost,skill.cooldown);
                     }else{AudioManager.instance.Play("Deny");}
-                    //}
                 }
             }
         }if(Input.GetKeyDown(KeyCode.E) || key==2){
             foreach(Skill skill in skills){
                 var i=skill.ID;
-                //if(skill.keySet==skillKeyBind.E){
                 if(skillsBinds[i]==skillKeyBind.E){
-                    //if(i==0){
                     if(cooldownE<=0 && Time.deltaTime>0.0001f){
                         Skills(skillKeyBind.E,i,skill.enCost,skill.cooldown);
                     }else{AudioManager.instance.Play("Deny");}
-                    //}
                 }
             }
         }
     }
     }
     public void DeathSkills(){
-        if(umenu.mPulse_upgraded==2)Skills(skillKeyBind.Disabled,0,0,0);//PostMortem MagneticPulse
+        if(UpgradeMenu.instance.mPulse_upgraded==2)Skills(skillKeyBind.Disabled,0,0,0);//PostMortem MagneticPulse
     }
     
     #region//Skills
     public void Skills(skillKeyBind key,int i,float enCost,float cooldown){
-        cooldowns[i]=skills[i].cooldown;
-        //if(skillsBinds[i]==skillKeyBind.Q){cooldownQ=skills[i].cooldown;}
-        //else if(skillsBinds[i]==skillKeyBind.E){cooldownE=skills[i].cooldown;}
         if(i!=2){
         if(player.energy>0){
+            cooldowns[i]=skills[i].cooldown;
             player.AddSubEnergy(enCost,false);
-            //if(key==skillKeyBind.Q){cooldownQ=cooldown;}
-            //if(key==skillKeyBind.E){cooldownE=cooldown;}
             if(key==skillKeyBind.Disabled){}
             if(i==0){//Magnetic Pulse
                 GameObject mPulse=Instantiate(mPulsePrefab, transform.position,Quaternion.identity);
@@ -126,8 +109,7 @@ public class PlayerSkills : MonoBehaviour{
         }else{AudioManager.instance.Play("Deny");}
         }else if(i==2){//Overhaul
         if(GameSession.instance.coresXp>0){
-                //if(key==skillKeyBind.Q){cooldownQ=cooldown;}
-                //if(key==skillKeyBind.E){cooldownE=cooldown;}
+                cooldowns[i]=skills[i].cooldown;
                 if(key==skillKeyBind.Disabled){}
                 if(player.energy<1){player.AddSubEnergy(20);}
                 var ratio=(GameSession.instance.coresXp/GameSession.instance.xp_forCore);
@@ -138,8 +120,6 @@ public class PlayerSkills : MonoBehaviour{
                 GameSession.instance.coresXp=0;
                 AudioManager.instance.Play("Overhaul");
                 AudioManager.instance.GetSource("Overhaul").loop=true;
-                //if(overhaulAudio==null){overhaulAudio=gameObject.AddComponent(typeof(AudioSource)) as AudioSource;}
-                //if(overhaulAudio!=null){overhaulAudio.clip=AudioManager.instance.Get("Overhaul");overhaulAudio.loop=true;overhaulAudio.Play();}
         }
         }else{AudioManager.instance.Play("Deny");}
     }
@@ -175,6 +155,11 @@ public class PlayerSkills : MonoBehaviour{
         if(!player.infEnergy&&AudioManager.instance!=null&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}//Destroy(overhaulAudio);}
     }
     #endregion
+    public void ResetSkillCooldowns(){
+        for(var i=0;i<cooldowns.Length;i++){cooldowns[i]=0;}
+        cooldownQ=0;
+        cooldownE=0;
+    }
 
     private void SetActiveAllChildren(Transform transform, bool value){
         foreach (Transform child in transform){

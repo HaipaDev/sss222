@@ -166,10 +166,6 @@ public class Player : MonoBehaviour{
     [SerializeField] public float onfireDmg=1f;
     [SerializeField] public float decayTickrate=0.5f;
     [SerializeField] public float decayDmg=0.5f;
-    [SerializeField] public float armoredMulti=2f;
-    [SerializeField] public float fragileMulti=0.7f;
-    [SerializeField] public float powerMulti=1.6f;
-    [SerializeField] public float weaknsMulti=0.66f;
 #endregion
 
 #region//Energy/Weapon Durations
@@ -177,7 +173,8 @@ public class Player : MonoBehaviour{
     [SerializeField] public List<WeaponProperties> weaponProperties;
     [SerializeField] public float shadowCost=5f;
     [Header("Energy Gains")]//Collectibles
-    [SerializeField] public float energyBallGet=9f;
+    [SerializeField] public float energyBallGet=6f;
+    [SerializeField] public float energyBatteryGet=11f;
     [SerializeField] public float medkitEnergyGet=40f;
     [SerializeField] public float microMedkitHpAmnt=10f;
     [SerializeField] public float medkitHpAmnt=25f;
@@ -341,10 +338,6 @@ public class Player : MonoBehaviour{
         onfireDmg=i.onfireDmg;
         decayTickrate=i.decayTickrate;
         decayDmg=i.decayDmg;
-        armoredMulti=i.armoredMulti;
-        fragileMulti=i.fragileMulti;
-        powerMulti=i.powerMulti;
-        weaknsMulti=i.weaknsMulti;
         //WeaponProperties
         //GameRules gr = (GameRules)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Config&UI/GameRulesets/GRDef.prefab", typeof(GameRules));
         GameRules gr=null;
@@ -365,6 +358,7 @@ public class Player : MonoBehaviour{
         }
         ///Energy gains
         energyBallGet=i.energyBallGet;
+        energyBatteryGet=i.energyBatteryGet;
         medkitEnergyGet=i.medkitEnergyGet;
         microMedkitHpAmnt=i.microMedkitHpAmnt;
         medkitHpAmnt=i.medkitHpAmnt;
@@ -1040,10 +1034,10 @@ public class Player : MonoBehaviour{
         if(blindTimer>0){blindTimer-=Time.deltaTime;}else{if(blindTimer>-4)ResetStatus("blind");}
         if(speedTimer>0){speedTimer-=Time.deltaTime;}else{if(speedTimer>-4)if(speed){speedStrength=1;moveSpeedCurrent=speedPrev;}ResetStatus("speed");}
         if(slowTimer>0){slowTimer-=Time.deltaTime;}else{if(slowTimer>-4)if(slow){slowStrength=1;moveSpeedCurrent=speedPrev;}ResetStatus("slow");}
-        if(armored==true&&fragile!=true){armorMulti=armoredMulti*armoredStrength;}else if(fragile==true&&armored!=true){armorMulti=fragileMulti/fragileStrength;}
-        if(armored!=true&&fragile!=true){armorMulti=armorMultiInit;}if(armored==true&&fragile==true){armorMulti=fragileStrength*armoredStrength;}
-        if(power==true&&weakns!=true){dmgMulti=powerMulti*powerStrength;}else if(weakns==true&&power!=true){dmgMulti=weaknsMulti/weaknsStrength;}
-        if(power!=true&&weakns!=true){dmgMulti=dmgMultiInit;}if(power==true&&weakns==true){dmgMulti=weaknsStrength*powerStrength;}
+        if(armored==true&&fragile!=true){armorMulti=armoredStrength;}else if(fragile==true&&armored!=true){armorMulti=1/fragileStrength;}
+        if(armored!=true&&fragile!=true){armorMulti=armorMultiInit;}if(armored==true&&fragile==true){armorMulti=(1/fragileStrength)*armoredStrength;}
+        if(power==true&&weakns!=true){dmgMulti=powerStrength;}else if(weakns==true&&power!=true){dmgMulti=1/weaknsStrength;}
+        if(power!=true&&weakns!=true){dmgMulti=dmgMultiInit;}if(power==true&&weakns==true){dmgMulti=(1/weaknsStrength)*powerStrength;}
         if(onfire){if(frozen){ResetStatus("frozen");/*Damage(1,dmgType.silent);*/}}
         if(infEnergyTimer>0){infEnergyTimer-=Time.deltaTime;}else{if(infEnergyTimer>-4){ResetStatus("infEnergy");}}
         if(infEnergy){energy=infPrevEnergy;}
@@ -1248,7 +1242,7 @@ public class Player : MonoBehaviour{
         if(type==dmgType.healSilent){if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);}}
     }
     public void AddSubEnergy(float value,bool add=false){
-    if(energyOn){
+    if(energyOn&&!infEnergy){
         if(inverter!=true){
             if(add){energy+=value;EnergyPopUpHUD(value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
             else{energy-=value;EnergyPopUpHUD(-value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
