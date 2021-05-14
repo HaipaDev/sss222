@@ -43,17 +43,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecc846f247c28a4f935da921a1dbab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cfgName: Adventure Mode
+  cfgName: Arcade Mode
   defaultGameSpeed: 1
   shopOn: 1
   shopCargoOn: 1
   upgradesOn: 1
   xpOn: 1
   barrierOn: 0
-  EVscoreMax: 40
+  EVscoreMax: 30
   shopScoreMax: 300
   shopScoreMaxS: 300
-  shopScoreMaxE: 550
+  shopScoreMaxE: 350
   scoreMulti: 1
   luckMulti: 1
   startingPosPlayer: {x: 0.36, y: -6.24}
@@ -62,44 +62,34 @@ MonoBehaviour:
   moveY: 1
   paddingX: -0.125
   paddingY: 0.45
-  moveSpeedPlayer: 5
-  healthPlayer: 75
-  maxHPPlayer: 75
+  moveSpeedPlayer: 7.5
+  healthPlayer: 100
+  maxHPPlayer: 100
   energyOnPlayer: 1
-  energyPlayer: 100
-  maxEnergyPlayer: 180
-  ammoOn: 0
+  energyPlayer: 30
+  maxEnergyPlayer: 60
+  ammoOn: 1
   fuelOn: 0
   fuelDrainAmnt: 0.1
   fuelDrainFreq: 0.5
   powerupStarting: laser
   powerupDefault: laser
   weaponsLimited: 0
-  losePwrupOutOfEn: 0
-  losePwrupOutOfAmmo: 0
+  losePwrupOutOfEn: 1
+  losePwrupOutOfAmmo: 1
   armorMultiPlayer: 1
   dmgMultiPlayer: 1
   shootMultiPlayer: 1
-  shipScaleDefault: 0.89
+  shipScaleDefault: 0.95
+  bulletResize: 0
   overheatOnPlayer: 1
-  overheatTimerMax: 8.66
-  overheatCooldown: 0.65
+  overheatTimerMax: 11.44
+  overheatCooldown: 0.5
   overheatedTime: 3
   recoilOnPlayer: 1
   weaponProperties:
-  - {fileID: 11400000, guid: c02591e544d31e44c9fecff122d832be, type: 2}
-  - {fileID: 11400000, guid: 466aaf3a96073854faf4eafb373c65f1, type: 2}
-  - {fileID: 11400000, guid: c2cd77c9677e9534d8469763df8aeeb3, type: 2}
-  - {fileID: 11400000, guid: 49cc28bde08a8444d925542f523215f2, type: 2}
-  - {fileID: 11400000, guid: b154f23a4342bb34db4c4811ecf62a91, type: 2}
-  - {fileID: 11400000, guid: 06682e2bb692b854cb933bc149bc8fa6, type: 2}
-  - {fileID: 11400000, guid: 44fef545084b37043a427b9fa004d1c6, type: 2}
-  - {fileID: 11400000, guid: 282b02d64fc493b40905744ad32dcccd, type: 2}
-  - {fileID: 11400000, guid: dbf3681dcbec09945ad44292f5d3a124, type: 2}
-  - {fileID: 11400000, guid: 58363aed9654ce94ba9cb6630ba14d49, type: 2}
-  - {fileID: 11400000, guid: 3e8bb0a8b7a347245a4e8a410ed28efe, type: 2}
-  - {fileID: 11400000, guid: e913b426dcd9a2c46872469ef76d3b27, type: 2}
-  - {fileID: 11400000, guid: 873e180e33e72a84a95efe650b9264be, type: 2}
+  - {fileID: 11400000, guid: b365b34ef3f6bed4b852bce204bfe8f3, type: 2}
+  - {fileID: 11400000, guid: 390ccedfd644e144ebfac9dbe0d34fb0, type: 2}
   flipTime: 7
   gcloverTime: 6
   shadowTime: 10
@@ -110,8 +100,14 @@ MonoBehaviour:
   inverterTime: 10
   magnetTime: 15
   scalerTime: 15
-  shipScaleMin: 0.45
-  shipScaleMax: 2.5
+  scalerSizes:
+  - 0.45
+  - 0.75
+  - 1.2
+  - 1.5
+  - 1.75
+  - 2
+  - 2.5
   matrixTime: 7
   pmultiTime: 24
   accelTime: 7
@@ -119,11 +115,8 @@ MonoBehaviour:
   onfireDmg: 1
   decayTickrate: 0.5
   decayDmg: 0.5
-  armoredMulti: 2
-  fragileMulti: 0.7
-  powerMulti: 1.6
-  weaknsMulti: 0.66
   energyBallGet: 9
+  energyBatteryGet: 11
   medkitEnergyGet: 40
   microMedkitHpAmnt: 10
   medkitHpAmnt: 25
@@ -162,7 +155,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
     rarity: 0
     dropChance: 6
-    levelReq: 0
+    levelReq: 1
   - name: GCLover
     lootItem: {fileID: 11400000, guid: f6a560a419dccd647bb79ae520e69ddf, type: 2}
     rarity: 2
@@ -172,7 +165,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 836e8441bd1a4e1468be0e689364fb14, type: 2}
     rarity: 0
     dropChance: 6
-    levelReq: 0
+    levelReq: 2
   - name: Magnet
     lootItem: {fileID: 11400000, guid: 6878a416f2285834c9af2732b5242ce0, type: 2}
     rarity: 1
@@ -186,13 +179,13 @@ MonoBehaviour:
   - name: PointMulti
     lootItem: {fileID: 11400000, guid: 1f5c3c97f5d9e164dafb8aac25017596, type: 2}
     rarity: 1
-    dropChance: 2
-    levelReq: 5
+    dropChance: 0
+    levelReq: 0
   - name: Randomizer
     lootItem: {fileID: 11400000, guid: 8645c7606471be849bbf4044ff5ceec1, type: 2}
     rarity: 0
-    dropChance: 6
-    levelReq: 1
+    dropChance: 0
+    levelReq: 0
   - name: Scaler
     lootItem: {fileID: 11400000, guid: c9d54cc47e5cf20499998336988ca3ff, type: 2}
     rarity: 0
@@ -213,12 +206,12 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 9a4e80f1fa79ea547a89f82e21045b39, type: 2}
     rarity: 1
     dropChance: 1.75
-    levelReq: 4
+    levelReq: 3
   - name: HRockets
     lootItem: {fileID: 11400000, guid: f75229abe571c5f4780d84f66fa08b5b, type: 2}
     rarity: 0
     dropChance: 3
-    levelReq: 3
+    levelReq: 2
   - name: Laser2
     lootItem: {fileID: 11400000, guid: 1368b36bec2ccca4e97ab92bed99ea99, type: 2}
     rarity: 0
@@ -228,7 +221,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 6682bf37c4b0a37459f807e12dd59d27, type: 2}
     rarity: 1
     dropChance: 3.15
-    levelReq: 2
+    levelReq: 1
   - name: LClaws
     lootItem: {fileID: 11400000, guid: 48ec4756caf9fcb4fab471d62d339935, type: 2}
     rarity: 1
@@ -243,17 +236,17 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: e2b5a8667474ac54a8705649fcad7ee5, type: 2}
     rarity: 1
     dropChance: 2
-    levelReq: 0
+    levelReq: 1
   - name: Phaser
     lootItem: {fileID: 11400000, guid: 96f99f90403e530478f4d3e9bd04b50f, type: 2}
     rarity: 1
     dropChance: 0
-    levelReq: 2
+    levelReq: 1
   - name: PLaser
     lootItem: {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
     rarity: 1
-    dropChance: 3
-    levelReq: 4
+    dropChance: 2
+    levelReq: 3
   - name: QRockets
     lootItem: {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
     rarity: 0
@@ -263,7 +256,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
     rarity: 2
     dropChance: 0
-    levelReq: 4
+    levelReq: 2
   mTimePowerupWeaponsSpawns: -1
   mTimePowerupWeaponsSpawnsS: -1
   mTimePowerupWeaponsSpawnsE: -1
@@ -312,6 +305,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 67796b4b135ab994c9d4cbf15e0a728b, type: 2}
   - {fileID: 11400000, guid: feed16e0d91c8bc49a5039c0f5de5bae, type: 2}
   - {fileID: 11400000, guid: 313e63b1f688ca74d8fe6fc05250006d, type: 2}
+  - {fileID: 11400000, guid: 62a29b7fc10a69b45bf9ff41b6cda95a, type: 2}
   enemies:
   - name: Bat
     size: {x: 1, y: 1}
@@ -562,8 +556,8 @@ MonoBehaviour:
     lunarDrop: {fileID: 0}
     lunarDropChance: 0
     spritesLunar:
-    - {fileID: 21300000, guid: d77e60d2555e3794bb7b3751fc12984a, type: 3}
-    - {fileID: 21300000, guid: 9707760d56d495d49ad28413a26f324c, type: 3}
+    - {fileID: 21300000, guid: 8f5604571a603dc4ca74f76f5a8c070e, type: 3}
+    - {fileID: 21300000, guid: 4ca5f58d98a9d514e98f96344392f882, type: 3}
     lunarPart: {fileID: 100000, guid: c9a649e528b32914aa6bb629e3597592, type: 3}
   enCombatantSettings:
     speedFollowX: 3.5
@@ -642,156 +636,51 @@ MonoBehaviour:
   efxGlareDev: {x: 1.5, y: 2}
   shopList:
   - name: 0Minigun
-    item: {fileID: 11400000, guid: 6ec05bf2e77023040a7434c469830641, type: 2}
-    dropChance:
-    - 0
-    - 1
-    - 2
-    - 3
-    - 4
-    price: -1
-    priceS: 25
-    priceE: 35
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 2HRockets
-    item: {fileID: 11400000, guid: a28047dfde9ced14a9903f48debcca04, type: 2}
-    dropChance:
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    price: -1
-    priceS: 15
-    priceE: 21
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 3LaserTriple
-    item: {fileID: 11400000, guid: abb4cfc964a457a43966da12baf2d6e1, type: 2}
-    dropChance:
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    price: -1
-    priceS: 10
-    priceE: 24
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 4MedkitUltra
-    item: {fileID: 11400000, guid: 165a7c68e9b1f2c47b32f92ac76ac387, type: 2}
-    dropChance:
-    - 0
-    - 0.75
-    - 1
-    - 2
-    - 3
-    price: -1
-    priceS: 20
-    priceE: 27
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 5LSaber
-    item: {fileID: 11400000, guid: b85bbd8627abfd044ba3d84fbb99696a, type: 2}
-    dropChance:
-    - 7
-    - 6
-    - 5.3
-    - 4
-    - 3
-    price: -1
-    priceS: 8
-    priceE: 12
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 6QRockets
-    item: {fileID: 11400000, guid: dd25ef0572237bd4dadb8483a89004df, type: 2}
-    dropChance:
-    - 3
-    - 4
-    - 5
-    - 5.5
-    - 6.2
-    price: -1
-    priceS: 18
-    priceE: 28
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 7PRockets
-    item: {fileID: 11400000, guid: c24afda4a89457e4f9314bf378d20b5d, type: 2}
-    dropChance:
-    - 0
-    - 0.2
-    - 0.5
-    - 1
-    - 3
-    price: -1
-    priceS: 36
-    priceE: 45
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 8Magnet
-    item: {fileID: 11400000, guid: 6d1914be2a8292b44bfe7829c76f6525, type: 2}
-    dropChance:
-    - 7
-    - 6
-    - 5
-    - 4
-    - 4
-    price: -1
-    priceS: 13
-    priceE: 26
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 9Randomizer
-    item: {fileID: 11400000, guid: f9bb167715c7fcc419a9f9aa53b85245, type: 2}
-    dropChance:
-    - 6.5
-    - 6
-    - 5.5
-    - 5
-    - 5
-    price: -1
-    priceS: 9
-    priceE: 17
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 10PowerCore
-    item: {fileID: 11400000, guid: ca7b448a3f962ed45b97683ad5bdea1e, type: 2}
-    dropChance:
-    - 5
-    - 6
-    - 5
-    - 5.5
-    - 5
-    price: -1
-    priceS: 12
-    priceE: 23
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 11SpeedUpgrade
-    item: {fileID: 11400000, guid: de21f97679bf7a242afdafac444f7804, type: 2}
-    dropChance:
-    - 1
-    - 2
-    - 3
-    - 3
-    - 3.5
-    price: -1
-    priceS: 9
-    priceE: 33
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 12MicroMedkit
-    item: {fileID: 11400000, guid: 32d0083f734ca5c4da2bc4a855ae429f, type: 2}
-    dropChance:
-    - 6
-    - 4
-    - 2
-    - 1
-    - 1
-    price: -1
-    priceS: 3
-    priceE: 7
+    lootItem: {fileID: 0}
+    dropChance: 0
   - name: 13MicroBattery
-    item: {fileID: 11400000, guid: 3765c1456dd867849a3897323fb24e52, type: 2}
-    dropChance:
-    - 6
-    - 4
-    - 2
-    - 1
-    - 1
-    price: -1
-    priceS: 3
-    priceE: 7
-  defSlots: 1
+    lootItem: {fileID: 0}
+    dropChance: 0
   repEnabled: 1
   reputationThresh: 01000000030000000500000008000000
   shopTimeLimitEnabled: 1
   shopTimeLimit: 10
   crystalDropS: 4
   crystalDropE: 14
-  xp_forCore: 300
+  xp_forCore: 100
   xp_wave: 20
   xp_shop: 3
   xp_powerup: 1
@@ -804,7 +693,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1938246018583424785}
         m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-        m_MethodName: AdventureLvlEach
+        m_MethodName: ArcadeLvlEach
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -818,7 +707,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1938246018583424785}
         m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-        m_MethodName: AdventureLvl1
+        m_MethodName: ArcadeLvl1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -828,35 +717,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1938246018583424785}
-        m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-        m_MethodName: AdventureLvl2
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1938246018583424785}
-        m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-        m_MethodName: AdventureLvl4
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-  lvlEventsIDs: 00000000010000000200000004000000
+  lvlEventsIDs: 0000000001000000
   total_UpgradesCountMax: 5
   other_UpgradesCountMax: 10
   maxHealth_UpgradeAmnt: 5

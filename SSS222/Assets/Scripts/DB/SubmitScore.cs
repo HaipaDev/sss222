@@ -12,11 +12,11 @@ public class SubmitScore : MonoBehaviour{
             db.SaveScoreToDB(GameSession.instance.gameModeSelected,SaveSerial.instance.hyperGamerLoginData.username,GameSession.instance.GetHighscore(GameSession.instance.gameModeSelected));
             if(FindObjectOfType<DisplayLeaderboard>().currentUser)FindObjectOfType<DisplayLeaderboard>().DisplayCurrentUserHighscore();
         }
-        else{FindObjectOfType<Level>().LoadLoginScene();}
+        else{Level.instance.LoadLoginScene();}
     }
     public void ReturnToGMInfo(){StartCoroutine(ReturnToGMInfoI());}
     IEnumerator ReturnToGMInfoI(){
         yield return new WaitForSecondsRealtime(3.5f);
-        FindObjectOfType<Level>().LoadGameModeInfoScene();
+        Level.instance.LoadGameModeInfoScene();
     }
 }

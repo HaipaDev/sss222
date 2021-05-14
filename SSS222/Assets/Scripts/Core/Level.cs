@@ -4,22 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour{
+    public static Level instance;
     [SerializeField]ParticleSystem transition;
     [SerializeField]Animator transitioner;
     [SerializeField]float transitionTime=0.35f;
     //float prevGameSpeed;
-    private void Awake(){
-        GameSession.instance.gameSpeed=1f;
-        Time.timeScale=1f;
-        SetUpSingleton();
-    }
+    private void Awake(){SetUpSingleton();GameSession.instance.gameSpeed=1f;}
     private void SetUpSingleton(){
-        int numberOfObj = FindObjectsOfType<Level>().Length;
-        if(numberOfObj > 1){
-            Destroy(gameObject);
-        }else{
-            DontDestroyOnLoad(gameObject);
-        }
+        instance=this;if(FindObjectsOfType<Level>().Length>1){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);}
     }
     void Start(){
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
@@ -35,10 +27,9 @@ public class Level : MonoBehaviour{
         SaveSerial.instance.Save();
         GameSession.instance.ResetMusicPitch();
         SceneManager.LoadScene("Menu");
-        //LoadLevel("Menu");
         if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
     }
-    public void LoadStartMenuGame(){FindObjectOfType<Level>().StartCoroutine(LoadStartMenuGameI());}
+    public void LoadStartMenuGame(){Level.instance.StartCoroutine(LoadStartMenuGameI());}
     IEnumerator LoadStartMenuGameI(){
         if(SceneManager.GetActiveScene().name=="Game"){
             GameSession.instance.SaveHighscore();
@@ -49,21 +40,14 @@ public class Level : MonoBehaviour{
         SaveSerial.instance.Save();
         GameSession.instance.ResetMusicPitch();
         SceneManager.LoadScene("Menu");
-        //LoadLevel("Menu");
         if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
-        
-        //GameSession.instance.savableData.Save();
-        //SaveSerial.instance.Save();
     }
     public void LoadGameScene(){
-        //GameSession.instance.SetGameModeSelected(i);
         if(DamageValues.instance!=null)DamageValues.instance.StartCoroutine(DamageValues.instance.SetValues());
-        if(GameSession.instance.gameModeSelected==0){SaveSerial.instance.LoadAdventure();GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
+        if(GameSession.instance.gameModeSelected==1){SaveSerial.instance.LoadAdventure();GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
         SceneManager.LoadScene("Game");
-        //LoadLevel("Game");
         GameSession.instance.ResetScore();
         GameSession.instance.gameSpeed=1f;
-        Time.timeScale = 1f;
     }
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");}
     public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}
@@ -76,10 +60,8 @@ public class Level : MonoBehaviour{
     public void LoadCreditsScene(){SceneManager.LoadScene("Credits");}
     public void LoadWebsite(string url){Application.OpenURL(url);}
     public void SubmitScore(){if(SaveSerial.instance.hyperGamerLoginData.loggedIn){LoadScoreSubmitScene();}else{LoadLoginScene();}}
-    public void RestartGame(){FindObjectOfType<Level>().StartCoroutine(RestartGameI());}
+    public void RestartGame(){Level.instance.StartCoroutine(RestartGameI());}
     IEnumerator RestartGameI(){
-        //PauseMenu.GameIsPaused=false;
-        //if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().DestroyAll();Destroy(FindObjectOfType<DisruptersSpawner>().gameObject);
         GameSession.instance.SaveHighscore();
         yield return new WaitForSecondsRealtime(0.01f);
         GameSession.instance.ResetScore();
@@ -88,7 +70,6 @@ public class Level : MonoBehaviour{
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameSession.instance.speedChanged=false;
         GameSession.instance.gameSpeed=1f;
-        //if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().StartCoroutine(FindObjectOfType<DisruptersSpawner>().SetValues());
     }
     public void RestartScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

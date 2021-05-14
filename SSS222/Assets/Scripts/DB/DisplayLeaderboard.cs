@@ -26,10 +26,10 @@ public class DisplayLeaderboard : MonoBehaviour{
     }
     public void CurrentUserHighscoreBtn(){
         if(SceneManager.GetActiveScene().name!="ScoreSubmit"){
-            if(SaveSerial.instance.hyperGamerLoginData.loggedIn){FindObjectOfType<Level>().LoadScoreSubmitScene();}
-            else{FindObjectOfType<Level>().LoadLoginScene();}
+            if(SaveSerial.instance.hyperGamerLoginData.loggedIn){Level.instance.LoadScoreSubmitScene();}
+            else{Level.instance.LoadLoginScene();}
         }else{
-            FindObjectOfType<Level>().LoadLeaderboardScene();
+            Level.instance.LoadLeaderboardScene();
         }
     }
     public async void DisplayCurrentUserHighscore(){

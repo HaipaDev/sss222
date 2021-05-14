@@ -16,21 +16,21 @@ public class GameSession : MonoBehaviour{
     public bool upgradesOn=true;
     public bool xpOn=true;
     [Header("Current Player Values")]
-    public int score = 0;
-    public float scoreMulti = 1f;
-    public float luckMulti = 1f;
-    public int coins = 0;
-    public int cores = 0;
-    public float coresXp = 0f;
-    public float coresXpTotal = 0f;
-    public int enemiesCount = 0;
+    public int score=0;
+    public float scoreMulti=1f;
+    public float luckMulti=1f;
+    public int coins=0;
+    public int cores=0;
+    public float coresXp=0f;
+    public float coresXpTotal=0f;
+    public int enemiesCount=0;
     [Header("EVent Score Values")]
-    public int EVscore = 0;
-    public int EVscoreMax = 50;
-    public int shopScore = 0;
-    public int shopScoreMax = 200;
-    public int shopScoreMaxS = 200;
-    public int shopScoreMaxE = 450;
+    public int EVscore=0;
+    public int EVscoreMax=50;
+    public int shopScore=0;
+    public int shopScoreMax=200;
+    public int shopScoreMaxS=200;
+    public int shopScoreMaxE=450;
     [Header("XP Values")]
     public float xp_forCore=100f;
     public float xp_wave=20f;
@@ -125,10 +125,10 @@ public class GameSession : MonoBehaviour{
         //Open Shop
         if(shopOn&&(shopScore>=shopScoreMax&&coins>0)){
             if(shopCargoOn){Shop.instance.SpawnCargo();}
-            else{Shop.shopOpen = true;
+            else{Shop.shopOpen=true;
             /*foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
-                enemy.givePts = false;
-                enemy.health = -1;
+                enemy.givePts=false;
+                enemy.health=-1;
                 enemy.Die();
             }*/
             gameSpeed=0f;}
@@ -169,8 +169,8 @@ public class GameSession : MonoBehaviour{
         if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true){if(restartTimer==-4)restartTimer=1f;}
         else if(PauseMenu.GameIsPaused==true&&Input.GetKeyDown(KeyCode.Space)){FindObjectOfType<PauseMenu>().Resume();}
         if(restartTimer>0)restartTimer-=Time.unscaledDeltaTime;
-        if(restartTimer<=0&&restartTimer!=-4){if(Input.GetKeyDown(KeyCode.R)||(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Space))){FindObjectOfType<Level>().RestartGame();restartTimer=-4;}}
-        if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Escape)){FindObjectOfType<Level>().LoadStartMenu();}
+        if(restartTimer<=0&&restartTimer!=-4){if(Input.GetKeyDown(KeyCode.R)||(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Space))){Level.instance.RestartGame();restartTimer=-4;}}
+        if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Escape)){Level.instance.LoadStartMenu();}
         }
 
         if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().inverter==true)){
@@ -247,11 +247,11 @@ public class GameSession : MonoBehaviour{
 
     public void ResetScore(){
         score=0;
-        EVscore = 0;
-        shopScore = 0;
-        coins = 0;
-        coresXp = 0;
-        cores = 0;
+        EVscore=0;
+        shopScore=0;
+        coins=0;
+        coresXp=0;
+        cores=0;
         enballDropMulti=1;
         coinDropMulti=1;
         coreDropMulti=1;
@@ -261,8 +261,7 @@ public class GameSession : MonoBehaviour{
     }
     public void SaveHighscore(){
         if(score>SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]){SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]=score;}
-        if(GameSession.instance.gameModeSelected==0){StartCoroutine(SaveAdventureI());}
-        //FindObjectOfType<DataSavable>().highscore = highscore;
+        if(GameSession.instance.gameModeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e => e.cfgName.Contains("Adventure"))){StartCoroutine(SaveAdventureI());}
     }
     IEnumerator SaveAdventureI(){
         yield return new WaitForSecondsRealtime(0.02f);
@@ -324,35 +323,35 @@ public class GameSession : MonoBehaviour{
     public void SaveSettings(){
         /*var ss=SaveSerial.instance;
         var sm=FindObjectOfType<SettingsMenu>();
-        ss.moveByMouse = sm.moveByMouse;
-        ss.quality = sm.quality;
-        ss.fullscreen = sm.fullscreen;
-        ss.scbuttons = sm.scbuttons;
-        ss.pprocessing = sm.pprocessing;
-        ss.masterVolume = sm.masterVolume;
-        ss.soundVolume = sm.soundVolume;
-        ss.musicVolume = sm.musicVolume;
-        ss.lefthand = sm.lefthand;*/
+        ss.moveByMouse=sm.moveByMouse;
+        ss.quality=sm.quality;
+        ss.fullscreen=sm.fullscreen;
+        ss.scbuttons=sm.scbuttons;
+        ss.pprocessing=sm.pprocessing;
+        ss.masterVolume=sm.masterVolume;
+        ss.soundVolume=sm.soundVolume;
+        ss.musicVolume=sm.musicVolume;
+        ss.lefthand=sm.lefthand;*/
 
         SaveSerial.instance.SaveSettings();
     }
     public void SaveInventory(){
-        SaveSerial.instance.playerData.skinID = FindObjectOfType<Inventory>().skinID;
-        SaveSerial.instance.playerData.chameleonColor[0] = FindObjectOfType<Inventory>().chameleonColorArr[0];
-        SaveSerial.instance.playerData.chameleonColor[1] = FindObjectOfType<Inventory>().chameleonColorArr[1];
-        SaveSerial.instance.playerData.chameleonColor[2] = FindObjectOfType<Inventory>().chameleonColorArr[2];
+        SaveSerial.instance.playerData.skinID=FindObjectOfType<Inventory>().skinID;
+        SaveSerial.instance.playerData.chameleonColor[0]=FindObjectOfType<Inventory>().chameleonColorArr[0];
+        SaveSerial.instance.playerData.chameleonColor[1]=FindObjectOfType<Inventory>().chameleonColorArr[1];
+        SaveSerial.instance.playerData.chameleonColor[2]=FindObjectOfType<Inventory>().chameleonColorArr[2];
     }
     public void Save(){ SaveSerial.instance.Save(); SaveSerial.instance.SaveSettings(); }
     public void Load(){ SaveSerial.instance.Load(); SaveSerial.instance.LoadSettings(); }
     //public void DeleteAllShowConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((false)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((true)); }
     //public void DeleteAllHideConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((true)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((false)); }
-    public void DeleteAll(){ SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure(); ResetSettings(); FindObjectOfType<Level>().LoadStartMenu();//FindObjectOfType<Level>().Restart();
+    public void DeleteAll(){ SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure(); ResetSettings(); Level.instance.LoadStartMenu();//FindObjectOfType<Level>().Restart();
     /*Destroy(SaveSerial.instance.gameObject);Destroy(this.gameObject); SaveSerial.instance=null;GameSession.instance=null;DamageValues.instance=null;*/}
     public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}//FindObjectOfType<Level>().LoadStartMenu();}
     
     public void ResetSettings(){
         SaveSerial.instance.ResetSettings();
-        FindObjectOfType<Level>().RestartScene();
+        Level.instance.RestartScene();
         SaveSerial.instance.SaveSettings();
         var s=FindObjectOfType<SettingsMenu>();
         /*SaveSerial.instance.settingsData.gameVersion="0.4";
@@ -370,16 +369,16 @@ public class GameSession : MonoBehaviour{
     float settingsOpenTimer;
     public void CloseSettings(bool goToPause){
     if(GameSession.instance!=null){
-        if(SceneManager.GetActiveScene().name=="Options"){if(FindObjectOfType<Level>()!=null)FindObjectOfType<Level>().LoadStartMenu();}
+        if(SceneManager.GetActiveScene().name=="Options"){if(Level.instance!=null)Level.instance.LoadStartMenu();}
         else if(SceneManager.GetActiveScene().name=="Game"&&PauseMenu.GameIsPaused){if(FindObjectOfType<SettingsMenu>()!=null)FindObjectOfType<SettingsMenu>().Close();if(FindObjectOfType<PauseMenu>()!=null&&goToPause)FindObjectOfType<PauseMenu>().Pause();}
     }}
 
     void CalculateLuck(){
-        //ref float multiAmnt = ref enballMultiAmnt;
+        //ref float multiAmnt=ref enballMultiAmnt;
         //1+(0.08*((1.05-1)/0.05))
         if(luckMulti<2.5f){
             enballDropMulti=1+(enballMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
-            //multiAmnt = ref coinMultiAmnt;
+            //multiAmnt=ref coinMultiAmnt;
             coinDropMulti=1+(coinMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
             coreDropMulti=1+(coreMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
             rarePwrupMulti=1+(rareMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
@@ -442,9 +441,9 @@ public class GameSession : MonoBehaviour{
         }
     }
     public string FormatTime(float time){
-        int minutes = (int) time / 60 ;
-        int seconds = (int) time - 60 * minutes;
-        //int milliseconds = (int) (1000 * (time - minutes * 60 - seconds));
+        int minutes=(int) time / 60 ;
+        int seconds=(int) time - 60 * minutes;
+        //int milliseconds=(int) (1000 * (time - minutes * 60 - seconds));
     return string.Format("{0:00}:{1:00}"/*:{2:000}"*/, minutes, seconds/*, milliseconds*/ );
     }
     public string GetGameSessionTimeFormat(){
