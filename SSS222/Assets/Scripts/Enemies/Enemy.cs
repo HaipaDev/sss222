@@ -113,9 +113,9 @@ public class Enemy : MonoBehaviour{
         //Rotate if Stinger
         if(gameObject.name.Contains("Stinger")){
         if(Time.timeScale>0.0001f){
-        if(FindObjectOfType<Player>()!=null){
-            if(transform.position.x-FindObjectOfType<Player>().transform.position.x<0.2f){
-            if(transform.position.y-FindObjectOfType<Player>().transform.position.y<3){
+        if(Player.instance!=null){
+            if(transform.position.x-Player.instance.transform.position.x<0.2f){
+            if(transform.position.y-Player.instance.transform.position.y<3){
                 //transform.rotation=new Quaternion(0,0,180,0);
                 if(transform.rotation.z<179){transform.rotation=new Quaternion(0,0,transform.rotation.z+30*Time.timeScale,0);}
                 if(transform.rotation.z>=179/*||(transform.rotation.z>-150&&transform.rotation.z<0)*/){transform.rotation=new Quaternion(0,0,180,0);}
@@ -145,7 +145,7 @@ public class Enemy : MonoBehaviour{
         }
     }
     private void FlyOff(){
-        if(FindObjectOfType<Player>()==null){
+        if(Player.instance==null){
             shooting=false;
             rb.velocity=new Vector2(0,3f);
         }

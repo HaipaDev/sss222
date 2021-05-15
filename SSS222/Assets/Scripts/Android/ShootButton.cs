@@ -16,7 +16,7 @@ public class ShootButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     void Update(){
         if(pressed){
             if(timer<=0){
-                FindObjectOfType<Player>().ShootButton(true);
+                Player.instance.ShootButton(true);
                 //timer=FindObjectOfType<Player>().shootTimer;
                 timer=cooldown;
             }else{
@@ -25,7 +25,7 @@ public class ShootButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 if(timerHold>timeHold && timer>0){timer=0;}
             }
         }else{
-            FindObjectOfType<Player>().ShootButton(false);
+            Player.instance.ShootButton(false);
         }
         //if (Input.GetMouseButtonUp(0)){FindObjectOfType<Player>().ShootButton(false);pressed=false;}
     }
@@ -36,7 +36,7 @@ public class ShootButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         //}
      }
      public void OnPointerUp(PointerEventData eventData){
-        FindObjectOfType<Player>().ShootButton(false);
+        Player.instance.ShootButton(false);
         pressed=false;
         //if(timer<=0)timer=FindObjectOfType<Player>().shootTimer;
         if(timer>0){timer-=Time.deltaTime;}

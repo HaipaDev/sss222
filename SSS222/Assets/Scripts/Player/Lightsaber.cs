@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class Lightsaber : MonoBehaviour{
     [SerializeField] bool enemy=false;
-    Player player;
     EnCombatant enCombatant;
     void Start()
     {
         if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
-        player=FindObjectOfType<Player>();
         enCombatant=FindObjectOfType<EnCombatant>();
         //int numberOfObj = FindObjectsOfType<Lightsaber>().Length;if (numberOfObj > 1){Destroy(gameObject);}
     }
     private void Update() {
-        if(enemy!=true)transform.localScale = player.transform.localScale;
+        if(enemy!=true)transform.localScale = Player.instance.transform.localScale;
         else{transform.localRotation=enCombatant.transform.localRotation;}
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -40,7 +38,7 @@ public class Lightsaber : MonoBehaviour{
                     //Destroy(flare.gameObject, 0.3f);
                 }
             }else{
-                if (other.gameObject.CompareTag("PlayerWeapons")){
+                if (other.gameObject.CompareTag("Player.instanceWeapons")){
                     if(other.GetComponent<Tag_PlayerWeaponBlockable>()!=null){
                         Destroy(other.gameObject, 0.05f);
                         AudioManager.instance.Play("LSaberBlockEnemy");

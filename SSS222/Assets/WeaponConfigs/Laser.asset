@@ -21,7 +21,7 @@ MonoBehaviour:
   costTypeProperties:
     id: 1
   ovheat: 0
-  duration: 10
+  duration: 0
   references:
     version: 1
     00000000:
@@ -41,9 +41,9 @@ MonoBehaviour:
         serialOffsetSpeedE: {x: 0, y: 0}
         serialOffsetAngle: {x: 0, y: 5}
         serialOffsetSound: 0.03
-        shootDelay: 0.34
-        holdDelayMulti: 1.15
-        tapDelayMulti: 1
+        shootDelay: 0.24
+        holdDelayMulti: 1
+        tapDelayMulti: 1.5
         recoilStrength: 0
         recoilTime: 0
         flare: 1

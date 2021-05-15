@@ -22,12 +22,12 @@ public class BarValue : MonoBehaviour{
     }
 
     void Update(){
-        if(valueName.Contains("health")){if(FindObjectOfType<Player>()!=null){value=FindObjectOfType<Player>().health;maxValue=FindObjectOfType<Player>().maxHP;}}
-        if(valueName.Contains("energy")){if(FindObjectOfType<Player>()!=null){value=FindObjectOfType<Player>().energy;maxValue=FindObjectOfType<Player>().maxEnergy;}}
+        if(valueName.Contains("health")){if(Player.instance!=null){value=Player.instance.health;maxValue=Player.instance.maxHP;}}
+        if(valueName.Contains("energy")){if(Player.instance!=null){value=Player.instance.energy;maxValue=Player.instance.maxEnergy;}}
         if(valueName.Contains("xp")){if(FindObjectOfType<GameSession>()!=null){value=FindObjectOfType<GameSession>().coresXp;maxValue=FindObjectOfType<GameSession>().xp_forCore;}}
         if(valueName.Contains("shopTimer")){if(FindObjectOfType<Shop>()!=null){value=FindObjectOfType<Shop>().shopTimer;maxValue=FindObjectOfType<Shop>().shopTimeMax;}}
-        if(valueName.Contains("hpAbsorp")){if(FindObjectOfType<Player>()!=null){value=FindObjectOfType<Player>().hpAbsorpAmnt;maxValue=FindObjectOfType<Player>().maxHP/4;}}
-        if(valueName.Contains("enAbsorp")){if(FindObjectOfType<Player>()!=null){value=FindObjectOfType<Player>().enAbsorpAmnt;maxValue=FindObjectOfType<Player>().maxHP/4;}}
+        if(valueName.Contains("hpAbsorp")){if(Player.instance!=null){value=Player.instance.hpAbsorpAmnt;maxValue=Player.instance.maxHP/4;}}
+        if(valueName.Contains("enAbsorp")){if(Player.instance!=null){value=Player.instance.enAbsorpAmnt;maxValue=Player.instance.maxHP/4;}}
 
         if(barType==barType.HorizontalR){transform.localScale=new Vector2(value/maxValue,transform.localScale.y);}
         if(barType==barType.HorizontalL){transform.localScale=new Vector2(value/maxValue,transform.localScale.y);/*new Vector2(-(value/maxValue),transform.localScale.y);*/}

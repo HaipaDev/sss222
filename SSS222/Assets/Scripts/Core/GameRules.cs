@@ -183,8 +183,7 @@ public static GameRules instance;
     public float xp_staying=-2f;
     public float stayingTimeReq=4f;
     [Header("Changes per level")]
-    public UnityEvent[] lvlEvents;
-    public int[] lvlEventsIDs;
+    public List<ListEvents> lvlEvents;
 #endregion
 #region//Upgrades
 [Header("Upgrades")]
@@ -233,61 +232,39 @@ public static GameRules instance;
 #endregion
 #endregion
 #region//Voids
-    private void Awake(){
+    void Awake(){
         SetupSingleton();
     }
-    private void SetupSingleton(){
-        int numberOfObj = FindObjectsOfType<GameRules>().Length;
-        if(numberOfObj>1||!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){
-            Destroy(gameObject);
-        }else{
-            DontDestroyOnLoad(gameObject);
-            instance=this;
-        }
+    void SetupSingleton(){
+        if(FindObjectsOfType<GameRules>().Length>1||!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
+        else{DontDestroyOnLoad(gameObject);instance=this;}
     }
-    private void Update() {
+    void Update() {
         if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
     }
-    private void OnValidate(){
+    void OnValidate(){
         if(!shopOn)shopCargoOn=false;
+        foreach(ListEvents le in lvlEvents){le.name="Levels: "+le.lvls.x+"-"+le.lvls.y;}
     }
     #region//Custom Events
-    public void AdventureLvlEach(){
-        var p=FindObjectOfType<Player>();
-        p.shootMulti+=0.01f;
-        p.armorMultiInit+=0.005f;
-    }
-    public void AdventureLvl1(){
-        var p=FindObjectOfType<Player>();
-        if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=0.30f;}
-        if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=5;}
-    }
-    public void AdventureLvl2(){
-        var p=FindObjectOfType<Player>();
-        if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=0.26f;}
-        if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=7;}
-    }
-    public void AdventureLvl4(){
-        var p=FindObjectOfType<Player>();
-        if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=0.22f;}
-        if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=10;}
-    }
-
-
-    public void ArcadeLvlEach(){
-        var p=FindObjectOfType<Player>();
-        p.shootMulti+=0.02f;
-        p.armorMultiInit+=0.01f;
-    }
-    public void ArcadeLvl1(){
-        var p=FindObjectOfType<Player>();
-        p.maxEnergy*=1.5f;
-    }
+    Player p=Player.instance;
+    public void MultiplyMaxHealth(float amnt){p.maxHP*=amnt;}
+    public void MultiplyMaxEnergy(float amnt){p.maxEnergy*=amnt;}
+    public void ShootMultiAdd(float amnt){p.shootMulti+=amnt;}
+    public void ArmorMultiAdd(float amnt){p.armorMultiInit+=amnt;}
+    public void LaserShootSpeed(float amnt){if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=amnt;}}
+    public void MLaserBulletAmnt(int amnt){if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=amnt;}}
     #endregion
 }
 #endregion
 
 #region//Custom classes
+[System.Serializable]
+public class ListEvents{
+    [HideInInspector]public string name;
+    public UnityEvent events=new UnityEvent();
+    public Vector2 lvls;
+}
 [System.Serializable]
 public class EnemyClass{
     public string name;

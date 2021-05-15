@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class UpgradeMenu : MonoBehaviour{
@@ -117,14 +118,14 @@ public class UpgradeMenu : MonoBehaviour{
     }
     void Start(){
         instance=this;
-        player=FindObjectOfType<Player>();
+        player=Player.instance;
         pskills=FindObjectOfType<PlayerSkills>();
         Resume();
     }
     void Update(){
         if(Input.GetKeyDown(KeyCode.F)){
             if(UpgradeMenuIsOpen){Resume();
-            }else{if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && FindObjectOfType<Player>()!=null)Open();}
+            }else{if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && Player.instance!=null)Open();}
         }
         if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Backspace)){if(upgradeMenu2UI.activeSelf || lvltreeUI.activeSelf){Back();Open();return;}
         else if(!(upgradeMenu2UI.activeSelf && lvltreeUI.activeSelf) && upgradeMenuUI.activeSelf){Resume();return;}}
@@ -181,7 +182,7 @@ public class UpgradeMenu : MonoBehaviour{
 
     public void UnlockSkillUni(int ID, ref int value,int number,int cost){
         if(GameSession.instance.cores>=cost && value==number-1){value=number;GameSession.instance.cores-=cost;GetComponent<AudioSource>().Play();
-        var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
+        var skills=Player.instance.GetComponent<PlayerSkills>().skillsBinds;
         for(var i=0;i<skills.Length;i++){if(i!=ID)if(skills[i]==skillKeyBind.Q && skills[i]!=skillKeyBind.E){skills[ID]=skillKeyBind.E;}}//Set to E if Q is occuppied
         for(var i=0;i<skills.Length;i++){if(i!=ID)if(skills[i]!=skillKeyBind.Q){skills[ID]=skillKeyBind.Q;}}//Set to Q by default
         }
@@ -197,7 +198,7 @@ public class UpgradeMenu : MonoBehaviour{
         //if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,2,1);}
     }
     public void SetSkillQ(int ID){
-        var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
+        var skills=Player.instance.GetComponent<PlayerSkills>().skillsBinds;
 
         //foreach(skillKeyBind skillOther in skills){skillOther=skillKeyBind.Disabled;}
         for(var i=0;i<skills.Length;i++){if(i!=ID){if(skills[i]!=skillKeyBind.E){skills[i]=skillKeyBind.Disabled;}}}
@@ -232,12 +233,12 @@ public class UpgradeMenu : MonoBehaviour{
             pskills.cooldownQ=E;
         }*/
         skills[ID]=skillKeyBind.Q;
-        /*var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skills;
+        /*var skills=Player.instance.GetComponent<PlayerSkills>().skills;
         foreach(SkillSlotID skillOther in skills){skillOther.keySet=skillKeyBind.Disabled;}
         var skill=skills[ID];
         skill.keySet=skillKeyBind.Q;*/
     }public void SetSkillE(int ID){
-        var skills=FindObjectOfType<Player>().GetComponent<PlayerSkills>().skillsBinds;
+        var skills=Player.instance.GetComponent<PlayerSkills>().skillsBinds;
         for(var i=0;i<skills.Length;i++){if(i!=ID){if(skills[i]!=skillKeyBind.Q){skills[i]=skillKeyBind.Disabled;}}}
         var ii=0;
         foreach(ColorSkillKey k in FindObjectsOfType<ColorSkillKey>()){
@@ -284,9 +285,9 @@ public class UpgradeMenu : MonoBehaviour{
     public void DefaultPowerupL3(){DefaultPowerupChange("laser2","laser3",defaultPowerup_upgradeCost2,true,ref player.energy,115,false,0);}//defaultPowerup_upgradeCost2);}
     public void DefaultPowerupPerma(){DefaultPowerupChange("laser3","perma",defaultPowerup_upgradeCost3,true,ref player.energy,130,true,0);}//defaultPowerup_upgradeCost3);}
     public void UnlockCrystalMend(){if(crMend_upgraded<=0){crMend_upgraded=1;crMendEnabled=true;GameSession.instance.cores-=crMend_upgradeCost;}}
-    public void SwitchCrMend(){if(crMend_upgraded>=1){if(crMendEnabled==true){crMendEnabled=false;return;}if(crMendEnabled==false){crMendEnabled=true;FindObjectOfType<Player>().Damage(5,dmgType.silent);return;}}}
+    public void SwitchCrMend(){if(crMend_upgraded>=1){if(crMendEnabled==true){crMendEnabled=false;return;}if(crMendEnabled==false){crMendEnabled=true;Player.instance.Damage(5,dmgType.silent);return;}}}
     public void UnlockEnergyDiss(){if(enDiss_upgraded<=0){enDiss_upgraded=1;enDissEnabled=true;GameSession.instance.cores-=enDiss_upgradeCost;}}
-    public void SwitchEnDiss(){if(enDiss_upgraded>=1){if(enDissEnabled==true){enDissEnabled=false;return;}if(enDissEnabled==false){enDissEnabled=true;FindObjectOfType<Player>().AddSubEnergy(10,false);return;}}}
+    public void SwitchEnDiss(){if(enDiss_upgraded>=1){if(enDissEnabled==true){enDissEnabled=false;return;}if(enDissEnabled==false){enDissEnabled=true;Player.instance.AddSubEnergy(10,false);return;}}}
 
     /*public void UnlockEnergyRefill(){
         if(GameSession.instance.cores>=energyRefill_upgradeCost && energyRefill_upgraded!=1){player.energyRefillUnlocked=1;GameSession.instance.cores-=energyRefill_upgradeCost;energyRefill_upgraded=1;GetComponent<AudioSource>().Play();}
@@ -332,12 +333,7 @@ public class UpgradeMenu : MonoBehaviour{
             LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=Mathf.Clamp(total_UpgradesCount-total_UpgradesCountMax,0,99);
             LevelUp();
             total_UpgradesLvl++;
-            var g=GameRules.instance;
-            var player=FindObjectOfType<Player>();
-            if(g!=null&&player!=null){
-                if(g.lvlEvents.Length>0){g.lvlEvents[0].Invoke();}
-                var i=0;foreach(int id in g.lvlEventsIDs){if(i<g.lvlEventsIDs.Length-1){i++;}if(total_UpgradesLvl==g.lvlEventsIDs[i])g.lvlEvents[i].Invoke();}
-            }
+            UpgradeMenu.instance.LvlEvents();
             }
         if(lvlbar.current==null)lvlbar.created=2;
         if(barr==lvlbar){lvlbar.ID=lvlID;lvlbar.created=lvlcr;}
@@ -374,7 +370,13 @@ public class UpgradeMenu : MonoBehaviour{
         AudioManager.instance.Play("LvlUp2");
         FindObjectOfType<OnScreenButtons>().transform.GetChild(0).GetComponent<Animator>().SetTrigger("on");
     }
-
+    public void LvlEvents(){
+        if(GameRules.instance!=null&&Player.instance!=null){
+        foreach(ListEvents le in GameRules.instance.lvlEvents){
+            if(le.lvls.x==0&&le.lvls.y==0){le.events.Invoke();}
+            else{if(UpgradeMenu.instance.total_UpgradesLvl>=le.lvls.x&&UpgradeMenu.instance.total_UpgradesLvl<=le.lvls.y){le.events.Invoke();}}
+        }}
+    }
     public void CheatCores(){
         GameSession.instance.CheckCodes(-1,0);
         GameSession.instance.CheckCodes(2,6);

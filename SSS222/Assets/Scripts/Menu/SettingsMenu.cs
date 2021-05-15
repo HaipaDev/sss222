@@ -117,7 +117,7 @@ public class SettingsMenu : MonoBehaviour{
         }
         foreach(Transform t in steeringToggle.transform.GetChild(0)){t.gameObject.SetActive(false);}
         steeringToggle.transform.GetChild(0).GetChild((int)s.settingsData.inputType).gameObject.SetActive(true);
-        if(FindObjectOfType<Player>()!=null){if(s.settingsData.inputType==InputType.mouse)FindObjectOfType<Player>().SetMoveByMouse(true);else FindObjectOfType<Player>().SetMoveByMouse(false);}
+        if(Player.instance!=null){if(s.settingsData.inputType==InputType.mouse)Player.instance.SetMoveByMouse(true);else Player.instance.SetMoveByMouse(false);}
         }
         //if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.moveByMouse = isMovingByMouse;
         //if(SaveSerial.instance!=null)SaveSerial.instance.moveByMouse = isMovingByMouse;

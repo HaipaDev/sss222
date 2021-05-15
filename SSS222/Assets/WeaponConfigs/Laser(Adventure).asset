@@ -10,42 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74f905b4fa1c32244b5205d44cda0c7a, type: 3}
-  m_Name: MLaser(Arcade)
+  m_Name: Laser(Adventure)
   m_EditorClassIdentifier: 
-  name: mlaser
-  assetName: MLaser
+  name: laser
+  assetName: Laser
   weaponType: 0
   weaponTypeProperties:
     id: 0
   costType: 0
   costTypeProperties:
     id: 1
-  ovheat: 0.1
-  duration: 0
+  ovheat: 0
+  duration: 10
   references:
     version: 1
     00000000:
       type: {class: weaponTypeBullet, ns: , asm: Assembly-CSharp}
       data:
         leftSide: 1
-        leftAnchor: {x: -0.28, y: 0}
-        leftAnchorE: {x: -0.36, y: 0}
+        leftAnchor: {x: -0.35, y: 0}
+        leftAnchorE: {x: 0, y: 0}
         rightSide: 1
-        rightAnchor: {x: 0.28, y: 0}
-        rightAnchorE: {x: 0.36, y: 0}
+        rightAnchor: {x: 0.35, y: 0}
+        rightAnchorE: {x: 0, y: 0}
         randomSide: 0
-        bulletAmount: 10
-        speed: {x: 0, y: 8.5}
-        speedE: {x: 0, y: 10}
-        serialOffsetSpeed: {x: 0.46, y: 0}
-        serialOffsetSpeedE: {x: 0.54, y: 0}
-        serialOffsetAngle: {x: 0, y: 0}
-        serialOffsetSound: 0
-        shootDelay: 0.1
-        holdDelayMulti: 1
-        tapDelayMulti: 0.8
-        recoilStrength: 10
-        recoilTime: 0.15
+        bulletAmount: 1
+        speed: {x: 0, y: 9}
+        speedE: {x: 0, y: 0}
+        serialOffsetSpeed: {x: 0.55, y: 0}
+        serialOffsetSpeedE: {x: 0, y: 0}
+        serialOffsetAngle: {x: 0, y: 5}
+        serialOffsetSound: 0.03
+        shootDelay: 0.34
+        holdDelayMulti: 1.15
+        tapDelayMulti: 1
+        recoilStrength: 0
+        recoilTime: 0
         flare: 1
         flareDur: 0.3
     00000001:

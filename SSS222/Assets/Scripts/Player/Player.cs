@@ -11,6 +11,7 @@ using UnityEngine.EventSystems;
 //using UnityEditor;
 
 public class Player : MonoBehaviour{
+    public static Player instance;
 #region Vars
 #region//Basic Player Values
     [Header("Player")]
@@ -259,7 +260,7 @@ public class Player : MonoBehaviour{
     //public @InputMaster inputMaster;
 #endregion
 #endregion
-    private void Awake() {StartCoroutine(SetGameRuleValues());}
+    private void Awake(){instance=this;StartCoroutine(SetGameRuleValues());}
     void Start(){
         if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
         
@@ -339,11 +340,9 @@ public class Player : MonoBehaviour{
         decayTickrate=i.decayTickrate;
         decayDmg=i.decayDmg;
         //WeaponProperties
-        //GameRules gr = (GameRules)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Config&UI/GameRulesets/GRDef.prefab", typeof(GameRules));
-        GameRules gr=null;
-        gr=GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.gameModeSelected];
-        if(gr!=null){
-        foreach(WeaponProperties wi in gr.weaponProperties){
+        GameRules grdef=GameCreator.instance.gamerulesetsPrefabs[0];
+        if(grdef!=null){
+        foreach(WeaponProperties wi in grdef.weaponProperties){
             if(!weaponProperties.Contains(wi)){weaponProperties.Add(wi);}
         }}
         foreach(WeaponProperties wi in i.weaponProperties){

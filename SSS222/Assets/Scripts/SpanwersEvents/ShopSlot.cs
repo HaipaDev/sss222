@@ -30,7 +30,7 @@ public class ShopSlot : MonoBehaviour{
     public void Purchase(){
     if(GameSession.instance.coins>=item.price){
         GameSession.instance.coins-=item.price;
-        var pos=FindObjectOfType<Player>().transform.position;
+        var pos=Player.instance.transform.position;
         switch(item.ID){
             case 0:Instantiate(GameAssets.instance.Get("Laser2Pwrup"),pos,Quaternion.identity); break;
             case 1:Instantiate(GameAssets.instance.Get("Laser3Pwrup"),pos,Quaternion.identity); break;

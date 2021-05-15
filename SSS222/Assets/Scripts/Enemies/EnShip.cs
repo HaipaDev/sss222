@@ -13,11 +13,6 @@ public class EnShip : MonoBehaviour{
     [SerializeField] float distY = 1.3f;
     [SerializeField] float distX = 0.3f;
     [SerializeField] bool getClose = false;
-
-    Player player;
-    //Enemy enemy;
-    //Rigidbody2D rb;
-    //GameSession gameSession;
     void Awake(){
     //Set Values
     var i=GameRules.instance;
@@ -31,45 +26,30 @@ public class EnShip : MonoBehaviour{
     }
     }
     void Start(){
-        player = FindObjectOfType<Player>();
-        //enemy = GetComponent<Enemy>();
-        //rb = GetComponent<Rigidbody2D>();
-        //gameSession = FindObjectOfType<GameSession>();
-
-        posY = new Vector2(transform.position.x, transform.position.y - distY);
+        posY=new Vector2(transform.position.x,transform.position.y-distY);
     }
 
     void Update(){
-        if(player!=null){
+    if(Player.instance!=null){
         float stepY = vspeed * Time.deltaTime;
         float stepX = speedFollow * Time.deltaTime;
-        playerPosX = new Vector2(player.transform.position.x, transform.position.y);
-        playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
+        playerPosX = new Vector2(Player.instance.transform.position.x, transform.position.y);
+        playerPos = new Vector2(Player.instance.transform.position.x, Player.instance.transform.position.y);
         selfPos = new Vector2(transform.position.x,transform.position.y);
         var dist = Vector2.Distance(playerPosX, selfPos);
 
-        if (transform.position.y>posY.y){ transform.position = new Vector2(player.transform.position.x, transform.position.y - vspeed); }
-        else {
-            /*if(transform.position.x < player.transform.position.x+ distX)
-            {
-                transform.position = new Vector2(transform.position.x + speedFollow, transform.position.y);
-            }else if(transform.position.x > player.transform.position.x+distX)
-            {
-                transform.position = new Vector2(transform.position.x - speedFollow, transform.position.y);
-            }
-            else{}*/
-            //if (!target) { return; }
+        if(transform.position.y>posY.y){transform.position=new Vector2(Player.instance.transform.position.x,transform.position.y-vspeed);}
+        else{
             if(getClose!=true){
-                var dir = (playerPosX - selfPos).normalized;
-                selfPos += dir * speedFollow * Time.deltaTime;
-                transform.position = selfPos;
+                var dir=(playerPosX-selfPos).normalized;
+                selfPos+=dir*speedFollow*Time.deltaTime;
+                transform.position=selfPos;
             }else{
-                var dir = (playerPos - selfPos).normalized;
-                selfPos += dir * speedFollow * Time.deltaTime;
-                transform.position = selfPos;
+                var dir=(playerPos-selfPos).normalized;
+                selfPos+=dir*speedFollow*Time.deltaTime;
+                transform.position=selfPos;
             }
         }
-        //Debug.Log(stepY);
-        }
+    }
     }
 }

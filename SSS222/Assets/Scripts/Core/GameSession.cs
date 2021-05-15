@@ -8,6 +8,8 @@ using UnityEngine.UI;
 using BayatGames.SaveGameFree;
 using UnityEngine.Rendering.PostProcessing;
 //using UnityEngine.InputSystem;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 public class GameSession : MonoBehaviour{
     public static GameSession instance;
     [Header("Global")]
@@ -119,7 +121,7 @@ public class GameSession : MonoBehaviour{
             StartCoroutine(SetGameRulesValues());
             setValues=true;
         }
-        if(SceneManager.GetActiveScene().name=="Game"&&FindObjectOfType<Player>()!=null&&gameSpeed>0.0001f){gameSessionTime+=Time.unscaledDeltaTime;}
+        if(SceneManager.GetActiveScene().name=="Game"&&Player.instance!=null&&gameSpeed>0.0001f){gameSessionTime+=Time.unscaledDeltaTime;}
         if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
 
         //Open Shop
@@ -136,9 +138,9 @@ public class GameSession : MonoBehaviour{
             shopScore=0;
         }
 
-        if(FindObjectOfType<Player>()!=null){
-            if(FindObjectOfType<Player>().timeFlyingCore>flyingTimeReq){AddXP(xp_flying);FindObjectOfType<Player>().timeFlyingCore=0f;}
-            if(FindObjectOfType<Player>().stayingTimerCore>stayingTimeReq){if(coresXp>-xp_staying)AddXP(xp_staying);FindObjectOfType<Player>().stayingTimerCore=0f;}
+        if(Player.instance!=null){
+            if(Player.instance.timeFlyingCore>flyingTimeReq){AddXP(xp_flying);Player.instance.timeFlyingCore=0f;}
+            if(Player.instance.stayingTimerCore>stayingTimeReq){if(coresXp>-xp_staying)AddXP(xp_staying);Player.instance.stayingTimerCore=0f;}
         }
         
         coresXp=Mathf.Clamp(coresXp,0,xp_forCore);
@@ -158,9 +160,9 @@ public class GameSession : MonoBehaviour{
 
         //Set speed to normal
         if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
-        (FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().matrix==false&&FindObjectOfType<Player>().accel==false)&&speedChanged!=true){gameSpeed=defaultGameSpeed;}
+        (Player.instance!=null&&Player.instance.matrix==false&&Player.instance.accel==false)&&speedChanged!=true){gameSpeed=defaultGameSpeed;}
         if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
-        if(FindObjectOfType<Player>()==null){gameSpeed=defaultGameSpeed;}
+        if(Player.instance==null){gameSpeed=defaultGameSpeed;}
         
         //Restart with R or Space/Resume with Space
         if(SceneManager.GetActiveScene().name=="Game"){
@@ -173,7 +175,7 @@ public class GameSession : MonoBehaviour{
         if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Escape)){Level.instance.LoadStartMenu();}
         }
 
-        if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().inverter==true)){
+        if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(Player.instance!=null&&Player.instance.inverter==true)){
             foreach(AudioSource sound in FindObjectsOfType<AudioSource>()){
                 if(sound!=null){
                     GameObject snd=sound.gameObject;
@@ -185,7 +187,7 @@ public class GameSession : MonoBehaviour{
                 }
             }
         }
-        if(FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().inverter==false){
+        if(Player.instance!=null&&Player.instance.inverter==false){
             foreach(AudioSource sound in FindObjectsOfType<AudioSource>()){
                 if(sound!=null){
                     GameObject snd=sound.gameObject;
@@ -310,11 +312,7 @@ public class GameSession : MonoBehaviour{
         yield return new WaitForSeconds(0.1f);
         if(UpgradeMenu.instance!=null){
             for(var i=UpgradeMenu.instance.total_UpgradesLvl;i>0;i--){
-                var g=GameRules.instance;
-                var player=FindObjectOfType<Player>();
-                if(g!=null&&player!=null){
-                if(g.lvlEvents.Length>0){g.lvlEvents[0].Invoke();}
-                var d=0;foreach(int id in g.lvlEventsIDs){if(d<g.lvlEventsIDs.Length-1){d++;}if(UpgradeMenu.instance.total_UpgradesLvl==g.lvlEventsIDs[d])g.lvlEvents[d].Invoke();}}
+                UpgradeMenu.instance.LvlEvents();
             }
         }
         Debug.Log("Adventure data laoded in GameSession");
@@ -413,7 +411,7 @@ public class GameSession : MonoBehaviour{
         }
         if(cheatmode==true){
             if(Input.GetKey(KeyCode.F1) || fkey==1){
-                player=FindObjectOfType<Player>();
+                player=Player.instance;
                 if(Input.GetKeyDown(KeyCode.Alpha1) || nkey==1){player.health=player.maxHP;}
                 if(Input.GetKeyDown(KeyCode.Alpha2) || nkey==2){player.energy=player.maxEnergy;}
                 if(Input.GetKeyDown(KeyCode.Alpha3) || nkey==3){player.gclover=true;player.gcloverTimer=player.gcloverTime;}
@@ -431,7 +429,7 @@ public class GameSession : MonoBehaviour{
                 if(Input.GetKeyDown(KeyCode.Alpha9) || nkey==9){foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())ps.enemiesCount=100;}
             }
             if(Input.GetKey(KeyCode.F3) || fkey==3){
-                player=FindObjectOfType<Player>();
+                player=Player.instance;
                 if(Input.GetKeyDown(KeyCode.Alpha1) || nkey==1){player.powerup="laser3";}
                 if(Input.GetKeyDown(KeyCode.Alpha2) || nkey==2){player.powerup="mlaser";}
                 if(Input.GetKeyDown(KeyCode.Alpha3) || nkey==3){player.powerup="lsaber";}

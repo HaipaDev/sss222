@@ -27,7 +27,7 @@ public class OnScreenButtons : MonoBehaviour{
     public void OpenUpgrade(){
         var umenu=FindObjectOfType<UpgradeMenu>();
         if(UpgradeMenu.UpgradeMenuIsOpen!=true){
-            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && FindObjectOfType<Player>()!=null){umenu.upgradeMenuUI.SetActive(true);
+            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && Player.instance!=null){umenu.upgradeMenuUI.SetActive(true);
             umenu.Open();}
         }else{umenu.Resume();}
     }

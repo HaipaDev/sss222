@@ -15,8 +15,8 @@ public class Tag_Joystick : MonoBehaviour{
         var vj=GetComponent<VariableJoystick>();
         vj.fixedPosition=fixedPosition;
         if(SaveSerial.instance.settingsData.lefthand){vj.fixedPosition=new Vector2(-fixedPosition.x,fixedPosition.y);}
-        if(FindObjectOfType<Player>()!=null){
-            var p=FindObjectOfType<Player>();
+        if(Player.instance!=null){
+            var p=Player.instance;
             if(p.moveX&&p.moveY)vj.AxisOptions=AxisOptions.Both;
             else if(p.moveX&&!p.moveY)vj.AxisOptions=AxisOptions.Horizontal;
             else if(!p.moveX&&p.moveY)vj.AxisOptions=AxisOptions.Vertical;

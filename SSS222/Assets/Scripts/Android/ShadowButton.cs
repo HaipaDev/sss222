@@ -14,10 +14,10 @@ public class ShadowButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         pos=transform.position;
     }
     void Update(){
-        if(FindObjectOfType<Player>().shadow!=true){GetComponent<Button>().enabled=false;GetComponent<Image>().enabled=false;transform.GetChild(0).gameObject.SetActive(false);}else{GetComponent<Button>().enabled=true;GetComponent<Image>().enabled=true;transform.GetChild(0).gameObject.SetActive(true);}
+        if(Player.instance.shadow!=true){GetComponent<Button>().enabled=false;GetComponent<Image>().enabled=false;transform.GetChild(0).gameObject.SetActive(false);}else{GetComponent<Button>().enabled=true;GetComponent<Image>().enabled=true;transform.GetChild(0).gameObject.SetActive(true);}
         if(pressed){
-            transform.position=Camera.main.WorldToScreenPoint(FindObjectOfType<Player>().mousePos);
-            lastPos=FindObjectOfType<Player>().mousePos;
+            transform.position=Camera.main.WorldToScreenPoint(Player.instance.mousePos);
+            lastPos=Player.instance.mousePos;
             //if(timer<=0){
                 //FindObjectOfType<Player>().ShadowButton(true);
                 //timer=FindObjectOfType<Player>().shootTimer;
@@ -36,7 +36,7 @@ public class ShadowButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         //}
      }
      public void OnPointerUp(PointerEventData eventData){
-        FindObjectOfType<Player>().ShadowButton(lastPos);
+        Player.instance.ShadowButton(lastPos);
         pressed=false;
         transform.position=pos;
         //if(timer<=0)timer=FindObjectOfType<Player>().shootTimer;

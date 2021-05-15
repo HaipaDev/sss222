@@ -11,11 +11,9 @@ public class EnemyPathing : MonoBehaviour{
     public int waypointIndex = 0;
     public int enemyIndex = 0;
     Rigidbody2D rb;
-    Player player;
     //bool CheckWavesPath(wavePathType wavePathType){if(waveConfig.wavePathType==wavePathType){return true;}else{return false;}}
     void Start(){
         rb=GetComponent<Rigidbody2D>();
-        if(FindObjectOfType<Player>()!=null)player=FindObjectOfType<Player>();
         if(waveConfig!=null){
             if(waveConfig.wavePathType==wavePathType.startToEnd){
                 waypointsS=waveConfig.GetWaypointsStart();
@@ -45,7 +43,7 @@ public class EnemyPathing : MonoBehaviour{
                 if(waveConfig.randomSpeed==false){rb.velocity = new Vector2(0f, -waveConfig.GetMoveSpeed());}
                 else{rb.velocity=new Vector2(0f, Random.Range(-waveConfig.GetMoveSpeedS(), -waveConfig.GetMoveSpeedE()));}
             }
-            else if(waveConfig.wavePathType==wavePathType.shipPlace){transform.position = new Vector2(player.transform.position.x, 7.2f);
+            else if(waveConfig.wavePathType==wavePathType.shipPlace){transform.position = new Vector2(Player.instance.transform.position.x, 7.2f);
                 if(waveConfig.randomSpeed==false){rb.velocity = new Vector2(0f, -waveConfig.GetMoveSpeed());}
                 else{rb.velocity=new Vector2(0f, Random.Range(-waveConfig.GetMoveSpeedS(), -waveConfig.GetMoveSpeedE()));}
             }

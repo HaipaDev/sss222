@@ -7,11 +7,11 @@ public class LBoomerang : MonoBehaviour{
     [SerializeField] List<Enemy> enemiesHit;
     void Update(){
         float step = speed * Time.deltaTime;
-        if((FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().ammo==-1)||FindObjectOfType<Player>()==null){
+        if((Player.instance!=null&&Player.instance.ammo==-1)||Player.instance==null){
             var target=FindClosestEnemy();
             if(target!=null)transform.position = Vector2.MoveTowards(transform.position, target.transform.position, step);
-        }else if(FindObjectOfType<Player>()!=null&&FindObjectOfType<Player>().ammo!=-1){
-            transform.position = Vector2.MoveTowards(transform.position, FindObjectOfType<Player>().transform.position, step);
+        }else if(Player.instance!=null&&Player.instance.ammo!=-1){
+            transform.position = Vector2.MoveTowards(transform.position, Player.instance.transform.position, step);
         }
     }
     public Enemy FindClosestEnemy(){

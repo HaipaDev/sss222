@@ -23,7 +23,7 @@ public class ShootInArc2 : MonoBehaviour {
 
 	void Start(){
 		CameraNormal.Normalize();
-        if(FindObjectOfType<Player>()!=null)p0=(FindObjectOfType<Player>().transform.position+FindFurthestEnemy().transform.position)/2;
+        if(Player.instance!=null)p0=(Player.instance.transform.position+FindFurthestEnemy().transform.position)/2;
         p0=new Vector3(p0.x+=0.25f,p0.y,p0.z);
         p1=FindFurthestEnemy().transform.position;
         pc=FindFurthestEnemy().transform.position;

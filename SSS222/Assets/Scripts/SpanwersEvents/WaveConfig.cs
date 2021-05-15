@@ -112,14 +112,14 @@ public class WaveConfig:ScriptableObject{
         var p=(pathRandomPoint)wavePaths;
         //var pathIndex=Random.Range(0, waveWaypoints.Count);
         foreach(Transform child in p.path.transform){waveWaypoints.Add(child);}
-        Transform closest=waveWaypoints.FindClosest(FindObjectOfType<Player>().transform.position);
+        Transform closest=waveWaypoints.FindClosest(Player.instance.transform.position);
         return closest;
     }
     public Vector2 GetShipPlaceCoords(WaveConfig waveConfig){
         var w=(shipPlace)wavePaths;
         Vector2 coords=w.coords;
-        if(w._spawnSide==shipPlace.spawnSide.up||w._spawnSide==shipPlace.spawnSide.down){coords.x=FindObjectOfType<Player>().transform.position.x;}
-        else if(w._spawnSide==shipPlace.spawnSide.left||w._spawnSide==shipPlace.spawnSide.right||w._spawnSide==shipPlace.spawnSide.lOrR){coords.y=FindObjectOfType<Player>().transform.position.y;}
+        if(w._spawnSide==shipPlace.spawnSide.up||w._spawnSide==shipPlace.spawnSide.down){coords.x=Player.instance.transform.position.x;}
+        else if(w._spawnSide==shipPlace.spawnSide.left||w._spawnSide==shipPlace.spawnSide.right||w._spawnSide==shipPlace.spawnSide.lOrR){coords.y=Player.instance.transform.position.y;}
         else if(w._spawnSide==shipPlace.spawnSide.lOrR){if(Random.Range(0,100)<50){w.coords.x*=-1;}}
         return coords;
     }

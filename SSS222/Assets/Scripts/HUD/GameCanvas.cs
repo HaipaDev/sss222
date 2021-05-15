@@ -83,13 +83,13 @@ public class GameCanvas : MonoBehaviour{
         GameObject dmgpopup=GameCanvas.CreateOnUI(GameAssets.instance.GetVFX("DMGPopup"),pos);
         dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=color;
         dmgpopup.transform.localScale=new Vector2(scale,scale);
-        if(FindObjectOfType<Player>()!=null&&isPlayer)dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg/FindObjectOfType<Player>().armorMulti,2).ToString();
+        if(Player.instance!=null&&isPlayer)dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg/Player.instance.armorMulti,2).ToString();
         else{dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg,1).ToString();}
     }public GameObject DMGPopupReturn(float dmg, Vector2 pos, Color color, float scale=1, bool isPlayer=false){
         GameObject dmgpopup=GameCanvas.CreateOnUI(GameAssets.instance.GetVFX("DMGPopup"),pos);
         dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=color;
         dmgpopup.transform.localScale=new Vector2(scale,scale);
-        if(FindObjectOfType<Player>()!=null&&isPlayer)dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg/FindObjectOfType<Player>().armorMulti,2).ToString();
+        if(Player.instance!=null&&isPlayer)dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg/Player.instance.armorMulti,2).ToString();
         else{dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg,1).ToString();}
         return dmgpopup;
     }
@@ -129,7 +129,7 @@ public class GameCanvas : MonoBehaviour{
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(amnt<0)symbol="-";
-        if(FindObjectOfType<Player>()!=null&&(!FindObjectOfType<Player>().infEnergy)||(FindObjectOfType<Player>().infEnergy&&symbol=="+")){
+        if(Player.instance!=null&&(!Player.instance.infEnergy)||(Player.instance.infEnergy&&symbol=="+")){
         enPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();}
         }else{Debug.LogWarning("EnergyPopUpHUD not present");}
     }
@@ -194,7 +194,7 @@ public class GameCanvas : MonoBehaviour{
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(amnt<0)symbol="-";
-        if(FindObjectOfType<Player>()!=null&&(!FindObjectOfType<Player>().infEnergy)||(FindObjectOfType<Player>().infEnergy&&symbol=="+")){
+        if(Player.instance!=null&&(!Player.instance.infEnergy)||(Player.instance.infEnergy&&symbol=="+")){
         ammoPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
         //energyUsedCount+=Mathf.Abs(amnt);
         }

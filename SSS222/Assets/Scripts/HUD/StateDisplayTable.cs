@@ -5,16 +5,14 @@ using UnityEngine;
 public class StateDisplayTable : MonoBehaviour{
     [SerializeField]GameObject element;
     GameObject table;
-    Player player;
     void Start(){
         table=transform.GetChild(0).gameObject;
-        player=FindObjectOfType<Player>();
     }
 
     void Update(){
         //Create
-        if(player!=null){
-        for(var i=0;i<player.statuses.Count;i++){
+        if(Player.instance!=null){
+        for(var i=0;i<Player.instance.statuses.Count;i++){
             if(table.transform.childCount==0){
                 GameObject go=Instantiate(element,table.transform);
                 go.name="StateDisplay"+0;

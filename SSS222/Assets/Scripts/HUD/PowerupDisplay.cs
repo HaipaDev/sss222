@@ -11,7 +11,6 @@ public class PowerupDisplay : MonoBehaviour{
     string pwrup;
     public string state="";
 
-    Player player;
     Image spr;
     TMPro.TextMeshProUGUI TMP;
 
@@ -20,11 +19,10 @@ public class PowerupDisplay : MonoBehaviour{
     Sprite sprite;
     Image bg;
     void Start(){
-        if(FindObjectOfType<Player>()!=null)player=FindObjectOfType<Player>();
-        //if(player!=null)pwrup = player.powerup;
+        //if(Player.instance!=null)pwrup = Player.instance.powerup;
         spr=GetComponent<Image>();
         //if(powerups!=true){
-        //if(powerups!=true||(player!=null&&player.weaponsLimited)){
+        //if(powerups!=true||(Player.instance!=null&&Player.instance.weaponsLimited)){
         if(textObj==null){if(transform.GetComponentInChildren<TMPro.TextMeshProUGUI>()!=null)textObj=transform.GetComponentInChildren<TMPro.TextMeshProUGUI>().gameObject;}
         if(textObj!=null){TMP=textObj.GetComponent<TMPro.TextMeshProUGUI>();}
         if(transform.GetChild(0)!=null){bg=transform.GetChild(0).GetComponent<Image>();}
@@ -38,10 +36,10 @@ public class PowerupDisplay : MonoBehaviour{
         if(bg!=null)bg.color=color2;
 
         if(powerups==true){
-            if(player!=null){
-                pwrup=player.powerup;
+            if(Player.instance!=null){
+                pwrup=Player.instance.powerup;
                 if(TMP!=null){
-                    var timer=player.powerupTimer;
+                    var timer=Player.instance.powerupTimer;
                     if((float)timer<10f&&(float)timer>=0){value=(float)System.Math.Round((float)timer, 1);TMP.characterSpacing=-25f;}
                     else if((float)timer>10f){value=(float)Mathf.RoundToInt((float)timer);TMP.characterSpacing=0f;}
                     else if((float)timer==-5){value=-5;}
@@ -61,11 +59,11 @@ public class PowerupDisplay : MonoBehaviour{
             if(pwrup=="null")color.a=0;
             else color.a=1;
         }else{
-            if(player!=null){
-                if(player.statuses.Count>number){if(player.statuses[number]!=""){state=player.statuses[number];}else state="";}else state="";
-                /*if(number==1){state=player.status1;}
-                if(number==2){state=player.status2;}
-                if(number==3){state=player.status3;}*/
+            if(Player.instance!=null){
+                if(Player.instance.statuses.Count>number){if(Player.instance.statuses[number]!=""){state=Player.instance.statuses[number];}else state="";}else state="";
+                /*if(number==1){state=Player.instance.status1;}
+                if(number==2){state=Player.instance.status2;}
+                if(number==3){state=Player.instance.status3;}*/
                 //var s=this.GetType().GetField(state+"Sprite").SetValue(this,false);
                 //spr.sprite=s;
                 if(state==""||state==null){
@@ -80,7 +78,7 @@ public class PowerupDisplay : MonoBehaviour{
                     this.GetType().GetField("sprite").SetValue(this,sprr);
                     spr.sprite=sprite;*/
                     if(GameAssets.instance!=null)spr.sprite=GameAssets.instance.Spr(state+"Pwrup");
-                    var timer=player.GetType().GetField(state+"Timer").GetValue(player);
+                    var timer=Player.instance.GetType().GetField(state+"Timer").GetValue(Player.instance);
                     if((float)timer<10f&&(float)timer>=0){value=(float)System.Math.Round((float)timer, 1);TMP.characterSpacing=-25f;}
                     else if((float)timer>10f){value=(float)Mathf.RoundToInt((float)timer);TMP.characterSpacing=0f;}
                     else if((float)timer==-5){value=-5;}

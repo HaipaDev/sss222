@@ -8,11 +8,9 @@ public class EnableChildOnPlayer : MonoBehaviour{
     [SerializeField] public float valueReq=1;
     public float value;
     Image image;
-    Player player;
     PlayerSkills pskills;
     void Start(){
         image=GetComponent<Image>();
-        player=FindObjectOfType<Player>();
         pskills=FindObjectOfType<PlayerSkills>();
         //valueReq=
     }
@@ -24,13 +22,10 @@ public class EnableChildOnPlayer : MonoBehaviour{
         }else{SetActiveAllChildren(transform,false);}
     }
 
-    private void SetActiveAllChildren(Transform transform, bool value)
-    {
-         foreach (Transform child in transform)
-         {
-             child.gameObject.SetActive(value);
- 
-             SetActiveAllChildren(child, value);
-         }
-     }
+    void SetActiveAllChildren(Transform transform, bool value){
+        foreach (Transform child in transform){
+            child.gameObject.SetActive(value);
+            SetActiveAllChildren(child, value);
+        }
+    }
 }

@@ -114,7 +114,7 @@ public class Waves : MonoBehaviour{
                 //var pointIndex=Random.Range(0, waveWaypoints.Count);
                 var pos=waveConfig.GetWaypointRandomPoint().position;
                 var w=(WaveConfig.pathRandomPoint)waveConfig.wavePaths;
-                if(w.closestToPlayer&&FindObjectOfType<Player>()!=null){pos=waveConfig.GetWaypointClosestToPlayer().position;}
+                if(w.closestToPlayer&&Player.instance!=null){pos=waveConfig.GetWaypointClosestToPlayer().position;}
                 var newEnemy=Instantiate(
                     waveConfig.GetEnemyPrefab(),
                     pos,
@@ -125,7 +125,7 @@ public class Waves : MonoBehaviour{
             }
             break;
         case wavePathType.shipPlace:
-            if(FindObjectOfType<Player>()!=null){
+            if(Player.instance!=null){
                 var pS=(WaveConfig.shipPlace)waveConfig.wavePaths;
                 for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
                     var newEnemy=Instantiate(
