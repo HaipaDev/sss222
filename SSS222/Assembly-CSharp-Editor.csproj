@@ -40,7 +40,6 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Editor\uGUITools.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Editor\AccordionElementEditor.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Editor\CUIBezierCurveEditor.cs" />
-     <Compile Include="Assets\Editor\CustomEditorBase.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Editor\CUITextEditor.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Editor\UIExtensionsMenuOptions.cs" />
      <Compile Include="Assets\Other\Joystick Pack\Scripts\Editor\DynamicJoystickEditor.cs" />
@@ -61,7 +60,6 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Editor\TextPicEditor.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Editor\ReadOnlyDrawer.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Editor\CUIImageEditor.cs" />
-     <Compile Include="Assets\Editor\ReplaceWithPrefab.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Unity Versions/2021.1.4f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

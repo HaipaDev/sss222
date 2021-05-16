@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ValueDisplay : MonoBehaviour{
     TMPro.TextMeshProUGUI txt;
-    DataSavable dataSavable;
     PlayerSkills pskills;
     [SerializeField] public string value="score";
     [SerializeField] float valueLimitD=-1;

@@ -7,7 +7,6 @@ public class ToggleValue : MonoBehaviour{
     Toggle toggle;
     Image img;
     GameSession gameSession;
-    DataSavable dataSavable;
     SaveSerial saveSerial;
     PlayerSkills pskills;
     UpgradeMenu upgradeMenu;
@@ -29,13 +28,13 @@ public class ToggleValue : MonoBehaviour{
 
     void ChangeText(){
         var i=GameRules.instance;
-        if (value=="shopOn") toggle.isOn=i.shopOn;
-        if (value=="shopCargoOn") toggle.isOn=i.shopCargoOn;
-        if (value=="upgradesOn") toggle.isOn=i.upgradesOn;
-        if (value=="xpOn") toggle.isOn=i.xpOn;
-        if (value=="barrierOn") toggle.isOn=i.barrierOn;
-        if (value=="moveX") toggle.isOn=i.moveX;
-        if (value=="moveY") toggle.isOn=i.moveY;
-        if (value=="moveAxis") {if(i.moveX&&i.moveY){img.sprite=GetComponent<SpritesLib>().sprites[0];}else if(i.moveX&&!i.moveY){img.sprite=GetComponent<SpritesLib>().sprites[1];}else if(!i.moveX&&i.moveY){img.sprite=GetComponent<SpritesLib>().sprites[2];}}
+        if(value=="shopOn")toggle.isOn=i.shopOn;
+        if(value=="shopCargoOn")toggle.isOn=i.shopCargoOn;
+        if(value=="upgradesOn")toggle.isOn=i.upgradesOn;
+        if(value=="xpOn")toggle.isOn=i.xpOn;
+        if(value=="barrierOn")toggle.isOn=i.barrierOn;
+        if(value=="moveX")toggle.isOn=i.moveX;
+        if(value=="moveY")toggle.isOn=i.moveY;
+        if(value=="moveAxis"){if(i.moveX&&i.moveY){img.sprite=GetComponent<SpritesLib>().sprites[0];}else if(i.moveX&&!i.moveY){img.sprite=GetComponent<SpritesLib>().sprites[1];}else if(!i.moveX&&i.moveY){img.sprite=GetComponent<SpritesLib>().sprites[2];}}
     }
 }

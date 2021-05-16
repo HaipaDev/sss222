@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class OnScreenButtons : MonoBehaviour{
     void Update(){
-        if(SaveSerial.instance.settingsData.scbuttons==false&&!transform.GetChild(0).GetComponent<Animator>().GetBool("on")){
+        if(SaveSerial.instance.settingsData.scbuttons==false&&transform.GetChild(0).GetComponent<Animator>()!=null&&!transform.GetChild(0).GetComponent<Animator>().GetBool("on")){
             foreach(Button bt in GetComponentsInChildren<Button>()){
                 bt.enabled=false;
                 bt.GetComponent<Image>().enabled=false;

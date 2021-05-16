@@ -285,11 +285,12 @@ public class GameSession : MonoBehaviour{
         s.advD.crMend_upgraded=u.crMend_upgraded;
         s.advD.enDiss_upgraded=u.enDiss_upgraded;
         yield return new WaitForSecondsRealtime(0.02f);
-        s.SaveAdventure();
         Debug.Log("Adventure data saved in GameSession");
+        s.SaveAdventure();
         }else{if(u==null){Debug.LogError("UpgradeMenu not present");}else if(s==null){Debug.LogError("SaveSerial not present");}else if(s.advD==null){Debug.LogError("Adventure Data null");}}
     }
     public IEnumerator LoadAdventureI(){
+        //LoadAdventure() in Level.cs
         yield return new WaitForSecondsRealtime(0.04f);
         var u=UpgradeMenu.instance;
         var s=SaveSerial.instance;
@@ -315,51 +316,25 @@ public class GameSession : MonoBehaviour{
                 UpgradeMenu.instance.LvlEvents();
             }
         }
-        Debug.Log("Adventure data laoded in GameSession");
+        Debug.Log("Adventure data loaded in GameSession");
         }else{if(u==null){Debug.LogError("UpgradeMenu not present");}else if(s==null){Debug.LogError("SaveSerial not present");}else if(s.advD==null){Debug.LogError("Adventure Data null");}}
     }
-    public void SaveSettings(){
-        /*var ss=SaveSerial.instance;
-        var sm=FindObjectOfType<SettingsMenu>();
-        ss.moveByMouse=sm.moveByMouse;
-        ss.quality=sm.quality;
-        ss.fullscreen=sm.fullscreen;
-        ss.scbuttons=sm.scbuttons;
-        ss.pprocessing=sm.pprocessing;
-        ss.masterVolume=sm.masterVolume;
-        ss.soundVolume=sm.soundVolume;
-        ss.musicVolume=sm.musicVolume;
-        ss.lefthand=sm.lefthand;*/
-
-        SaveSerial.instance.SaveSettings();
-    }
+    public void SaveSettings(){SaveSerial.instance.SaveSettings();}
     public void SaveInventory(){
         SaveSerial.instance.playerData.skinID=FindObjectOfType<Inventory>().skinID;
         SaveSerial.instance.playerData.chameleonColor[0]=FindObjectOfType<Inventory>().chameleonColorArr[0];
         SaveSerial.instance.playerData.chameleonColor[1]=FindObjectOfType<Inventory>().chameleonColorArr[1];
         SaveSerial.instance.playerData.chameleonColor[2]=FindObjectOfType<Inventory>().chameleonColorArr[2];
     }
-    public void Save(){ SaveSerial.instance.Save(); SaveSerial.instance.SaveSettings(); }
-    public void Load(){ SaveSerial.instance.Load(); SaveSerial.instance.LoadSettings(); }
-    //public void DeleteAllShowConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((false)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((true)); }
-    //public void DeleteAllHideConfirm(){ GameObject.Find("OptionsUI").transform.GetChild(0).gameObject.SetActive((true)); GameObject.Find("OptionsUI").transform.GetChild(1).gameObject.SetActive((false)); }
-    public void DeleteAll(){ SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure(); ResetSettings(); Level.instance.LoadStartMenu();//FindObjectOfType<Level>().Restart();
-    /*Destroy(SaveSerial.instance.gameObject);Destroy(this.gameObject); SaveSerial.instance=null;GameSession.instance=null;DamageValues.instance=null;*/}
-    public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}//FindObjectOfType<Level>().LoadStartMenu();}
-    
+    public void Save(){SaveSerial.instance.Save();SaveSerial.instance.SaveSettings();}
+    public void Load(){SaveSerial.instance.Load();SaveSerial.instance.LoadSettings();}
+    public void DeleteAll(){SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure();ResetSettings();Level.instance.LoadStartMenu();}
+    public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}
     public void ResetSettings(){
         SaveSerial.instance.ResetSettings();
         Level.instance.RestartScene();
         SaveSerial.instance.SaveSettings();
         var s=FindObjectOfType<SettingsMenu>();
-        /*SaveSerial.instance.settingsData.gameVersion="0.4";
-        SaveSerial.instance.settingsData.moveByMouse=true;
-        SaveSerial.instance.settingsData.quality=4;
-        SaveSerial.instance.settingsData.fullscreen=true;
-        SaveSerial.instance.settingsData.masterVolume=0;
-        SaveSerial.instance.settingsData.soundVolume=0;
-        SaveSerial.instance.settingsData.musicVolume=-25;
-        SaveSerial.instance.settingsData.joystickSize=1;*/
     }
     public void ResetMusicPitch(){
         if(FindObjectOfType<MusicPlayer>()!=null)FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;
@@ -372,11 +347,8 @@ public class GameSession : MonoBehaviour{
     }}
 
     void CalculateLuck(){
-        //ref float multiAmnt=ref enballMultiAmnt;
-        //1+(0.08*((1.05-1)/0.05))
         if(luckMulti<2.5f){
             enballDropMulti=1+(enballMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
-            //multiAmnt=ref coinMultiAmnt;
             coinDropMulti=1+(coinMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
             coreDropMulti=1+(coreMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
             rarePwrupMulti=1+(rareMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
@@ -393,12 +365,6 @@ public class GameSession : MonoBehaviour{
             rarePwrupMulti=Mathf.Clamp(1+(rareMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+rareMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
             legendPwrupMulti=Mathf.Clamp(1+(legendMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+legendMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
         }
-
-        /*if(enballDropMulti>3){enballMultiAmnt=0.003f;}
-        if(coinDropMulti>3){coinMultiAmnt=0.004f;}
-        if(coreDropMulti>2){coreMultiAmnt=0.002f;}
-        if(rarePwrupMulti>3){rareMultiAmnt=0.0002f;}
-        if(legendPwrupMulti>3){legendMultiAmnt=0.01f;}*/
     }
     public void CheckCodes(int fkey, int nkey){
         if(fkey==0&&nkey==0){}

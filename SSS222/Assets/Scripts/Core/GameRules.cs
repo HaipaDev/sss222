@@ -239,7 +239,9 @@ public static GameRules instance;
         if(FindObjectsOfType<GameRules>().Length>1||!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
         else{DontDestroyOnLoad(gameObject);instance=this;}
     }
-    void Update() {
+    Player p=Player.instance;
+    void Update(){
+        if(Player.instance!=null&&p!=Player.instance){p=Player.instance;}
         if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
     }
     void OnValidate(){
@@ -247,7 +249,6 @@ public static GameRules instance;
         foreach(ListEvents le in lvlEvents){le.name="Levels: "+le.lvls.x+"-"+le.lvls.y;}
     }
     #region//Custom Events
-    Player p=Player.instance;
     public void MultiplyMaxHealth(float amnt){p.maxHP*=amnt;}
     public void MultiplyMaxEnergy(float amnt){p.maxEnergy*=amnt;}
     public void ShootMultiAdd(float amnt){p.shootMulti+=amnt;}

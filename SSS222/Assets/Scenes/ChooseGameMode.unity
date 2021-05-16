@@ -773,6 +773,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ModeChoose Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 9097839132721239304, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a784139e3e9e63488fc974d2b0c6329, type: 3}
 --- !u!1 &7411510095155739036 stripped

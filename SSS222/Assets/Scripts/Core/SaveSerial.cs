@@ -15,7 +15,7 @@ public class SaveSerial : MonoBehaviour{
 	[SerializeField] string filename = "playerData";
 	bool dataEncode=true;
 	[SerializeField] string filenameAdventure = "adventureData";
-	bool adventureEncode=false;
+	bool adventureEncode=true;
 	[SerializeField] string filenameSettings = "gameSettings.cfg";
 	bool settingsEncode=false;
 	public int maxRegisteredHyperGamers=3;
@@ -112,7 +112,7 @@ public class SaveSerial : MonoBehaviour{
 	public void SaveAdventure(){
 		SaveGame.Encode = adventureEncode;
 		SaveGame.Serializer = new SaveGameJsonSerializer();
-		SaveGame.Save(filename, advD);
+		SaveGame.Save(filenameAdventure, advD);
 		Debug.Log("Adventure Data saved");
 	}
 	public void LoadAdventure(){

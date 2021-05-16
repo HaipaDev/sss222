@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -43,10 +44,10 @@ public class Level : MonoBehaviour{
         if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
     }
     public void LoadGameScene(){
-        if(DamageValues.instance!=null)DamageValues.instance.StartCoroutine(DamageValues.instance.SetValues());
-        if(GameSession.instance.gameModeSelected==1){SaveSerial.instance.LoadAdventure();GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
         SceneManager.LoadScene("Game");
-        GameSession.instance.ResetScore();
+        if(DamageValues.instance!=null)DamageValues.instance.StartCoroutine(DamageValues.instance.SetValues());
+        if(GameSession.instance.gameModeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e => e.cfgName.Contains("Adventure"))){SaveSerial.instance.LoadAdventure();GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
+        else{GameSession.instance.ResetScore();}
         GameSession.instance.gameSpeed=1f;
     }
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");}
