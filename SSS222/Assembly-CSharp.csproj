@@ -505,6 +505,15 @@
      <Compile Include="Assets\Other\ZBayatGames\SaveGameFree\Examples\Shared\Scripts\SerializerDropdown.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ColorPicker\ColorImage.cs" />
      <Compile Include="Assets\Scripts\Tags\Tag_RepBar.cs" />
+     <Compile Include="Assets\Other\GGEZ\PerfectPixelCamera\Scripts\PerfectPixelCamera.cs" />
+     <Compile Include="Assets\Other\GGEZ\PerfectPixelCamera\Demo\Assets\ZoomDemo.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Core\ComponentData.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Example\ExtendedComponentData.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Example\TransformSaver.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Example\GameMaster.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Core\ISavableComponent.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Core\SaveMaster.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_NotEditorDestroy.cs" />
      <None Include="Assets\Other\unity-ui-extensions\Resources\Shaders\UIAdditive.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
@@ -559,6 +568,7 @@
      <None Include="Assets\Other\unity-ui-extensions\Resources\Shaders\UIImageCrop.shader" />
      <None Include="Assets\Scripts\Visuals\$dd_Invert.shader" />
      <None Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\Other\GGEZ\PerfectPixelCamera\README.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />

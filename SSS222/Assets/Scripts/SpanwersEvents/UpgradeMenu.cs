@@ -378,12 +378,12 @@ public class UpgradeMenu : MonoBehaviour{
         }}
     }
     public void CheatCores(){
-        GameSession.instance.CheckCodes(-1,0);
-        GameSession.instance.CheckCodes(2,6);
-        //GameSession.instance.CheckCodes(-1,9);
+        GameSession.instance.CheckCodes("Del","0");
+        GameSession.instance.CheckCodes("2","Y");
+        //GameSession.instance.CheckCodes("Del","9");
     }public void CheatLevels(){
-        GameSession.instance.CheckCodes(-1,0);
-        GameSession.instance.CheckCodes(2,7);
-        //GameSession.instance.CheckCodes(-1,9);
+        GameSession.instance.CheckCodes("Del","0");
+        GameSession.instance.CheckCodes("2","U");
+        //GameSession.instance.CheckCodes("Del","9");
     }public void CheatXP(){GameSession.instance.coresXp=GameSession.instance.xp_forCore;}
 }

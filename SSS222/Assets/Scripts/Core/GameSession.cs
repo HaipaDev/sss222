@@ -209,7 +209,7 @@ public class GameSession : MonoBehaviour{
 
         if(UpgradeMenu.instance!=null)CalculateLuck();
 
-        CheckCodes(0,0);
+        CheckCodes("0","0");
     }
 
     public int GetScore(){return score;}
@@ -366,41 +366,41 @@ public class GameSession : MonoBehaviour{
             legendPwrupMulti=Mathf.Clamp(1+(legendMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+legendMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
         }
     }
-    public void CheckCodes(int fkey, int nkey){
-        if(fkey==0&&nkey==0){}
-        if(Input.GetKey(KeyCode.Delete) || fkey==-1){
-            if(Input.GetKeyDown(KeyCode.Alpha0) || nkey==0){
+    public void CheckCodes(string fkey, string nkey){
+        //if(fkey=="0"&&nkey=="0"){}
+        if(Input.GetKey(KeyCode.Delete) || fkey=="Del"){
+            if(Input.GetKeyDown(KeyCode.Alpha0) || nkey=="0"){
                 cheatmode=true;
-            }if(Input.GetKeyDown(KeyCode.Alpha9) || nkey==9){
+            }if(Input.GetKeyDown(KeyCode.Alpha9) || nkey=="9"){
                 cheatmode=false;
             }
         }
         if(cheatmode==true){
-            if(Input.GetKey(KeyCode.F1) || fkey==1){
+            if(Input.GetKey(KeyCode.Alpha1) || fkey=="1"){
                 player=Player.instance;
-                if(Input.GetKeyDown(KeyCode.Alpha1) || nkey==1){player.health=player.maxHP;}
-                if(Input.GetKeyDown(KeyCode.Alpha2) || nkey==2){player.energy=player.maxEnergy;}
-                if(Input.GetKeyDown(KeyCode.Alpha3) || nkey==3){player.gclover=true;player.gcloverTimer=player.gcloverTime;}
-                if(Input.GetKeyDown(KeyCode.Alpha4) || nkey==4){player.health=0;}
+                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){player.health=player.maxHP;}
+                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){player.energy=player.maxEnergy;}
+                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.gclover=true;player.gcloverTimer=player.gcloverTime;}
+                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.health=0;}
             }
-            if(Input.GetKey(KeyCode.F2) || fkey==2){
-                if(Input.GetKeyDown(KeyCode.Alpha1) || nkey==1){AddToScoreNoEV(100);}
-                if(Input.GetKeyDown(KeyCode.Alpha2) || nkey==2){AddToScoreNoEV(1000);}
-                if(Input.GetKeyDown(KeyCode.Alpha3) || nkey==3){EVscore=EVscoreMax;}
-                if(Input.GetKeyDown(KeyCode.Alpha4) || nkey==4){coins+=1;shopScore=shopScoreMax;}
-                if(Input.GetKeyDown(KeyCode.Alpha5) || nkey==5){AddXP(100);}
-                if(Input.GetKeyDown(KeyCode.Alpha6) || nkey==6){coins+=100;cores+=100;}
-                if(Input.GetKeyDown(KeyCode.Alpha7) || nkey==7){FindObjectOfType<UpgradeMenu>().total_UpgradesLvl+=10;}
-                if(Input.GetKeyDown(KeyCode.Alpha8) || nkey==8){foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())ps.timer=0.01f;}
-                if(Input.GetKeyDown(KeyCode.Alpha9) || nkey==9){foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())ps.enemiesCount=100;}
+            if(Input.GetKey(KeyCode.Alpha2) || fkey=="2"){
+                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){AddToScoreNoEV(100);}
+                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){AddToScoreNoEV(1000);}
+                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){EVscore=EVscoreMax;}
+                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){coins+=1;shopScore=shopScoreMax;}
+                if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){AddXP(100);}
+                if(Input.GetKeyDown(KeyCode.Y) || nkey=="Y"){coins+=100;cores+=100;}
+                if(Input.GetKeyDown(KeyCode.U) || nkey=="U"){FindObjectOfType<UpgradeMenu>().total_UpgradesLvl+=10;}
+                if(Input.GetKeyDown(KeyCode.I) || nkey=="I"){foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())ps.timer=0.01f;}
+                if(Input.GetKeyDown(KeyCode.O) || nkey=="O"){foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())ps.enemiesCount=100;}
             }
-            if(Input.GetKey(KeyCode.F3) || fkey==3){
+            if(Input.GetKey(KeyCode.Alpha3) || fkey==""){
                 player=Player.instance;
-                if(Input.GetKeyDown(KeyCode.Alpha1) || nkey==1){player.powerup="laser3";}
-                if(Input.GetKeyDown(KeyCode.Alpha2) || nkey==2){player.powerup="mlaser";}
-                if(Input.GetKeyDown(KeyCode.Alpha3) || nkey==3){player.powerup="lsaber";}
-                if(Input.GetKeyDown(KeyCode.Alpha4) || nkey==4){player.powerup="cstream";}
-                if(Input.GetKeyDown(KeyCode.Alpha5) || nkey==5){player.powerup="plaser";}
+                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){player.powerup="laser3";}
+                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){player.powerup="mlaser";}
+                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.powerup="lsaber";}
+                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.powerup="cstream";}
+                if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){player.powerup="plaser";}
             }
         }
     }
