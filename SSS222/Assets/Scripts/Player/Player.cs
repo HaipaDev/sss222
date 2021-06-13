@@ -17,7 +17,7 @@ public class Player : MonoBehaviour{
     [Header("Player")]
     [SerializeField] public bool moveX = true;
     [SerializeField] public bool moveY = true;
-    [SerializeField] bool moveByMouse = false;
+    [SerializeField] InputType inputType = InputType.mouse;
     [SerializeField] public bool autoShoot = false;
     [SerializeField] float paddingX = -0.125f;
     [SerializeField] float paddingY = 0.45f;
@@ -185,19 +185,8 @@ public class Player : MonoBehaviour{
     [SerializeField] public int crystalMend_refillCost=2;
     [SerializeField] public float energyDiss_refillCost=3.3f;
 #endregion
-#region//Other
-    [Header("Effects")]
-    #region//VFX
-    GameObject explosionVFX;
-    [HideInInspector]public GameObject flareHitVFX;
-    GameObject flareShootVFX;
-    GameObject shadowShootVFX;
-    GameObject gcloverVFX;
-    [HideInInspector]public GameObject gcloverOVFX;
-    //GameObject crystalExplosionVFX;
-    #endregion
+#region //Other
     [Header("Others")]
-    [SerializeField] GameObject shadowPrefab;
     MeshRenderer bgSprite;
     const float flareShootYY = 0.2f;
     int moveDir = 1;
@@ -216,7 +205,7 @@ public class Player : MonoBehaviour{
     [HideInInspector]public float instantiateTime = 0.025f;
     [HideInInspector]public float instantiateTimer = 0f;
     float weaponEnTimer;
-    [HideInInspector]public Vector2 mousePos;
+    [SerializeField]public Vector2 mousePos;
     [HideInInspector]public Vector2 mouseDir;
     [SerializeField]public float dist;
     [HideInInspector]public Vector2 velocity;
@@ -233,7 +222,6 @@ public class Player : MonoBehaviour{
     Rigidbody2D rb;
     PlayerSkills pskills;
     Shake shake;
-    PauseMenu pauseMenu;
     [HideInInspector]public Joystick joystick;
     //Settings settings;
     IEnumerator shootCoroutine;
@@ -266,29 +254,17 @@ public class Player : MonoBehaviour{
         
         rb=GetComponent<Rigidbody2D>();
         pskills=GetComponent<PlayerSkills>();
-        shake=GameObject.FindObjectOfType<Shake>();
+        shake=FindObjectOfType<Shake>();
         joystick=FindObjectOfType<VariableJoystick>();
         SetUpMoveBoundaries();
         dashTime=startDashTime;
-        if(SaveSerial.instance.settingsData.inputType==InputType.mouse)SetMoveByMouse(true);else SetMoveByMouse(false);
-        pauseMenu=FindObjectOfType<PauseMenu>();
 
-        SetPrefabs();
         moveXwas=moveX;
         moveYwas=moveY;
 
         bgSprite=GameObject.Find("BG ColorM").GetComponent<MeshRenderer>();
         //inputMaster.Player.Shoot.performed += _ => Shoot();
         //if(!speeded&&!slowed){speedPrev=moveSpeedInit;}
-    }
-    void SetPrefabs(){
-        explosionVFX=GameAssets.instance.GetVFX("Explosion");
-        flareHitVFX=GameAssets.instance.GetVFX("FlareHit");
-        flareShootVFX=GameAssets.instance.GetVFX("FlareShoot");
-        //shadowShootVFX=GameAssets.instance.GetVFX("ShadowTrail");
-        //gcloverVFX=GameAssets.instance.GetVFX("GCloverVFX");
-        //gcloverOVFX=GameAssets.instance.GetVFX("GCloverOutVFX");
-        //crystalExplosionVFX=GameAssets.instance.GetVFX("CExplVFX");
     }
     IEnumerator SetGameRuleValues(){
     yield return new WaitForSecondsRealtime(0.07f);
@@ -382,7 +358,7 @@ public class Player : MonoBehaviour{
     }
 
     void Update(){
-        //if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.inputType==InputType.mouse)moveByMouse=true;else moveByMouse=false;
+        SetInputType(SaveSerial.instance.settingsData.inputType);
         HandleInput(false);
         energy=Mathf.Clamp(energy,0,maxEnergy);
         health=Mathf.Clamp(health,0,maxHP);
@@ -397,7 +373,7 @@ public class Player : MonoBehaviour{
         if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
             if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}}
-            if(moveByMouse!=true){MovePlayer();}
+            if(inputType!=InputType.mouse){MovePlayer();}
             else{MoveWithMouse();}
         }else{
             if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
@@ -418,21 +394,17 @@ public class Player : MonoBehaviour{
             if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);
             overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
             if(overheated==true&&overheatedTimer>0&&Time.timeScale>0.0001f){overheatedTimer-=Time.deltaTime;
-                //GameObject flareL = Instantiate(flareShootVFX, new Vector2(transform.position.x - 0.35f, transform.position.y + flareShootYY), Quaternion.identity) as GameObject;
-                //Destroy(flareL.gameObject, 0.04f);
                 GameAssets.instance.VFX("Flare",new Vector2((transform.position.x+0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
                 GameAssets.instance.VFX("Flare",new Vector2((transform.position.x-0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
                 }
             if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
-        }//else{}
-        //if((autoShoot&&energyOn&&energy>0)&&(shootTimer<=0||shootCoroutine==null)){Shoot();}
-        //Debug.Log(shootTimer);
-        //Debug.LogWarning(shootCoroutine);
-        if(Application.platform==RuntimePlatform.Android)/*if(SaveSerial.instance.settingsData.inputType==InputType.touch)*/mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+        }
+        if(Application.platform==RuntimePlatform.Android){mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);}
+        else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
 
         if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
     }
-    public void SetMoveByMouse(bool set){moveByMouse=set;}
+    public void SetInputType(InputType type){inputType=type;}
     void FixedUpdate(){
         // If we're first at-bat, handle the input immediately and mark it already-handled.
         //HandleInput(true);
@@ -442,27 +414,24 @@ public class Player : MonoBehaviour{
         if(moveX&&moveY)mPos=new Vector2(mousePos.x,mousePos.y);
         if(moveX&&!moveY)mPos=new Vector2(mousePos.x,transform.position.y);
         if(!moveX&&moveY)mPos=new Vector2(transform.position.x,mousePos.y);
-        dist=Vector2.Distance(mPos, transform.position);
+        dist=Vector2.Distance(mPos,transform.position);
     }
 #region//Movement etc
     void HandleInput(bool isFixedUpdate){
-        bool hadAlreadyHandled = hasHandledInputThisFrame;
-        hasHandledInputThisFrame = isFixedUpdate;
-        if (hadAlreadyHandled)
-            return;
+        bool hadAlreadyHandled=hasHandledInputThisFrame;
+        hasHandledInputThisFrame=isFixedUpdate;
+        if(hadAlreadyHandled)return;
         /* Perform any instantaneous actions, using Time.fixedDeltaTime where necessary */
     }
     void CountTimeMovementPressed(){
-        if(SaveSerial.instance.settingsData.inputType==InputType.touch){
-        //if (Application.platform == RuntimePlatform.Android){
+        if(inputType==InputType.touch){
             if(joystick.Horizontal>0.2f || joystick.Horizontal<-0.2f){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(joystick.Vertical>0.2f || joystick.Vertical<-0.2f){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(((joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f)||(joystick.Vertical>0.2f||joystick.Vertical<-0.2f))&&Time.timeScale>0.01f){moving=true;}//Add to total time flying
             if(joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f){hPressedTime=0;}
             if(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f){vPressedTime=0;}
             if((joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f)&&(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f)){mPressedTime=0;moving=false;}
-        }else{
-        if(moveByMouse!=true){
+        }else if(inputType==InputType.keyboard){
             if(Input.GetButton("Horizontal")){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(Input.GetButton("Vertical")){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(Input.GetButton("Horizontal")||Input.GetButton("Vertical")&&Time.timeScale>0.01f){moving=true;}//Add to total time flying
@@ -470,110 +439,81 @@ public class Player : MonoBehaviour{
             if(!Input.GetButton("Vertical")){vPressedTime=0;}
             if(!Input.GetButton("Horizontal")&&!Input.GetButton("Vertical")){mPressedTime=0;moving=false;}
         }
-        }
     }
     
     private void MovePlayer(){
         var deltaX=0f;
         var deltaY=0f;
-        if (Input.GetButtonDown("Horizontal")){
-            float timeSinceLastClick = Time.time - lastClickTime;
-            if (timeSinceLastClick <= DCLICK_TIME&&(dashDir==0||(dashDir<-1||dashDir>1))) {dashDir=(int)Input.GetAxisRaw("Horizontal")*2; /*Debug.Log(dashDir);*/ DClick(dashDir); /*Debug.Log(dashDir);*/ deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir; }
-            else{ deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir; }
-            lastClickTime = Time.time;  }
+        if(Input.GetButtonDown("Horizontal")){
+            float timeSinceLastClick=Time.time-lastClickTime;
+            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || (dashDir<-1||dashDir>1))){dashDir=(int)Input.GetAxisRaw("Horizontal")*2;DClick(dashDir);deltaX=Input.GetAxis("Horizontal")*Time.deltaTime*moveSpeedCurrent*moveDir;}
+            else{deltaX=Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent*moveDir;}
+            lastClickTime=Time.time;}
         if(Input.GetButtonDown("Vertical")){
-            float timeSinceLastClick = Time.time - lastClickTime;
-            if(timeSinceLastClick<=DCLICK_TIME&&(dashDir==0||((dashDir<0&&dashDir>-2)||(dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical"); /*Debug.Log(dashDir);*/ DClick(dashDir); /*Debug.Log(dashDir);*/ deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
-            else{ deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir; }
-            lastClickTime = Time.time; }
+            float timeSinceLastClick=Time.time-lastClickTime;
+            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || ((dashDir<0&&dashDir>-2) || (dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical");DClick(dashDir);deltaY=Input.GetAxis("Vertical")*Time.deltaTime*moveSpeedCurrent*moveDir;}
+            else{deltaY=Input.GetAxis("Vertical")*Time.deltaTime*moveSpeedCurrent*moveDir;}
+            lastClickTime=Time.time;}
 
-        //if(Application.platform==RuntimePlatform.Android){
         if(SaveSerial.instance.settingsData.inputType==InputType.touch){
-            deltaX = joystick.Horizontal * Time.deltaTime * moveSpeedCurrent * moveDir;
-            deltaY = joystick.Vertical * Time.deltaTime * moveSpeedCurrent * moveDir;
+            deltaX=joystick.Horizontal*Time.deltaTime*moveSpeedCurrent*moveDir;
+            deltaY=joystick.Vertical*Time.deltaTime*moveSpeedCurrent*moveDir;
         }else{
-            deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent * moveDir;
-            deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeedCurrent * moveDir;
+            deltaX=Input.GetAxis("Horizontal")*Time.deltaTime*moveSpeedCurrent*moveDir;
+            deltaY=Input.GetAxis("Vertical")*Time.deltaTime*moveSpeedCurrent*moveDir;
         }
 
-        var newXpos = transform.position.x;
-        var newYpos = transform.position.y;
+        var newXpos=transform.position.x;
+        var newYpos=transform.position.y;
 
-        if (moveX==true) newXpos = Mathf.Clamp(transform.position.x,xMin,xMax) + deltaX;
-        if (moveY==true) newYpos = Mathf.Clamp(transform.position.y,yMin,yMax) + deltaY;
-        transform.position = new Vector2(newXpos,newYpos);
-        //Debug.Log(timeSinceLastClick);
-        //Debug.Log(dashTime);
+        if(moveX==true)newXpos=Mathf.Clamp(transform.position.x,xMin,xMax)+deltaX;
+        if(moveY==true)newYpos=Mathf.Clamp(transform.position.y,yMin,yMax)+deltaY;
+        transform.position=new Vector2(newXpos,newYpos);
         
     }
 
     private void MoveWithMouse(){
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseDir = mousePos - (Vector2)transform.position;
-        mousePos.x=Mathf.Clamp(mousePos.x, xMin, xMax);
-        mousePos.y=Mathf.Clamp(mousePos.y, yMin, yMax);
+        mouseDir=mousePos-(Vector2)transform.position;
+        mousePos.x=Mathf.Clamp(mousePos.x,xMin,xMax);
+        mousePos.y=Mathf.Clamp(mousePos.y,yMin,yMax);
         //dist in FixedUpdate()
         float distX=0;if(moveX){distX=Mathf.Abs(mousePos.x-transform.position.x);}
         float distY=0;if(moveY){distY=Mathf.Abs(mousePos.y-transform.position.y);}
-        //if((distX>0f||distY>0f)&&(distX<0.35f||distY<0.35f)){dist=0.35f;}
-        //if(((moveX&&distX>0f)||(moveY&&distY>0f))&&((moveX&&distX<0.35f)||(moveY&&distY<0.35f))){dist=0.35f;}
         if((moveX&&distX>0f&&distX<0.35f)||(moveY&&distY>0f&&distY<0.35f)){dist=0.35f;}
-        //var actualdist = Vector2.Distance(mousePos, transform.position);
         if(dist>=0.3f&&Time.timeScale>0.01f){moving=true;}
         if((moveX&&moveY)&&dist<=0.05f){moving=false;}
         if(((moveX&&!moveY)||!moveX&&moveY)&&dist<=0.24f){moving=false;}
-        //var minMoveDist=0f;
-        //if(dist<minMoveDist)dist=0;
 
-        float step = moveSpeedCurrent * Time.deltaTime;
-        //if(FindObjectOfType<ShootButton>()!=null && FindObjectOfType<ShootButton>().pressed==false)transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
-        //else if(FindObjectsOfType<ShootButton>()==null){transform.position = Vector2.MoveTowardqs(transform.position, mousePos*moveDir, step);}
-        //if(dist>minMoveDist)
-        if (moveX && moveY)transform.position = Vector2.MoveTowards(transform.position, mousePos*moveDir, step);
-        if (moveX && !moveY)transform.position = Vector2.MoveTowards(transform.position, new Vector2(mousePos.x*moveDir,transform.position.y), step);
-        if (!moveX && moveY)transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x,mousePos.y*moveDir), step);
+        float step = moveSpeedCurrent*Time.deltaTime;
+        if (moveX && moveY)transform.position=Vector2.MoveTowards(transform.position,mousePos*moveDir,step);
+        if (moveX && !moveY)transform.position=Vector2.MoveTowards(transform.position,new Vector2(mousePos.x*moveDir,transform.position.y),step);
+        if (!moveX && moveY)transform.position=Vector2.MoveTowards(transform.position,new Vector2(transform.position.x,mousePos.y*moveDir),step);
 
         if(Input.GetButtonDown("Fire2")){
-            //moveXwas=moveX;moveX=false;
-            //moveYwas=moveY;moveY=false;
-            float timeSinceLastClick = Time.time - lastClickTime;
-            if (timeSinceLastClick <= DCLICK_TIME){DClick(0); }
-            else{ lastClickTime = Time.time; }//moveX=moveXwas;moveY=moveYwas;}
+            float timeSinceLastClick=Time.time-lastClickTime;
+            if(timeSinceLastClick<=DCLICK_TIME){DClick(0);}
+            else{lastClickTime=Time.time;}
         }
 
-        var newXpos = transform.position.x;
-        var newYpos = transform.position.y;
+        var newXpos=transform.position.x;
+        var newYpos=transform.position.y;
 
-        if(moveX)newXpos = Mathf.Clamp(transform.position.x, xMin, xMax);
-        if(moveY)newYpos = Mathf.Clamp(transform.position.y, yMin, yMax);
+        if(moveX)newXpos=Mathf.Clamp(transform.position.x,xMin,xMax);
+        if(moveY)newYpos=Mathf.Clamp(transform.position.y,yMin,yMax);
 
-        //if(dist>minMoveDist)
-        transform.position = new Vector2(newXpos, newYpos);
+        transform.position=new Vector2(newXpos,newYpos);
     }
 
-    private void SetUpMoveBoundaries()
-    {
-        /*Camera gameCamera = Camera.main;
-        xMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + padding;
-        xMax = gameCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - padding;
-        yMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y + padding;
-        yMax = gameCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - padding;*/
-
-        /*xMin = -bgSprite.bounds.size.x + padding;
-        xMax = bgSprite.bounds.size.x - padding;
-        yMin = -bgSprite.bounds.size.y + padding;
-        yMax = bgSprite.bounds.size.y - padding;*/
-
-        xMin = -3.87f + paddingX;
-        xMax = 3.87f - paddingX;
-        yMin = -6.95f + paddingY;
-        yMax = 7f - paddingY;
+    private void SetUpMoveBoundaries(){
+        xMin=-3.87f+paddingX;
+        xMax=3.87f-paddingX;
+        yMin=-6.95f+paddingY;
+        yMax=7f-paddingY;
     }
 
     private void Shoot(){
         if(Time.timeScale>0.0001f){
             if(SaveSerial.instance.settingsData.inputType!=InputType.touch){
-            //if(Application.platform != RuntimePlatform.Android){
                 if(!autoShoot){
                     if(Input.GetButtonDown("Fire1")){
                         if(shootCoroutine!=null){return;}
@@ -581,22 +521,18 @@ public class Player : MonoBehaviour{
                     }if(!Input.GetButton("Fire1")||shootTimer<-1f){
                         if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                         shootCoroutine=null;
-                        //if(shootCoroutine!=null){
-                            //StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());StopCoroutine("ShootContinuously");//}
-                        if(moving==true)/*if(enRegenEnabled)*/timerEnRegen+=Time.deltaTime;
+                        if(moving==true)timerEnRegen+=Time.deltaTime;
                     }
-                    //if (Input.GetButtonUp("Fire1")){StopCoroutine(shootCoroutine);}
                 }else{
                     if(shootCoroutine!=null){return;}
                     else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     //shootCoroutine=null;
                     if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
-            }else{
-                if(autoShoot){//Autoshoot on Android
+            }else{//Regular shooting on Touch in ShootButton()
+                if(autoShoot){//Autoshoot on Touch
                     if(shootCoroutine!=null){return;}
                     else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
-                    //shootCoroutine=null;
                     if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
             }
@@ -616,109 +552,32 @@ public class Player : MonoBehaviour{
         }else{return;}//Autoshoot in Shoot()
     }
     public void ShadowButton(Vector2 pos){
-        //if(pressed){
-            if(moveX&&moveY)tpPos=pos;
-            if(moveX&&!moveY)tpPos=new Vector2(pos.x,transform.position.y);
-            if(!moveX&&moveY)tpPos=new Vector2(transform.position.x,pos.y);
-            DClick(0);
-            //float timeSinceLastClick = Time.time - lastClickTime;
-            //if (timeSinceLastClick <= DCLICK_TIME){DClick(0); }
-            //else{ lastClickTime = Time.time; }
-        //}
+        if(moveX&&moveY)tpPos=pos;
+        if(moveX&&!moveY)tpPos=new Vector2(pos.x,transform.position.y);
+        if(!moveX&&moveY)tpPos=new Vector2(transform.position.x,pos.y);
+        DClick(0);
     }
     public void DClick(int dir){
-        //Debug.Log("DClick");
-        if(shadow==true && (energy>0||!energyOn)){
-            if(SaveSerial.instance.settingsData.inputType!=InputType.touch){
-            //if(Application.platform!=RuntimePlatform.Android){
-                if(moveByMouse!=true){
-                    if(dir<0&&dir>-2) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
-                    if(dir>0&&dir<2){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
-                    if(dir<-1){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
-                    if(dir>1){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
-                    dashDir=0;
-                    /*if(Application.platform == RuntimePlatform.Android){
-                        if(joystick.Vertical<-0.2f) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
-                        if(joystick.Vertical>0.2f){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
-                        if(joystick.Horizontal<-0.2f){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
-                        if(joystick.Horizontal>0.2f){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
-                    }else{
-                        if(Input.GetAxisRaw("Vertical")<0) { rb.velocity = Vector2.down * dashSpeed * moveDir; }
-                        if(Input.GetAxisRaw("Vertical")>0){ rb.velocity = Vector2.up * dashSpeed * moveDir; }
-                        if(Input.GetAxisRaw("Horizontal")<0){ rb.velocity = Vector2.left * dashSpeed * moveDir; }
-                        if(Input.GetAxisRaw("Horizontal")>0){ rb.velocity = Vector2.right * dashSpeed * moveDir; }
-                    }*/
-                }else{
-                    if(moveX&&moveY)tpPos=mousePos;
-                    if(moveX&&!moveY)tpPos=new Vector2(mousePos.x,transform.position.y);
-                    if(!moveX&&moveY)tpPos=new Vector2(transform.position.x,mousePos.y);
-                    dashed=true;
-                    /*Vector2 difference = mousePos - (Vector2)transform.position;
-                    difference = difference.normalized;
-                    float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-                    Vector3 dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.right;
-
-                    rb.velocity = Vector2.zero;
-                    dir = new Vector2(mousePos.x, mousePos.y); // remember that mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    transform.position += dir; // the only thing to change is this cause you need to move for an equal ammount of units each time you attack
-                    */
-                    //rb.velocity = mousePos * dashSpeed * moveDir;
-                    //if(new Vector2(transform.position.x,transform.position.y)==mousePos){rb.velocity=Vector2.zero;}
-                    #region//Failed attempts of RayCasting
-                    //float maxDist=10;
-                    /*
-                    shadowRaycast=Physics2D.RaycastAll(transform.position,mousePos,maxDist).ToList();
-                    //Ray2D shadowRaycast=new Ray2D(transform.position,mousePos);
-                    Debug.DrawRay(transform.position,shadowRaycast[shadowRaycast.Count-1].point,Color.green,0.5f);
-                    if(Vector2.Distance(transform.position,mousePos)<=maxDist)transform.position=mousePos;
-                    */
-                    /*
-                    Ray2D ray = new Ray2D(transform.position, mousePos);
-                    shadowRaycast = Physics2D.RaycastAll(ray.origin, ray.direction, maxDist).ToList();
-                    Debug.Log(shadowRaycast.Count);
-                    foreach(RaycastHit2D hit in shadowRaycast){Debug.DrawRay(transform.position,hit.point,Color.green,0.5f);if(hit.collider!=null&&hit.collider.CompareTag("Enemy")){hit.collider.GetComponent<Enemy>().Die();}}
-                    */
-                    /*
-                    int totalObjectsHit = Physics2D.RaycastNonAlloc(transform.position, mousePos, shadowRaycast, maxDist);
-                    Debug.Log("Rays:"+totalObjectsHit);
-    
-                    //Iterate the objects hit by the laser
-                    for (int i = 0; i < totalObjectsHit; i++)
-                    {
-                        RaycastHit2D hit = shadowRaycast[i];
-                        Debug.DrawRay(transform.position,hit.point,Color.green,0.5f);
-                        //Do something
-                        if (hit.collider != null&&hit.collider.CompareTag("Enemy"))
-                        {
-                            hit.collider.GetComponent<Enemy>().Die();
-                        }
-                    }
-                    var posRaycast = Physics2D.Raycast(transform.position, mousePos, maxDist);
-                    transform.position=posRaycast.point;
-                    */
-                    /*
-                    Ray2D ray = new Ray2D(transform.position, mousePos);
-                    Debug.DrawRay(transform.position,mousePos, Color.red, 0.5f);
-                    RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, mousePos);
-                    Debug.Log("Hits: "+hits.Length);
-                    foreach (RaycastHit2D hit in hits) {
-                        Debug.DrawRay(transform.position,hit.point, Color.red, 0.5f);
-                        if(hit.collider.CompareTag("Enemy")){Debug.Log("Enemy Hit");hit.collider.gameObject.GetComponent<Enemy>().Die();}
-                    }
-                    //transform.position=ray.GetPoint(maxDist);
-                    */
-                    #endregion
-                    //transform.position=Vector2.MoveTowards(transform.position,mousePos,300*Time.deltaTime);
-                }
-            }else{
+        if(shadow==true&&(energy>0||!energyOn)){
+            if(inputType==InputType.mouse){
+                if(moveX&&moveY)tpPos=mousePos;
+                if(moveX&&!moveY)tpPos=new Vector2(mousePos.x,transform.position.y);
+                if(!moveX&&moveY)tpPos=new Vector2(transform.position.x,mousePos.y);
+                dashed=true;
+            }else if(inputType==InputType.keyboard){
+                if(dir<0&&dir>-2){rb.velocity=Vector2.down*dashSpeed*moveDir;}
+                if(dir>0&&dir<2){rb.velocity=Vector2.up*dashSpeed*moveDir;}
+                if(dir<-1){rb.velocity=Vector2.left*dashSpeed*moveDir;}
+                if(dir>1){rb.velocity=Vector2.right*dashSpeed*moveDir;}
+                dashDir=0;
+            }else if(inputType==InputType.touch){
                 dashed=true;
             }
             AddSubEnergy(shadowCost,false);
-            dashing = true;
-            shadowed = true;
-            //AudioSource.PlayClipAtPoint(shadowdashSFX, new Vector2(transform.position.x, transform.position.y));
+            dashing=true;
+            shadowed=true;
             AudioManager.instance.Play("Shadowdash");
-            dashTime = startDashTime;
+            dashTime=startDashTime;
             //else{ rb.velocity = Vector2.zero; }
         }//else { dashTime = startDashTime; rb.velocity = Vector2.zero; }
         
@@ -953,15 +812,15 @@ public class Player : MonoBehaviour{
             if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
                 matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
-                //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
-                if(moveByMouse==true && dist<1){
+                //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
+                if(inputType==InputType.mouse && dist<1){
                     GameSession.instance.gameSpeed=dist;
                     GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed);
-                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType!=InputType.touch /*(Application.platform != RuntimePlatform.Android)*/ && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed);
-                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType==InputType.touch /*(Application.platform == RuntimePlatform.Android)*/ && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed);
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
@@ -979,15 +838,15 @@ public class Player : MonoBehaviour{
             if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
                 accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
-                //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
-                if(moveByMouse==true && dist>0.35){
+                //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
+                if(inputType==InputType.mouse && dist>0.35){
                     GameSession.instance.gameSpeed=dist+(1-0.35f);
                     GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
-                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType!=InputType.touch /*(Application.platform != RuntimePlatform.Android)*/ && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
-                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType==InputType.touch /*(Application.platform == RuntimePlatform.Android)*/ && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
@@ -1003,15 +862,15 @@ public class Player : MonoBehaviour{
                 accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
                 matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
-                //||(moveByMouse==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
-                if(moveByMouse==true){
+                //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
+                if(inputType==InputType.mouse){
                     GameSession.instance.gameSpeed=dist;
                     GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed*2);
-                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType!=InputType.touch /*(Application.platform != RuntimePlatform.Android)*/ && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
                     //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed*2);
-                }else if(moveByMouse==false && SaveSerial.instance.settingsData.inputType==InputType.touch /*(Application.platform == RuntimePlatform.Android)*/ && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
                     GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed*2);
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
@@ -1046,7 +905,7 @@ public class Player : MonoBehaviour{
     
     private void Shadow(){
         if(Time.timeScale>0.0001f&&instantiateTimer<=0){
-            GameObject shadow=Instantiate(shadowPrefab,new Vector2(transform.position.x,transform.position.y), Quaternion.identity);
+            GameObject shadow=GameAssets.instance.Make("PlayerShadow",transform.position);
             shadow.transform.localScale=new Vector3(shipScale,shipScale,1);
             Destroy(shadow.gameObject, shadowLength);
             instantiateTimer=instantiateTime;
@@ -1260,7 +1119,7 @@ public class Player : MonoBehaviour{
             else{ammo+=v;AmmoPopUpHUD(v);}
         }
     }
-    public void AddSubCoins(int value,bool add=false){
+    public void AddSubCoins(int value,bool add=true){
     if(inverter!=true){
         if(add){GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
         else{GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
@@ -1268,7 +1127,7 @@ public class Player : MonoBehaviour{
         if(add){GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
         else{GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
     }
-    }public void AddSubXP(float value,bool add=false){
+    }public void AddSubXP(float value,bool add=true){
     if(inverter!=true){
         if(add){GameSession.instance.AddXP(value);}
         else{GameSession.instance.AddXP(-value);}
@@ -1276,7 +1135,7 @@ public class Player : MonoBehaviour{
         if(add){GameSession.instance.AddXP(-value);}
         else{GameSession.instance.AddXP(value);}
     }
-    }public void AddSubCores(int value,bool add=false){
+    }public void AddSubCores(int value,bool add=true){
     if(inverter!=true){
         if(add){GameSession.instance.cores+=value;CoresPopUpHUD(value);}
         else{GameSession.instance.cores-=value;CoresPopUpHUD(-value);}

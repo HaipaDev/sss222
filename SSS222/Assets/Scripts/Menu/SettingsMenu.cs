@@ -18,29 +18,29 @@ public class SettingsMenu : MonoBehaviour{
     [SerializeField]GameObject lefthandToggle;
     [SerializeField]GameObject cheatToggle;
     [SerializeField]GameObject vibrationsToggle;
+    [SerializeField]GameObject horizPlayfieldToggle;
     [SerializeField]GameObject masterSlider;
     [SerializeField]GameObject soundSlider;
     [SerializeField]GameObject musicSlider;
-    [SerializeField]AudioSource audioSource;
     public AudioMixer audioMixer;
     [SerializeField]GameObject pprocessingPrefab;
     public PostProcessVolume postProcessVolume;
     private void Start(){
-        if(audioSource==null)audioSource=GetComponent<AudioSource>();
 
         if(SaveSerial.instance!=null){
-            qualityDropdopwn.GetComponent<Dropdown>().value = SaveSerial.instance.settingsData.quality;
-            fullscreenToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.fullscreen;
-            pprocessingToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.pprocessing;
-            scbuttonsToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.scbuttons;
-            //steeringToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.moveByMouse;
-            lefthandToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.lefthand;
-            cheatToggle.GetComponent<Toggle>().isOn = GameSession.instance.cheatmode;
-            vibrationsToggle.GetComponent<Toggle>().isOn = SaveSerial.instance.settingsData.vibrations;
+            qualityDropdopwn.GetComponent<Dropdown>().value=SaveSerial.instance.settingsData.quality;
+            fullscreenToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.fullscreen;
+            pprocessingToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.pprocessing;
+            scbuttonsToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.scbuttons;
+            //steeringToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.moveByMouse;
+            lefthandToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.lefthand;
+            cheatToggle.GetComponent<Toggle>().isOn=GameSession.instance.cheatmode;
+            vibrationsToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.vibrations;
+            bool h=false;if(SaveSerial.instance.settingsData.playfieldRot==PlaneDir.horiz){h=true;}horizPlayfieldToggle.GetComponent<Toggle>().isOn=h;
 
-            masterSlider.GetComponent<Slider>().value = SaveSerial.instance.settingsData.masterVolume;
-            soundSlider.GetComponent<Slider>().value = SaveSerial.instance.settingsData.soundVolume;
-            musicSlider.GetComponent<Slider>().value = SaveSerial.instance.settingsData.musicVolume;
+            masterSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.masterVolume;
+            soundSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.soundVolume;
+            musicSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.musicVolume;
         }
         if(SceneManager.GetActiveScene().name=="Options")OpenSettings();
 
@@ -66,24 +66,24 @@ public class SettingsMenu : MonoBehaviour{
     public void Close(){transform.GetChild(0).gameObject.SetActive(false);transform.GetChild(1).gameObject.SetActive(false);}
     public void SetMasterVolume(float volume){
     if(GameSession.instance!=null){
-        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.masterVolume = volume;
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.masterVolume=volume;
     }}public void SetSoundVolume(float volume){
     if(GameSession.instance!=null){
-        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.soundVolume = volume;
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.soundVolume=volume;
     }}
     public void SetMusicVolume(float volume){
     if(GameSession.instance!=null){
-        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.musicVolume = volume;
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.musicVolume=volume;
     }}
     public void SetQuality(int qualityIndex){
     if(GameSession.instance!=null){
         QualitySettings.SetQualityLevel(qualityIndex);
-        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.quality = qualityIndex;
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.quality=qualityIndex;
     }}
     public void SetFullscreen (bool isFullscreen){
     if(GameSession.instance!=null){
         Screen.fullScreen = isFullscreen;
-        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.fullscreen = isFullscreen;
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.fullscreen=isFullscreen;
         Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,isFullscreen,60);
     }}
     public void SetPostProcessing (bool isPostprocessed){
@@ -95,11 +95,17 @@ public class SettingsMenu : MonoBehaviour{
         if(isPostprocessed==false && FindObjectOfType<PostProcessVolume>()!=null){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
     }}
     public void SetOnScreenButtons (bool onscbuttons){
-        if(GameSession.instance!=null)if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.scbuttons = onscbuttons;
+        if(GameSession.instance!=null)if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.scbuttons=onscbuttons;
     }public void SetVibrations (bool vibrations){
-        if(GameSession.instance!=null)if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.vibrations = vibrations;
+        if(GameSession.instance!=null)if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.vibrations=vibrations;
+    }public void SetPlayfieldRot (bool horiz){
+        PlaneDir h=PlaneDir.vert;if(horiz==true){h=PlaneDir.horiz;}if(GameSession.instance!=null)if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.playfieldRot=h;
+        if(SceneManager.GetActiveScene().name=="Game"&&Application.isPlaying){
+            if(h==PlaneDir.horiz){FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,90);FindObjectOfType<Camera>().orthographicSize=GameSession.instance.horizCameraSize;}
+            else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=GameSession.instance.vertCameraSize;}
+        }
     }
-    public void SetSteering(){//bool isMovingByMouse){
+    public void SetSteering(){
     if(GameSession.instance!=null){
         SaveSerial s;
         if(SaveSerial.instance!=null){
@@ -117,7 +123,7 @@ public class SettingsMenu : MonoBehaviour{
         }
         foreach(Transform t in steeringToggle.transform.GetChild(0)){t.gameObject.SetActive(false);}
         steeringToggle.transform.GetChild(0).GetChild((int)s.settingsData.inputType).gameObject.SetActive(true);
-        if(Player.instance!=null){if(s.settingsData.inputType==InputType.mouse)Player.instance.SetMoveByMouse(true);else Player.instance.SetMoveByMouse(false);}
+        //if(Player.instance!=null){Player.instance.SetInputType(s.settingsData.inputType);}
         }
         //if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.moveByMouse = isMovingByMouse;
         //if(SaveSerial.instance!=null)SaveSerial.instance.moveByMouse = isMovingByMouse;
@@ -152,6 +158,6 @@ public class SettingsMenu : MonoBehaviour{
         if(GameSession.instance!=null)GameSession.instance.cheatmode = isCheatmode;
     }
     public void PlayDing(){
-        if(GameSession.instance!=null)audioSource.Play();
+        if(GameSession.instance!=null)GetComponent<AudioSource>().Play();
     }
 }

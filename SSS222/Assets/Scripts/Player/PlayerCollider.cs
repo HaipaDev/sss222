@@ -49,8 +49,7 @@ public class PlayerCollider : MonoBehaviour{
                             if(en!=true){Destroy(other.gameObject, 0.05f);}
                             else{other.GetComponent<Enemy>().givePts=false; other.GetComponent<Enemy>().health=-1; other.GetComponent<Enemy>().Die();}
                         }
-                        var flare=Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
-                        Destroy(flare.gameObject, 0.3f);
+                        GameAssets.instance.VFX("FlareHit", new Vector2(other.transform.position.x, transform.position.y + 0.5f),0.3f);
                     }
                     else if(player.shadow==true&&player.dashing==true){
                         //if(destroy == true){
@@ -71,8 +70,9 @@ public class PlayerCollider : MonoBehaviour{
             else if(other.gameObject.CompareTag("Powerups")){
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){player.AddSubEnergy(player.energyBallGet,true);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){player.AddSubCoins(other.GetComponent<LCrystalDrop>().amnt,true);}//GameSession.instance.coins += 1;}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(1,true);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("BlackEnBall").name)){player.AddSubXP(1,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(1);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestBall").name)){player.AddSubXP(1);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestVial").name)){player.AddSubXP(5);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Battery").name)){player.AddSubEnergy(player.energyBatteryGet,true);}
                 if(other.GetComponent<Tag_Collectible>().isPowerup){//if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
                     if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddPwrups(1);//powerupsGoblin++;
@@ -116,8 +116,7 @@ public class PlayerCollider : MonoBehaviour{
                     player.SetStatus("gclover");
                     GameSession.instance.MultiplyScore(1.25f);
                     player.energy=player.maxEnergy;
-                    GameObject gcloverexOVFX=Instantiate(player.gcloverOVFX, new Vector2(0, 0), Quaternion.identity);
-                    Destroy(gcloverexOVFX, 1f);
+                    GameAssets.instance.VFX("GCloverOutVFX", Vector2.zero,1f);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowPwrup").name)){
                     if(player.energy<=player.enForPwrupRefill){player.AddSubEnergy(player.pwrupEnergyGet,true);}
@@ -183,7 +182,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){AudioManager.instance.Play("EnergyBall");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){AudioManager.instance.Play("Coin");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){AudioManager.instance.Play("CoreCollect");}
-                else if(other.gameObject.name.Contains(GameAssets.instance.Get("BlackEnBall").name)){AudioManager.instance.Play("BlackEnBall");}
+                else if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestBall").name)||other.gameObject.name.Contains(GameAssets.instance.Get("CelestVial").name)){AudioManager.instance.Play("CelestBall");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("GCloverPwrup").name)){AudioManager.instance.Play("GClover");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowBtPwrup").name)){AudioManager.instance.Play("ShadowGet");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("MatrixPwrup").name)){AudioManager.instance.Play("MatrixGet");}
@@ -224,14 +223,10 @@ public class PlayerCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)){dmg=-damageValues.GetDmgBlueFlame();}
             if(other.gameObject.name.Contains("StickBomb")){dmg=0;}
         }
-        //if(dmgTimer<=0){
-                //if(other.gameObject.name.Contains(leechName)){}
-                //var flare=Instantiate(player.flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
-                //Destroy(flare.gameObject, 0.3f);
-                if(GameSession.instance.dmgPopups==true&&dmg>0&&!player.gclover&&!player.dashing){GameCanvas.instance.DMGPopup(dmg,other.transform.position,Color.red,2,true);}
-                else if(dmg<0){GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1.5f,true);}
-                if(dmg>0)player.Damage(dmg,dmgType.silent);
-                if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;
+        if(GameSession.instance.dmgPopups==true&&dmg>0&&!player.gclover&&!player.dashing){GameCanvas.instance.DMGPopup(dmg,other.transform.position,Color.red,2,true);}
+        else if(dmg<0){GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1.5f,true);}
+        if(dmg>0)player.Damage(dmg,dmgType.silent);
+        if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;
     }else{dmgTimer-=Time.deltaTime;}
     }
     }

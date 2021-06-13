@@ -161,6 +161,7 @@ public class SaveSerial : MonoBehaviour{
 		public bool coinPopupsSum;
 		public bool corePopupsSum;
 		public bool scorePopupsSum;
+		public PlaneDir playfieldRot=PlaneDir.vert;
 	}
 	
 	public void SaveSettings(){
@@ -194,15 +195,8 @@ public class SaveSerial : MonoBehaviour{
 		instance=this;
 		playerData.highscore=new int[GameSession.gameModeMaxID];
 	}
-	private void SetUpSingleton(){
-		int numberOfObj = FindObjectsOfType<SaveSerial>().Length;
-		if (numberOfObj > 1){
-			Destroy(gameObject);
-		}
-		else{
-			DontDestroyOnLoad(gameObject);
-		}
-	}
+	private void SetUpSingleton(){if(FindObjectsOfType<SaveSerial>().Length>1){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);}}
 #endregion
 }
 public enum InputType{mouse,touch,keyboard}
+public enum PlaneDir{vert,horiz}

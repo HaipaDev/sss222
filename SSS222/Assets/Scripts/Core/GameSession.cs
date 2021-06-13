@@ -58,6 +58,8 @@ public class GameSession : MonoBehaviour{
     public float defaultGameSpeed=1f;
     public bool speedChanged;
     public bool slowingPause;
+    public float vertCameraSize=7f;
+    public float horizCameraSize=3.92f;
     [Header("Other")]
     public bool cheatmode;
     public bool dmgPopups=true;
@@ -119,6 +121,8 @@ public class GameSession : MonoBehaviour{
         //Set values on Enter Game Room
         if(!setValues&&(SceneManager.GetActiveScene().name=="Game")){
             StartCoroutine(SetGameRulesValues());
+            if(SaveSerial.instance.settingsData.playfieldRot==PlaneDir.horiz){FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,90);FindObjectOfType<Camera>().orthographicSize=horizCameraSize;}
+            else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=vertCameraSize;}
             setValues=true;
         }
         if(SceneManager.GetActiveScene().name=="Game"&&Player.instance!=null&&gameSpeed>0.0001f){gameSessionTime+=Time.unscaledDeltaTime;}
@@ -236,7 +240,7 @@ public class GameSession : MonoBehaviour{
     public void AddXP(float xpValue){if(xpOn){coresXp+=xpValue;GameCanvas.instance.XpPopupSwitch(xpValue);}coresXpTotal+=xpValue;}
     public void DropXP(float xpAmnt, Vector2 pos, float rangeX=0.5f, float rangeY=0.5f){
         var amnt=Mathf.RoundToInt(xpAmnt);
-        SpreadObjects.SpreadGO(GameAssets.instance.Get("BlackEnBall"),pos,amnt,rangeX,rangeY);
+        SpreadObjects.SpreadGO(GameAssets.instance.Get("CelestBall"),pos,amnt,rangeX,rangeY);
         if(xpAmnt-amnt!=0)GameSession.instance.AddXP(xpAmnt-amnt);
     }
     public void AddEnemyCount(){enemiesCount++;if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddKills(1);//EnemiesCountHealDrone++;
@@ -253,6 +257,7 @@ public class GameSession : MonoBehaviour{
         shopScore=0;
         coins=0;
         coresXp=0;
+        coresXpTotal=0;
         cores=0;
         enballDropMulti=1;
         coinDropMulti=1;

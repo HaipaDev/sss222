@@ -43,9 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afeecf0a3642dbe4398a0c42f11afe9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filenameLogin: hyperGamerLogin
   filename: playerData
   filenameAdventure: adventureData
   filenameSettings: gameSettings.cfg
+  maxRegisteredHyperGamers: 3
+  hyperGamerLoginData:
+    registeredCount: 0
+    loggedIn: 0
+    username: 
+    password: 
   playerData:
     highscore: 0000000000000000000000000000000000000000
     skinID: 0
@@ -94,3 +101,4 @@ MonoBehaviour:
     coinPopupsSum: 1
     corePopupsSum: 1
     scorePopupsSum: 0
+    playfieldRot: 0

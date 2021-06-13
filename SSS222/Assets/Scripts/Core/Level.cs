@@ -90,6 +90,8 @@ public class Level : MonoBehaviour{
             var scene=SceneManager.GetActiveScene().name;
             if(scene=="ChooseGameMode"||scene=="Inventory"||scene=="Credits"||scene=="Leaderboards"||scene=="Login"){
                 LoadStartMenu();
+            }else if(scene=="InfoGameMode"){
+                LoadGameModeChooseScene();
             }else if(scene=="ScoreSubmit"){
                 LoadGameModeInfoScene();
             }else if(scene=="Options"){

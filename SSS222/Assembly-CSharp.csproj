@@ -80,8 +80,8 @@
      <Compile Include="Assets\Other\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
      <Compile Include="Assets\Scripts\Shaders\InvertAllAudio.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ReorderableList\ReorderableList.cs" />
-     <Compile Include="Assets\Scripts\Visuals\TimeFreezer.cs" />
      <Compile Include="Assets\Scripts\Player\GloomyScythe.cs" />
+     <Compile Include="Assets\Scripts\Visuals\TimeFreezer.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\NonDrawingGraphic.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\Waves.cs" />
      <Compile Include="Assets\Other\ZBayatGames\SaveGameFree\Scripts\Encoders\SaveGameSimpleEncoder32.cs" />
@@ -98,9 +98,10 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\SelectionBox\SelectionBox.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\FallDown.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\ToolTips\BoundTooltip\BoundTooltipTrigger.cs" />
-     <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ComboBox\ComboBox.cs" />
      <Compile Include="Assets\Scripts\HUD\GameCanvas.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\Cooldown\CooldownEffect_SAUIM.cs" />
+     <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ComboBox\ComboBox.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Example\ExtendedComponentData.cs" />
      <Compile Include="Assets\Scripts\Menu\ToggleObject_GameRules.cs" />
      <Compile Include="Assets\Scripts\HUD\StatButtonColor.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Primitives\UICircle.cs" />
@@ -119,10 +120,12 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\UI_TweenScale.cs" />
      <Compile Include="Assets\Scripts\Shaders\QuickGlow.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\UIParticleSystem.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Example\TransformSaver.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\Segment.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\PPIViewer.cs" />
      <Compile Include="Assets\Other\ZBayatGames\SaveGameFree\Examples\Save Web\ExampleSaveWeb.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Layout\UIVerticalScroller.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Core\ComponentData.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\03_InfiniteScroll\Example03CellDto.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\SpreadObjects.cs" />
      <Compile Include="Assets\Scripts\HUD\CoresXPBar.cs" />
@@ -174,6 +177,7 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\InputModules\AimerInputModule.cs" />
      <Compile Include="Assets\Other\Weighted Random Numbers\Examples\Tree Resizer\Scripts\TurnCamera.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\DisruptersSpawner.cs" />
+     <Compile Include="Assets\Other\GGEZ\PerfectPixelCamera\Scripts\PerfectPixelCamera.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Layout\CardUI\2D Cards\CardPopup2D.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\AnimOff.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\DragCorrector.cs" />
@@ -217,8 +221,8 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ComboBox\AutoCompleteComboBox.cs" />
      <Compile Include="Assets\Scripts\Player\HealthLeech.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIImageCrop.cs" />
-     <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Layout\CardUI\Superellipse Creation\SuperellipsePoints.cs" />
      <Compile Include="Assets\Scripts\Visuals\BackgroundScroller.cs" />
+     <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Layout\CardUI\Superellipse Creation\SuperellipsePoints.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\TextEffects\AnimateEffects.cs" />
      <Compile Include="Assets\Scripts\HUD\EnableChildOnUpgrade.cs" />
      <Compile Include="Assets\Scripts\HUD\Camera\CameraScript.cs" />
@@ -226,8 +230,8 @@
      <Compile Include="Assets\Scripts\Tags\Tag_EnSaberWeapon.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Layout\CardUI\2D Cards\CardExpanding2D.cs" />
      <Compile Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\Demo\BuyInventoryItem.cs" />
-     <Compile Include="Assets\Other\unity-ui-extensions\Examples\TextEffects\testHref.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\Singleton.cs" />
+     <Compile Include="Assets\Other\unity-ui-extensions\Examples\TextEffects\testHref.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\RescalingPanels\ResizePanel.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerCollider.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -237,8 +241,8 @@
      <Compile Include="Assets\Scripts\UniversalUsage\DetachFromFollow.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Layout\TileSizeFitter.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\BoxSlider.cs" />
-     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\CableCurve.cs" />
+     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
      <Compile Include="Assets\Scripts\HUD\ShakeQuicklyUI.cs" />
      <Compile Include="Assets\Scripts\HUD\PowerupTimerUI_Off.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\02_CellEventHandling\Example02ScrollViewCell.cs" />
@@ -256,8 +260,8 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\ShaderEffects\UIMultiplyEffect.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\MenuExample\Scripts\Menus\MainMenu.cs" />
-     <Compile Include="Assets\Scripts\Visuals\Glow.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Primitives\DiamondGraph.cs" />
+     <Compile Include="Assets\Scripts\Visuals\Glow.cs" />
      <Compile Include="Assets\Scripts\Player\ShipSkinManager.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\02_CellEventHandling\Example02CellDto.cs" />
      <Compile Include="Assets\Scripts\SpanwersEvents\ShopQueue.cs" />
@@ -284,6 +288,7 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Layout\VerticalScrollSnap.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ColorPicker\Events\HSVChangedEvent.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Example\GameMaster.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Primitives\UICornerCut.cs" />
      <Compile Include="Assets\Other\Joystick Pack\Scripts\Base\Joystick.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\NicerOutline.cs" />
@@ -304,6 +309,7 @@
      <Compile Include="Assets\Scripts\Enemies\HLaserCollision.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Utilities\ExtensionsToggleGroup.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ColorPicker\Events\ColorChangedEvent.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Core\ISavableComponent.cs" />
      <Compile Include="Assets\Scripts\HUD\GameOverCanvas.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\Gradient2.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\VR Extensions\VRInputModule.cs" />
@@ -316,6 +322,7 @@
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\ToolTips\HoverTooltip.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\BarValue.cs" />
      <Compile Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\Demo\InventoryItem.cs" />
+     <Compile Include="Assets\Other\ZExtendableSaveSystem\Core\SaveMaster.cs" />
      <Compile Include="Assets\Scripts\Tags\Tag_PlayerWeaponBlockable.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\FancyScrollView\04_FocusOn\Example04CellDto.cs" />
      <Compile Include="Assets\Scripts\Player\ShootInArc.cs" />
@@ -412,7 +419,9 @@
      <Compile Include="Assets\Scripts\Enemies\EnShip.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ColorPicker\ColorValues.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+     <Compile Include="Assets\Other\GGEZ\PerfectPixelCamera\Demo\Assets\ZoomDemo.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\CylinderText.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerShadow.cs" />
      <Compile Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\Scripts\IGameNotificationsPlatform.cs" />
      <Compile Include="Assets\Other\Weighted Random Numbers\Scripts\RandomDistribution.cs" />
      <Compile Include="Assets\Scripts\Tags\Tag_ShopTimer.cs" />
@@ -486,6 +495,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Effects\CurlyUI\CUIText.cs" />
      <Compile Include="Assets\Scripts\HUD\XPFill.cs" />
+     <Compile Include="Assets\Scripts\Tags\Tag_NotEditorDestroy.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\Cooldown\CooldownEffect_Image.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Examples\UILineRenderer\TestAddingPoints.cs" />
      <Compile Include="Assets\Scripts\UniversalUsage\EnableDisableObject.cs" />
@@ -505,15 +515,6 @@
      <Compile Include="Assets\Other\ZBayatGames\SaveGameFree\Examples\Shared\Scripts\SerializerDropdown.cs" />
      <Compile Include="Assets\Other\unity-ui-extensions\Scripts\Controls\ColorPicker\ColorImage.cs" />
      <Compile Include="Assets\Scripts\Tags\Tag_RepBar.cs" />
-     <Compile Include="Assets\Other\GGEZ\PerfectPixelCamera\Scripts\PerfectPixelCamera.cs" />
-     <Compile Include="Assets\Other\GGEZ\PerfectPixelCamera\Demo\Assets\ZoomDemo.cs" />
-     <Compile Include="Assets\Other\ZExtendableSaveSystem\Core\ComponentData.cs" />
-     <Compile Include="Assets\Other\ZExtendableSaveSystem\Example\ExtendedComponentData.cs" />
-     <Compile Include="Assets\Other\ZExtendableSaveSystem\Example\TransformSaver.cs" />
-     <Compile Include="Assets\Other\ZExtendableSaveSystem\Example\GameMaster.cs" />
-     <Compile Include="Assets\Other\ZExtendableSaveSystem\Core\ISavableComponent.cs" />
-     <Compile Include="Assets\Other\ZExtendableSaveSystem\Core\SaveMaster.cs" />
-     <Compile Include="Assets\Scripts\Tags\Tag_NotEditorDestroy.cs" />
      <None Include="Assets\Other\unity-ui-extensions\Resources\Shaders\UIAdditive.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
@@ -542,6 +543,7 @@
      <None Include="Assets\Other\ZBayatGames\SaveGameFree\Documentation\Save Game Free Documentation - Plain Text Version.txt" />
      <None Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\Shaders\$dd_Invert.shader" />
      <None Include="Assets\Other\unity-ui-extensions\Resources\Shaders\UI Particle MultiplyDouble.shader" />
      <None Include="Assets\Scripts\Visuals\Blur.shader" />
      <None Include="Assets\Other\In App Purchasing\3.0.2\In App Purchasing Sample\script\link.xml" />
@@ -557,6 +559,7 @@
      <None Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
+     <None Include="Assets\Shaders\$dd_Invert-Sprite.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\Shaders\QuickBlur.shader" />
@@ -566,7 +569,6 @@
      <None Include="Assets\Other\unity-ui-extensions\Resources\Shaders\UI Particle AddSmooth.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\Other\unity-ui-extensions\Resources\Shaders\UIImageCrop.shader" />
-     <None Include="Assets\Scripts\Visuals\$dd_Invert.shader" />
      <None Include="Assets\Other\Mobile Notifications\1.3.2\Notification Samples\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Other\GGEZ\PerfectPixelCamera\README.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
@@ -812,6 +814,9 @@
     <Reference Include="UnityEditor.UnityConnectModule">
         <HintPath>C:/Unity Versions/2021.1.4f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections.LowLevel.ILSupport">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+    </Reference>
     <Reference Include="MongoDB.Driver.Core">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Assets/Plugins/MongoDB.Driver.Core.dll</HintPath>
     </Reference>
@@ -829,6 +834,9 @@
     </Reference>
     <Reference Include="System.Buffers">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Assets/Plugins/System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Unsafe">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/PackageCache/com.unity.burst@1.4.1/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Assets/Plugins/MongoDB.Driver.dll</HintPath>
@@ -1205,14 +1213,14 @@
     <Reference Include="UnityEditor.CacheServer">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.AdaptivePerformance.Samsung.Android.Editor">
-        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.AdaptivePerformance.Samsung.Android.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Purchasing.SecurityStub">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityStub.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Advertisements">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.IK.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.IK.Editor.dll</HintPath>
@@ -1223,6 +1231,9 @@
     <Reference Include="Unity.Rider.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -1232,11 +1243,11 @@
     <Reference Include="Unity.2D.IK.Runtime">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.IK.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Purchasing.Codeless">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.Purchasing.Codeless.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.AdaptivePerformance.Editor">
-        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.AdaptivePerformance.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Triangle.Runtime">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
@@ -1247,11 +1258,11 @@
     <Reference Include="UnityEngine.Monetization">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Addressables.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.AdaptivePerformance">
-        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.AdaptivePerformance.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Notifications.Android">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Notifications.Android.dll</HintPath>
@@ -1261,6 +1272,9 @@
     </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityWakatime">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityWakatime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
@@ -1277,8 +1291,8 @@
     <Reference Include="Unity.TextMeshPro">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.AdaptivePerformance.Simulator.Extension">
-        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.AdaptivePerformance.Simulator.Extension.dll</HintPath>
+    <Reference Include="Unity.Burst.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RemoteConfig.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.RemoteConfig.Editor.dll</HintPath>
@@ -1292,8 +1306,8 @@
     <Reference Include="Unity.InternalAPIEditorBridge.001">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Subsystem.Registration">
-        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Subsystem.Registration.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ResourceManager">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
@@ -1301,17 +1315,23 @@
     <Reference Include="Unity.Postprocessing.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Jobs.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Mathematics">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.AdaptivePerformance.Simulator.Editor">
-        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.AdaptivePerformance.Simulator.Editor.dll</HintPath>
+    <Reference Include="Unity.Burst">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing.SecurityCore">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityCore.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Jobs">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Jobs.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Runtime">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
@@ -1321,6 +1341,9 @@
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing.Stores">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.Purchasing.Stores.dll</HintPath>
@@ -1343,11 +1366,8 @@
     <Reference Include="UnityEngine.Advertisements.Editor">
         <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.AdaptivePerformance.Simulator.VRR.Extension">
-        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.AdaptivePerformance.Simulator.VRR.Extension.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.AdaptivePerformance.Samsung.Android">
-        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.AdaptivePerformance.Samsung.Android.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+        <HintPath>C:/Unity Projects/SSS222/SSS222/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

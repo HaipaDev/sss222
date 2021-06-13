@@ -26,13 +26,13 @@ public class ShipSkinManager : MonoBehaviour{
         //if(skinID<1){skinID=1;}
         skins=FindObjectOfType<GameAssets>().skins;
         overlays=FindObjectOfType<GameAssets>().skinOverlays;
-        if(skinID==1){ addOverlay = true; }
+        if(skinID==1){addOverlay=true;}
         if(addOverlay==true){
-            overlayOBJ = Instantiate(overlayPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+            overlayOBJ=Instantiate(overlayPrefab,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
             overlayOBJ.transform.parent = gameObject.transform;
             overlayOBJ.transform.position=new Vector3(overlayOBJ.transform.position.x,overlayOBJ.transform.position.y,-0.01f);
             overlayOBJ.transform.localScale=Vector2.one;
-            overlay = overlayOBJ.GetComponent<SpriteRenderer>();
+            overlay=overlayOBJ.GetComponent<SpriteRenderer>();
             if(GameSession.maskMode!=0)overlayOBJ.GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
         }
     }

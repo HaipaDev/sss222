@@ -46,15 +46,17 @@ MonoBehaviour:
   objects:
   - name: Player
     gobj: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
+  - name: PlayerShadow
+    gobj: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699, type: 3}
   - name: Coin
     gobj: {fileID: 1056705403108089519, guid: eebb358fa9ff6af419cd68bd020a4289, type: 3}
   - name: EnBall
     gobj: {fileID: 1056705403108089519, guid: b02c0de83bb50b44aadff0efec44e73f, type: 3}
   - name: Battery
     gobj: {fileID: 1056705403108089519, guid: 40c1b09ed4e143144bff57da67d04666, type: 3}
-  - name: BlackEnBall
+  - name: CelestBall
     gobj: {fileID: 1056705403108089519, guid: 6a1e5463a6bee1d41ad4a51d34ef22af, type: 3}
-  - name: BlackFiol
+  - name: CelestVial
     gobj: {fileID: 1056705403108089519, guid: ede186f4c97da394c8ec2106f7e700f4, type: 3}
   - name: PowerCore
     gobj: {fileID: 1056705403108089519, guid: 0311d6b525027ad43918a62b48acaba8, type: 3}

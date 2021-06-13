@@ -6,40 +6,32 @@ using UnityEngine.UI;
 
 public class ShadowButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler{
     public bool pressed;
-    public float cooldown=0.1f;
-    float timer;
-    Vector2 pos;
-    Vector2 lastPos;
+    Vector2 defPos;
+    [SerializeField]Vector2 lastPos;
+    [SerializeField]Vector3 pPosScr;
+    [SerializeField]Vector3 mPosScr;
     void Start(){
-        pos=transform.position;
+        defPos=transform.position;
     }
     void Update(){
         if(Player.instance.shadow!=true){GetComponent<Button>().enabled=false;GetComponent<Image>().enabled=false;transform.GetChild(0).gameObject.SetActive(false);}else{GetComponent<Button>().enabled=true;GetComponent<Image>().enabled=true;transform.GetChild(0).gameObject.SetActive(true);}
+        pPosScr=Camera.main.WorldToScreenPoint(Player.instance.transform.position);
+        mPosScr=Camera.main.WorldToScreenPoint(Player.instance.mousePos);
         if(pressed){
-            transform.position=Camera.main.WorldToScreenPoint(Player.instance.mousePos);
+            transform.position=new Vector2(
+            Mathf.Clamp(mPosScr.x,pPosScr.x-150,pPosScr.x+150),
+            Mathf.Clamp(mPosScr.y,pPosScr.y-150,pPosScr.y+150)
+            );
             lastPos=Player.instance.mousePos;
-            //if(timer<=0){
-                //FindObjectOfType<Player>().ShadowButton(true);
-                //timer=FindObjectOfType<Player>().shootTimer;
-                //timer=cooldown;
-            //}
-        }else{
-            //FindObjectOfType<Player>().ShadowButton(false);
         }
-        //if (Input.GetMouseButtonUp(0)){FindObjectOfType<Player>().ShootButton(false);pressed=false;}
+        //if(Input.GetMouseButton(0)){FindObjectOfType<Player>().ShootButton(false);pressed=true;}
     }
     public void OnPointerDown(PointerEventData eventData){
-        //if(timer>0){timer-=Time.deltaTime;}
-            pressed=true;
-            
-            //timer=cooldown;
-        //}
+        pressed=true;
      }
      public void OnPointerUp(PointerEventData eventData){
         Player.instance.ShadowButton(lastPos);
         pressed=false;
-        transform.position=pos;
-        //if(timer<=0)timer=FindObjectOfType<Player>().shootTimer;
-        //if(timer>0){timer-=Time.deltaTime;}
+        transform.position=defPos;
      }
 }
