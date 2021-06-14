@@ -198,7 +198,7 @@ public class Enemy : MonoBehaviour{
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true; health=-1; Die();} else{Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){foreach(GameObject obj in GetComponent<GoblinDrop>().powerup)Destroy(obj);/*obj.SetActive(true);*/}}}
     }
     //Collisions in EnemyCollider
-    public void DispDmgCount(Vector2 pos){StartCoroutine(DispDmgCountI(pos));}
+    public void DispDmgCount(Vector2 pos){if(SaveSerial.instance.settingsData.dmgPopups)StartCoroutine(DispDmgCountI(pos));}
     IEnumerator DispDmgCountI(Vector2 pos){
         dmgCounted=true;
         //In Update, DispDmgCountUp

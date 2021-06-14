@@ -1007,6 +1007,7 @@ GameObject:
   - component: {fileID: 2058572317371699689}
   - component: {fileID: 6818419309391091837}
   - component: {fileID: 1247023967951679912}
+  - component: {fileID: 2000995937740024593}
   m_Layer: 5
   m_Name: LeaderboardsButton
   m_TagString: Untagged
@@ -1026,14 +1027,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 243917645334185275}
-  m_Father: {fileID: 5656695446430749891}
-  m_RootOrder: 3
+  m_Father: {fileID: 4367303425744928242}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 129}
   m_SizeDelta: {x: 840, y: 170}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &2058572317371699689
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1111,7 +1112,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 6818419309391091837}
   m_OnClick:
     m_PersistentCalls:
@@ -1142,6 +1143,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+--- !u!114 &2000995937740024593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942515483745306144}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c549c04c8442c418989efec6c5b56b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1312992847180540474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,6 +1317,8 @@ GameObject:
   - component: {fileID: 2168107509293631748}
   - component: {fileID: 1317200156949184822}
   - component: {fileID: 4663692514586871313}
+  - component: {fileID: 4663692514586871314}
+  - component: {fileID: 4085138618077139272}
   m_Layer: 5
   m_Name: Login
   m_TagString: Untagged
@@ -1393,7 +1408,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.8962264, g: 0.2494215, b: 0.2494215, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1425,6 +1440,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+--- !u!114 &4663692514586871314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069664168863968223}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c549c04c8442c418989efec6c5b56b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4085138618077139272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069664168863968223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88dd165c92e0b34c84d2274e82a3506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  components: 1
+  button: 0
+  inOrderedList: 0
 --- !u!1 &2532998136048797181
 GameObject:
   m_ObjectHideFlags: 0
@@ -2871,7 +2913,7 @@ RectTransform:
   - {fileID: 4663692512742735595}
   - {fileID: 4663692512906347997}
   - {fileID: 5523423952384854268}
-  - {fileID: 1561698028628065502}
+  - {fileID: 4367303425744928242}
   - {fileID: 4799967186423811271}
   - {fileID: 4663692513654627938}
   m_Father: {fileID: 3396757096309026494}
@@ -2922,6 +2964,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!1 &5282342560640654217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4367303425744928242}
+  - component: {fileID: 5233510529895650823}
+  m_Layer: 5
+  m_Name: Leaderboards
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4367303425744928242
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5282342560640654217}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1561698028628065502}
+  m_Father: {fileID: 5656695446430749891}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5233510529895650823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5282342560640654217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88dd165c92e0b34c84d2274e82a3506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  components: 0
+  button: 0
+  inOrderedList: 1
 --- !u!1 &5470787352983939761
 GameObject:
   m_ObjectHideFlags: 0
@@ -3048,9 +3142,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ContentLayout: {fileID: 4156191088219283992}
   DraggableArea: {fileID: 0}
-  IsDraggable: 1
+  IsDraggable: 0
   CloneDraggedObject: 0
-  IsDropable: 1
+  IsDropable: 0
   IsDisplacable: 0
   maxItems: 2147483647
   OnElementDropped:

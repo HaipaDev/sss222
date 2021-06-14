@@ -61,6 +61,7 @@ public class GameSession : MonoBehaviour{
     public float vertCameraSize=7f;
     public float horizCameraSize=3.92f;
     [Header("Other")]
+    public string gameVersion="0.5t3";
     public bool cheatmode;
     public bool dmgPopups=true;
     public bool analyticsOn=true;
@@ -211,9 +212,17 @@ public class GameSession : MonoBehaviour{
         if(SaveSerial.instance.settingsData.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
         }
 
-        if(UpgradeMenu.instance!=null)CalculateLuck();
+        //Disable particles
+        if(!SaveSerial.instance.settingsData.particles){
+            if(FindObjectsOfType<ParticleSystem>()!=null){
+                foreach(ParticleSystem ps in FindObjectsOfType<ParticleSystem>()){
+                    Destroy(ps.gameObject);
+                }
+            }
+        }
 
-        CheckCodes("0","0");
+        if(UpgradeMenu.instance!=null)CalculateLuck();
+        CheckCodes(".",".");
     }
 
     public int GetScore(){return score;}
@@ -223,7 +232,7 @@ public class GameSession : MonoBehaviour{
     public int GetEVScore(){return EVscore;}
     public int GetShopScore(){return shopScore; }
     public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
-    public string GetGameVersion(){return SaveSerial.instance.settingsData.gameVersion;}
+    //public string GetGameVersion(){return SaveSerial.instance.settingsData.gameVersion;}
 
     public void AddToScore(int scoreValue){
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);

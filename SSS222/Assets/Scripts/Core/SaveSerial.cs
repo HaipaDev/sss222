@@ -140,19 +140,25 @@ public class SaveSerial : MonoBehaviour{
 #region//Settings Data
 	public SettingsData settingsData=new SettingsData();
 	[System.Serializable]public class SettingsData{
-		public string gameVersion="0.5t3";
 		public InputType inputType;
-		public bool fullscreen=true;
-		public bool pprocessing;
-		public bool scbuttons;
-		public bool vibrations;
-		public int quality=4;
-		public float masterVolume=0;
-		public float soundVolume=0;
-		public float musicVolume=-25;
 		public JoystickType joystickType;
 		public float joystickSize=1;
 		public bool lefthand;
+		public bool scbuttons;
+		public bool vibrations;
+		
+		public float masterVolume=0;
+		public float soundVolume=0;
+		public float musicVolume=-25;
+		
+		
+		public PlaneDir playfieldRot=PlaneDir.vert;
+		public int quality=4;
+		public bool fullscreen=true;
+		public bool dmgPopups=true;
+		public bool particles=true;
+		public bool pprocessing;
+
 		public float popupSumTime=0.25f;
 		public bool hpPopupsSum;
 		public bool enPopupsSum;
@@ -161,7 +167,7 @@ public class SaveSerial : MonoBehaviour{
 		public bool coinPopupsSum;
 		public bool corePopupsSum;
 		public bool scorePopupsSum;
-		public PlaneDir playfieldRot=PlaneDir.vert;
+		
 	}
 	
 	public void SaveSettings(){

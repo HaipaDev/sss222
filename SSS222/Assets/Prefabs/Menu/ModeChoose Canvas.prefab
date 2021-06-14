@@ -1830,7 +1830,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "UPDATE 1.2(?) - \nCUSTOM\n(MODDABLE??)\nSHARABLE\nGAMEMODES"
+  m_text: "UPDATE 1.1(?) - \nCUSTOM\n(MODDABLE??)\nSHARABLE\nGAMEMODES"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a08a4866d54094b853c1b628fdbdd1, type: 2}
   m_sharedMaterial: {fileID: 7516542502403631768, guid: 45a08a4866d54094b853c1b628fdbdd1,
@@ -1968,6 +1968,7 @@ GameObject:
   - component: {fileID: 7865634934013441153}
   - component: {fileID: 8217655564114580793}
   - component: {fileID: 9097839132721239304}
+  - component: {fileID: 3652414085661732446}
   m_Layer: 5
   m_Name: AdventureModeButton
   m_TagString: Untagged
@@ -2075,7 +2076,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 8217655564114580793}
   m_OnClick:
     m_PersistentCalls:
@@ -2093,6 +2094,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+--- !u!114 &3652414085661732446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4324225270732203493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88dd165c92e0b34c84d2274e82a3506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  components: 1
+  button: 1
+  inOrderedList: 0
 --- !u!1 &4633498205738231469
 GameObject:
   m_ObjectHideFlags: 0
@@ -4445,7 +4461,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "UPDATE 0.7/1.1 - \nMORE MODULES, \nBOSSES"
+  m_text: "UPDATE 1.2 - \nMORE MODULES, \nBOSSES"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a08a4866d54094b853c1b628fdbdd1, type: 2}
   m_sharedMaterial: {fileID: 7516542502403631768, guid: 45a08a4866d54094b853c1b628fdbdd1,
@@ -4473,7 +4489,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 57.45
+  m_fontSize: 62.2
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1

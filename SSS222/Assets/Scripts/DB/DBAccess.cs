@@ -54,7 +54,7 @@ public class DBAccess : MonoBehaviour{
             else if(score<sameNameScore.ToList()[0].score){SetSubmitMessage("Score is lower than submitted");}
             else{await scores.FindOneAndUpdateAsync(e => e.name==name, Builders<Model_Score>.Update.Set(e => e.score, score));SetSubmitMessage("Score overwritten!");}
         }else{
-            Model_Score document=new Model_Score { name=name, score=score, version=GameSession.instance.GetGameVersion(), date=System.DateTime.Now };
+            Model_Score document=new Model_Score { name=name, score=score, version=GameSession.instance.gameVersion, date=System.DateTime.Now };
             await scores.InsertOneAsync(document);
             SetSubmitMessage("New score submitted!");
         }

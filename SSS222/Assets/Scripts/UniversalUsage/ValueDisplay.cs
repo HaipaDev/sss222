@@ -23,7 +23,7 @@ public class ValueDisplay : MonoBehaviour{
         else if(value=="coins") txt.text=GameSession.instance.GetCoins().ToString();
         else if(value=="cores") txt.text=GameSession.instance.GetCores().ToString();
         else if(value.Contains("highscore")) txt.text=GameSession.instance.GetHighscore(/*int.Parse(value.Split('e')[1])*/GameSession.instance.gameModeSelected).ToString();
-        else if(value=="gameVersion") txt.text=GameSession.instance.GetGameVersion();
+        else if(value=="gameVersion") txt.text=GameSession.instance.gameVersion;
         else if(value=="timePlayed") txt.text=GameSession.instance.GetGameSessionTimeFormat();
         }
         if(Player.instance!=null){

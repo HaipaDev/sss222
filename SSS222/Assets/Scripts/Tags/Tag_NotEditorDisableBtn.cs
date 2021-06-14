@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Tag_NotEditorDestroy : MonoBehaviour{
+public class Tag_NotEditorDisableBtn : MonoBehaviour{
     void Start(){
         #if !UNITY_EDITOR
-            Destroy(gameObject);
+            GetComponent<Button>().interactable=false;
         #endif
     }
 }
