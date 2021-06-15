@@ -27,8 +27,10 @@ public class SettingsMenu : MonoBehaviour{
     [SerializeField]GameObject qualityDropdopwn;
     [SerializeField]GameObject fullscreenToggle;
     [SerializeField]GameObject pprocessingToggle;
+    [SerializeField]GameObject screenshakeToggle;
     [SerializeField]GameObject dmgPopupsToggle;
     [SerializeField]GameObject particlesToggle;
+    [SerializeField]GameObject screenflashToggle;
 
     [SerializeField]GameObject pprocessingPrefab;
     public PostProcessVolume postProcessVolume;
@@ -47,8 +49,10 @@ public class SettingsMenu : MonoBehaviour{
             qualityDropdopwn.GetComponent<Dropdown>().value=SaveSerial.instance.settingsData.quality;
             fullscreenToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.fullscreen;
             pprocessingToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.pprocessing;
+            screenshakeToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.screenshake;
             dmgPopupsToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.dmgPopups;
             particlesToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.particles;
+            screenflashToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.screenflash;
         }
         if(SceneManager.GetActiveScene().name=="Options")OpenSettings();
 
@@ -90,19 +94,25 @@ public class SettingsMenu : MonoBehaviour{
                 pprocessingToggle.GetComponent<Toggle>().isOn=false;
                 dmgPopupsToggle.GetComponent<Toggle>().isOn=false;
             }if(qualityIndex==0){
+                SaveSerial.instance.settingsData.screenshake=false;
                 SaveSerial.instance.settingsData.particles=false;
+                SaveSerial.instance.settingsData.screenflash=false;
+                screenshakeToggle.GetComponent<Toggle>().isOn=false;
                 particlesToggle.GetComponent<Toggle>().isOn=false;
+                screenflashToggle.GetComponent<Toggle>().isOn=false;
             }if(qualityIndex>1){
                 SaveSerial.instance.settingsData.particles=true;
                 particlesToggle.GetComponent<Toggle>().isOn=true;
-            }if(qualityIndex>=5){
+            }if(qualityIndex>4){
                 SaveSerial.instance.settingsData.pprocessing=true;
                 pprocessingToggle.GetComponent<Toggle>().isOn=true;
             }
         }
     }
+    public void SetScreenshake(bool isOn){if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.screenshake=isOn;}
     public void SetDmgPopups(bool isOn){if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.dmgPopups=isOn;}
     public void SetParticles(bool isOn){if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.particles=isOn;}
+    public void SetScreenflash(bool isOn){if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.screenflash=isOn;}
     public void SetFullscreen(bool isOn){
         Screen.fullScreen=isOn;
         if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.fullscreen=isOn;

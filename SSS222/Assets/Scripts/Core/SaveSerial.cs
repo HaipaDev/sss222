@@ -155,9 +155,11 @@ public class SaveSerial : MonoBehaviour{
 		public PlaneDir playfieldRot=PlaneDir.vert;
 		public int quality=4;
 		public bool fullscreen=true;
-		public bool dmgPopups=true;
-		public bool particles=true;
 		public bool pprocessing;
+		public bool screenshake=true;
+		public bool dmgPopups=true;
+		public bool particles=true;		
+		public bool screenflash=true;
 
 		public float popupSumTime=0.25f;
 		public bool hpPopupsSum;

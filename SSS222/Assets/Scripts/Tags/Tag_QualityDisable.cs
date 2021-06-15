@@ -13,15 +13,15 @@ public class Tag_QualityDisable : MonoBehaviour{
         if(!components){
             if(!inOrderedList){
                 foreach(Transform t in transform){
-                    if(condition())t.gameObject.SetActive(false);
+                    if(_condition())t.gameObject.SetActive(false);
                     else t.gameObject.SetActive(true);
                 }
             }else{
                 foreach(Transform t in transform){
-                    if(condition())t.gameObject.SetActive(false);
+                    if(_condition())t.gameObject.SetActive(false);
                     else t.gameObject.SetActive(true);
                 }
-                if(condition())GetComponent<RectTransform>().sizeDelta=Vector2.zero;
+                if(_condition())GetComponent<RectTransform>().sizeDelta=Vector2.zero;
                 else GetComponent<RectTransform>().sizeDelta=new Vector2(100,100);
                 GetComponent<LayoutElement>().enabled=false;GetComponent<LayoutElement>().enabled=true;
             }
@@ -29,15 +29,15 @@ public class Tag_QualityDisable : MonoBehaviour{
             if(!button){
                 foreach(MonoBehaviour c in GetComponents(typeof(MonoBehaviour))){
                 if(c!=this){
-                    if(condition()){c.enabled=false;}
+                    if(_condition()){c.enabled=false;}
                     else{c.enabled=true;}
                 }
                 }
             }else{
-                if(condition())GetComponent<Button>().interactable=false;
+                if(_condition())GetComponent<Button>().interactable=false;
                 else GetComponent<Button>().interactable=true;
             }
         }
     }
-    bool condition(){if((!moreThan&&QualitySettings.GetQualityLevel()<=(int)level) || (moreThan&&QualitySettings.GetQualityLevel()>=(int)level))return true;else return false;}
+    bool _condition(){if((!moreThan&&QualitySettings.GetQualityLevel()<=(int)level) || (moreThan&&QualitySettings.GetQualityLevel()>=(int)level))return true;else return false;}
 }

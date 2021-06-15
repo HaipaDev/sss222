@@ -9,6 +9,7 @@ public class Shake : MonoBehaviour{
     [SerializeField]float x=0;
     [SerializeField]float y=0;
     public void CamShake(float multiplier, float speed){
+    if(SaveSerial.instance.settingsData.screenshake){
         if(debug==true)Debug.Log("Mult Before: "+mult);
         if(multiplier>mult||camAnim.GetBool("shake")!=true){
         camAnim.ResetTrigger("shake");
@@ -19,6 +20,7 @@ public class Shake : MonoBehaviour{
         if(debug==true)Debug.Log("Mult After: "+mult);
         }
         //camAnim.transform.position=new Vector3(x,y,10);
+    }
     }
     private void Update() {
         camAnim.transform.position=new Vector3(x*mult,y*mult,-10);

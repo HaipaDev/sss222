@@ -20,7 +20,7 @@ public class Screenflash : MonoBehaviour{
     }
 
     void Update(){
-    if(Player.instance!=null){
+    if(SaveSerial.instance.settingsData.screenflash&&Player.instance!=null){
         if(Player.instance.damaged==true){image.color=damageFlashColor;Player.instance.damaged=false;}
         else{image.color=Color.Lerp(image.color, Color.clear, damageFlashSpeed*Time.deltaTime);}
         if(Player.instance.healed==true){image.color=healFlashColor;Player.instance.healed=false;}

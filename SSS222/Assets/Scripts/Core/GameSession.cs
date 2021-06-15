@@ -212,15 +212,6 @@ public class GameSession : MonoBehaviour{
         if(SaveSerial.instance.settingsData.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
         }
 
-        //Disable particles
-        if(!SaveSerial.instance.settingsData.particles){
-            if(FindObjectsOfType<ParticleSystem>()!=null){
-                foreach(ParticleSystem ps in FindObjectsOfType<ParticleSystem>()){
-                    Destroy(ps.gameObject);
-                }
-            }
-        }
-
         if(UpgradeMenu.instance!=null)CalculateLuck();
         CheckCodes(".",".");
     }
