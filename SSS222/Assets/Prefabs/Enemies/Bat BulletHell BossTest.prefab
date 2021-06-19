@@ -205,14 +205,10 @@ MonoBehaviour:
   givePts: 1
   scoreValueStart: 50
   scoreValueEnd: 100
-  enBallChanceInit: 30
-  coinChanceInit: 3
-  powercoreChanceInit: 1
   xpAmnt: 0
-  enBallChance: 0
-  coinChance: 0
-  powercoreChance: 0
-  specialDrop: {fileID: 0}
+  drops: []
+  dropValues: []
+  destroyOut: 1
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0

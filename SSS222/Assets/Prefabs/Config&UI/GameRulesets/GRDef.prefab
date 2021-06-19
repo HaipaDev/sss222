@@ -332,15 +332,20 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
-    freezefxTime: 0
     givePts: 1
     scoreValueStart: 4
     scoreValueEnd: 9
-    enBallChanceInit: 30
-    coinChanceInit: 3
-    powercoreChanceInit: 0
     xpAmnt: 0
-    specialDrop: {fileID: 0}
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 1}
+      dropChance: 3
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 0
   - name: Comet
     size: {x: 1, y: 1}
     spr: {fileID: 0}
@@ -354,15 +359,20 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
-    freezefxTime: 0
     givePts: 1
     scoreValueStart: 3
     scoreValueEnd: 10
-    enBallChanceInit: 30
-    coinChanceInit: 3
-    powercoreChanceInit: 0
     xpAmnt: 0
-    specialDrop: {fileID: 0}
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 1}
+      dropChance: 3
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 0
   - name: Enemy Combatant
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
@@ -376,15 +386,20 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 1
     flyOff: 1
-    freezefxTime: 0
     givePts: 1
     scoreValueStart: 10
     scoreValueEnd: 17
-    enBallChanceInit: 30
-    coinChanceInit: 3
-    powercoreChanceInit: 25
     xpAmnt: 1
-    specialDrop: {fileID: 0}
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 1}
+      dropChance: 3
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 25
   - name: Enemy Ship
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
@@ -399,15 +414,20 @@ MonoBehaviour:
     bulletDist: 0.35
     randomizeWaveDeath: 1
     flyOff: 1
-    freezefxTime: 0
     givePts: 1
     scoreValueStart: 11
     scoreValueEnd: 15
-    enBallChanceInit: 30
-    coinChanceInit: 3
-    powercoreChanceInit: 25
     xpAmnt: 1
-    specialDrop: {fileID: 0}
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 1}
+      dropChance: 3
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 25
   - name: Glare Devil
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
@@ -421,15 +441,20 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
-    freezefxTime: 0
     givePts: 1
     scoreValueStart: 13
     scoreValueEnd: 13
-    enBallChanceInit: 30
-    coinChanceInit: 3
-    powercoreChanceInit: 1
     xpAmnt: 4
-    specialDrop: {fileID: 0}
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 1}
+      dropChance: 3
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 1
   - name: Goblin Thief
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
@@ -444,15 +469,20 @@ MonoBehaviour:
     bulletDist: 0.1
     randomizeWaveDeath: 0
     flyOff: 0
-    freezefxTime: 0
     givePts: 1
     scoreValueStart: 15
     scoreValueEnd: 25
-    enBallChanceInit: 30
-    coinChanceInit: 3
-    powercoreChanceInit: 10
     xpAmnt: 2
-    specialDrop: {fileID: 0}
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 1}
+      dropChance: 3
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 10
   - name: Healing Drone
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
@@ -466,16 +496,20 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
-    freezefxTime: 0
     givePts: 1
     scoreValueStart: 15
     scoreValueEnd: 25
-    enBallChanceInit: 30
-    coinChanceInit: 3
-    powercoreChanceInit: 15
     xpAmnt: 2.5
-    specialDrop: {fileID: 1056705403108089519, guid: 2b95db0bd9edebc4b97375103e5a2d9a,
-      type: 3}
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 1}
+      dropChance: 3
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 15
   - name: Mecha Leech
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
@@ -489,15 +523,20 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
-    freezefxTime: 0
     givePts: 1
-    scoreValueStart: 15
-    scoreValueEnd: 25
-    enBallChanceInit: 30
-    coinChanceInit: 3
-    powercoreChanceInit: 13
-    xpAmnt: 4
-    specialDrop: {fileID: 0}
+    scoreValueStart: 30
+    scoreValueEnd: 3
+    xpAmnt: 13
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 15
+    - name: Coin
+      ammount: {x: 1, y: 1}
+      dropChance: 5
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 0
   - name: Stinger
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
@@ -511,15 +550,20 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
-    freezefxTime: 0
     givePts: 1
     scoreValueStart: 3
     scoreValueEnd: 7
-    enBallChanceInit: 30
-    coinChanceInit: 3
-    powercoreChanceInit: 1
     xpAmnt: 1.5
-    specialDrop: {fileID: 0}
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 1}
+      dropChance: 3
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 1
   - name: Vortex Wheel
     size: {x: 1, y: 1}
     spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
@@ -534,15 +578,20 @@ MonoBehaviour:
     bulletDist: 0
     randomizeWaveDeath: 0
     flyOff: 0
-    freezefxTime: 0
     givePts: 1
     scoreValueStart: 15
     scoreValueEnd: 20
-    enBallChanceInit: 30
-    coinChanceInit: 3
-    powercoreChanceInit: 30
     xpAmnt: 5
-    specialDrop: {fileID: 0}
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 1}
+      dropChance: 3
+    - name: PowerCore
+      ammount: {x: 1, y: 2}
+      dropChance: 30
   cometSettings:
     sizeMin: 0.4
     sizeMax: 1.4
@@ -561,11 +610,8 @@ MonoBehaviour:
     lunarCometChance: 10
     lunarHealthMulti: 2.5
     lunarSpeedMulti: 0.415
-    lunarScore: -1
-    lunarScoreS: 0
-    lunarScoreE: 0
-    lunarDrop: {fileID: 0}
-    lunarDropChance: 0
+    lunarScore: {x: 0, y: 0}
+    drops: []
     spritesLunar:
     - {fileID: 21300000, guid: 8f5604571a603dc4ca74f76f5a8c070e, type: 3}
     - {fileID: 21300000, guid: 4ca5f58d98a9d514e98f96344392f882, type: 3}
@@ -612,7 +658,10 @@ MonoBehaviour:
   glareDevilSettings:
     timerMax: 3.3
     efxBlind: {x: 4, y: 4}
-  goblinBossHP: 50
+  goblinBossSettings:
+    goblinBossSprite: {fileID: 21300000, guid: 890dc7c14b246d14fa31ab7f2c20b46e, type: 3}
+    goblinBossHP: 50
+    goblinBossDrops: []
   dmg: 5
   dmgZone: 2
   dmgLaser: 5

@@ -123,7 +123,7 @@ public static GameRules instance;
     public HealingDroneSettings healingDroneSettings;
     public VortexWheelSettings vortexWheelSettings;
     public GlareDevilSettings glareDevilSettings;
-    public float goblinBossHP=50;
+    public GoblinBossSettings goblinBossSettings;
 #endregion
 #region//Damage Values
 [Header("Damage Values")]
@@ -247,7 +247,17 @@ public static GameRules instance;
     void OnValidate(){
         if(!shopOn)shopCargoOn=false;
         foreach(ListEvents le in lvlEvents){le.name="Levels: "+le.lvls.x+"-"+le.lvls.y;}
+        foreach(EnemyClass e in enemies){
+            //e.drops=new List<LootTableEntryDrops>();//Restart list if bugged
+            e.drops[0].name="EnBall";e.drops[1].name="Coin";e.drops[2].name="PowerCore";
+            if(e.drops.Count==0){
+                var obj=new LootTableEntryDrops(){name="EnBall",ammount=new Vector2(1,1),dropChance=30};e.drops.Add(obj);
+                obj=new LootTableEntryDrops(){name="Coin",ammount=new Vector2(1,1),dropChance=3};e.drops.Add(obj);
+                obj=new LootTableEntryDrops(){name="PowerCore",ammount=new Vector2(1,1),dropChance=0};e.drops.Add(obj);
+            }
+        }
     }
+    //GameObject GameAssetsGet(string name){return FindObjectOfType<GameCreator>().gameAssetsPrefab.GetComponent<GameAssets>().Get(name);}
     #region//Custom Events
     public void MultiplyMaxHealth(float amnt){p.maxHP*=amnt;}
     public void MultiplyMaxEnergy(float amnt){p.maxEnergy*=amnt;}
@@ -281,16 +291,12 @@ public class EnemyClass{
     public float bulletDist=0.35f;
     public bool randomizeWaveDeath = false;
     public bool flyOff = false;
-    public float freezefxTime = 0;
     [Header("Drops & Points")]
     public bool givePts = true;
     public int scoreValueStart = 1;
     public int scoreValueEnd = 10;
-    public float enBallChanceInit = 30f;
-    public float coinChanceInit = 3f;
-    public float powercoreChanceInit = 0f;
     public float xpAmnt = 0f;
-    public GameObject specialDrop;
+    public List<LootTableEntryDrops> drops;
 }
 [System.Serializable]
 public class CometSettings{
@@ -309,11 +315,8 @@ public class CometSettings{
     public int lunarCometChance=10;
     public float lunarHealthMulti=2.5f;
     public float lunarSpeedMulti=0.415f;
-    public int lunarScore=-1;
-    public int lunarScoreS=0;
-    public int lunarScoreE=0;
-    public GameObject lunarDrop;
-    public int lunarDropChance=0;
+    public Vector2 lunarScore;
+    public List<LootTableEntryDrops> drops;
     public Sprite[] spritesLunar;
     public GameObject lunarPart;
 }
@@ -374,6 +377,13 @@ public class VortexWheelSettings{
 public class GlareDevilSettings{
     public float timerMax=3.3f;
     public Vector2 efxBlind=new Vector2(4,4);
+}
+
+[System.Serializable]
+public class GoblinBossSettings{
+    public Sprite goblinBossSprite;
+    public float goblinBossHP=50f;
+    public List<LootTableEntryDrops> goblinBossDrops;
 }
 
 

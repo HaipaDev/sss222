@@ -8,7 +8,6 @@ public class ShopItemID : ScriptableObject{
     [SerializeField] public string name;
     [SerializeField] public string desc;
     [SerializeField] public Sprite img;
+    [SerializeField] public Vector2 priceR=new Vector2(5,15);
     [SerializeField] public int price;
-    [SerializeField] public int priceS=5;
-    [SerializeField] public int priceE=15;
 }

@@ -526,6 +526,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: cometSettings.drops.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cometSettings.lunarCometChance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: cometSettings.lunarHealthMulti
       value: 3.5
       objectReference: {fileID: 0}
@@ -736,6 +746,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: cometSettings.drops.Array.data[0].name
+      value: SpeedPwrup
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: enemies.Array.data[0].maxTimeBtwnShots
       value: 1
       objectReference: {fileID: 0}
@@ -937,8 +952,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: cometSettings.drops.Array.data[0].lootItem
+      value: SpeedPwrup
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cometSettings.drops.Array.data[0].ammount.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cometSettings.drops.Array.data[0].ammount.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: cometSettings.scoreSizes.Array.data[1].size
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cometSettings.drops.Array.data[0].dropChance
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

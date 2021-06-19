@@ -22,43 +22,35 @@ public class Enemy : MonoBehaviour{
     [SerializeField] float bulletDist=0.35f;
     [SerializeField] bool randomizeWaveDeath=false;
     [SerializeField] bool flyOff=false;
-    [SerializeField] float freezefxTime=0.05f;
     [Header("Drops & Points")]
-    //[SerializeField] int scoreValue=1;
     [SerializeField] public bool givePts=true;
     [SerializeField] int scoreValueStart=1;
     [SerializeField] int scoreValueEnd=10;
-    [SerializeField] float enBallChanceInit=30f;
-    [SerializeField] float coinChanceInit=3f;
-    [SerializeField] float powercoreChanceInit=0f;
     [SerializeField] float xpAmnt=0f;
-    [HideInInspector] public float enBallChance;
-    [HideInInspector] public float coinChance;
-    [HideInInspector] public float powercoreChance;
-    [SerializeField] public GameObject specialDrop;
+    [SerializeField] public List<LootTableEntryDrops> drops;
+    public List<float> dropValues;
+
     [Header("Others")]
-    //[SerializeField] public bool cTagged=false;
-    //[SerializeField] public float curSpeed;
-    [SerializeField] public bool yeeted=false;
+    [SerializeField] public bool destroyOut=true;
+    public bool yeeted=false;
     public bool dmgCounted;
     public float dmgCount;
     GameObject dmgCountPopup;
 
     Rigidbody2D rb;
-    Shake shake;
 
     private void Awake(){
         StartCoroutine(SetValues());
         if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
     }
     IEnumerator SetValues(){
+        //drops=(LootTableDrops)gameObject.AddComponent(typeof(LootTableDrops));
         yield return new WaitForSeconds(0.02f);
-        //Set values
         var i=GameRules.instance;
         if(i!=null){
-            EnemyClass e=null;
-            foreach(EnemyClass enemy in i.enemies){if(enemy.name==Name){e=enemy;}}
-            if(e!=null){
+        EnemyClass e=null;
+        foreach(EnemyClass enemy in i.enemies){if(enemy.name==Name){e=enemy;}}
+        if(e!=null){
             size=e.size;
             if(GetComponent<CometRandomProperties>()==null){transform.localScale=size;spr=e.spr;GetComponent<SpriteRenderer>().sprite=spr;}
             healthStart=e.health;
@@ -71,46 +63,42 @@ public class Enemy : MonoBehaviour{
             bulletDist=e.bulletDist;
             randomizeWaveDeath=e.randomizeWaveDeath;
             flyOff=e.flyOff;
-            freezefxTime=e.freezefxTime;
             
             givePts=e.givePts;
             scoreValueStart=e.scoreValueStart;
             scoreValueEnd=e.scoreValueEnd;
-            enBallChanceInit=e.enBallChanceInit;
-            coinChanceInit=e.coinChanceInit;
-            powercoreChanceInit=e.powercoreChanceInit;
             xpAmnt=e.xpAmnt;
-            specialDrop=e.specialDrop;
-            }
+            drops=e.drops;
+        }
             health=healthStart;
+
+            //dropValues=drops.dropList;
+            yield return new WaitForSeconds(0.08f);
+            for(var d=0;d<drops.Count;d++){dropValues.Add(drops[d].dropChance);}
+            dropValues[0]*=GameSession.instance.enballDropMulti;
+            dropValues[1]*=GameSession.instance.coinDropMulti;
+            dropValues[2]*=GameSession.instance.coreDropMulti;
+
+            for(var d=0;d<dropValues.Count;d++){
+                if(Random.Range(0, 100)<=dropValues[d]){dropValues[d]=101;}
+            }
+            if(!GameRules.instance.energyOnPlayer)dropValues[0]=0;
+            if(!GameSession.instance.shopOn)dropValues[1]=0;
+            if(!GameSession.instance.upgradesOn)dropValues[2]=0;
         }
     }
     void Start(){
         rb=GetComponent<Rigidbody2D>();
-        shake=GameObject.FindObjectOfType<Shake>();
-
-        enBallChanceInit*=GameSession.instance.enballDropMulti;
-        coinChanceInit*=GameSession.instance.coinDropMulti;
-        powercoreChanceInit*=GameSession.instance.coreDropMulti;
-
-        enBallChance=Random.Range(0f, 100f);
-        coinChance=Random.Range(0f, 100f);
-        powercoreChance=Random.Range(0f, 100f);
-        if(enBallChance<=enBallChanceInit&&enBallChanceInit>0){enBallChance=1;}
-        if(coinChance<=coinChanceInit&&coinChanceInit>0){coinChance=1;}
-        if(powercoreChance<=powercoreChanceInit&&powercoreChanceInit>0){powercoreChance=1;}
-        if(!GameRules.instance.energyOnPlayer)enBallChance=0;
-        if(!GameSession.instance.shopOn)coinChance=0;
-        if(!GameSession.instance.upgradesOn)powercoreChance=0;
         shotCounter=Random.Range(minTimeBtwnShots,maxTimeBtwnShots);
     }
     void Update(){
-        if (shooting){Shoot();}
+        if(shooting){Shoot();}
         if(flyOff){FlyOff();}
         Die();
-        DestroyOutside();
+        if(destroyOut)DestroyOutside();
         DispDmgCountUp();
-        //Rotate if Stinger
+
+        //Rotate if Stinger?
         if(gameObject.name.Contains("Stinger")){
         if(Time.timeScale>0.0001f){
         if(Player.instance!=null){
@@ -124,20 +112,20 @@ public class Enemy : MonoBehaviour{
     }
     
     private void Shoot(){
-        shotCounter -= Time.deltaTime;
+        shotCounter-=Time.deltaTime;
         if(shotCounter<=0f){
         if(GetComponent<LaunchRadialBullets>()==null&&GetComponent<HealingDrone>()==null){
             if(bullet!=null){
                 if(DBullets!=true){
-                    var bt=Instantiate(bullet, transform.position,Quaternion.identity) as GameObject;
-                    bt.GetComponent<Rigidbody2D>().velocity=new Vector2(0, -bulletSpeed);
+                    var bt=Instantiate(bullet,transform.position,Quaternion.identity) as GameObject;
+                    bt.GetComponent<Rigidbody2D>().velocity=new Vector2(0,-bulletSpeed);
                 }else{
                     var pos1=new Vector2(transform.position.x+bulletDist,transform.position.y);
-                    var bt1=Instantiate(bullet, pos1, Quaternion.identity) as GameObject;
-                    bt1.GetComponent<Rigidbody2D>().velocity=new Vector2(0, -bulletSpeed);
+                    var bt1=Instantiate(bullet,pos1,Quaternion.identity) as GameObject;
+                    bt1.GetComponent<Rigidbody2D>().velocity=new Vector2(0,-bulletSpeed);
                     var pos2=new Vector2(transform.position.x - bulletDist, transform.position.y);
-                    var bt2=Instantiate(bullet, pos2, Quaternion.identity) as GameObject;
-                    bt2.GetComponent<Rigidbody2D>().velocity=new Vector2(0, -bulletSpeed);
+                    var bt2=Instantiate(bullet,pos2,Quaternion.identity) as GameObject;
+                    bt2.GetComponent<Rigidbody2D>().velocity=new Vector2(0,-bulletSpeed);
                 }
             }else{Debug.LogWarning("Bullet not asigned");}
         }else if(GetComponent<LaunchRadialBullets>()!=null){GetComponent<LaunchRadialBullets>().Shoot();}
@@ -150,52 +138,52 @@ public class Enemy : MonoBehaviour{
             rb.velocity=new Vector2(0,3f);
         }
     }
-    public void Die(){
-        if(health<=0&&health!=-1000){
-            int scoreValue=Random.Range(scoreValueStart,scoreValueEnd);
-            if(GetComponent<CometRandomProperties>()!=null){
-                var comet=GetComponent<CometRandomProperties>();
-                if(comet.scoreBySize){
-                    for(var i=0;i<comet.scoreSizes.Length&&(comet.Size()>comet.scoreSizes[i].size&&(i+1<comet.scoreSizes.Length&&comet.Size()<comet.scoreSizes[i+1].size));i++){/*&&comet.scoreSizes[i].size-System.Math.Truncate(comet.scoreSizes[i].size)>0.5*/ //){i++;}
-                    scoreValue=comet.scoreSizes[i].score;}
-                }
-                if(comet.isLunar){
-                    var lunarScore=comet.LunarScore();
-                    if(lunarScore!=-1)scoreValue=lunarScore;
-                    if(comet.LunarDrop()){Instantiate(comet.GetLunarDrop(),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);}
-                }
+    public void Die(){if(health<=0&&health!=-1000){
+        GameSession.instance.AddEnemyCount();
+        int scoreValue=Random.Range(scoreValueStart,scoreValueEnd);
+        if(GetComponent<CometRandomProperties>()!=null){
+            var comet=GetComponent<CometRandomProperties>();
+            if(comet.scoreBySize){
+                for(var i=0;i<comet.scoreSizes.Length&&(comet.Size()>comet.scoreSizes[i].size&&(i+1<comet.scoreSizes.Length&&comet.Size()<comet.scoreSizes[i+1].size));i++){scoreValue=comet.scoreSizes[i].score;}
             }
-            if(givePts==true){
-                GameSession.instance.AddToScore(scoreValue);
-                if(enBallChance==1){GameAssets.instance.Make("EnBall",transform.position);}
-                if(coinChance==1){GameAssets.instance.Make("Coin",transform.position);}
-                if(powercoreChance==1){GameAssets.instance.Make("PowerCore",transform.position);}
-                GameSession.instance.AddEnemyCount();
-                if(xpAmnt!=0)if(GameRules.instance.xpOn){
-                    if(xpAmnt/5>=1){for(var i=0;i<(int)(xpAmnt/5);i++){GameAssets.instance.Make("CelestVial",transform.position);}}
-                    GameSession.instance.DropXP(xpAmnt%5,transform.position);
-                }
-                else{GameSession.instance.AddXP(xpAmnt);}
-                givePts=false;
+            if(comet.isLunar){
+                var lunarScore=comet.LunarScore();
+                if(lunarScore!=-1)scoreValue=lunarScore;
+                comet.LunarDrop();
             }
-            AudioManager.instance.Play("Explosion");
-            if(GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup(true);
-            if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
-            if(specialDrop!=null){Instantiate(specialDrop,transform.position,Quaternion.identity);}
-            //if(GetComponent<HealingDrone>()!=null)GameAssets.instance.Make("ArmorPwrup",transform.position);
-            //if(GetComponent<ParticleDelay>()!=null){GetComponent<ParticleDelay>().on=true;health=-1000;Destroy(gameObject,0.05f);}
-            /*if(GetComponent<ParticleDelay>()==null){*/GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject,0.01f);//}
-            shake.CamShake(2,1);
-            if(TimeFreezer.instance!=null&&freezefxTime>0)TimeFreezer.instance.Freeze(freezefxTime);
         }
-    }
+        if(givePts==true)GameSession.instance.AddToScore(scoreValue);
+        if(xpAmnt!=0)if(GameRules.instance.xpOn){
+            if(xpAmnt/5>=1){for(var i=0;i<(int)(xpAmnt/5);i++){GameAssets.instance.Make("CelestVial",transform.position);}}
+            GameSession.instance.DropXP(xpAmnt%5,transform.position);
+        }
+        else{GameSession.instance.AddXP(xpAmnt);}
+        givePts=false;
+
+
+        List<LootTableEntryDrops> ld=drops;
+        for(var i=0;i<ld.Count;i++){//Drop items
+            string st=ld[i].name;
+            if(dropValues.Count>=ld.Count){
+            if(dropValues[i]>=101){
+                var amnt=Random.Range((int)ld[i].ammount.x,(int)ld[i].ammount.y);
+                if(amnt==1)GameAssets.instance.Make(st,transform.position);
+                else{GameAssets.instance.MakeSpread(st,transform.position,amnt);}
+            }}
+        }
+        AudioManager.instance.Play("Explosion");
+        if(GetComponent<Goblin>()!=null){GetComponent<Goblin>().DropPowerup(true);if(GetComponent<Goblin>().bossForm){GetComponent<Goblin>().GoblinBossDrop();}}
+        if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
+        GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject,0.01f);//}
+        Shake.instance.CamShake(2,1);
+    }}
     private void OnDestroy(){
-        if(GetComponent<GoblinDrop>()!=null)GetComponent<GoblinDrop>().DropPowerup(false);
+        if(GetComponent<Goblin>()!=null)GetComponent<Goblin>().DropPowerup(false);
         if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
         if(randomizeWaveDeath==true){GameSession.instance.EVscore=GameSession.instance.EVscoreMax;}
     }
     private void DestroyOutside(){
-        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true; health=-1; Die();} else{Destroy(gameObject,0.001f); if(GetComponent<GoblinDrop>()!=null){foreach(GameObject obj in GetComponent<GoblinDrop>().powerup)Destroy(obj);/*obj.SetActive(true);*/}}}
+        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true;health=-1;Die();}else{Destroy(gameObject,0.001f);if(GetComponent<Goblin>()!=null){foreach(GameObject obj in GetComponent<Goblin>().powerups)Destroy(obj);}}}
     }
     //Collisions in EnemyCollider
     public void DispDmgCount(Vector2 pos){if(SaveSerial.instance.settingsData.dmgPopups)StartCoroutine(DispDmgCountI(pos));}

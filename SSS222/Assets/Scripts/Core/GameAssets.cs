@@ -12,7 +12,7 @@ public class GameAssets : MonoBehaviour{
 	public Sprite[] skins;
 	public Sprite[] skinOverlays;
     
-    void Awake(){if (instance != null){Destroy(gameObject);}else{instance = this;DontDestroyOnLoad(gameObject);}}
+    void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
 
     public GameObject Make(string obj, Vector2 pos){
 		GObject o = Array.Find(objects, item => item.name == obj);
@@ -22,6 +22,22 @@ public class GameAssets : MonoBehaviour{
 		}
 		GameObject gobj=o.gobj;
         GameObject objref = Instantiate(gobj,pos,Quaternion.identity);
+        return objref;
+	}
+    public GameObject MakeSpread(string obj, Vector2 pos, int amnt, float rangeX=0.5f, float rangeY=0.5f){
+		GObject o = Array.Find(objects, item => item.name == obj);
+		if (o == null){
+			Debug.LogWarning("Object: " + name + " not found!");
+			return null;
+		}
+		GameObject gobj=o.gobj;
+		GameObject objref=Instantiate(gobj,pos,Quaternion.identity);
+		for(var i=1;i<amnt;i++){
+		var rndmX=UnityEngine.Random.Range(-rangeX,rangeX);
+		var rndmY=UnityEngine.Random.Range(-rangeY,rangeY);
+		var poss=pos+new Vector2(rndmX,rndmY);
+        Instantiate(gobj,poss,Quaternion.identity);
+		}
         return objref;
 	}
     public GameObject VFX(string obj, Vector2 pos, float duration){

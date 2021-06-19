@@ -20,7 +20,7 @@ public class ShopSlot : MonoBehaviour{
     void Update(){
         if(item!=null){
             if(!itemCloned){item=Instantiate(item);itemCloned=true;}
-            if(!priceSet&&item.price==0){item.price=Random.Range(item.priceS,item.priceE);priceSet=true;}
+            if(!priceSet&&item.price==0){item.price=Random.Range((int)item.priceR.x,(int)item.priceR.y);priceSet=true;}
             nameTxt.text=item.name;
             descTxt.text=item.desc;
             priceTxt.text=item.price.ToString();

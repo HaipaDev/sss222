@@ -14,12 +14,12 @@ GameObject:
   - component: {fileID: 2504153875300975561}
   - component: {fileID: 6361041040622666652}
   - component: {fileID: 801518567914847888}
+  - component: {fileID: 3661790324503242065}
   - component: {fileID: -4076050431880435700}
   - component: {fileID: -1660457734484328102}
   - component: {fileID: -4204476924176818017}
   - component: {fileID: 7810611016273777585}
   - component: {fileID: 637602792}
-  - component: {fileID: 3661790324503242065}
   m_Layer: 9
   m_Name: GlareDevil
   m_TagString: Enemy
@@ -52,6 +52,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -167,6 +168,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3661790324503242065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147796775416149952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf5c64c69fc85e458ab96b639ada4ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-4076050431880435700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +195,7 @@ MonoBehaviour:
   Name: Glare Devil
   size: {x: 1, y: 1}
   spr: {fileID: 0}
+  healthStart: 100
   health: 33
   shooting: 0
   minTimeBtwnShots: 2.25
@@ -196,14 +210,10 @@ MonoBehaviour:
   givePts: 1
   scoreValueStart: 13
   scoreValueEnd: 13
-  enBallChanceInit: 30
-  coinChanceInit: 3
-  powercoreChanceInit: 1
   xpAmnt: 4
-  enBallChance: 0
-  coinChance: 0
-  powercoreChance: 0
-  specialDrop: {fileID: 0}
+  drops: []
+  dropValues: []
+  destroyOut: 1
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
@@ -350,15 +360,3 @@ MonoBehaviour:
   emissionSpeed: 8.63
   xx: 0.41
   yy: 0.255
---- !u!114 &3661790324503242065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147796775416149952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bf5c64c69fc85e458ab96b639ada4ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

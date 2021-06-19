@@ -240,7 +240,7 @@ public class GameSession : MonoBehaviour{
     public void AddXP(float xpValue){if(xpOn){coresXp+=xpValue;GameCanvas.instance.XpPopupSwitch(xpValue);}coresXpTotal+=xpValue;}
     public void DropXP(float xpAmnt, Vector2 pos, float rangeX=0.5f, float rangeY=0.5f){
         var amnt=Mathf.RoundToInt(xpAmnt);
-        SpreadObjects.SpreadGO(GameAssets.instance.Get("CelestBall"),pos,amnt,rangeX,rangeY);
+        GameAssets.instance.MakeSpread("CelestBall",pos,amnt,rangeX,rangeY);
         if(xpAmnt-amnt!=0)GameSession.instance.AddXP(xpAmnt-amnt);
     }
     public void AddEnemyCount(){enemiesCount++;if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddKills(1);//EnemiesCountHealDrone++;

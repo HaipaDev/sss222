@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +28,11 @@ public class ValueDisplay : MonoBehaviour{
         else if(value=="timePlayed") txt.text=GameSession.instance.GetGameSessionTimeFormat();
         }
         if(Player.instance!=null){
-        if(value=="hpOffMax") txt.text=Mathf.RoundToInt(Player.instance.health).ToString()+"/"+Player.instance.maxHP.ToString();
+        if(value=="hpOffMax"){
+            if(GameSession.instance.gameModeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e => e.cfgName.Contains("Classic"))||Player.instance.health<=5){
+                txt.text=System.Math.Round(Player.instance.health,1).ToString()+"/"+Player.instance.maxHP.ToString();}//Round to .1
+            else txt.text=Mathf.RoundToInt(Player.instance.health).ToString()+"/"+Player.instance.maxHP.ToString();
+        }
         else if(value=="energyOffMax") txt.text=Mathf.RoundToInt(Player.instance.energy).ToString()+"/"+Player.instance.maxEnergy.ToString();
         else if(value=="max_hp") txt.text=Player.instance.maxHP.ToString();
         else if(value=="max_energy") txt.text=Player.instance.maxEnergy.ToString();

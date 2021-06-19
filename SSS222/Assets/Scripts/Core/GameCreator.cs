@@ -10,7 +10,7 @@ public class GameCreator : MonoBehaviour{
     [SerializeField] GameObject gameSessionPrefab;
     [SerializeField] GameObject loaderPrefab;
     [SerializeField] GameObject saveSerialPrefab;
-    [SerializeField] GameObject gameAssetsPrefab;
+    [SerializeField] public GameObject gameAssetsPrefab;
     [SerializeField] GameObject levelPrefab;
     [SerializeField] GameObject audioManagerPrefab;
     [SerializeField] GameObject dbaccessPrefab;

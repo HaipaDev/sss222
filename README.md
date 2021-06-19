@@ -17,6 +17,5 @@ Roadmap:
 - [ ] 1.0 - Initial Release
 
 (Potential updates)
-- [ ] 1.1 - Adventure Update
-- [ ] 1.2 - Spacebox Mode{Moddable?} & SpaceDex
-- [ ] 1.3 - Expert Mode
+- [ ] 1.1 - Spacebox Mode{, Modding} & SpaceDex
+- [ ] 1.2 - Adventure Update

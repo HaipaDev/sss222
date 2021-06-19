@@ -175,14 +175,10 @@ MonoBehaviour:
   givePts: 1
   scoreValueStart: 3
   scoreValueEnd: 10
-  enBallChanceInit: 30
-  coinChanceInit: 3
-  powercoreChanceInit: 0
   xpAmnt: 0
-  enBallChance: 0
-  coinChance: 0
-  powercoreChance: 0
-  specialDrop: {fileID: 0}
+  drops: []
+  dropValues: []
+  destroyOut: 1
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
@@ -262,11 +258,12 @@ MonoBehaviour:
   lunarCometChance: 10
   lunarHealthMulti: 2.5
   lunarSpeedMulti: 0.415
-  lunarScore: -1
-  lunarScoreS: 0
-  lunarScoreE: 0
-  lunarDrop: {fileID: 0}
-  lunarDropChance: 0
+  lunarScore: {x: 0, y: 0}
+  lunarDrops:
+  - name: 
+    ammount: {x: 1, y: 1}
+    dropChance: 10
+  dropValues: []
   spritesLunar:
   - {fileID: 21300000, guid: d77e60d2555e3794bb7b3751fc12984a, type: 3}
   - {fileID: 21300000, guid: 9707760d56d495d49ad28413a26f324c, type: 3}

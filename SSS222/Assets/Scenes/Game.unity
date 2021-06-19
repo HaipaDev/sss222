@@ -198,6 +198,80 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 67368681014719523}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &118627618
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3147796775416149952, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_Name
+      value: Bat
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149952, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.9132004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5782396
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147796775416149954, guid: 2c3f94b277a11e0478605915547d8fed,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2c3f94b277a11e0478605915547d8fed, type: 3}
 --- !u!1001 &213951254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -832,10 +906,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: shopList.Array.data[0].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 5ff6e06bb3284ea439383bac210a74f4,
+        type: 2}
     - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: m_Name
       value: GRDef
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -1252,7 +1337,7 @@ PrefabInstance:
     - target: {fileID: 1056705403108089519, guid: ede186f4c97da394c8ec2106f7e700f4,
         type: 3}
       propertyPath: m_Name
-      value: CelestFiol
+      value: CelestVial
       objectReference: {fileID: 0}
     - target: {fileID: 1056705403108089519, guid: ede186f4c97da394c8ec2106f7e700f4,
         type: 3}

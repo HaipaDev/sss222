@@ -221,7 +221,6 @@ public class Player : MonoBehaviour{
 
     Rigidbody2D rb;
     PlayerSkills pskills;
-    Shake shake;
     [HideInInspector]public Joystick joystick;
     //Settings settings;
     IEnumerator shootCoroutine;
@@ -254,7 +253,6 @@ public class Player : MonoBehaviour{
         
         rb=GetComponent<Rigidbody2D>();
         pskills=GetComponent<PlayerSkills>();
-        shake=FindObjectOfType<Shake>();
         joystick=FindObjectOfType<VariableJoystick>();
         SetUpMoveBoundaries();
         dashTime=startDashTime;
@@ -932,7 +930,7 @@ public class Player : MonoBehaviour{
         if(recoilOn)StartCoroutine(RecoilI(strength,time));
     }
     IEnumerator RecoilI(float strength,float time){
-        shake.CamShake(0.1f,1/(time*4));
+        Shake.instance.CamShake(0.1f,1/(time*4));
         if(SaveSerial.instance.settingsData.vibrations)Vibrator.Vibrate(2);
         rb.velocity = Vector2.down*strength;
         yield return new WaitForSeconds(time);
