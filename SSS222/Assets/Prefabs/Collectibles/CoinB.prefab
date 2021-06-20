@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 3676386598028052292}
   - component: {fileID: 972416664606367055}
   - component: {fileID: -5383710884614058826}
-  - component: {fileID: 7333537673251837494}
   - component: {fileID: -6575572109222253960}
   m_Layer: 0
   m_Name: CoinB
@@ -226,21 +225,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPowerup: 0
---- !u!114 &7333537673251837494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056705403108089519}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8a043bf0580d84eb18491853285d12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amnt: 0
-  amntS: 4
-  amntE: 14
 --- !u!114 &-6575572109222253960
 MonoBehaviour:
   m_ObjectHideFlags: 0

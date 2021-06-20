@@ -39,6 +39,7 @@ public class Level : MonoBehaviour{
         }
         yield return new WaitForSecondsRealtime(0.05f);
         SaveSerial.instance.Save();
+        if(GameSession.instance.cheatmode)SaveSerial.instance.SaveLogin();//Only save login when cheatmode on
         GameSession.instance.ResetMusicPitch();
         SceneManager.LoadScene("Menu");
         if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}

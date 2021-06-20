@@ -3,24 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HLaserKillThis : MonoBehaviour{
-    [SerializeField] GameObject cargoDrop;
     [SerializeField] float delay=1f;
     private void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)||other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){
-            StartCoroutine(KillDelay());
-            //if(!gameObject.name.Contains("Cargo"))Destroy(gameObject);
-            //else StartCoroutine(Cargo());
-        }
+        if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)||other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name))StartCoroutine(KillDelay());
     }
-    private void OnTriggerExit2D(Collider2D other) {
-        StopCoroutine(KillDelay());
-    }
+    private void OnTriggerExit2D(Collider2D other){StopCoroutine(KillDelay());}
     IEnumerator KillDelay(){
         yield return new WaitForSeconds(delay);
-        if(gameObject.name.Contains("Cargo")){
-            LaunchRadialBullets bt = gameObject.AddComponent(typeof(LaunchRadialBullets)) as LaunchRadialBullets;
+        if(GetComponent<CargoShip>()!=null){
+            GameAssets.instance.MakeSpread("CoinB",transform.position,5);
+            /*LaunchRadialBullets bt=gameObject.AddComponent(typeof(LaunchRadialBullets)) as LaunchRadialBullets;
             bt.SetProjectile(cargoDrop);//GameObject.Find("Coin"));
-            bt.Shoot();
+            bt.Shoot();*/
             GameAssets.instance.VFX("Explosion",transform.position,0.33f);
             yield return new WaitForSeconds(0.05f);
         }

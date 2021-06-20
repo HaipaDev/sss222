@@ -1317,7 +1317,6 @@ GameObject:
   - component: {fileID: 2168107509293631748}
   - component: {fileID: 1317200156949184822}
   - component: {fileID: 4663692514586871313}
-  - component: {fileID: 4663692514586871314}
   - component: {fileID: 4085138618077139272}
   m_Layer: 5
   m_Name: Login
@@ -1440,18 +1439,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
---- !u!114 &4663692514586871314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069664168863968223}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05c549c04c8442c418989efec6c5b56b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4085138618077139272
 MonoBehaviour:
   m_ObjectHideFlags: 0

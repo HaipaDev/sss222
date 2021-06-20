@@ -184,6 +184,8 @@ public class Player : MonoBehaviour{
     [SerializeField] public float enPwrupDuplicate=42f;
     [SerializeField] public int crystalMend_refillCost=2;
     [SerializeField] public float energyDiss_refillCost=3.3f;
+    [SerializeField] public int crystalGet=2;
+    [SerializeField] public int crystalBGet=6;
 #endregion
 #region //Other
     [Header("Others")]
@@ -338,6 +340,9 @@ public class Player : MonoBehaviour{
         pwrupEnergyGet=i.pwrupEnergyGet;
         enForPwrupRefill=i.enForPwrupRefill;
         enPwrupDuplicate=i.enPwrupDuplicate;
+
+        crystalGet=i.crystalGet;
+        crystalBGet=i.crystalBGet;
 
         yield return new WaitForSecondsRealtime(0.06f);
         var u=UpgradeMenu.instance;
@@ -781,16 +786,16 @@ public class Player : MonoBehaviour{
         if(magnet==true){
             if(FindObjectsOfType<Tag_MagnetAffected>()!=null){
                 magnetTimer-=Time.deltaTime;
-                Tag_MagnetAffected[] objs = FindObjectsOfType<Tag_MagnetAffected>();
+                Tag_MagnetAffected[] objs=FindObjectsOfType<Tag_MagnetAffected>();
                 foreach(Tag_MagnetAffected obj in objs){
-                    var followC = obj.GetComponent<Follow>();
-                    if(followC==null){Follow follow = obj.gameObject.AddComponent(typeof(Follow)) as Follow; follow.target=this.gameObject;}
-                    else{followC.distReq=6f;followC.speedFollow=5f;}
+                    var followC=obj.GetComponent<Follow>();
+                    if(followC==null){Follow follow=obj.gameObject.AddComponent(typeof(Follow)) as Follow;follow.target=this.gameObject;follow.distReq=4;follow.speedFollow=5;}
+                    else{followC.distReq=obj.GetDistReq();followC.speedFollow=obj.GetSpeedFollow();}
                 }
             }else{
-                Tag_Collectible[] objs = FindObjectsOfType<Tag_Collectible>();
+                Tag_Collectible[] objs=FindObjectsOfType<Tag_Collectible>();
                 foreach(Tag_Collectible obj in objs){
-                    var follow = obj.GetComponent<Follow>();
+                    var follow=obj.GetComponent<Follow>();
                     if(follow!=null)Destroy(follow);
                 }
             }

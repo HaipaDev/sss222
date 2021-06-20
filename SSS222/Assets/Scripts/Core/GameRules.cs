@@ -88,6 +88,8 @@ public static GameRules instance;
     public float pwrupEnergyGet=36f;
     public float enForPwrupRefill=25f;
     public float enPwrupDuplicate=42f;
+    public int crystalGet=2;
+    public int crystalBGet=6;
     [Header("Skills")]
     public Skill[] skillsPlayer;
     public float timeOverhaul=10;
@@ -169,8 +171,6 @@ public static GameRules instance;
     public int[] reputationThresh=new int[repLength];
     public bool shopTimeLimitEnabled=true;
     public float shopTimeLimit=10;
-    public int crystalDropS=4;
-    public int crystalDropE=14;
 #endregion
 #region//Leveling
     [Header("Leveling")]
@@ -256,6 +256,8 @@ public static GameRules instance;
                 obj=new LootTableEntryDrops(){name="PowerCore",ammount=new Vector2(1,1),dropChance=0};e.drops.Add(obj);
             }
         }
+        cometSettings.lunarDrops[0].name="Coin";
+        if(cometSettings.lunarDrops.Count==0)cometSettings.lunarDrops.Add(new LootTableEntryDrops(){name="Coin",ammount=new Vector2(6,12),dropChance=101});
     }
     //GameObject GameAssetsGet(string name){return FindObjectOfType<GameCreator>().gameAssetsPrefab.GetComponent<GameAssets>().Get(name);}
     #region//Custom Events
@@ -292,10 +294,10 @@ public class EnemyClass{
     public bool randomizeWaveDeath = false;
     public bool flyOff = false;
     [Header("Drops & Points")]
-    public bool givePts = true;
-    public int scoreValueStart = 1;
-    public int scoreValueEnd = 10;
+    public bool giveScore = true;
+    public Vector2 scoreValue=new Vector2(1,10);
     public float xpAmnt = 0f;
+    public float xpChance = 100f;
     public List<LootTableEntryDrops> drops;
 }
 [System.Serializable]
@@ -316,7 +318,7 @@ public class CometSettings{
     public float lunarHealthMulti=2.5f;
     public float lunarSpeedMulti=0.415f;
     public Vector2 lunarScore;
-    public List<LootTableEntryDrops> drops;
+    public List<LootTableEntryDrops> lunarDrops;
     public Sprite[] spritesLunar;
     public GameObject lunarPart;
 }

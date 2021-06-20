@@ -14,7 +14,7 @@ public class DamageParticle : MonoBehaviour{
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.CompareTag("Enemy")&&other.gameObject.GetComponent<VortexWheel>()==null&&enemies==true){
             var enemy=other.GetComponent<Enemy>();
-            if(enemy.health<=dmgEnemy)enemy.givePts=false;
+            if(enemy.health<=dmgEnemy)enemy.giveScore=false;
             enemy.health-=dmgEnemy;
             GetComponent<Collider2D>().enabled=false;
             Destroy(gameObject);

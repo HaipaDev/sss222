@@ -21,6 +21,7 @@ public class CometRandomProperties : MonoBehaviour{
     [SerializeField] float lunarHealthMulti=2.5f;
     [SerializeField] float lunarSpeedMulti=0.415f;
     [SerializeField] Vector2 lunarScore;
+    [SerializeField] public Vector2 lunarCrystalAmmounts;
     [SerializeField] public List<LootTableEntryDrops> lunarDrops;
     public List<float> dropValues;
     [SerializeField] Sprite[] spritesLunar;
@@ -55,13 +56,13 @@ public class CometRandomProperties : MonoBehaviour{
             lunarHealthMulti=e.lunarHealthMulti;
             lunarSpeedMulti=e.lunarSpeedMulti;
             lunarScore=e.lunarScore;
-            lunarDrops=e.drops;
+            lunarDrops=e.lunarDrops;
 
             spritesLunar=e.spritesLunar;
             lunarPart=e.lunarPart;
         }
         for(var d=0;d<lunarDrops.Count;d++){dropValues.Add(lunarDrops[d].dropChance);}
-        for(var d=0;d<dropValues.Count;d++){if(Random.Range(0, 100)<=dropValues[d]){dropValues[d]=101;}}
+        for(var d=0;d<dropValues.Count;d++){if(Random.Range(1,101)<=dropValues[d]&&dropValues[d]!=0){dropValues[d]=101;}}
     }
     IEnumerator Start(){
         bFlame=GetComponent<BackflameEffect>();
@@ -82,23 +83,15 @@ public class CometRandomProperties : MonoBehaviour{
         if(healthBySize)enemy.healthStart=Mathf.RoundToInt(enemy.health*size);enemy.health=enemy.healthStart;
 
         //Lunar Comets
-        //if(GameSession.instance.shopOn){
-        //if(GameSession.instance.gameModeSelected!=2){
-            if(Random.Range(0,100)<lunarCometChance)isLunar=true;
-            if(isLunar==true){
-                TransformIntoLunar();
-            }
-        //}
-        //}
+        if(Random.Range(0,100)<lunarCometChance)isLunar=true;
+        if(isLunar==true){
+            TransformIntoLunar();
+        }
         //rotationSpeed=Random.Range(2,8);
         //Destroy(this,0.3f);
     }
     public float Size(){return size;}
-    public int LunarScore(){
-        return Random.Range((int)lunarScore.x,(int)lunarScore.y);
-    }
-    //public bool LunarDrop(){if(Random.Range(0,100)<lunarDropChance&&lunarDrop!=null)return true;else return false;}
-    //public GameObject GetLunarDrop(){return lunarDrop;}
+    public int LunarScore(){return Random.Range((int)lunarScore.x,(int)lunarScore.y);}
     void Update(){
         if(healhitCount>=3&&!isLunar){MakeLunar();}
         //transform.Rotate(new Vector3(0,0,rotationSpeed));
@@ -118,7 +111,7 @@ public class CometRandomProperties : MonoBehaviour{
         enemy.health*=lunarHealthMulti;
         rb.velocity*=lunarSpeedMulti;
         yield return new WaitForSeconds(0.1f);
-        if(GameSession.instance.shopOn)enemy.dropValues[1]=101;
+        if(!GameSession.instance.shopOn)dropValues[0]=102;
     }
 
     public void LunarDrop(){
@@ -126,11 +119,17 @@ public class CometRandomProperties : MonoBehaviour{
         for(var i=0;i<ld.Count;i++){
             string st=ld[i].name;
             if(dropValues.Count>=ld.Count){
-            if(dropValues[i]>=101){
-                var amnt=Random.Range((int)ld[i].ammount.x,(int)ld[i].ammount.y);
-                if(amnt==1)GameAssets.instance.Make(st,transform.position);
-                else{GameAssets.instance.MakeSpread(st,transform.position,amnt);}
-            }}
+            if(dropValues[i]==101){
+            var amnt=Random.Range((int)ld[i].ammount.x,(int)ld[i].ammount.y);
+            if(amnt!=0){
+                if(!st.Contains("Coin")){
+                    if(amnt==1)GameAssets.instance.Make(st,transform.position);
+                    else{GameAssets.instance.MakeSpread(st,transform.position,amnt);}
+                }else{//Drop Lunar Crystals
+                    if(amnt/GameRules.instance.crystalBGet>=1){for(var c=0;c<(int)(amnt/GameRules.instance.crystalBGet);c++){GameAssets.instance.MakeSpread("CoinB",transform.position,1);}}
+                    GameAssets.instance.MakeSpread("Coin",transform.position,(amnt%GameRules.instance.crystalBGet)/GameRules.instance.crystalGet);//CrystalB=6, CrystalS=2
+                }
+            }}}
         }
     }
 }

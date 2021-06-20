@@ -291,7 +291,7 @@ public class GameSession : MonoBehaviour{
         s.advD.enDiss_upgraded=u.enDiss_upgraded;
         yield return new WaitForSecondsRealtime(0.02f);
         Debug.Log("Adventure data saved in GameSession");
-        s.SaveAdventure();
+        if(cheatmode)s.SaveAdventure();//Only save adventure when cheatmode on
         }else{if(u==null){Debug.LogError("UpgradeMenu not present");}else if(s==null){Debug.LogError("SaveSerial not present");}else if(s.advD==null){Debug.LogError("Adventure Data null");}}
     }
     public IEnumerator LoadAdventureI(){

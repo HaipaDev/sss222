@@ -47,7 +47,7 @@ public class PlayerCollider : MonoBehaviour{
                         //else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
                         if(destroy==true){
                             if(en!=true){Destroy(other.gameObject, 0.05f);}
-                            else{other.GetComponent<Enemy>().givePts=false; other.GetComponent<Enemy>().health=-1; other.GetComponent<Enemy>().Die();}
+                            else{other.GetComponent<Enemy>().giveScore=false; other.GetComponent<Enemy>().health=-1; other.GetComponent<Enemy>().Die();}
                         }
                         GameAssets.instance.VFX("FlareHit", new Vector2(other.transform.position.x, transform.position.y + 0.5f),0.3f);
                     }
@@ -69,7 +69,8 @@ public class PlayerCollider : MonoBehaviour{
             #region//Powerups
             else if(other.gameObject.CompareTag("Powerups")){
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){player.AddSubEnergy(player.energyBallGet,true);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){player.AddSubCoins(other.GetComponent<LCrystalDrop>().amnt,true);}//GameSession.instance.coins += 1;}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){player.AddSubCoins(player.crystalGet,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("CoinB").name)){player.AddSubCoins(player.crystalBGet,true);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(1);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestBall").name)){player.AddSubXP(1);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestVial").name)){player.AddSubXP(5);}

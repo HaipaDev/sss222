@@ -23,10 +23,10 @@ public class Enemy : MonoBehaviour{
     [SerializeField] bool randomizeWaveDeath=false;
     [SerializeField] bool flyOff=false;
     [Header("Drops & Points")]
-    [SerializeField] public bool givePts=true;
-    [SerializeField] int scoreValueStart=1;
-    [SerializeField] int scoreValueEnd=10;
+    [SerializeField] public bool giveScore=true;
+    [SerializeField] Vector2 scoreValue=new Vector2(1,10);
     [SerializeField] float xpAmnt=0f;
+    [SerializeField] float xpChance=100f;
     [SerializeField] public List<LootTableEntryDrops> drops;
     public List<float> dropValues;
 
@@ -64,10 +64,10 @@ public class Enemy : MonoBehaviour{
             randomizeWaveDeath=e.randomizeWaveDeath;
             flyOff=e.flyOff;
             
-            givePts=e.givePts;
-            scoreValueStart=e.scoreValueStart;
-            scoreValueEnd=e.scoreValueEnd;
+            giveScore=e.giveScore;
+            scoreValue=e.scoreValue;
             xpAmnt=e.xpAmnt;
+            xpChance=e.xpChance;
             drops=e.drops;
         }
             health=healthStart;
@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour{
             dropValues[2]*=GameSession.instance.coreDropMulti;
 
             for(var d=0;d<dropValues.Count;d++){
-                if(Random.Range(0, 100)<=dropValues[d]){dropValues[d]=101;}
+                if(Random.Range(1,101)<=dropValues[d]&&dropValues[d]!=0){dropValues[d]=101;}
             }
             if(!GameRules.instance.energyOnPlayer)dropValues[0]=0;
             if(!GameSession.instance.shopOn)dropValues[1]=0;
@@ -140,36 +140,42 @@ public class Enemy : MonoBehaviour{
     }
     public void Die(){if(health<=0&&health!=-1000){
         GameSession.instance.AddEnemyCount();
-        int scoreValue=Random.Range(scoreValueStart,scoreValueEnd);
+        int score=Random.Range((int)scoreValue.x,(int)scoreValue.y);
         if(GetComponent<CometRandomProperties>()!=null){
             var comet=GetComponent<CometRandomProperties>();
             if(comet.scoreBySize){
-                for(var i=0;i<comet.scoreSizes.Length&&(comet.Size()>comet.scoreSizes[i].size&&(i+1<comet.scoreSizes.Length&&comet.Size()<comet.scoreSizes[i+1].size));i++){scoreValue=comet.scoreSizes[i].score;}
+                for(var i=0;i<comet.scoreSizes.Length&&(comet.Size()>comet.scoreSizes[i].size&&(i+1<comet.scoreSizes.Length&&comet.Size()<comet.scoreSizes[i+1].size));i++){score=comet.scoreSizes[i].score;}
             }
             if(comet.isLunar){
                 var lunarScore=comet.LunarScore();
-                if(lunarScore!=-1)scoreValue=lunarScore;
+                if(lunarScore!=-1)score=lunarScore;
                 comet.LunarDrop();
             }
         }
-        if(givePts==true)GameSession.instance.AddToScore(scoreValue);
-        if(xpAmnt!=0)if(GameRules.instance.xpOn){
+        if(giveScore==true)GameSession.instance.AddToScore(score);
+        if(GameRules.instance.xpOn)if(xpAmnt!=0&&xpChance<Random.Range(0,100)){
             if(xpAmnt/5>=1){for(var i=0;i<(int)(xpAmnt/5);i++){GameAssets.instance.Make("CelestVial",transform.position);}}
             GameSession.instance.DropXP(xpAmnt%5,transform.position);
         }
         else{GameSession.instance.AddXP(xpAmnt);}
-        givePts=false;
+        giveScore=false;
 
 
         List<LootTableEntryDrops> ld=drops;
         for(var i=0;i<ld.Count;i++){//Drop items
             string st=ld[i].name;
             if(dropValues.Count>=ld.Count){
-            if(dropValues[i]>=101){
-                var amnt=Random.Range((int)ld[i].ammount.x,(int)ld[i].ammount.y);
-                if(amnt==1)GameAssets.instance.Make(st,transform.position);
-                else{GameAssets.instance.MakeSpread(st,transform.position,amnt);}
-            }}
+            if(dropValues[i]==101){
+            var amnt=Random.Range((int)ld[i].ammount.x,(int)ld[i].ammount.y);
+            if(amnt!=0){
+                if(!st.Contains("Coin")){
+                    if(amnt==1)GameAssets.instance.Make(st,transform.position);
+                    else{GameAssets.instance.MakeSpread(st,transform.position,amnt);}
+                }else{//Drop Lunar Crystals
+                    if(amnt/GameRules.instance.crystalBGet>=1){for(var c=0;c<(int)(amnt/GameRules.instance.crystalBGet);c++){GameAssets.instance.MakeSpread("CoinB",transform.position,1);}}
+                    GameAssets.instance.MakeSpread("Coin",transform.position,(amnt%GameRules.instance.crystalBGet)/GameRules.instance.crystalGet);//CrystalB=6, CrystalS=2
+                }
+            }}}
         }
         AudioManager.instance.Play("Explosion");
         if(GetComponent<Goblin>()!=null){GetComponent<Goblin>().DropPowerup(true);if(GetComponent<Goblin>().bossForm){GetComponent<Goblin>().GoblinBossDrop();}}
@@ -183,7 +189,7 @@ public class Enemy : MonoBehaviour{
         if(randomizeWaveDeath==true){GameSession.instance.EVscore=GameSession.instance.EVscoreMax;}
     }
     private void DestroyOutside(){
-        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){givePts=true;health=-1;Die();}else{Destroy(gameObject,0.001f);if(GetComponent<Goblin>()!=null){foreach(GameObject obj in GetComponent<Goblin>().powerups)Destroy(obj);}}}
+        if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){giveScore=true;health=-1;Die();}else{Destroy(gameObject,0.001f);if(GetComponent<Goblin>()!=null){foreach(GameObject obj in GetComponent<Goblin>().powerups)Destroy(obj);}}}
     }
     //Collisions in EnemyCollider
     public void DispDmgCount(Vector2 pos){if(SaveSerial.instance.settingsData.dmgPopups)StartCoroutine(DispDmgCountI(pos));}
