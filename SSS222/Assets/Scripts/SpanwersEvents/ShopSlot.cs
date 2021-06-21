@@ -45,7 +45,7 @@ public class ShopSlot : MonoBehaviour{
             case 10:Instantiate(GameAssets.instance.Get("QRocketPwrup"),pos,Quaternion.identity); break;
             case 11:Instantiate(GameAssets.instance.Get("InverterPwrup"),pos,Quaternion.identity); break;
             case 12:Instantiate(GameAssets.instance.Get("MatrixPwrup"),pos,Quaternion.identity); break;
-            case 13:Instantiate(GameAssets.instance.Get("AcceleratorPwrup"),pos,Quaternion.identity); break;
+            case 13:Instantiate(GameAssets.instance.Get("AccelPwrup"),pos,Quaternion.identity); break;
             case 14:Instantiate(GameAssets.instance.Get("CStreamPwrup"),pos,Quaternion.identity); break;
             case 15:Instantiate(GameAssets.instance.Get("BlackFiol"),pos,Quaternion.identity); break;
             case 16:Instantiate(GameAssets.instance.Get("RandomizerPwrup"),pos,Quaternion.identity); break;

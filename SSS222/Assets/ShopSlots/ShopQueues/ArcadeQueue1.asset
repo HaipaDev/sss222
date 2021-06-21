@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotList:
   - itemList:
-    - name: Micro Mender
+    - name: Lunar Gel
       lootItem: {fileID: 11400000, guid: a57502b4bd18a7a4c97bb6c7b30fd0f9, type: 2}
       dropChance: 3
     - name: Battery
@@ -44,8 +44,8 @@ MonoBehaviour:
     - name: Scaler
       lootItem: {fileID: 11400000, guid: 0c3e8c7aa556520418db99d4ac17f78b, type: 2}
       dropChance: 3
-    - name: Randomizer
-      lootItem: {fileID: 11400000, guid: d6bb61cea746feb4498df90835f7d8c0, type: 2}
+    - name: Quick Rockets
+      lootItem: {fileID: 11400000, guid: 6a4c685da4946654d978b1a4f5cca231, type: 2}
       dropChance: 2
   - itemList:
     - name: Laser 3
@@ -57,13 +57,13 @@ MonoBehaviour:
   - itemList:
     - name: Crystal Stream
       lootItem: {fileID: 11400000, guid: f9a140876750da6458b96409451f456d, type: 2}
-      dropChance: 3
+      dropChance: 2
     - name: Mini Lasers
       lootItem: {fileID: 11400000, guid: 6dac1c090a2da0545b45d6e22af1518c, type: 2}
-      dropChance: 2
+      dropChance: 3
   itemsPercentage:
   - list:
-    - Micro Mender - 42,86% - 3/4
+    - Lunar Gel - 42,86% - 3/4
     - Battery - 42,86% - 3/4
     - Laser 2 - 14,29% - 1/6
   - list:
@@ -75,13 +75,13 @@ MonoBehaviour:
     - Saber - 25% - 2/6
   - list:
     - Scaler - 60% - 3/2
-    - Randomizer - 40% - 2/3
+    - Quick Rockets - 40% - 2/3
   - list:
     - Laser 3 - 66,67% - 4/2
     - Mender - 33,33% - 2/4
   - list:
-    - Crystal Stream - 60% - 3/2
-    - Mini Lasers - 40% - 2/3
+    - Crystal Stream - 40% - 2/3
+    - Mini Lasers - 60% - 3/2
   sum:
   - 7
   - 6

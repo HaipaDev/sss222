@@ -515,6 +515,9 @@ MonoBehaviour:
     - name: PowerCore
       ammount: {x: 1, y: 1}
       dropChance: 15
+    - name: MicroMedkit
+      ammount: {x: 1, y: 2}
+      dropChance: 50
   - name: Mecha Leech
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}

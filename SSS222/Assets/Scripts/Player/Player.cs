@@ -363,8 +363,9 @@ public class Player : MonoBehaviour{
     void Update(){
         SetInputType(SaveSerial.instance.settingsData.inputType);
         HandleInput(false);
-        energy=Mathf.Clamp(energy,0,maxEnergy);
         health=Mathf.Clamp(health,0,maxHP);
+        energy=Mathf.Clamp(energy,0,maxEnergy);
+        ammo=Mathf.Clamp(ammo,-4,999);
         LosePowerup();
         if(!ammoOn)ammo=-4;
         DrawOtherWeapons();
@@ -700,7 +701,7 @@ public class Player : MonoBehaviour{
                     if(flareR!=null)Destroy(flareR.gameObject, wp.flareDur);
                     if(w.costType==costType.energy){AddSubEnergy(wc.cost,false);}
                     if(w.costType==costType.ammo){if(ammo>=wc.cost)AddSubAmmo(wc.cost,false);else{AddSubAmmo(ammo-wc.cost,false);}}
-                    if(w.costType==costType.crystalAmmo){if(ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,true);AddSubCoins(wcCA.crystalCost,false);}AddSubEnergy(wcCA.regularEnergyCost);}
+                    if(w.costType==costType.crystalAmmo){if(ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
                     if(w.costType==costType.blackEnergy){if(GameSession.instance.coresXp>=wc.cost){AddSubXP(wc.cost,false);}if(w.costType==costType.blackEnergy){AddSubEnergy(wcBE.regularEnergyCost);}}
                     if(w.ovheat!=0&&w.costType!=costType.boomerang)Overheat(w.ovheat);
                     if(w.costType==costType.boomerang){ammo=-1;instantiateTimer=w.ovheat;}
@@ -1090,7 +1091,7 @@ public class Player : MonoBehaviour{
         //this.GetType().GetField("powerupTimer").SetValue(this,i);
     }
 
-    public void Damage(float dmg, dmgType type){
+    public void Damage(float dmg, dmgType type, bool ignore=true){//Later add on possible Inverter options
         if(type!=dmgType.heal&&type!=dmgType.healSilent&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;HPPopUpHUD(-dmgTot);}
         else if(gclover){AudioManager.instance.Play("GCloverHit");}
         if(type==dmgType.silent){damaged=true;}
@@ -1102,9 +1103,9 @@ public class Player : MonoBehaviour{
         if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);}}
         if(type==dmgType.healSilent){if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);}}
     }
-    public void AddSubEnergy(float value,bool add=false){
+    public void AddSubEnergy(float value,bool add=false, bool ignore=false){
     if(energyOn&&!infEnergy){
-        if(inverter!=true){
+        if(inverter!=true||ignore){
             if(add){energy+=value;EnergyPopUpHUD(value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
             else{energy-=value;EnergyPopUpHUD(-value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
         }else{
@@ -1112,34 +1113,34 @@ public class Player : MonoBehaviour{
             else{energy+=value;EnergyPopUpHUD(value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
         }
     }}
-    public void AddSubAmmo(float value,bool add=false){
+    public void AddSubAmmo(float value,bool add=false, bool ignore=false){
         var v=(int)value;
-        if(inverter!=true){
+        if(inverter!=true||ignore){
             if(add){ammo+=v;AmmoPopUpHUD(v);}
-            else{ammo-=v;AmmoPopUpHUD(-v);}
+            else{if(ammo>=v)ammo-=v;AmmoPopUpHUD(-v);}
         }else{
-            if(add){ammo-=v;AmmoPopUpHUD(-v);}
+            if(add){if(ammo>=v)ammo-=v;AmmoPopUpHUD(-v);}
             else{ammo+=v;AmmoPopUpHUD(v);}
         }
     }
-    public void AddSubCoins(int value,bool add=true){
-    if(inverter!=true){
+    public void AddSubCoins(int value,bool add=true, bool ignore=false){
+    if(inverter!=true||ignore){
         if(add){GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
         else{GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
     }else{
         if(add){GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
         else{GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
     }
-    }public void AddSubXP(float value,bool add=true){
-    if(inverter!=true){
+    }public void AddSubXP(float value,bool add=true, bool ignore=false){
+    if(inverter!=true||ignore){
         if(add){GameSession.instance.AddXP(value);}
         else{GameSession.instance.AddXP(-value);}
     }else{
         if(add){GameSession.instance.AddXP(-value);}
         else{GameSession.instance.AddXP(value);}
     }
-    }public void AddSubCores(int value,bool add=true){
-    if(inverter!=true){
+    }public void AddSubCores(int value,bool add=true, bool ignore=false){
+    if(inverter!=true||ignore){
         if(add){GameSession.instance.cores+=value;CoresPopUpHUD(value);}
         else{GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
     }else{
@@ -1147,11 +1148,11 @@ public class Player : MonoBehaviour{
         else{GameSession.instance.cores+=value;CoresPopUpHUD(value);}
     }
     }
-    public void Overheat(float value,bool add=true){
+    public void Overheat(float value,bool add=true, bool ignore=false){
         if(overheatOn){
         if(overheatTimerMax!=-4){
         if(overheated!=true){
-            if(inverter!=true){
+            if(inverter!=true||ignore){
                 if(add){if(overheatTimer==-4){overheatTimer=0;}overheatTimer+=value;overheatCdTimer=overheatCooldown;}
                 else{overheatTimer-=value;}
             }else{

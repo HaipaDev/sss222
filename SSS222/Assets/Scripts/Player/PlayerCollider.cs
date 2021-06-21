@@ -79,7 +79,7 @@ public class PlayerCollider : MonoBehaviour{
                     if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddPwrups(1);//powerupsGoblin++;
                     GameSession.instance.AddXP(GameSession.instance.xp_powerup);//XP For powerups
                 }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("MicroMedkit").name)){HPAdd(player.microMedkitHpAmnt);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("MicroMedkit").name)){player.hpAbsorpAmnt+=player.microMedkitHpAmnt;}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)||other.gameObject.name.Contains(GameAssets.instance.Get("ArmorCPwrup").name)){
                     if(player.health==player.maxHP){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}
                     else if(player.health!=player.maxHP&&player.health>(player.maxHP-player.medkitHpAmnt)){
