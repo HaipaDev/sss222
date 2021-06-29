@@ -10,6 +10,7 @@ using BayatGames.SaveGameFree.Serializers;
 
 public class SaveSerial : MonoBehaviour{
 	public static SaveSerial instance;
+	void Awake(){if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}playerData.highscore=new int[GameSession.gameModeMaxID];}
 	[SerializeField] string filenameLogin = "hyperGamerLogin";
 	bool loginEncode=false;
 	[SerializeField] string filename = "playerData";
@@ -196,14 +197,6 @@ public class SaveSerial : MonoBehaviour{
 			Debug.Log("Settings Data deleted");
 		}else Debug.Log("Settings file not found in "+Application.persistentDataPath+"/"+filenameSettings);
 	}
-#endregion
-#region//Singleton
-	private void Awake(){
-		SetUpSingleton();
-		instance=this;
-		playerData.highscore=new int[GameSession.gameModeMaxID];
-	}
-	private void SetUpSingleton(){if(FindObjectsOfType<SaveSerial>().Length>1){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);}}
 #endregion
 }
 public enum InputType{mouse,touch,keyboard}

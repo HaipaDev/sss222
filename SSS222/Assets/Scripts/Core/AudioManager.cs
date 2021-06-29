@@ -2,31 +2,17 @@ using UnityEngine.Audio;
 using System;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
-{
-//AudioManager.instance.Play("");
+public class AudioManager : MonoBehaviour{
 	public static AudioManager instance;
-
 	public AudioMixer audioMixer;
 	public AudioMixerGroup mixerGroup;
-
 	public Sound[] sounds;
 
-	void Awake()
-	{
-		if (instance != null)
-		{
-			Destroy(gameObject);
-		}
-		else
-		{
-			instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
+	void Awake(){
+		if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
 
-		foreach (Sound s in sounds)
-		{
-			s.source = gameObject.AddComponent<AudioSource>();
+		foreach(Sound s in sounds){
+			s.source=gameObject.AddComponent<AudioSource>();
 			s.source.clip = s.clip;
 			s.source.loop = s.loop;
 			s.source.playOnAwake=false;
@@ -35,11 +21,9 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-	public void Play(string sound)
-	{
+	public void Play(string sound){
 		Sound s = Array.Find(sounds, item => item.name == sound);
-		if (s == null)
-		{
+		if (s == null){
 			Debug.LogWarning("Sound: " + sound + " not found!");
 			return;
 		}
@@ -54,7 +38,7 @@ public class AudioManager : MonoBehaviour
 
 	public void StopPlaying(string sound){
 		Sound s = Array.Find(sounds, item => item.name == sound);
-		if (s == null){
+		if(s == null){
 			Debug.LogWarning("Sound: " + sound + " not found!");
 			return;
   		}
@@ -64,25 +48,21 @@ public class AudioManager : MonoBehaviour
 
 		s.source.Stop ();
  	}
-	public AudioClip Get(string sound)
-	{
+	public AudioClip Get(string sound){
 		Sound s = Array.Find(sounds, item => item.name == sound);
-		if (s == null)
-		{
+		if(s == null){
 			Debug.LogWarning("Sound: " + sound + " not found!");
 			return null;
 		}else{return s.clip;}
 	}
-	public AudioSource GetSource(string sound)
-	{
+	public AudioSource GetSource(string sound){
 		Sound s = Array.Find(sounds, item => item.name == sound);
-		if (s == null)
-		{
+		if (s == null){
 			Debug.LogWarning("Sound: " + sound + " not found!");
 			return null;
 		}else{return s.source;}
 	}
-	private void Update(){
+	void Update(){
 		audioMixer.SetFloat("MasterVolume", SaveSerial.instance.settingsData.masterVolume);
 		audioMixer.SetFloat("SoundVolume", SaveSerial.instance.settingsData.soundVolume);
 		audioMixer.SetFloat("MusicVolume", SaveSerial.instance.settingsData.musicVolume);
@@ -91,7 +71,6 @@ public class AudioManager : MonoBehaviour
 
 [System.Serializable]
 public class Sound {
-
 	public string name;
 
 	public AudioClip clip;
