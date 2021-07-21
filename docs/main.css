@@ -4,19 +4,27 @@ body{
 	background-color: rgb(49,9,49);
 	//background-blend-mode: screen;
 	background-size:160% 120%;
-	cursor: url("img/cursor.png"), auto;	
-	font-family: "moonhouseregular";
+	cursor: url("img/cursor.png"), auto;
+	font-family: "deathstar";
+	letter-spacing:2px;
 	color: white;
-}a{text-decoration:none;}
+}div.bodyoverlay{background-color: rgb(0,0,0,0.1);}
+a{text-decoration:none;cursor:url("img/cursor.png"), auto;}
 @font-face {
-    font-family: "moonhouseregular";
+    font-family: "moonhouse";
     src: url("fonts/moonhouse/moonhouse-webfont.woff2") format('woff2'),
          url("fonts/moonhouse/moonhouse-webfont.woff") format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
-a{cursor:url("img/cursor.png"), auto;}
+@font-face {
+    font-family: 'deathstar';
+    src: url('fonts/deathstar/death_star-webfont.woff2') format('woff2'),
+         url('fonts/deathstar/death_star-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h1.title{font-family: "moonhouse";letter-spacing:2.5px;margin-bottom:30px;}
 
 div.logo{
 	width:100%;height:25%;
@@ -25,12 +33,8 @@ div.logo{
 	background-position:center;
 	background-size:calc(348px*1.55) calc(234px*1.55);
 }
-img.logo{
-	
-}
-div.desc{
-	
-}
+img.logo{}
+div.desc{}
 div.release{
 	margin-top:4vmin;
 	height:10%;
@@ -42,7 +46,7 @@ a.release{
 	background-position:-24px -12px;
 	background-size:112% 130%;
 	border:none;
-	font-family: "moonhouseregular";
+	font-family: "moonhouse";
 	color: white;
 	letter-spacing:3px;
 	line-height:24px;
