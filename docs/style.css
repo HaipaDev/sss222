@@ -37,6 +37,23 @@ div.logo{
 }
 img.logo{}
 div.desc{}
+
+.images img{
+	width:344;
+	height:615;
+}
+
+div.icons{
+	margin-top:50px;
+}
+.icons td{
+	width:50px;height:50px;
+}
+.iconsButton{
+	background-color:rgba(0,0,0,0);
+	background-size:100% 100%;
+	border:none;
+}
 div.release{
 	margin-top:4vmin;
 	height:10%;
