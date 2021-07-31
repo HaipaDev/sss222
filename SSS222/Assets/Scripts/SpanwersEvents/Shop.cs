@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,9 +45,9 @@ public class Shop : MonoBehaviour{
         if(shopOpen==true){OpenShop();}
         if(Input.GetKeyDown(KeyCode.Escape)){Resume();}
         if(repEnabled)LevelRep();
-        if(shopTimeMax!=-5&&shopOpened&&shopTimer>0){shopTimer-=Time.unscaledDeltaTime;}
+        if(shopTimeMax!=-5&&shopOpened&&shopTimer>0){if(!EditorApplication.isPaused)shopTimer-=Time.unscaledDeltaTime;}
         if(shopTimeMax!=-5&&shopTimer<=0&&shopTimer!=-4){Resume();}
-        if(purchaseTimer>0){purchaseTimer-=Time.unscaledDeltaTime;}
+        if(purchaseTimer>0){if(!EditorApplication.isPaused)purchaseTimer-=Time.unscaledDeltaTime;}
         if(purchaseTimer<=0&&purchaseTimer!=-4){GameSession.instance.gameSpeed=0;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=true;}purchaseTimer=-4;}
     }
     public void SpawnCargo(){
@@ -85,14 +86,14 @@ public class Shop : MonoBehaviour{
         GameSession.instance.gameSpeed=1f;
     }
 
-
+    [ContextMenu("NewQueue")]
     public void NewQueue(){
         ClearSlots();
         lootTable.currentQueue=lootTable.GetQueue();
         CreateSlot();
     }
     public void ClearSlots(){
-        for(var go=0;go<slotsContainer.transform.childCount;go++){Destroy(slotsContainer.transform.GetChild(go).gameObject);}
+        for(var i=0;i<slotsContainer.transform.childCount;i++){Destroy(slotsContainer.transform.GetChild(0).gameObject);}reputationSlot=0;currentSlotID=0;
     }
     public void CreateSlot(){
         if(currentSlotID<lootTable.currentQueue.slotList.Count){
@@ -108,7 +109,7 @@ public class Shop : MonoBehaviour{
     void LevelRep(){
         if(GetComponentInChildren<XPBars>()!=null){
         var bar=GetComponentInChildren<XPBars>();
-        for(var i=0;i<slotUnlock.Length;i++){if(reputationSlot==slotUnlock[i]){var xp=slotUnlock[i+1];bar.ID=xp;if(bar.current==null){bar.Recreate();}CreateSlot();reputationSlot=0;}}}
+        for(var i=currentSlotID;i<slotUnlock.Length;i++){if(reputationSlot==slotUnlock[i]){var xp=slotUnlock[i+1];bar.ID=xp;if(bar.current==null){bar.Recreate();}CreateSlot();reputationSlot=0;}}}
     }
 
     //[SerializeReference]IEnumerator pco=null;
@@ -132,14 +133,13 @@ public class Shop : MonoBehaviour{
     }*/
 
     public void RepPlus(int amnt){
-        if(repEnabled){
+    if(repEnabled){
         reputation+=amnt;
         reputationSlot+=amnt;
-        }
-    }public void RepMinus(int amnt){
-        if(repEnabled){
+    }}
+    public void RepMinus(int amnt){
+    if(repEnabled){
         reputation-=amnt;
         reputationSlot-=amnt;
-        }
-    }
+    }}
 }

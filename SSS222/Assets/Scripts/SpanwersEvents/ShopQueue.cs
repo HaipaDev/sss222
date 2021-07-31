@@ -27,11 +27,10 @@ public class ShopQueue:ScriptableObject{
     void OnValidate(){SumUp();}
     public ShopItemID GetItem(int currentSlotID){
         float randomWeight = 0;
-        do{
-            //No weight on any number?
-            if (sum[currentSlotID] == 0) return null;
-            randomWeight = Random.Range(0, sum[currentSlotID]);
-        } while (randomWeight == sum[currentSlotID]);
+        do{//No weight on any number?
+            if(sum[currentSlotID]==0)return null;
+            randomWeight=Random.Range(0,sum[currentSlotID]);
+        }while(randomWeight==sum[currentSlotID]);
         foreach (LootTableEntryShopQueue entry in slotList[currentSlotID].itemList){
             if(randomWeight<entry.dropChance) return entry.lootItem;
             randomWeight-=entry.dropChance;

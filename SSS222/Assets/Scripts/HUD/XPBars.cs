@@ -14,10 +14,10 @@ public class XPBars : MonoBehaviour{
     private void OnValidate(){
         #if UNITY_EDITOR
         if(created==1){
-            UnityEditor.EditorApplication.delayCall += () =>{
+            UnityEditor.EditorApplication.delayCall+=()=>{
                 if(current!=null)DestroyImmediate(current);
                 created=3;
-            }; 
+            };
         }
         if(prefabs[ID-1]!=null&&ID>-1&&ID<=prefabs.Length&&created==2){
             if(current==null)current=(GameObject)PrefabUtility.InstantiatePrefab(prefabs[ID-1],transform);
