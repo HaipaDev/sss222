@@ -325,7 +325,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
     health: 40
     shooting: 1
-    minTimeBtwnShots: 1.75
+    shootTime: {x: 1.75, y: 2.8}
     maxTimeBtwnShots: 2.8
     bullet: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
       type: 3}
@@ -353,7 +353,7 @@ MonoBehaviour:
     spr: {fileID: 0}
     health: 15
     shooting: 0
-    minTimeBtwnShots: 0
+    shootTime: {x: 1.75, y: 2.8}
     maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
@@ -380,7 +380,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
     health: 95
     shooting: 0
-    minTimeBtwnShots: 0
+    shootTime: {x: 1.75, y: 2.8}
     maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
     health: 120
     shooting: 1
-    minTimeBtwnShots: 0.65
+    shootTime: {x: 0.64, y: 0.94}
     maxTimeBtwnShots: 0.93
     bullet: {fileID: 5313808222654050488, guid: 7ee89741fb82f0a45a71870919d506a7,
       type: 3}
@@ -438,7 +438,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
     health: 33
     shooting: 0
-    minTimeBtwnShots: 0
+    shootTime: {x: 1.75, y: 2.8}
     maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
@@ -465,7 +465,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
     health: 16
     shooting: 0
-    minTimeBtwnShots: 1.8
+    shootTime: {x: 1.8, y: 2.2}
     maxTimeBtwnShots: 2.2
     bullet: {fileID: 5313808222654050488, guid: 31832a8c249783e449d9e8aad6457ca7,
       type: 3}
@@ -493,7 +493,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
     health: 115
     shooting: 1
-    minTimeBtwnShots: 0
+    shootTime: {x: 1.75, y: 2.8}
     maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
@@ -523,7 +523,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
     health: 26
     shooting: 0
-    minTimeBtwnShots: 0
+    shootTime: {x: 1.75, y: 2.8}
     maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
@@ -550,7 +550,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
     health: 17
     shooting: 0
-    minTimeBtwnShots: 0
+    shootTime: {x: 1.75, y: 2.8}
     maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
@@ -577,7 +577,7 @@ MonoBehaviour:
     spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
     health: 95
     shooting: 0
-    minTimeBtwnShots: 0
+    shootTime: {x: 1.75, y: 2.8}
     maxTimeBtwnShots: 0
     bullet: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2,
       type: 3}

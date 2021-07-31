@@ -76,6 +76,7 @@ public class Player : MonoBehaviour{
     public float shootMulti=1f;
     [SerializeField] public float shipScaleDefault=0.89f;
     [SerializeField] public bool bulletResize;
+    [SerializeField] public int bflameDmgTillLvl=1;
 #endregion
 #region//States
     [Header("States")]
@@ -407,6 +408,7 @@ public class Player : MonoBehaviour{
         else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
 
         if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
+        if(GameRules.instance.upgradesOn&&UpgradeMenu.instance!=null&&GetComponent<BackflameEffect>()!=null){if(UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&transform.GetChild(0).name.Contains("Dmg")){GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame");}}
     }
     public void SetInputType(InputType type){inputType=type;}
     void FixedUpdate(){

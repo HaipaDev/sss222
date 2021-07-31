@@ -14,8 +14,7 @@ public class Enemy : MonoBehaviour{
     public float health=100f;
     float shotCounter;
     [SerializeField] public bool shooting=false;
-    [SerializeField] float minTimeBtwnShots=0.2f;
-    [SerializeField] float maxTimeBtwnShots=1f;
+    [SerializeField] Vector2 shootTime=new Vector2(1.75f,2.8f);
     [SerializeField] public GameObject bullet;
     [SerializeField] float bulletSpeed=8f;
     [SerializeField] bool DBullets=false;
@@ -55,8 +54,7 @@ public class Enemy : MonoBehaviour{
             if(GetComponent<CometRandomProperties>()==null){transform.localScale=size;spr=e.spr;GetComponent<SpriteRenderer>().sprite=spr;}
             healthStart=e.health;
             shooting=e.shooting;
-            minTimeBtwnShots=e.minTimeBtwnShots;
-            maxTimeBtwnShots=e.maxTimeBtwnShots;
+            shootTime=e.shootTime;
             bullet=e.bullet;
             bulletSpeed=e.bulletSpeed;
             DBullets=e.DBullets;
@@ -89,7 +87,7 @@ public class Enemy : MonoBehaviour{
     }
     void Start(){
         rb=GetComponent<Rigidbody2D>();
-        shotCounter=Random.Range(minTimeBtwnShots,maxTimeBtwnShots);
+        shotCounter=Random.Range(shootTime.x,shootTime.y);
     }
     void Update(){
         if(shooting){Shoot();}
@@ -129,7 +127,7 @@ public class Enemy : MonoBehaviour{
                 }
             }else{Debug.LogWarning("Bullet not asigned");}
         }else if(GetComponent<LaunchRadialBullets>()!=null){GetComponent<LaunchRadialBullets>().Shoot();}
-        shotCounter=Random.Range(minTimeBtwnShots, maxTimeBtwnShots);
+        shotCounter=Random.Range(shootTime.x, shootTime.y);
         }
     }
     private void FlyOff(){

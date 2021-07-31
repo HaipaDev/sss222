@@ -285,7 +285,7 @@ public class EnemyClass{
     public Sprite spr;
     public float health=100;
     public bool shooting = false;
-    public float minTimeBtwnShots=0.2f;
+    public Vector2 shootTime=new Vector2(1.75f,2.8f);
     public float maxTimeBtwnShots=1f;
     public GameObject bullet;
     public float bulletSpeed = 8f;
