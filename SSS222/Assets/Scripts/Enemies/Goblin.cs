@@ -102,7 +102,7 @@ public class Goblin : MonoBehaviour{
         bossForm=true;
     }
     void BossAI(){
-        if(Time.timeScale>0.0001){
+        if(GameSession.GlobalTimeIsPaused){
             float step=vspeed*Time.timeScale;
             if(!moveDown&&pos.y<yMax)pos.y+=step;
             if(pos.y>=yMax)moveDown=true;

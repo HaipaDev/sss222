@@ -11,6 +11,7 @@ public class EnemyPathing : MonoBehaviour{
     public int waypointIndex = 0;
     public int enemyIndex = 0;
     Rigidbody2D rb;
+    Vector2 velPaused;
     //bool CheckWavesPath(wavePathType wavePathType){if(waveConfig.wavePathType==wavePathType){return true;}else{return false;}}
     void Start(){
         rb=GetComponent<Rigidbody2D>();
@@ -50,18 +51,21 @@ public class EnemyPathing : MonoBehaviour{
             else{transform.position=waypointsS[waypointIndex].transform.position;}
             }
         }
+        velPaused=rb.velocity;
     }
+    
     void Update(){
-        if(waveConfig!=null)Move();
-        else{Debug.LogWarning(gameObject.name+" WaveConfig not found.");}
+        if(waveConfig!=null&&!GameSession.GlobalTimeIsPaused)Move();
+        else if(waveConfig==null){Debug.LogWarning(gameObject.name+" WaveConfig not found.");}
+        if(GameSession.GlobalTimeIsPaused){if(rb.velocity!=Vector2.zero){velPaused=rb.velocity;rb.velocity=Vector2.zero;}}else{if(velPaused!=Vector2.zero)rb.velocity=velPaused;}
     }
     public void SetWaveConfig(WaveConfig waveConfig){this.waveConfig = waveConfig;}
     void Move(){
         if(waveConfig.wavePathType==wavePathType.startToEnd){//Start-End Path
             if (transform.position!= waypointsE[waypointIndex].transform.position){
                 var targetPos = waypointsE[waypointIndex].transform.position;
-                var step = waveConfig.GetMoveSpeed() * Time.deltaTime;
-                transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
+                var step = waveConfig.GetMoveSpeed()*Time.deltaTime;
+                transform.position=Vector2.MoveTowards(transform.position, targetPos, step);
                 //if (transform.position == targetPos)waypointIndex++;
             }else{Destroy(gameObject);}
         }else if(waveConfig.wavePathType==wavePathType.btwn2Pts){//Between 2 points

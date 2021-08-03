@@ -375,7 +375,7 @@ public class Player : MonoBehaviour{
         Regen();
         Die();
         CountTimeMovementPressed();
-        if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
+        if((frozen!=true&&(!fuelOn||(fuelOn&&energy>0)))&&!(Shop.shopOpened)){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
             if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}}
             if(inputType!=InputType.mouse){MovePlayer();}
@@ -627,7 +627,7 @@ public class Player : MonoBehaviour{
 #endregion
 
 #region//Powerups
-    public IEnumerator ShootContinuously(){while(true){if(Time.timeScale>0.0001f&&!PauseMenu.GameIsPaused&&!UpgradeMenu.UpgradeMenuIsOpen&&!Shop.shopOpened){
+    public IEnumerator ShootContinuously(){if(!GameSession.GlobalTimeIsPaused){while(true){
         WeaponProperties w=null;
         if(GetWeaponProperty(powerup)!=null){w=GetWeaponProperty(powerup);}else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}else Debug.LogWarning(powerup+" not added to WeaponProperties List");
         if(w!=null){
@@ -815,7 +815,7 @@ public class Player : MonoBehaviour{
         transform.localScale=new Vector3(shipScale,shipScale,1);
         
         if(matrix==true&&accel==false){
-            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
+            if(!GameSession.GlobalTimeIsPaused){
                 matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
@@ -841,7 +841,7 @@ public class Player : MonoBehaviour{
         if(pmultiTimer <=0 && pmultiTimer>-4){GameSession.instance.scoreMulti=GameSession.instance.defaultGameSpeed; ResetStatus("pmulti");}
 
         if(accel==true&&matrix==false){
-            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
+            if(!GameSession.GlobalTimeIsPaused){
                 accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
@@ -864,7 +864,7 @@ public class Player : MonoBehaviour{
         if(accelTimer <=0 && accelTimer>-4){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; ResetStatus("accel");}
 
         if(accel==true&&matrix==true){
-            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){
+            if(!GameSession.GlobalTimeIsPaused){
                 accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
                 matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
@@ -1206,7 +1206,7 @@ public class Player : MonoBehaviour{
         }
     }
     void LosePowerup(){
-        if(losePwrupOutOfEn&&energy<=0){SetPowerup(powerupDefault);}
+        if(losePwrupOutOfEn&&energy<=0&&powerup!=powerupDefault){SetPowerup(powerupDefault);}
         if(ammoOn&&((GetWeaponProperty(powerup)!=null&&GetWeaponProperty(powerup).costType==costType.ammo)||(GetWeaponPropertyActive(powerup)!=null&&GetWeaponPropertyActive(powerup).costType!=costType.boomerang)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){SetPowerup(powerup=powerupDefault);ammo=-4;}
     }
 

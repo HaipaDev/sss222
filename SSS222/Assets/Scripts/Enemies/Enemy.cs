@@ -110,6 +110,7 @@ public class Enemy : MonoBehaviour{
     }
     
     private void Shoot(){
+    if(!GameSession.GlobalTimeIsPaused){
         shotCounter-=Time.deltaTime;
         if(shotCounter<=0f){
         if(GetComponent<LaunchRadialBullets>()==null&&GetComponent<HealingDrone>()==null){
@@ -129,6 +130,7 @@ public class Enemy : MonoBehaviour{
         }else if(GetComponent<LaunchRadialBullets>()!=null){GetComponent<LaunchRadialBullets>().Shoot();}
         shotCounter=Random.Range(shootTime.x, shootTime.y);
         }
+    }
     }
     private void FlyOff(){
         if(Player.instance==null){

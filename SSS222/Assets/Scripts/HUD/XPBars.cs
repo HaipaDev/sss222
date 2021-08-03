@@ -6,6 +6,7 @@ using UnityEditor;
 public class XPBars : MonoBehaviour{
     [SerializeField] GameObject[] prefabs;
     [SerializeField] public int ID;
+    [SerializeField] public int IDmax;
     [SerializeField] string valueName;
     [SerializeField] bool shop;
     //int value;
@@ -13,13 +14,14 @@ public class XPBars : MonoBehaviour{
     [SerializeField][Range(1,3)] public int created;
     private void OnValidate(){
         #if UNITY_EDITOR
+        IDmax=prefabs.Length;
         if(created==1){
             UnityEditor.EditorApplication.delayCall+=()=>{
                 if(current!=null)DestroyImmediate(current);
                 created=3;
             };
         }
-        if(prefabs[ID-1]!=null&&ID>-1&&ID<=prefabs.Length&&created==2){
+        if(prefabs[ID-1]!=null&&ID>-1&&ID<=IDmax&&created==2){
             if(current==null)current=(GameObject)PrefabUtility.InstantiatePrefab(prefabs[ID-1],transform);
             if(current!=null){
                 var ch=current.transform.Find("Fill");
@@ -34,11 +36,12 @@ public class XPBars : MonoBehaviour{
     }
 
     void Update(){
+        IDmax=prefabs.Length;
         if(created==1){
             if(current!=null)DestroyImmediate(current);
             created=3;
         }
-        if(prefabs[ID-1]!=null&&ID>-1&&ID<=prefabs.Length&&created==2){
+        if(prefabs[ID-1]!=null&&ID>-1&&ID<=IDmax&&created==2){
             if(current==null)current=(GameObject)Instantiate(prefabs[ID-1],transform);
             if(current!=null){
                 var ch=current.transform.Find("Fill");

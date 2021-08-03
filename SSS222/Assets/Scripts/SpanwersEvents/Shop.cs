@@ -83,7 +83,7 @@ public class Shop : MonoBehaviour{
         shopMenuUI.SetActive(false);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         shopOpened=false;
-        GameSession.instance.gameSpeed=1f;
+        GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;
     }
 
     [ContextMenu("NewQueue")]
@@ -109,10 +109,10 @@ public class Shop : MonoBehaviour{
     void LevelRep(){
         if(GetComponentInChildren<XPBars>()!=null){
         var bar=GetComponentInChildren<XPBars>();
-        for(var i=currentSlotID;i<slotUnlock.Length;i++){if(reputationSlot==slotUnlock[i]){var xp=slotUnlock[i+1];bar.ID=xp;if(bar.current==null){bar.Recreate();}CreateSlot();reputationSlot=0;}}}
+        for(var i=currentSlotID;i<slotUnlock.Length;i++){if(reputationSlot==slotUnlock[i]){/*var xp=slotUnlock[i+1];if(xp<IDmax)bar.ID=xp;if(bar.current==null){bar.Recreate();}*/CreateSlot();reputationSlot=0;}}}
     }
 
-    //[SerializeReference]IEnumerator pco=null;
+    [SerializeReference]IEnumerator pco=null;
     public void Purchase(){
         //Actual purchasing is in ShopSlot
         if(purchaseTimer==-4){
@@ -121,16 +121,18 @@ public class Shop : MonoBehaviour{
             if(!purchased)purchased=true;
             //GameSession.instance.gameSpeed=0.05f;purchaseTimer=0.3f;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=false;}
         }
-    }
-        /*if(pco!=null&&purchaseTimer>0){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=0;StopCoroutine(pco);pco=null;}
+    //}
+        if(pco!=null&&purchaseTimer>0){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=0;StopCoroutine(pco);pco=null;}
         if(pco==null){pco=PurchaseTimeI(0.02f);}if(pco!=null&&purchaseTimer<=0){StartCoroutine(pco);}
     }
     public IEnumerator PurchaseTimeI(float time){
-        GameSession.instance.speedChanged=true;GameSession.instance.gameSpeed=0.05f;
-        purchaseTimer=0.5f;
+        GameSession.instance.speedChanged=true;GameSession.instance.gameSpeed=1f;
+        foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=false;}
+        purchaseTimer=time;
         yield return new WaitForSecondsRealtime(time);
         GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=0;
-    }*/
+        pco=null;
+    }
 
     public void RepPlus(int amnt){
     if(repEnabled){
