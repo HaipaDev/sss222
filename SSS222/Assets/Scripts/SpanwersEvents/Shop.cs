@@ -13,6 +13,7 @@ public class Shop : MonoBehaviour{
     public GameObject slotPrefab;
     public int[] slotUnlock=new int[4];
     public float shopTimeMax=10f;
+    public float slotsWhenLimit=3;
 
     public int currentSlotID;
     public int purchases;

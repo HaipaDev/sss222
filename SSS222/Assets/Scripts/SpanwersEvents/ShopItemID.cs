@@ -10,4 +10,5 @@ public class ShopItemID : ScriptableObject{
     [SerializeField] public Sprite img;
     [SerializeField] public Vector2 priceR=new Vector2(5,15);
     [SerializeField] public int price;
+    [SerializeField] public Vector2 limit=new Vector2(3,5);
 }

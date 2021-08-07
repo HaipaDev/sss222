@@ -50,7 +50,7 @@ public class PowerupDisplay : MonoBehaviour{
                     else {TMP.text=value.ToString();}
                 }
             }else{
-                pwrup=GameRules.instance.powerupStarting;
+                //pwrup=GameRules.instance.powerupStarting;
                 spr.color=Color.white;
             }
             var name=pwrup;

@@ -11,25 +11,37 @@ public class ShopSlot : MonoBehaviour{
     [SerializeField] TextMeshProUGUI priceTxt;
     [SerializeField] Image itemImg;
     [SerializeField] bool itemCloned;
-    [SerializeField] bool priceSet;
+    public bool valuesSet;
+    [SerializeField] int limit=1;
+    public int purchasedCount;
+    public int limitCount;
     public void SetItem(ShopItemID item){
         itemCloned=false;
-        priceSet=false;
+        valuesSet=false;
+        purchasedCount=0;
+        limitCount=0;
         this.item=item;
     }
     void Update(){
         if(item!=null){
             if(!itemCloned){item=Instantiate(item);itemCloned=true;}
-            if(!priceSet&&item.price==0){item.price=Random.Range((int)item.priceR.x,(int)item.priceR.y);priceSet=true;}
+            if(!valuesSet){
+                if(item.price==0){item.price=Random.Range((int)item.priceR.x,(int)item.priceR.y);}
+                if(limit==0)limit=Random.Range((int)item.limit.x,(int)item.limit.y);
+                valuesSet=true;
+            }
             nameTxt.text=item.name;
             descTxt.text=item.desc;
             priceTxt.text=item.price.ToString();
             itemImg.sprite=item.img;
+            if(limitCount>=limit){GetComponentInChildren<Button>().interactable=false;}else{GetComponentInChildren<Button>().interactable=true;}
         }
     }
     public void Purchase(){
-    if(GameSession.instance.coins>=item.price){
+    if(GameSession.instance.coins>=item.price&&limitCount<limit){
         GameSession.instance.coins-=item.price;
+        purchasedCount++;
+        if(Shop.instance.currentSlotID>=Shop.instance.slotsWhenLimit)limitCount++;
         var pos=Player.instance.transform.position;
         switch(item.ID){
             case 0:Instantiate(GameAssets.instance.Get("Laser2Pwrup"),pos,Quaternion.identity);break;

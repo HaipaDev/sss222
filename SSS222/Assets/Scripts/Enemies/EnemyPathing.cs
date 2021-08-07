@@ -51,13 +51,13 @@ public class EnemyPathing : MonoBehaviour{
             else{transform.position=waypointsS[waypointIndex].transform.position;}
             }
         }
-        velPaused=rb.velocity;
+        //velPaused=rb.velocity;
     }
     
     void Update(){
         if(waveConfig!=null&&!GameSession.GlobalTimeIsPaused)Move();
         else if(waveConfig==null){Debug.LogWarning(gameObject.name+" WaveConfig not found.");}
-        if(GameSession.GlobalTimeIsPaused){if(rb.velocity!=Vector2.zero){velPaused=rb.velocity;rb.velocity=Vector2.zero;}}else{if(velPaused!=Vector2.zero)rb.velocity=velPaused;}
+        //if(GameSession.GlobalTimeIsPaused){if(rb.velocity!=Vector2.zero){velPaused=rb.velocity;rb.velocity=Vector2.zero;}}else{if(velPaused!=Vector2.zero)rb.velocity=velPaused;}
     }
     public void SetWaveConfig(WaveConfig waveConfig){this.waveConfig = waveConfig;}
     void Move(){
