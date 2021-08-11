@@ -36,6 +36,7 @@ public class PowerupsSpawner : MonoBehaviour{
         var powerupsPos = new Vector3(Random.Range(-3f, 3f), 7f, 0);
         GameObject newPowerup;
         if(lootTable!=null)
+        if(lootTable.GetItem()!=null)
         if(lootTable.GetItem().item!=null)
         newPowerup=Instantiate(
             //GetRandomPowerup(),

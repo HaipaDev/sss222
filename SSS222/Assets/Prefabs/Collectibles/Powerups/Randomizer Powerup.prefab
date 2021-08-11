@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4305882262000766416}
   - component: {fileID: -6444293445127140414}
   - component: {fileID: -2469076448820819903}
+  - component: {fileID: 4202213354433177949}
   m_Layer: 0
   m_Name: Randomizer Powerup
   m_TagString: Powerups
@@ -49,6 +50,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -153,7 +155,7 @@ MonoBehaviour:
     lootItem: {fileID: -6559572297083776647, guid: b68538418da2b5943be6fd26f9e0ddec,
       type: 3}
     dropChance: 5
-  - name: ArmorU Powerup
+  - name: ArmorClassic Powerup
     lootItem: {fileID: 4071643129898169003, guid: 79e3a62b1e44c5c42afcffa470e5736a,
       type: 3}
     dropChance: 7
@@ -221,7 +223,7 @@ MonoBehaviour:
     lootItem: {fileID: 4305882262000766416, guid: 783ed3a20f22d5c408b2c7c789cd06e9,
       type: 3}
     dropChance: 8
-  - name: Coin
+  - name: CoinS
     lootItem: {fileID: -6575572109222253960, guid: eebb358fa9ff6af419cd68bd020a4289,
       type: 3}
     dropChance: 8
@@ -231,7 +233,7 @@ MonoBehaviour:
     dropChance: 3
   itemsPercentage:
   - name: Armor PowerUp - 4,08% - 5/117,4
-  - name: ArmorU Powerup - 5,72% - 7/115,4
+  - name: ArmorClassic Powerup - 5,72% - 7/115,4
   - name: Laser2 Powerup - 5,72% - 7/115,4
   - name: Laser3 PowerUp - 6,54% - 8/114,4
   - name: LSaber Powerup - 7,35% - 9/113,4
@@ -248,7 +250,7 @@ MonoBehaviour:
   - name: Accelerator Powerup - 6,54% - 8/114,4
   - name: Flip Powerup - 6,54% - 8/114,4
   - name: Magnet Powerup - 6,54% - 8/114,4
-  - name: Coin - 6,54% - 8/114,4
+  - name: CoinS - 6,54% - 8/114,4
   - name: Powercore - 2,45% - 3/119,4
   sum: 122.4
   restart: 0
@@ -290,6 +292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distReqMulti: 6
+  speedFollowMulti: 5
 --- !u!114 &-2469076448820819903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,3 +307,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPowerup: 1
+--- !u!114 &4202213354433177949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649215481239408911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}

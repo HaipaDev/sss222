@@ -60,17 +60,16 @@ public class LootTablePowerups : MonoBehaviour{
         SumUpAfter();
     }
     public PowerupItem GetItem(){
-        float randomWeight = 0;
+        float randomWeight=0;
         do{
-            //No weight on any number?
-            if (sum == 0) return null;
-            randomWeight = Random.Range(0, sum);
-        } while (randomWeight == sum);
+            if(sum==0)return null;
+            randomWeight=Random.Range(0,sum);
+        }while(randomWeight==sum);
         var i=-1;
         foreach(LootTableEntryPowerup entry in itemList){
             i++;
-                if(randomWeight<dropList[i]) return entry.lootItem;
-                randomWeight-=dropList[i];
+            if(randomWeight<dropList[i])return entry.lootItem;
+            randomWeight-=dropList[i];
         }
         return null;
     }
@@ -98,12 +97,11 @@ public class LootTablePowerups : MonoBehaviour{
         var i=-1;
         foreach(LootTableEntryPowerup entry in itemList){
             i++;
-            if(currentLvl<entry.levelReq)dropList[i]=0;
-            if(GameSession.instance!=null){
             if(entry.rarity==rarityPowerup.Common)dropList[i]=entry.dropChance;
             else if(entry.rarity==rarityPowerup.Rare)dropList[i]=entry.dropChance*GameSession.instance.rarePwrupMulti;
             else if(entry.rarity==rarityPowerup.Legendary)dropList[i]=entry.dropChance*GameSession.instance.legendPwrupMulti;
-            }
+            if(currentLvl<entry.levelReq&&GameRules.instance.upgradesOn)dropList[i]=0;
+            
             var value=System.Convert.ToSingle(System.Math.Round((dropList[i]/sum*100),2));
             if(entry!=null&&itemsPercentage!=null&&itemsPercentage[i]!=null)itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
         }

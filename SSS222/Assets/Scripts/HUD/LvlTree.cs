@@ -23,7 +23,7 @@ public class LvlTree : MonoBehaviour{
         foreach(LootTablePowerups lt in FindObjectsOfType<LootTablePowerups>()){powerups.AddRange(lt.itemList);}
         yield return new WaitForSecondsRealtime(0.015f);
         List<LootTableEntryPowerup> removeList=new List<LootTableEntryPowerup>();
-        foreach(LootTableEntryPowerup entry in powerups){if(entry.dropChance<=0){removeList.Add(entry);}else{powerupsItems.Add(entry.lootItem.item);}}
+        foreach(LootTableEntryPowerup entry in powerups){if(entry.dropChance<=0){removeList.Add(entry);}}
         foreach(LootTableEntryPowerup rem in removeList){if(powerups.Contains(rem)){powerups.Remove(rem);}}
         yield return new WaitForSecondsRealtime(0.015f);
         SetLevels();
@@ -42,7 +42,7 @@ public class LvlTree : MonoBehaviour{
                     //for(var a=0;a<20;a++){//test make 20x more
                     GameObject go2=Instantiate(gridElement,go.transform.GetChild(0));
                     go2.name=powerup.name;
-                    go2.GetComponent<Image>().sprite=powerupsItems[p].GetComponent<SpriteRenderer>().sprite;
+                    go2.GetComponent<Image>().sprite=powerup.lootItem.item.GetComponent<SpriteRenderer>().sprite;
                     go.GetComponent<LvlTreeList>().elements.Add(go2);
                     //}
                     #region LvlTreeList AutoScale

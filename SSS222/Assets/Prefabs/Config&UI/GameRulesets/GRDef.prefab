@@ -158,17 +158,17 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: d1939f2a5efe96042842032862cdf62e, type: 2}
     rarity: 0
     dropChance: 3.5
-    levelReq: 1
+    levelReq: 0
   - name: Armor
     lootItem: {fileID: 11400000, guid: 8ee29e2bede3b904bb2b52557eb0f6b9, type: 2}
     rarity: 0
-    dropChance: 3
-    levelReq: 0
+    dropChance: 1.75
+    levelReq: 1
   - name: Flip
     lootItem: {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
     rarity: 0
     dropChance: 6
-    levelReq: 1
+    levelReq: 0
   - name: GCLover
     lootItem: {fileID: 11400000, guid: f6a560a419dccd647bb79ae520e69ddf, type: 2}
     rarity: 2
@@ -189,11 +189,6 @@ MonoBehaviour:
     rarity: 0
     dropChance: 4
     levelReq: 1
-  - name: PointMulti
-    lootItem: {fileID: 11400000, guid: 1f5c3c97f5d9e164dafb8aac25017596, type: 2}
-    rarity: 1
-    dropChance: 0
-    levelReq: 0
   - name: Randomizer
     lootItem: {fileID: 11400000, guid: 8645c7606471be849bbf4044ff5ceec1, type: 2}
     rarity: 0

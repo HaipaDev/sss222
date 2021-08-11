@@ -398,16 +398,16 @@ public class GameSession : MonoBehaviour{
                 if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){AddXP(100);}
                 if(Input.GetKeyDown(KeyCode.Y) || nkey=="Y"){coins+=100;cores+=100;}
                 if(Input.GetKeyDown(KeyCode.U) || nkey=="U"){FindObjectOfType<UpgradeMenu>().total_UpgradesLvl+=10;}
-                if(Input.GetKeyDown(KeyCode.I) || nkey=="I"){foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())ps.timer=0.01f;}
-                if(Input.GetKeyDown(KeyCode.O) || nkey=="O"){foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())ps.enemiesCount=100;}
             }
             if(Input.GetKey(KeyCode.Alpha3) || fkey==""){
                 player=Player.instance;
-                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){player.powerup="laser3";}
-                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){player.powerup="mlaser";}
-                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.powerup="lsaber";}
-                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.powerup="cstream";}
-                if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){player.powerup="plaser";}
+                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){Array.Find(FindObjectsOfType<PowerupsSpawner>(),x=>x.spawnerType==spawnerType.powerupStatus).timer=0.01f;}
+                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){var ps=Array.Find(FindObjectsOfType<PowerupsSpawner>(),x=>x.spawnerType==spawnerType.powerupWeapon);ps.enemiesCount=ps.enemiesCountReq;}
+                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.powerup="laser3";}
+                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.powerup="mlaser";}
+                if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){player.powerup="lsaber";}
+                if(Input.GetKeyDown(KeyCode.Y) || nkey=="Y"){player.powerup="cstream";}
+                if(Input.GetKeyDown(KeyCode.U) || nkey=="U"){player.powerup="plaser";}
             }
         }
     }

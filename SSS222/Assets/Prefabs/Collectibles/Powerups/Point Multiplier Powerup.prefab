@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4305882262000766416}
   - component: {fileID: -6444293445127140414}
   - component: {fileID: 2877176336294305119}
+  - component: {fileID: 8822419058668928948}
   m_Layer: 0
   m_Name: Point Multiplier Powerup
   m_TagString: Powerups
@@ -48,6 +49,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -173,6 +175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distReqMulti: 6
+  speedFollowMulti: 5
 --- !u!114 &2877176336294305119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,3 +190,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPowerup: 1
+--- !u!114 &8822419058668928948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649215481239408911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}
