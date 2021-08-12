@@ -378,7 +378,8 @@ public class Player : MonoBehaviour{
         if((frozen!=true&&(!fuelOn||(fuelOn&&energy>0)))&&!(Shop.shopOpened)){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
             if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}}
-            if(inputType!=InputType.mouse){MovePlayer();}
+            if(inputType!=InputType.mouse&&inputType!=InputType.drag){MovePlayer();}
+            else if(inputType==InputType.drag){MoveWithDrag();}
             else{MoveWithMouse();}
         }else{
             if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
@@ -398,7 +399,7 @@ public class Player : MonoBehaviour{
             if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
             if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);
             overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
-            if(overheated==true&&overheatedTimer>0&&Time.timeScale>0.0001f){overheatedTimer-=Time.deltaTime;
+            if(overheated==true&&overheatedTimer>0&&!GameSession.GlobalTimeIsPaused){overheatedTimer-=Time.deltaTime;
                 GameAssets.instance.VFX("Flare",new Vector2((transform.position.x+0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
                 GameAssets.instance.VFX("Flare",new Vector2((transform.position.x-0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
                 }
@@ -417,10 +418,18 @@ public class Player : MonoBehaviour{
         //MovePlayer();
         //if (!Input.GetButton("Fire1")){if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}}
         Vector2 mPos=new Vector2(0,0);
-        if(moveX&&moveY)mPos=new Vector2(mousePos.x,mousePos.y);
-        if(moveX&&!moveY)mPos=new Vector2(mousePos.x,transform.position.y);
-        if(!moveX&&moveY)mPos=new Vector2(transform.position.x,mousePos.y);
-        dist=Vector2.Distance(mPos,transform.position);
+        if(inputType==InputType.mouse){
+            if(moveX&&moveY)mPos=new Vector2(mousePos.x,mousePos.y);
+            if(moveX&&!moveY)mPos=new Vector2(mousePos.x,transform.position.y);
+            if(!moveX&&moveY)mPos=new Vector2(transform.position.x,mousePos.y);
+            dist=Vector2.Distance(mPos,transform.position);
+        }else if(inputType==InputType.drag){
+            if(moveX&&moveY)mPos=new Vector2(mousePos.x,mousePos.y);
+            if(moveX&&!moveY)mPos=new Vector2(mousePos.x,dragStartPos.y);
+            if(!moveX&&moveY)mPos=new Vector2(dragStartPos.x,mousePos.y);
+            if(dragStartPos!=Vector2.zero)dist=Vector2.Distance(mPos,dragStartPos);
+            else{dist=0;}
+        }
     }
 #region//Movement etc
     void HandleInput(bool isFixedUpdate){
@@ -461,7 +470,7 @@ public class Player : MonoBehaviour{
             else{deltaY=Input.GetAxis("Vertical")*Time.deltaTime*moveSpeedCurrent*moveDir;}
             lastClickTime=Time.time;}
 
-        if(SaveSerial.instance.settingsData.inputType==InputType.touch){
+        if(inputType==InputType.touch){
             deltaX=joystick.Horizontal*Time.deltaTime*moveSpeedCurrent*moveDir;
             deltaY=joystick.Vertical*Time.deltaTime*moveSpeedCurrent*moveDir;
         }else{
@@ -509,17 +518,59 @@ public class Player : MonoBehaviour{
 
         transform.position=new Vector2(newXpos,newYpos);
     }
+    public Vector2 dragStartPos=Vector2.zero;
+    public void MoveWithDrag(){
+        //mouseDir=mousePos-(Vector2)dragStartPos;
+        mousePos.x=Mathf.Clamp(mousePos.x,xMin,xMax);
+        mousePos.y=Mathf.Clamp(mousePos.y,yMin,yMax);
 
-    private void SetUpMoveBoundaries(){
+        if(Input.GetButtonDown("Fire1")){if(dragStartPos==Vector2.zero){dragStartPos=mousePos;}}
+        else if(Input.GetButtonUp("Fire1")){dragStartPos=Vector2.zero;}
+
+        var movePos=Vector2.zero;
+        movePos=(Vector2)transform.position+(mousePos-dragStartPos);
+
+        if(dragStartPos!=Vector2.zero){
+            //dist in FixedUpdate()
+            float distX=0;if(moveX){distX=Mathf.Abs(movePos.x-dragStartPos.x);}
+            float distY=0;if(moveY){distY=Mathf.Abs(movePos.y-dragStartPos.y);}
+            if((moveX&&distX>0f&&distX<0.35f)||(moveY&&distY>0f&&distY<0.35f)){dist=0.35f;}
+            if(dist>=0.3f&&Time.timeScale>0.01f){moving=true;}
+            if((moveX&&moveY)&&dist<=0.05f){moving=false;}
+            if(((moveX&&!moveY)||!moveX&&moveY)&&dist<=0.24f){moving=false;}
+            
+            float step = moveSpeedCurrent*Time.deltaTime;
+            if (moveX && moveY)transform.position=Vector2.MoveTowards(transform.position,movePos*moveDir,step);
+            if (moveX && !moveY)transform.position=Vector2.MoveTowards(transform.position,new Vector2(movePos.x*moveDir,transform.position.y),step);
+            if (!moveX && moveY)transform.position=Vector2.MoveTowards(transform.position,new Vector2(transform.position.x,movePos.y*moveDir),step);
+        }
+
+        /*if(Input.GetButtonDown("Fire2")){
+            float timeSinceLastClick=Time.time-lastClickTime;
+            if(timeSinceLastClick<=DCLICK_TIME){DClick(0);}
+            else{lastClickTime=Time.time;}
+        }*/
+
+        var newXpos=transform.position.x;
+        var newYpos=transform.position.y;
+
+        if(moveX)newXpos=Mathf.Clamp(transform.position.x,xMin,xMax);
+        if(moveY)newYpos=Mathf.Clamp(transform.position.y,yMin,yMax);
+
+        transform.position=new Vector2(newXpos,newYpos);
+    }
+    #endregion
+
+    void SetUpMoveBoundaries(){
         xMin=-3.87f+paddingX;
         xMax=3.87f-paddingX;
         yMin=-6.95f+paddingY;
         yMax=7f-paddingY;
     }
 
-    private void Shoot(){
-        if(Time.timeScale>0.0001f){
-            if(SaveSerial.instance.settingsData.inputType!=InputType.touch){
+    void Shoot(){
+        if(!GameSession.GlobalTimeIsPaused){
+            if(inputType!=InputType.touch&&inputType!=InputType.drag){
                 if(!autoShoot){
                     if(Input.GetButtonDown("Fire1")){
                         if(shootCoroutine!=null){return;}
@@ -590,7 +641,7 @@ public class Player : MonoBehaviour{
     }
 
     private void Die(){
-        if(health <= 0 && dead!=true){
+        if(health<=0&&dead!=true){
             dead=true;
             Hide();
             Destroy(gameObject, 0.05f);//Kill player
@@ -624,7 +675,6 @@ public class Player : MonoBehaviour{
         if(GetComponent<PlayerSkills>()!=null)GetComponent<PlayerSkills>().enabled=false;
         foreach(Transform c in transform){Destroy(c.gameObject);}
     }
-#endregion
 
 #region//Powerups
     public IEnumerator ShootContinuously(){if(!GameSession.GlobalTimeIsPaused){while(true){
@@ -900,7 +950,7 @@ public class Player : MonoBehaviour{
     }
     
     private void Shadow(){
-        if(Time.timeScale>0.0001f&&instantiateTimer<=0){
+        if(!GameSession.GlobalTimeIsPaused&&instantiateTimer<=0){
             GameObject shadow=GameAssets.instance.Make("PlayerShadow",transform.position);
             shadow.transform.localScale=new Vector3(shipScale,shipScale,1);
             Destroy(shadow.gameObject, shadowLength);
@@ -911,7 +961,7 @@ public class Player : MonoBehaviour{
     void Regen(){
         //if(UpgradeMenu.instance.crMend_upgraded>0){hpRegenEnabled=true;}
         //if(UpgradeMenu.instance.enDiss_upgraded>0){enRegenEnabled=true;}
-        if(Time.timeScale>0.0001f){
+        if(!GameSession.GlobalTimeIsPaused){
             if(hpAbsorpAmnt<0){hpAbsorpAmnt=0;}
             if(enAbsorpAmnt<0){enAbsorpAmnt=0;}
             if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt==0){if(GameSession.instance.coins>=crystalMend_refillCost){hpAbsorpAmnt+=crystalMendAbsorp;GameSession.instance.coins-=crystalMend_refillCost;}}

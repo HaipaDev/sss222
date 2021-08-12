@@ -148,6 +148,9 @@ public class SettingsMenu : MonoBehaviour{
                 s.settingsData.inputType=(InputType)2;
                 break;
             case (InputType)2:
+                s.settingsData.inputType=(InputType)3;
+                break;
+            case (InputType)3:
                 s.settingsData.inputType=(InputType)0;
                 break;
         }
