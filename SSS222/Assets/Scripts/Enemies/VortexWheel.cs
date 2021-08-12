@@ -112,4 +112,5 @@ public class VortexWheel : MonoBehaviour{
         yield return new WaitForSeconds(0.66f);
         timer=startTimer;
     }
+    public float GetTimeToDie(){return timeToDie;}
 }

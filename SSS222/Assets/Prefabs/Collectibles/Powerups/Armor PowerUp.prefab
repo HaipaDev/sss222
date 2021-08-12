@@ -12,11 +12,10 @@ GameObject:
   - component: {fileID: 8780570276352314872}
   - component: {fileID: 8355397771474675314}
   - component: {fileID: -6171021230754350541}
-  - component: {fileID: 6905334083320018934}
+  - component: {fileID: 3628668899502226944}
+  - component: {fileID: -1079769817959805146}
   - component: {fileID: -6559572297083776647}
   - component: {fileID: 5949580010197571203}
-  - component: {fileID: -1079769817959805146}
-  - component: {fileID: -2445513478200337415}
   m_Layer: 0
   m_Name: Armor PowerUp
   m_TagString: Powerups
@@ -137,7 +136,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5833333, y: 0.5833333}
   m_EdgeRadius: 0
---- !u!114 &6905334083320018934
+--- !u!114 &3628668899502226944
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,8 +148,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c942e59cf2bc3a74c9f71af997ea7e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  vspeed: 4
+  dir: 1
+  speed: 4
+--- !u!114 &-1079769817959805146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649215481239408911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPowerup: 1
 --- !u!114 &-6559572297083776647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,29 +189,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distReqMulti: 6
   speedFollowMulti: 5
---- !u!114 &-1079769817959805146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5649215481239408911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPowerup: 1
---- !u!114 &-2445513478200337415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5649215481239408911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}

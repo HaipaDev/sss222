@@ -48,7 +48,7 @@ public class Goblin : MonoBehaviour{
                 //Instantiate(powerup,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
                 pwrup.SetActive(true);
                 pwrup.transform.position=transform.position;
-                if(pwrup.GetComponent<FallDown>()!=null)pwrup.GetComponent<Rigidbody2D>().velocity = Vector2.down*pwrup.GetComponent<FallDown>().GetVSpeed();
+                if(pwrup.GetComponent<GoDir>()!=null)pwrup.GetComponent<Rigidbody2D>().velocity=Vector2.down*pwrup.GetComponent<GoDir>().GetSpeed();
             }
         }
         }

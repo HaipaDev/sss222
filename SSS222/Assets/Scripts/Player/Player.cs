@@ -1098,11 +1098,11 @@ public class Player : MonoBehaviour{
     public void AddSubEnergy(float value,bool add=false, bool ignore=false){
     if(energyOn&&!infEnergy){
         if(inverter!=true||ignore){
-            if(add){energy+=value;EnergyPopUpHUD(value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
+            if(add){energy+=value;EnergyPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
             else{energy-=value;EnergyPopUpHUD(-value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
         }else{
             if(add){energy-=value;EnergyPopUpHUD(-value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
-            else{energy+=value;EnergyPopUpHUD(value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
+            else{energy+=value;EnergyPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
         }
     }}
     public void AddSubAmmo(float value,bool add=false, bool ignore=false){

@@ -10,29 +10,17 @@ public class FollowStrict : MonoBehaviour{
     //public float dist;
     [SerializeField] public float xx;
     [SerializeField] public float yy;
-    //[SerializeField] Quaternion rotation;
-
-    //Player player;
     public GameObject targetObj;
-    //Rigidbody2D rb;
-
-    // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         if(targetObj==null){
-            if(target!=null){if(GameObject.Find(target.name)!=null){targetObj = GameObject.Find(target.name);} else{targetObj=GameObject.Find(target.name+"(Clone)");} }
-            else{if(targetTag!="")targetObj = GameObject.FindGameObjectWithTag(targetTag); }
+            if(target!=null){if(GameObject.Find(target.name)!=null){targetObj=GameObject.Find(target.name);}else{targetObj=GameObject.Find(target.name+"(Clone)");}}
+            else{if(targetTag!="")targetObj=GameObject.FindGameObjectWithTag(targetTag);}
         }
-        //rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update(){
         if(targetObj==null){Destroy(gameObject);}
-        else targetPos = new Vector2(targetObj.transform.position.x+xx, targetObj.transform.position.y+yy);
-        //selfPos = new Vector2(transform.position.x, transform.position.y);
-        //dist=Vector2.Distance(targetPos, selfPos);
-        transform.position = targetPos;
+        else targetPos=new Vector2(targetObj.transform.position.x+xx, targetObj.transform.position.y+yy);
+        transform.position=targetPos;
     }
 }
