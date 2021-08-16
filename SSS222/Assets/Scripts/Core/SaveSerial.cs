@@ -145,6 +145,7 @@ public class SaveSerial : MonoBehaviour{
 		public JoystickType joystickType;
 		public float joystickSize=1;
 		public bool lefthand;
+		public bool dtapMouseShoot;
 		public bool scbuttons;
 		public bool vibrations;
 		

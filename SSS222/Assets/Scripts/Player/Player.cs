@@ -519,6 +519,8 @@ public class Player : MonoBehaviour{
         transform.position=new Vector2(newXpos,newYpos);
     }
     public Vector2 dragStartPos=Vector2.zero;
+    float dragStopTimer;
+    Vector2 dragStopMousePos;
     public void MoveWithDrag(){
         //mouseDir=mousePos-(Vector2)dragStartPos;
         mousePos.x=Mathf.Clamp(mousePos.x,xMin,xMax);
@@ -526,6 +528,9 @@ public class Player : MonoBehaviour{
 
         if(Input.GetButtonDown("Fire1")){if(dragStartPos==Vector2.zero){dragStartPos=mousePos;}}
         else if(Input.GetButtonUp("Fire1")){dragStartPos=Vector2.zero;}
+
+        if(dragStopTimer>0){dragStopTimer-=Time.unscaledDeltaTime;}if(dragStopTimer<=0){dragStopTimer=0.075f;dragStopMousePos=mousePos;}
+        if(mousePos==dragStopMousePos&&Input.GetButton("Fire1")){dragStartPos=mousePos;}
 
         var movePos=Vector2.zero;
         movePos=(Vector2)transform.position+(mousePos-dragStartPos);
@@ -568,13 +573,23 @@ public class Player : MonoBehaviour{
         yMax=7f-paddingY;
     }
 
+    //const float DCLICK_SHOOT_TIME=0.2f;
+    float lastClickShootTime;
     void Shoot(){
         if(!GameSession.GlobalTimeIsPaused){
             if(inputType!=InputType.touch&&inputType!=InputType.drag){
                 if(!autoShoot){
                     if(Input.GetButtonDown("Fire1")){
-                        if(shootCoroutine!=null){return;}
-                        else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                        if(!SaveSerial.instance.settingsData.dtapMouseShoot){
+                            if(shootCoroutine!=null){return;}
+                            else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                        }else{
+                            float timeSinceLastClick=Time.time-lastClickShootTime;
+                            if(shootCoroutine!=null){return;}
+                            else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                            else{lastClickShootTime=Time.time;}
+                        }
+                        
                     }if(!Input.GetButton("Fire1")||shootTimer<-1f){
                         if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                         shootCoroutine=null;
@@ -585,6 +600,19 @@ public class Player : MonoBehaviour{
                     else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     //shootCoroutine=null;
                     if(moving==true)timerEnRegen+=Time.deltaTime;
+                }
+            }else if(inputType==InputType.drag){
+                if(!autoShoot){
+                    if(Input.GetButtonDown("Fire1")){
+                        float timeSinceLastClick=Time.time-lastClickShootTime;
+                        if(shootCoroutine!=null){return;}
+                        else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                        else{lastClickShootTime=Time.time;}
+                    }if(!Input.GetButton("Fire1")||shootTimer<-1f){
+                        if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
+                        shootCoroutine=null;
+                        if(moving==true)timerEnRegen+=Time.deltaTime;
+                    }
                 }
             }else{//Regular shooting on Touch in ShootButton()
                 if(autoShoot){//Autoshoot on Touch
@@ -869,7 +897,7 @@ public class Player : MonoBehaviour{
             matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
             //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
             //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
-            if(inputType==InputType.mouse && dist<1){
+            if((inputType==InputType.mouse || inputType==InputType.drag) && dist<1){
                 GameSession.instance.gameSpeed=dist;
                 GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed);
             }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
@@ -891,7 +919,7 @@ public class Player : MonoBehaviour{
             accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
             //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
             //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
-            if(inputType==InputType.mouse && dist>0.35){
+            if((inputType==InputType.mouse || inputType==InputType.drag) && dist>0.35){
                 GameSession.instance.gameSpeed=dist+(1-0.35f);
                 GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
             }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
@@ -911,7 +939,7 @@ public class Player : MonoBehaviour{
             matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
             //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
             //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
-            if(inputType==InputType.mouse){
+            if(inputType==InputType.mouse || inputType==InputType.drag){
                 GameSession.instance.gameSpeed=dist;
                 GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed*2);
             }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){

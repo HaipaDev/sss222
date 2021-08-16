@@ -46,9 +46,9 @@ public class Shop : MonoBehaviour{
         if(shopOpen==true){OpenShop();}
         if(Input.GetKeyDown(KeyCode.Escape)){Resume();}
         if(repEnabled)LevelRep();
-        if(shopTimeMax!=-5&&shopOpened&&shopTimer>0){if(!EditorApplication.isPaused)shopTimer-=Time.unscaledDeltaTime;}
+        if(shopTimeMax!=-5&&shopOpened&&shopTimer>0){shopTimer-=Time.unscaledDeltaTime;}
         if(shopTimeMax!=-5&&shopTimer<=0&&shopTimer!=-4){Resume();}
-        if(purchaseTimer>0){if(!EditorApplication.isPaused)purchaseTimer-=Time.unscaledDeltaTime;}
+        if(purchaseTimer>0){purchaseTimer-=Time.unscaledDeltaTime;}
         if(purchaseTimer<=0&&purchaseTimer!=-4){GameSession.instance.gameSpeed=0;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=true;}purchaseTimer=-4;}
     }
     public void SpawnCargo(){

@@ -14,6 +14,7 @@ public class SettingsMenu : MonoBehaviour{
     [SerializeField]GameObject steeringToggle;
     [SerializeField]GameObject vibrationsToggle;
     [SerializeField]GameObject horizPlayfieldToggle;
+    [SerializeField]GameObject dtapMouseShootToggle;
     [SerializeField]GameObject lefthandToggle;
     [SerializeField]GameObject scbuttonsToggle;
     [SerializeField]GameObject cheatToggle;
@@ -37,6 +38,7 @@ public class SettingsMenu : MonoBehaviour{
     private void Start(){
         if(SaveSerial.instance!=null){
             scbuttonsToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.scbuttons;
+            dtapMouseShootToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.dtapMouseShoot;
             lefthandToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.lefthand;
             vibrationsToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.vibrations;
             cheatToggle.GetComponent<Toggle>().isOn=GameSession.instance.cheatmode;
@@ -148,7 +150,8 @@ public class SettingsMenu : MonoBehaviour{
                 s.settingsData.inputType=(InputType)2;
                 break;
             case (InputType)2:
-                s.settingsData.inputType=(InputType)3;
+                if(GameSession.instance.cheatmode)s.settingsData.inputType=(InputType)3;
+                else s.settingsData.inputType=(InputType)0;
                 break;
             case (InputType)3:
                 s.settingsData.inputType=(InputType)0;
@@ -179,10 +182,11 @@ public class SettingsMenu : MonoBehaviour{
     public void SetJoystickSize(float size){
         if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.joystickSize=size;
     }public void SetLefthand(bool isOn){
-            if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.lefthand=isOn;
-            if(FindObjectOfType<SwitchPlacesCanvas>()!=null)FindObjectOfType<SwitchPlacesCanvas>().Set();
-    }
-    public void SetCheatmode(bool isOn){
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.lefthand=isOn;
+        if(FindObjectOfType<SwitchPlacesCanvas>()!=null)FindObjectOfType<SwitchPlacesCanvas>().Set();
+    }public void SetDTapMouse(bool isOn){
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.dtapMouseShoot=isOn;
+    }public void SetCheatmode(bool isOn){
         if(GameSession.instance!=null)GameSession.instance.cheatmode=isOn;
     }
     public void PlayDing(){if(Application.isPlaying)GetComponent<AudioSource>().Play();}

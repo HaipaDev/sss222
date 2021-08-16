@@ -119,7 +119,7 @@ public class GameSession : MonoBehaviour{
     }
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
-        if(Time.timeScale<=0.0001||PauseMenu.GameIsPaused||Shop.shopOpened||UpgradeMenu.UpgradeMenuIsOpen){GlobalTimeIsPaused=true;}else{GlobalTimeIsPaused=false;}
+        if(Time.timeScale<=0.0001f||PauseMenu.GameIsPaused||Shop.shopOpened||UpgradeMenu.UpgradeMenuIsOpen){GlobalTimeIsPaused=true;}else{GlobalTimeIsPaused=false;}
 
         //Set values on Enter Game Room
         if(!setValues&&(SceneManager.GetActiveScene().name=="Game")){
