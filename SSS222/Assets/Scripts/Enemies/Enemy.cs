@@ -12,9 +12,9 @@ public class Enemy : MonoBehaviour{
     [SerializeField] public Sprite spr;
     [SerializeField] public float healthStart=100f;
     public float health=100f;
-    float shotCounter;
     [SerializeField] public bool shooting=false;
-    [SerializeField] Vector2 shootTime=new Vector2(1.75f,2.8f);
+    [SerializeField] public Vector2 shootTime=new Vector2(1.75f,2.8f);
+    public float shotCounter;
     [SerializeField] public GameObject bullet;
     [SerializeField] float bulletSpeed=8f;
     [SerializeField] bool DBullets=false;
@@ -41,10 +41,11 @@ public class Enemy : MonoBehaviour{
     private void Awake(){
         StartCoroutine(SetValues());
         if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
+        if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
     }
     IEnumerator SetValues(){
         //drops=(LootTableDrops)gameObject.AddComponent(typeof(LootTableDrops));
-        yield return new WaitForSeconds(0.02f);
+        yield return new WaitForSeconds(0.01f);
         var i=GameRules.instance;
         if(i!=null){
         EnemyClass e=null;
@@ -71,7 +72,8 @@ public class Enemy : MonoBehaviour{
             health=healthStart;
 
             //dropValues=drops.dropList;
-            yield return new WaitForSeconds(0.08f);
+            if(shooting)shotCounter=Random.Range(shootTime.x,shootTime.y);
+            yield return new WaitForSeconds(0.04f);
             for(var d=0;d<drops.Count;d++){dropValues.Add(drops[d].dropChance);}
             dropValues[0]*=GameSession.instance.enballDropMulti;
             dropValues[1]*=GameSession.instance.coinDropMulti;
@@ -118,13 +120,16 @@ public class Enemy : MonoBehaviour{
                 if(DBullets!=true){
                     var bt=Instantiate(bullet,transform.position,Quaternion.identity) as GameObject;
                     bt.GetComponent<Rigidbody2D>().velocity=new Vector2(0,-bulletSpeed);
+                    if(bt.GetComponent<Tag_PauseVelocity>()==null)bt.AddComponent<Tag_PauseVelocity>();
                 }else{
                     var pos1=new Vector2(transform.position.x+bulletDist,transform.position.y);
                     var bt1=Instantiate(bullet,pos1,Quaternion.identity) as GameObject;
                     bt1.GetComponent<Rigidbody2D>().velocity=new Vector2(0,-bulletSpeed);
+                    if(bt1.GetComponent<Tag_PauseVelocity>()==null)bt1.AddComponent<Tag_PauseVelocity>();
                     var pos2=new Vector2(transform.position.x - bulletDist, transform.position.y);
                     var bt2=Instantiate(bullet,pos2,Quaternion.identity) as GameObject;
                     bt2.GetComponent<Rigidbody2D>().velocity=new Vector2(0,-bulletSpeed);
+                    if(bt2.GetComponent<Tag_PauseVelocity>()==null)bt2.AddComponent<Tag_PauseVelocity>();
                 }
             }else{Debug.LogWarning("Bullet not asigned");}
         }else if(GetComponent<LaunchRadialBullets>()!=null){GetComponent<LaunchRadialBullets>().Shoot();}

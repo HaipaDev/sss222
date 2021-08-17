@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: -477606771839660972}
   - component: {fileID: -1806142457920749441}
   - component: {fileID: 2138168064270286247}
+  - component: {fileID: 2931916237291476981}
   m_Layer: 0
   m_Name: StickBomb
   m_TagString: EnemyBullet
@@ -53,6 +54,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -390,9 +392,21 @@ MonoBehaviour:
   shake_distance: 0.05
   count_max: 3
   fallSpeed: 6
-  leechAttachSFX: {fileID: 0}
   attached: 0
   detached: 0
   stage: 0
   count: 0
   dist: 0
+--- !u!114 &2931916237291476981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}

@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: -4204476924176818017}
   - component: {fileID: 7810611016273777585}
   - component: {fileID: 637602792}
+  - component: {fileID: 5188534911647565938}
   m_Layer: 9
   m_Name: GlareDevil
   m_TagString: Enemy
@@ -198,19 +199,18 @@ MonoBehaviour:
   healthStart: 100
   health: 33
   shooting: 0
-  minTimeBtwnShots: 2.25
-  maxTimeBtwnShots: 4
+  shootTime: {x: 1.75, y: 2.8}
+  shotCounter: 0
   bullet: {fileID: 0}
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
   randomizeWaveDeath: 0
   flyOff: 0
-  freezefxTime: 0
-  givePts: 1
-  scoreValueStart: 13
-  scoreValueEnd: 13
+  giveScore: 1
+  scoreValue: {x: 1, y: 10}
   xpAmnt: 4
+  xpChance: 100
   drops: []
   dropValues: []
   destroyOut: 1
@@ -360,3 +360,16 @@ MonoBehaviour:
   emissionSpeed: 8.63
   xx: 0.41
   yy: 0.255
+--- !u!114 &5188534911647565938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147796775416149952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}

@@ -11,6 +11,8 @@ public class LootTableEntryShopQueue{
     [HideInInspector]public string name;
     public ShopItemID lootItem;
     public float dropChance=0f;
+    public Vector2 price=new Vector2(5,15);
+    public Vector2 limit=new Vector2(3,5);
 }
 [System.Serializable]
 public class ItemPercentageSlotsQueue{
@@ -25,18 +27,22 @@ public class ShopQueue:ScriptableObject{
     public float[] sum;
     
     void OnValidate(){SumUp();}
-    public ShopItemID GetItem(int currentSlotID){
+    
+    public LootTableEntryShopQueue GetEntry(int currentSlotID){
         float randomWeight = 0;
         do{//No weight on any number?
             if(sum[currentSlotID]==0)return null;
             randomWeight=Random.Range(0,sum[currentSlotID]);
         }while(randomWeight==sum[currentSlotID]);
-        foreach (LootTableEntryShopQueue entry in slotList[currentSlotID].itemList){
-            if(randomWeight<entry.dropChance) return entry.lootItem;
+        foreach(LootTableEntryShopQueue entry in slotList[currentSlotID].itemList){
+            if(randomWeight<entry.dropChance) return entry;
             randomWeight-=entry.dropChance;
         }
         return null;
     }
+    public int GetPrice(int currentSlotID){return (int)Random.Range(GetEntry(currentSlotID).price.x,GetEntry(currentSlotID).price.y);}
+    public int GetLimit(int currentSlotID){return (int)Random.Range(GetEntry(currentSlotID).limit.x,GetEntry(currentSlotID).limit.y);}
+    public ShopItemID GetItem(int currentSlotID){return GetEntry(currentSlotID).lootItem;}
     [ContextMenu("SumUp")]void SumUp(){
         System.Array.Resize(ref itemsPercentage, slotList.Count);
         System.Array.Resize(ref itemTable, slotList.Count);

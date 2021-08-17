@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 6543032046267015800}
   - component: {fileID: 1490166543656379823}
   - component: {fileID: 1306324344444208931}
+  - component: {fileID: 6311566017061671203}
   m_Layer: 9
   m_Name: Comet
   m_TagString: Enemy
@@ -163,19 +164,18 @@ MonoBehaviour:
   healthStart: 100
   health: 15
   shooting: 0
-  minTimeBtwnShots: 2.25
-  maxTimeBtwnShots: 4
+  shootTime: {x: 1.75, y: 2.8}
+  shotCounter: 0
   bullet: {fileID: 0}
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
   randomizeWaveDeath: 0
   flyOff: 0
-  freezefxTime: 0
-  givePts: 1
-  scoreValueStart: 3
-  scoreValueEnd: 10
+  giveScore: 1
+  scoreValue: {x: 1, y: 10}
   xpAmnt: 0
+  xpChance: 100
   drops: []
   dropValues: []
   destroyOut: 1
@@ -259,6 +259,7 @@ MonoBehaviour:
   lunarHealthMulti: 2.5
   lunarSpeedMulti: 0.415
   lunarScore: {x: 0, y: 0}
+  lunarCrystalAmmounts: {x: 0, y: 0}
   lunarDrops:
   - name: 
     ammount: {x: 1, y: 1}
@@ -367,3 +368,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6311566017061671203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147796775416149952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}

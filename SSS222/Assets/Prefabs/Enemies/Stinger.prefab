@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -4676202966796079322}
   - component: {fileID: 801518567914847888}
   - component: {fileID: 2836206252358398912}
+  - component: {fileID: 3264071911331071748}
   m_Layer: 9
   m_Name: Stinger
   m_TagString: Enemy
@@ -172,19 +173,18 @@ MonoBehaviour:
   healthStart: 100
   health: 17
   shooting: 0
-  minTimeBtwnShots: 1.75
-  maxTimeBtwnShots: 2.8
+  shootTime: {x: 1.75, y: 2.8}
+  shotCounter: 0
   bullet: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2, type: 3}
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
   randomizeWaveDeath: 0
   flyOff: 0
-  freezefxTime: 0
-  givePts: 1
-  scoreValueStart: 3
-  scoreValueEnd: 7
+  giveScore: 1
+  scoreValue: {x: 1, y: 10}
   xpAmnt: 1.5
+  xpChance: 100
   drops: []
   dropValues: []
   destroyOut: 1
@@ -325,3 +325,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3264071911331071748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147796775416149952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}

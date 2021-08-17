@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: -5264164664935737425}
   - component: {fileID: -3670235290477086464}
   - component: {fileID: 8981922279404870772}
+  - component: {fileID: -1736329592667235363}
   m_Layer: 9
   m_Name: Enemy Combatant
   m_TagString: Enemy
@@ -175,19 +176,18 @@ MonoBehaviour:
   healthStart: 100
   health: 95
   shooting: 0
-  minTimeBtwnShots: 0.65
-  maxTimeBtwnShots: 0.93
+  shootTime: {x: 1.75, y: 2.8}
+  shotCounter: 0
   bullet: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1, type: 3}
   bulletSpeed: 8
   DBullets: 0
   bulletDist: 0.35
   randomizeWaveDeath: 1
   flyOff: 1
-  freezefxTime: 0
-  givePts: 1
-  scoreValueStart: 10
-  scoreValueEnd: 17
+  giveScore: 1
+  scoreValue: {x: 1, y: 10}
   xpAmnt: 1
+  xpChance: 100
   drops: []
   dropValues: []
   destroyOut: 1
@@ -368,6 +368,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-1736329592667235363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6432250634095115783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}
 --- !u!1001 &3326251306031948486
 PrefabInstance:
   m_ObjectHideFlags: 0

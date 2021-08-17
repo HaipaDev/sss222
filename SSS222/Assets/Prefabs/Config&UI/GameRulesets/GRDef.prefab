@@ -321,7 +321,6 @@ MonoBehaviour:
     health: 40
     shooting: 1
     shootTime: {x: 1.75, y: 2.8}
-    maxTimeBtwnShots: 2.8
     bullet: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
       type: 3}
     bulletSpeed: 5
@@ -349,7 +348,6 @@ MonoBehaviour:
     health: 15
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
     DBullets: 0
@@ -376,7 +374,6 @@ MonoBehaviour:
     health: 95
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
     DBullets: 0
@@ -403,7 +400,6 @@ MonoBehaviour:
     health: 120
     shooting: 1
     shootTime: {x: 0.64, y: 0.94}
-    maxTimeBtwnShots: 0.93
     bullet: {fileID: 5313808222654050488, guid: 7ee89741fb82f0a45a71870919d506a7,
       type: 3}
     bulletSpeed: 8
@@ -434,7 +430,6 @@ MonoBehaviour:
     health: 33
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
     DBullets: 0
@@ -461,7 +456,6 @@ MonoBehaviour:
     health: 16
     shooting: 0
     shootTime: {x: 1.8, y: 2.2}
-    maxTimeBtwnShots: 2.2
     bullet: {fileID: 5313808222654050488, guid: 31832a8c249783e449d9e8aad6457ca7,
       type: 3}
     bulletSpeed: 4
@@ -488,8 +482,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
     health: 115
     shooting: 1
-    shootTime: {x: 1.75, y: 2.8}
-    maxTimeBtwnShots: 0
+    shootTime: {x: 0.2, y: 0.2}
     bullet: {fileID: 0}
     bulletSpeed: 0
     DBullets: 0
@@ -519,7 +512,6 @@ MonoBehaviour:
     health: 26
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
     DBullets: 0
@@ -546,7 +538,6 @@ MonoBehaviour:
     health: 17
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    maxTimeBtwnShots: 0
     bullet: {fileID: 0}
     bulletSpeed: 0
     DBullets: 0
@@ -573,7 +564,6 @@ MonoBehaviour:
     health: 95
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    maxTimeBtwnShots: 0
     bullet: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2,
       type: 3}
     bulletSpeed: 8

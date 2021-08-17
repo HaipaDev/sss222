@@ -101,6 +101,8 @@ public class Shop : MonoBehaviour{
             var go=Instantiate(slotPrefab,slotsContainer.transform);
             var slot=go.GetComponent<ShopSlot>();
             slot.SetItem(lootTable.currentQueue.GetItem(currentSlotID));
+            slot.SetPrice(lootTable.currentQueue.GetPrice(currentSlotID));
+            slot.SetLimit(lootTable.currentQueue.GetLimit(currentSlotID));
             currentSlotID++;
         }else{Debug.LogWarning("ShopSlot limit");}
         
