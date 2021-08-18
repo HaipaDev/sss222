@@ -25,8 +25,9 @@ public class Shop : MonoBehaviour{
     public int reputationSlot;
     public float sum;
     public float shopTimer=-4;
-    public LootTableShop lootTable;
     public float purchaseTimer=-4;
+    public LootTableShop lootTable;
+    public List<ShopSlot> currentSlotsList;
 
     private void Awake(){instance=this;}
     void Start(){
@@ -50,6 +51,7 @@ public class Shop : MonoBehaviour{
         if(shopTimeMax!=-5&&shopTimer<=0&&shopTimer!=-4){Resume();}
         if(purchaseTimer>0){purchaseTimer-=Time.unscaledDeltaTime;}
         if(purchaseTimer<=0&&purchaseTimer!=-4){GameSession.instance.gameSpeed=0;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=true;}purchaseTimer=-4;}
+        if(currentSlotsList.FindAll(x=>x.limitCount>=x.limit).Count>lootTable.currentQueue.slotList.Count/2){NewQueue();}
     }
     public void SpawnCargo(){
         var cargoDir=dir.up;
@@ -88,18 +90,23 @@ public class Shop : MonoBehaviour{
     }
 
     [ContextMenu("NewQueue")]
-    public void NewQueue(){
+    public void NewQueue(){StartCoroutine(NewQueueI());}
+    IEnumerator NewQueueI(){
         ClearSlots();
+        yield return new WaitForSecondsRealtime(0.1f);
         lootTable.currentQueue=lootTable.GetQueue();
         CreateSlot();
     }
     public void ClearSlots(){
-        for(var i=0;i<slotsContainer.transform.childCount;i++){Destroy(slotsContainer.transform.GetChild(0).gameObject);}reputationSlot=0;currentSlotID=0;
+        var slotsCount=slotsContainer.transform.childCount;
+        for(var i=0;i<slotsCount;i++){DestroyImmediate(slotsContainer.transform.GetChild(0).gameObject);Debug.Log(i+"/Count: "+slotsCount);}
+        reputationSlot=0;currentSlotID=0;currentSlotsList.Clear();
     }
     public void CreateSlot(){
         if(currentSlotID<lootTable.currentQueue.slotList.Count){
             var go=Instantiate(slotPrefab,slotsContainer.transform);
             var slot=go.GetComponent<ShopSlot>();
+            currentSlotsList.Add(slot);
             slot.SetItem(lootTable.currentQueue.GetItem(currentSlotID));
             slot.SetPrice(lootTable.currentQueue.GetPrice(currentSlotID));
             slot.SetLimit(lootTable.currentQueue.GetLimit(currentSlotID));

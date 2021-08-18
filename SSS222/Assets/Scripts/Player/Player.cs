@@ -375,7 +375,7 @@ public class Player : MonoBehaviour{
         Regen();
         Die();
         CountTimeMovementPressed();
-        if((frozen!=true&&(!fuelOn||(fuelOn&&energy>0)))&&!(Shop.shopOpened)){
+        if((frozen!=true&&(!fuelOn||(fuelOn&&energy>0)))&&!GameSession.GlobalTimeIsPaused){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
             if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}}
             if(inputType!=InputType.mouse&&inputType!=InputType.drag){MovePlayer();}
@@ -440,16 +440,16 @@ public class Player : MonoBehaviour{
     }
     void CountTimeMovementPressed(){
         if(inputType==InputType.touch){
-            if(joystick.Horizontal>0.2f || joystick.Horizontal<-0.2f){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
-            if(joystick.Vertical>0.2f || joystick.Vertical<-0.2f){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
-            if(((joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f)||(joystick.Vertical>0.2f||joystick.Vertical<-0.2f))&&Time.timeScale>0.01f){moving=true;}//Add to total time flying
+            if(joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
+            if(joystick.Vertical>0.2f||joystick.Vertical<-0.2f){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
+            if(((joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f)||(joystick.Vertical>0.2f||joystick.Vertical<-0.2f))&&!GameSession.GlobalTimeIsPaused){moving=true;}//Add to total time flying
             if(joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f){hPressedTime=0;}
             if(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f){vPressedTime=0;}
             if((joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f)&&(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f)){mPressedTime=0;moving=false;}
         }else if(inputType==InputType.keyboard){
             if(Input.GetButton("Horizontal")){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(Input.GetButton("Vertical")){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
-            if(Input.GetButton("Horizontal")||Input.GetButton("Vertical")&&Time.timeScale>0.01f){moving=true;}//Add to total time flying
+            if(Input.GetButton("Horizontal")||Input.GetButton("Vertical")&&!GameSession.GlobalTimeIsPaused){moving=true;}//Add to total time flying
             if(!Input.GetButton("Horizontal")){hPressedTime=0;}
             if(!Input.GetButton("Vertical")){vPressedTime=0;}
             if(!Input.GetButton("Horizontal")&&!Input.GetButton("Vertical")){mPressedTime=0;moving=false;}
@@ -495,7 +495,7 @@ public class Player : MonoBehaviour{
         float distX=0;if(moveX){distX=Mathf.Abs(mousePos.x-transform.position.x);}
         float distY=0;if(moveY){distY=Mathf.Abs(mousePos.y-transform.position.y);}
         if((moveX&&distX>0f&&distX<0.35f)||(moveY&&distY>0f&&distY<0.35f)){dist=0.35f;}
-        if(dist>=0.3f&&Time.timeScale>0.01f){moving=true;}
+        if(dist>=0.3f&&!GameSession.GlobalTimeIsPaused){moving=true;}
         if((moveX&&moveY)&&dist<=0.05f){moving=false;}
         if(((moveX&&!moveY)||!moveX&&moveY)&&dist<=0.24f){moving=false;}
 
@@ -540,7 +540,7 @@ public class Player : MonoBehaviour{
             float distX=0;if(moveX){distX=Mathf.Abs(movePos.x-dragStartPos.x);}
             float distY=0;if(moveY){distY=Mathf.Abs(movePos.y-dragStartPos.y);}
             if((moveX&&distX>0f&&distX<0.35f)||(moveY&&distY>0f&&distY<0.35f)){dist=0.35f;}
-            if(dist>=0.3f&&Time.timeScale>0.01f){moving=true;}
+            if(dist>=0.3f&&!GameSession.GlobalTimeIsPaused){moving=true;}
             if((moveX&&moveY)&&dist<=0.05f){moving=false;}
             if(((moveX&&!moveY)||!moveX&&moveY)&&dist<=0.24f){moving=false;}
             
@@ -621,7 +621,7 @@ public class Player : MonoBehaviour{
                     if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
             }
-        }
+        }else{if(shootCoroutine!=null)StopCoroutine(shootCoroutine);shootCoroutine=null;}
     }
 
     public void ShootButton(bool pressed){
@@ -892,7 +892,7 @@ public class Player : MonoBehaviour{
         if(scalerTimer <=0 && scalerTimer>-4){ResetStatus("scaler");}
         transform.localScale=new Vector3(shipScale,shipScale,1);
         
-        if(!GameSession.GlobalTimeIsPaused){
+        if(!GameSession.GlobalTimeIsPausedNotSlowed){
         if(matrix==true&&accel==false){
             matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
             //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){

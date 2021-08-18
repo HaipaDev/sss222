@@ -10,7 +10,7 @@ public class GoDir : MonoBehaviour{
         else if(dir==dir.left)GetComponent<Rigidbody2D>().velocity=Vector2.left*speed;
         else if(dir==dir.right)GetComponent<Rigidbody2D>().velocity=Vector2.right*speed;
         else GetComponent<Rigidbody2D>().velocity=Vector2.down*speed;
-        if(GetComponent<Tag_PauseVelocity>()!=null){gameObject.AddComponent<Tag_PauseVelocity>();}
+        if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
     }
     public float GetSpeed(){return speed;}
 }

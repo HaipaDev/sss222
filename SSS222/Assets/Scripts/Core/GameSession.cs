@@ -13,6 +13,7 @@ using UnityEngine.EventSystems;
 public class GameSession : MonoBehaviour{
     public static GameSession instance;
     public static bool GlobalTimeIsPaused;
+    public static bool GlobalTimeIsPausedNotSlowed;
     [Header("Global")]
     public bool shopOn=true;
     public bool shopCargoOn=true;
@@ -120,6 +121,7 @@ public class GameSession : MonoBehaviour{
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
         if(Time.timeScale<=0.0001f||PauseMenu.GameIsPaused||Shop.shopOpened||UpgradeMenu.UpgradeMenuIsOpen){GlobalTimeIsPaused=true;}else{GlobalTimeIsPaused=false;}
+        if(PauseMenu.GameIsPaused||Shop.shopOpened||UpgradeMenu.UpgradeMenuIsOpen){GlobalTimeIsPausedNotSlowed=true;}else{GlobalTimeIsPausedNotSlowed=false;}
 
         //Set values on Enter Game Room
         if(!setValues&&(SceneManager.GetActiveScene().name=="Game")){
@@ -128,7 +130,7 @@ public class GameSession : MonoBehaviour{
             else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=vertCameraSize;}
             setValues=true;
         }
-        if(SceneManager.GetActiveScene().name=="Game"&&Player.instance!=null&&gameSpeed>0.0001f){gameSessionTime+=Time.unscaledDeltaTime;}
+        if(SceneManager.GetActiveScene().name=="Game"&&Player.instance!=null&&!GlobalTimeIsPaused){gameSessionTime+=Time.unscaledDeltaTime;}
         if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
 
         //Open Shop

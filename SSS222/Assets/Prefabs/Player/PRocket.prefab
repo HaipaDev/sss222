@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 4325923379415193658}
   - component: {fileID: 5528135550288439540}
   - component: {fileID: -5706639723197656910}
+  - component: {fileID: 7947204962705298970}
   m_Layer: 8
   m_Name: PRocket
   m_TagString: PlayerWeapons
@@ -52,6 +53,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -320,7 +322,9 @@ MonoBehaviour:
   xx: 0
   yy: -0.6
   time: 0.3
+  onTop: 1
   stayStill: 1
+  angle: 0
   BFlame: {fileID: 0}
 --- !u!114 &5528135550288439540
 MonoBehaviour:
@@ -347,3 +351,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7947204962705298970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}

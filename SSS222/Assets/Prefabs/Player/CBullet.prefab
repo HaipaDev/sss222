@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: -3458073233683693476}
   - component: {fileID: -3609200207216390652}
   - component: {fileID: -6762143650873762682}
+  - component: {fileID: 9190681407786714349}
   m_Layer: 8
   m_Name: CBullet
   m_TagString: PlayerWeapons
@@ -56,6 +57,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -389,7 +391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cargoDrop: {fileID: 0}
   delay: 1
 --- !u!114 &-3609200207216390652
 MonoBehaviour:
@@ -417,3 +418,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healAmnt: 0.05
+--- !u!114 &9190681407786714349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}

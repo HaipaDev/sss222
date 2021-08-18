@@ -162,7 +162,7 @@ public class Waves : MonoBehaviour{
     public string GetWaveName(){return currentWave.waveName;}
     // Update is called once per frame
     void Update(){
-        if(Time.timeScale>0.0001f){
+        if(!GameSession.GlobalTimeIsPaused){
             if(timeSpawns>-0.01){timeSpawns -= Time.deltaTime;}
             else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
             else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){SpawnAllEnemiesInWave(currentWave);timeSpawns=currentWave.timeSpawnWave;}

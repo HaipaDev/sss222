@@ -10,8 +10,8 @@ public class ShopSlot : MonoBehaviour{
     [SerializeField] TextMeshProUGUI descTxt;
     [SerializeField] TextMeshProUGUI priceTxt;
     [SerializeField] Image itemImg;
-    [SerializeField] int price;
-    [SerializeField] int limit=1;
+    [SerializeField] public int price;
+    [SerializeField] public int limit=1;
     public int purchasedCount;
     public int limitCount;
     public void SetItem(ShopItemID item){

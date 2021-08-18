@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 487403076291435772}
   - component: {fileID: -6390383646227157615}
   - component: {fileID: 6021504876835340968}
+  - component: {fileID: 9015679668162711525}
   m_Layer: 8
   m_Name: Laser
   m_TagString: PlayerWeapons
@@ -51,10 +52,12 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -302,6 +305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7c0a6cd33104f458caa6bbc316b8c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energy: 0
+  charged: 0
 --- !u!114 &6021504876835340968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,5 +319,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
-    type: 3}
+  delay: 1
+--- !u!114 &9015679668162711525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}

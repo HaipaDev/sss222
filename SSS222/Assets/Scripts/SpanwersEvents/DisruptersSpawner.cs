@@ -80,7 +80,7 @@ public class DisruptersSpawner : MonoBehaviour{
         yield return StartCoroutine(FindObjectOfType<Waves>().SpawnAllEnemiesInWave(dc.waveConfig));
     }
     void Update(){
-        if(Time.timeScale>0.0001f){foreach(DisrupterConfig dc in disruptersList){var d=dc.spawnProps;if(d.timeEnabled){if(d.time>0)d.time-=Time.deltaTime;}}}
+        if(!GameSession.GlobalTimeIsPaused){foreach(DisrupterConfig dc in disruptersList){var d=dc.spawnProps;if(d.timeEnabled){if(d.time>0)d.time-=Time.deltaTime;}}}
     }
     public void AddEnergy(float val){foreach(DisrupterConfig dc in disruptersList){if(dc.disrupterType==disrupterType.energy){var ds=(DisrupterConfig.spawnEnergy)dc.spawnProps;ds.energy+=val;}}}
     public void AddMissed(float val){foreach(DisrupterConfig dc in disruptersList){if(dc.disrupterType==disrupterType.missed){var ds=(DisrupterConfig.spawnEnergy)dc.spawnProps;ds.energy+=val;}}}

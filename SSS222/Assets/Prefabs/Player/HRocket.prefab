@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: -7128104713871850210}
   - component: {fileID: 1804059341044045333}
   - component: {fileID: 325570832738826552}
+  - component: {fileID: 8170598641885161734}
   m_Layer: 8
   m_Name: HRocket
   m_TagString: PlayerWeapons
@@ -52,10 +53,12 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -321,10 +324,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 100000, guid: 081b45b1b47b4094f818a7a47a0c69b6, type: 3}
-  twice: 0
   xx: 0
   yy: -0.6
   time: 0.3
+  onTop: 1
+  stayStill: 1
+  angle: 0
+  BFlame: {fileID: 0}
 --- !u!114 &1804059341044045333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,5 +355,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hlaserPrefab: {fileID: 5297393032930098129, guid: 2b8e070b2c05858409a34af27783b68f,
-    type: 3}
+  delay: 1
+--- !u!114 &8170598641885161734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velPaused: {x: 0, y: 0}
