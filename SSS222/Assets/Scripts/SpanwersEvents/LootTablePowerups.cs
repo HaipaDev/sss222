@@ -23,6 +23,33 @@ public class LootTablePowerups : MonoBehaviour{
     private Dictionary<PowerupItem, float> itemTable;
     [SerializeField] ItemPercentagePowerup[] itemsPercentage;
     public float sum;
+    private void Awake(){StartCoroutine(SetValues());}
+    private IEnumerator SetValues(){
+        yield return new WaitForSeconds(0.1f);
+        var i=GameRules.instance;
+        if(i!=null){
+            var ps=GetComponent<PowerupsSpawner>();
+            if(ps.spawnerType==spawnerType.powerupStatus){
+                itemList=i.pwrupStatusList;
+                ps.mTimePowerupSpawns=i.mTimePowerupStatusSpawns;
+                ps.mTimePowerupSpawnsS=i.mTimePowerupStatusSpawnsS;
+                ps.mTimePowerupSpawnsE=i.mTimePowerupStatusSpawnsE;
+                ps.firstSpawn=i.firstPowerupStatusSpawn;
+                ps.enemiesCountReq=i.enemiesPowerupStatusCountReq;
+            }
+            if(ps.spawnerType==spawnerType.powerupWeapon){
+                itemList=i.pwrupWeaponList;
+                ps.mTimePowerupSpawns=i.mTimePowerupWeaponsSpawns;
+                ps.mTimePowerupSpawnsS=i.mTimePowerupWeaponsSpawnsS;
+                ps.mTimePowerupSpawnsE=i.mTimePowerupWeaponsSpawnsE;
+                ps.firstSpawn=i.firstPowerupWeaponsSpawn;
+                ps.enemiesCountReq=i.enemiesPowerupWeaponsCountReq;
+            }
+        }
+        if(itemList.Count==0){Destroy(this);}
+        yield return new WaitForSeconds(0.2f);
+        SumUp();
+    }
     void OnValidate(){
         SumUp();
         SumUpAfter();
@@ -46,7 +73,7 @@ public class LootTablePowerups : MonoBehaviour{
         }
         return null;
     }
-    public void SumUp(){
+    void SumUp(){
         if(dropList.Count<itemList.Count){
         dropList=new List<float>(itemList.Count);
         var i=-1;

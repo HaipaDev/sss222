@@ -28,7 +28,7 @@ public class LootTableWaves : MonoBehaviour{
         var i=GameRules.instance;
         if(i!=null){
             var w=GetComponent<Waves>();
-            itemList=i.waveList;
+            if(w.spawnerType==spawnerType.wave)itemList=i.waveList;
             w.startingWave=i.startingWave;
             w.startingWaveRandom=i.startingWaveRandom;
             w.uniqueWaves=i.uniqueWaves;

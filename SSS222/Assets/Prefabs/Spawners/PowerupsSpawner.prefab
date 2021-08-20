@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7985188867064137226}
   - component: {fileID: 884923418037271656}
-  - component: {fileID: 1734509379744776936}
+  - component: {fileID: 1427136848}
   m_Layer: 0
   m_Name: PowerupsSpawner
   m_TagString: Untagged
@@ -44,20 +44,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1f804133db36c4fb88cb24f950f7d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  powerupSpawnerType: 0
-  powerupSpawner:
-    id: 0
+  powerups:
+  - {fileID: 5649215481239408911, guid: b68538418da2b5943be6fd26f9e0ddec, type: 3}
+  - {fileID: 530782707432221319, guid: 79e3a62b1e44c5c42afcffa470e5736a, type: 3}
+  - {fileID: 274471404120805607, guid: c16ad10c3be8d894a81ec53963a84d36, type: 3}
+  - {fileID: 7318881522084147253, guid: 0e2ef393ab2246b4a877082641eb520d, type: 3}
+  - {fileID: 4548736405339070879, guid: 76d0a650fa6095b4d9e2950fb018aeaa, type: 3}
+  - {fileID: 4548736405339070879, guid: bbbfc3cfe6944bb4cadd94872c94df49, type: 3}
+  - {fileID: 4548736405339070879, guid: d44872e141aa7484a8ce2adfdcd8fb86, type: 3}
+  - {fileID: 4548736405339070879, guid: da69c5e66b1dd2941ba313f4c96bc246, type: 3}
+  - {fileID: 4548736405339070879, guid: 5924af7ffd96c8147b6d83568c56580e, type: 3}
+  - {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268, type: 3}
+  - {fileID: 4548736405339070879, guid: 09e222a729e8d7a46b1ed32960cf9e6e, type: 3}
+  - {fileID: 4548736405339070879, guid: 506b460219bf5b24db97b32612acb51c, type: 3}
+  - {fileID: 4548736405339070879, guid: 5a016be1fe8ea64479b960ba66d5e80e, type: 3}
+  - {fileID: 4548736405339070879, guid: 344da1b4b981f0442828a9bcd1b5c7a3, type: 3}
+  - {fileID: 4548736405339070879, guid: a8cf40cf136a1904ab8dc7e10093b0ea, type: 3}
+  - {fileID: 4548736405339070879, guid: f6cc792fe400da64187dce1a17381752, type: 3}
+  - {fileID: 4548736405339070879, guid: 78f32229652b5c245b94bb675fb6be7a, type: 3}
+  - {fileID: 5649215481239408911, guid: 783ed3a20f22d5c408b2c7c789cd06e9, type: 3}
+  - {fileID: 4548736405339070879, guid: fef9a70d1e2661246b686c5f3f207fff, type: 3}
+  - {fileID: 4548736405339070879, guid: c430f5cd45eed4947ad8424c9ab96449, type: 3}
+  mTimePowerupSpawns: 6
+  firstSpawn: 8
   timer: 0
-  enemiesCount: 0
   sum: 0
-  references:
-    version: 1
-    00000000:
-      type: {class: powerupSpawnerTime, ns: , asm: Assembly-CSharp}
-      data:
-        spawnTime: {x: 9, y: 16}
---- !u!114 &1734509379744776936
+--- !u!114 &1427136848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,95 +78,119 @@ MonoBehaviour:
   m_GameObject: {fileID: 3860724879463956440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a2dcdd07bf355f4bbfb092c01cafa4a, type: 3}
+  m_Script: {fileID: 11500000, guid: 091ec5cb283d1194284dcb8fd566737d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemList:
-  - name: Accelerator
-    lootItem: {fileID: 11400000, guid: d1939f2a5efe96042842032862cdf62e, type: 2}
-    rarity: 0
-    dropChance: 3.5
-    levelReq: 1
-  - name: Armor
-    lootItem: {fileID: 11400000, guid: 8ee29e2bede3b904bb2b52557eb0f6b9, type: 2}
-    rarity: 0
-    dropChance: 3
-    levelReq: 0
-  - name: ArmorU
-    lootItem: {fileID: 11400000, guid: 2650301666c6e9d4b8719cd07986fecb, type: 2}
-    rarity: 1
-    dropChance: 1.75
-    levelReq: 1
-  - name: Flip
-    lootItem: {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
-    rarity: 0
-    dropChance: 6
-    levelReq: 0
-  - name: GCLover
-    lootItem: {fileID: 11400000, guid: f6a560a419dccd647bb79ae520e69ddf, type: 2}
-    rarity: 2
-    dropChance: 0.3
-    levelReq: 1
-  - name: Inverter
-    lootItem: {fileID: 11400000, guid: 836e8441bd1a4e1468be0e689364fb14, type: 2}
-    rarity: 0
-    dropChance: 6
-    levelReq: 0
-  - name: Magnet
-    lootItem: {fileID: 11400000, guid: 6878a416f2285834c9af2732b5242ce0, type: 2}
-    rarity: 1
-    dropChance: 5
-    levelReq: 0
-  - name: Matrix
-    lootItem: {fileID: 11400000, guid: 9000ede4635f82647a1cd13010567e48, type: 2}
-    rarity: 0
-    dropChance: 4
-    levelReq: 1
-  - name: PointMulti
-    lootItem: {fileID: 11400000, guid: 1f5c3c97f5d9e164dafb8aac25017596, type: 2}
-    rarity: 1
+  - name: Amor PowerUp
+    lootItem: {fileID: -6559572297083776647, guid: b68538418da2b5943be6fd26f9e0ddec,
+      type: 3}
+    dropChance: 10
+  - name: ArmorU Powerup
+    lootItem: {fileID: 4071643129898169003, guid: 79e3a62b1e44c5c42afcffa470e5736a,
+      type: 3}
+    dropChance: 8
+  - name: Laser2 Powerup
+    lootItem: {fileID: 8467605574232654556, guid: c16ad10c3be8d894a81ec53963a84d36,
+      type: 3}
+    dropChance: 0
+  - name: Laser3 PowerUp
+    lootItem: {fileID: -6929926316309368144, guid: 0e2ef393ab2246b4a877082641eb520d,
+      type: 3}
+    dropChance: 8
+  - name: Phaser Powerup
+    lootItem: {fileID: -4513847231358184560, guid: 76d0a650fa6095b4d9e2950fb018aeaa,
+      type: 3}
+    dropChance: 7
+  - name: HRockets Powerup
+    lootItem: {fileID: 7481789463701768704, guid: bbbfc3cfe6944bb4cadd94872c94df49,
+      type: 3}
+    dropChance: 9
+  - name: MLaser Powerup
+    lootItem: {fileID: 1625218228944727905, guid: d44872e141aa7484a8ce2adfdcd8fb86,
+      type: 3}
+    dropChance: 7
+  - name: LSaber Powerup
+    lootItem: {fileID: -7642471649942006840, guid: da69c5e66b1dd2941ba313f4c96bc246,
+      type: 3}
+    dropChance: 9.5
+  - name: Flip Powerup
+    lootItem: {fileID: -794193057557848658, guid: 5924af7ffd96c8147b6d83568c56580e,
+      type: 3}
+    dropChance: 11
+  - name: GClover Powerup
+    lootItem: {fileID: 7369046335645166684, guid: e862a3dbc125f6a479dc758a97999268,
+      type: 3}
     dropChance: 2
-    levelReq: 3
-  - name: Randomizer
-    lootItem: {fileID: 11400000, guid: 8645c7606471be849bbf4044ff5ceec1, type: 2}
-    rarity: 0
-    dropChance: 6
-    levelReq: 0
-  - name: Scaler
-    lootItem: {fileID: 11400000, guid: c9d54cc47e5cf20499998336988ca3ff, type: 2}
-    rarity: 0
-    dropChance: 5
-    levelReq: 0
-  - name: Shadowdash
-    lootItem: {fileID: 11400000, guid: 9b409de821cfef24e850bac7ad821f16, type: 2}
-    rarity: 0
-    dropChance: 3
-    levelReq: 1
-  currentLvl: 99
-  dropList:
-  - 3.5
-  - 3
-  - 1.75
-  - 6
-  - 0.3
-  - 6
-  - 5
-  - 4
-  - 2
-  - 6
-  - 5
-  - 3
+  - name: ShadowBT Powerup
+    lootItem: {fileID: -2957623977586560592, guid: 09e222a729e8d7a46b1ed32960cf9e6e,
+      type: 3}
+    dropChance: 2
+  - name: Shadowdash Powerup
+    lootItem: {fileID: -2856840963608659397, guid: 506b460219bf5b24db97b32612acb51c,
+      type: 3}
+    dropChance: 9
+  - name: LClaws Powerup
+    lootItem: {fileID: 8750722719677159592, guid: 5a016be1fe8ea64479b960ba66d5e80e,
+      type: 3}
+    dropChance: 8.5
+  - name: QRockets Powerup
+    lootItem: {fileID: 8041867047060190925, guid: 344da1b4b981f0442828a9bcd1b5c7a3,
+      type: 3}
+    dropChance: 9.5
+  - name: PRockets Powerup
+    lootItem: {fileID: -8352404726845617390, guid: a8cf40cf136a1904ab8dc7e10093b0ea,
+      type: 3}
+    dropChance: 0
+  - name: CStream Powerup
+    lootItem: {fileID: -294417472788152316, guid: f6cc792fe400da64187dce1a17381752,
+      type: 3}
+    dropChance: 6.5
+  - name: Inverter Powerup
+    lootItem: {fileID: -3510972991010633183, guid: 78f32229652b5c245b94bb675fb6be7a,
+      type: 3}
+    dropChance: 11
+  - name: Magnet Powerup
+    lootItem: {fileID: 4305882262000766416, guid: 783ed3a20f22d5c408b2c7c789cd06e9,
+      type: 3}
+    dropChance: 8
+  - name: Scaler Powerup
+    lootItem: {fileID: 7157503050481327636, guid: fef9a70d1e2661246b686c5f3f207fff,
+      type: 3}
+    dropChance: 9.5
+  - name: Matrix Powerup
+    lootItem: {fileID: 8237334835763180172, guid: c430f5cd45eed4947ad8424c9ab96449,
+      type: 3}
+    dropChance: 7.5
+  - name: Point Multiplier Powerup
+    lootItem: {fileID: 4305882262000766416, guid: 8c7a6bb61db1fe54c8c2e4559b9978fb,
+      type: 3}
+    dropChance: 7
+  - name: Randomizer Powerup
+    lootItem: {fileID: 4305882262000766416, guid: 404504c142e7a4a40805ec056d2a842f,
+      type: 3}
+    dropChance: 10
   itemsPercentage:
-  - name: Accelerator - 7,68% - 3,5/42,05
-  - name: Armor - 6,59% - 3/42,55
-  - name: ArmorU - 3,84% - 1,75/43,8
-  - name: Flip - 13,17% - 6/39,55
-  - name: GCLover - 0,66% - 0,3/45,25
-  - name: Inverter - 13,17% - 6/39,55
-  - name: Magnet - 10,98% - 5/40,55
-  - name: Matrix - 8,78% - 4/41,55
-  - name: PointMulti - 4,39% - 2/43,55
-  - name: Randomizer - 13,17% - 6/39,55
-  - name: Scaler - 10,98% - 5/40,55
-  - name: Shadowdash - 6,59% - 3/42,55
-  sum: 45.55
+  - name: Amor PowerUp - 6.25% - 10/150
+  - name: ArmorU Powerup - 5% - 8/152
+  - name: Laser2 Powerup - 0% - 0/160
+  - name: Laser3 PowerUp - 5% - 8/152
+  - name: Phaser Powerup - 4.38% - 7/153
+  - name: HRockets Powerup - 5.62% - 9/151
+  - name: MLaser Powerup - 4.38% - 7/153
+  - name: LSaber Powerup - 5.94% - 9.5/150.5
+  - name: Flip Powerup - 6.88% - 11/149
+  - name: GClover Powerup - 1.25% - 2/158
+  - name: ShadowBT Powerup - 1.25% - 2/158
+  - name: Shadowdash Powerup - 5.62% - 9/151
+  - name: LClaws Powerup - 5.31% - 8.5/151.5
+  - name: QRockets Powerup - 5.94% - 9.5/150.5
+  - name: PRockets Powerup - 0% - 0/160
+  - name: CStream Powerup - 4.06% - 6.5/153.5
+  - name: Inverter Powerup - 6.88% - 11/149
+  - name: Magnet Powerup - 5% - 8/152
+  - name: Scaler Powerup - 5.94% - 9.5/150.5
+  - name: Matrix Powerup - 4.69% - 7.5/152.5
+  - name: Point Multiplier Powerup - 4.38% - 7/153
+  - name: Randomizer Powerup - 6.25% - 10/150
+  sum: 160
