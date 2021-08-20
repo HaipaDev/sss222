@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Waves : MonoBehaviour{
-    [SerializeField] public spawnerType spawnerType;
-    //[SerializeField] List<WaveConfig> waveConfigs;
-    //[SerializeField] int[] waveConfigsWeights;
     [SerializeField] public int startingWave=0;
     [SerializeField] public bool startingWaveRandom=false;
     public int waveIndex=0;
     public WaveConfig currentWave;
-    //[SerializeField] bool progressiveWaves=false;
-    [SerializeField] public bool uniqueWaves=true;//Unique Wave Randomization?
+    [SerializeField] public bool uniqueWaves=true;
     [SerializeField] float mTimeSpawns=2f;
     public float timeSpawns=0f;
 
@@ -24,7 +20,7 @@ public class Waves : MonoBehaviour{
         yield return new WaitForSeconds(0.15f);
         waveDisplay=FindObjectOfType<WaveDisplay>();
         lootTable=GetComponent<LootTableWaves>();
-        if(startingWaveRandom){currentWave=GetRandomWave();startingWave=waveIndex;}//Random.Range(0,lootTable.itemList.Count-1);}
+        if(startingWaveRandom){currentWave=GetRandomWave();startingWave=waveIndex;}
         do{yield return StartCoroutine(SpawnWaves());}while(true);
     }
     public WaveConfig GetRandomWave(){
@@ -160,7 +156,7 @@ public class Waves : MonoBehaviour{
         WaveConfig selected=WeightedRandomizer.From(weights).TakeOne(); // Strongly-typed object returned. No casting necessary.
     }*/
     public string GetWaveName(){return currentWave.waveName;}
-    // Update is called once per frame
+
     void Update(){
         if(!GameSession.GlobalTimeIsPaused){
             if(timeSpawns>-0.01){timeSpawns -= Time.deltaTime;}
