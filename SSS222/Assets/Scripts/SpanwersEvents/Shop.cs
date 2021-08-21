@@ -11,9 +11,8 @@ public class Shop : MonoBehaviour{
     public GameObject shopMenuUI;
     public GameObject slotsContainer;
     public GameObject slotPrefab;
-    public int[] slotUnlock=new int[4];
+    public int[] slotUnlock;
     public float shopTimeMax=10f;
-    public float slotsWhenLimit=3;
 
     public int currentSlotID;
     public int purchases;
@@ -95,7 +94,7 @@ public class Shop : MonoBehaviour{
         ClearSlots();
         yield return new WaitForSecondsRealtime(0.1f);
         lootTable.currentQueue=lootTable.GetQueue();
-        CreateSlot();
+        for(var i=0;i<lootTable.currentQueue.preUnlocked;i++){CreateSlot();}
     }
     public void ClearSlots(){
         var slotsCount=slotsContainer.transform.childCount;

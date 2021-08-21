@@ -2494,7 +2494,7 @@ PrefabInstance:
     - target: {fileID: 5070146239176450900, guid: ff9793f039b72f14994587665385df16,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -261
+      value: 261
       objectReference: {fileID: 0}
     - target: {fileID: 8429984816886233568, guid: ff9793f039b72f14994587665385df16,
         type: 3}
@@ -2509,7 +2509,7 @@ PrefabInstance:
     - target: {fileID: 8797093643959647985, guid: ff9793f039b72f14994587665385df16,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 261
+      value: -261
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff9793f039b72f14994587665385df16, type: 3}
@@ -3883,6 +3883,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 56208185252951280, guid: 96d69890f517e4c48943f992c4f243a5,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 56208185252951280, guid: 96d69890f517e4c48943f992c4f243a5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1618462405806779064, guid: 96d69890f517e4c48943f992c4f243a5,
         type: 3}
       propertyPath: m_ScrollSensitivity

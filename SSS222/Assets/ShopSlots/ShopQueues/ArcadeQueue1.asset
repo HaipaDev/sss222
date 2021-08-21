@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ecb9aadf7f8084e90fda5db25c342c, type: 3}
   m_Name: ArcadeQueue1
   m_EditorClassIdentifier: 
+  preUnlocked: 3
+  slotsWhenLimit: 4
   slotList:
   - itemList:
     - name: Lunar Gel

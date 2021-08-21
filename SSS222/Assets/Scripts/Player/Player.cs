@@ -835,38 +835,34 @@ public class Player : MonoBehaviour{
  
 #region//States
     private void States(){
-        if(flip==true){flipTimer-=Time.deltaTime;moveDir=-1;}else{moveDir=1;}
+        if(flip==true){moveDir=-1;}else{moveDir=1;}
         if(flipTimer<=0&&flipTimer>-4){ResetStatus("flip");AudioManager.instance.Play("PowerupOff");}
 
         if(gclover==true){
             health=maxHP;
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover=true;
-            gcloverTimer-=Time.deltaTime;
-        }
-        else{
+        }else{
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover=false;
         }
         if(gcloverTimer<=0&&gcloverTimer>-4){ResetStatus("gclover");AudioManager.instance.Play("GCloverOff");}
 
-        if(shadow==true){shadowTimer-=Time.deltaTime;}
         if(shadowTimer<=0&&shadowTimer>-4){ResetStatus("shadow");AudioManager.instance.Play("PowerupOff");}
         if(shadow==true){Shadow();if(GetComponent<BackflameEffect>().enabled==true)GetComponent<BackflameEffect>().enabled=false;}
         else{dashTime=-4;if(GetComponent<BackflameEffect>().enabled==false)GetComponent<BackflameEffect>().enabled=true;}
         if(shadow==true&&dashTime<=0&&dashTime!=-4){rb.velocity=Vector2.zero; dashing=false; /*moveX=moveXwas;moveY=moveYwas;*/ dashTime=-4;}
-        else{dashTime-=Time.deltaTime; if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}/*if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);*/}
+        else{if(!GameSession.GlobalTimeIsPaused){dashTime-=Time.deltaTime;}
+        if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}/*if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);*/}
         if(energy<=0){shadow=false;}
         if(shadow==false){dashing=false;}
 
         if(inverter==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){
-        FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=false;FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().enabled=true;FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=true;}
-        inverterTimer+=Time.deltaTime;}
+        FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=false;FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().enabled=true;FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=true;}}
         else{if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==true){FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=false;}if(FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic==false){FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=true;}
         if(FindObjectOfType<MusicPlayer>()!=null&&FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch==-1){FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;}}
-        if(inverterTimer >=10 && inverterTimer<14){ResetStatus("inverter"); inverterTimer=14;}
+        if(inverterTimer>=inverterTime&&inverterTimer<inverterTime+4){ResetStatus("inverter");inverterTimer=inverterTime+4;}
 
         if(magnet==true){
             if(FindObjectsOfType<Tag_MagnetAffected>()!=null){
-                magnetTimer-=Time.deltaTime;
                 Tag_MagnetAffected[] objs=FindObjectsOfType<Tag_MagnetAffected>();
                 foreach(Tag_MagnetAffected obj in objs){
                     var followC=obj.GetComponent<Follow>();
@@ -884,7 +880,6 @@ public class Player : MonoBehaviour{
         if(magnetTimer<=0&&magnetTimer>-4){ResetStatus("magnet");}
         
         if(scaler==true){
-            scalerTimer-=Time.deltaTime;
             //Scaler function in PlayerCollider
         }else{
             shipScale=shipScaleDefault;
@@ -892,89 +887,99 @@ public class Player : MonoBehaviour{
         if(scalerTimer <=0 && scalerTimer>-4){ResetStatus("scaler");}
         transform.localScale=new Vector3(shipScale,shipScale,1);
         
-        if(!GameSession.GlobalTimeIsPausedNotSlowed){
-        if(matrix==true&&accel==false){
-            matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
-            //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
-            //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
-            if((inputType==InputType.mouse || inputType==InputType.drag) && dist<1){
-                GameSession.instance.gameSpeed=dist;
-                GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed);
-            }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
-                
-                //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed);
-            }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed);
-            }else{
-                if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
-            }
-        }
-        if(matrixTimer <=0 && matrixTimer>-4){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; ResetStatus("matrix");}
-
-        if(pmultiTimer>0){pmultiTimer-=Time.deltaTime;}
         if(pmultiTimer <=0 && pmultiTimer>-4){GameSession.instance.scoreMulti=GameSession.instance.defaultGameSpeed; ResetStatus("pmulti");}
 
-        if(accel==true&&matrix==false){
-            accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
-            //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
-            //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
-            if((inputType==InputType.mouse || inputType==InputType.drag) && dist>0.35){
-                GameSession.instance.gameSpeed=dist+(1-0.35f);
-                GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
-            }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
-                
-                //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
-            }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
-            }else{
-                if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
+        if(!GameSession.GlobalTimeIsPausedNotSlowed){
+            if(matrix==true&&accel==false){
+                matrixTimer-=Time.unscaledDeltaTime;
+                //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
+                //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
+                if((inputType==InputType.mouse || inputType==InputType.drag) && dist<1){
+                    GameSession.instance.gameSpeed=dist;
+                    GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed);
+                }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                    
+                    //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed);
+                }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed);
+                }else{
+                    if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
+                }
+            }
+            if(matrixTimer <=0 && matrixTimer>-4){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; ResetStatus("matrix");}
+
+
+            if(accel==true&&matrix==false){
+                accelTimer-=Time.unscaledDeltaTime;
+                //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
+                //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
+                if((inputType==InputType.mouse || inputType==InputType.drag) && dist>0.35){
+                    GameSession.instance.gameSpeed=dist+(1-0.35f);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
+                }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                    
+                    //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
+                }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,GameSession.instance.defaultGameSpeed*2);
+                }else{
+                    if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
+                }
+            }
+            if(accelTimer <=0 && accelTimer>-4){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; ResetStatus("accel");}
+
+            if(accel==true&&matrix==true){
+                accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
+                matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
+                //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
+                //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
+                if(inputType==InputType.mouse || inputType==InputType.drag){
+                    GameSession.instance.gameSpeed=dist;
+                    GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed*2);
+                }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
+                    
+                    //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed*2);
+                }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
+                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed*2);
+                }else{
+                    if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
+                }
             }
         }
-        if(accelTimer <=0 && accelTimer>-4){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; ResetStatus("accel");}
+        if(!GameSession.GlobalTimeIsPaused){
+            //Timers
+            if(flipTimer>0){flipTimer-=Time.deltaTime;}
+            if(gcloverTimer>0){gcloverTimer-=Time.deltaTime;}
+            if(shadowTimer>0){shadowTimer-=Time.deltaTime;}
+            if(magnetTimer>0){magnetTimer-=Time.deltaTime;}
+            if(scalerTimer>0){scalerTimer-=Time.deltaTime;}
+            if(pmultiTimer>0){pmultiTimer-=Time.deltaTime;}
+            if(inverterTimer<inverterTime){inverterTimer+=Time.deltaTime;}
 
-        if(accel==true&&matrix==true){
-            accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
-            matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
-            //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
-            //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
-            if(inputType==InputType.mouse || inputType==InputType.drag){
-                GameSession.instance.gameSpeed=dist;
-                GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,0.05f,GameSession.instance.defaultGameSpeed*2);
-            }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
-                
-                //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed*2);
-            }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,0.05f,GameSession.instance.defaultGameSpeed*2);
-            }else{
-                if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
-            }
+            if(onfireTimer>0){onfireTimer-=Time.deltaTime*(1+dist);}else{if(onfireTimer>-4)ResetStatus("onfire");}
+            if(decayTimer>0){decayTimer-=Time.deltaTime;}else{if(decayTimer>-4)ResetStatus("decay");}
+            if(electrcTimer>0){electrcTimer-=Time.deltaTime;}else{if(electrcTimer>-4)ResetStatus("electrc");}
+            if(frozenTimer>0){frozenTimer-=Time.deltaTime;}else{if(frozenTimer>-4)ResetStatus("frozen");}
+            if(armoredTimer>0){armoredTimer-=Time.deltaTime;}else{if(armoredTimer>-4)if(armored){armoredStrength=1;}ResetStatus("armored");}
+            if(fragileTimer>0){fragileTimer-=Time.deltaTime;}else{if(fragileTimer>-4)if(fragile){fragileStrength=1;}ResetStatus("fragile");}
+            if(powerTimer>0){powerTimer-=Time.deltaTime;}else{if(powerTimer>-4)if(power){powerStrength=1;}ResetStatus("power");}
+            if(weaknsTimer>0){weaknsTimer-=Time.deltaTime;}else{if(weaknsTimer>-4)if(weakns){weaknsStrength=1;}ResetStatus("weakns");}
+            if(hackedTimer>0){hackedTimer-=Time.deltaTime;}else{if(hackedTimer>-4)ResetStatus("hacked");}
+            if(blindTimer>0){blindTimer-=Time.deltaTime;}else{if(blindTimer>-4)ResetStatus("blind");}
+            if(speedTimer>0){speedTimer-=Time.deltaTime;}else{if(speedTimer>-4)if(speed){speedStrength=1;moveSpeedCurrent=speedPrev;}ResetStatus("speed");}
+            if(slowTimer>0){slowTimer-=Time.deltaTime;}else{if(slowTimer>-4)if(slow){slowStrength=1;moveSpeedCurrent=speedPrev;}ResetStatus("slow");}
+            if(armored==true&&fragile!=true){armorMulti=armoredStrength;}else if(fragile==true&&armored!=true){armorMulti=1/fragileStrength;}
+            if(armored!=true&&fragile!=true){armorMulti=armorMultiInit;}if(armored==true&&fragile==true){armorMulti=(1/fragileStrength)*armoredStrength;}
+            if(power==true&&weakns!=true){dmgMulti=powerStrength;}else if(weakns==true&&power!=true){dmgMulti=1/weaknsStrength;}
+            if(power!=true&&weakns!=true){dmgMulti=dmgMultiInit;}if(power==true&&weakns==true){dmgMulti=(1/weaknsStrength)*powerStrength;}
+            if(onfire){if(frozen){ResetStatus("frozen");/*Damage(1,dmgType.silent);*/}}
+            if(infEnergyTimer>0){infEnergyTimer-=Time.deltaTime;}else{if(infEnergyTimer>-4){ResetStatus("infEnergy");}}
+            if(infEnergy){energy=infPrevEnergy;}
+            if(speed==true&&slow!=true){moveSpeedCurrent=speedPrev*(1.25f*speedStrength);}else if(slow==true&&speed!=true){moveSpeedCurrent=speedPrev/(2*slowStrength);}else if(speed&&slow){moveSpeedCurrent=moveSpeed;}
+            //if(speeded!=true&&slowed!=true){moveSpeedCurrent=moveSpeed;}if(speeded==true&&slowed==true){}
         }
-        }
-
-        if(onfireTimer>0){onfireTimer-=Time.deltaTime*(1+dist);}else{if(onfireTimer>-4)ResetStatus("onfire");}
-        if(decayTimer>0){decayTimer-=Time.deltaTime;}else{if(decayTimer>-4)ResetStatus("decay");}
-        if(electrcTimer>0){electrcTimer-=Time.deltaTime;}else{if(electrcTimer>-4)ResetStatus("electrc");}
-        if(frozenTimer>0){frozenTimer-=Time.deltaTime;}else{if(frozenTimer>-4)ResetStatus("frozen");}
-        if(armoredTimer>0){armoredTimer-=Time.deltaTime;}else{if(armoredTimer>-4)if(armored){armoredStrength=1;}ResetStatus("armored");}
-        if(fragileTimer>0){fragileTimer-=Time.deltaTime;}else{if(fragileTimer>-4)if(fragile){fragileStrength=1;}ResetStatus("fragile");}
-        if(powerTimer>0){powerTimer-=Time.deltaTime;}else{if(powerTimer>-4)if(power){powerStrength=1;}ResetStatus("power");}
-        if(weaknsTimer>0){weaknsTimer-=Time.deltaTime;}else{if(weaknsTimer>-4)if(weakns){weaknsStrength=1;}ResetStatus("weakns");}
-        if(hackedTimer>0){hackedTimer-=Time.deltaTime;}else{if(hackedTimer>-4)ResetStatus("hacked");}
-        if(blindTimer>0){blindTimer-=Time.deltaTime;}else{if(blindTimer>-4)ResetStatus("blind");}
-        if(speedTimer>0){speedTimer-=Time.deltaTime;}else{if(speedTimer>-4)if(speed){speedStrength=1;moveSpeedCurrent=speedPrev;}ResetStatus("speed");}
-        if(slowTimer>0){slowTimer-=Time.deltaTime;}else{if(slowTimer>-4)if(slow){slowStrength=1;moveSpeedCurrent=speedPrev;}ResetStatus("slow");}
-        if(armored==true&&fragile!=true){armorMulti=armoredStrength;}else if(fragile==true&&armored!=true){armorMulti=1/fragileStrength;}
-        if(armored!=true&&fragile!=true){armorMulti=armorMultiInit;}if(armored==true&&fragile==true){armorMulti=(1/fragileStrength)*armoredStrength;}
-        if(power==true&&weakns!=true){dmgMulti=powerStrength;}else if(weakns==true&&power!=true){dmgMulti=1/weaknsStrength;}
-        if(power!=true&&weakns!=true){dmgMulti=dmgMultiInit;}if(power==true&&weakns==true){dmgMulti=(1/weaknsStrength)*powerStrength;}
-        if(onfire){if(frozen){ResetStatus("frozen");/*Damage(1,dmgType.silent);*/}}
-        if(infEnergyTimer>0){infEnergyTimer-=Time.deltaTime;}else{if(infEnergyTimer>-4){ResetStatus("infEnergy");}}
-        if(infEnergy){energy=infPrevEnergy;}
-        if(speed==true&&slow!=true){moveSpeedCurrent=speedPrev*(1.25f*speedStrength);}else if(slow==true&&speed!=true){moveSpeedCurrent=speedPrev/(2*slowStrength);}else if(speed&&slow){moveSpeedCurrent=moveSpeed;}
-        //if(speeded!=true&&slowed!=true){moveSpeedCurrent=moveSpeed;}if(speeded==true&&slowed==true){}
     }
     
     private void Shadow(){

@@ -34,7 +34,7 @@ public class ShopSlot : MonoBehaviour{
     if(GameSession.instance.coins>=price&&limitCount<limit){
         GameSession.instance.coins-=price;
         purchasedCount++;
-        if(Shop.instance.currentSlotID>=Shop.instance.slotsWhenLimit)limitCount++;
+        if(Shop.instance.currentSlotID>=Shop.instance.lootTable.currentQueue.slotsWhenLimit)limitCount++;
         var pos=Player.instance.transform.position;
         switch(item.ID){
             case 0:Instantiate(GameAssets.instance.Get("Laser2Pwrup"),pos,Quaternion.identity);break;

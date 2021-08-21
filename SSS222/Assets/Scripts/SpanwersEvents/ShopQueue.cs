@@ -21,6 +21,8 @@ public class ItemPercentageSlotsQueue{
 
 [CreateAssetMenu(menuName = "ShopQueue")]
 public class ShopQueue:ScriptableObject{
+    [SerializeField] public int preUnlocked=1;
+    [SerializeField] public int slotsWhenLimit=3;
     [SerializeField] public List<EntryShopQueue> slotList;
     [SerializeField] Dictionary<ShopItemID, float>[] itemTable;
     [SerializeField] ItemPercentageSlotsQueue[] itemsPercentage;
