@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GlareDevil : MonoBehaviour{
+    [SerializeField]float radius=3f;
     [SerializeField]float timerMax=3.3f;
     [SerializeField]Vector2 efxBlind=new Vector2(4,4);
 
@@ -13,6 +14,7 @@ public class GlareDevil : MonoBehaviour{
     var i=GameRules.instance;
     if(i!=null){
         var e=i.glareDevilSettings;
+        radius=e.radius;
         timerMax=e.timerMax;
         efxBlind=e.efxBlind;
     }
@@ -27,7 +29,7 @@ public class GlareDevil : MonoBehaviour{
             if(path.waypointIndex==path.waypointsL.Count-1){GetComponent<SpriteRenderer>().flipX=false;transform.GetChild(0).position=new Vector3(transform.position.x+(-GetComponent<Glow>().GetXX()),transform.position.y+GetComponent<Glow>().GetYY(),0.01f);}
             if(path.waypointIndex==1){GetComponent<SpriteRenderer>().flipX=true;transform.GetChild(0).position=new Vector3(transform.position.x+GetComponent<Glow>().GetXX(),transform.position.y+GetComponent<Glow>().GetYY(),0.01f);}
             //transform.GetChild(0).GetComponent<ParticleSystem>().Play();
-            if(Vector2.Distance(Player.instance.transform.position,transform.position)<3f){Blind();}
+            if(Vector2.Distance(Player.instance.transform.position,transform.position)<radius){Blind();}
         }
         if(timer>0)timer-=Time.deltaTime;
     }

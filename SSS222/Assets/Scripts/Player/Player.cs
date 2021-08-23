@@ -295,6 +295,7 @@ public class Player : MonoBehaviour{
         shootMultiInit=i.shootMultiPlayer;
         shipScaleDefault=i.shipScaleDefault;
         bulletResize=i.bulletResize;
+        bflameDmgTillLvl=i.bflameDmgTillLvl;
         overheatOn=i.overheatOnPlayer;
         recoilOn=i.recoilOnPlayer;
         ///State Defaults

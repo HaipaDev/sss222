@@ -52,6 +52,7 @@ public static GameRules instance;
     public float shootMultiPlayer=1f;
     public float shipScaleDefault=0.89f;
     public bool bulletResize;
+    public int bflameDmgTillLvl=1;
     public bool overheatOnPlayer=true;
     public float overheatTimerMax = 8.66f;
     public float overheatCooldown = 0.65f;
@@ -376,6 +377,7 @@ public class VortexWheelSettings{
 }
 [System.Serializable]
 public class GlareDevilSettings{
+    public float radius=3f;
     public float timerMax=3.3f;
     public Vector2 efxBlind=new Vector2(4,4);
 }
