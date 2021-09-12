@@ -11,7 +11,6 @@ public class Shop : MonoBehaviour{
     public GameObject shopMenuUI;
     public GameObject slotsContainer;
     public GameObject slotPrefab;
-    public int[] slotUnlock;
     public float shopTimeMax=10f;
 
     public int currentSlotID;
@@ -81,7 +80,7 @@ public class Shop : MonoBehaviour{
         shopTimer=-4;
         if(purchased==false&&subbed==false){purchasedNotTimes++;}
         subbed=false;
-        if(purchasedNotTimes==2){RepMinus(1);purchasedNotTimes=0;}
+        if(purchasedNotTimes==2){RepChange(1,false);purchasedNotTimes=0;}
         shopMenuUI.SetActive(false);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         shopOpened=false;
@@ -98,7 +97,7 @@ public class Shop : MonoBehaviour{
     }
     public void ClearSlots(){
         var slotsCount=slotsContainer.transform.childCount;
-        for(var i=0;i<slotsCount;i++){DestroyImmediate(slotsContainer.transform.GetChild(0).gameObject);Debug.Log(i+"/Count: "+slotsCount);}
+        for(var i=0;i<slotsCount;i++){DestroyImmediate(slotsContainer.transform.GetChild(0).gameObject);}//Debug.Log(i+"/Count: "+slotsCount);}
         reputationSlot=0;currentSlotID=0;currentSlotsList.Clear();
     }
     public void CreateSlot(){
@@ -109,6 +108,7 @@ public class Shop : MonoBehaviour{
             slot.SetItem(lootTable.currentQueue.GetItem(currentSlotID));
             slot.SetPrice(lootTable.currentQueue.GetPrice(currentSlotID));
             slot.SetLimit(lootTable.currentQueue.GetLimit(currentSlotID));
+            slot.SetRep(lootTable.currentQueue.GetRep(currentSlotID));
             currentSlotID++;
         }else{Debug.LogWarning("ShopSlot limit");}
         
@@ -118,7 +118,9 @@ public class Shop : MonoBehaviour{
     void LevelRep(){
         if(GetComponentInChildren<XPBars>()!=null){
         var bar=GetComponentInChildren<XPBars>();
-        for(var i=currentSlotID;i<slotUnlock.Length;i++){if(reputationSlot==slotUnlock[i]){/*var xp=slotUnlock[i+1];if(xp<IDmax)bar.ID=xp;if(bar.current==null){bar.Recreate();}*/CreateSlot();reputationSlot=0;}}}
+        for(var i=currentSlotID;i<lootTable.currentQueue.slotList.Count;i++){if(reputationSlot==lootTable.currentQueue.GetSlot(currentSlotID).slotUnlock){/*var xp=slotUnlock[i+1];if(xp<IDmax)bar.ID=xp;if(bar.current==null){bar.Recreate();}*/
+        CreateSlot();reputationSlot=reputationSlot-lootTable.currentQueue.GetSlot(currentSlotID).slotUnlock;if(reputationSlot<0){reputationSlot=0;}//reputationSlot=0;
+        }}}
     }
 
     [SerializeReference]IEnumerator pco=null;
@@ -126,7 +128,7 @@ public class Shop : MonoBehaviour{
         //Actual purchasing is in ShopSlot
         if(purchaseTimer==-4){
             purchases+=1;
-            RepPlus(1);
+            //RepPlus(1);
             if(!purchased)purchased=true;
             //GameSession.instance.gameSpeed=0.05f;purchaseTimer=0.3f;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=false;}
         }
@@ -143,14 +145,14 @@ public class Shop : MonoBehaviour{
         pco=null;
     }
 
-    public void RepPlus(int amnt){
+    public void RepChange(int amnt,bool add=true){
     if(repEnabled){
-        reputation+=amnt;
-        reputationSlot+=amnt;
-    }}
-    public void RepMinus(int amnt){
-    if(repEnabled){
-        reputation-=amnt;
-        reputationSlot-=amnt;
+        if(add){
+            reputation+=amnt;
+            reputationSlot+=amnt;
+        }else{
+            reputation-=amnt;
+            reputationSlot-=amnt;
+        }
     }}
 }

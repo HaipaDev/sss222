@@ -52,7 +52,7 @@ public class LootTablePowerups : MonoBehaviour{
     }
     void OnValidate(){
         SumUp();
-        SumUpAfter();
+        //SumUpAfter();
     }
     void Update(){
         if(UpgradeMenu.instance!=null)currentLvl=UpgradeMenu.instance.total_UpgradesLvl;

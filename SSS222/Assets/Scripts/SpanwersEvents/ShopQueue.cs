@@ -5,6 +5,7 @@ using System.Linq;
 
 [System.Serializable]
 public class EntryShopQueue{
+    public int slotUnlock=4;
     public List<LootTableEntryShopQueue> itemList;
 }[System.Serializable]
 public class LootTableEntryShopQueue{
@@ -13,6 +14,7 @@ public class LootTableEntryShopQueue{
     public float dropChance=0f;
     public Vector2 price=new Vector2(5,15);
     public Vector2 limit=new Vector2(3,5);
+    public Vector2 rep=new Vector2(1,6);
 }
 [System.Serializable]
 public class ItemPercentageSlotsQueue{
@@ -42,9 +44,11 @@ public class ShopQueue:ScriptableObject{
         }
         return null;
     }
+    public EntryShopQueue GetSlot(int currentSlotID){return slotList[currentSlotID];}
+    public ShopItemID GetItem(int currentSlotID){return GetEntry(currentSlotID).lootItem;}
     public int GetPrice(int currentSlotID){return (int)Random.Range(GetEntry(currentSlotID).price.x,GetEntry(currentSlotID).price.y);}
     public int GetLimit(int currentSlotID){return (int)Random.Range(GetEntry(currentSlotID).limit.x,GetEntry(currentSlotID).limit.y);}
-    public ShopItemID GetItem(int currentSlotID){return GetEntry(currentSlotID).lootItem;}
+    public int GetRep(int currentSlotID){return (int)Random.Range(GetEntry(currentSlotID).rep.x,GetEntry(currentSlotID).rep.y);}
     [ContextMenu("SumUp")]void SumUp(){
         System.Array.Resize(ref itemsPercentage, slotList.Count);
         System.Array.Resize(ref itemTable, slotList.Count);

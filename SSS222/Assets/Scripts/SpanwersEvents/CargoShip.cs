@@ -21,7 +21,7 @@ public class CargoShip : MonoBehaviour{
             transform.GetChild(0).gameObject.SetActive(true);
         }if(other.CompareTag("PlayerWeapons")&&other.GetComponent<HealthLeech>()==null){
             Destroy(other.gameObject);
-            if(tagged==false){Shop.instance.RepMinus(repMinus);tagged=true;AudioManager.instance.Play("CargoHit");transform.GetChild(0).gameObject.SetActive(true);}
+            if(tagged==false){Shop.instance.RepChange(repMinus,false);tagged=true;AudioManager.instance.Play("CargoHit");transform.GetChild(0).gameObject.SetActive(true);}
         }else if(other.GetComponent<HealthLeech>()!=null){
             if(tagged==false){Shop.instance.reputation+=3;tagged=true;}
         }

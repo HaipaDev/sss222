@@ -12,6 +12,7 @@ public class ShopSlot : MonoBehaviour{
     [SerializeField] Image itemImg;
     [SerializeField] public int price;
     [SerializeField] public int limit=1;
+    [SerializeField] public int rep=1;
     public int purchasedCount;
     public int limitCount;
     public void SetItem(ShopItemID item){
@@ -21,6 +22,7 @@ public class ShopSlot : MonoBehaviour{
     }
     public void SetPrice(int val){price=val;}
     public void SetLimit(int val){limit=val;}
+    public void SetRep(int val){rep=val;}
     void Update(){
         if(item!=null){
             nameTxt.text=item.name;
@@ -34,6 +36,7 @@ public class ShopSlot : MonoBehaviour{
     if(GameSession.instance.coins>=price&&limitCount<limit){
         GameSession.instance.coins-=price;
         purchasedCount++;
+        Shop.instance.RepChange(rep);
         if(Shop.instance.currentSlotID>=Shop.instance.lootTable.currentQueue.slotsWhenLimit)limitCount++;
         var pos=Player.instance.transform.position;
         switch(item.ID){
