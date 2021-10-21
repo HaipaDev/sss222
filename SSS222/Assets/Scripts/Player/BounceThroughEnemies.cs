@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BounceFromEnemies : MonoBehaviour{
+public class BounceThroughEnemies : MonoBehaviour{
     [SerializeField] public float speed=9f;
     [SerializeField] List<Enemy> enemiesHit;
 
     void Update(){
-        float step = speed * Time.deltaTime;
+        float step=speed*Time.deltaTime;
         var target=FindClosestEnemy();
-        if(target!=null)transform.position = Vector2.MoveTowards(transform.position, target.transform.position, step);
+        if(target!=null)transform.position=Vector2.MoveTowards(transform.position,target.transform.position,step);
     }
     public Enemy FindClosestEnemy(){
-        KdTree<Enemy> Enemies = new KdTree<Enemy>();
+        KdTree<Enemy> Enemies=new KdTree<Enemy>();
         Enemy[] EnemiesArr;
-        EnemiesArr = FindObjectsOfType<Enemy>();
+        EnemiesArr=FindObjectsOfType<Enemy>();
         foreach(Enemy enemy in EnemiesArr){
             //if(enemy.GetComponent<Enemy>().cTagged==false)Enemies.Add(enemy);
             if(!enemiesHit.Contains(enemy))Enemies.Add(enemy);
         }
-        Enemy closest = Enemies.FindClosest(transform.position);
+        Enemy closest=Enemies.FindClosest(transform.position);
         return closest;
     }
 

@@ -750,7 +750,8 @@ public class Player : MonoBehaviour{
                                 sL=new Vector2(sL.x-=speedoffxL,sL.y+=speedoffyL);}
                             if(w.costType!=costType.boomerang)if(bulletL.GetComponent<Rigidbody2D>()!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;
                             else{if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();}
-                            if(bulletL.GetComponent<BounceFromEnemies>()!=null)bulletL.GetComponent<BounceFromEnemies>().speed=sL.y;
+                            if(bulletL.GetComponent<BounceThroughEnemies>()!=null)bulletL.GetComponent<BounceThroughEnemies>().speed=sL.y;
+                            if(bulletL.GetComponent<BounceBetweenEnemies>()!=null)bulletL.GetComponent<BounceBetweenEnemies>().speed=sL.y;
                             bulletL.transform.Rotate(rL);
                             if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalR;
                             if(bulletL.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletL.GetComponent<Tag_PlayerWeaponBlockable>().energy=wc.cost/wp.bulletAmount;}
@@ -768,7 +769,8 @@ public class Player : MonoBehaviour{
                                 sR=new Vector2(sR.x+=speedoffxR,sR.y+=speedoffyR);}
                             if(w.costType!=costType.boomerang)if(bulletR.GetComponent<Rigidbody2D>()!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;
                             else{if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();}
-                            if(bulletR.GetComponent<BounceFromEnemies>()!=null)bulletR.GetComponent<BounceFromEnemies>().speed=sR.y;
+                            if(bulletR.GetComponent<BounceThroughEnemies>()!=null)bulletR.GetComponent<BounceThroughEnemies>().speed=sR.y;
+                            if(bulletR.GetComponent<BounceBetweenEnemies>()!=null)bulletR.GetComponent<BounceBetweenEnemies>().speed=sR.y;
                             bulletR.transform.Rotate(rR);
                             if(bulletR.GetComponent<IntervalSound>()!=null)bulletR.GetComponent<IntervalSound>().interval=soundIntervalR;
                             if(bulletR.GetComponent<Tag_PlayerWeaponBlockable>()!=null&&w.costType==costType.energy){bulletR.GetComponent<Tag_PlayerWeaponBlockable>().energy=wc.cost/wp.bulletAmount;}

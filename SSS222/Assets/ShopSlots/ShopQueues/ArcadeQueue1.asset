@@ -15,77 +15,96 @@ MonoBehaviour:
   preUnlocked: 3
   slotsWhenLimit: 4
   slotList:
-  - itemList:
+  - slotUnlock: 0
+    itemList:
     - name: Lunar Gel
       lootItem: {fileID: 11400000, guid: a57502b4bd18a7a4c97bb6c7b30fd0f9, type: 2}
       dropChance: 3
-      price: {x: 5, y: 15}
-      limit: {x: 3, y: 5}
+      price: {x: 3, y: 6}
+      limit: {x: 5, y: 6}
+      rep: {x: 1, y: 1}
     - name: Battery
       lootItem: {fileID: 11400000, guid: f95fecd3c84703640870657a366da511, type: 2}
       dropChance: 3
-      price: {x: 5, y: 15}
-      limit: {x: 3, y: 5}
+      price: {x: 2, y: 6}
+      limit: {x: 5, y: 7}
+      rep: {x: 1, y: 1}
     - name: Laser 2
       lootItem: {fileID: 11400000, guid: bc76ce6cd259aad4a853d94976673358, type: 2}
       dropChance: 1
-      price: {x: 5, y: 15}
-      limit: {x: 3, y: 5}
-  - itemList:
+      price: {x: 4, y: 7}
+      limit: {x: 1, y: 2}
+      rep: {x: 1, y: 3}
+  - slotUnlock: 5
+    itemList:
     - name: Magnet
       lootItem: {fileID: 11400000, guid: d55de636b0711e54687954c8fa6676f0, type: 2}
       dropChance: 4
-      price: {x: 5, y: 15}
+      price: {x: 4, y: 8}
       limit: {x: 3, y: 5}
+      rep: {x: 1, y: 2}
     - name: Accelerator
       lootItem: {fileID: 11400000, guid: 4ef1ce05d74a7174b9a1dc1049e41130, type: 2}
       dropChance: 2
-      price: {x: 5, y: 15}
+      price: {x: 4, y: 7}
       limit: {x: 3, y: 5}
-  - itemList:
+      rep: {x: 2, y: 3}
+  - slotUnlock: 6
+    itemList:
     - name: Matrix
       lootItem: {fileID: 11400000, guid: 55064a2d497ac6946890686e8769607d, type: 2}
       dropChance: 2
-      price: {x: 5, y: 15}
+      price: {x: 6, y: 7}
       limit: {x: 3, y: 5}
+      rep: {x: 1, y: 2}
     - name: Saber
       lootItem: {fileID: 11400000, guid: d00d4cd4b50aa9547a57ae0db24fa4cd, type: 2}
       dropChance: 2
-      price: {x: 5, y: 15}
-      limit: {x: 3, y: 5}
-  - itemList:
+      price: {x: 2, y: 4}
+      limit: {x: 5, y: 7}
+      rep: {x: 3, y: 4}
+  - slotUnlock: 8
+    itemList:
     - name: Scaler
       lootItem: {fileID: 11400000, guid: 0c3e8c7aa556520418db99d4ac17f78b, type: 2}
       dropChance: 3
-      price: {x: 5, y: 15}
-      limit: {x: 3, y: 5}
+      price: {x: 2, y: 6}
+      limit: {x: 5, y: 8}
+      rep: {x: 2, y: 4}
     - name: Quick Rockets
       lootItem: {fileID: 11400000, guid: 6a4c685da4946654d978b1a4f5cca231, type: 2}
       dropChance: 2
-      price: {x: 5, y: 15}
-      limit: {x: 3, y: 5}
-  - itemList:
+      price: {x: 10, y: 15}
+      limit: {x: 1, y: 2}
+      rep: {x: 3, y: 4}
+  - slotUnlock: 9
+    itemList:
     - name: Laser 3
       lootItem: {fileID: 11400000, guid: 187414193757906429e075a6a4c93829, type: 2}
       dropChance: 4
-      price: {x: 5, y: 15}
-      limit: {x: 3, y: 5}
+      price: {x: 14, y: 15}
+      limit: {x: 1, y: 2}
+      rep: {x: 2, y: 5}
     - name: Mender
       lootItem: {fileID: 11400000, guid: 6bb27783a3898934ea601fbd6d3b6689, type: 2}
       dropChance: 2
-      price: {x: 5, y: 15}
-      limit: {x: 3, y: 5}
-  - itemList:
+      price: {x: 13, y: 16}
+      limit: {x: 2, y: 3}
+      rep: {x: -1, y: 1}
+  - slotUnlock: 14
+    itemList:
     - name: Crystal Stream
       lootItem: {fileID: 11400000, guid: f9a140876750da6458b96409451f456d, type: 2}
       dropChance: 2
-      price: {x: 5, y: 15}
-      limit: {x: 3, y: 5}
+      price: {x: 18, y: 19}
+      limit: {x: 1, y: 2}
+      rep: {x: 2, y: 3}
     - name: Mini Lasers
       lootItem: {fileID: 11400000, guid: 6dac1c090a2da0545b45d6e22af1518c, type: 2}
       dropChance: 3
-      price: {x: 5, y: 15}
-      limit: {x: 3, y: 5}
+      price: {x: 17, y: 17}
+      limit: {x: 1, y: 2}
+      rep: {x: 4, y: 5}
   itemsPercentage:
   - list:
     - Lunar Gel - 42,86% - 3/4
