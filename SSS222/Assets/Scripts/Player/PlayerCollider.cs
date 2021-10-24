@@ -9,6 +9,7 @@ public class PlayerCollider : MonoBehaviour{
     public float dmgTimer;
     public string lastHitObj;
     public float lastHitDmg;
+    public List<colliTypes> collisionTypes=UniCollider.colliTypesForPl;
 
     Player player;
     void Start(){player=GetComponent<Player>();}
@@ -16,6 +17,7 @@ public class PlayerCollider : MonoBehaviour{
     if(!other.CompareTag(tag)){
             DamageDealer damageDealer=other.GetComponent<DamageDealer>();
             DamageValues damageValues=DamageValues.instance;
+            float dmg=0;
             //ifif(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
 
             if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);player.Damage(damageValues.GetDmgZone(),dmgType.silent);}
@@ -23,47 +25,30 @@ public class PlayerCollider : MonoBehaviour{
             if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){
                 bool en=true;
                 bool destroy=true;
-                float dmg=0;
-                if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)destroy=false;
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("Comet").name)){if(other.GetComponent<CometRandomProperties>()!=null){if(other.GetComponent<CometRandomProperties>().damageBySpeedSize){dmg=(float)System.Math.Round(damageValues.GetDmgComet()*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1);}else{dmg=damageValues.GetDmgComet();}}else{dmg=damageValues.GetDmgComet();}}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("Bat").name)){dmg=damageValues.GetDmgBat();}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("Soundwave").name)){dmg=damageValues.GetDmgSoundwave(); AudioManager.instance.Play("SoundwaveHit");en=false;}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("EnShip").name)){dmg=damageValues.GetDmgEnemyShip1();}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBt").name)){dmg=damageValues.GetDmgEBt();en=false;player.Hack(4);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("EnComb").name)){destroy=false;}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=damageValues.GetDmgEnSaber();en=false;}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("Goblin").name)){dmg=damageValues.GetDmgGoblin();}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("HDrone").name)){dmg=damageValues.GetDmgHealDrone();}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("Vortex").name)){dmg=damageValues.GetDmgVortex();}
-                if(other.gameObject.name.Contains("StickBomb")){dmg=0;en=false;destroy=false;}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("Stinger").name)){dmg=damageValues.GetDmgStinger(); player.Weaken(damageValues.GetEfxStinger().x,damageValues.GetEfxStinger().y);}
-                //if(other.gameObject.name.Contains(GameAssets.instance.Get("Leech").name)){destroy=false;}
-                //if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)||other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){destroy=false;}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("GoblinBt").name)){dmg=damageValues.GetDmgGoblinBt(); /*player.Blind(3,2);*/player.Fragile(damageValues.GetEfxGoblinBt().x,damageValues.GetEfxGoblinBt().y); player.Hack(damageValues.GetEfxGoblinBt().x*0.9f); AudioManager.instance.Play("GoblinBtHit");en=false;}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("GlareDevil").name)){dmg=damageValues.GetDmgGoblin(); player.Fragile(damageValues.GetEfxGlareDev().x,damageValues.GetEfxGlareDev().y); player.Weaken(damageValues.GetEfxGlareDev().x,damageValues.GetEfxGlareDev().y);}
+                dmg=UniCollider.TriggerEnter(other,transform,collisionTypes)[0];
+                if(UniCollider.TriggerEnter(other,transform,collisionTypes)[1]==0)destroy=false;
+                if(UniCollider.TriggerEnter(other,transform,collisionTypes)[2]==0)en=false;
+
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){
                     if(player.dashing==false){
                         if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);}
                         //else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
                         if(destroy==true){
-                            if(en!=true){Destroy(other.gameObject, 0.05f);}
-                            else{other.GetComponent<Enemy>().giveScore=false; other.GetComponent<Enemy>().health=-1; other.GetComponent<Enemy>().Die();}
+                            if(en!=true){Destroy(other.gameObject,0.05f);}
+                            else{other.GetComponent<Enemy>().giveScore=false;other.GetComponent<Enemy>().health=-1;other.GetComponent<Enemy>().Die();}
                         }
-                        GameAssets.instance.VFX("FlareHit", new Vector2(other.transform.position.x, transform.position.y + 0.5f),0.3f);
+                        GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,transform.position.y+0.5f),0.3f);
                     }
                     else if(player.shadow==true&&player.dashing==true){
                         //if(destroy == true){
-                        if(en!=true){Destroy(other.gameObject, 0.05f);}
-                        else{other.GetComponent<Enemy>().health=-1; other.GetComponent<Enemy>().Die();}
+                        if(en!=true){Destroy(other.gameObject,0.05f);}
+                        else{other.GetComponent<Enemy>().health=-1;other.GetComponent<Enemy>().Die();}
                         //}else{}
                    }
                 }else{
                     if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);}
                     //else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
                 }
-                var name=other.gameObject.name.Split('(')[0];lastHitObj=name;lastHitDmg=dmg;
-                if(GameSession.instance.dmgPopups==true&&dmg!=0&&!player.gclover&&!player.dashing){GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPlayerColor),2,true);}
-                //DMGPopUpHud(dmg);
             }
             #endregion
             #region//Powerups
@@ -192,6 +177,8 @@ public class PlayerCollider : MonoBehaviour{
                 Destroy(other.gameObject, 0.05f);
             }
             #endregion
+            if(dmg!=0&&!player.gclover){var name=other.gameObject.name.Split('(')[0];lastHitObj=name;lastHitDmg=dmg;}
+            UniCollider.DMG_VFX(2,other,transform,dmg);
     }
     }
     public void PowerupCollect(string name){
@@ -208,31 +195,22 @@ public class PlayerCollider : MonoBehaviour{
     void AmmoAdd(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
     void AmmoAddDupl(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
     private void OnTriggerStay2D(Collider2D other){
-    if(!other.CompareTag(tag)){
-    if(dmgTimer<=0){
-            DamageDealer damageDealer=other.GetComponent<DamageDealer>();
-            DamageValues damageValues=DamageValues.instance;
-            //if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
-            //bool en=false;
-            float dmg=0;
-            if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=damageValues.GetDmgZone();}
-        if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Leech").name)){dmg=damageValues.GetDmgLeech(); AudioManager.instance.Play("LeechBite");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){dmg=damageValues.GetDmgHLaser();}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){dmg=damageValues.GetDmgVLaser();}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=damageValues.GetDmgEnSaber();}
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)){dmg=-damageValues.GetDmgBlueFlame();}
-            if(other.gameObject.name.Contains("StickBomb")){dmg=0;}
-        }
-        if(GameSession.instance.dmgPopups==true&&dmg>0&&!player.gclover&&!player.dashing){GameCanvas.instance.DMGPopup(dmg,other.transform.position,Color.red,2,true);}
-        else if(dmg<0){GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1.5f,true);}
+    if(!other.CompareTag(tag)){if(dmgTimer<=0){
+        DamageDealer damageDealer=other.GetComponent<DamageDealer>();
+        DamageValues damageValues=DamageValues.instance;
+        //if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
+        float dmg=UniCollider.TriggerStay(other,transform,collisionTypes);
+        if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=damageValues.GetDmgZone();}
+        //if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){
+            
+        //}
+        UniCollider.DMG_VFX(3,other,transform,dmg);
         if(dmg>0)player.Damage(dmg,dmgType.silent);
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;
-    }else{dmgTimer-=Time.deltaTime;}
-    }
+    }else{dmgTimer-=Time.deltaTime;}}
     }
     private void OnTriggerExit2D(Collider2D other){
-        if(other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyBullet")){if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;}
+        if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;}
         //GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
         //dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
    }

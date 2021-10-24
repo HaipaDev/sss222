@@ -828,9 +828,10 @@ public class Player : MonoBehaviour{
                 if(losePwrupOutOfEn)powerup=powerupDefault;
                 }
             }
-            if(go!=null){if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(go.transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
+            //Dissapear when near Cargo
+            /*if(go!=null){if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(go.transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
                 go.SetActive(false);}else{go.SetActive(true);}
-            }
+            }*/
         }
     DestroyHeldWeapons();
     }

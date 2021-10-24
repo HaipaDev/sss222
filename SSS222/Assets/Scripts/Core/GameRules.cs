@@ -130,14 +130,15 @@ public static GameRules instance;
 #endregion
 #region//Damage Values
 [Header("Damage Values")]
-    public float dmg=5;
     public float dmgZone=2;
     public float dmgLaser=5f;
     public float dmgPhaser=0.5f;
     public float dmgHRocket=13.5f;
     public float dmgMiniLaser=0.32f;
     public float dmgLSaber=0.86f;
+    public float dmgLSaberIni=7.77f;
     public float dmgLClaws=7f;
+    public float dmgLClawsTouch=0.23f;
     public float dmgShadowBT=40.5f;
     public float dmgQRocket=14.5f;
     public float dmgPRocket=0f;
@@ -167,8 +168,12 @@ public static GameRules instance;
 #region//Shop
 [Header("Shop")]
     public List<LootTableEntryShop> shopList;
+    public float cargoSpeed=2;
+    public float cargoHealth=44;
+    [SerializeField] public int[] repMinusCargoHit=new int[3]{1,2,4};
+    [SerializeField] public int repMinusCargoKill=7;
     public bool repEnabled=true;
-     public const int repLength=4;
+    public const int repLength=4;
     public int[] reputationThresh=new int[repLength];
     public bool shopTimeLimitEnabled=true;
     public float shopTimeLimit=10;

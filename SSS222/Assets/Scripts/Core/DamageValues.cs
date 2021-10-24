@@ -14,7 +14,6 @@ public enum dmgType{
 }
 public class DamageValues : MonoBehaviour{
     public static DamageValues instance;
-    float dmg = 5;
     float dmgFlame = 1;
     float dmgZone = 2;
     float dmgLaser = 5f;
@@ -22,7 +21,9 @@ public class DamageValues : MonoBehaviour{
     float dmgHRocket = 13.5f;
     float dmgMiniLaser = 0.32f;
     float dmgLSaber = 0.86f;
+    float dmgLSaberIni = 7.77f;
     float dmgLClaws = 7f;
+    float dmgLClawsTouch = 0.23f;
     float dmgShadowBT = 40.5f;
     float dmgQRocket = 14.5f;
     float dmgPRocket = 0f;
@@ -59,7 +60,6 @@ public IEnumerator SetValues(){
 yield return new WaitForSeconds(0.08f);
 var i=GameRules.instance;
 if(i!=null){
-    dmg=i.dmg;
     //dmgFlame=i.dmgFlame;
     dmgZone=i.dmgZone;
     dmgLaser=i.dmgLaser;
@@ -67,7 +67,9 @@ if(i!=null){
     dmgHRocket=i.dmgHRocket;
     dmgMiniLaser=i.dmgMiniLaser;
     dmgLSaber=i.dmgLSaber;
+    dmgLSaberIni=i.dmgLSaberIni;
     dmgLClaws=i.dmgLClaws;
+    dmgLClawsTouch=i.dmgLClawsTouch;
     dmgShadowBT=i.dmgShadowBT;
     dmgQRocket=i.dmgQRocket;
     dmgPRocket=i.dmgPRocket;
@@ -97,7 +99,6 @@ if(i!=null){
 }
 #endregion
 #region//Get Functions
-    public float GetDmg(){return dmg;}
     public float GetDmgFlame(){return dmgFlame;}
     public float GetDmgZone(){return dmgZone;}
 
@@ -106,7 +107,9 @@ if(i!=null){
     public float GetDmgHRocket(){return dmgHRocket;}
     public float GetDmgMiniLaser(){return dmgMiniLaser;}
     public float GetDmgLSaber(){return dmgLSaber;}
+    public float GetDmgLSaberIni(){return dmgLSaberIni;}
     public float GetDmgLClaws(){return dmgLClaws;}
+    public float GetDmgLClawsTouch(){return dmgLClawsTouch;}
     public float GetDmgShadowBT(){return dmgShadowBT;}
     public float GetDmgQRocket(){return dmgQRocket;}
     public float GetDmgPRocket(){return dmgPRocket;}

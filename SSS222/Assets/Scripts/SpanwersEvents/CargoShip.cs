@@ -3,35 +3,77 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CargoShip : MonoBehaviour{
-    dir cargoDirSpawn=dir.up;
-    [SerializeField] public int repMinus=2;
+    dir cargoDirSpawn=dir.down;
     [SerializeField] float speed=2;
-    public bool tagged;
+    [SerializeField] float healthStart=44;
+    public float health;
+    [SerializeField] public int[] repMinusHit=new int[3]{1,2,4};
+    [SerializeField] public int repMinusKill=7;
     public bool visited;
-    void Start(){
-        //GetComponent<Rigidbody2D>().velocity=new Vector2(0,-speed);
-        transform.GetChild(0).gameObject.SetActive(false);
+    bool[] tagged=new bool[3];
+    void Awake(){
+        //Set values
+        var i=GameRules.instance;
+        speed=i.cargoSpeed;
+        healthStart=i.cargoHealth;
+        health=healthStart;
+        repMinusHit=i.repMinusCargoHit;
+        repMinusKill=i.repMinusCargoKill;
     }
-    private void OnTriggerEnter2D(Collider2D other) {
+    void Start(){
+        TurnShieldOn();
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other){
         if(other.CompareTag("Player")&&visited==false){
             Shop.shopOpen=true;
             visited=true;
-            tagged=true;
             //GetComponentInChildren<TMPro.TextMeshProUGUI>().gameObject.SetActive(false);
             transform.GetChild(0).gameObject.SetActive(true);
-        }if(other.CompareTag("PlayerWeapons")&&other.GetComponent<HealthLeech>()==null){
-            Destroy(other.gameObject);
-            if(tagged==false){Shop.instance.RepChange(repMinus,false);tagged=true;AudioManager.instance.Play("CargoHit");transform.GetChild(0).gameObject.SetActive(true);}
+        }
+        if(other.CompareTag("PlayerWeapons")&&other.GetComponent<HealthLeech>()==null){
+            float dmg=UniCollider.TriggerEnter(other,transform,new List<colliTypes>(){colliTypes.playerWeapons})[0];
+            if(dmg!=0){
+                health-=dmg;
+            }
+
+            UniCollider.DMG_VFX(0,other,transform,dmg,ColorInt32.dmgPlayerColor);
         }else if(other.GetComponent<HealthLeech>()!=null){
-            if(tagged==false){Shop.instance.reputation+=3;tagged=true;}
+            Shop.instance.reputation+=1;
         }
         if(other.GetComponent<Shredder>()!=null){Destroy(gameObject);}
     }
-    private void OnDestroy() {
+    void Update(){
+        if(health>=healthStart/2&&health!=healthStart){if(tagged[0]==false){Shop.instance.RepChange(repMinusHit[0],false);tagged[0]=true;}}
+        else if(health<=healthStart/2){if(tagged[1]==false){Shop.instance.RepChange(repMinusHit[1],false);tagged[1]=true;}}
+        else if(health<=healthStart/3){TurnShieldOff();if(tagged[2]==false){Shop.instance.RepChange(repMinusHit[2],false);tagged[2]=true;}}
+
+        if(health<=0){
+            AudioManager.instance.Play("Explosion");
+            GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);
+            Shake.instance.CamShake(2,1);
+            Destroy(gameObject,0.01f);
+            GameAssets.instance.MakeSpread("CoinB",transform.position,5);
+            Shop.instance.RepChange(repMinusKill,false);
+        }
+    }
+    private void OnDestroy(){
         if(visited==false&&Shop.instance.subbed==false){
             Shop.instance.purchasedNotTimes++;
             Shop.instance.subbed=true;
         }
+    }
+
+    void TurnShieldOn(){
+        if(transform.GetChild(0).gameObject.activeSelf==false){
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
+    void TurnShieldOff(){
+        //if(transform.GetChild(0).gameObject.activeSelf==true){
+            AudioManager.instance.Play("CargoHit");
+            transform.GetChild(0).gameObject.SetActive(false);
+        //}
     }
     public void SetCargoSpawnDir(dir dir){StartCoroutine(SetCargoSpawnDirI(dir));}
     IEnumerator SetCargoSpawnDirI(dir dir){

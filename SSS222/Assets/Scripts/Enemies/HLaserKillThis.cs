@@ -10,15 +10,7 @@ public class HLaserKillThis : MonoBehaviour{
     private void OnTriggerExit2D(Collider2D other){StopCoroutine(KillDelay());}
     IEnumerator KillDelay(){
         yield return new WaitForSeconds(delay);
-        if(GetComponent<CargoShip>()!=null){
-            GameAssets.instance.MakeSpread("CoinB",transform.position,5);
-            /*LaunchRadialBullets bt=gameObject.AddComponent(typeof(LaunchRadialBullets)) as LaunchRadialBullets;
-            bt.SetProjectile(cargoDrop);//GameObject.Find("Coin"));
-            bt.Shoot();*/
-            GameAssets.instance.VFX("Explosion",transform.position,0.33f);
-            yield return new WaitForSeconds(0.05f);
-        }
-        Destroy(gameObject);
+        if(GetComponent<CargoShip>()!=null){GetComponent<CargoShip>().health=0;}else{Destroy(gameObject);}
     }
     /*IEnumerator Cargo(){
         yield return new WaitForSeconds(1f);

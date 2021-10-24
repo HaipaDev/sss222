@@ -188,7 +188,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0b3799fea0fbb05449df1c7bbe3285db, type: 3}
-  m_Color: {r: 0.25044498, g: 0.65348816, b: 0.7924528, a: 0.57254905}
+  m_Color: {r: 0.2688679, g: 1, b: 0.86562854, a: 0.57254905}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: -2754935484836143089}
   - component: {fileID: 502397296}
   - component: {fileID: 4979044037410903986}
+  - component: {fileID: -4351724222208693977}
   m_Layer: 0
   m_Name: CargoShip
   m_TagString: Untagged
@@ -578,9 +579,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17745d9ff10b56440b75559896f954e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  repMinus: 2
   speed: 2
-  tagged: 0
+  healthStart: 44
+  health: 0
+  repMinusHit: 010000000200000004000000
+  repMinusKill: 7
   visited: 0
 --- !u!114 &-2754935484836143089
 MonoBehaviour:
@@ -594,8 +597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cargoDrop: {fileID: 1056705403108089519, guid: eebb358fa9ff6af419cd68bd020a4289,
-    type: 3}
   delay: 1
 --- !u!114 &502397296
 MonoBehaviour:
@@ -637,6 +638,18 @@ MonoBehaviour:
   stayStill: 1
   angle: 0
   BFlame: {fileID: 0}
+--- !u!114 &-4351724222208693977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4546529352650547393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8300030818994398507
 GameObject:
   m_ObjectHideFlags: 0
