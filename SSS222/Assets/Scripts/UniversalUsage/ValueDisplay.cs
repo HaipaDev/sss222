@@ -29,7 +29,7 @@ public class ValueDisplay : MonoBehaviour{
         }
         if(Player.instance!=null){
         if(value=="hpOffMax"){
-            if(GameSession.instance.gameModeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e => e.cfgName.Contains("Classic"))||Player.instance.health<=5){
+            if(GameSession.instance.CheckGameModeSelected("Classic")||Player.instance.health<=5){
                 txt.text=System.Math.Round(Player.instance.health,1).ToString()+"/"+Player.instance.maxHP.ToString();}//Round to .1
             else txt.text=Mathf.RoundToInt(Player.instance.health).ToString()+"/"+Player.instance.maxHP.ToString();
         }

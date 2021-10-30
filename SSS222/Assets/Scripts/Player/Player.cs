@@ -190,7 +190,7 @@ public class Player : MonoBehaviour{
 #endregion
 #region //Other
     [Header("Others")]
-    MeshRenderer bgSprite;
+    Renderer bgSprite;
     const float flareShootYY = 0.2f;
     int moveDir = 1;
     const float DCLICK_TIME = 0.2f;
@@ -253,7 +253,7 @@ public class Player : MonoBehaviour{
 #endregion
 #endregion
     private void Awake(){instance=this;StartCoroutine(SetGameRuleValues());}
-    void Start(){
+    IEnumerator Start(){
         if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
         
         rb=GetComponent<Rigidbody2D>();
@@ -265,7 +265,19 @@ public class Player : MonoBehaviour{
         moveXwas=moveX;
         moveYwas=moveY;
 
-        bgSprite=GameObject.Find("BG ColorM").GetComponent<MeshRenderer>();
+        bgSprite=GameObject.Find("BG ColorM").GetComponent<Renderer>();
+
+        yield return new WaitForSeconds(0.06f);
+
+        var u=UpgradeMenu.instance;
+        if(GameSession.instance.CheckGameModeSelected("Adventure")){
+            if(u!=null){
+                maxHP+=(Mathf.Clamp(u.maxHealth_UpgradesLvl-1,0,999)*(u.maxHealth_UpgradesCountMax*u.maxHealth_UpgradeAmnt))+(u.maxHealth_UpgradeAmnt*u.maxHealth_UpgradesCount);/*if(u.total_UpgradesLvl>0)*/health=maxHP;
+                maxEnergy+=(Mathf.Clamp(u.maxEnergy_UpgradesLvl-1,0,999)*(u.maxEnergy_UpgradesCountMax*u.maxEnergy_UpgradeAmnt))+(u.maxEnergy_UpgradeAmnt*u.maxEnergy_UpgradesCount);if(u.total_UpgradesLvl>0)energy=maxEnergy;
+            }else{Debug.LogError("UpgradeMenu not found");}
+        }else if(GameSession.instance.CheckGameModeSelected("Hardcore")){
+            GetComponent<AudioSource>().enabled=true;
+        }
         //inputMaster.Player.Shoot.performed += _ => Shoot();
         //if(!speeded&&!slowed){speedPrev=moveSpeedInit;}
     }
@@ -348,16 +360,10 @@ public class Player : MonoBehaviour{
 
         crystalGet=i.crystalGet;
         crystalBGet=i.crystalBGet;
+    }
 
         yield return new WaitForSecondsRealtime(0.06f);
-        var u=UpgradeMenu.instance;
-        if(GameSession.instance.gameModeSelected==0){
-        if(u!=null){
-            maxHP+=(Mathf.Clamp(u.maxHealth_UpgradesLvl-1,0,999)*(u.maxHealth_UpgradesCountMax*u.maxHealth_UpgradeAmnt))+(u.maxHealth_UpgradeAmnt*u.maxHealth_UpgradesCount);/*if(u.total_UpgradesLvl>0)*/health=maxHP;
-            maxEnergy+=(Mathf.Clamp(u.maxEnergy_UpgradesLvl-1,0,999)*(u.maxEnergy_UpgradesCountMax*u.maxEnergy_UpgradeAmnt))+(u.maxEnergy_UpgradeAmnt*u.maxEnergy_UpgradesCount);if(u.total_UpgradesLvl>0)energy=maxEnergy;
-        }else{Debug.LogError("UpgradeMenu not found");}
-        }
-    }
+        
         moveSpeed=moveSpeedInit;
         moveSpeedCurrent=moveSpeed;
         speedPrev[0]=moveSpeed;
@@ -414,7 +420,24 @@ public class Player : MonoBehaviour{
         else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
 
         if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
-        if(GameRules.instance.upgradesOn&&UpgradeMenu.instance!=null&&GetComponent<BackflameEffect>()!=null){if(UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&transform.GetChild(0).name.Contains("Dmg")){GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame");}}
+        
+        if(GameRules.instance.upgradesOn&&UpgradeMenu.instance!=null&&GetComponent<BackflameEffect>()!=null){
+            //Blue Flame for Hardcore
+            if(GameSession.instance.CheckGameModeSelected("Hardcore")){
+                if((UpgradeMenu.instance.total_UpgradesLvl<bflameDmgTillLvl||bflameDmgTillLvl<=0)&&!transform.GetChild(0).name.Contains("Blue")){
+                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame_BluePlayer");
+                }
+                //Reverse: dmg from Lvl
+                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0&&!transform.GetChild(0).name.Contains("Dmg"))){
+                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlameDMG_BluePlayer");
+                    fuelDrainAmnt*=2;
+                }
+            }else{//Revert to default flame when Level above
+                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&transform.GetChild(0)==null||(transform.GetChild(0)!=null&&transform.GetChild(0).name.Contains("Dmg"))){
+                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame");
+                }
+            }
+        }
 
         if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
     }

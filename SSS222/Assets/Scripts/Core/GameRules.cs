@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -239,12 +240,16 @@ public static GameRules instance;
 #endregion
 #endregion
 #region//Voids
-    void Awake(){
-        SetupSingleton();
-    }
+    void Awake(){SetupSingleton();}
     void SetupSingleton(){
         if(FindObjectsOfType<GameRules>().Length>1||!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
         else{DontDestroyOnLoad(gameObject);instance=this;}
+    }
+    IEnumerator Start(){
+        //Set gameModeSelected if artificially turned on gamemode etc
+        yield return new WaitForSecondsRealtime(0.05f);
+        if(!GameSession.instance.CheckGameModeSelected(cfgName)){
+            GameSession.instance.SetGameModeSelectedStr(cfgName);}
     }
     Player p=Player.instance;
     void Update(){

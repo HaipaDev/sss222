@@ -352,6 +352,8 @@ MonoBehaviour:
   joystick: {fileID: 0}
   moving: 0
   tpPos: {x: 0, y: 0}
+  collidedId: 0
+  collidedIdChangeTime: 0
   dragStartPos: {x: 0, y: 0}
 --- !u!114 &1949430517914965929
 MonoBehaviour:
@@ -443,7 +445,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 9702fbb395c910b449526048800ee86e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.17
+  m_Volume: 0.07
   m_Pitch: 1
   Loop: 1
   Mute: 0

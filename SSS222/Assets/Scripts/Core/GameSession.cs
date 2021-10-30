@@ -272,7 +272,7 @@ public class GameSession : MonoBehaviour{
     }
     public void SaveHighscore(){
         if(score>SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]){SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]=score;}
-        if(GameSession.instance.gameModeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e => e.cfgName.Contains("Adventure"))){StartCoroutine(SaveAdventureI());}
+        if(CheckGameModeSelected("Adventure")){StartCoroutine(SaveAdventureI());}
     }
     IEnumerator SaveAdventureI(){
         yield return new WaitForSecondsRealtime(0.02f);
@@ -427,6 +427,8 @@ public class GameSession : MonoBehaviour{
         return Mathf.RoundToInt(gameSessionTime);
     }
     public void SetGameModeSelected(int i){gameModeSelected=i;}
+    public void SetGameModeSelectedStr(string name){gameModeSelected=Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
+    public bool CheckGameModeSelected(string name){if(gameModeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))){return true;}else{return false;}}
     public void SetCheatmode(){if(!cheatmode){cheatmode=true;return;}else{cheatmode=false;return;}}
 }
 public enum dir{up,down,left,right}

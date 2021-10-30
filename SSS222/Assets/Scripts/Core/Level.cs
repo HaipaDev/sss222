@@ -43,15 +43,16 @@ public class Level : MonoBehaviour{
         GameSession.instance.ResetMusicPitch();
         SceneManager.LoadScene("Menu");
         if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
+        /*GameSession.instance.SetGameModeSelected(0);*/
     }
     public void LoadGameScene(){
         SceneManager.LoadScene("Game");
         if(DamageValues.instance!=null)DamageValues.instance.StartCoroutine(DamageValues.instance.SetValues());
-        if(GameSession.instance.gameModeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e => e.cfgName.Contains("Adventure"))){SaveSerial.instance.LoadAdventure();GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
+        if(GameSession.instance.CheckGameModeSelected("Adventure")){SaveSerial.instance.LoadAdventure();GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
         else{GameSession.instance.ResetScore();}
         GameSession.instance.gameSpeed=1f;
     }
-    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");}
+    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");/*GameSession.instance.SetGameModeSelected(0);*/}
     public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}
     public void LoadGameModeInfoSceneSet(int i){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGameModeSelected(i);}
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
