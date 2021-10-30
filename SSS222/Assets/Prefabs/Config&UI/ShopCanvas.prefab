@@ -33,7 +33,7 @@ RectTransform:
   - {fileID: 6298986274213004259}
   - {fileID: 8336648191880702715}
   m_Father: {fileID: 3679422391047689950}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -61,6 +61,7 @@ MonoBehaviour:
   - {fileID: 8144562277117598384, guid: b5459cb553ab74f4ab527ea0fc97da17, type: 3}
   - {fileID: 8144562277117598384, guid: 89446209cd4c74d45a7773fea567a338, type: 3}
   ID: 1
+  IDmax: 7
   valueName: reputationSlot
   shop: 1
   current: {fileID: 0}
@@ -295,16 +296,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2860698425454378754}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0000119, y: 1.0000119, z: 1.0000119}
   m_Children: []
-  m_Father: {fileID: 7302103004387449330}
-  m_RootOrder: 0
+  m_Father: {fileID: 3679422391047689950}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21, y: 83}
+  m_AnchoredPosition: {x: 21.000242, y: 846.0009}
   m_SizeDelta: {x: 817.4, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2229789927322726636
@@ -526,6 +527,7 @@ RectTransform:
   m_Children:
   - {fileID: 262546149074920136}
   - {fileID: 1096598027616375818}
+  - {fileID: 4606163358898249543}
   - {fileID: 7302103004387449330}
   - {fileID: 3644888674375740416}
   - {fileID: 2598520816188095585}
@@ -694,7 +696,6 @@ MonoBehaviour:
   slotsContainer: {fileID: 4396388954008070026}
   slotPrefab: {fileID: 4955086252991357872, guid: f7f563039b7d3b44d860e2dfc4fd692d,
     type: 3}
-  slotUnlock: 020000000300000004000000050000000600000009000000
   shopTimeMax: 10
   currentSlotID: 0
   purchases: 0
@@ -706,8 +707,9 @@ MonoBehaviour:
   reputationSlot: 0
   sum: 0
   shopTimer: -4
-  lootTable: {fileID: 1227156221995543344}
   purchaseTimer: -4
+  lootTable: {fileID: 1227156221995543344}
+  currentSlotsList: []
   pco:
     id: 0
   references:
@@ -865,7 +867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7302103004387449330
 RectTransform:
   m_ObjectHideFlags: 0
@@ -877,10 +879,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000119, y: 1.0000119, z: 1.0000119}
   m_Children:
-  - {fileID: 4606163358898249543}
   - {fileID: 8361806240746391978}
   m_Father: {fileID: 3679422391047689950}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -908,6 +909,7 @@ MonoBehaviour:
   - {fileID: 8144562277117598384, guid: b5459cb553ab74f4ab527ea0fc97da17, type: 3}
   - {fileID: 8144562277117598384, guid: 89446209cd4c74d45a7773fea567a338, type: 3}
   ID: 1
+  IDmax: 7
   valueName: reputationSlot
   shop: 1
   current: {fileID: 8361806240746391981}
@@ -1135,7 +1137,7 @@ RectTransform:
   m_Children:
   - {fileID: 1909945321452097964}
   m_Father: {fileID: 3679422391047689950}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2090,7 +2092,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6901660595455312042}
   m_HandleRect: {fileID: 330221192202664180}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2131,7 +2133,7 @@ PrefabInstance:
     - target: {fileID: 8144562277117598391, guid: 10c3b40b5d5b06445a55453c02d117f3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8144562277117598391, guid: 10c3b40b5d5b06445a55453c02d117f3,
         type: 3}

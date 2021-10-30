@@ -276,7 +276,10 @@ public class Player : MonoBehaviour{
                 maxEnergy+=(Mathf.Clamp(u.maxEnergy_UpgradesLvl-1,0,999)*(u.maxEnergy_UpgradesCountMax*u.maxEnergy_UpgradeAmnt))+(u.maxEnergy_UpgradeAmnt*u.maxEnergy_UpgradesCount);if(u.total_UpgradesLvl>0)energy=maxEnergy;
             }else{Debug.LogError("UpgradeMenu not found");}
         }else if(GameSession.instance.CheckGameModeSelected("Hardcore")){
+            GetComponent<AudioSource>().playOnAwake=true;
+            GetComponent<AudioSource>().loop=true;
             GetComponent<AudioSource>().enabled=true;
+            GetComponent<AudioSource>().Play();
         }
         //inputMaster.Player.Shoot.performed += _ => Shoot();
         //if(!speeded&&!slowed){speedPrev=moveSpeedInit;}
@@ -388,13 +391,13 @@ public class Player : MonoBehaviour{
         CountTimeMovementPressed();
         if((frozen!=true&&(!fuelOn||(fuelOn&&energy>0)))&&!GameSession.GlobalTimeIsPaused){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
-            if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}}
+            if(transform.childCount>0){if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}}
             if(inputType!=InputType.mouse&&inputType!=InputType.drag){MovePlayer();}
             else if(inputType==InputType.drag){MoveWithDrag();}
             else{MoveWithMouse();}
         }else{
             if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
-            if(transform.GetChild(0)!=null){if(transform.GetChild(0).gameObject.activeSelf==true){transform.GetChild(0).gameObject.SetActive(false);}}
+            if(transform.childCount>0){if(transform.GetChild(0).gameObject.activeSelf==true){transform.GetChild(0).gameObject.SetActive(false);}}
         }
         if(shootTimer>0)shootTimer -= Time.deltaTime;
         if(instantiateTimer>0)instantiateTimer-=Time.deltaTime;
@@ -428,12 +431,12 @@ public class Player : MonoBehaviour{
                     GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame_BluePlayer");
                 }
                 //Reverse: dmg from Lvl
-                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0&&!transform.GetChild(0).name.Contains("Dmg"))){
+                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&!transform.GetChild(0).name.Contains("Dmg")){
                     GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlameDMG_BluePlayer");
                     fuelDrainAmnt*=2;
                 }
             }else{//Revert to default flame when Level above
-                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&transform.GetChild(0)==null||(transform.GetChild(0)!=null&&transform.GetChild(0).name.Contains("Dmg"))){
+                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&transform.GetChild(0).name.Contains("Dmg")){
                     GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame");
                 }
             }

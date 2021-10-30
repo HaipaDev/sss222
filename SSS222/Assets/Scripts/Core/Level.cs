@@ -42,7 +42,7 @@ public class Level : MonoBehaviour{
         if(GameSession.instance.cheatmode)SaveSerial.instance.SaveLogin();//Only save login when cheatmode on
         GameSession.instance.ResetMusicPitch();
         SceneManager.LoadScene("Menu");
-        if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
+        if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.defaultGameSpeed=1f;GameSession.instance.gameSpeed=1f;}
         /*GameSession.instance.SetGameModeSelected(0);*/
     }
     public void LoadGameScene(){

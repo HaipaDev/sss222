@@ -15,8 +15,8 @@ public class BGManager : MonoBehaviour{
         else{SetColorMat(defMat);}
     }
     public void SetColorMat(Material mat){
-        foreach (Transform t in transform.GetComponentsInChildren<Transform>()){
-            if(t.GetComponent<Tag_BGColor>()!=null){t.GetComponent<Renderer>().material=mat;}
-        }
+        foreach(Tag_BGColor t in transform.GetComponentsInChildren<Tag_BGColor>()){ 
+            t.GetComponent<Renderer>().material=mat; 
+        } 
     }
 }

@@ -197,7 +197,7 @@ public class GameSession : MonoBehaviour{
             }
         }
         if(Player.instance!=null&&Player.instance.inverter==false){
-            foreach(AudioSource sound in FindObjectsOfType<AudioSource>()){
+            foreach(AudioSource sound in AudioManager.instance.GetComponents(typeof(AudioSource))){
                 if(sound!=null){
                     GameObject snd=sound.gameObject;
                     //if(sound!=musicPlayer){
