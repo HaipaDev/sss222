@@ -380,8 +380,10 @@ public class GameSession : MonoBehaviour{
         if(Input.GetKey(KeyCode.Delete) || fkey=="Del"){
             if(Input.GetKeyDown(KeyCode.Alpha0) || nkey=="0"){
                 cheatmode=true;
+                AudioManager.instance.Play("LvlUp");
             }if(Input.GetKeyDown(KeyCode.Alpha9) || nkey=="9"){
                 cheatmode=false;
+                AudioManager.instance.Play("Death");
             }
         }
         if(cheatmode==true){

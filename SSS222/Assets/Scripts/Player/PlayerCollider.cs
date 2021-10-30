@@ -12,12 +12,13 @@ public class PlayerCollider : MonoBehaviour{
     public List<colliTypes> collisionTypes=UniCollider.colliTypesForPl;
 
     Player player;
-    void Start(){player=GetComponent<Player>();}
+    void Start(){player=Player.instance;}
     private void OnTriggerEnter2D(Collider2D other){
-    if(!other.CompareTag(tag)){
+    if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
             DamageDealer damageDealer=other.GetComponent<DamageDealer>();
             DamageValues damageValues=DamageValues.instance;
             float dmg=0;
+            if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
             //ifif(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
 
             if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);player.Damage(damageValues.GetDmgZone(),dmgType.silent);}
@@ -65,13 +66,17 @@ public class PlayerCollider : MonoBehaviour{
                     GameSession.instance.AddXP(GameSession.instance.xp_powerup);//XP For powerups
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("MicroMedkit").name)){player.hpAbsorpAmnt+=player.microMedkitHpAmnt;}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)||other.gameObject.name.Contains(GameAssets.instance.Get("ArmorCPwrup").name)){
-                    if(player.health==player.maxHP){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)){
+                    if(player.health>=player.maxHP){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}
                     else if(player.health!=player.maxHP&&player.health>(player.maxHP-player.medkitHpAmnt)){
                         int val=Mathf.RoundToInt(player.medkitHpAmnt-(player.maxHP-player.health));
                         if(val>0)GameSession.instance.AddToScoreNoEV(val);}
                     HPAdd(player.medkitHpAmnt);
                     player.AddSubEnergy(player.medkitEnergyGet,true);
+                }
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorCPwrup").name)){
+                    if(player.health>=player.maxHP){GameSession.instance.AddToScoreNoEV(25);}
+                    else{HPAdd(player.medkitHpAmnt);}
                 }
                 void HPAdd(float hp){player.Damage(hp,dmgType.heal);}
                 
@@ -104,11 +109,15 @@ public class PlayerCollider : MonoBehaviour{
                     player.energy=player.maxEnergy;
                     GameAssets.instance.VFX("GCloverOutVFX", Vector2.zero,1f);
                 }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowPwrup").name)){
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowPwrup").name)||other.gameObject.name.Contains(GameAssets.instance.Get("ShadowtracesPwrup").name)){
+                    if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowtracesPwrup").name)){
+                        if(!player.shadow){player.SetSpeedPrev();player.moveSpeedCurrent*=1.3f;}
+                    }
                     if(player.energy<=player.enForPwrupRefill){player.AddSubEnergy(player.pwrupEnergyGet,true);}
                     if(player.shadow==true){EnergyAddDupl();}
                     player.SetStatus("shadow");
                     player.shadowed=true;
+                    
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("AssassinPwrup").name)){
                     if(player.energy<=player.enForPwrupRefill){player.AddSubEnergy(player.pwrupEnergyGet,true);}
@@ -195,10 +204,11 @@ public class PlayerCollider : MonoBehaviour{
     void AmmoAdd(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
     void AmmoAddDupl(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
     private void OnTriggerStay2D(Collider2D other){
-    if(!other.CompareTag(tag)){if(dmgTimer<=0){
+    if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){if(dmgTimer<=0){
         DamageDealer damageDealer=other.GetComponent<DamageDealer>();
         DamageValues damageValues=DamageValues.instance;
         //if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
+        if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
         float dmg=UniCollider.TriggerStay(other,transform,collisionTypes);
         if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=damageValues.GetDmgZone();}
         //if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){

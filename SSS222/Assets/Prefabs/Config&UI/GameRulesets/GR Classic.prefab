@@ -229,6 +229,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: dashingEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: energyOnPlayer
       value: 0
       objectReference: {fileID: 0}
@@ -781,7 +786,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pwrupStatusList.Array.data[3].lootItem
       value: 
-      objectReference: {fileID: 11400000, guid: 9b409de821cfef24e850bac7ad821f16,
+      objectReference: {fileID: 11400000, guid: b3cb68140e7d4124187260b08c942a17,
         type: 2}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

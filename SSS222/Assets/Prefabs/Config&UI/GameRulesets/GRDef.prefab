@@ -56,7 +56,7 @@ MonoBehaviour:
   shopScoreMaxE: 350
   scoreMulti: 1
   luckMulti: 1
-  startingPosPlayer: {x: 0.36, y: -6.24}
+  startingPosPlayer: {x: 0, y: -6.24}
   autoShootPlayer: 0
   moveX: 1
   moveY: 1
@@ -104,6 +104,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 873e180e33e72a84a95efe650b9264be, type: 2}
   flipTime: 7
   gcloverTime: 6
+  dashingEnabled: 1
   shadowTime: 10
   shadowLength: 0.33
   shadowCost: 5

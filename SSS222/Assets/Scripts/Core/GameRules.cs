@@ -62,6 +62,7 @@ public static GameRules instance;
     [Header("State Defaults")]
     public float flipTime = 7f;
     public float gcloverTime = 6f;
+    public bool dashingEnabled = true;
     public float shadowTime = 10f;
     public float shadowLength=0.33f;
     public float shadowCost=5f;

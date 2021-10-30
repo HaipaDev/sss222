@@ -165,12 +165,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveX: 1
   moveY: 1
-  moveByMouse: 1
+  inputType: 0
   autoShoot: 0
   paddingX: 0.15
   paddingY: 0.45
   moveSpeedInit: 5
-  lsaberSpeedMulti: 1.25
   moveSpeed: 5
   moveSpeedCurrent: 0
   health: 150
@@ -221,6 +220,7 @@ MonoBehaviour:
   shootMulti: 1
   shipScaleDefault: 0.89
   bulletResize: 0
+  bflameDmgTillLvl: 1
   statuses: []
   statusc: 
   flip: 0
@@ -281,7 +281,8 @@ MonoBehaviour:
   infPrevEnergy: 0
   infEnergyTime: -4
   speed: 0
-  speedPrev: 0
+  speedPrev:
+  - 0
   speedTimer: -4
   speedTime: -4
   speedStrength: 1
@@ -291,6 +292,7 @@ MonoBehaviour:
   slowStrength: 1
   flipTime: 8.5
   gcloverTime: 8
+  dashingEnabled: 1
   shadowTime: 12
   shadowLength: 0.2
   dashSpeed: 20
@@ -313,13 +315,10 @@ MonoBehaviour:
   onfireDmg: 1
   decayTickrate: 0.5
   decayDmg: 0.5
-  armoredMulti: 2
-  fragileMulti: 0.7
-  powerMulti: 1.6
-  weaknsMulti: 0.66
   weaponProperties: []
   shadowCost: 5
   energyBallGet: 9
+  energyBatteryGet: 11
   medkitEnergyGet: 40
   microMedkitHpAmnt: 10
   medkitHpAmnt: 25
@@ -328,10 +327,8 @@ MonoBehaviour:
   enPwrupDuplicate: 42
   crystalMend_refillCost: 2
   energyDiss_refillCost: 3.3
-  flareHitVFX: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
-  gcloverOVFX: {fileID: 100000, guid: 41fbf007ac904dd48afafa7a6655e3ef, type: 3}
-  shadowPrefab: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699,
-    type: 3}
+  crystalGet: 2
+  crystalBGet: 6
   damaged: 0
   healed: 0
   shadowed: 0
@@ -355,6 +352,7 @@ MonoBehaviour:
   joystick: {fileID: 0}
   moving: 0
   tpPos: {x: 0, y: 0}
+  dragStartPos: {x: 0, y: 0}
 --- !u!114 &1949430517914965929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +368,7 @@ MonoBehaviour:
   dmgTimer: 0
   lastHitObj: 
   lastHitDmg: 0
+  collisionTypes: 0200000003000000
 --- !u!114 &3388790463455218104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,7 +426,9 @@ MonoBehaviour:
   xx: 0
   yy: -0.6
   time: 0.3
+  onTop: 1
   stayStill: 0
+  angle: 0
   BFlame: {fileID: 0}
 --- !u!82 &1143734159
 AudioSource:

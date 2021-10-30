@@ -14,7 +14,7 @@ public class ShadowButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         defPos=transform.position;
     }
     void Update(){
-        if(Player.instance.shadow!=true){GetComponent<Button>().enabled=false;GetComponent<Image>().enabled=false;transform.GetChild(0).gameObject.SetActive(false);}else{GetComponent<Button>().enabled=true;GetComponent<Image>().enabled=true;transform.GetChild(0).gameObject.SetActive(true);}
+        if(!Player.instance.dashingEnabled&&!Player.instance.shadow){GetComponent<Button>().enabled=false;GetComponent<Image>().enabled=false;transform.GetChild(0).gameObject.SetActive(false);}else{GetComponent<Button>().enabled=true;GetComponent<Image>().enabled=true;transform.GetChild(0).gameObject.SetActive(true);}
         pPosScr=Camera.main.WorldToScreenPoint(Player.instance.transform.position);
         mPosScr=Camera.main.WorldToScreenPoint(Player.instance.mousePos);
         if(pressed){

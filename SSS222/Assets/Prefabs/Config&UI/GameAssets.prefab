@@ -48,6 +48,8 @@ MonoBehaviour:
     gobj: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
   - name: PlayerShadow
     gobj: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699, type: 3}
+  - name: PlayerShadowColli
+    gobj: {fileID: 4546529352650547393, guid: 4946868aa924dea4ea2cfe6dcae3dc42, type: 3}
   - name: Coin
     gobj: {fileID: 1056705403108089519, guid: eebb358fa9ff6af419cd68bd020a4289, type: 3}
   - name: CoinB
@@ -88,6 +90,8 @@ MonoBehaviour:
     gobj: {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268, type: 3}
   - name: ShadowPwrup
     gobj: {fileID: 4548736405339070879, guid: 506b460219bf5b24db97b32612acb51c, type: 3}
+  - name: ShadowtracesPwrup
+    gobj: {fileID: 4548736405339070879, guid: 272fa447f8634b54eaea1c3bed81ac0d, type: 3}
   - name: ShadowBtPwrup
     gobj: {fileID: 4548736405339070879, guid: 09e222a729e8d7a46b1ed32960cf9e6e, type: 3}
   - name: QRocketPwrup
