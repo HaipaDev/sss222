@@ -17,7 +17,7 @@ public class DamageOverDist : MonoBehaviour{
     public float startTime;
     Rigidbody2D rb;
     void Start(){
-        if(gameObject.name.Contains("PLaser")){dmgBase=DamageValues.instance.GetPLaserDMG();}
+        if(gameObject.name.Contains("PLaser")){dmgBase=DamageValues.instance.dmgPlaser;}
         startTime=Time.time;
         rb=GetComponent<Rigidbody2D>();
         dmg=dmgBase;

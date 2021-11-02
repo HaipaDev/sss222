@@ -101,6 +101,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 58363aed9654ce94ba9cb6630ba14d49, type: 2}
   - {fileID: 11400000, guid: 3e8bb0a8b7a347245a4e8a410ed28efe, type: 2}
   - {fileID: 11400000, guid: e913b426dcd9a2c46872469ef76d3b27, type: 2}
+  - {fileID: 11400000, guid: d9e665abbbe16ee4b9f0d9ab5e94954d, type: 2}
   - {fileID: 11400000, guid: 873e180e33e72a84a95efe650b9264be, type: 2}
   flipTime: 7
   gcloverTime: 6
@@ -598,6 +599,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 99983d2108c82d9488eb046ba733b402, type: 3}
     - {fileID: 21300000, guid: 9a41682c86a2e8646ab244683f0ab5e5, type: 3}
     - {fileID: 21300000, guid: 934315a3b0cb1ac4ea7e145834d70dc7, type: 3}
+    - {fileID: 21300000, guid: dac756e11ea5f20458ac92124d3795de, type: 3}
     - {fileID: 21300000, guid: a6f4957e5f138db408124ac4b05f0c0e, type: 3}
     bflamePart: {fileID: 100000, guid: 0f7e2bf3d8f33c5408bfbf96c2047b91, type: 3}
     sizeMinLunar: 0.88
@@ -670,7 +672,10 @@ MonoBehaviour:
   dmgLSaberIni: 7.77
   dmgLClaws: 7
   dmgLClawsTouch: 0.23
+  dmgGloomyScythes: 40.5
+  dmgGloomyScythes_player: 1
   dmgShadowBT: 40.5
+  dmgShadowBT_player: 0
   dmgQRocket: 14.5
   dmgPRocket: 0
   dmgPRocketExpl: 0.5
@@ -682,7 +687,7 @@ MonoBehaviour:
   dmgSoundwave: 16.5
   dmgEnemyShip1: 80
   dmgEBt: 24.5
-  dmgEnemySaber: 2.5
+  dmgEnSaber: 2.5
   dmgGoblin: 16
   dmgHealDrone: 75
   dmgVortex: 70

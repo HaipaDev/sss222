@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
-  m_Name: Shadowdash
+  m_Name: GloomyScythesPowerup
   m_EditorClassIdentifier: 
-  name: Shadowdash
-  item: {fileID: 4548736405339070879, guid: b8bc1ba80b2b8024194cb002d7afb980, type: 3}
-  dropChance: 3
-  rarity: 0
+  name: Gloomy Scythes
+  item: {fileID: 4548736405339070879, guid: 83970e65e1504b74e92f4da36b330187, type: 3}
+  dropChance: 0.05
+  rarity: 2
   levelReq: 1

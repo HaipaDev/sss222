@@ -14,43 +14,46 @@ public enum dmgType{
 }
 public class DamageValues : MonoBehaviour{
     public static DamageValues instance;
-    float dmgFlame = 1;
-    float dmgZone = 2;
-    float dmgLaser = 5f;
-    float dmgPhaser = 0.5f;
-    float dmgHRocket = 13.5f;
-    float dmgMiniLaser = 0.32f;
-    float dmgLSaber = 0.86f;
-    float dmgLSaberIni = 7.77f;
-    float dmgLClaws = 7f;
-    float dmgLClawsTouch = 0.23f;
-    float dmgShadowBT = 40.5f;
-    float dmgQRocket = 14.5f;
-    float dmgPRocket = 0f;
-    float dmgPRocketExpl = 0.5f;
-    float dmgCBullet = 2f;
-    float dmgPlaser = 6.78f;
+    public float dmgFlame = 1;
+    public float dmgZone = 2;
+    public float dmgLaser = 5f;
+    public float dmgPhaser = 0.5f;
+    public float dmgHRocket = 13.5f;
+    public float dmgMiniLaser = 0.32f;
+    public float dmgLSaber = 0.86f;
+    public float dmgLSaberIni = 7.77f;
+    public float dmgLClaws = 7f;
+    public float dmgLClawsTouch = 0.23f;
+    public float dmgGloomyScythes=40.5f;
+    public float dmgGloomyScythes_player=1f;
+    public float dmgShadowBT = 40.5f;
+    public float dmgShadowBT_player = 1f;
+    public float dmgQRocket = 14.5f;
+    public float dmgPRocket = 0f;
+    public float dmgPRocketExpl = 0.5f;
+    public float dmgCBullet = 2f;
+    public float dmgPlaser = 6.78f;
     //PLaser damage is inside the obj
-    float dmgMPulse = 130f;
+    public float dmgMPulse = 130f;
 
-    float dmgComet = 10f;
-    float dmgBlueFlame = 0.2f;
-    float dmgBat = 36f;
-    float dmgSoundwave = 16.5f;
-    float dmgEnemyShip1 = 80f;
-    float dmgEBt = 24.5f;
-    float dmgEnemySaber = 2.5f;    
-    float dmgGoblin = 16f;
-    float dmgHealDrone = 75f;
-    float dmgVortex = 70f;
-    float dmgLeech = 4f;
-    float dmgVLaser = 90f;
-    float dmgHLaser = 16f;
-    float dmgStinger = 33.3f;
-    Vector2 efxStinger = new Vector2(20,1);
-    float dmgGoblinBt = 7f;
-    Vector2 efxGoblinBt = new Vector2(6,0.8f);
-    Vector2 efxGlareDev = new Vector2(1.5f,2f);
+    public float dmgComet = 10f;
+    public float dmgBlueFlame = 0.2f;
+    public float dmgBat = 36f;
+    public float dmgSoundwave = 16.5f;
+    public float dmgEnemyShip1 = 80f;
+    public float dmgEBt = 24.5f;
+    public float dmgEnSaber = 2.5f;    
+    public float dmgGoblin = 16f;
+    public float dmgHealDrone = 75f;
+    public float dmgVortex = 70f;
+    public float dmgLeech = 4f;
+    public float dmgVLaser = 90f;
+    public float dmgHLaser = 16f;
+    public float dmgStinger = 33.3f;
+    public Vector2 efxStinger = new Vector2(20,1);
+    public float dmgGoblinBt = 7f;
+    public Vector2 efxGoblinBt = new Vector2(6,0.8f);
+    public Vector2 efxGlareDev = new Vector2(1.5f,2f);
 
 #region//Set Values
 private void Awake(){
@@ -70,7 +73,10 @@ if(i!=null){
     dmgLSaberIni=i.dmgLSaberIni;
     dmgLClaws=i.dmgLClaws;
     dmgLClawsTouch=i.dmgLClawsTouch;
+    dmgGloomyScythes=i.dmgGloomyScythes;
+    dmgGloomyScythes_player=i.dmgGloomyScythes_player;
     dmgShadowBT=i.dmgShadowBT;
+    dmgShadowBT_player=i.dmgShadowBT_player;
     dmgQRocket=i.dmgQRocket;
     dmgPRocket=i.dmgPRocket;
     dmgPRocketExpl=i.dmgPRocketExpl;
@@ -83,7 +89,7 @@ if(i!=null){
     dmgSoundwave=i.dmgSoundwave;
     dmgEnemyShip1=i.dmgEnemyShip1;
     dmgEBt=i.dmgEBt;
-    dmgEnemySaber=i.dmgEnemySaber;    
+    dmgEnSaber=i.dmgEnSaber;    
     dmgGoblin=i.dmgGoblin;
     dmgHealDrone=i.dmgHealDrone;
     dmgVortex=i.dmgVortex;
@@ -96,48 +102,6 @@ if(i!=null){
     efxGoblinBt=i.efxGoblinBt;
     efxGlareDev=i.efxGlareDev;
 }
+#endregion
 }
-#endregion
-#region//Get Functions
-    public float GetDmgFlame(){return dmgFlame;}
-    public float GetDmgZone(){return dmgZone;}
-
-    public float GetDmgLaser(){return dmgLaser;}
-    public float GetDmgPhaser(){return dmgPhaser;}
-    public float GetDmgHRocket(){return dmgHRocket;}
-    public float GetDmgMiniLaser(){return dmgMiniLaser;}
-    public float GetDmgLSaber(){return dmgLSaber;}
-    public float GetDmgLSaberIni(){return dmgLSaberIni;}
-    public float GetDmgLClaws(){return dmgLClaws;}
-    public float GetDmgLClawsTouch(){return dmgLClawsTouch;}
-    public float GetDmgShadowBT(){return dmgShadowBT;}
-    public float GetDmgQRocket(){return dmgQRocket;}
-    public float GetDmgPRocket(){return dmgPRocket;}
-    public float GetDmgPRocketExpl(){return dmgPRocketExpl;}
-    public float GetDmgCBullet(){return dmgCBullet;}
-    public float GetPLaserDMG(){return dmgPlaser;}
-    
-    public float GetDmgMPulse(){return dmgMPulse;}
-
-
-    public float GetDmgComet(){return dmgComet;}
-    public float GetDmgBlueFlame(){return dmgBlueFlame;}
-    public float GetDmgBat(){return dmgBat;}
-    public float GetDmgSoundwave(){return dmgSoundwave;}
-    public float GetDmgEnemyShip1(){return dmgEnemyShip1;}
-    public float GetDmgEBt(){return dmgEBt;}
-    public float GetDmgEnSaber(){return dmgEnemySaber;}
-    public float GetDmgGoblin(){return dmgGoblin;}
-    public float GetDmgHealDrone(){return dmgHealDrone;}
-    public float GetDmgVortex(){return dmgVortex;}
-    public float GetDmgLeech(){return dmgLeech;}
-    public float GetDmgVLaser(){return dmgVLaser;}
-    public float GetDmgHLaser(){return dmgHLaser;}
-    public float GetDmgStinger(){return dmgStinger;}
-    public Vector2 GetEfxStinger(){return efxStinger;}
-    public float GetDmgGoblinBt(){return dmgGoblinBt;}
-    public Vector2 GetEfxGoblinBt(){return efxGoblinBt;}
-    public Vector2 GetEfxGlareDev(){return efxGlareDev;}
-#endregion
-
 }

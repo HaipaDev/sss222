@@ -89,7 +89,7 @@ MonoBehaviour:
   slowingPause: 0
   vertCameraSize: 7
   horizCameraSize: 3.92
-  gameVersion: 0.5
+  gameVersion: 0.6t1
   cheatmode: 0
   dmgPopups: 1
   analyticsOn: 1
@@ -108,6 +108,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f9bea8f2a1b8c643886772f027bb876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dmgFlame: 1
+  dmgZone: 2
+  dmgLaser: 5
+  dmgPhaser: 0.5
+  dmgHRocket: 13.5
+  dmgMiniLaser: 0.32
+  dmgLSaber: 0.86
+  dmgLSaberIni: 7.77
+  dmgLClaws: 7
+  dmgLClawsTouch: 0.23
+  dmgGloomyScythes: 40.5
+  dmgGloomyScythes_player: 1
+  dmgShadowBT: 40.5
+  dmgShadowBT_player: 1
+  dmgQRocket: 14.5
+  dmgPRocket: 0
+  dmgPRocketExpl: 0.5
+  dmgCBullet: 2
+  dmgPlaser: 6.78
+  dmgMPulse: 130
+  dmgComet: 10
+  dmgBlueFlame: 0.2
+  dmgBat: 36
+  dmgSoundwave: 16.5
+  dmgEnemyShip1: 80
+  dmgEBt: 24.5
+  dmgEnSaber: 2.5
+  dmgGoblin: 16
+  dmgHealDrone: 75
+  dmgVortex: 70
+  dmgLeech: 4
+  dmgVLaser: 90
+  dmgHLaser: 16
+  dmgStinger: 33.3
+  efxStinger: {x: 20, y: 1}
+  dmgGoblinBt: 7
+  efxGoblinBt: {x: 6, y: 0.8}
+  efxGlareDev: {x: 1.5, y: 2}
 --- !u!82 &4215481038911001461
 AudioSource:
   m_ObjectHideFlags: 0

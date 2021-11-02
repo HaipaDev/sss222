@@ -89,9 +89,11 @@ MonoBehaviour:
   - name: GCloverPwrup
     gobj: {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268, type: 3}
   - name: ShadowPwrup
-    gobj: {fileID: 4548736405339070879, guid: 506b460219bf5b24db97b32612acb51c, type: 3}
+    gobj: {fileID: 4548736405339070879, guid: b8bc1ba80b2b8024194cb002d7afb980, type: 3}
   - name: ShadowtracesPwrup
     gobj: {fileID: 4548736405339070879, guid: 272fa447f8634b54eaea1c3bed81ac0d, type: 3}
+  - name: GloomyScythesPwrup
+    gobj: {fileID: 4548736405339070879, guid: 83970e65e1504b74e92f4da36b330187, type: 3}
   - name: ShadowBtPwrup
     gobj: {fileID: 4548736405339070879, guid: 09e222a729e8d7a46b1ed32960cf9e6e, type: 3}
   - name: QRocketPwrup
@@ -168,8 +170,10 @@ MonoBehaviour:
     gobj: {fileID: 100000, guid: 405398434fd7ed640a8082ddb451bddf, type: 3}
   - name: CBullet
     gobj: {fileID: 6041420664094412071, guid: caecc161b4ab6f041977bf96ceff3dba, type: 3}
-  - name: ShadowBt
+  - name: GloomyScythe
     gobj: {fileID: 5313808222654050488, guid: 6f86399c48e08bc4c9514b05241611f1, type: 3}
+  - name: ShadowBt
+    gobj: {fileID: 5313808222654050488, guid: 4fa01687837a73e42ad4bd043a443c79, type: 3}
   - name: MPulse
     gobj: {fileID: 6041420664094412071, guid: 94f381ce0f5d6bf4eb2a7b0cc13dd5cc, type: 3}
   - name: AccelPwrup
@@ -297,9 +301,11 @@ MonoBehaviour:
   - name: gcloverPwrup
     spr: {fileID: 21300000, guid: 63a2647ea2885b44bab05e7cb94c0c90, type: 3}
   - name: shadowbtPwrup
+    spr: {fileID: 21300000, guid: 7a13c44ce4113bd43b911f4faaf800f5, type: 3}
+  - name: gloomyScythesPwrup
     spr: {fileID: 21300000, guid: 692a8ad24f832a547a376f4d7a93d022, type: 3}
   - name: shadowPwrup
-    spr: {fileID: 21300000, guid: 7d2dfbf4cfecaea469f79f936b00f154, type: 3}
+    spr: {fileID: 21300000, guid: 210890cc2edb2984980e27306c488683, type: 3}
   - name: laser
     spr: {fileID: 21300000, guid: 21535f4e423e0194a829b85e44f114e6, type: 3}
   - name: coin
