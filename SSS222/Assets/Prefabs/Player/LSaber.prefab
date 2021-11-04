@@ -16,11 +16,9 @@ GameObject:
   - component: {fileID: 1265304716601146569}
   - component: {fileID: 4688364101293123351}
   - component: {fileID: 5239081426931158637}
-  - component: {fileID: 3335024609016532008}
   - component: {fileID: -4609015006554659745}
   - component: {fileID: 1699225988743725034}
   - component: {fileID: 2924709680038836347}
-  - component: {fileID: 8598117121453545953}
   m_Layer: 8
   m_Name: LSaber
   m_TagString: PlayerWeapons
@@ -36,7 +34,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4755926375889011706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.37, y: -5.19, z: 0}
+  m_LocalPosition: {x: 0.37, y: -5.19, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -282,23 +280,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 0
---- !u!114 &3335024609016532008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4755926375889011706}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2506537cb16da42a716c515120ac19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
-  targetTag: 
-  xx: 0
-  yy: 1.12
-  targetObj: {fileID: 0}
 --- !u!114 &-4609015006554659745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f6045237e60644b821afbacc05e85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: 0
+  startPos: {x: 0, y: 0}
 --- !u!114 &1699225988743725034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,16 +318,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmgFreq: 0.001
---- !u!114 &8598117121453545953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4755926375889011706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}

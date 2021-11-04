@@ -3,50 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Lightsaber : MonoBehaviour{
-    [SerializeField] bool enemy=false;
-    EnCombatant enCombatant;
-    void Start()
-    {
+    [SerializeField]Vector2 startPos;
+    void IEnumerator(){
         if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
-        enCombatant=FindObjectOfType<EnCombatant>();
-        //int numberOfObj = FindObjectsOfType<Lightsaber>().Length;if (numberOfObj > 1){Destroy(gameObject);}
+        if((Vector2)transform.localPosition!=Vector2.zero)startPos=transform.localPosition;
     }
-    private void Update() {
-        if(enemy!=true)transform.localScale = Player.instance.transform.localScale;
-        else{transform.localRotation=enCombatant.transform.localRotation;}
+    void Update(){
+        transform.localScale=Player.instance.transform.localScale;
+        if(startPos!=Vector2.zero){
+            int ax=1;//if(Player.instance.localScale.x>Player.instance.shipScale);
+            if(Player.instance.transform.localScale.x<Player.instance.shipScale){ax=-1;}
+            if(Player.instance.transform.localScale.x!=Player.instance.shipScale)transform.localPosition=new Vector3(startPos.x,startPos.y+(ax*0.05f*Player.instance.shipScale),0.01f);
+        }
+        else startPos=transform.localPosition;
     }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!other.CompareTag(tag))
-        {
-            if(enemy!=true){
-                if (other.gameObject.CompareTag("EnemyBullet"))
-                {
-                    /*DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
-                    if (!damageDealer) { return; }
-                    
-                    var Sname = soundwavePrefab.name; var Sname1 = soundwavePrefab.name + "(Clone)";
-                    if (other.gameObject.name == Sname || other.gameObject.name == Sname1) { dmg = damageDealer.GetDamageSoundwave(); AudioSource.PlayClipAtPoint(soundwaveHitSFX, new Vector2(transform.position.x, transform.position.y)); }
-                    var EBtname = EBtPrefab.name; var EBtname1 = EBtPrefab.name + "(Clone)";
-                    if (other.gameObject.name == EBtname || other.gameObject.name == EBtname1) dmg = damageDealer.GetDamageEBt();*/
-
+    void OnTriggerEnter2D(Collider2D other){
+        if(!other.CompareTag(tag)){
+                if(other.gameObject.CompareTag("EnemyBullet")){
                     Destroy(other.gameObject, 0.05f);
-                    //else { if (other.GetComponent<Enemy>().health > -1) { other.GetComponent<Enemy>().givePts = false; other.GetComponent<Enemy>().health = -1; other.GetComponent<Enemy>().Die(); } }
-
                     AudioManager.instance.Play("LSaberBlock");
-                    //var flare = Instantiate(flareHitVFX, new Vector2(other.transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
-                    //Destroy(flare.gameObject, 0.3f);
+                    //GameObject flare=Instantiate(flareHitVFX,new Vector2(other.transform.position.x,transform.position.y+0.5f),Quaternion.identity);
+                    //Destroy(flare,0.3f);
                 }
-            }else{
-                if (other.gameObject.CompareTag("Player.instanceWeapons")){
-                    if(other.GetComponent<Tag_PlayerWeaponBlockable>()!=null){
-                        Destroy(other.gameObject, 0.05f);
-                        AudioManager.instance.Play("LSaberBlockEnemy");
-                    }if(other.GetComponent<Lightsaber>()!=null){
-                        AudioManager.instance.Play("LSaberBlockEnemy");
-                    }
-                }
-            }
         }
     }
 }

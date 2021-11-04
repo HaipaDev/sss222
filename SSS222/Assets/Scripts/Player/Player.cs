@@ -843,7 +843,8 @@ public class Player : MonoBehaviour{
                 GameObject asset=GameAssets.instance.Get(w.assetName);
                 foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
                 //if(go!=null){go.transform.position=go.transform.position+new Vector3(wp.offset.x,wp.offset.y,go.transform.position.z);}
-                if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+new Vector3(wp.offset.x,wp.offset.y,0);}
+                if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+new Vector3(wp.offset.x,wp.offset.y,0.01f);}
+                //if(go!=null){if(go.GetComponent<Lightsaber>()!=null){go.GetComponent<Lightsaber>().SetStartPos(go.transform.position);}}
                 weaponEnTimer=wp.energyPeriod;
                 powerup=wp.nameActive;
             }else{
