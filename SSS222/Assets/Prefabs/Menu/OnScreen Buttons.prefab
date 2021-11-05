@@ -623,7 +623,6 @@ GameObject:
   m_Component:
   - component: {fileID: 799342203077165380}
   - component: {fileID: 1377877411804869007}
-  - component: {fileID: 7293689707689345936}
   m_Layer: 5
   m_Name: SkillQ
   m_TagString: Untagged
@@ -670,18 +669,6 @@ MonoBehaviour:
   buttons:
   - {fileID: 2389002541165373696}
   ID: -1
---- !u!114 &7293689707689345936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1469410503784355968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34fa7140063475c4ab165366b8ffb820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1711269654712959634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,7 +1399,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2249936804335594906}
   - component: {fileID: 2389002541165373696}
-  - component: {fileID: 7293689707689345935}
   m_Layer: 5
   m_Name: SkillE
   m_TagString: Untagged
@@ -1459,18 +1445,6 @@ MonoBehaviour:
   buttons:
   - {fileID: 1377877411804869007}
   ID: -1
---- !u!114 &7293689707689345935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3349346649233828346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34fa7140063475c4ab165366b8ffb820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3658889032374422607
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,7 +1744,7 @@ GameObject:
   - component: {fileID: 2712130457646993364}
   - component: {fileID: 2712130457646993387}
   - component: {fileID: 31828259505153511}
-  - component: {fileID: 7293689707689345937}
+  - component: {fileID: 4408442698352912746}
   m_Layer: 5
   m_Name: UpgradeMenuButton
   m_TagString: Untagged
@@ -1912,7 +1886,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7293689707689345937
+--- !u!114 &4408442698352912746
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1921,9 +1895,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4324470884591702722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34fa7140063475c4ab165366b8ffb820, type: 3}
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 4
 --- !u!1 &4489985164809384023
 GameObject:
   m_ObjectHideFlags: 0

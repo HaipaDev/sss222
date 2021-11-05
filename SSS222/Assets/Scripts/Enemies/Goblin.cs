@@ -94,7 +94,7 @@ public class Goblin : MonoBehaviour{
     [ContextMenu("BossTransform")]void GoblinTransform(){
         AudioManager.instance.Play("GoblinTransform");
         GetComponent<Follow>().enabled=false;
-        GetComponent<BackflameEffect>().enabled=false;if(transform.GetChild(1)!=false)Destroy(transform.GetChild(1).gameObject);
+        if(GetComponent<BackflameEffect>().BFlame!=null){Destroy(GetComponent<BackflameEffect>().BFlame);}GetComponent<BackflameEffect>().enabled=false;
         confused=false;questionMarkObj.SetActive(false);
         GetComponent<SpriteRenderer>().sprite=bossSprite;
         GetComponent<Enemy>().shooting=true;GetComponent<Enemy>().health=bossHp;

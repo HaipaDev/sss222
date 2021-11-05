@@ -53,6 +53,7 @@ public class DamageValues : MonoBehaviour{
     public Vector2 efxStinger = new Vector2(20,1);
     public float dmgGoblinBt = 7f;
     public Vector2 efxGoblinBt = new Vector2(6,0.8f);
+    public float dmgGlareDev = 8f;
     public Vector2 efxGlareDev = new Vector2(1.5f,2f);
 
 #region//Set Values
@@ -100,6 +101,7 @@ if(i!=null){
     efxStinger=i.efxStinger;
     dmgGoblinBt=i.dmgGoblinBt;
     efxGoblinBt=i.efxGoblinBt;
+    dmgGlareDev=i.dmgGlareDev;
     efxGlareDev=i.efxGlareDev;
 }
 #endregion

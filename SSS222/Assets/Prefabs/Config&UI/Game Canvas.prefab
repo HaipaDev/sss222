@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3146176}
   - component: {fileID: 3146175}
-  - component: {fileID: 7293689707689345923}
   m_Layer: 5
   m_Name: SkillTimerUI
   m_TagString: Untagged
@@ -55,18 +54,6 @@ MonoBehaviour:
   xx: -0.225
   yy: -0.55
   targetObj: {fileID: 0}
---- !u!114 &7293689707689345923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3146174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34fa7140063475c4ab165366b8ffb820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &216991348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,7 +1719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6fdfd702052f94e9434cc97eebcd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reverse: 0
+  reverse: 1
   gamemodeName: Classic
 --- !u!1 &793144839772054474
 GameObject:
@@ -1821,7 +1808,7 @@ GameObject:
   - component: {fileID: 7037639326498322390}
   - component: {fileID: 2037284672964674256}
   - component: {fileID: 165371448041909548}
-  - component: {fileID: 1711496856}
+  - component: {fileID: 9069062583499244427}
   m_Layer: 5
   m_Name: EnergyText
   m_TagString: Untagged
@@ -1962,7 +1949,7 @@ MonoBehaviour:
   value: energyOffMax
   valueLimitD: -1
   changeOnValidate: 1
---- !u!114 &1711496856
+--- !u!114 &9069062583499244427
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1971,9 +1958,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 870539482574335547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6d6111abe5e2843b7b8402294079b8, type: 3}
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &1024818671695279519
 GameObject:
   m_ObjectHideFlags: 0
@@ -2120,7 +2108,6 @@ GameObject:
   - component: {fileID: 1167553120558668925}
   - component: {fileID: 8229708403396889955}
   - component: {fileID: 3090536183242020061}
-  - component: {fileID: 1908400046819326635}
   m_Layer: 5
   m_Name: XPStrip
   m_TagString: Untagged
@@ -2186,18 +2173,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1908400046819326635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255815044435384812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34fa7140063475c4ab165366b8ffb820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1619450124692792737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,7 +2184,7 @@ GameObject:
   - component: {fileID: 432487846047178028}
   - component: {fileID: 5511910380311769802}
   - component: {fileID: 2183352588649546948}
-  - component: {fileID: 159035514351508079}
+  - component: {fileID: 3652246229105120649}
   - component: {fileID: 3804192328872084405}
   m_Layer: 5
   m_Name: CoresIMG
@@ -2275,7 +2250,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &159035514351508079
+--- !u!114 &3652246229105120649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2284,9 +2259,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1619450124692792737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34fa7140063475c4ab165366b8ffb820, type: 3}
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
 --- !u!114 &3804192328872084405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2311,7 +2287,7 @@ GameObject:
   - component: {fileID: 8420018892854600822}
   - component: {fileID: 2028839340528542643}
   - component: {fileID: 364892489735195741}
-  - component: {fileID: 7293689707689345939}
+  - component: {fileID: 3014525795709322815}
   - component: {fileID: 7293689707689345972}
   m_Layer: 5
   m_Name: CoresText
@@ -2451,7 +2427,7 @@ MonoBehaviour:
   value: cores
   valueLimitD: -1
   changeOnValidate: 0
---- !u!114 &7293689707689345939
+--- !u!114 &3014525795709322815
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2460,9 +2436,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1676674659974407079}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34fa7140063475c4ab165366b8ffb820, type: 3}
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
 --- !u!114 &7293689707689345972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3664,7 +3641,7 @@ GameObject:
   - component: {fileID: 1526484694775318043}
   - component: {fileID: 5691738507744027401}
   - component: {fileID: 2949876316928642170}
-  - component: {fileID: 8516634494430667539}
+  - component: {fileID: 3944575479969766310}
   m_Layer: 5
   m_Name: EnergyStrip
   m_TagString: Untagged
@@ -3731,7 +3708,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8516634494430667539
+--- !u!114 &3944575479969766310
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3740,9 +3717,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4210565710816105855}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6d6111abe5e2843b7b8402294079b8, type: 3}
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &4740258267429615052
 GameObject:
   m_ObjectHideFlags: 0
@@ -4309,8 +4287,8 @@ GameObject:
   - component: {fileID: 7898855328462501139}
   - component: {fileID: 6561870063023193863}
   - component: {fileID: 5169531775500330443}
-  - component: {fileID: 2968663984086236940}
   - component: {fileID: 2373914692663204083}
+  - component: {fileID: 8290561481116802033}
   m_Layer: 5
   m_Name: CoinsIMG
   m_TagString: Untagged
@@ -4375,18 +4353,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2968663984086236940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7025448343729471930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01ee171d7a2ac8147af49fcaf34e6eda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2373914692663204083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4399,6 +4365,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6e35754186afe449fb15e70ce05bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8290561481116802033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7025448343729471930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
 --- !u!1 &7293689707047259069
 GameObject:
   m_ObjectHideFlags: 0
@@ -4776,7 +4755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6fdfd702052f94e9434cc97eebcd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reverse: 1
+  reverse: 0
   gamemodeName: Classic
 --- !u!1 &8329480943627786079
 GameObject:
@@ -4886,7 +4865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   on: 0
   scale: 3
---- !u!114 &7293689707689345940
+--- !u!114 &6667054831116098734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4895,9 +4874,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8684379468643623505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01ee171d7a2ac8147af49fcaf34e6eda, type: 3}
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
 --- !u!114 &7293689707689345970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6050,56 +6030,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinsDiffParrent
       objectReference: {fileID: 0}
-    - target: {fileID: 3550108299735435595, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
-        type: 3}
-      propertyPath: m_fontColorGradient.topLeft.b
-      value: 0.8957934
-      objectReference: {fileID: 0}
-    - target: {fileID: 3550108299735435595, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
-        type: 3}
-      propertyPath: m_fontColorGradient.topLeft.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3550108299735435595, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
-        type: 3}
-      propertyPath: m_fontColorGradient.topLeft.r
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 3550108299735435595, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
-        type: 3}
-      propertyPath: m_fontColorGradient.topRight.b
-      value: 0.8957934
-      objectReference: {fileID: 0}
-    - target: {fileID: 3550108299735435595, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
-        type: 3}
-      propertyPath: m_fontColorGradient.topRight.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3550108299735435595, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
-        type: 3}
-      propertyPath: m_fontColorGradient.topRight.r
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 3550108299735435595, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
-        type: 3}
-      propertyPath: m_fontColorGradient.bottomLeft.g
-      value: 0.60309815
-      objectReference: {fileID: 0}
-    - target: {fileID: 3550108299735435595, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
-        type: 3}
-      propertyPath: m_fontColorGradient.bottomLeft.r
-      value: 0.16470586
-      objectReference: {fileID: 0}
-    - target: {fileID: 3550108299735435595, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
-        type: 3}
-      propertyPath: m_fontColorGradient.bottomRight.g
-      value: 0.60309815
-      objectReference: {fileID: 0}
-    - target: {fileID: 3550108299735435595, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
-        type: 3}
-      propertyPath: m_fontColorGradient.bottomRight.r
-      value: 0.16470586
-      objectReference: {fileID: 0}
     - target: {fileID: 5790825999867161158, guid: 1b99ec6ca93f4b74f8c535955368c3c5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -6740,7 +6670,8 @@ PrefabInstance:
       propertyPath: m_fontColorGradient.bottomRight.r
       value: 0.57938766
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7293689707689345938, guid: bb92276a5bda5154dbf3039379802ec5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bb92276a5bda5154dbf3039379802ec5, type: 3}
 --- !u!224 &8010431999719995548 stripped
 RectTransform:

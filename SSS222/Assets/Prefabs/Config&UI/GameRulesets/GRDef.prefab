@@ -304,7 +304,7 @@ MonoBehaviour:
     levelReq: 1
   - name: StingerFlingers
     lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
-    dropChance: 6.2
+    dropChance: 1
     levelReq: 1
   startingWave: 0
   startingWaveRandom: 0
@@ -698,6 +698,7 @@ MonoBehaviour:
   efxStinger: {x: 20, y: 1}
   dmgGoblinBt: 7
   efxGoblinBt: {x: 6, y: 0.8}
+  dmgGlareDev: 8
   efxGlareDev: {x: 1.5, y: 2}
   shopList:
   - name: 

@@ -15,10 +15,11 @@ public class GameSession : MonoBehaviour{
     public static bool GlobalTimeIsPaused;
     public static bool GlobalTimeIsPausedNotSlowed;
     [Header("Global")]
+    public bool crystalsOn=true;
+    public bool xpOn=true;
     public bool shopOn=true;
     public bool shopCargoOn=true;
     public bool upgradesOn=true;
-    public bool xpOn=true;
     [Header("Current Player Values")]
     public int score=0;
     public float scoreMulti=1f;
@@ -98,8 +99,10 @@ public class GameSession : MonoBehaviour{
     if(i!=null){
         //Main
         defaultGameSpeed=i.defaultGameSpeed;gameSpeed=defaultGameSpeed;
-        shopOn=i.shopOn;
+        crystalsOn=i.crystalsOn;
         xpOn=i.xpOn;
+        shopOn=i.shopOn;
+        shopCargoOn=i.shopCargoOn;
         upgradesOn=i.upgradesOn;
         EVscoreMax=i.EVscoreMax;
         shopScoreMax=i.shopScoreMax;

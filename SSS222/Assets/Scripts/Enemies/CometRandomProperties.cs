@@ -111,7 +111,7 @@ public class CometRandomProperties : MonoBehaviour{
         enemy.health*=lunarHealthMulti;
         rb.velocity*=lunarSpeedMulti;
         yield return new WaitForSeconds(0.1f);
-        if(!GameSession.instance.shopOn)dropValues[0]=102;
+        if(!GameSession.instance.crystalsOn)dropValues[0]=102;
     }
 
     public void LunarDrop(){

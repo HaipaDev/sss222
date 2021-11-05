@@ -9,8 +9,8 @@ public class GameModeDestroy : MonoBehaviour{
     [SerializeField] string gamemodeName;
     //[SerializeField] int gamemodeID;
     IEnumerator Start(){
-        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(0,0.25f));//Prevent overload crash
-        if(!reverse&&!GameSession.instance.CheckGameModeSelected(gamemodeName)){Destroy(gameObject);}
+        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(0,0.15f));//Prevent overload crash
+        if(!reverse&&GameSession.instance.CheckGameModeSelected(gamemodeName)){Destroy(gameObject);}
         else if(reverse&&GameSession.instance.CheckGameModeSelected(gamemodeName)){Destroy(gameObject);}
     }
 }

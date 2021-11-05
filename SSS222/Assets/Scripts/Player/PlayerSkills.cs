@@ -59,34 +59,35 @@ public class PlayerSkills : MonoBehaviour{
     }
 
     public void UseSkills(int key){
+    if(!GameSession.GlobalTimeIsPaused){
         for(var i=0;i<cooldowns.Length;i++){
             if(cooldowns[i]>0)cooldowns[i]-=Time.deltaTime;
 
             if(skillsBinds[i]==skillKeyBind.Q){cooldownQ=cooldowns[i];}
             else if(skillsBinds[i]==skillKeyBind.E){cooldownE=cooldowns[i];}
         }
-    if(Time.deltaTime>0.0001&&player.hacked!=true){
-        if(Input.GetKeyDown(KeyCode.Q) || key==1){
-            foreach(Skill skill in skills){
-                var i=skill.ID;
-                if(skillsBinds[i]==skillKeyBind.Q){
-                    if(cooldownQ<=0 && Time.deltaTime>0.0001f){
-                        Skills(skillKeyBind.Q,i,skill.enCost,skill.cooldown);
-                    }else{AudioManager.instance.Play("Deny");}
+        if(player.hacked!=true){
+            if(Input.GetKeyDown(KeyCode.Q) || key==1){
+                foreach(Skill skill in skills){
+                    var i=skill.ID;
+                    if(skillsBinds[i]==skillKeyBind.Q){
+                        if(cooldownQ<=0 && Time.deltaTime>0.0001f){
+                            Skills(skillKeyBind.Q,i,skill.enCost,skill.cooldown);
+                        }else{AudioManager.instance.Play("Deny");}
+                    }
                 }
-            }
-        }if(Input.GetKeyDown(KeyCode.E) || key==2){
-            foreach(Skill skill in skills){
-                var i=skill.ID;
-                if(skillsBinds[i]==skillKeyBind.E){
-                    if(cooldownE<=0 && Time.deltaTime>0.0001f){
-                        Skills(skillKeyBind.E,i,skill.enCost,skill.cooldown);
-                    }else{AudioManager.instance.Play("Deny");}
+            }if(Input.GetKeyDown(KeyCode.E) || key==2){
+                foreach(Skill skill in skills){
+                    var i=skill.ID;
+                    if(skillsBinds[i]==skillKeyBind.E){
+                        if(cooldownE<=0 && Time.deltaTime>0.0001f){
+                            Skills(skillKeyBind.E,i,skill.enCost,skill.cooldown);
+                        }else{AudioManager.instance.Play("Deny");}
+                    }
                 }
             }
         }
-    }
-    }
+    }}
     public void DeathSkills(){
         if(UpgradeMenu.instance.mPulse_upgraded==2)Skills(skillKeyBind.Disabled,0,0,0);//PostMortem MagneticPulse
     }
@@ -125,13 +126,14 @@ public class PlayerSkills : MonoBehaviour{
     }
 
     public void SkillsUpdate(){
+    if(!GameSession.GlobalTimeIsPaused){
         if(currentSkillID!=1){
             SetActiveAllChildren(timerUI.transform,false);
         }
         if(currentSkillID==1){
             if(timerTeleport==-4)timerTeleport=3f;
             if(timerTeleport>0){
-                if(Time.timeScale>0.0001f)timerTeleport-=Time.unscaledDeltaTime;
+                timerTeleport-=Time.unscaledDeltaTime;
                 if(Input.GetMouseButtonDown(0)){
                     AudioManager.instance.Play("Portal");
                     GameObject tp1 = Instantiate(portalVFX,transform.position,Quaternion.identity);
@@ -152,8 +154,8 @@ public class PlayerSkills : MonoBehaviour{
         if(timerOverhaul>0&&player.infEnergy){
             timerOverhaul-=Time.deltaTime;
         }if((timerOverhaul<0&&timerOverhaul!=-4)&&player.infEnergy){player.Overhaul();timerOverhaul=timeOverhaul;}
-        if(!player.infEnergy&&AudioManager.instance!=null&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}//Destroy(overhaulAudio);}
-    }
+        if(!player.infEnergy&&AudioManager.instance!=null&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}
+    }}
     #endregion
     public void ResetSkillCooldowns(){
         for(var i=0;i<cooldowns.Length;i++){cooldowns[i]=0;}

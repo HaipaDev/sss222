@@ -187,7 +187,7 @@ public class PlayerCollider : MonoBehaviour{
                 Destroy(other.gameObject, 0.05f);
             }
             #endregion
-            if(dmg!=0&&!player.gclover){var name=other.gameObject.name.Split('(')[0];lastHitObj=name;lastHitDmg=dmg;}
+            if((dmg!=0||other.gameObject.name.Contains(GameAssets.instance.Get("InverterPwrup").name))&&!player.gclover){var name=other.gameObject.name.Split('(')[0];lastHitObj=name;lastHitDmg=dmg;}
             UniCollider.DMG_VFX(2,other,transform,dmg);
     }
     }

@@ -79,10 +79,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 0.8431373, g: 0.6901961, b: 1, a: 1}
-    topRight: {r: 0.8431373, g: 0.6901961, b: 1, a: 1}
-    bottomLeft: {r: 0.38431376, g: 0.16470589, b: 0.6117647, a: 1}
-    bottomRight: {r: 0.38431376, g: 0.16470589, b: 0.6117647, a: 1}
+    topLeft: {r: 0.6901961, g: 1, b: 0.8957934, a: 1}
+    topRight: {r: 0.6901961, g: 1, b: 0.8957934, a: 1}
+    bottomLeft: {r: 0.16470586, g: 0.60309815, b: 0.6117647, a: 1}
+    bottomRight: {r: 0.16470586, g: 0.60309815, b: 0.6117647, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 1272474570117108533}
   - component: {fileID: 1284941966594856709}
   - component: {fileID: 7992392854743644909}
-  - component: {fileID: 1641861659067600462}
+  - component: {fileID: 452324040124261947}
   m_Layer: 5
   m_Name: CoinsDiffParrent
   m_TagString: Untagged
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   on: 0
---- !u!114 &1641861659067600462
+--- !u!114 &452324040124261947
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,6 +223,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1641861659067600461}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01ee171d7a2ac8147af49fcaf34e6eda, type: 3}
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1

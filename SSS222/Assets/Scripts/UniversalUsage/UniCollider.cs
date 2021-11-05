@@ -48,31 +48,31 @@ public class UniCollider : MonoBehaviour{
         #endregion
         }if(collis.Contains(colliTypes.enemies)){
         #region//Enemies bodies
-            var player=transform.GetComponent<Player>();
-            bool isPlayer=false;if(other.GetComponent<Player>()!=null)isPlayer=true;
+            Player player=null;
+            if(transform.GetComponent<Player>()!=null){player=transform.GetComponent<Player>();}
 
             if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)destroy=false;
             if(other.gameObject.name.Contains(GameAssets.instance.Get("Comet").name)){if(other.GetComponent<CometRandomProperties>()!=null){if(other.GetComponent<CometRandomProperties>().damageBySpeedSize){dmg=(float)System.Math.Round(damageValues.dmgComet*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1);}else{dmg=damageValues.dmgComet;}}else{dmg=damageValues.dmgComet;}}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("Bat").name)){dmg=damageValues.dmgBat;}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("EnShip").name)){dmg=damageValues.dmgEnemyShip1;}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("EnComb").name)){destroy=false;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Goblin").name)){dmg=damageValues.dmgGoblin;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Goblin").name)){dmg=damageValues.dmgGoblin;if(player!=null){player.Hack(damageValues.efxGoblinBt.x*0.75f);}}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("HDrone").name)){dmg=damageValues.dmgHealDrone;}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("Vortex").name)){dmg=damageValues.dmgVortex;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Stinger").name)){dmg=damageValues.dmgStinger;if(isPlayer){player.Weaken(damageValues.efxStinger.x,damageValues.efxStinger.y);}}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("GlareDevil").name)){dmg=damageValues.dmgGoblin;if(isPlayer){player.Fragile(damageValues.efxGlareDev.x,damageValues.efxGlareDev.y);player.Weaken(damageValues.efxGlareDev.x,damageValues.efxGlareDev.y);}}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Stinger").name)){dmg=damageValues.dmgStinger;if(player!=null){player.Weaken(damageValues.efxStinger.x,damageValues.efxStinger.y);}}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("GlareDevil").name)){dmg=damageValues.dmgGlareDev;if(player!=null){player.Blind(damageValues.efxGlareDev.x,damageValues.efxGlareDev.y);player.Weaken(damageValues.efxGlareDev.x,damageValues.efxGlareDev.y);}}
         #endregion
         }if(collis.Contains(colliTypes.enemyWeapons)){
         #region//Enemy Weapons
-            var player=transform.GetComponent<Player>();
-            bool isPlayer=false;if(other.GetComponent<Player>()!=null)isPlayer=true;
+            Player player=null;
+            if(transform.GetComponent<Player>()!=null){player=transform.GetComponent<Player>();}
 
             if(other.gameObject.name.Contains(GameAssets.instance.Get("Soundwave").name)){dmg=damageValues.dmgSoundwave; AudioManager.instance.Play("SoundwaveHit");en=false;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBt").name)){dmg=damageValues.dmgEBt;en=false;if(isPlayer)player.Hack(4);}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBt").name)){dmg=damageValues.dmgEBt;en=false;if(player!=null)player.Hack(4);}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=damageValues.dmgEnSaber;en=false;}
             if(other.gameObject.name.Contains("StickBomb")){dmg=0;en=false;destroy=false;}
             
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("GoblinBt").name)){dmg=damageValues.dmgGoblinBt; if(isPlayer){/*player.Blind(3,2);*/player.Fragile(damageValues.efxGoblinBt.x,damageValues.efxGoblinBt.y);player.Hack(damageValues.efxGoblinBt.x*0.9f);}AudioManager.instance.Play("GoblinBtHit");en=false;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("GoblinBt").name)){dmg=damageValues.dmgGoblinBt; if(player!=null){/*player.Blind(3,2);*/player.Fragile(damageValues.efxGoblinBt.x,damageValues.efxGoblinBt.y);player.Hack(damageValues.efxGoblinBt.x*0.9f);}AudioManager.instance.Play("GoblinBtHit");en=false;}
         #endregion
         }
 

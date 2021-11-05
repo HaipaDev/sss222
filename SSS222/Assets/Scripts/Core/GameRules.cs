@@ -13,10 +13,11 @@ public static GameRules instance;
     [Header("Global")]
     public string cfgName;
     public float defaultGameSpeed=1f;
+    public bool crystalsOn=true;
+    public bool xpOn=true;
     public bool shopOn=true;
     public bool shopCargoOn=true;
     public bool upgradesOn=true;
-    public bool xpOn=true;
     public bool barrierOn=false;
     public int EVscoreMax=30;
     public int shopScoreMax=200;
@@ -168,6 +169,7 @@ public static GameRules instance;
     public Vector2 efxStinger=new Vector2(20,1);
     public float dmgGoblinBt=7f;
     public Vector2 efxGoblinBt=new Vector2(6,0.8f);
+    public float dmgGlareDev = 8f;
     public Vector2 efxGlareDev=new Vector2(1.5f,2f);
 #endregion
 #region//Shop

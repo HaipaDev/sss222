@@ -995,7 +995,7 @@ public class Player : MonoBehaviour{
             if(magnetTimer>0){magnetTimer-=Time.deltaTime;}
             if(scalerTimer>0){scalerTimer-=Time.deltaTime;}
             if(pmultiTimer>0){pmultiTimer-=Time.deltaTime;}
-            if(inverterTimer<inverterTime){inverterTimer+=Time.deltaTime;}
+            if(inverterTimer<inverterTime&&inverterTimer>-4){inverterTimer+=Time.deltaTime;}
 
             if(onfireTimer>0){onfireTimer-=Time.deltaTime*(1+dist);}else{if(onfireTimer>-4)ResetStatus("onfire");}
             if(decayTimer>0){decayTimer-=Time.deltaTime;}else{if(decayTimer>-4)ResetStatus("decay");}

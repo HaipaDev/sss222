@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6972097034719487243}
   - component: {fileID: 7452661825457085639}
   - component: {fileID: 8620906438793791199}
-  - component: {fileID: 2008519699}
+  - component: {fileID: 7052465259645583642}
   m_Layer: 5
   m_Name: EnergyTakenParrent
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   on: 0
---- !u!114 &2008519699
+--- !u!114 &7052465259645583642
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,9 +89,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 298348446204384214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6d6111abe5e2843b7b8402294079b8, type: 3}
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &4506150488287773705
 GameObject:
   m_ObjectHideFlags: 0
