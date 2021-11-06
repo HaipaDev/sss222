@@ -40,36 +40,93 @@ public class LootTableWaves : MonoBehaviour{
     }
     private void Update() {
         if(UpgradeMenu.instance!=null)currentLvl=UpgradeMenu.instance.total_UpgradesLvl;
+        else currentLvl=-4;
+        SumUp();
+        SumUpAfter();
     }
     public WaveConfig GetItem(){
         float randomWeight = 0;
-        do{
-            //No weight on any number?
-            if (sum == 0) return null;
-            randomWeight = Random.Range(0, sum);
-        } while (randomWeight == sum);
+        do{//No weight on any number?
+            if(sum==0)return null;
+            randomWeight=Random.Range(0,sum);
+        }while(randomWeight==sum);
         var i=-1;
         foreach(LootTableEntryWaves entry in itemList){
             i++;
-            if(randomWeight<dropList[i]) return entry.lootItem;
+            if(randomWeight<dropList[i])return entry.lootItem;
             randomWeight-=dropList[i];
         }
         return null;
     }
-    void SumUp(){
+    /*void SumUp(){
         dropList.Clear();
         itemTable = new Dictionary<WaveConfig, float>();
         var i=-1;
         foreach(LootTableEntryWaves entry in itemList){
             i++;
             dropList.Add(entry.dropChance);
-            if(currentLvl<entry.levelReq)dropList[i]=0;
+            if(currentLvl<entry.levelReq&&currentLvl!=-4)dropList[i]=0;
             entry.name=entry.lootItem.name;
             itemTable.Add(entry.lootItem, (float)dropList[i]);
             var value=System.Convert.ToSingle(System.Math.Round((dropList[i]/sum*100),2));
-                if(i>=0&&i<itemsPercentage.Length)itemsPercentage[i].name=entry.name+"("+entry.levelReq+")"+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);
+                if(i>=0&&i<itemsPercentage.Length)
+                itemsPercentage[i].name=
+                entry.name+
+                "("+entry.levelReq+")"
+                +" - "+value+"%"+" - "+
+                dropList[i]+"/"+
+                (sum-dropList[i]);
         }
         sum=itemTable.Values.Sum();
         System.Array.Resize(ref itemsPercentage, itemList.Count);
+    }*/
+
+    void SumUp(){
+        if(dropList.Count<itemList.Count){
+        dropList=new List<float>(itemList.Count);
+        itemTable=new Dictionary<WaveConfig,float>();
+        var i=-1;
+        System.Array.Resize(ref itemsPercentage, itemList.Count);
+        foreach(LootTableEntryWaves entry in itemList){
+            i++;
+            dropList.Add(entry.dropChance);
+            if(currentLvl<entry.levelReq&&currentLvl!=-4)dropList[i]=0;
+            entry.name=entry.lootItem.name;
+            
+            itemTable.Add(
+                entry.lootItem,
+            (float)dropList[i]);
+            var value=System.Convert.ToSingle(System.Math.Round((dropList[i]/sum*100),2));
+                if(entry!=null&&itemsPercentage!=null&&itemsPercentage[i]!=null){
+                    itemsPercentage[i].name=
+                    entry.name+
+                    "("+entry.levelReq+")"
+                    +" - "+value+"%"+" - "+
+                    dropList[i]+"/"+
+                    (sum-dropList[i]);
+                }
+        }
+        sum=dropList.Sum();
+        System.Array.Resize(ref itemsPercentage, itemList.Count);
+        }
+    }
+    void SumUpAfter(){
+        if(dropList.Count<itemList.Count){dropList.Capacity=itemList.Capacity;}
+        var i=-1;
+        foreach(LootTableEntryWaves entry in itemList){
+            i++;
+            if(currentLvl<entry.levelReq&&GameRules.instance.upgradesOn)dropList[i]=0;
+            
+            var value=System.Convert.ToSingle(System.Math.Round((dropList[i]/sum*100),2));
+                if(entry!=null&&itemsPercentage!=null&&itemsPercentage[i]!=null){
+                    itemsPercentage[i].name=
+                    entry.name+
+                    "("+entry.levelReq+")"
+                    +" - "+value+"%"+" - "+
+                    dropList[i]+"/"+
+                    (sum-dropList[i]);
+                }
+        }
+        sum=dropList.Sum();
     }
 }

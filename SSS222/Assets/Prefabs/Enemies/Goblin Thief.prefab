@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: -4076050431880435700}
   - component: {fileID: 863184083460422149}
   - component: {fileID: 7191012222464984588}
-  - component: {fileID: 5525344232430064120}
   - component: {fileID: 1599323986}
   - component: {fileID: -8825757306841386777}
   - component: {fileID: 6954968814921301417}
@@ -197,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmgTimer: 0
+  collisionTypes: 0000000001000000
 --- !u!114 &-4076050431880435700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,27 +281,6 @@ MonoBehaviour:
   dirYYUp: 0
   OOR_YY: 1
   followClosestEnemy: 0
---- !u!114 &5525344232430064120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147796775416149952}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f19f394ac284834b8e769ab6deb8ed7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  catch_distance: 5
-  shake_distance: 0.05
-  count_max: 3
-  fallSpeed: 6
-  attached: 0
-  detached: 0
-  stage: 0
-  count: 0
-  dist: 0
 --- !u!114 &1599323986
 MonoBehaviour:
   m_ObjectHideFlags: 0

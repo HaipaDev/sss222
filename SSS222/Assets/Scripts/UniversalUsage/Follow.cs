@@ -31,7 +31,7 @@ public class Follow : MonoBehaviour{
         else{targetObj=GameObject.FindGameObjectWithTag(targetTag);}
         if(followClosestEnemy==true){if(FindClosestEnemy()!=null)targetObj=FindClosestEnemy().gameObject;}
         rb=GetComponent<Rigidbody2D>();
-        if(GetComponent<Tag_PauseVelocity>()!=null){gameObject.AddComponent<Tag_PauseVelocity>();}
+        if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
    }
 
     void Update(){

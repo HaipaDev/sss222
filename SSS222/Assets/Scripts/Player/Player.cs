@@ -147,12 +147,14 @@ public class Player : MonoBehaviour{
     public float slowTimer=-4;
     [HideInInspector]public float slowTime=-4;
     [HideInInspector]public float slowStrength=1;
+    
     [Header("State Defaults")]
     [SerializeField] public float flipTime=7f;
     [SerializeField] public float gcloverTime=6f;
     [SerializeField] public bool dashingEnabled=true;
     [SerializeField] public float shadowTime=10f;
     [SerializeField] public float shadowLength=0.33f;
+    [SerializeField] public float shadowtracesSpeed=1.3f;
     [SerializeField] public float dashSpeed=10f;
     [SerializeField] public float startDashTime=0.2f;
     [SerializeField] public float inverterTime=10f;
@@ -321,6 +323,7 @@ public class Player : MonoBehaviour{
         dashingEnabled=i.dashingEnabled;
         shadowTime=i.shadowTime;
         shadowLength=i.shadowLength;
+        shadowtracesSpeed=i.shadowtracesSpeed;
         shadowCost=i.shadowCost;
         dashSpeed=i.dashSpeed;
         startDashTime=i.startDashTime;
@@ -1009,14 +1012,16 @@ public class Player : MonoBehaviour{
             if(blindTimer>0){blindTimer-=Time.deltaTime;}else{if(blindTimer>-4)ResetStatus("blind");}
             if(speedTimer>0){speedTimer-=Time.deltaTime;}else{if(speedTimer>-4)if(speed){speedStrength=1;RevertToSpeedPrev();}ResetStatus("speed");}
             if(slowTimer>0){slowTimer-=Time.deltaTime;}else{if(slowTimer>-4)if(slow){slowStrength=1;RevertToSpeedPrev();}ResetStatus("slow");}
-            if(armored==true&&fragile!=true){armorMulti=armoredStrength;}else if(fragile==true&&armored!=true){armorMulti=1/fragileStrength;}
-            if(armored!=true&&fragile!=true){armorMulti=armorMultiInit;}if(armored==true&&fragile==true){armorMulti=(1/fragileStrength)*armoredStrength;}
-            if(power==true&&weakns!=true){dmgMulti=powerStrength;}else if(weakns==true&&power!=true){dmgMulti=1/weaknsStrength;}
-            if(power!=true&&weakns!=true){dmgMulti=dmgMultiInit;}if(power==true&&weakns==true){dmgMulti=(1/weaknsStrength)*powerStrength;}
+            if(armored==true&&fragile!=true){armorMulti=armorMultiInit*armoredStrength;}else if(armored!=true&&fragile==true){armorMulti=armorMultiInit/fragileStrength;}
+            if(armored!=true&&fragile!=true){armorMulti=armorMultiInit;}if(armored==true&&fragile==true){armorMulti=(dmgMultiInit/fragileStrength)*armoredStrength;}
+            if(power==true&&weakns!=true){dmgMulti=dmgMultiInit*powerStrength;}else if(power!=true&&weakns==true){dmgMulti=dmgMultiInit/weaknsStrength;}
+            if(power!=true&&weakns!=true){dmgMulti=dmgMultiInit;}if(power==true&&weakns==true){dmgMulti=(dmgMultiInit/weaknsStrength)*powerStrength;}
             if(onfire){if(frozen){ResetStatus("frozen");/*Damage(1,dmgType.silent);*/}}
             if(infEnergyTimer>0){infEnergyTimer-=Time.deltaTime;}else{if(infEnergyTimer>-4){ResetStatus("infEnergy");}}
             if(infEnergy){energy=infPrevEnergy;}
-            if(speed==true&&slow!=true){moveSpeedCurrent=speedPrev[speedPrev.Count-1]*(1.25f*speedStrength);}else if(slow==true&&speed!=true){moveSpeedCurrent=speedPrev[speedPrev.Count-1]/(2*slowStrength);}else if(speed&&slow){moveSpeedCurrent=moveSpeed;}
+            if(speed==true&&slow!=true){moveSpeedCurrent=speedPrev[speedPrev.Count-1]*speedStrength;}else if(speed!=true&&slow==true){moveSpeedCurrent=speedPrev[speedPrev.Count-1]/slowStrength;}
+            else if(speed&&slow){if(speedPrev.Count>1)moveSpeedCurrent=speedPrev[speedPrev.Count-2]/slowStrength*speedStrength;
+            else moveSpeedCurrent=speedPrev[speedPrev.Count-1]/slowStrength*speedStrength;}
             //if(speeded!=true&&slowed!=true){moveSpeedCurrent=moveSpeed;}if(speeded==true&&slowed==true){}
         }
     }
@@ -1073,30 +1078,24 @@ public class Player : MonoBehaviour{
         if(randomizer!=null)Instantiate(randomizer,transform.position,Quaternion.identity);
     }
     
-    public void OnFire(float duration,float strength){
+    public void OnFire(float duration,float strength=1){
         onfireTime=duration;
         SetStatus("onfire");
         StartCoroutine(OnFireI(strength));
     }
-    IEnumerator OnFireI(float strength){
-    while(true){
-       if(onfire==true){
-           Damage(onfireDmg*strength,dmgType.flame);
-           yield return new WaitForSeconds(onfireTickrate);
-       }else{yield break;}
-    }}
-    public void Decay(float duration,float strength){
+    IEnumerator OnFireI(float strength){while(onfire){
+        Damage(onfireDmg*strength,dmgType.flame);
+        yield return new WaitForSeconds(onfireTickrate);
+    }yield break;}
+    public void Decay(float duration,float strength=1){
         decayTime=duration;
         SetStatus("decay");
         StartCoroutine(DecayI(strength));
     }
-    IEnumerator DecayI(float strength){
-    while(true){
-       if(decay==true){
-           Damage(decayDmg*strength,dmgType.decay);
-           yield return new WaitForSeconds(decayTickrate);
-       }else{yield break;}
-    }}
+    IEnumerator DecayI(float strength){while(decay){
+        Damage(decayDmg*strength,dmgType.decay);
+        yield return new WaitForSeconds(decayTickrate);
+    }yield break;}
     public void Electrc(float duration){
         electrcTime=duration;
         SetStatus("electrc");
@@ -1105,44 +1104,55 @@ public class Player : MonoBehaviour{
         frozenTime=duration;
         SetStatus("frozen");
     }
-    public void Armor(float duration,float strength){
+    public void Armor(float duration,float strength=1){
         armoredTime=duration;
-        armoredStrength=strength;
+        if(strength!=1)armoredStrength=strength;
+        else armoredStrength=1.5f;
         SetStatus("armored");
     }
-    public void Fragile(float duration,float strength){
+    public void Fragile(float duration,float strength=1){
         fragileTime=duration;
-        fragileStrength=strength;
+        if(strength!=1)fragileStrength=strength;
+        else fragileStrength=1.5f;
         SetStatus("fragile");
-    }public void Power(float duration,float strength){
+    }public void Power(float duration,float strength=1){
         powerTime=duration;
-        powerStrength=strength;
+        if(strength!=1)powerStrength=strength;
+        else powerStrength=1.5f;
         SetStatus("power");
-    }public void Weaken(float duration,float strength){
+    }public void Weaken(float duration,float strength=1){
         weaknsTime=duration;
-        weaknsStrength=strength;
+        if(strength!=1)weaknsStrength=strength;
+        else weaknsStrength=1.5f;
         SetStatus("weakns");
     }public void Hack(float duration){
         hackedTime=duration;
         SetStatus("hacked");
-    }public void Blind(float duration,float strength){
+    }public void Blind(float duration,float strength=1){
         blindTime=duration;
-        blindStrenght=strength;
+        if(strength!=1)blindStrenght=strength;
+        else blindStrenght=1.5f;
         SetStatus("blind");
     }public void InfEnergy(float duration){
         infPrevEnergy=energy;
         infEnergyTime=duration;
         SetStatus("infEnergy");
-    }public void Speed(float duration,float strength){
-        SetSpeedPrev();
+    }public void Speed(float duration,float strength=1){
         speedTime=duration;
-        speedStrength=strength;
-        SetStatus("speed");
-    }public void Slow(float duration,float strength){
-        SetSpeedPrev();
+        if(speed!=true){
+            SetSpeedPrev();
+            if(strength!=1)speedStrength=strength;
+            else speedStrength=1.5f;
+            SetStatus("speed");
+        }
+    }public void Slow(float duration,float strength=1){
         slowTime=duration;
-        slowStrength=strength;
-        SetStatus("slow");
+        if(slow!=true){
+            SetSpeedPrev();
+            if(strength!=1)slowStrength=strength;
+            else slowStrength=1.5f;
+            SetStatus("slow");
+        }
     }
 #endregion
 
@@ -1325,8 +1335,9 @@ public class Player : MonoBehaviour{
     }
 
     public void SetSpeedPrev(){
-        if(speedPrev.Count==1&&speedPrev[0]==moveSpeed){speedPrev[0]=moveSpeedCurrent;}
-        else{speedPrev.Add(moveSpeedCurrent);}
+        //if(speedPrev.Count==1&&speedPrev[0]==moveSpeed){speedPrev[0]=moveSpeedCurrent;}
+        //else{speedPrev.Add(moveSpeedCurrent);}
+        if(moveSpeedCurrent!=moveSpeed){speedPrev.Add(moveSpeedCurrent);}
     }
     public void RevertToSpeedPrev(){
         if(speedPrev.Count>1){moveSpeedCurrent=speedPrev[speedPrev.Count-1];speedPrev.Remove(speedPrev[speedPrev.Count-1]);}

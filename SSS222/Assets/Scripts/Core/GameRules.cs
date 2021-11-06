@@ -67,6 +67,7 @@ public static GameRules instance;
     public bool dashingEnabled = true;
     public float shadowTime = 10f;
     public float shadowLength=0.33f;
+    public float shadowtracesSpeed=1.3f;
     public float shadowCost=5f;
     public float dashSpeed=10f;
     public float startDashTime=0.2f;

@@ -37,7 +37,7 @@ public class Goblin : MonoBehaviour{
     }
 
     void Update(){
-        if(powerups!=null){rb.velocity=new Vector2(Random.Range(2.5f,3f),Random.Range(2.5f,3f));}//Fly off after getting powerup
+        if(powerups!=null&&!bossForm){rb.velocity=new Vector2(Random.Range(2.5f,3f),Random.Range(2.5f,3f));}//Fly off after getting powerup
         if(bossForm)BossAI();
     }
     
@@ -99,10 +99,11 @@ public class Goblin : MonoBehaviour{
         GetComponent<SpriteRenderer>().sprite=bossSprite;
         GetComponent<Enemy>().shooting=true;GetComponent<Enemy>().health=bossHp;
         pos.x=transform.position.x;transform.rotation=new Quaternion(0,0,0,0);
+        rb.velocity=Vector2.zero;GetComponent<Tag_PauseVelocity>().velPaused=Vector2.zero;
         bossForm=true;
     }
     void BossAI(){
-        if(GameSession.GlobalTimeIsPaused){
+        if(!GameSession.GlobalTimeIsPaused){
             float step=vspeed*Time.timeScale;
             if(!moveDown&&pos.y<yMax)pos.y+=step;
             if(pos.y>=yMax)moveDown=true;

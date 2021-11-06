@@ -41,7 +41,6 @@ public class Enemy : MonoBehaviour{
     private void Awake(){
         StartCoroutine(SetValues());
         if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
-        if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
     }
     IEnumerator SetValues(){
         //drops=(LootTableDrops)gameObject.AddComponent(typeof(LootTableDrops));
@@ -89,6 +88,7 @@ public class Enemy : MonoBehaviour{
     }
     void Start(){
         rb=GetComponent<Rigidbody2D>();
+        //if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
         shotCounter=Random.Range(shootTime.x,shootTime.y);
     }
     void Update(){
