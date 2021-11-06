@@ -39,8 +39,8 @@ public class UniCollider : MonoBehaviour{
                 GameAssets.instance.VFX("ExplosionSmall", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
             }
             if(other.gameObject.name.Contains(GameAssets.instance.Get("PRocket").name)){dmg=damageValues.dmgPRocket;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("PLaser").name)){dmg=other.GetComponent<DamageOverDist>().dmg;if(transform.GetComponent<EnemyHacked>()==null){transform.gameObject.AddComponent<EnemyHacked>();}Destroy(other.gameObject,0.01f);AudioManager.instance.Play("PLaserHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("Plasma").name)){dmg=damageValues.dmgPRocketExpl;transform.GetComponent<Rigidbody2D>().velocity=Vector2.up*6f;transform.GetComponent<Enemy>().yeeted=true;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("PLaser").name)){dmg=other.GetComponent<DamageOverDist>().dmg;if(transform.GetComponent<EnemyHacked>()==null){transform.gameObject.AddComponent<EnemyHacked>();}Destroy(other.gameObject,0.01f);AudioManager.instance.Play("PLaserHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=damageValues.dmgMPulse;AudioManager.instance.Play("MLaserHit");}
 
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.dmgFlame;}
@@ -72,13 +72,13 @@ public class UniCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=damageValues.dmgEnSaber;en=false;}
             if(other.gameObject.name.Contains("StickBomb")){dmg=0;en=false;destroy=false;}
             
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("GoblinBt").name)){dmg=damageValues.dmgGoblinBt; if(player!=null){/*player.Blind(3,2);*/player.Fragile(damageValues.efxGoblinBt.x,damageValues.efxGoblinBt.y);player.Hack(damageValues.efxGoblinBt.x*0.9f);}AudioManager.instance.Play("GoblinBtHit");en=false;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("GoblinBt").name)){dmg=damageValues.dmgGoblinBt; if(player!=null){/*player.Blind(3,2);*/player.Fragile(damageValues.efxGoblinBt.x,damageValues.efxGoblinBt.y);player.Hack(damageValues.efxGoblinBt.x);}AudioManager.instance.Play("GoblinBtHit");en=false;}
         #endregion
         }
 
-        float destroyF=1;if(destroy==false)destroyF=0;
-        float enF=1;if(en==false)enF=0;
-        return new float[]{dmg,destroyF,enF};
+        int destroyF=1;if(destroy==false)destroyF=0;
+        int enF=1;if(en==false)enF=0;
+        return new float[]{dmg,(float)destroyF,(float)enF};
     }
     public static float TriggerStay(Collider2D other, Transform transform, List<colliTypes> collis){
         var damageValues=DamageValues.instance;
@@ -92,7 +92,7 @@ public class UniCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("Plasma").name)){dmg=damageValues.dmgPRocketExpl;}//AudioSource.PlayClipAtPoint(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("CBullet").name)){dmg=damageValues.dmgCBullet;AudioManager.instance.Play("CStreamHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){dmg=(float)System.Math.Round(damageValues.dmgLSaber/3,2);Player.instance.energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y));}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=0;AudioManager.instance.Play("PRocketHit");}
+            //if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=0;AudioManager.instance.Play("PRocketHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.dmgFlame;}
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!transform.gameObject.name.Contains("Comet")){dmg=-damageValues.dmgBlueFlame;}else if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&transform.gameObject.name.Contains("Comet")){dmg=0;}
         #endregion

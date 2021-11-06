@@ -662,7 +662,7 @@ MonoBehaviour:
     timerMax: 3.3
     efxBlind: {x: 4, y: 4}
   goblinBossSettings:
-    goblinBossSprite: {fileID: 21300000, guid: 890dc7c14b246d14fa31ab7f2c20b46e, type: 3}
+    goblinBossSprite: {fileID: 21300000, guid: 39a25c8b6bd02054f89bc66720513032, type: 3}
     goblinBossHP: 50
     goblinBossDrops: []
   dmgZone: 2
@@ -683,7 +683,7 @@ MonoBehaviour:
   dmgPRocketExpl: 0.5
   dmgCBullet: 2
   dmgPlaser: 6.78
-  dmgMPulse: 130
+  dmgMPulse: 50
   dmgComet: 10
   dmgBat: 36
   dmgSoundwave: 16.5
@@ -698,8 +698,8 @@ MonoBehaviour:
   dmgHLaser: 16
   dmgStinger: 33.3
   efxStinger: {x: 20, y: 1}
-  dmgGoblinBt: 7
-  efxGoblinBt: {x: 6, y: 0.8}
+  dmgGoblinBt: 2.2
+  efxGoblinBt: {x: 6, y: 1}
   dmgGlareDev: 8
   efxGlareDev: {x: 1.5, y: 2}
   shopList:

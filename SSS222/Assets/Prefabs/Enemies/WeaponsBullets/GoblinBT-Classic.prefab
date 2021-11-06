@@ -17,10 +17,9 @@ GameObject:
   - component: {fileID: -3868070912757826984}
   - component: {fileID: 6410541325448673402}
   - component: {fileID: 2958747851579661756}
-  - component: {fileID: -2361113034422557386}
   - component: {fileID: 4741881015134173703}
   m_Layer: 9
-  m_Name: GoblinBT
+  m_Name: GoblinBT-Classic
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6a350c0eb1a04bc4081739045e4c7a20, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2371d25e0f9454c489e407013d0f38c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,7 +129,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.1764706, y: 0.1764706}
+    oldSize: {x: 0.25, y: 0.375}
     newSize: {x: 0.2962963, y: 0.44444445}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -292,36 +291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a296ec3eabf454da6090a43bedc110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  classic: 0
---- !u!114 &-2361113034422557386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21a8c4beb6393e8418ea04d76c86dccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  target: {fileID: 0}
-  targetTag: Player
-  targetObj: {fileID: 0}
-  dist: 0
-  distReq: 4
-  speedFollow: 5
-  vspeed: 2.4
-  hspeed: 0
-  rotateTowards: 0
-  speedRotate: 15
-  angleAdj: -90
-  followAfterOOR: 0
-  dirYYUp: 0
-  OOR_YY: 1.5
-  followClosestEnemy: 0
 --- !u!114 &4741881015134173703
 MonoBehaviour:
   m_ObjectHideFlags: 0

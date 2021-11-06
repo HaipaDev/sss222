@@ -88,7 +88,7 @@ public class Enemy : MonoBehaviour{
     }
     void Start(){
         rb=GetComponent<Rigidbody2D>();
-        //if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
+        if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
         shotCounter=Random.Range(shootTime.x,shootTime.y);
     }
     void Update(){
@@ -115,7 +115,7 @@ public class Enemy : MonoBehaviour{
     if(!GameSession.GlobalTimeIsPaused){
         shotCounter-=Time.deltaTime;
         if(shotCounter<=0f){
-        if(GetComponent<LaunchRadialBullets>()==null&&GetComponent<HealingDrone>()==null){
+        if(GetComponent<LaunchRadialBullets>()==null&&GetComponent<LaunchSwarmBullets>()==null&&GetComponent<HealingDrone>()==null){
             if(bullet!=null){
                 if(DBullets!=true){
                     var bt=Instantiate(bullet,transform.position,Quaternion.identity) as GameObject;
@@ -133,6 +133,7 @@ public class Enemy : MonoBehaviour{
                 }
             }else{Debug.LogWarning("Bullet not asigned");}
         }else if(GetComponent<LaunchRadialBullets>()!=null){GetComponent<LaunchRadialBullets>().Shoot();}
+        else if(GetComponent<LaunchSwarmBullets>()!=null){GetComponent<LaunchSwarmBullets>().Shoot();}
         shotCounter=Random.Range(shootTime.x, shootTime.y);
         }
     }

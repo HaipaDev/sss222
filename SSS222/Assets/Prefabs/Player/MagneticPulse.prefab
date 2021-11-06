@@ -10,16 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1582285686359280275}
   - component: {fileID: 1844801458717974007}
-  - component: {fileID: 5461616768932919024}
   - component: {fileID: 1585547072156378214}
-  - component: {fileID: 8209699668945105969}
   - component: {fileID: 5820739300652673482}
   - component: {fileID: 6441261333678637232}
+  - component: {fileID: 7217661830312325026}
   - component: {fileID: 6895824084116310237}
-  - component: {fileID: -1256347099050162162}
   m_Layer: 8
   m_Name: MagneticPulse
-  m_TagString: Untagged
+  m_TagString: PlayerWeapons
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,27 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &5461616768932919024
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!58 &1585547072156378214
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -128,18 +105,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.33333334
---- !u!114 &8209699668945105969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &5820739300652673482
 AudioSource:
   m_ObjectHideFlags: 0
@@ -250,6 +215,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 0
+--- !u!114 &7217661830312325026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6895824084116310237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,19 +241,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   limit: 80
---- !u!114 &-1256347099050162162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmgFreq: 0.001
 --- !u!1001 &4057143324263591056
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -495,6 +495,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: enemies.Array.data[5].bullet
+      value: 
+      objectReference: {fileID: 5313808222654050488, guid: a5c2d58a3cf741949bd20513219dfcd0,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: enemies.Array.data[5].health
       value: 3.5
       objectReference: {fileID: 0}
@@ -679,6 +685,12 @@ PrefabInstance:
       propertyPath: pwrupStatusList.Array.data[9].name
       value: HRockets
       objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: goblinBossSettings.goblinBossSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 890dc7c14b246d14fa31ab7f2c20b46e,
+        type: 3}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: pwrupStatusList.Array.data[10].name
