@@ -30,13 +30,13 @@ public class EnShip : MonoBehaviour{
     }
 
     void Update(){
-    if(Player.instance!=null){
-        float stepY = vspeed * Time.deltaTime;
-        float stepX = speedFollow * Time.deltaTime;
-        playerPosX = new Vector2(Player.instance.transform.position.x, transform.position.y);
-        playerPos = new Vector2(Player.instance.transform.position.x, Player.instance.transform.position.y);
-        selfPos = new Vector2(transform.position.x,transform.position.y);
-        var dist = Vector2.Distance(playerPosX, selfPos);
+    if(!GameSession.GlobalTimeIsPaused&&Player.instance!=null){
+        float stepY=vspeed*Time.deltaTime;
+        float stepX=speedFollow*Time.deltaTime;
+        playerPosX=new Vector2(Player.instance.transform.position.x,transform.position.y);
+        playerPos=new Vector2(Player.instance.transform.position.x,Player.instance.transform.position.y);
+        selfPos=new Vector2(transform.position.x,transform.position.y);
+        var dist=Vector2.Distance(playerPosX,selfPos);
 
         if(transform.position.y>posY.y){transform.position=new Vector2(Player.instance.transform.position.x,transform.position.y-vspeed);}
         else{

@@ -9,13 +9,15 @@ public class Loader : MonoBehaviour{
     public AudioMixer audioMixer;
     bool loaded;
     private void Load(){
-        if(Application.platform==RuntimePlatform.Android){SaveSerial.instance.settingsData.inputType=InputType.touch;SaveSerial.instance.settingsData.pprocessing=false;SaveSerial.instance.settingsData.scbuttons=true;}
-        else{SaveSerial.instance.settingsData.inputType=InputType.mouse;SaveSerial.instance.settingsData.pprocessing=true;SaveSerial.instance.settingsData.scbuttons=false;}
+        if(Application.platform==RuntimePlatform.Android){SaveSerial.instance.settingsData.inputType=/*InputType.touch;*/InputType.mouse;SaveSerial.instance.settingsData.dtapMouseShoot=true;
+        SaveSerial.instance.settingsData.pprocessing=false;SaveSerial.instance.settingsData.scbuttons=true;}
+        else{SaveSerial.instance.settingsData.inputType=InputType.mouse;SaveSerial.instance.settingsData.dtapMouseShoot=false;
+        SaveSerial.instance.settingsData.pprocessing=true;SaveSerial.instance.settingsData.scbuttons=false;}
         if(!loaded){
-        SaveSerial.instance.Load();
-        SaveSerial.instance.LoadLogin();
-        SaveSerial.instance.LoadSettings();
-        loaded=true;
+            SaveSerial.instance.Load();
+            SaveSerial.instance.LoadLogin();
+            SaveSerial.instance.LoadSettings();
+            loaded=true;
         }
         if(Application.platform!=RuntimePlatform.Android){Screen.fullScreen=SaveSerial.instance.settingsData.fullscreen;if(SaveSerial.instance.settingsData.fullscreen)Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);
         QualitySettings.SetQualityLevel(SaveSerial.instance.settingsData.quality);}

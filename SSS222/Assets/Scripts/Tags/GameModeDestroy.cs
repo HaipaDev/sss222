@@ -11,6 +11,6 @@ public class GameModeDestroy : MonoBehaviour{
     IEnumerator Start(){
         yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(0,0.15f));//Prevent overload crash
         if(!reverse&&GameSession.instance.CheckGameModeSelected(gamemodeName)){Destroy(gameObject);}
-        else if(reverse&&GameSession.instance.CheckGameModeSelected(gamemodeName)){Destroy(gameObject);}
+        else if(reverse&&!GameSession.instance.CheckGameModeSelected(gamemodeName)){Destroy(gameObject);}
     }
 }

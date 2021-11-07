@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5539952464143062612}
   - component: {fileID: 5539952464143062613}
   - component: {fileID: 5539952464143062614}
+  - component: {fileID: 4513458520638440046}
   m_Layer: 5
   m_Name: StateDisplay0
   m_TagString: Untagged
@@ -94,6 +95,19 @@ MonoBehaviour:
   powerups: 0
   textObj: {fileID: 0}
   state: 
+--- !u!114 &4513458520638440046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5539952464143062616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0724842366b6ea4eaeab0d5c14d8f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &5539952465636854906
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +119,7 @@ GameObject:
   - component: {fileID: 5539952465636854905}
   - component: {fileID: 5539952465636854903}
   - component: {fileID: 5539952465636854904}
+  - component: {fileID: 865952905681019319}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -169,6 +184,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &865952905681019319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5539952465636854906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0724842366b6ea4eaeab0d5c14d8f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &5539952465892817221
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,6 +208,7 @@ GameObject:
   - component: {fileID: 5539952465892817220}
   - component: {fileID: 5539952465892817218}
   - component: {fileID: 5539952465892817219}
+  - component: {fileID: 4249462406711827645}
   m_Layer: 5
   m_Name: StateText
   m_TagString: Untagged
@@ -303,3 +332,16 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4249462406711827645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5539952465892817221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0724842366b6ea4eaeab0d5c14d8f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1

@@ -80,19 +80,24 @@ MonoBehaviour:
     crMend_upgraded: 0
     enDiss_upgraded: 0
   settingsData:
-    gameVersion: 0.5t3
     inputType: 0
-    fullscreen: 1
-    pprocessing: 0
-    scbuttons: 0
-    vibrations: 0
-    quality: 4
-    masterVolume: 0
-    soundVolume: 0
-    musicVolume: -25
     joystickType: 0
     joystickSize: 1
     lefthand: 0
+    dtapMouseShoot: 0
+    scbuttons: 0
+    vibrations: 0
+    masterVolume: 0
+    soundVolume: 0
+    musicVolume: -25
+    playfieldRot: 0
+    quality: 4
+    fullscreen: 1
+    pprocessing: 0
+    screenshake: 1
+    dmgPopups: 1
+    particles: 1
+    screenflash: 1
     popupSumTime: 0.25
     hpPopupsSum: 1
     enPopupsSum: 1
@@ -101,4 +106,9 @@ MonoBehaviour:
     coinPopupsSum: 1
     corePopupsSum: 1
     scorePopupsSum: 0
-    playfieldRot: 0
+    hudVis_graphic: 0.9
+    hudVis_text: 1
+    hudVis_notif: 1
+    hudVis_popup: 0.9
+    hudVis_barFill: 1
+    hudVis_absorpFill: 0.5

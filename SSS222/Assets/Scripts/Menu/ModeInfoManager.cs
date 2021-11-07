@@ -4,19 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ModeInfoManager : MonoBehaviour{
-    [SerializeField] GameObject startPanel;
-    [SerializeField] GameObject infoPanel;
+    [SerializeField] int panelActive=0;
+    [SerializeField] GameObject[] panels;
     [SerializeField] Image startIMG;
     [SerializeField] Sprite[] startSprites;
     void Start(){
-        OpenStartPanel();
+        SetActivePanel(0);
         startIMG.sprite=startSprites[GameSession.instance.gameModeSelected];
     }
     void Update(){
         
     }
-    public void OpenNextPanel(){if(startPanel.activeSelf){OpenInfoPanel();}else{OpenStartPanel();}}
-    public void OpenPrevPanel(){if(!startPanel.activeSelf){OpenStartPanel();}else{OpenInfoPanel();}}
-    public void OpenStartPanel(){startPanel.SetActive(true);infoPanel.SetActive(false);}
-    public void OpenInfoPanel(){startPanel.SetActive(false);infoPanel.SetActive(true);}
+    public void SetActivePanel(int i){foreach(GameObject p in panels){p.SetActive(false);}panels[i].SetActive(true);panelActive=i;}
+    public void OpenNextPanel(){if(panelActive<panels.Length-1)SetActivePanel(panelActive+1);else SetActivePanel(0);}
+    public void OpenPrevPanel(){if(panelActive>0)SetActivePanel(panelActive-1);else SetActivePanel(panels.Length-1);}
 }

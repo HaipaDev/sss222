@@ -19,7 +19,9 @@ public class GameSession : MonoBehaviour{
     public bool xpOn=true;
     public bool shopOn=true;
     public bool shopCargoOn=true;
+    //public bool levelingOn=true;
     public bool upgradesOn=true;
+    //public bool modulesOn=true;
     [Header("Current Player Values")]
     public int score=0;
     public float scoreMulti=1f;

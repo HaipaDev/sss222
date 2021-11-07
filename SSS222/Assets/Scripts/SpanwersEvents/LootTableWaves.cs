@@ -8,7 +8,7 @@ public class LootTableEntryWaves{
     [HideInInspector]public string name;
     public WaveConfig lootItem;
     public float dropChance=0f;
-    public float levelReq=0f;
+    public int levelReq=0;
 }
 [System.Serializable]
 public class ItemPercentageWaves{

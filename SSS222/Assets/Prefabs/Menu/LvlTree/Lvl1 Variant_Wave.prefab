@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 622646601013503038, guid: a332cd3b6b3b143459783ec5815f892b,
         type: 3}
       propertyPath: m_Name
-      value: Lvl1 Variant
+      value: Lvl1 Variant_Wave
       objectReference: {fileID: 0}
     - target: {fileID: 822282105972452282, guid: a332cd3b6b3b143459783ec5815f892b,
         type: 3}
@@ -159,6 +159,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3011394683108519929, guid: a332cd3b6b3b143459783ec5815f892b,
         type: 3}
+      propertyPath: m_textAlignment
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 3011394683108519929, guid: a332cd3b6b3b143459783ec5815f892b,
+        type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3011394683108519929, guid: a332cd3b6b3b143459783ec5815f892b,
+        type: 3}
       propertyPath: m_textInfo.lineCount
       value: 1
       objectReference: {fileID: 0}
@@ -215,7 +225,7 @@ PrefabInstance:
     - target: {fileID: 3593468848345083293, guid: a332cd3b6b3b143459783ec5815f892b,
         type: 3}
       propertyPath: m_MinHeight
-      value: 150
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 3593468848345083293, guid: a332cd3b6b3b143459783ec5815f892b,
         type: 3}

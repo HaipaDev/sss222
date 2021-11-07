@@ -520,7 +520,6 @@ GameObject:
   - component: {fileID: 3117612949783586437}
   - component: {fileID: 5353796659517418924}
   - component: {fileID: 743260091175601703}
-  - component: {fileID: 7659840743291813063}
   - component: {fileID: 676337422661115244}
   m_Layer: 5
   m_Name: ScrollRect
@@ -631,49 +630,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &7659840743291813063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1160572746015818913}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b333d67eb08d464d823874f6a1666c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ContentLayout: {fileID: 6465522002748499793}
-  DraggableArea: {fileID: 0}
-  IsDraggable: 0
-  CloneDraggedObject: 0
-  IsDropable: 0
-  IsDisplacable: 0
-  maxItems: 2147483647
-  OnElementDropped:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementGrabbed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementRemoved:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementAdded:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementDisplacedFrom:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementDisplacedTo:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementDisplacedFromReturned:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementDisplacedToReturned:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &676337422661115244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4461,7 +4417,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "UPDATE 1.2 - \nMORE CONTENT, \nBOSSES\n[MULTIPLAYER?]"
+  m_text: "UPDATE 0.6 - \nOverhauled Trading with Items, Space Pirates and Enforcers"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a08a4866d54094b853c1b628fdbdd1, type: 2}
   m_sharedMaterial: {fileID: 7516542502403631768, guid: 45a08a4866d54094b853c1b628fdbdd1,
@@ -4489,7 +4445,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55.5
+  m_fontSize: 44.4
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -7,24 +7,24 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEditor;
 
-public class LvlTree : MonoBehaviour{
+public class LvlTreeWaves : MonoBehaviour{
     [SerializeField] GameObject mainList;
     [SerializeField] GameObject listElement;
     [SerializeField] GameObject gridElement;
     [SerializeField] GameObject[] lists;
-    [SerializeField] List<LootTableEntryPowerup> powerups;
+    [SerializeField] List<LootTableEntryWaves> waves;
     [SerializeField] List<int> levels;
     //int maxHSlots=13;
     int minLevel=0;
     void Awake(){StartCoroutine(SetValues());}
     IEnumerator SetValues(){
         yield return new WaitForSecondsRealtime(0.15f);
-        if(FindObjectOfType<LootTablePowerups>()!=null)foreach(LootTablePowerups lt in FindObjectsOfType<LootTablePowerups>()){powerups.AddRange(lt.itemList);}
-        else if(GameRules.instance!=null){powerups.AddRange(GameRules.instance.pwrupStatusList);powerups.AddRange(GameRules.instance.pwrupWeaponList);}
+        if(FindObjectOfType<LootTableWaves>()!=null){foreach(LootTableWaves lt in FindObjectsOfType<LootTableWaves>()){waves.AddRange(lt.itemList);}}
+        else if(GameRules.instance!=null){waves.AddRange(GameRules.instance.waveList);}
         yield return new WaitForSecondsRealtime(0.015f);
-        List<LootTableEntryPowerup> removeList=new List<LootTableEntryPowerup>();
-        foreach(LootTableEntryPowerup entry in powerups){if(entry.dropChance<=0){removeList.Add(entry);}}
-        foreach(LootTableEntryPowerup rem in removeList){if(powerups.Contains(rem)){powerups.Remove(rem);}}
+        List<LootTableEntryWaves> removeList=new List<LootTableEntryWaves>();
+        foreach(LootTableEntryWaves entry in waves){if(entry.dropChance<=0){removeList.Add(entry);}}
+        foreach(LootTableEntryWaves rem in removeList){if(waves.Contains(rem)){waves.Remove(rem);}}
         yield return new WaitForSecondsRealtime(0.015f);
         SetLevels();
         yield return new WaitForSecondsRealtime(0.015f);
@@ -36,13 +36,13 @@ public class LvlTree : MonoBehaviour{
             go.GetComponent<LvlTreeList>().level=levels[i];
             go.name="Lvl"+levels[i].ToString();
             var p=-1;
-            foreach(LootTableEntryPowerup powerup in powerups){
+            foreach(LootTableEntryWaves wave in waves){
                 p++;
-                if(levels[i]==powerup.levelReq){
+                if(levels[i]==wave.levelReq){
                     //for(var a=0;a<20;a++){//test make 20x more
                     GameObject go2=Instantiate(gridElement,go.transform.GetChild(0));
-                    go2.name=powerup.name;
-                    go2.GetComponent<Image>().sprite=powerup.lootItem.item.GetComponent<SpriteRenderer>().sprite;
+                    go2.name=wave.name;
+                    go2.GetComponent<Image>().sprite=wave.lootItem.thumbnail;
                     go.GetComponent<LvlTreeList>().elements.Add(go2);
                     //}
                     #region LvlTreeList AutoScale
@@ -66,19 +66,19 @@ public class LvlTree : MonoBehaviour{
         }
     }
     void OnValidate() {
-        //powerups=AssetDatabase.FindAssets("t:PowerupItem");
-        //powerups=Resources.FindObjectsOfTypeAll(typeof(PowerupItem));
-        //Array.Resize(ref powerupsItems,powerups.Count);
-        //Array.Resize(ref powerupsItems,powerups.Length);
+        //waves=AssetDatabase.FindAssets("t:PowerupItem");
+        //waves=Resources.FindObjectsOfTypeAll(typeof(PowerupItem));
+        //Array.Resize(ref wavesSpr,waves.Count);
+        //Array.Resize(ref wavesSpr,waves.Length);
         //SetLevels();
-        //string paths=AssetDatabase.GUIDToAssetPath(powerups[0]);
+        //string paths=AssetDatabase.GUIDToAssetPath(waves[0]);
     }
     void SetLevels(){
         levels.Clear();
-        for(var i=0; i<powerups.Count; i++){
-            int p=powerups[i].levelReq;
-            //powerupsItems[i]=(GameObject)powerups[i].GetType().GetField("item").GetValue(powerups[i]);
-            //var p=(int)powerups[i].GetType().GetField("levelReq").GetValue(powerups[i]);
+        for(var i=0; i<waves.Count; i++){
+            int p=waves[i].levelReq;
+            //wavesSpr[i]=(GameObject)waves[i].GetType().GetField("item").GetValue(waves[i]);
+            //var p=(int)waves[i].GetType().GetField("levelReq").GetValue(waves[i]);
             if(p>=minLevel&&!levels.Contains(p))levels.Add(p);
             levels.Sort();
         }

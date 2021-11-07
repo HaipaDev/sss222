@@ -33,6 +33,13 @@ public class SettingsMenu : MonoBehaviour{
     [SerializeField]GameObject particlesToggle;
     [SerializeField]GameObject screenflashToggle;
 
+    [SerializeField]GameObject hudVis_graphicsSlider;
+    [SerializeField]GameObject hudVis_textSlider;
+    [SerializeField]GameObject hudVis_barsSlider;
+    [SerializeField]GameObject hudVis_absorpSlider;
+    [SerializeField]GameObject hudVis_popupsSlider;
+    [SerializeField]GameObject hudVis_notifsSlider;
+
     [SerializeField]GameObject pprocessingPrefab;
     public PostProcessVolume postProcessVolume;
     private void Start(){
@@ -55,6 +62,14 @@ public class SettingsMenu : MonoBehaviour{
             dmgPopupsToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.dmgPopups;
             particlesToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.particles;
             screenflashToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.screenflash;
+
+            
+            hudVis_graphicsSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_graphics;
+            hudVis_textSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_text;
+            hudVis_barsSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_barFill;
+            hudVis_absorpSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_absorpFill;
+            hudVis_popupsSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_popups;
+            hudVis_notifsSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_notif;
         }
         if(SceneManager.GetActiveScene().name=="Options")OpenSettings();
 
@@ -74,7 +89,7 @@ public class SettingsMenu : MonoBehaviour{
         if(SaveSerial.instance.settingsData.musicVolume<=-40){SaveSerial.instance.settingsData.musicVolume=-80;}
     }
     }
-    public void SetPanelActive(int i){foreach(GameObject p in panels){p.SetActive(false);}panels[i].SetActive(true);}
+    public void SetPanelActive(int i){foreach(GameObject p in panels){p.SetActive(false);}panels[i].SetActive(true);panelActive=i;}
     public void OpenSettings(){transform.GetChild(0).gameObject.SetActive(true);transform.GetChild(1).gameObject.SetActive(false);}
     public void OpenDeleteAll(){transform.GetChild(1).gameObject.SetActive(true);transform.GetChild(0).gameObject.SetActive(false);}
     public void Close(){transform.GetChild(0).gameObject.SetActive(false);transform.GetChild(1).gameObject.SetActive(false);}
@@ -189,5 +204,19 @@ public class SettingsMenu : MonoBehaviour{
     }public void SetCheatmode(bool isOn){
         if(GameSession.instance!=null)GameSession.instance.cheatmode=isOn;
     }
+    public void SetHudVis_Graphics(float amnt){
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.hudVis_graphics=amnt;
+    }public void SetHudVis_Text(float amnt){
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.hudVis_text=amnt;
+    }public void SetHudVis_BarFill(float amnt){
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.hudVis_barFill=amnt;
+    }public void SetHudVis_AbsorpFill(float amnt){
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.hudVis_absorpFill=amnt;
+    }public void SetHudVis_Popups(float amnt){
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.hudVis_popups=amnt;
+    }public void SetHudVis_Notif(float amnt){
+        if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.hudVis_notif=amnt;
+    }
+
     public void PlayDing(){if(Application.isPlaying)GetComponent<AudioSource>().Play();}
 }
