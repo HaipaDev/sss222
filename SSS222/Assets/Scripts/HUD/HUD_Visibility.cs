@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HUD_Visibility : MonoBehaviour{
     [SerializeField] HUDVis_type type;
     [SerializeField] bool overwriteSav;
+    [SerializeField] float animVal;
     float savAlpha;
     void Start(){
         savAlpha=GetTransparency();
@@ -25,6 +26,7 @@ public class HUD_Visibility : MonoBehaviour{
           img.color=tempColor;}
         if(GetComponent<TMPro.TextMeshProUGUI>()!=null){var txt=GetComponent<TMPro.TextMeshProUGUI>();
           if(overwriteSav)txt.alpha=amnt;
+          else if(type==HUDVis_type.popups)txt.alpha=animVal*amnt;
           else txt.alpha=savAlpha*amnt;}
     }
     float GetTransparency(){

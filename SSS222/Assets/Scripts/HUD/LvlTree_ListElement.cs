@@ -3,25 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LvlTreeList : MonoBehaviour{
+public class LvlTree_ListElement : MonoBehaviour{
     [SerializeField] public int level;
     [SerializeField] public List<GameObject> elements;
     int maxHSlots=7;
     float yy;
+    RectTransform rt;
     void Start(){
-        GetComponentInChildren<TMPro.TextMeshProUGUI>().text="Level: "+level.ToString();
-        var l=1;//20>13 l=1+1=2 // 40>13 l=3+1=4
-        if(elements.Count>maxHSlots){l=(int)System.Math.Truncate((decimal)elements.Count/maxHSlots)+1;}
-        RectTransform rt = GetComponent<RectTransform>();
-        yy=rt.sizeDelta.y;
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x, yy*l);
-    }
+        rt=GetComponent<RectTransform>();
 
-    void Update(){
-        GetComponentInChildren<TMPro.TextMeshProUGUI>().text="Level: "+level.ToString();
+        transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text="Level: "+level.ToString();
         var l=1;//20>13 l=1+1=2 // 40>13 l=3+1=4
         if(elements.Count>maxHSlots){l=(int)System.Math.Truncate((decimal)elements.Count/maxHSlots)+1;}
-        RectTransform rt = GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x, yy*l);
+        yy=rt.sizeDelta.y;
+        if(rt!=null)rt.sizeDelta=new Vector2(rt.sizeDelta.x, yy*l);
+    }
+    void Update(){
+        if(rt==null)rt=GetComponent<RectTransform>();
+
+        transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text="Level: "+level.ToString();
+        var l=1;//20>13 l=1+1=2 // 40>13 l=3+1=4
+        if(elements.Count>maxHSlots){l=(int)System.Math.Truncate((decimal)elements.Count/maxHSlots)+1;}
+        if(rt!=null)rt.sizeDelta=new Vector2(rt.sizeDelta.x, yy*l);
     }
 }
