@@ -11,7 +11,7 @@ public class GameCreator : MonoBehaviour{
     [SerializeField] GameObject loaderPrefab;
     [SerializeField] GameObject saveSerialPrefab;
     [SerializeField] public GameObject gameAssetsPrefab;
-    [SerializeField] GameObject levelPrefab;
+    [SerializeField] GameObject gSceneManagerPrefab;
     [SerializeField] GameObject audioManagerPrefab;
     [SerializeField] GameObject dbaccessPrefab;
     //[SerializeField] int gamerulesetsID;
@@ -27,7 +27,7 @@ public class GameCreator : MonoBehaviour{
         //if(FindObjectOfType<Loader>()==null){Instantiate(loaderPrefab);}
         if(FindObjectOfType<SaveSerial>()==null){Instantiate(saveSerialPrefab);}
         if(FindObjectOfType<GameAssets>()==null){Instantiate(gameAssetsPrefab);}
-        if(FindObjectOfType<Level>()==null){Instantiate(levelPrefab);}
+        if(FindObjectOfType<GSceneManager>()==null){Instantiate(gSceneManagerPrefab);}
         if(FindObjectOfType<AudioManager>()==null){Instantiate(audioManagerPrefab);}
         if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
         if(FindObjectOfType<GameRules>()==null&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Instantiate(GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.gameModeSelected]);}

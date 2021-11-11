@@ -21,7 +21,6 @@ public class Tag_CheatModeDisable : MonoBehaviour{
                 }
                 if(GameSession.instance.cheatmode!=true)GetComponent<RectTransform>().sizeDelta=Vector2.zero;
                 else GetComponent<RectTransform>().sizeDelta=new Vector2(100,100);
-                GetComponent<LayoutElement>().enabled=false;GetComponent<LayoutElement>().enabled=true;
             }
         }else{
             if(!button){

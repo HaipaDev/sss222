@@ -766,17 +766,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4201300888754685035, guid: f0f9db98eefc6544cb033ccb81dab8ea,
+      - m_Target: {fileID: 7808446908510125222, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_TargetAssemblyTypeName: Level, Assembly-CSharp
-        m_MethodName: LoadGameModeInfoSceneSet
-        m_Mode: 3
+        m_TargetAssemblyTypeName: GSceneManager, Assembly-CSharp
+        m_MethodName: LoadGameModeInfoSceneSetStr
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 2
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Classic
           m_BoolArgument: 0
         m_CallState: 1
 --- !u!1 &1670236401388022048
@@ -977,17 +977,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4201300888754685035, guid: f0f9db98eefc6544cb033ccb81dab8ea,
+      - m_Target: {fileID: 7808446908510125222, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_TargetAssemblyTypeName: Level, Assembly-CSharp
-        m_MethodName: LoadGameModeInfoSceneSet
-        m_Mode: 3
+        m_TargetAssemblyTypeName: GSceneManager, Assembly-CSharp
+        m_MethodName: LoadGameModeInfoSceneSetStr
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 3
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Meteor
           m_BoolArgument: 0
         m_CallState: 1
 --- !u!1 &2037732639926684526
@@ -1113,17 +1113,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4201300888754685035, guid: f0f9db98eefc6544cb033ccb81dab8ea,
+      - m_Target: {fileID: 7808446908510125222, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_TargetAssemblyTypeName: Level, Assembly-CSharp
-        m_MethodName: LoadGameModeInfoSceneSet
-        m_Mode: 3
+        m_TargetAssemblyTypeName: GSceneManager, Assembly-CSharp
+        m_MethodName: LoadGameModeInfoSceneSetStr
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 4
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Hardcore
           m_BoolArgument: 0
         m_CallState: 1
 --- !u!1 &2246720349489221229
@@ -2037,17 +2037,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4201300888754685035, guid: f0f9db98eefc6544cb033ccb81dab8ea,
+      - m_Target: {fileID: 7808446908510125222, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_TargetAssemblyTypeName: Level, Assembly-CSharp
-        m_MethodName: LoadGameModeInfoSceneSet
-        m_Mode: 3
+        m_TargetAssemblyTypeName: GSceneManager, Assembly-CSharp
+        m_MethodName: LoadGameModeInfoSceneSetStr
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Adventure
           m_BoolArgument: 0
         m_CallState: 1
 --- !u!114 &3652414085661732446
@@ -2057,7 +2057,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4324225270732203493}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c88dd165c92e0b34c84d2274e82a3506, type: 3}
   m_Name: 
@@ -3430,17 +3430,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4201300888754685035, guid: f0f9db98eefc6544cb033ccb81dab8ea,
+      - m_Target: {fileID: 7808446908510125222, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_TargetAssemblyTypeName: Level, Assembly-CSharp
-        m_MethodName: LoadGameModeInfoSceneSet
-        m_Mode: 3
+        m_TargetAssemblyTypeName: GSceneManager, Assembly-CSharp
+        m_MethodName: LoadGameModeInfoSceneSetStr
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Arcade
           m_BoolArgument: 0
         m_CallState: 1
 --- !u!1 &7411510094191583599
@@ -3952,9 +3952,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4201300888754685035, guid: f0f9db98eefc6544cb033ccb81dab8ea,
+      - m_Target: {fileID: 7808446908510125222, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: GSceneManager, Assembly-CSharp
         m_MethodName: LoadStartMenu
         m_Mode: 1
         m_Arguments:
@@ -4427,8 +4427,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282137821
-  m_fontColor: {r: 0.8679245, g: 0.23335704, b: 0.23335704, a: 1}
+    rgba: 4290690798
+  m_fontColor: {r: 0.9339623, g: 0.7445265, b: 0.7445265, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 2
   m_fontColorGradient:

@@ -17,9 +17,8 @@ public class ShipLevelRequired : MonoBehaviour{
 
         textObj=this.gameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
         textObj.text=txt+value;
-        if(UpgradeMenu.instance.total_UpgradesLvl>=value){this.gameObject.SetActive(false);}
     }
     void Update(){
-        if(UpgradeMenu.instance.total_UpgradesLvl>=value){this.gameObject.SetActive(false);}
+        if(UpgradeMenu.instance.total_UpgradesLvl>=value||!GameSession.instance.levelingOn){this.gameObject.SetActive(false);}
     }
 }

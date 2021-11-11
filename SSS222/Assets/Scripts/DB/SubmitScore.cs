@@ -9,14 +9,14 @@ public class SubmitScore : MonoBehaviour{
     public void SubmitScoreFunc(){
         var db=FindObjectOfType<DBAccess>();
         if(SaveSerial.instance.hyperGamerLoginData.username!=""){
-            db.SaveScoreToDB(GameSession.instance.gameModeSelected,SaveSerial.instance.hyperGamerLoginData.username,GameSession.instance.GetHighscore(GameSession.instance.gameModeSelected));
+            db.SaveScoreToDB(SaveSerial.instance.hyperGamerLoginData.username,GameSession.instance.GetHighscore(GameSession.instance.gameModeSelected));
             if(FindObjectOfType<DisplayLeaderboard>().currentUser)FindObjectOfType<DisplayLeaderboard>().DisplayCurrentUserHighscore();
         }
-        else{Level.instance.LoadLoginScene();}
+        else{GSceneManager.instance.LoadLoginScene();}
     }
     public void ReturnToGMInfo(){StartCoroutine(ReturnToGMInfoI());}
     IEnumerator ReturnToGMInfoI(){
         yield return new WaitForSecondsRealtime(3.5f);
-        Level.instance.LoadGameModeInfoScene();
+        GSceneManager.instance.LoadGameModeInfoScene();
     }
 }

@@ -271,6 +271,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &627086498
 Canvas:
   m_ObjectHideFlags: 0
@@ -456,7 +457,7 @@ PrefabInstance:
     - target: {fileID: 3229481634824747819, guid: e59a01e90fe362a4595e25a9c141b432,
         type: 3}
       propertyPath: m_Name
-      value: Inventory Canvas
+      value: Customization Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 3229481634824747823, guid: e59a01e90fe362a4595e25a9c141b432,
         type: 3}
@@ -600,44 +601,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e59a01e90fe362a4595e25a9c141b432, type: 3}
---- !u!1 &3931574695238749253 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3229481634824747819, guid: e59a01e90fe362a4595e25a9c141b432,
-    type: 3}
-  m_PrefabInstance: {fileID: 3931574695238749252}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3931574695238749254 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3931574695380374580, guid: e59a01e90fe362a4595e25a9c141b432,
-    type: 3}
-  m_PrefabInstance: {fileID: 3931574695238749252}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3931574695238749255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3931574695238749255 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3931574695380374570, guid: e59a01e90fe362a4595e25a9c141b432,
     type: 3}
   m_PrefabInstance: {fileID: 3931574695238749252}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3931574695238749256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3931574695238749253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efd95ac4b962c144a475d00e417f154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btn: {fileID: 3931574695238749254}
-  onEnable: 1
 --- !u!1001 &5673888052050347140
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -26,10 +26,11 @@ public class DisplayLeaderboard : MonoBehaviour{
     }
     public void CurrentUserHighscoreBtn(){
         if(SceneManager.GetActiveScene().name!="ScoreSubmit"){
-            if(SaveSerial.instance.hyperGamerLoginData.loggedIn){Level.instance.LoadScoreSubmitScene();}
-            else{Level.instance.LoadLoginScene();}
-        }else{
-            Level.instance.LoadLeaderboardScene();
+            if(SaveSerial.instance.hyperGamerLoginData.loggedIn){GSceneManager.instance.LoadScoreSubmitScene();}
+            else{GSceneManager.instance.LoadLoginScene();}
+        }else{if(SaveSerial.instance.hyperGamerLoginData.loggedIn){GSceneManager.instance.LoadLeaderboardsScene();}
+            else{GSceneManager.instance.LoadLoginScene();}
+            
         }
     }
     public async void DisplayCurrentUserHighscore(){
@@ -38,7 +39,7 @@ public class DisplayLeaderboard : MonoBehaviour{
         string currentUserName="";
         int currentUserScore=0;
         if(SaveSerial.instance.hyperGamerLoginData.loggedIn){
-            var task=FindObjectOfType<DBAccess>().GetScoresFromDB(GameSession.instance.gameModeSelected);
+            var task=FindObjectOfType<DBAccess>().GetScoresFromDB();
             var resultSorted=await task;
             resultSorted=resultSorted.OrderByDescending(e=>e.score).ToList();
             

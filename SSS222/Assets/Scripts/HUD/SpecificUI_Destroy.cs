@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class SpecificUI_Destroy : MonoBehaviour{
     [SerializeField] specifiUI_type type;
-    IEnumerator Start(){
+    void Start(){
+        StartCoroutine(Check());
+    }
+
+    IEnumerator Check(){
+        if(type==specifiUI_type.energy&&!GameRules.instance.energyOnPlayer)Destroy(gameObject);
+        else if(type==specifiUI_type.crystals&&!GameSession.instance.crystalsOn)Destroy(gameObject);
+        else if(type==specifiUI_type.xp&&!GameSession.instance.xpOn)Destroy(gameObject);
+        else if(type==specifiUI_type.shop&&!GameSession.instance.shopOn)Destroy(gameObject);
+        else if(type==specifiUI_type.modules&&!GameSession.instance.modulesOn)Destroy(gameObject);
+        else if(type==specifiUI_type.statUpgs&&!GameSession.instance.statUpgOn)Destroy(gameObject);
+        else if(type==specifiUI_type.inventory&&!GameSession.instance.iteminvOn)Destroy(gameObject);
+        else if(type==specifiUI_type.leveling&&!GameSession.instance.levelingOn)Destroy(gameObject);
         yield return new WaitForSeconds(0.1f);
-        if(type!=specifiUI_type.energy&&!GameRules.instance.energyOnPlayer)Destroy(gameObject);
-        if(type!=specifiUI_type.crystals&&!GameSession.instance.crystalsOn)Destroy(gameObject);
-        if(type!=specifiUI_type.xp&&!GameSession.instance.xpOn)Destroy(gameObject);
-        if(type!=specifiUI_type.shop&&!GameSession.instance.shopOn)Destroy(gameObject);
-        if(type!=specifiUI_type.upgrades&&!GameSession.instance.upgradesOn)Destroy(gameObject);
+        StartCoroutine(Check());
     }
 }
 
 enum specifiUI_type{
-    energy,crystals,xp,shop,upgrades
+    energy,crystals,xp,shop,modules,statUpgs,inventory,leveling
 }

@@ -19,26 +19,27 @@ public class ShadowButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if(!GameRules.instance.dashingEnabled)Destroy(gameObject);
     }
     void Update(){
-        if(!Player.instance.shadow||((!drag&&SaveSerial.instance.settingsData.inputType!=InputType.touch)||
-        (drag&&(SaveSerial.instance.settingsData.inputType!=InputType.mouse||!SaveSerial.instance.settingsData.dtapMouseShoot)))){
-            TurnOff();}
-        else if(Player.instance.shadow&&((!drag&&SaveSerial.instance.settingsData.inputType==InputType.touch)||
-        (drag&&SaveSerial.instance.settingsData.inputType==InputType.mouse&&SaveSerial.instance.settingsData.dtapMouseShoot))){
-            TurnOn();}
-        pPosScr=Camera.main.WorldToScreenPoint(Player.instance.transform.position);
-        mPosScr=Camera.main.WorldToScreenPoint(Player.instance.mousePos);
-        if(pressed){
-            transform.position=new Vector2(
-            Mathf.Clamp(mPosScr.x,pPosScr.x-150,pPosScr.x+150),
-            Mathf.Clamp(mPosScr.y,pPosScr.y-150,pPosScr.y+150)
-            );
-            lastPos=Player.instance.mousePos;
-        }else if(!pressed&&drag){
-            defPos=Player.instance.transform.position;
-            transform.position=pPosScr;
-            transform.localScale=Player.instance.transform.localScale;
-        }
-        //if(Input.GetMouseButton(0)){FindObjectOfType<Player>().ShootButton(false);pressed=true;}
+        if(Player.instance!=null){
+            if(!Player.instance.shadow||((!drag&&SaveSerial.instance.settingsData.inputType!=InputType.touch)||
+            (drag&&(SaveSerial.instance.settingsData.inputType!=InputType.mouse||!SaveSerial.instance.settingsData.dtapMouseShoot)))){
+                TurnOff();}
+            else if(Player.instance.shadow&&((!drag&&SaveSerial.instance.settingsData.inputType==InputType.touch)||
+            (drag&&SaveSerial.instance.settingsData.inputType==InputType.mouse&&SaveSerial.instance.settingsData.dtapMouseShoot))){
+                TurnOn();}
+            pPosScr=Camera.main.WorldToScreenPoint(Player.instance.transform.position);
+            mPosScr=Camera.main.WorldToScreenPoint(Player.instance.mousePos);
+            if(pressed){
+                transform.position=new Vector2(
+                Mathf.Clamp(mPosScr.x,pPosScr.x-150,pPosScr.x+150),
+                Mathf.Clamp(mPosScr.y,pPosScr.y-150,pPosScr.y+150)
+                );
+                lastPos=Player.instance.mousePos;
+            }else if(!pressed&&drag){
+                defPos=Player.instance.transform.position;
+                transform.position=pPosScr;
+                transform.localScale=Player.instance.transform.localScale;
+            }
+        }else{Destroy(gameObject);}
     }
     void TurnOn(){if(!enabledd){transform.GetChild(0).gameObject.SetActive(true);enabledd=true;}}
     void TurnOff(){if(enabledd){transform.GetChild(0).gameObject.SetActive(false);enabledd=false;}}

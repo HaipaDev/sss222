@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Level : MonoBehaviour{
-    public static Level instance;
-    [SerializeField]ParticleSystem transition;
-    [SerializeField]Animator transitioner;
-    [SerializeField]float transitionTime=0.35f;
+public class GSceneManager : MonoBehaviour{
+    public static GSceneManager instance;
+    /*ParticleSystem transition;
+    Animator transitioner;
+    float transitionTime=0.35f;*/
     //float prevGameSpeed;
     private void Awake(){SetUpSingleton();GameSession.instance.gameSpeed=1f;}
     private void SetUpSingleton(){
-        instance=this;if(FindObjectsOfType<Level>().Length>1){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);}
+        if(GSceneManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
     }
     void Start(){
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
@@ -30,7 +30,7 @@ public class Level : MonoBehaviour{
         SceneManager.LoadScene("Menu");
         if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
     }
-    public void LoadStartMenuGame(){Level.instance.StartCoroutine(LoadStartMenuGameI());}
+    public void LoadStartMenuGame(){GSceneManager.instance.StartCoroutine(LoadStartMenuGameI());}
     IEnumerator LoadStartMenuGameI(){
         if(SceneManager.GetActiveScene().name=="Game"){
             GameSession.instance.SaveHighscore();
@@ -48,24 +48,26 @@ public class Level : MonoBehaviour{
     public void LoadGameScene(){
         SceneManager.LoadScene("Game");
         if(DamageValues.instance!=null)DamageValues.instance.StartCoroutine(DamageValues.instance.SetValues());
-        if(GameSession.instance.CheckGameModeSelected("Adventure")){SaveSerial.instance.LoadAdventure();GameSession.instance.StartCoroutine(GameSession.instance.LoadAdventureI());}
+        if(GameSession.instance.CheckGameModeSelected("Adventure")){GameSession.instance.LoadAdventure();}
         else{GameSession.instance.ResetScore();}
         GameSession.instance.gameSpeed=1f;
     }
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");/*GameSession.instance.SetGameModeSelected(0);*/}
     public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}
     public void LoadGameModeInfoSceneSet(int i){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGameModeSelected(i);}
+    public void LoadGameModeInfoSceneSetStr(string str){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGameModeSelectedStr(str);}
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
-    public void LoadInventoryScene(){SceneManager.LoadScene("Inventory");}
+    public void LoadCustomizationScene(){SceneManager.LoadScene("Customization");}
     public void LoadLoginScene(){SceneManager.LoadScene("Login");}
-    public void LoadLeaderboardScene(){SceneManager.LoadScene("Leaderboard");}
+    public void LoadLeaderboardsScene(){SceneManager.LoadScene("Leaderboards");}
     public void LoadScoreSubmitScene(){SceneManager.LoadScene("ScoreSubmit");}
     public void LoadCreditsScene(){SceneManager.LoadScene("Credits");}
     public void LoadWebsite(string url){Application.OpenURL(url);}
     public void SubmitScore(){if(SaveSerial.instance.hyperGamerLoginData.loggedIn){LoadScoreSubmitScene();}else{LoadLoginScene();}}
-    public void RestartGame(){Level.instance.StartCoroutine(RestartGameI());}
+    public void RestartGame(){GSceneManager.instance.StartCoroutine(GSceneManager.instance.RestartGameI());}
     IEnumerator RestartGameI(){
         GameSession.instance.SaveHighscore();
+        if(GameSession.instance.CheckGameModeSelected("Adventure"))GameSession.instance.SaveAdventure();//not sure if Restart should save or not
         yield return new WaitForSecondsRealtime(0.01f);
         GameSession.instance.ResetScore();
         GameSession.instance.ResetMusicPitch();
@@ -73,6 +75,7 @@ public class Level : MonoBehaviour{
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameSession.instance.speedChanged=false;
         GameSession.instance.gameSpeed=1f;
+        if(GameSession.instance.CheckGameModeSelected("Adventure"))GameSession.instance.LoadAdventure();
     }
     public void RestartScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -90,7 +93,7 @@ public class Level : MonoBehaviour{
     void CheckESC(){
     if(Input.GetKeyDown(KeyCode.Escape)){
             var scene=SceneManager.GetActiveScene().name;
-            if(scene=="ChooseGameMode"||scene=="Inventory"||scene=="Credits"||scene=="Leaderboards"||scene=="Login"){
+            if(scene=="ChooseGameMode"||scene=="Customization"||scene=="Credits"||scene=="Leaderboards"||scene=="Login"){
                 LoadStartMenu();
             }else if(scene=="InfoGameMode"){
                 LoadGameModeChooseScene();
@@ -107,7 +110,7 @@ public class Level : MonoBehaviour{
             }
     }}
 
-    void LoadLevel(string sceneName){
+    /*void LoadLevel(string sceneName){
         //StartCoroutine(LoadTransition(sceneName));
         LoadTransition(sceneName);
     }
@@ -121,5 +124,5 @@ public class Level : MonoBehaviour{
         //yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene(sceneName);
-    }
+    }*/
 }

@@ -757,7 +757,7 @@ public class Player : MonoBehaviour{
             if((w.costType==costType.energy&&((energyOn&&energy>0)||(!energyOn)))
             ||((w.costType==costType.ammo&&ammo>0)||(w.costType==costType.boomerang&&ammo==1))
             ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(ammo>0||GameSession.instance.coins>0))
-            ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(GameSession.instance.coresXp>0))){
+            ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(GameSession.instance.xp>0))){
                 if(overheated!=true&&electrc!=true){
                     weaponTypeBullet wp=null;
                     if(w.weaponType==weaponType.bullet){wp=(weaponTypeBullet)w.weaponTypeProperties;}
@@ -820,7 +820,7 @@ public class Player : MonoBehaviour{
                     if(w.costType==costType.energy){AddSubEnergy(wc.cost,false);}
                     if(w.costType==costType.ammo){if(ammo>=wc.cost)AddSubAmmo(wc.cost,false);else{AddSubAmmo(ammo-wc.cost,false);}}
                     if(w.costType==costType.crystalAmmo){if(ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
-                    if(w.costType==costType.blackEnergy){if(GameSession.instance.coresXp>=wc.cost){AddSubXP(wc.cost,false);}if(w.costType==costType.blackEnergy){AddSubEnergy(wcBE.regularEnergyCost);}}
+                    if(w.costType==costType.blackEnergy){if(GameSession.instance.xp>=wc.cost){AddSubXP(wc.cost,false);}if(w.costType==costType.blackEnergy){AddSubEnergy(wcBE.regularEnergyCost);}}
                     if(w.ovheat!=0&&w.costType!=costType.boomerang)Overheat(w.ovheat);
                     if(w.costType==costType.boomerang){ammo=-1;instantiateTimer=w.ovheat;}
                     if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
@@ -1044,7 +1044,7 @@ public class Player : MonoBehaviour{
             if(hpAbsorpAmnt<0){hpAbsorpAmnt=0;}
             if(enAbsorpAmnt<0){enAbsorpAmnt=0;}
             if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt==0){if(GameSession.instance.coins>=crystalMend_refillCost){hpAbsorpAmnt+=crystalMendAbsorp;GameSession.instance.coins-=crystalMend_refillCost;}}
-            if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt==0){if(GameSession.instance.coresXp>=energyDiss_refillCost){enAbsorpAmnt+=energyDissAbsorp;GameSession.instance.coresXp-=energyDiss_refillCost;}}
+            if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt==0){if(GameSession.instance.xp>=energyDiss_refillCost){enAbsorpAmnt+=energyDissAbsorp;GameSession.instance.xp-=energyDiss_refillCost;}}
             if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<maxHP)Damage(hpRegenAmnt,dmgType.heal);hpAbsorpAmnt-=hpRegenAmnt;timerHpRegen=0;}
             if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<maxEnergy)AddSubEnergy(enRegenAmnt,true);enAbsorpAmnt-=enRegenAmnt;timerEnRegen=0;}
             //if(hpRegenEnabled==true&&timerHpRegen>=freqHpRegen){Damage(hpRegenAmnt,dmgType.heal);timerHpRegen=0;}

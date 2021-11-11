@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 286714148164074327}
-  - component: {fileID: 4201300888754685035}
+  - component: {fileID: 7808446908510125222}
   m_Layer: 0
-  m_Name: Level
+  m_Name: GSceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4201300888754685035
+--- !u!114 &7808446908510125222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,9 +40,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7128682332300410602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edca100265f75404084c42588bee60c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 75059e28fc4881e49890c8b54a76ac1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   transition: {fileID: 0}
   transitioner: {fileID: 0}
-  transitionTime: 0
+  transitionTime: 0.35

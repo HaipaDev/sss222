@@ -44,8 +44,8 @@ public class DBAccess : MonoBehaviour{
         //GetScoresFromDB();
     }
 
-    public async void SaveScoreToDB(int gamemodeID,string name, int score){
-        var scores=GetGamemodeCollection(gamemodeID);
+    public async void SaveScoreToDB(string name, int score){
+        var scores=GetGamemodeCollection();
         var sameNameScore=await scores.FindAsync(e => e.name==name);
         //if(sameIDscore.ToList().Count>0){Debug.Log(id);}else{Debug.Log("Score with name "+name+" not found");}
         if(sameNameScore.ToList().Count>0){
@@ -53,14 +53,14 @@ public class DBAccess : MonoBehaviour{
             if(score==0){SetSubmitMessage("Score is equals 0!");}
             else if(score<sameNameScore.ToList()[0].score){SetSubmitMessage("Score is lower than submitted");}
             else{await scores.FindOneAndUpdateAsync(e => e.name==name, Builders<Model_Score>.Update.Set(e => e.score, score));SetSubmitMessage("Score overwritten!");}
-        }else{
+        }else{if(score!=0){
             Model_Score document=new Model_Score { name=name, score=score, version=GameSession.instance.gameVersion, date=System.DateTime.Now };
             await scores.InsertOneAsync(document);
             SetSubmitMessage("New score submitted!");
-        }
+        }else{SetSubmitMessage("Score is equals 0!");}}
     }
-    public async Task<List<Model_Score>> GetScoresFromDB(int gamemodeID){
-        var scores=GetGamemodeCollection(gamemodeID);
+    public async Task<List<Model_Score>> GetScoresFromDB(){
+        var scores=GetGamemodeCollection();
         var allScoresTask=scores.FindAsync<Model_Score>(FilterDefinition<Model_Score>.Empty);
         var scoresAwaited=await allScoresTask;
         List<Model_Score> highscores=new List<Model_Score>();
@@ -72,13 +72,11 @@ public class DBAccess : MonoBehaviour{
         //Debug.Log("Highscores: "+highscores.ToString());
         return highscores;
     }
-    IMongoCollection<Model_Score> GetGamemodeCollection(int ID){
+    IMongoCollection<Model_Score> GetGamemodeCollection(){
         var collection=scores_arcade;
-        //for(var i=0;i<GameCreator.instance.gamerulesetsPrefabs.Length;i++){
-            if(GameCreator.instance.gamerulesetsPrefabs[ID].cfgName.Contains("Classic")){collection=scores_classic;}
-            else if(GameCreator.instance.gamerulesetsPrefabs[ID].cfgName.Contains("Hardcore")){collection=scores_hardcore;}
-            else if(GameCreator.instance.gamerulesetsPrefabs[ID].cfgName.Contains("Meteor")){collection=scores_meteormadness;}
-        //}
+        if(GameSession.instance.CheckGameModeSelected("Classic")){collection=scores_classic;}
+        else if(GameSession.instance.CheckGameModeSelected("Hardcore")){collection=scores_hardcore;}
+        else if(GameSession.instance.CheckGameModeSelected("Meteor")){collection=scores_meteormadness;}
         return collection;
     }
 

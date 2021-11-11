@@ -623,6 +623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 799342203077165380}
   - component: {fileID: 1377877411804869007}
+  - component: {fileID: 4152919360546797048}
   m_Layer: 5
   m_Name: SkillQ
   m_TagString: Untagged
@@ -669,6 +670,19 @@ MonoBehaviour:
   buttons:
   - {fileID: 2389002541165373696}
   ID: -1
+--- !u!114 &4152919360546797048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469410503784355968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
 --- !u!1 &1711269654712959634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,6 +1413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2249936804335594906}
   - component: {fileID: 2389002541165373696}
+  - component: {fileID: 6121983882676451504}
   m_Layer: 5
   m_Name: SkillE
   m_TagString: Untagged
@@ -1445,6 +1460,19 @@ MonoBehaviour:
   buttons:
   - {fileID: 1377877411804869007}
   ID: -1
+--- !u!114 &6121983882676451504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3349346649233828346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
 --- !u!1 &3658889032374422607
 GameObject:
   m_ObjectHideFlags: 0

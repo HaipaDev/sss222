@@ -26,14 +26,14 @@ public class Leaderboard : MonoBehaviour{
         for(var i=0;i<container.transform.childCount;i++){Destroy(container.transform.GetChild(i).gameObject);}
     }
     public async void DisplayLeaderboards(){
-        var task=DBAccess.instance.GetScoresFromDB(GameSession.instance.gameModeSelected);
+        var task=DBAccess.instance.GetScoresFromDB();
         result=await task;
         //var output="";
 
         resultSorted=result;
         resultSorted=resultSorted.OrderByDescending(e=>e.score).ToList();
 
-        if(container.transform.childCount>0){containerChildCount=container.transform.childCount;}
+        if(container!=null)if(container.transform.childCount>0){containerChildCount=container.transform.childCount;}
 
         if(resultSorted.Count>0){
             if(containerChildCount>0){

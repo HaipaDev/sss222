@@ -385,5 +385,5 @@ public class UpgradeMenu : MonoBehaviour{
         GameSession.instance.CheckCodes("Del","0");
         GameSession.instance.CheckCodes("2","U");
         //GameSession.instance.CheckCodes("Del","9");
-    }public void CheatXP(){GameSession.instance.coresXp=GameSession.instance.xp_forCore;}
+    }public void CheatXP(){GameSession.instance.xp=GameSession.instance.xp_max;}
 }

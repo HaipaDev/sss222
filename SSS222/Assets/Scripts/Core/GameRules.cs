@@ -15,11 +15,14 @@ public static GameRules instance;
     public float defaultGameSpeed=1f;
     public bool crystalsOn=true;
     public bool xpOn=true;
+    public bool coresOn=true;
     public bool shopOn=true;
     public bool shopCargoOn=true;
-    //public bool levelingOn=true;
+    public bool levelingOn=true;
     public bool upgradesOn=true;
-    //public bool modulesOn=true;
+    public bool modulesOn=true;
+    public bool statUpgOn=false;
+    public bool iteminvOn=true;
     public bool barrierOn=false;
     public int EVscoreMax=30;
     public int shopScoreMax=200;
@@ -190,7 +193,7 @@ public static GameRules instance;
 #endregion
 #region//Leveling
     [Header("Leveling")]
-    public float xp_forCore=100f;
+    public float xp_max=100f;
     public float xp_wave=20f;
     public float xp_shop=3f;
     public float xp_powerup=1f;

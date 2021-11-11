@@ -929,9 +929,8 @@ GameObject:
   - component: {fileID: 4556867967539554988}
   - component: {fileID: 4556867967539554991}
   - component: {fileID: 4556867967539554990}
-  - component: {fileID: 4556867967539554985}
   m_Layer: 5
-  m_Name: Re-orderable Vertical ScrollRect
+  m_Name: Vertical ScrollRect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1058,49 +1057,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &4556867967539554985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4556867967539554987}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b333d67eb08d464d823874f6a1666c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ContentLayout: {fileID: 4556867967840950510}
-  DraggableArea: {fileID: 0}
-  IsDraggable: 0
-  CloneDraggedObject: 0
-  IsDropable: 0
-  IsDisplacable: 0
-  maxItems: 2147483647
-  OnElementDropped:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementGrabbed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementRemoved:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementAdded:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementDisplacedFrom:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementDisplacedTo:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementDisplacedFromReturned:
-    m_PersistentCalls:
-      m_Calls: []
-  OnElementDisplacedToReturned:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4556867967670779612
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,9 +1178,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4201300888754685035, guid: f0f9db98eefc6544cb033ccb81dab8ea,
+      - m_Target: {fileID: 7808446908510125222, guid: f0f9db98eefc6544cb033ccb81dab8ea,
           type: 3}
-        m_TargetAssemblyTypeName: Level, Assembly-CSharp
+        m_TargetAssemblyTypeName: GSceneManager, Assembly-CSharp
         m_MethodName: LoadStartMenu
         m_Mode: 1
         m_Arguments:
@@ -2249,32 +2205,32 @@ PrefabInstance:
     - target: {fileID: 7933725076996306457, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7933725076996306457, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7933725076996306457, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7933725076996306457, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7933725076996306457, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1065.0516
+      value: 1065.0518
       objectReference: {fileID: 0}
     - target: {fileID: 7933725076996306457, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 266.99106
+      value: 266.9911
       objectReference: {fileID: 0}
     - target: {fileID: 7933725076996306457, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
         type: 3}
@@ -2314,12 +2270,12 @@ PrefabInstance:
     - target: {fileID: 7933725076996306457, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 537.29395
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7933725076996306457, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1629
+      value: -669
       objectReference: {fileID: 0}
     - target: {fileID: 7933725076996306457, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
         type: 3}
