@@ -12,10 +12,11 @@ public class UpgradeMenu : MonoBehaviour{
     public GameObject upgradeMenuUI;
     public GameObject upgradeMenu2UI;
     public GameObject lvltreeUI;
+    public GameObject lvltreeUI1;
+    public GameObject lvltreeUI2;
+    public GameObject invMenu;
     public GameObject statsMenu;
     public GameObject skillsMenu;
-    public GameObject skills1Menu;
-    public GameObject skills2Menu;
     public GameObject backButton;
     public XPBars lvlbar;
     public float prevGameSpeed=1f;
@@ -119,7 +120,7 @@ public class UpgradeMenu : MonoBehaviour{
     void Start(){
         instance=this;
         player=Player.instance;
-        pskills=FindObjectOfType<PlayerSkills>();
+        pskills=Player.instance.GetComponent<PlayerSkills>();
         Resume();
     }
     void Update(){
@@ -146,33 +147,50 @@ public class UpgradeMenu : MonoBehaviour{
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         GameSession.instance.gameSpeed=0f;
         UpgradeMenuIsOpen=true;
+        StartCoroutine(ForceLayoutUpdate());
         //ParticleSystem.Stop();
         //var ptSystems = FindObjectOfType<ParticleSystem>();
         //foreach(ptSystem in ptSystems){ParticleSystem.Pause();}
     }
 
+    IEnumerator ForceLayoutUpdate(){
+        yield return new WaitForSecondsRealtime(0.02f);
+        GameObject.Find("Container-Buttons").GetComponent<Image>().enabled=false;
+        yield return new WaitForSecondsRealtime(0.02f);
+        GameObject.Find("Container-Buttons").GetComponent<Image>().enabled=true;//force update layout
+    }
+
     public void PreviousGameSpeed(){GameSession.instance.gameSpeed=prevGameSpeed;}
 
+    
+    public void OpenInv(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
+        invMenu.SetActive(true);
+        statsMenu.SetActive(false);
+        skillsMenu.SetActive(false);
+    }
     public void OpenStats(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
-        //skillsMenu.SetActive(false);
-        if(skillsMenu.activeSelf!=true)statsMenu.SetActive(true);backButton.SetActive(true);
+        invMenu.SetActive(false);
+        statsMenu.SetActive(false);
+        skillsMenu.SetActive(true);
     }
     public void OpenSkills(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
-        //statsMenu.SetActive(false);
-        if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
-        if(skills1Menu.activeSelf==false&&skills2Menu.activeSelf==false){skills1Menu.SetActive(true);}
+        invMenu.SetActive(false);
+        statsMenu.SetActive(false);
+        skillsMenu.SetActive(true);
     }
-    public void OpenSkillsPrev(){
-        if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
-        if(skills2Menu.activeSelf==true){skills1Menu.SetActive(true);skills2Menu.SetActive(false);}
-        else if(skills1Menu.activeSelf==true&&skills2Menu.activeSelf==false){skills2Menu.SetActive(true);skills1Menu.SetActive(false);}
-    }public void OpenSkillsNext(){
-        if(statsMenu.activeSelf!=true)skillsMenu.SetActive(true);
-        if(skills1Menu.activeSelf==true){skills2Menu.SetActive(true);skills1Menu.SetActive(false);}
-        else if(skills2Menu.activeSelf==true&&skills1Menu.activeSelf==false){skills1Menu.SetActive(true);skills2Menu.SetActive(false);}
-    }public void OpenLvlTree(){
+    public void OpenLvlTree(){
         upgradeMenuUI.SetActive(false);
         lvltreeUI.SetActive(true);
+        OpenLvlTree1();
+    }public void OpenLvlTree1(){
+        lvltreeUI1.SetActive(true);
+        lvltreeUI2.SetActive(false);
+    }public void OpenLvlTree2(){
+        lvltreeUI2.SetActive(true);
+        lvltreeUI1.SetActive(false);
+    }public void NextLvlTree(){
+        if(lvltreeUI1.activeSelf){lvltreeUI2.SetActive(true);lvltreeUI1.SetActive(false);return;}
+        if(lvltreeUI2.activeSelf){lvltreeUI1.SetActive(true);lvltreeUI2.SetActive(false);return;}
     }
     public void Back(){
         statsMenu.SetActive(false);skillsMenu.SetActive(false);
@@ -301,42 +319,44 @@ public class UpgradeMenu : MonoBehaviour{
     void LevelEverything(){
     if(startTimer>0){startTimer-=Time.unscaledDeltaTime;}
     if(startTimer<=0){
-        var on=false;
-        if(upgradeMenuUI.activeSelf==true)on=true;
-        if(total_UpgradesLvl==0){
-            total_UpgradesCountMax=1;//1 for Lvl 0
-            if(lvlbar.ID!=1){
-                if(co==null&&on==true){ChangeLvlBar(1,ref lvlbar);}
-                }
-        }else if(total_UpgradesLvl<=2 && total_UpgradesLvl>0){
-            total_UpgradesCountMax=2;//2 for Lvl 1-2
-            if(lvlbar.ID!=2){
-                if(co==null&&on==true){ChangeLvlBar(2,ref lvlbar);}
-                }
-        }else if(total_UpgradesLvl<5&&total_UpgradesLvl>2){
-            total_UpgradesCountMax=total_UpgradesLvl;
-            if(lvlbar.ID!=total_UpgradesLvl){
-                if(co==null&&on==true){ChangeLvlBar(total_UpgradesLvl,ref lvlbar);}
-                }
-        }else if(total_UpgradesLvl>=5&&total_UpgradesLvl<10){
-            total_UpgradesCountMax=5;//5-9 is 5 XP
-            if(lvlbar.ID!=5){
-                if(co==null&&on==true){ChangeLvlBar(5,ref lvlbar);}
-                }
-        }else if(total_UpgradesLvl>=10){
-            total_UpgradesCountMax=10;//10 or above is 10 XP
-            if(lvlbar.ID!=6){
-                if(co==null&&on==true){ChangeLvlBar(6,ref lvlbar);}
-                }
-        }
-        if(total_UpgradesCount>=total_UpgradesCountMax){
-            LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=Mathf.Clamp(total_UpgradesCount-total_UpgradesCountMax,0,99);
-            LevelUp();
-            total_UpgradesLvl++;
-            UpgradeMenu.instance.LvlEvents();
+        if(GameSession.instance.levelingOn){
+            var on=false;
+            if(upgradeMenuUI.activeSelf==true)on=true;
+            if(total_UpgradesLvl==0){
+                total_UpgradesCountMax=1;//1 for Lvl 0
+                if(lvlbar.ID!=1){
+                    if(co==null&&on==true){ChangeLvlBar(1,ref lvlbar);}
+                    }
+            }else if(total_UpgradesLvl<=2 && total_UpgradesLvl>0){
+                total_UpgradesCountMax=2;//2 for Lvl 1-2
+                if(lvlbar.ID!=2){
+                    if(co==null&&on==true){ChangeLvlBar(2,ref lvlbar);}
+                    }
+            }else if(total_UpgradesLvl<5&&total_UpgradesLvl>2){
+                total_UpgradesCountMax=total_UpgradesLvl;
+                if(lvlbar.ID!=total_UpgradesLvl){
+                    if(co==null&&on==true){ChangeLvlBar(total_UpgradesLvl,ref lvlbar);}
+                    }
+            }else if(total_UpgradesLvl>=5&&total_UpgradesLvl<10){
+                total_UpgradesCountMax=5;//5-9 is 5 XP
+                if(lvlbar.ID!=5){
+                    if(co==null&&on==true){ChangeLvlBar(5,ref lvlbar);}
+                    }
+            }else if(total_UpgradesLvl>=10){
+                total_UpgradesCountMax=10;//10 or above is 10 XP
+                if(lvlbar.ID!=6){
+                    if(co==null&&on==true){ChangeLvlBar(6,ref lvlbar);}
+                    }
             }
-        if(lvlbar.current==null)lvlbar.created=2;
-        if(barr==lvlbar){lvlbar.ID=lvlID;lvlbar.created=lvlcr;}
+            if(total_UpgradesCount>=total_UpgradesCountMax){
+                LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=Mathf.Clamp(total_UpgradesCount-total_UpgradesCountMax,0,99);
+                LevelUp();
+                total_UpgradesLvl++;
+                UpgradeMenu.instance.LvlEvents();
+                }
+            if(lvlbar.current==null)lvlbar.created=2;
+            if(barr==lvlbar){lvlbar.ID=lvlID;lvlbar.created=lvlcr;}
+        }
         
 
         if(maxHealth_UpgradesCount==1 && maxHealth_UpgradesLvl==0){maxHealth_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}

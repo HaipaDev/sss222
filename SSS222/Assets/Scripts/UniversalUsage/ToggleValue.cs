@@ -29,10 +29,14 @@ public class ToggleValue : MonoBehaviour{
     void ChangeText(){
         var i=GameRules.instance;
         if(value=="crystalsOn")toggle.isOn=i.crystalsOn;
+        if(value=="coresOn")toggle.isOn=i.coresOn;
         if(value=="xpOn")toggle.isOn=i.xpOn;
         if(value=="shopOn")toggle.isOn=i.shopOn;
         if(value=="shopCargoOn")toggle.isOn=i.shopCargoOn;
-        if(value=="upgradesOn")toggle.isOn=i.upgradesOn;
+        if(value=="iteminvOn")toggle.isOn=i.iteminvOn;
+        if(value=="statUpgOn")toggle.isOn=i.statUpgOn;
+        if(value=="modulesOn")toggle.isOn=i.modulesOn;
+        if(value=="levelingOn")toggle.isOn=i.levelingOn;
         if(value=="barrierOn")toggle.isOn=i.barrierOn;
         if(value=="moveX")toggle.isOn=i.moveX;
         if(value=="moveY")toggle.isOn=i.moveY;

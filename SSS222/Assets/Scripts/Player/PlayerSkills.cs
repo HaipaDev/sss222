@@ -37,7 +37,7 @@ public class PlayerSkills : MonoBehaviour{
     void Start(){
         player=GetComponent<Player>();
         timerUI=GameObject.Find("SkillTimer_par");
-        if(GameRules.instance.upgradesOn!=true){Destroy(this);}
+        if(GameRules.instance.modulesOn!=true){Destroy(this);}
     }
 
     void Update(){

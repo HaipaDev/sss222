@@ -100,7 +100,8 @@ public class LootTablePowerups : MonoBehaviour{
             if(entry.rarity==rarityPowerup.Common)dropList[i]=entry.dropChance;
             else if(entry.rarity==rarityPowerup.Rare)dropList[i]=entry.dropChance*GameSession.instance.rarePwrupMulti;
             else if(entry.rarity==rarityPowerup.Legendary)dropList[i]=entry.dropChance*GameSession.instance.legendPwrupMulti;
-            if(currentLvl<entry.levelReq&&GameRules.instance.upgradesOn)dropList[i]=0;
+            if(!GameSession.instance.levelingOn){entry.levelReq=0;}
+            if(currentLvl<entry.levelReq&&GameSession.instance.levelingOn)dropList[i]=0;
             
             var value=System.Convert.ToSingle(System.Math.Round((dropList[i]/sum*100),2));
             if(entry!=null&&itemsPercentage!=null&&itemsPercentage[i]!=null)itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+dropList[i]+"/"+(sum-dropList[i]);

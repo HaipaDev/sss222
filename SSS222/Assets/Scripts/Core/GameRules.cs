@@ -19,7 +19,6 @@ public static GameRules instance;
     public bool shopOn=true;
     public bool shopCargoOn=true;
     public bool levelingOn=true;
-    public bool upgradesOn=true;
     public bool modulesOn=true;
     public bool statUpgOn=false;
     public bool iteminvOn=true;
@@ -290,6 +289,7 @@ public static GameRules instance;
     public void ArmorMultiAdd(float amnt){p.armorMultiInit+=amnt;}
     public void LaserShootSpeed(float amnt){if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=amnt;}}
     public void MLaserBulletAmnt(int amnt){if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=amnt;}}
+    public void ChangeMaxXP(int amnt){xp_max=amnt;}
     #endregion
 }
 #endregion

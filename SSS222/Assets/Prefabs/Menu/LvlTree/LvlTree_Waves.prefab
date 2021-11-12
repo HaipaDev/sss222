@@ -36,12 +36,22 @@ PrefabInstance:
     - target: {fileID: 3332209872269253717, guid: a82aefb0501b31049956607bde9eae3e,
         type: 3}
       propertyPath: m_Name
-      value: LvlTreeWaves
+      value: LvlTree_Waves
       objectReference: {fileID: 0}
     - target: {fileID: 3332209872269253717, guid: a82aefb0501b31049956607bde9eae3e,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781025195223017450, guid: a82aefb0501b31049956607bde9eae3e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -546.9502
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781025195223017450, guid: a82aefb0501b31049956607bde9eae3e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 138.9519
       objectReference: {fileID: 0}
     - target: {fileID: 4923450889857843743, guid: a82aefb0501b31049956607bde9eae3e,
         type: 3}
@@ -167,6 +177,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: CELESTIAL LADDER (Waves)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8332457561037275445, guid: a82aefb0501b31049956607bde9eae3e,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 31.8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3960355476571393644, guid: a82aefb0501b31049956607bde9eae3e, type: 3}

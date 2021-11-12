@@ -83,7 +83,7 @@ public class Enemy : MonoBehaviour{
             }
             if(!GameRules.instance.energyOnPlayer)dropValues[0]=0;
             if(!GameSession.instance.crystalsOn)dropValues[1]=0;
-            if(!GameSession.instance.upgradesOn)dropValues[2]=0;
+            if(!GameSession.instance.coresOn)dropValues[2]=0;
         }
     }
     void Start(){

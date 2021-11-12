@@ -17,11 +17,12 @@ public class SpecificUI_Destroy : MonoBehaviour{
         else if(type==specifiUI_type.statUpgs&&!GameSession.instance.statUpgOn)Destroy(gameObject);
         else if(type==specifiUI_type.inventory&&!GameSession.instance.iteminvOn)Destroy(gameObject);
         else if(type==specifiUI_type.leveling&&!GameSession.instance.levelingOn)Destroy(gameObject);
+        else if(type==specifiUI_type.cores&&!GameSession.instance.coresOn)Destroy(gameObject);
         yield return new WaitForSeconds(0.1f);
         StartCoroutine(Check());
     }
 }
 
 enum specifiUI_type{
-    energy,crystals,xp,shop,modules,statUpgs,inventory,leveling
+    energy,crystals,xp,shop,modules,statUpgs,inventory,leveling,cores
 }

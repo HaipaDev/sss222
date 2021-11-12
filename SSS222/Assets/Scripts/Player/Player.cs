@@ -427,7 +427,7 @@ public class Player : MonoBehaviour{
 
         if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
         
-        if(!GameSession.GlobalTimeIsPaused&&GameRules.instance.upgradesOn&&UpgradeMenu.instance!=null&&GetComponent<BackflameEffect>()!=null){
+        if(!GameSession.GlobalTimeIsPaused&&GameRules.instance.levelingOn&&UpgradeMenu.instance!=null&&GetComponent<BackflameEffect>()!=null){
             //Blue Flame for Hardcore
             if(GameSession.instance.CheckGameModeSelected("Hardcore")){
                 if((UpgradeMenu.instance.total_UpgradesLvl<bflameDmgTillLvl||bflameDmgTillLvl<=0)&&!transform.GetChild(0).name.Contains("Blue")){

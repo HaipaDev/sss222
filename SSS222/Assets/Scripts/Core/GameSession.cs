@@ -21,10 +21,10 @@ public class GameSession : MonoBehaviour{
     public bool shopOn=true;
     public bool shopCargoOn=true;
     public bool levelingOn=true;
-    public bool upgradesOn=true;
     public bool modulesOn=true;
     public bool statUpgOn=false;
     public bool iteminvOn=true;
+    public bool anyUpgradesOn=true;
     [Header("Current Player Values")]
     public int score=0;
     public float scoreMulti=1f;
@@ -129,6 +129,7 @@ public class GameSession : MonoBehaviour{
         xp_staying=i.xp_staying;
         stayingTimeReq=i.stayingTimeReq;
     }
+    if(modulesOn||statUpgOn||iteminvOn){anyUpgradesOn=true;}else{anyUpgradesOn=false;}
     }
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
