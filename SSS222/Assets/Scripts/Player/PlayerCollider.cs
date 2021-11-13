@@ -15,20 +15,17 @@ public class PlayerCollider : MonoBehaviour{
     void Start(){player=Player.instance;}
     private void OnTriggerEnter2D(Collider2D other){
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
-            DamageDealer damageDealer=other.GetComponent<DamageDealer>();
-            DamageValues damageValues=DamageValues.instance;
             float dmg=0;
             if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
-            //ifif(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
-
             //if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);player.Damage(damageValues.dmgZone,dmgType.silent);}
+
             #region//Enemies
             if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){
                 bool en=true;
                 bool destroy=true;
-                dmg=UniCollider.TriggerEnter(other,transform,collisionTypes)[0];
-                if(UniCollider.TriggerEnter(other,transform,collisionTypes)[1]==0)destroy=false;
-                if(UniCollider.TriggerEnter(other,transform,collisionTypes)[2]==0)en=false;
+                dmg=UniCollider.TriggerEnter(other,transform,collisionTypes);
+                if(other.GetComponent<Enemy>()==null)en=false;
+                if(other.GetComponent<Tag_CollideDontDestroy>()!=null)destroy=false;
 
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){
                     if(player.dashing==false){
@@ -63,7 +60,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Battery").name)){player.AddSubEnergy(player.energyBatteryGet,true);}
                 if(other.GetComponent<Tag_Collectible>().isPowerup){//if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
                     if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddPwrups(1);//powerupsGoblin++;
-                    GameSession.instance.AddXP(GameSession.instance.xp_powerup);//XP For powerups
+                    GameSession.instance.AddXP(GameRules.instance.xp_powerup);//XP For powerups
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("MicroMedkit").name)){player.hpAbsorpAmnt+=player.microMedkitHpAmnt;}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)){
@@ -207,15 +204,10 @@ public class PlayerCollider : MonoBehaviour{
     void AmmoAddDupl(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
     private void OnTriggerStay2D(Collider2D other){
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){if(dmgTimer<=0){
-        DamageDealer damageDealer=other.GetComponent<DamageDealer>();
-        DamageValues damageValues=DamageValues.instance;
-        //if(!damageDealer||!damageValues){Debug.LogWarning("No DamageDealer component or DamageValues instance");return;}
         if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
         float dmg=UniCollider.TriggerStay(other,transform,collisionTypes);
-        if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=damageValues.dmgZone;}
-        //if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){
-            
-        //}
+        if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=GameRules.instance.dmgZone;}
+
         UniCollider.DMG_VFX(3,other,transform,dmg);
         if(dmg>0)player.Damage(dmg,dmgType.silent);
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;

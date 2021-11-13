@@ -33,7 +33,7 @@ public class CargoShip : MonoBehaviour{
             transform.GetChild(0).gameObject.SetActive(true);
         }
         if(other.CompareTag("PlayerWeapons")&&other.GetComponent<HealthLeech>()==null){
-            float dmg=UniCollider.TriggerEnter(other,transform,new List<colliTypes>(){colliTypes.playerWeapons})[0];
+            float dmg=UniCollider.TriggerEnter(other,transform,new List<colliTypes>(){colliTypes.playerWeapons});
             if(shieldOn)dmg*=0.75f;
             if(dmg!=0)health-=dmg;
 

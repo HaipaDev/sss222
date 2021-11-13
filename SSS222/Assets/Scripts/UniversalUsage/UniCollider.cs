@@ -6,106 +6,100 @@ public class UniCollider : MonoBehaviour{
     public static List<colliTypes> colliTypesForEn=new List<colliTypes>{colliTypes.player,colliTypes.playerWeapons};
     public static List<colliTypes> colliTypesForPl=new List<colliTypes>{colliTypes.enemies,colliTypes.enemyWeapons};
     //public float dmgTimer;
-    public static float[] TriggerEnter(Collider2D other, Transform transform, List<colliTypes> collis){
-        var damageValues=DamageValues.instance;
+    public static float TriggerEnter(Collider2D other, Transform transform, List<colliTypes> collis){
+        var dmgVal=GameRules.instance;
         float dmg=0;
-        bool en=true;
-        bool destroy=true;
         if(collis.Contains(colliTypes.player)){
             
         }
         if(collis.Contains(colliTypes.playerWeapons)){
         #region//Player Weapons
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Laser").name)){dmg=damageValues.dmgLaser;Destroy(other.gameObject);AudioManager.instance.Play("EnemyHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Laser").name)){dmg=dmgVal.dmgLaser;Destroy(other.gameObject);AudioManager.instance.Play("EnemyHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("MLaser").name)){
                     AudioManager.instance.Play("MLaserHit");
                     /*var mlaserHitSound=other.GetComponent<RandomSound>().sound;
                     if(other.GetComponent<RandomSound>().playLimitForThis==true){mlaserHitSound=other.GetComponent<RandomSound>().sound2;}
                     AudioSource.PlayClipAtPoint(mlaserHitSound, new Vector2(transform.position.x, transform.position.y));*/
-                dmg=damageValues.dmgMiniLaser;Destroy(other.gameObject);
+                dmg=dmgVal.dmgMiniLaser;Destroy(other.gameObject);
             }
-            if (other.gameObject.name.Contains(GameAssets.instance.Get("HRocket").name)){dmg=damageValues.dmgHRocket;Destroy(other.gameObject);AudioManager.instance.Play("HRocketHit");
+            if (other.gameObject.name.Contains(GameAssets.instance.Get("HRocket").name)){dmg=dmgVal.dmgHRocket;Destroy(other.gameObject);AudioManager.instance.Play("HRocketHit");
                 GameAssets.instance.VFX("ExplosionSmall", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
             }
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("LSaber").name)){dmg=(float)System.Math.Round(damageValues.dmgLSaberIni,2);AudioManager.instance.Play("LSaberHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){dmg=(float)System.Math.Round(damageValues.dmgLClawsTouch,2);AudioManager.instance.Play("LClawsHit");Player.instance.energy-=1f;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("LClawsVFX").name)){dmg=damageValues.dmgLClaws;AudioManager.instance.Play("LClawsHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("GloomyScythe").name)){dmg=damageValues.dmgGloomyScythes;
-            if(GameRules.instance.dmgGloomyScythes_player!=0){Player.instance.Damage(damageValues.dmgGloomyScythes_player,dmgType.shadow);}}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowBt").name)){dmg=damageValues.dmgShadowBT;
-            if(GameRules.instance.dmgShadowBT_player!=0){Player.instance.Damage(damageValues.dmgShadowBT_player,dmgType.shadow);}}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("CBullet").name)){dmg=damageValues.dmgCBullet;AudioManager.instance.Play("CStreamHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("QRocket").name)){dmg=damageValues.dmgQRocket;Destroy(other.gameObject);AudioManager.instance.Play("QRocketHit");
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("LSaber").name)){dmg=(float)System.Math.Round(dmgVal.dmgLSaberIni,2);AudioManager.instance.Play("LSaberHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){dmg=(float)System.Math.Round(dmgVal.dmgLClawsTouch,2);AudioManager.instance.Play("LClawsHit");Player.instance.energy-=1f;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("LClawsVFX").name)){dmg=dmgVal.dmgLClaws;AudioManager.instance.Play("LClawsHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("GloomyScythe").name)){dmg=dmgVal.dmgGloomyScythes;
+            if(GameRules.instance.dmgGloomyScythes_player!=0){Player.instance.Damage(dmgVal.dmgGloomyScythes_player,dmgType.shadow);}}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowBt").name)){dmg=dmgVal.dmgShadowBT;
+            if(GameRules.instance.dmgShadowBT_player!=0){Player.instance.Damage(dmgVal.dmgShadowBT_player,dmgType.shadow);}}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("CBullet").name)){dmg=dmgVal.dmgCBullet;AudioManager.instance.Play("CStreamHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("QRocket").name)){dmg=dmgVal.dmgQRocket;Destroy(other.gameObject);AudioManager.instance.Play("QRocketHit");
                 GameAssets.instance.VFX("ExplosionSmall", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
             }
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("PRocket").name)){dmg=damageValues.dmgPRocket;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Plasma").name)){dmg=damageValues.dmgPRocketExpl;transform.GetComponent<Rigidbody2D>().velocity=Vector2.up*6f;transform.GetComponent<Enemy>().yeeted=true;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("PRocket").name)){dmg=dmgVal.dmgPRocket;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Plasma").name)){dmg=dmgVal.dmgPRocketExpl;transform.GetComponent<Rigidbody2D>().velocity=Vector2.up*6f;transform.GetComponent<Enemy>().yeeted=true;}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("PLaser").name)){dmg=other.GetComponent<DamageOverDist>().dmg;if(transform.GetComponent<EnemyHacked>()==null){transform.gameObject.AddComponent<EnemyHacked>();}Destroy(other.gameObject,0.01f);AudioManager.instance.Play("PLaserHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=damageValues.dmgMPulse;AudioManager.instance.Play("MLaserHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=dmgVal.dmgMPulse;AudioManager.instance.Play("MLaserHit");}
 
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.dmgFlame;}
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!transform.gameObject.name.Contains("Comet")){dmg=-damageValues.dmgBlueFlame;}else if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&transform.gameObject.name.Contains("Comet")){dmg=0;}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=dmgVal.dmgShipFlame;}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!transform.gameObject.name.Contains("Comet")){dmg=-dmgVal.dmgBlueFlame;}else if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&transform.gameObject.name.Contains("Comet")){dmg=0;}
         #endregion
         }if(collis.Contains(colliTypes.enemies)){
         #region//Enemies bodies
             Player player=null;
             if(transform.GetComponent<Player>()!=null){player=transform.GetComponent<Player>();}
 
-            if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)destroy=false;
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Comet").name)){if(other.GetComponent<CometRandomProperties>()!=null){if(other.GetComponent<CometRandomProperties>().damageBySpeedSize){dmg=(float)System.Math.Round(damageValues.dmgComet*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1);}else{dmg=damageValues.dmgComet;}}else{dmg=damageValues.dmgComet;}}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Bat").name)){dmg=damageValues.dmgBat;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnShip").name)){dmg=damageValues.dmgEnemyShip1;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnComb").name)){destroy=false;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Goblin").name)){dmg=damageValues.dmgGoblin;if(player!=null){player.Hack(damageValues.efxGoblinBt.x*0.75f);}}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("HDrone").name)){dmg=damageValues.dmgHealDrone;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Vortex").name)){dmg=damageValues.dmgVortex;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Stinger").name)){dmg=damageValues.dmgStinger;if(player!=null){player.Weaken(damageValues.efxStinger.x,damageValues.efxStinger.y);}}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("GlareDevil").name)){dmg=damageValues.dmgGlareDev;if(player!=null){player.Blind(damageValues.efxGlareDev.x,damageValues.efxGlareDev.y);player.Weaken(damageValues.efxGlareDev.x,damageValues.efxGlareDev.y);}}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Comet").name)){if(other.GetComponent<CometRandomProperties>()!=null){if(other.GetComponent<CometRandomProperties>().damageBySpeedSize){dmg=(float)System.Math.Round(dmgVal.dmgComet*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.y)*other.transform.localScale.x,1);}else{dmg=dmgVal.dmgComet;}}else{dmg=dmgVal.dmgComet;}}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Bat").name)){dmg=dmgVal.dmgBat;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnShip").name)){dmg=dmgVal.dmgEnemyShip1;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnComb").name)){dmg=0;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Goblin").name)){dmg=dmgVal.dmgGoblin;if(player!=null){player.Hack(dmgVal.efxGoblinBt.x*0.75f);}}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("HDrone").name)){dmg=dmgVal.dmgHealDrone;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Vortex").name)){dmg=dmgVal.dmgVortex;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Stinger").name)){dmg=dmgVal.dmgStinger;if(player!=null){player.Weaken(dmgVal.efxStinger.x,dmgVal.efxStinger.y);}}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("GlareDevil").name)){dmg=dmgVal.dmgGlareDev;if(player!=null){player.Blind(dmgVal.efxGlareDev.x,dmgVal.efxGlareDev.y);player.Weaken(dmgVal.efxGlareDev.x,dmgVal.efxGlareDev.y);}}
         #endregion
         }if(collis.Contains(colliTypes.enemyWeapons)){
         #region//Enemy Weapons
             Player player=null;
             if(transform.GetComponent<Player>()!=null){player=transform.GetComponent<Player>();}
 
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Soundwave").name)){dmg=damageValues.dmgSoundwave; AudioManager.instance.Play("SoundwaveHit");en=false;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBt").name)){dmg=damageValues.dmgEBt;en=false;if(player!=null)player.Hack(4);}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=damageValues.dmgEnSaber;en=false;}
-            if(other.gameObject.name.Contains("StickBomb")){dmg=0;en=false;destroy=false;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Soundwave").name)){dmg=dmgVal.dmgSoundwave;AudioManager.instance.Play("SoundwaveHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBt").name)){dmg=dmgVal.dmgEBt;if(player!=null)player.Hack(4);}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=dmgVal.dmgEnSaber;}
+            if(other.gameObject.name.Contains("StickBomb")){dmg=0;}
             
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("GoblinBt").name)){dmg=damageValues.dmgGoblinBt; if(player!=null){/*player.Blind(3,2);*/player.Fragile(damageValues.efxGoblinBt.x,damageValues.efxGoblinBt.y);player.Hack(damageValues.efxGoblinBt.x);}AudioManager.instance.Play("GoblinBtHit");en=false;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("GoblinBt").name)){dmg=dmgVal.dmgGoblinBt; if(player!=null){/*player.Blind(3,2);*/player.Fragile(dmgVal.efxGoblinBt.x,dmgVal.efxGoblinBt.y);player.Hack(dmgVal.efxGoblinBt.x);}AudioManager.instance.Play("GoblinBtHit");;}
         #endregion
         }
-
-        int destroyF=1;if(destroy==false)destroyF=0;
-        int enF=1;if(en==false)enF=0;
-        return new float[]{dmg,(float)destroyF,(float)enF};
+        return dmg;
     }
     public static float TriggerStay(Collider2D other, Transform transform, List<colliTypes> collis){
-        var damageValues=DamageValues.instance;
+        var dmgVal=GameRules.instance;
         float dmg=0;
         if(collis.Contains(colliTypes.player)){
             
         }if(collis.Contains(colliTypes.playerWeapons)){
         #region//PlayerWeapons
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Phaser").name)){dmg=damageValues.dmgPhaser;AudioManager.instance.Play("PhaserHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("LSaber").name)){dmg=damageValues.dmgLSaber;AudioManager.instance.Play("EnemyHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Plasma").name)){dmg=damageValues.dmgPRocketExpl;}//AudioSource.PlayClipAtPoint(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("CBullet").name)){dmg=damageValues.dmgCBullet;AudioManager.instance.Play("CStreamHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){dmg=(float)System.Math.Round(damageValues.dmgLSaber/3,2);Player.instance.energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Phaser").name)){dmg=dmgVal.dmgPhaser;AudioManager.instance.Play("PhaserHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("LSaber").name)){dmg=dmgVal.dmgLSaber;AudioManager.instance.Play("EnemyHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Plasma").name)){dmg=dmgVal.dmgPRocketExpl;}//AudioSource.PlayClipAtPoint(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("CBullet").name)){dmg=dmgVal.dmgCBullet;AudioManager.instance.Play("CStreamHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){dmg=(float)System.Math.Round(dmgVal.dmgLSaber/3,2);Player.instance.energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y));}
             //if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=0;AudioManager.instance.Play("PRocketHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=damageValues.dmgFlame;}
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!transform.gameObject.name.Contains("Comet")){dmg=-damageValues.dmgBlueFlame;}else if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&transform.gameObject.name.Contains("Comet")){dmg=0;}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=dmgVal.dmgShipFlame;}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!transform.gameObject.name.Contains("Comet")){dmg=-dmgVal.dmgBlueFlame;}else if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&transform.gameObject.name.Contains("Comet")){dmg=0;}
         #endregion
         }if(collis.Contains(colliTypes.enemies)){
         #region//Enemies bodies
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Leech").name)){dmg=damageValues.dmgLeech;AudioManager.instance.Play("LeechBite");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){dmg=damageValues.dmgHLaser;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){dmg=damageValues.dmgVLaser;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Leech").name)){dmg=dmgVal.dmgLeech;AudioManager.instance.Play("LeechBite");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){dmg=dmgVal.dmgHLaser;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){dmg=dmgVal.dmgVLaser;}
         #endregion
         }if(collis.Contains(colliTypes.enemyWeapons)){
         #region//Enemy Weapons
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=damageValues.dmgEnSaber;}
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)){dmg=-damageValues.dmgBlueFlame;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=dmgVal.dmgEnSaber;}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)){dmg=-dmgVal.dmgBlueFlame;}
             if(other.gameObject.name.Contains("StickBomb")){dmg=0;}
         #endregion
         }

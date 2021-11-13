@@ -15,10 +15,8 @@ GameObject:
   - component: {fileID: -3061252192134034468}
   - component: {fileID: 3322887099283394469}
   - component: {fileID: 5004634516315193596}
-  - component: {fileID: 1234536692577487592}
   - component: {fileID: 644650788451108567}
   - component: {fileID: -5264164664935737425}
-  - component: {fileID: 1491187296576134743}
   m_Layer: 9
   m_Name: Enemy Ship
   m_TagString: Enemy
@@ -205,18 +203,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmgTimer: 0
   collisionTypes: 0000000001000000
---- !u!114 &1234536692577487592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6432250634095115783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &644650788451108567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,16 +232,3 @@ MonoBehaviour:
   distY: 1.3
   distX: 0.3
   getClose: 0
---- !u!114 &1491187296576134743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6432250634095115783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}

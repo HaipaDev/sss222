@@ -23,10 +23,8 @@ public static GameRules instance;
     public bool statUpgOn=false;
     public bool iteminvOn=true;
     public bool barrierOn=false;
-    public int EVscoreMax=30;
-    public int shopScoreMax=200;
-    public int shopScoreMaxS=200;
-    public int shopScoreMaxE=450;
+    public Vector2Int EVscoreMax=new Vector2Int(30,50);
+    public Vector2Int shopScoreMax=new Vector2Int(200,450);
     public float scoreMulti=1;
     public float luckMulti=1;
 #endregion
@@ -139,6 +137,7 @@ public static GameRules instance;
 #region//Damage Values
 [Header("Damage Values")]
     public float dmgZone=2;
+    public float dmgShipFlame=1;
     public float dmgLaser=5f;
     public float dmgPhaser=0.5f;
     public float dmgHRocket=13.5f;
@@ -158,6 +157,7 @@ public static GameRules instance;
     public float dmgPlaser=6.78f;
     public float dmgMPulse=130f;
     //
+    public float dmgBlueFlame=0.2f;
     public float dmgComet=10f;
     public float dmgBat=36f;
     public float dmgSoundwave=16.5f;
@@ -192,7 +192,7 @@ public static GameRules instance;
 #endregion
 #region//Leveling
     [Header("Leveling")]
-    public float xp_max=100f;
+    public float xpMax=100f;
     public float xp_wave=20f;
     public float xp_shop=3f;
     public float xp_powerup=1f;
@@ -205,6 +205,7 @@ public static GameRules instance;
 #endregion
 #region//Upgrades
 [Header("Upgrades")]
+    public int saveBarsFromLvl=5;
     public int total_UpgradesCountMax=5;
     public int other_UpgradesCountMax=10;
     public float maxHealth_UpgradeAmnt=5f;
@@ -289,7 +290,7 @@ public static GameRules instance;
     public void ArmorMultiAdd(float amnt){p.armorMultiInit+=amnt;}
     public void LaserShootSpeed(float amnt){if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=amnt;}}
     public void MLaserBulletAmnt(int amnt){if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=amnt;}}
-    public void ChangeMaxXP(int amnt){xp_max=amnt;}
+    public void ChangeMaxXP(int amnt){GameSession.instance.xpMax=amnt;}
     #endregion
 }
 #endregion
@@ -300,6 +301,7 @@ public class ListEvents{
     [HideInInspector]public string name;
     public UnityEvent events=new UnityEvent();
     public Vector2 lvls;
+    public bool skipRe;
 }
 [System.Serializable]
 public class EnemyClass{

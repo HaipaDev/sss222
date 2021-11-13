@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: -1806142457920749441}
   - component: {fileID: 2138168064270286247}
   - component: {fileID: 2931916237291476981}
+  - component: {fileID: 4880990869877679133}
   m_Layer: 0
   m_Name: StickBomb
   m_TagString: EnemyBullet
@@ -410,3 +411,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velPaused: {x: 0, y: 0}
+--- !u!114 &4880990869877679133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98da01868dc4e6645828d15a7e1b7db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

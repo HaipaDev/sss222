@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2294840158062716945}
   - component: {fileID: 1690200251157227969}
   - component: {fileID: 2389488310671507859}
-  - component: {fileID: 3555650474774595720}
   - component: {fileID: 2039410060127780732}
   m_Layer: 0
   m_Name: HLaser
@@ -253,18 +252,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3555650474774595720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1690200251157227970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2039410060127780732
 MonoBehaviour:
   m_ObjectHideFlags: 0

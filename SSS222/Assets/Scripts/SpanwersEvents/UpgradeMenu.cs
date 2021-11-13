@@ -54,6 +54,7 @@ public class UpgradeMenu : MonoBehaviour{
     public int enDiss_lvlReq=5;
     [Header("Upgrade Counts")]
     public int total_UpgradesCount;
+    public int saveBarsFromLvl=5;
     public int total_UpgradesLvl=0;
     public int maxHealth_UpgradesCount;
     public int maxHealth_UpgradesLvl=1;
@@ -84,6 +85,7 @@ public class UpgradeMenu : MonoBehaviour{
     yield return new WaitForSeconds(0.07f);
     var i=GameRules.instance;
     if(i!=null){
+        saveBarsFromLvl=i.saveBarsFromLvl;
         total_UpgradesCountMax=i.total_UpgradesCountMax;
         maxHealth_UpgradeAmnt=i.maxHealth_UpgradeAmnt;
         maxHealth_UpgradeCost=i.maxHealth_UpgradeCost;
@@ -121,6 +123,7 @@ public class UpgradeMenu : MonoBehaviour{
         instance=this;
         player=Player.instance;
         pskills=Player.instance.GetComponent<PlayerSkills>();
+        if(GameSession.instance.CheckGameModeSelected("Adventure")){LvlEventsAdventure();}
         Resume();
     }
     void Update(){
@@ -286,9 +289,10 @@ public class UpgradeMenu : MonoBehaviour{
     //}*/
     //public void AddFloat(ref float value,float amnt,int cost){if(GameSession.instance.cores>=cost){value+=amnt;}}
     //if(GameSession.instance.cores>=maxHealth_UpgradeCost)player.maxHP+=maxHealth_UpgradeAmnt;GameSession.instance.cores-=maxHealth_UpgradeCost;
-    public void AddMaxHP(){UpgradeFloat(ref player.maxHP,maxHealth_UpgradeAmnt,maxHealth_UpgradeCost, true, ref player.health,ref maxHealth_UpgradesCount, ref maxHealth_UpgradesLvl,false);}
-    public void AddMaxEnergy(){UpgradeFloat(ref player.maxEnergy,maxEnergy_UpgradeAmnt,maxEnergy_UpgradeCost, true, ref player.energy,ref maxEnergy_UpgradesCount, ref maxEnergy_UpgradesLvl,false);}
-    public void AddSpeed(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt,speed_UpgradeCost, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount, ref speed_UpgradesLvl,false);}
+    public void AddMaxHP(){UpgradeFloat(ref player.maxHP,maxHealth_UpgradeAmnt,maxHealth_UpgradeCost, true, ref player.health, ref maxHealth_UpgradesCount, ref maxHealth_UpgradesLvl,false);}
+    public void AddMaxEnergy(){UpgradeFloat(ref player.maxEnergy,maxEnergy_UpgradeAmnt,maxEnergy_UpgradeCost, true, ref player.energy, ref maxEnergy_UpgradesCount, ref maxEnergy_UpgradesLvl,false);}
+    public async void AddSpeed(){float placeholder=0;UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt,speed_UpgradeCost, false, ref placeholder, ref speed_UpgradesCount, ref speed_UpgradesLvl,false);
+    if(player.speedPrev.Count==1){player.speedPrev[0]=player.moveSpeed;player.moveSpeedCurrent=player.speedPrev[0];}}
     public void AddSpeedBypass(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt/2,0, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount, ref speed_UpgradesLvl,true);}
     //public void AddHpRegen(){UpgradeAfterStartingVal(ref player.hpRegenEnabled,ref player.hpRegenAmnt,0.1f,0.2f,hpRegen_UpgradeAmnt,hpRegen_UpgradeCost, false, ref player.hpRegenAmnt,ref hpRegen_UpgradesCount,ref hpRegen_UpgradesLvl,false);}
     //public void AddEnRegen(){UpgradeAfterStartingVal(ref player.enRegenEnabled,ref player.enRegenAmnt,0.5f,1f,enRegen_UpgradeAmnt,enRegen_UpgradeCost, false, ref player.enRegenAmnt,ref enRegen_UpgradesCount,ref enRegen_UpgradesLvl,false);}
@@ -319,7 +323,7 @@ public class UpgradeMenu : MonoBehaviour{
     void LevelEverything(){
     if(startTimer>0){startTimer-=Time.unscaledDeltaTime;}
     if(startTimer<=0){
-        if(GameSession.instance.levelingOn){
+        if(GameRules.instance.levelingOn){
             var on=false;
             if(upgradeMenuUI.activeSelf==true)on=true;
             if(total_UpgradesLvl==0){
@@ -391,10 +395,17 @@ public class UpgradeMenu : MonoBehaviour{
         FindObjectOfType<OnScreenButtons>().transform.GetChild(0).GetComponent<Animator>().SetTrigger("on");
     }
     public void LvlEvents(){
-        if(GameRules.instance!=null&&Player.instance!=null){
+        if(GameRules.instance!=null){
         foreach(ListEvents le in GameRules.instance.lvlEvents){
             if(le.lvls.x==0&&le.lvls.y==0){le.events.Invoke();}
-            else{if(UpgradeMenu.instance.total_UpgradesLvl>=le.lvls.x&&UpgradeMenu.instance.total_UpgradesLvl<=le.lvls.y){le.events.Invoke();}}
+            else{if(UpgradeMenu.instance.total_UpgradesLvl>=le.lvls.x&&UpgradeMenu.instance.total_UpgradesLvl<=le.lvls.y&&!le.skipRe){le.events.Invoke();}}
+        }}
+    }
+    public void LvlEventsAdventure(){
+        if(GameRules.instance!=null){
+        foreach(ListEvents le in GameRules.instance.lvlEvents){
+            if(le.lvls.x==0&&le.lvls.y==0){le.events.Invoke();}
+            else{if(UpgradeMenu.instance.total_UpgradesLvl>=le.lvls.x&&!le.skipRe){le.events.Invoke();}}
         }}
     }
     public void CheatCores(){
@@ -405,5 +416,5 @@ public class UpgradeMenu : MonoBehaviour{
         GameSession.instance.CheckCodes("Del","0");
         GameSession.instance.CheckCodes("2","U");
         //GameSession.instance.CheckCodes("Del","9");
-    }public void CheatXP(){GameSession.instance.xp=GameSession.instance.xp_max;}
+    }public void CheatXP(){GameSession.instance.xp=GameSession.instance.xpMax;}
 }

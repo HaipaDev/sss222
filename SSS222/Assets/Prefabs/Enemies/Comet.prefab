@@ -15,11 +15,9 @@ GameObject:
   - component: {fileID: 6361041040622666652}
   - component: {fileID: -4076050431880435700}
   - component: {fileID: 4548800055037187618}
-  - component: {fileID: 801518567914847888}
   - component: {fileID: 6543032046267015800}
   - component: {fileID: 1490166543656379823}
   - component: {fileID: 1306324344444208931}
-  - component: {fileID: 6311566017061671203}
   m_Layer: 9
   m_Name: Comet
   m_TagString: Enemy
@@ -196,18 +194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmgTimer: 0
   collisionTypes: 0000000001000000
---- !u!114 &801518567914847888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147796775416149952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6543032046267015800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,16 +356,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6311566017061671203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147796775416149952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}

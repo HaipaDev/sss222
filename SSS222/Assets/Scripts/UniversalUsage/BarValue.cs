@@ -24,7 +24,7 @@ public class BarValue : MonoBehaviour{
     void Update(){
         if(valueName.Contains("health")){if(Player.instance!=null){value=Player.instance.health;maxValue=Player.instance.maxHP;}}
         if(valueName.Contains("energy")){if(Player.instance!=null){value=Player.instance.energy;maxValue=Player.instance.maxEnergy;}}
-        if(valueName.Contains("xp")){if(FindObjectOfType<GameSession>()!=null){value=FindObjectOfType<GameSession>().xp;maxValue=FindObjectOfType<GameSession>().xp_max;}}
+        if(valueName.Contains("xp")){if(FindObjectOfType<GameSession>()!=null){value=FindObjectOfType<GameSession>().xp;maxValue=FindObjectOfType<GameSession>().xpMax;}}
         if(valueName.Contains("shopTimer")){if(FindObjectOfType<Shop>()!=null){value=FindObjectOfType<Shop>().shopTimer;maxValue=FindObjectOfType<Shop>().shopTimeMax;}}
         if(valueName.Contains("hpAbsorp")){if(Player.instance!=null){value=Player.instance.hpAbsorpAmnt;maxValue=Player.instance.maxHP/4;}}
         if(valueName.Contains("enAbsorp")){if(Player.instance!=null){value=Player.instance.enAbsorpAmnt;maxValue=Player.instance.maxHP/4;}}

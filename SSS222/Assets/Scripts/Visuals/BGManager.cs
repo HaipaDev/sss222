@@ -8,7 +8,7 @@ public class BGManager : MonoBehaviour{
     [SerializeField]Material hardcoreMat;
     [SerializeField]Material classicMat;
     IEnumerator Start(){
-        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Game"){yield return new WaitForSecondsRealtime(0.075f);}else{}
+        /*if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Game"){*/yield return new WaitForSecondsRealtime(0.075f);//}else{}
 
         if(GameSession.instance.CheckGameModeSelected("Hardcore")){SetColorMat(hardcoreMat);}
         else if(GameSession.instance.CheckGameModeSelected("Classic")){SetColorMat(classicMat);}

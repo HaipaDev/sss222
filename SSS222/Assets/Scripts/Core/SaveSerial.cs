@@ -90,7 +90,6 @@ public class SaveSerial : MonoBehaviour{
 #region //Adventure Data
 	public AdventureData advD=new AdventureData();
 	[System.Serializable]public class AdventureData{
-		public float xp=0;
 		public int total_UpgradesCount=0;
 		public int total_UpgradesLvl=0;
 		public int maxHealth_UpgradesCount=0;

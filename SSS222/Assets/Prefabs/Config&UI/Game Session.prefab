@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8689102416231088193}
   - component: {fileID: 1110796801287457597}
-  - component: {fileID: 2792471921738564784}
   - component: {fileID: 4215481038911001461}
   - component: {fileID: -8367683804401754267}
   - component: {fileID: 324381181996544345}
@@ -47,16 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da37379824486b54ea7f2696a5b904fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crystalsOn: 1
-  xpOn: 1
-  coresOn: 1
-  shopOn: 1
-  shopCargoOn: 1
-  levelingOn: 1
-  upgradesOn: 1
-  modulesOn: 1
-  statUpgOn: 0
-  iteminvOn: 1
   score: 0
   scoreMulti: 1
   luckMulti: 1
@@ -65,20 +54,12 @@ MonoBehaviour:
   xp: 0
   xpTotal: 0
   enemiesCount: 0
+  anyUpgradesOn: 1
   EVscore: 0
   EVscoreMax: 30
   shopScore: 0
   shopScoreMax: 250
-  shopScoreMaxS: 200
-  shopScoreMaxE: 800
-  xp_max: 100
-  xp_wave: 20
-  xp_shop: 0
-  xp_powerup: 1
-  xp_flying: 7
-  flyingTimeReq: 25
-  xp_staying: -2
-  stayingTimeReq: 4
+  xpMax: 100
   enballDropMulti: 1
   coinDropMulti: 1
   coreDropMulti: 1
@@ -102,57 +83,6 @@ MonoBehaviour:
   gameModeSelected: 0
   restartTimer: -4
   gameSessionTime: 0
---- !u!114 &2792471921738564784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2670168737584117729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f9bea8f2a1b8c643886772f027bb876, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmgFlame: 1
-  dmgZone: 2
-  dmgLaser: 5
-  dmgPhaser: 0.5
-  dmgHRocket: 13.5
-  dmgMiniLaser: 0.32
-  dmgLSaber: 0.86
-  dmgLSaberIni: 7.77
-  dmgLClaws: 7
-  dmgLClawsTouch: 0.23
-  dmgGloomyScythes: 40.5
-  dmgGloomyScythes_player: 1
-  dmgShadowBT: 40.5
-  dmgShadowBT_player: 1
-  dmgQRocket: 14.5
-  dmgPRocket: 0
-  dmgPRocketExpl: 0.5
-  dmgCBullet: 2
-  dmgPlaser: 6.78
-  dmgMPulse: 130
-  dmgComet: 10
-  dmgBlueFlame: 0.2
-  dmgBat: 36
-  dmgSoundwave: 16.5
-  dmgEnemyShip1: 80
-  dmgEBt: 24.5
-  dmgEnSaber: 2.5
-  dmgGoblin: 16
-  dmgHealDrone: 75
-  dmgVortex: 70
-  dmgLeech: 4
-  dmgVLaser: 90
-  dmgHLaser: 16
-  dmgStinger: 33.3
-  efxStinger: {x: 20, y: 1}
-  dmgGoblinBt: 7
-  efxGoblinBt: {x: 6, y: 0.8}
-  dmgGlareDev: 8
-  efxGlareDev: {x: 1.5, y: 2}
 --- !u!82 &4215481038911001461
 AudioSource:
   m_ObjectHideFlags: 0

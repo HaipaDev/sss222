@@ -110,7 +110,7 @@ public class PlayerSkills : MonoBehaviour{
                 cooldowns[i]=skills[i].cooldown;
                 if(key==skillKeyBind.Disabled){}
                 if(player.energy<1){player.AddSubEnergy(20);}
-                var ratio=(GameSession.instance.xp/GameSession.instance.xp_max);
+                var ratio=(GameSession.instance.xp/GameSession.instance.xpMax);
                 GameCanvas.instance.XPPopUpHUD(-GameSession.instance.xp);
                 player.InfEnergy(ratio*33);
                 player.Power(16,Mathf.Clamp(3f*ratio,1.1f,2.2f));

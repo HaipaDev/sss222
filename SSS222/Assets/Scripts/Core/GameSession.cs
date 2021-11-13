@@ -14,17 +14,6 @@ public class GameSession : MonoBehaviour{
     public static GameSession instance;
     public static bool GlobalTimeIsPaused;
     public static bool GlobalTimeIsPausedNotSlowed;
-    [Header("Global")]
-    public bool crystalsOn=true;
-    public bool xpOn=true;
-    public bool coresOn=true;
-    public bool shopOn=true;
-    public bool shopCargoOn=true;
-    public bool levelingOn=true;
-    public bool modulesOn=true;
-    public bool statUpgOn=false;
-    public bool iteminvOn=true;
-    public bool anyUpgradesOn=true;
     [Header("Current Player Values")]
     public int score=0;
     public float scoreMulti=1f;
@@ -34,22 +23,13 @@ public class GameSession : MonoBehaviour{
     public float xp=0f;
     public float xpTotal=0f;
     public int enemiesCount=0;
-    [Header("EVent Score Values")]
+    [Header("GameRules/Event Values")]
+    public bool anyUpgradesOn=true;
     public int EVscore=0;
-    public int EVscoreMax=50;
+    public int EVscoreMax=0;
     public int shopScore=0;
-    public int shopScoreMax=200;
-    public int shopScoreMaxS=200;
-    public int shopScoreMaxE=450;
-    [Header("XP Values")]
-    public float xp_max=100f;
-    public float xp_wave=20f;
-    public float xp_shop=10f;
-    public float xp_powerup=3f;
-    public float xp_flying=7f;
-    public float flyingTimeReq=25f;
-    public float xp_staying=-5f;
-    public float stayingTimeReq=4f;
+    public int shopScoreMax=0;
+    public float xpMax=100f;
     [Header("Luck Multiplier Values")]
     public float enballDropMulti=1;
     public float coinDropMulti=1;
@@ -87,7 +67,6 @@ public class GameSession : MonoBehaviour{
 
     void Awake(){
         SetUpSingleton();
-        instance=this;
         StartCoroutine(SetGameRulesValues());
         #if UNITY_EDITOR
         cheatmode=true;
@@ -95,42 +74,27 @@ public class GameSession : MonoBehaviour{
         cheatmode=false;
         #endif
     }
-    void SetUpSingleton(){int numberOfObj=FindObjectsOfType<GameSession>().Length;if(numberOfObj>1){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);}}
+    void SetUpSingleton(){if(GameSession.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
     void Start(){Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);}
     IEnumerator SetGameRulesValues(){
     yield return new WaitForSeconds(0.03f);
     //Set values
     var i=GameRules.instance;
     if(i!=null){
-        //Main
+        ///Main
         defaultGameSpeed=i.defaultGameSpeed;gameSpeed=defaultGameSpeed;
-        crystalsOn=i.crystalsOn;
-        xpOn=i.xpOn;
-        coresOn=i.coresOn;
-        shopOn=i.shopOn;
-        shopCargoOn=i.shopCargoOn;
-        levelingOn=i.levelingOn;
-        modulesOn=i.modulesOn;
-        statUpgOn=i.statUpgOn;
-        iteminvOn=i.iteminvOn;
-        EVscoreMax=i.EVscoreMax;
-        shopScoreMax=i.shopScoreMax;
-        shopScoreMaxS=i.shopScoreMaxS;
-        shopScoreMaxE=i.shopScoreMaxE;
         scoreMulti=i.scoreMulti;
         luckMulti=i.luckMulti;
-        //Leveling
-        xp_max=i.xp_max;
-        xp_wave=i.xp_wave;
-        xp_shop=i.xp_shop;
-        xp_powerup=i.xp_powerup;
-        xp_flying=i.xp_flying;
-        flyingTimeReq=i.flyingTimeReq;
-        xp_staying=i.xp_staying;
-        stayingTimeReq=i.stayingTimeReq;
+        xpMax=i.xpMax;
+
+        if(GameRules.instance.modulesOn||GameRules.instance.statUpgOn||GameRules.instance.iteminvOn){anyUpgradesOn=true;}else{anyUpgradesOn=false;}
+
+        RandomizeShopScoreMax();
+        RandomizeEVScoreMax();
     }
-    if(modulesOn||statUpgOn||iteminvOn){anyUpgradesOn=true;}else{anyUpgradesOn=false;}
     }
+    public void RandomizeShopScoreMax(){shopScoreMax=UnityEngine.Random.Range(GameRules.instance.shopScoreMax.x,GameRules.instance.shopScoreMax.y);}
+    public void RandomizeEVScoreMax(){EVscoreMax=UnityEngine.Random.Range(GameRules.instance.EVscoreMax.x,GameRules.instance.EVscoreMax.y);}
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
         if(Time.timeScale<=0.0001f||PauseMenu.GameIsPaused||Shop.shopOpened||UpgradeMenu.UpgradeMenuIsOpen){GlobalTimeIsPaused=true;}else{GlobalTimeIsPaused=false;}
@@ -145,41 +109,42 @@ public class GameSession : MonoBehaviour{
         }
         if(SceneManager.GetActiveScene().name=="Game"&&Player.instance!=null&&!GlobalTimeIsPaused){gameSessionTime+=Time.unscaledDeltaTime;}
         if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
-
-        //Open Shop
-        if(shopOn&&(shopScore>=shopScoreMax&&coins>0)){
-            if(shopCargoOn){Shop.instance.SpawnCargo();}
-            else{Shop.shopOpen=true;
-            /*foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
-                enemy.givePts=false;
-                enemy.health=-1;
-                enemy.Die();
-            }*/
-            gameSpeed=0f;}
-            shopScoreMax=UnityEngine.Random.Range(shopScoreMaxS,shopScoreMaxE);
-            shopScore=0;
-        }
-
-        if(Player.instance!=null){
-            if(Player.instance.timeFlyingCore>flyingTimeReq){AddXP(xp_flying);Player.instance.timeFlyingCore=0f;}
-            if(Player.instance.stayingTimerCore>stayingTimeReq){if(xp>-xp_staying)AddXP(xp_staying);Player.instance.stayingTimerCore=0f;}
-        }
         
-        xp=Mathf.Clamp(xp,0,xp_max);
+        xp=Mathf.Clamp(xp,0,xpMax);
         cores=Mathf.Clamp(cores,0,99999);
         coins=Mathf.Clamp(coins,0,99999);
-        if(xpTotal<0)xpTotal=0;
-        if(xpOn&&xp>=xp_max&&levelingOn){
-            //cores++;
-            if(coresOn){
-                GameAssets.instance.Make("PowerCore",new Vector2(UnityEngine.Random.Range(-3.5f, 3.5f),7.4f));
-                FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
+        
+        if(GameRules.instance!=null){
+            //Open Shop
+            if(GameRules.instance.shopOn&&(shopScore>=shopScoreMax&&coins>0)){
+                if(GameRules.instance.shopCargoOn){Shop.instance.SpawnCargo();}
+                else{Shop.shopOpen=true;
+                /*foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
+                    enemy.givePts=false;
+                    enemy.health=-1;
+                    enemy.Die();
+                }*/
+                gameSpeed=0f;}
+                GameSession.instance.RandomizeEVScoreMax();
+                shopScore=0;
             }
-            //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
-            xp=0;
-            //AudioManager.instance.Play("LvlUp");
-            AudioManager.instance.Play("LvlUp");
-            
+
+            if(xpTotal<0)xpTotal=0;
+            if(GameRules.instance.xpOn&&xp>=xpMax&&GameRules.instance.levelingOn){
+                //cores++;
+                if(GameRules.instance.coresOn){
+                    GameAssets.instance.Make("PowerCore",new Vector2(UnityEngine.Random.Range(-3.5f, 3.5f),7.4f));
+                    FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
+                }
+                //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
+                xp=0;
+                //AudioManager.instance.Play("LvlUp");
+                AudioManager.instance.Play("LvlUp");
+                
+            }
+
+            if(Player.instance.timeFlyingCore>GameRules.instance.flyingTimeReq){AddXP(GameRules.instance.xp_flying);Player.instance.timeFlyingCore=0f;}
+            if(Player.instance.stayingTimerCore>GameRules.instance.stayingTimeReq){if(xp>-GameRules.instance.xp_staying)AddXP(GameRules.instance.xp_staying);Player.instance.stayingTimerCore=0f;}
         }
 
         //Set speed to normal
@@ -234,29 +199,20 @@ public class GameSession : MonoBehaviour{
         if(UpgradeMenu.instance!=null)CalculateLuck();
         CheckCodes(".",".");
     }
-
-    public int GetScore(){return score;}
-    public int GetCoins(){return coins;}
-    public int GetCores(){return cores;}
-    public float Getxp(){return xp;}
-    public int GetEVScore(){return EVscore;}
-    public int GetShopScore(){return shopScore; }
     public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
     //public string GetGameVersion(){return SaveSerial.instance.settingsData.gameVersion;}
 
     public void AddToScore(int scoreValue){
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);
         EVscore+=scoreValue;
-        if(shopOn)shopScore+=Mathf.RoundToInt(scoreValue*scoreMulti);
+        if(GameRules.instance.shopOn)shopScore+=Mathf.RoundToInt(scoreValue*scoreMulti);
         GameCanvas.instance.ScorePopupSwitch(scoreValue*scoreMulti);
     }
-
     public void MultiplyScore(float multipl){
         score=Mathf.RoundToInt(score*multipl);
     }
-
     public void AddToScoreNoEV(int scoreValue){score+=scoreValue;GameCanvas.instance.ScorePopupSwitch(scoreValue);}
-    public void AddXP(float xpValue){if(xpOn){xp+=xpValue;GameCanvas.instance.XpPopupSwitch(xpValue);}xpTotal+=xpValue;}
+    public void AddXP(float xpValue){if(GameRules.instance.xpOn){xp+=xpValue;GameCanvas.instance.XpPopupSwitch(xpValue);}xpTotal+=xpValue;}
     public void DropXP(float xpAmnt, Vector2 pos, float rangeX=0.5f, float rangeY=0.5f){
         var amnt=Mathf.RoundToInt(xpAmnt);
         GameAssets.instance.MakeSpread("CelestBall",pos,amnt,rangeX,rangeY);
@@ -287,9 +243,9 @@ public class GameSession : MonoBehaviour{
     }
     public void SaveHighscore(){
         if(score>SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]){SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]=score;}
-        if(CheckGameModeSelected("Adventure")){StartCoroutine(SaveAdventureI());}
+        if(CheckGameModeSelected("Adventure")){SaveAdventure();}
     }
-    public void SaveAdventure(){StartCoroutine(SaveAdventureI());SaveSerial.instance.SaveAdventure();}
+    public void SaveAdventure(){StartCoroutine(SaveAdventureI());}
     IEnumerator SaveAdventureI(){
         //next steps in SaveSerial
         yield return new WaitForSecondsRealtime(0.02f);
@@ -297,8 +253,7 @@ public class GameSession : MonoBehaviour{
         var s=SaveSerial.instance;
         var ss=SaveSerial.instance.advD;
         if(u!=null&&s!=null&&ss!=null){
-        ss.xp=xp;
-        ss.total_UpgradesCount=u.total_UpgradesCount;
+        if(ss.total_UpgradesLvl>=u.saveBarsFromLvl){ss.total_UpgradesCount=u.total_UpgradesCount;}
         ss.total_UpgradesLvl=u.total_UpgradesLvl;
         ss.maxHealth_UpgradesCount=u.maxHealth_UpgradesCount;
         ss.maxHealth_UpgradesLvl=u.maxHealth_UpgradesLvl;
@@ -315,20 +270,19 @@ public class GameSession : MonoBehaviour{
         ss.enDiss_upgraded=u.enDiss_upgraded;
         yield return new WaitForSecondsRealtime(0.02f);
         Debug.Log("Adventure data saved in GameSession");
-        if(cheatmode)s.SaveAdventure();//Only save adventure when cheatmode on
+        yield return new WaitForSecondsRealtime(0.033f);
+        SaveSerial.instance.SaveAdventure();
         }else{if(u==null){Debug.LogError("UpgradeMenu not present");}else if(s==null){Debug.LogError("SaveSerial not present");}else if(s.advD==null){Debug.LogError("Adventure Data null");}}
         
     }
-    public void LoadAdventure(){SaveSerial.instance.LoadAdventure();StartCoroutine(LoadAdventureI());}
+    public void LoadAdventure(){SaveSerial.instance.LoadAdventure();StartCoroutine(LoadAdventureI());}//LoadAdventure() in GSceneManager.cs
     IEnumerator LoadAdventureI(){
         //First load from SaveSerial
-        //LoadAdventure() in GSceneManager.cs
         yield return new WaitForSecondsRealtime(0.04f);
         var u=UpgradeMenu.instance;
         var s=SaveSerial.instance;
         var ss=SaveSerial.instance.advD;
         if(u!=null&&s!=null&&s.advD!=null){
-        xp=ss.xp;
         u.total_UpgradesCount=ss.total_UpgradesCount;
         u.total_UpgradesLvl=ss.total_UpgradesLvl;
         u.maxHealth_UpgradesCount=ss.maxHealth_UpgradesCount;
@@ -459,3 +413,4 @@ public class GameSession : MonoBehaviour{
     public void SetCheatmode(){if(!cheatmode){cheatmode=true;return;}else{cheatmode=false;return;}}
 }
 public enum dir{up,down,left,right}
+public enum dmgType{normal,silent,flame,shadow,decay,electr,heal,healSilent}

@@ -19,6 +19,6 @@ public class ShipLevelRequired : MonoBehaviour{
         textObj.text=txt+value;
     }
     void Update(){
-        if(UpgradeMenu.instance.total_UpgradesLvl>=value||!GameSession.instance.levelingOn){this.gameObject.SetActive(false);}
+        if(UpgradeMenu.instance.total_UpgradesLvl>=value||!GameRules.instance.levelingOn){this.gameObject.SetActive(false);}
     }
 }

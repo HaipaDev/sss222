@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 6267724299131017878}
   - component: {fileID: -7790566868657356652}
   m_Layer: 0
-  m_Name: ShadowBT Powerup
+  m_Name: GloomyScythes Powerup
   m_TagString: Powerups
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

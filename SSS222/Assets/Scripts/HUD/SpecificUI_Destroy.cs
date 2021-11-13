@@ -10,14 +10,14 @@ public class SpecificUI_Destroy : MonoBehaviour{
 
     IEnumerator Check(){
         if(type==specifiUI_type.energy&&!GameRules.instance.energyOnPlayer)Destroy(gameObject);
-        else if(type==specifiUI_type.crystals&&!GameSession.instance.crystalsOn)Destroy(gameObject);
-        else if(type==specifiUI_type.xp&&!GameSession.instance.xpOn)Destroy(gameObject);
-        else if(type==specifiUI_type.shop&&!GameSession.instance.shopOn)Destroy(gameObject);
-        else if(type==specifiUI_type.modules&&!GameSession.instance.modulesOn)Destroy(gameObject);
-        else if(type==specifiUI_type.statUpgs&&!GameSession.instance.statUpgOn)Destroy(gameObject);
-        else if(type==specifiUI_type.inventory&&!GameSession.instance.iteminvOn)Destroy(gameObject);
-        else if(type==specifiUI_type.leveling&&!GameSession.instance.levelingOn)Destroy(gameObject);
-        else if(type==specifiUI_type.cores&&!GameSession.instance.coresOn)Destroy(gameObject);
+        else if(type==specifiUI_type.crystals&&!GameRules.instance.crystalsOn)Destroy(gameObject);
+        else if(type==specifiUI_type.xp&&!GameRules.instance.xpOn)Destroy(gameObject);
+        else if(type==specifiUI_type.shop&&!GameRules.instance.shopOn)Destroy(gameObject);
+        else if(type==specifiUI_type.modules&&!GameRules.instance.modulesOn)Destroy(gameObject);
+        else if(type==specifiUI_type.statUpgs&&!GameRules.instance.statUpgOn)Destroy(gameObject);
+        else if(type==specifiUI_type.inventory&&!GameRules.instance.iteminvOn)Destroy(gameObject);
+        else if(type==specifiUI_type.leveling&&!GameRules.instance.levelingOn)Destroy(gameObject);
+        else if(type==specifiUI_type.cores&&!GameRules.instance.coresOn)Destroy(gameObject);
         yield return new WaitForSeconds(0.1f);
         StartCoroutine(Check());
     }

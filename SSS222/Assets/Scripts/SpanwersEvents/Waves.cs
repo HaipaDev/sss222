@@ -139,11 +139,11 @@ public class Waves : MonoBehaviour{
         if(!GameSession.GlobalTimeIsPaused){
             if(timeSpawns>-0.01){timeSpawns-=Time.deltaTime;}
             else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
-            else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){SpawnAllEnemiesInWave(currentWave);timeSpawns=currentWave.timeSpawnWave;}
+            else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){SpawnAllEnemiesInWave(currentWave);GameSession.instance.RandomizeEVScoreMax();timeSpawns=currentWave.timeSpawnWave;}
         }
         if(GameSession.instance!=null)if(GameSession.instance.EVscoreMax!=-5&&GameSession.instance.EVscore>=GameSession.instance.EVscoreMax){if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
-            timeSpawns=0; currentWave=GetRandomWave();
-            GameSession.instance.EVscore=0; if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameSession.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameSession.instance.xp_wave);}
+            timeSpawns=0;currentWave=GetRandomWave();
+            GameSession.instance.EVscore=0;if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameRules.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameRules.instance.xp_wave);}
         }
 
         //Check every 5s if no Enemies, force a wave spawn

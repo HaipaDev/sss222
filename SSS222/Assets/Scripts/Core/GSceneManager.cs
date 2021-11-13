@@ -10,10 +10,8 @@ public class GSceneManager : MonoBehaviour{
     Animator transitioner;
     float transitionTime=0.35f;*/
     //float prevGameSpeed;
-    private void Awake(){SetUpSingleton();GameSession.instance.gameSpeed=1f;}
-    private void SetUpSingleton(){
-        if(GSceneManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
-    }
+    void Awake(){SetUpSingleton();GameSession.instance.gameSpeed=1f;}
+    void SetUpSingleton(){if(GSceneManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
     void Start(){
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
         //prevGameSpeed = GameSession.instance.gameSpeed;
@@ -47,7 +45,6 @@ public class GSceneManager : MonoBehaviour{
     }
     public void LoadGameScene(){
         SceneManager.LoadScene("Game");
-        if(DamageValues.instance!=null)DamageValues.instance.StartCoroutine(DamageValues.instance.SetValues());
         if(GameSession.instance.CheckGameModeSelected("Adventure")){GameSession.instance.LoadAdventure();}
         else{GameSession.instance.ResetScore();}
         GameSession.instance.gameSpeed=1f;
@@ -67,7 +64,7 @@ public class GSceneManager : MonoBehaviour{
     public void RestartGame(){GSceneManager.instance.StartCoroutine(GSceneManager.instance.RestartGameI());}
     IEnumerator RestartGameI(){
         GameSession.instance.SaveHighscore();
-        if(GameSession.instance.CheckGameModeSelected("Adventure"))GameSession.instance.SaveAdventure();//not sure if Restart should save or not
+        //if(GameSession.instance.CheckGameModeSelected("Adventure"))GameSession.instance.SaveAdventure();//not sure if Restart should save or not
         yield return new WaitForSecondsRealtime(0.01f);
         GameSession.instance.ResetScore();
         GameSession.instance.ResetMusicPitch();
@@ -75,7 +72,8 @@ public class GSceneManager : MonoBehaviour{
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameSession.instance.speedChanged=false;
         GameSession.instance.gameSpeed=1f;
-        if(GameSession.instance.CheckGameModeSelected("Adventure"))GameSession.instance.LoadAdventure();
+        if(GameSession.instance.CheckGameModeSelected("Adventure")){
+        yield return new WaitForSecondsRealtime(0.1f);GameSession.instance.LoadAdventure();}
     }
     public void RestartScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -90,8 +90,8 @@ public class LootTableWaves : MonoBehaviour{
         foreach(LootTableEntryWaves entry in itemList){
             i++;
             dropList.Add(entry.dropChance);
-            if(!GameSession.instance.levelingOn){entry.levelReq=0;}
-            if(currentLvl<entry.levelReq&&currentLvl!=-4&&GameSession.instance.levelingOn)dropList[i]=0;
+            if(!GameRules.instance.levelingOn){entry.levelReq=0;}
+            if(currentLvl<entry.levelReq&&currentLvl!=-4&&GameRules.instance.levelingOn)dropList[i]=0;
             entry.name=entry.lootItem.name;
             
             itemTable.Add(
@@ -116,8 +116,8 @@ public class LootTableWaves : MonoBehaviour{
         var i=-1;
         foreach(LootTableEntryWaves entry in itemList){
             i++;
-            if(!GameSession.instance.levelingOn){entry.levelReq=0;}
-            if(currentLvl<entry.levelReq&&GameSession.instance.levelingOn)dropList[i]=0;
+            if(!GameRules.instance.levelingOn){entry.levelReq=0;}
+            if(currentLvl<entry.levelReq&&GameRules.instance.levelingOn)dropList[i]=0;
             
             var value=System.Convert.ToSingle(System.Math.Round((dropList[i]/sum*100),2));
                 if(entry!=null&&itemsPercentage!=null&&itemsPercentage[i]!=null){

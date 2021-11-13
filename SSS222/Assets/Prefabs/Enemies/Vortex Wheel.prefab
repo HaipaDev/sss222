@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: -3061252192134034468}
   - component: {fileID: 3322887099283394469}
   - component: {fileID: -1719784624319243089}
-  - component: {fileID: 1234536692577487592}
   - component: {fileID: 3809616233582520859}
   - component: {fileID: 1173182280}
   - component: {fileID: 3870371245394966467}
@@ -165,19 +164,18 @@ MonoBehaviour:
   healthStart: 100
   health: 95
   shooting: 0
-  minTimeBtwnShots: 0.65
-  maxTimeBtwnShots: 0.93
+  shootTime: {x: 1.75, y: 2.8}
+  shotCounter: 0
   bullet: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2, type: 3}
   bulletSpeed: 8
   DBullets: 0
   bulletDist: 0.35
   randomizeWaveDeath: 0
   flyOff: 0
-  freezefxTime: 0
-  givePts: 1
-  scoreValueStart: 15
-  scoreValueEnd: 20
+  giveScore: 1
+  scoreValue: {x: 1, y: 10}
   xpAmnt: 5
+  xpChance: 100
   drops: []
   dropValues: []
   destroyOut: 1
@@ -197,18 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmgTimer: 0
---- !u!114 &1234536692577487592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6432250634095115783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  collisionTypes: 0000000001000000
 --- !u!114 &3809616233582520859
 MonoBehaviour:
   m_ObjectHideFlags: 0

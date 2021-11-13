@@ -47,14 +47,16 @@ MonoBehaviour:
   defaultGameSpeed: 1
   crystalsOn: 1
   xpOn: 1
+  coresOn: 1
   shopOn: 1
   shopCargoOn: 1
-  upgradesOn: 1
+  levelingOn: 1
+  modulesOn: 1
+  statUpgOn: 0
+  iteminvOn: 1
   barrierOn: 0
-  EVscoreMax: 30
-  shopScoreMax: 300
-  shopScoreMaxS: 300
-  shopScoreMaxE: 350
+  EVscoreMax: {x: 30, y: 30}
+  shopScoreMax: {x: 200, y: 450}
   scoreMulti: 1
   luckMulti: 1
   startingPosPlayer: {x: 0, y: -6.24}
@@ -714,7 +716,7 @@ MonoBehaviour:
   reputationThresh: 01000000030000000500000008000000
   shopTimeLimitEnabled: 1
   shopTimeLimit: 10
-  xp_forCore: 100
+  xpMax: 100
   xp_wave: 20
   xp_shop: 3
   xp_powerup: 1
@@ -752,6 +754,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     lvls: {x: 0, y: 0}
+    skipRe: 0
   - name: 'Levels: 1-1'
     events:
       m_PersistentCalls:
@@ -769,6 +772,8 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     lvls: {x: 1, y: 1}
+    skipRe: 0
+  saveBarsFromLvl: 0
   total_UpgradesCountMax: 5
   other_UpgradesCountMax: 10
   maxHealth_UpgradeAmnt: 5
