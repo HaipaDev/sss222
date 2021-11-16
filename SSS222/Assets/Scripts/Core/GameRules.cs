@@ -103,18 +103,7 @@ public static GameRules instance;
 #endregion
 #region//Powerup Spawns
     [Header("Powerup/Waves Spawns")]
-    public List<LootTableEntryPowerup> pwrupStatusList;
-    public float mTimePowerupStatusSpawns=-1;
-    public float mTimePowerupStatusSpawnsS=9f;
-    public float mTimePowerupStatusSpawnsE=16f;
-    public float firstPowerupStatusSpawn=8;
-    public int enemiesPowerupStatusCountReq=-1;
-    public List<LootTableEntryPowerup> pwrupWeaponList;
-    public float mTimePowerupWeaponsSpawns=-1;
-    public float mTimePowerupWeaponsSpawnsS=-1;
-    public float mTimePowerupWeaponsSpawnsE=-1;
-    public float firstPowerupWeaponsSpawn=-4;
-    public int enemiesPowerupWeaponsCountReq=20;
+    public List<PowerupsSpawnerGR> powerupsSpawners;
 #endregion
 #region//Waves Spawns & Enemies
 [Header("Waves & Disrupters")]
@@ -253,7 +242,7 @@ public static GameRules instance;
 #region//Voids
     void Awake(){SetupSingleton();}
     void SetupSingleton(){
-        if(FindObjectsOfType<GameRules>().Length>1||!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
+        if(GameRules.instance!=null||!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
         else{DontDestroyOnLoad(gameObject);instance=this;}
     }
     IEnumerator Start(){
@@ -268,6 +257,11 @@ public static GameRules instance;
         if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
     }
     void OnValidate(){
+        foreach(var p in powerupsSpawners){
+            if(p.powerupSpawnerType==powerupSpawnerType.time){p.powerupSpawner=new powerupSpawnerTime();}
+            if(p.powerupSpawnerType==powerupSpawnerType.kills){p.powerupSpawner=new powerupSpawnerKills();}
+        }
+
         if(!shopOn)shopCargoOn=false;
         foreach(ListEvents le in lvlEvents){le.name="Levels: "+le.lvls.x+"-"+le.lvls.y;}
         foreach(EnemyClass e in enemies){
@@ -296,6 +290,12 @@ public static GameRules instance;
 #endregion
 
 #region//Custom classes
+[System.Serializable]
+public class PowerupsSpawnerGR{
+    public List<LootTableEntryPowerup> pwrupStatusList;
+    public powerupSpawnerType powerupSpawnerType;
+    [SerializeReference]public powerupSpawnerTypesPoly powerupSpawner;
+}
 [System.Serializable]
 public class ListEvents{
     [HideInInspector]public string name;

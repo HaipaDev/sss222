@@ -218,13 +218,12 @@ public class GameSession : MonoBehaviour{
         GameAssets.instance.MakeSpread("CelestBall",pos,amnt,rangeX,rangeY);
         if(xpAmnt-amnt!=0)GameSession.instance.AddXP(xpAmnt-amnt);
     }
-    public void AddEnemyCount(){enemiesCount++;if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddKills(1);//EnemiesCountHealDrone++;
-    var ps=FindObjectsOfType<PowerupsSpawner>();
-    foreach(PowerupsSpawner p in ps){
-        if(p.enemiesCountReq!=-1){
-            p.enemiesCount++;
-        }    
-    }}
+    public void AddEnemyCount(){
+        enemiesCount++;
+        if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddKills(1);
+        var ps=System.Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupSpawnerType==powerupSpawnerType.kills);
+        foreach(var p in ps){p.enemiesCount++;}
+    }
 
     public void ResetScore(){
         score=0;
@@ -385,8 +384,8 @@ public class GameSession : MonoBehaviour{
             }
             if(Input.GetKey(KeyCode.Alpha3) || fkey==""){
                 player=Player.instance;
-                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){Array.Find(FindObjectsOfType<PowerupsSpawner>(),x=>x.spawnerType==spawnerType.powerupStatus).timer=0.01f;}
-                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){var ps=Array.Find(FindObjectsOfType<PowerupsSpawner>(),x=>x.spawnerType==spawnerType.powerupWeapon);ps.enemiesCount=ps.enemiesCountReq;}
+                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){var ps=Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupSpawnerType==powerupSpawnerType.time);foreach(var p in ps){p.timer=0.01f;}}
+                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){var ps=Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupSpawnerType==powerupSpawnerType.kills);foreach(var p in ps){p.enemiesCount=9999999;}}
                 if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.powerup="laser3";}
                 if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.powerup="mlaser";}
                 if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){player.powerup="lsaber";}

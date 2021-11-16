@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Waves : MonoBehaviour{
-    [SerializeField] public spawnerType spawnerType;
-    //[SerializeField] List<WaveConfig> waveConfigs;
-    //[SerializeField] int[] waveConfigsWeights;
     [SerializeField] public int startingWave=0;
     [SerializeField] public bool startingWaveRandom=false;
     public int waveIndex=0;
     public WaveConfig currentWave;
-    //[SerializeField] bool progressiveWaves=false;
-    [SerializeField] public bool uniqueWaves=true;//Unique Wave Randomization?
+    [SerializeField] public bool uniqueWaves=true;
     [SerializeField] float mTimeSpawns=2f;
     public float timeSpawns=0f;
     float checkSpawns=5f;
