@@ -160,123 +160,9 @@ MonoBehaviour:
     enCost: 0
     cooldown: 90
   timeOverhaul: 10
-  pwrupStatusList:
-  - name: Accelerator
-    lootItem: {fileID: 11400000, guid: d1939f2a5efe96042842032862cdf62e, type: 2}
-    rarity: 0
-    dropChance: 3.5
-    levelReq: 0
-  - name: Armor
-    lootItem: {fileID: 11400000, guid: 8ee29e2bede3b904bb2b52557eb0f6b9, type: 2}
-    rarity: 0
-    dropChance: 1.75
-    levelReq: 1
-  - name: Flip
-    lootItem: {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
-    rarity: 0
-    dropChance: 6
-    levelReq: 0
-  - name: GCLover
-    lootItem: {fileID: 11400000, guid: f6a560a419dccd647bb79ae520e69ddf, type: 2}
-    rarity: 2
-    dropChance: 0
-    levelReq: 4
-  - name: Inverter
-    lootItem: {fileID: 11400000, guid: 836e8441bd1a4e1468be0e689364fb14, type: 2}
-    rarity: 0
-    dropChance: 6
-    levelReq: 2
-  - name: Magnet
-    lootItem: {fileID: 11400000, guid: 6878a416f2285834c9af2732b5242ce0, type: 2}
-    rarity: 1
-    dropChance: 5
-    levelReq: 2
-  - name: Matrix
-    lootItem: {fileID: 11400000, guid: 9000ede4635f82647a1cd13010567e48, type: 2}
-    rarity: 0
-    dropChance: 4
-    levelReq: 1
-  - name: Randomizer
-    lootItem: {fileID: 11400000, guid: 8645c7606471be849bbf4044ff5ceec1, type: 2}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: Scaler
-    lootItem: {fileID: 11400000, guid: c9d54cc47e5cf20499998336988ca3ff, type: 2}
-    rarity: 0
-    dropChance: 5
-    levelReq: 0
-  - name: Shadowdash
-    lootItem: {fileID: 11400000, guid: 9b409de821cfef24e850bac7ad821f16, type: 2}
-    rarity: 0
-    dropChance: 3
-    levelReq: 2
-  mTimePowerupStatusSpawns: -1
-  mTimePowerupStatusSpawnsS: 9
-  mTimePowerupStatusSpawnsE: 16
-  firstPowerupStatusSpawn: 8
-  enemiesPowerupStatusCountReq: -1
-  pwrupWeaponList:
-  - name: CStream
-    lootItem: {fileID: 11400000, guid: 9a4e80f1fa79ea547a89f82e21045b39, type: 2}
-    rarity: 1
-    dropChance: 1.75
-    levelReq: 3
-  - name: HRockets
-    lootItem: {fileID: 11400000, guid: f75229abe571c5f4780d84f66fa08b5b, type: 2}
-    rarity: 0
-    dropChance: 3
-    levelReq: 2
-  - name: Laser2
-    lootItem: {fileID: 11400000, guid: 1368b36bec2ccca4e97ab92bed99ea99, type: 2}
-    rarity: 0
-    dropChance: 4
-    levelReq: 1
-  - name: Laser3
-    lootItem: {fileID: 11400000, guid: 6682bf37c4b0a37459f807e12dd59d27, type: 2}
-    rarity: 1
-    dropChance: 3.15
-    levelReq: 2
-  - name: LClaws
-    lootItem: {fileID: 11400000, guid: 48ec4756caf9fcb4fab471d62d339935, type: 2}
-    rarity: 1
-    dropChance: 0
-    levelReq: 3
-  - name: LSaber
-    lootItem: {fileID: 11400000, guid: 58529076849c1924e91e0633da503bfc, type: 2}
-    rarity: 0
-    dropChance: 5
-    levelReq: 0
-  - name: MLaser
-    lootItem: {fileID: 11400000, guid: e2b5a8667474ac54a8705649fcad7ee5, type: 2}
-    rarity: 1
-    dropChance: 2
-    levelReq: 1
-  - name: Phaser
-    lootItem: {fileID: 11400000, guid: 96f99f90403e530478f4d3e9bd04b50f, type: 2}
-    rarity: 1
-    dropChance: 0
-    levelReq: 1
-  - name: PLaser
-    lootItem: {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
-    rarity: 1
-    dropChance: 0
-    levelReq: 5
-  - name: QRockets
-    lootItem: {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
-    rarity: 0
-    dropChance: 3
-    levelReq: 1
-  - name: ShadowBT
-    lootItem: {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
-    rarity: 2
-    dropChance: 0
-    levelReq: 2
-  mTimePowerupWeaponsSpawns: -1
-  mTimePowerupWeaponsSpawnsS: -1
-  mTimePowerupWeaponsSpawnsE: -1
-  firstPowerupWeaponsSpawn: -4
-  enemiesPowerupWeaponsCountReq: 20
+  powerupSpawnerPrefab: {fileID: 3860724879463956440, guid: c65d768f3c3f0f84da827b9eb6a21670,
+    type: 3}
+  powerupsSpawners: []
   waveList:
   - name: CometsFlyby
     lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
@@ -813,3 +699,5 @@ MonoBehaviour:
   enDiss_enabled: 1
   enDiss_upgradeCost: 4
   enDiss_lvlReq: 4
+  references:
+    version: 1

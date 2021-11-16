@@ -19,7 +19,7 @@ public class PowerupsSpawner : MonoBehaviour{
         if(i!=null){
             var ps=GetComponent<PowerupsSpawner>();
             if(ps.powerupSpawnerType==powerupSpawnerType.time){
-                lootTable.itemList=p.pwrupStatusList;
+                lootTable.itemList=p.powerupList;
                 ps.powerupSpawnerType=p.powerupSpawnerType;
                 ps.powerupSpawner=p.powerupSpawner;
             }

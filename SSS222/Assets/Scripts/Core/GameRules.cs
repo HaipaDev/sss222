@@ -10,7 +10,7 @@ public class GameRules : MonoBehaviour{
 #region//Values
 public static GameRules instance;
 #region//Global values
-    [Header("Global")]
+[Header("Global")]
     public string cfgName;
     public float defaultGameSpeed=1f;
     public bool crystalsOn=true;
@@ -29,7 +29,7 @@ public static GameRules instance;
     public float luckMulti=1;
 #endregion
 #region//Player
-    [Header("Player")]
+[Header("Player")]
     public Vector2 startingPosPlayer=new Vector2(0.36f,-6.24f);
     public bool autoShootPlayer=false;
     public bool moveX=true;
@@ -63,7 +63,7 @@ public static GameRules instance;
     public float overheatedTime=3;
     public bool recoilOnPlayer=true;
     public List<WeaponProperties> weaponProperties;
-    [Header("State Defaults")]
+[Header("State Defaults")]
     public float flipTime = 7f;
     public float gcloverTime = 6f;
     public bool dashingEnabled = true;
@@ -86,7 +86,7 @@ public static GameRules instance;
     public float onfireDmg = 1f;
     public float decayTickrate = 0.5f;
     public float decayDmg = 0.5f;
-    [Header("Energy Gains")]//Collectibles
+[Header("Energy Gains")]//Collectibles
     public float energyBallGet=6f;
     public float energyBatteryGet=11f;
     public float medkitEnergyGet=26f;
@@ -97,15 +97,14 @@ public static GameRules instance;
     public float enPwrupDuplicate=42f;
     public int crystalGet=2;
     public int crystalBGet=6;
-    [Header("Skills")]
+[Header("Skills")]
     public Skill[] skillsPlayer;
     public float timeOverhaul=10;
 #endregion
-#region//Powerup Spawns
-    [Header("Powerup/Waves Spawns")]
+#region//Waves & Powerups
+[Header("Powerup Spawns")]
+    public GameObject powerupSpawnerPrefab;
     public List<PowerupsSpawnerGR> powerupsSpawners;
-#endregion
-#region//Waves Spawns & Enemies
 [Header("Waves & Disrupters")]
     public List<LootTableEntryWaves> waveList;
     public int startingWave=0;
@@ -180,8 +179,8 @@ public static GameRules instance;
     public float shopTimeLimit=10;
 #endregion
 #region//Leveling
-    [Header("Leveling")]
-    public float xpMax=100f;
+[Header("Leveling")]
+    public float xp_forCore=100f;
     public float xp_wave=20f;
     public float xp_shop=3f;
     public float xp_powerup=1f;
@@ -189,7 +188,7 @@ public static GameRules instance;
     public float flyingTimeReq=25f;
     public float xp_staying=-2f;
     public float stayingTimeReq=4f;
-    [Header("Changes per level")]
+[Header("Changes per level")]
     public List<ListEvents> lvlEvents;
 #endregion
 #region//Upgrades
@@ -292,9 +291,9 @@ public static GameRules instance;
 #region//Custom classes
 [System.Serializable]
 public class PowerupsSpawnerGR{
-    public List<LootTableEntryPowerup> pwrupStatusList;
+    public List<LootTableEntryPowerup> powerupList;
     public powerupSpawnerType powerupSpawnerType;
-    [SerializeReference]public powerupSpawnerTypesPoly powerupSpawner;
+    [SerializeReference]public powerupSpawnerTypesPoly powerupSpawner=new powerupSpawnerTypesPoly();
 }
 [System.Serializable]
 public class ListEvents{
@@ -317,7 +316,7 @@ public class EnemyClass{
     public float bulletDist=0.35f;
     public bool randomizeWaveDeath = false;
     public bool flyOff = false;
-    [Header("Drops & Points")]
+[Header("Drops & Points")]
     public bool giveScore = true;
     public Vector2 scoreValue=new Vector2(1,10);
     public float xpAmnt = 0f;
@@ -326,16 +325,18 @@ public class EnemyClass{
 }
 [System.Serializable]
 public class CometSettings{
-    [Header("Basic")]
-    public Vector2 sizes=new Vector2(0.4f,1.4f);
+[Header("Basic")]
+    public float sizeMin=0.4f;
+    public float sizeMax=1.4f;
     public bool healthBySize=true;
     public bool damageBySpeedSize=true;
     public bool scoreBySize=false;
     public CometScoreSize[] scoreSizes;
     public Sprite[] sprites;
     public GameObject bflamePart;
-    [Header("Lunar")]
-    public Vector2 sizeMultLunar=new Vector2(0.88f,1.55f);
+[Header("Lunar")]
+    public float sizeMinLunar=0.88f;
+    public float sizeMaxLunar=1.55f;
     public int lunarCometChance=10;
     public float lunarHealthMulti=2.5f;
     public float lunarSpeedMulti=0.415f;
@@ -374,7 +375,7 @@ public class HealingDroneSettings{
     public GameObject healBallPrefab;
     public float shootFrequency=0.2f;
     public float speedBullet=4f;
-    [Header("Dodge")]
+[Header("Dodge")]
     public float distMin=1.6f;
     public float dodgeSpeed=2f;
     public float dodgeTime=0.5f;
@@ -391,7 +392,7 @@ public class VortexWheelSettings{
     public float chargeMultip=0.8f;
     public float chargeMultipS=1.3f;
     Sprite[] sprites;
-    [Header("Bullet")]
+[Header("Bullet")]
 	public GameObject projectile;
 	public int numberOfProjectiles=4;
 	public float radius=5;
