@@ -327,8 +327,7 @@ public class EnemyClass{
 [System.Serializable]
 public class CometSettings{
     [Header("Basic")]
-    public float sizeMin=0.4f;
-    public float sizeMax=1.4f;
+    public Vector2 sizes=new Vector2(0.4f,1.4f);
     public bool healthBySize=true;
     public bool damageBySpeedSize=true;
     public bool scoreBySize=false;
@@ -336,8 +335,7 @@ public class CometSettings{
     public Sprite[] sprites;
     public GameObject bflamePart;
     [Header("Lunar")]
-    public float sizeMinLunar=0.88f;
-    public float sizeMaxLunar=1.55f;
+    public Vector2 sizeMultLunar=new Vector2(0.88f,1.55f);
     public int lunarCometChance=10;
     public float lunarHealthMulti=2.5f;
     public float lunarSpeedMulti=0.415f;

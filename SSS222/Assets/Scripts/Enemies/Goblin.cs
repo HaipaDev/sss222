@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using Sirenix.OdinInspector;
 
 public class Goblin : MonoBehaviour{
     [SerializeField] Sprite bossSprite;
@@ -91,17 +92,18 @@ public class Goblin : MonoBehaviour{
             }
         }
     }
-    [ContextMenu("BossTransform")]void GoblinTransform(){
-        AudioManager.instance.Play("GoblinTransform");
+    [ContextMenu("BossTransform")][Button("Boss Transform")]
+    void GoblinTransform(){
+        bossForm=true;
         GetComponent<Follow>().enabled=false;
         if(GetComponent<BackflameEffect>().BFlame!=null){Destroy(GetComponent<BackflameEffect>().BFlame);}GetComponent<BackflameEffect>().enabled=false;
-        confused=false;questionMarkObj.SetActive(false);
+        confused=false;Destroy(transform.GetChild(0));
         GetComponent<SpriteRenderer>().sprite=bossSprite;
         GetComponent<Enemy>().healthStart=bossHp;GetComponent<Enemy>().health=bossHp;
         GetComponent<Enemy>().shooting=true;
         pos.x=transform.position.x;transform.rotation=new Quaternion(0,0,0,0);
         rb.velocity=Vector2.zero;GetComponent<Tag_PauseVelocity>().velPaused=Vector2.zero;
-        bossForm=true;
+        AudioManager.instance.Play("GoblinTransform");
     }
     void BossAI(){
         if(!GameSession.GlobalTimeIsPaused){

@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class CometRandomProperties : MonoBehaviour{
     [Header("Basic")]
-    [SerializeField] float sizeMin=0.4f;
-    [SerializeField] float sizeMax=1.4f;
+    [SerializeField] Vector2 sizes=new Vector2(0.4f,1.4f);
     [SerializeField] float size;
     [SerializeField] bool healthBySize=true;
     [SerializeField] public bool damageBySpeedSize=true;
@@ -15,8 +15,7 @@ public class CometRandomProperties : MonoBehaviour{
     [SerializeField] Sprite[] sprites;
     [SerializeField] GameObject bflamePart;
     [Header("Lunar")]
-    [SerializeField] float sizeMinLunar=0.88f;
-    [SerializeField] float sizeMaxLunar=1.55f;
+    [SerializeField] Vector2 sizeMultLunar=new Vector2(0.88f,1.55f);
     [SerializeField] int lunarCometChance=10;
     [SerializeField] float lunarHealthMulti=2.5f;
     [SerializeField] float lunarSpeedMulti=0.415f;
@@ -29,8 +28,8 @@ public class CometRandomProperties : MonoBehaviour{
     public int healhitCount;
     public bool isLunar;
 
-    SpriteRenderer spriteRenderer;
-    Enemy enemy;
+    Enemy en;
+    SpriteRenderer sprRender;
     BackflameEffect bFlame;
     Rigidbody2D rb;
     //float rotationSpeed;
@@ -41,8 +40,7 @@ public class CometRandomProperties : MonoBehaviour{
         var i=GameRules.instance;
         if(i!=null){
             var e=i.cometSettings;
-            sizeMin=e.sizeMin;
-            sizeMax=e.sizeMax;
+            sizes=e.sizes;
             healthBySize=e.healthBySize;
             damageBySpeedSize=e.damageBySpeedSize;
             scoreBySize=e.scoreBySize;
@@ -50,8 +48,7 @@ public class CometRandomProperties : MonoBehaviour{
             sprites=e.sprites;
             bflamePart=e.bflamePart;
 
-            sizeMinLunar=e.sizeMinLunar;
-            sizeMaxLunar=e.sizeMaxLunar;
+            sizeMultLunar=e.sizeMultLunar;
             lunarCometChance=e.lunarCometChance;
             lunarHealthMulti=e.lunarHealthMulti;
             lunarSpeedMulti=e.lunarSpeedMulti;
@@ -69,24 +66,20 @@ public class CometRandomProperties : MonoBehaviour{
         bFlame.enabled=false;
         yield return new WaitForSeconds(0.1f);
         bFlame.enabled=true;
-        spriteRenderer=GetComponent<SpriteRenderer>();
+        sprRender=GetComponent<SpriteRenderer>();
         rb=GetComponent<Rigidbody2D>();
-        enemy=GetComponent<Enemy>();
+        en=GetComponent<Enemy>();
         var spriteIndex=Random.Range(0, sprites.Length);
-        spriteRenderer.sprite=sprites[spriteIndex];
-        size=Random.Range(sizeMin, sizeMax);
-        transform.localScale=new Vector2(enemy.size.x*size,enemy.size.y*size);
+        sprRender.sprite=sprites[spriteIndex];
+        size=Random.Range(sizes.x, sizes.y);
+        transform.localScale=new Vector2(en.size.x*size,en.size.y*size);
 
         var angle=Random.Range(0f,360f);
         if(randomAngle)transform.rotation=Quaternion.AngleAxis(angle,Vector3.forward);
 
-        if(healthBySize)enemy.healthStart=Mathf.RoundToInt(enemy.health*size);enemy.health=enemy.healthStart;
+        if(healthBySize)en.healthStart=Mathf.RoundToInt(en.health*size);en.health=en.healthStart;
 
-        //Lunar Comets
-        if(Random.Range(0,100)<lunarCometChance)isLunar=true;
-        if(isLunar==true){
-            TransformIntoLunar();
-        }
+        if(Random.Range(0,100)<lunarCometChance)MakeLunar();
         //rotationSpeed=Random.Range(2,8);
         //Destroy(this,0.3f);
     }
@@ -96,21 +89,21 @@ public class CometRandomProperties : MonoBehaviour{
         if(healhitCount>=3&&!isLunar){MakeLunar();}
         //transform.Rotate(new Vector3(0,0,rotationSpeed));
     }
-    [ContextMenu("MakeLunar")]public void MakeLunar(){
-        isLunar=true;
-        bFlame.ClearBFlame();
-        TransformIntoLunar();
-    }
-    void TransformIntoLunar(){StartCoroutine(TransformIntoLunarI());}
-    IEnumerator TransformIntoLunarI(){
-        var spriteIndex=Random.Range(0,spritesLunar.Length);spriteRenderer.sprite=spritesLunar[spriteIndex];
-        bFlame.part=lunarPart;
-        var sizeA=Random.Range(sizeMinLunar, sizeMaxLunar);
-        transform.localScale=new Vector2(enemy.size.x*sizeA, enemy.size.y*sizeA);
+    [ContextMenu("MakeLunar")][Button("Make Lunar")]
+    public void MakeLunar(){isLunar=true;TransformIntoLunar();}
+    void TransformIntoLunar(){
+        var spriteIndex=Random.Range(0,spritesLunar.Length);
+        GetComponent<SpriteRenderer>().sprite=spritesLunar[spriteIndex];
+        if(bFlame!=null){bFlame.ClearBFlame();bFlame.part=lunarPart;}
 
-        enemy.health*=lunarHealthMulti;
+        var sizeA=Random.Range(sizeMultLunar.x, sizeMultLunar.y);
+        if(en!=null){transform.localScale=new Vector2(en.size.x*sizeA, en.size.y*sizeA);
+        en.health*=lunarHealthMulti;}
         rb.velocity*=lunarSpeedMulti;
-        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(SetCrystalDropsI());
+    }
+    IEnumerator SetCrystalDropsI(){
+        yield return new WaitForSeconds(0.05f);
         if(!GameRules.instance.crystalsOn)dropValues[0]=102;
     }
 
