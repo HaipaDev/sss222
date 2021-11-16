@@ -10,15 +10,15 @@ public class PowerupsSpawner : MonoBehaviour{
     public int enemiesCount;
     public float sum;
     LootTablePowerups lootTable;
-    private void Awake(){StartCoroutine(SetValues());}
+    /*private void Awake(){StartCoroutine(SetValues());}
     private IEnumerator SetValues(){
         yield return new WaitForSeconds(0.1f);
         lootTable=GetComponent<LootTablePowerups>();
         var i=GameRules.instance;
-        var p=GameRules.instance.powerupsSpawners[ID];
+        var p=GameRules.instance.powerupSpawners[ID];
         if(i!=null){
             var ps=GetComponent<PowerupsSpawner>();
-            if(ps.powerupSpawnerType==powerupSpawnerType.time){
+            /*if(ps.powerupSpawnerType==powerupSpawnerType.time){
                 lootTable.itemList=p.powerupList;
                 ps.powerupSpawnerType=p.powerupSpawnerType;
                 ps.powerupSpawner=p.powerupSpawner;
@@ -27,11 +27,11 @@ public class PowerupsSpawner : MonoBehaviour{
         if(lootTable.itemList.Count==0){Destroy(lootTable);}
         yield return new WaitForSeconds(0.2f);
         lootTable.SumUp();
-    }
-    void OnValidate(){
+    }*/
+    /*void OnValidate(){
         if(powerupSpawnerType==powerupSpawnerType.time){powerupSpawner=new powerupSpawnerTime();}
         if(powerupSpawnerType==powerupSpawnerType.kills){powerupSpawner=new powerupSpawnerKills();}
-    }
+    }*/
     void Update(){
         if(!GameSession.GlobalTimeIsPaused){if(timer>0)timer-=Time.deltaTime;}
         if(timer<=0){SpawnPowerups();}
@@ -54,7 +54,7 @@ public class PowerupsSpawner : MonoBehaviour{
             powerupSpawnerTime ps=(powerupSpawnerTime)powerupSpawner;
             timer=Mathf.RoundToInt(Random.Range(ps.spawnTime.x,ps.spawnTime.y));
         }else if(powerupSpawnerType==powerupSpawnerType.kills){
-            powerupSpawnerTime ps=(powerupSpawnerTime)powerupSpawner;
+            powerupSpawnerKills ps=(powerupSpawnerKills)powerupSpawner;
             timer=0.1f;
             enemiesCount=0;
         }

@@ -21,7 +21,7 @@ public class LvlTreePowerups : MonoBehaviour{
     IEnumerator SetValues(){
         yield return new WaitForSecondsRealtime(0.15f);
         if(FindObjectOfType<LootTablePowerups>()!=null)foreach(LootTablePowerups lt in FindObjectsOfType<LootTablePowerups>()){powerups.AddRange(lt.itemList);}
-        else if(GameRules.instance!=null){powerups.AddRange(GameRules.instance.pwrupStatusList);powerups.AddRange(GameRules.instance.pwrupWeaponList);}
+        //else if(GameRules.instance!=null){powerups.AddRange(GameRules.instance.pwrupStatusList);powerups.AddRange(GameRules.instance.pwrupWeaponList);}
         yield return new WaitForSecondsRealtime(0.015f);
         List<LootTableEntryPowerup> removeList=new List<LootTableEntryPowerup>();
         foreach(LootTableEntryPowerup entry in powerups){if(entry.dropChance<=0){removeList.Add(entry);}else{sum+=entry.dropChance;}}

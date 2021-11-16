@@ -4,18 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.EventSystems;
+using Sirenix.OdinInspector;
 
 public class GameCreator : MonoBehaviour{
     public static GameCreator instance;
-    [SerializeField] GameObject gameSessionPrefab;
-    [SerializeField] GameObject loaderPrefab;
-    [SerializeField] GameObject saveSerialPrefab;
-    [SerializeField] public GameObject gameAssetsPrefab;
-    [SerializeField] GameObject gSceneManagerPrefab;
-    [SerializeField] GameObject audioManagerPrefab;
-    [SerializeField] GameObject dbaccessPrefab;
+    [AssetsOnly][SerializeField] GameObject gameSessionPrefab;
+    [AssetsOnly][SerializeField] GameObject loaderPrefab;
+    [AssetsOnly][SerializeField] GameObject saveSerialPrefab;
+    [AssetsOnly][SerializeField] public GameObject gameAssetsPrefab;
+    [AssetsOnly][SerializeField] GameObject gSceneManagerPrefab;
+    [AssetsOnly][SerializeField] GameObject audioManagerPrefab;
+    [AssetsOnly][SerializeField] GameObject dbaccessPrefab;
     //[SerializeField] int gamerulesetsID;
-    [SerializeField] public GameRules[] gamerulesetsPrefabs;
+    [AssetsOnly][SerializeField] public GameRules[] gamerulesetsPrefabs;
     private void Awake(){
         instance=this;
         Load();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Weapon Config")]
 public class WeaponProperties:ScriptableObject{
-    [SerializeField] public string name;
+    [SerializeField] new public string name;
     [SerializeField] public string assetName;
     [SerializeField] public weaponType weaponType;
     [SerializeReference] public weaponTypeProperties weaponTypeProperties;

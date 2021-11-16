@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using Sirenix.OdinInspector;
 
 public class GameRules : MonoBehaviour{
 #region//Values
@@ -103,8 +104,8 @@ public static GameRules instance;
 #endregion
 #region//Waves & Powerups
 [Header("Powerup Spawns")]
-    public GameObject powerupSpawnerPrefab;
-    public List<PowerupsSpawnerGR> powerupsSpawners;
+    [AssetsOnly]public GameObject powerupSpawnerPrefab;
+    public List<PowerupsSpawnerGR> powerupSpawners;
 [Header("Waves & Disrupters")]
     public List<LootTableEntryWaves> waveList;
     public int startingWave=0;
@@ -180,7 +181,7 @@ public static GameRules instance;
 #endregion
 #region//Leveling
 [Header("Leveling")]
-    public float xp_forCore=100f;
+    public float xpMax=100f;
     public float xp_wave=20f;
     public float xp_shop=3f;
     public float xp_powerup=1f;
@@ -249,6 +250,16 @@ public static GameRules instance;
         yield return new WaitForSecondsRealtime(0.05f);
         if(!GameSession.instance.CheckGameModeSelected(cfgName)){
             GameSession.instance.SetGameModeSelectedStr(cfgName);}
+
+
+        yield return new WaitForSecondsRealtime(0.02f);
+        for(int i=0;i<powerupSpawners.Count;i++){
+            var ps=Instantiate(powerupSpawnerPrefab).GetComponent<PowerupsSpawner>();ps.ID=i;
+            ps.GetComponent<LootTablePowerups>().itemList=powerupSpawners[i].powerupList;
+            ps.powerupSpawnerType=powerupSpawners[i].psConfig.powerupSpawnerType;
+            ps.powerupSpawner=powerupSpawners[i].psConfig.powerupSpawner;
+            ps.gameObject.name=powerupSpawners[i].psConfig.name;
+        }
     }
     Player p=Player.instance;
     void Update(){
@@ -256,10 +267,10 @@ public static GameRules instance;
         if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
     }
     void OnValidate(){
-        foreach(var p in powerupsSpawners){
+        /*foreach(var p in powerupsSpawners){
             if(p.powerupSpawnerType==powerupSpawnerType.time){p.powerupSpawner=new powerupSpawnerTime();}
             if(p.powerupSpawnerType==powerupSpawnerType.kills){p.powerupSpawner=new powerupSpawnerKills();}
-        }
+        }*/
 
         if(!shopOn)shopCargoOn=false;
         foreach(ListEvents le in lvlEvents){le.name="Levels: "+le.lvls.x+"-"+le.lvls.y;}
@@ -275,7 +286,6 @@ public static GameRules instance;
         cometSettings.lunarDrops[0].name="Coin";
         if(cometSettings.lunarDrops.Count==0)cometSettings.lunarDrops.Add(new LootTableEntryDrops(){name="Coin",ammount=new Vector2(6,12),dropChance=101});
     }
-    //GameObject GameAssetsGet(string name){return FindObjectOfType<GameCreator>().gameAssetsPrefab.GetComponent<GameAssets>().Get(name);}
     #region//Custom Events
     public void MultiplyMaxHealth(float amnt){p.maxHP*=amnt;}
     public void MultiplyMaxEnergy(float amnt){p.maxEnergy*=amnt;}
@@ -292,9 +302,9 @@ public static GameRules instance;
 [System.Serializable]
 public class PowerupsSpawnerGR{
     public List<LootTableEntryPowerup> powerupList;
-    public powerupSpawnerType powerupSpawnerType;
-    [SerializeReference]public powerupSpawnerTypesPoly powerupSpawner=new powerupSpawnerTypesPoly();
+    public PowerupsSpawnerConfig psConfig;
 }
+
 [System.Serializable]
 public class ListEvents{
     [HideInInspector]public string name;
@@ -302,6 +312,9 @@ public class ListEvents{
     public Vector2 lvls;
     public bool skipRe;
 }
+
+
+
 [System.Serializable]
 public class EnemyClass{
     public string name;
@@ -310,7 +323,7 @@ public class EnemyClass{
     public float health=100;
     public bool shooting = false;
     public Vector2 shootTime=new Vector2(1.75f,2.8f);
-    public GameObject bullet;
+    [AssetsOnly]public GameObject bullet;
     public float bulletSpeed = 8f;
     public bool DBullets = false;
     public float bulletDist=0.35f;
@@ -326,24 +339,22 @@ public class EnemyClass{
 [System.Serializable]
 public class CometSettings{
 [Header("Basic")]
-    public float sizeMin=0.4f;
-    public float sizeMax=1.4f;
+    public Vector2 sizes=new Vector2(0.4f,1.4f);
     public bool healthBySize=true;
     public bool damageBySpeedSize=true;
     public bool scoreBySize=false;
     public CometScoreSize[] scoreSizes;
-    public Sprite[] sprites;
-    public GameObject bflamePart;
+    [AssetsOnly]public Sprite[] sprites;
+    [AssetsOnly]public GameObject bflamePart;
 [Header("Lunar")]
-    public float sizeMinLunar=0.88f;
-    public float sizeMaxLunar=1.55f;
+    public Vector2 sizeMultLunar=new Vector2(0.88f,1.55f);
     public int lunarCometChance=10;
     public float lunarHealthMulti=2.5f;
     public float lunarSpeedMulti=0.415f;
     public Vector2 lunarScore;
     public List<LootTableEntryDrops> lunarDrops;
-    public Sprite[] spritesLunar;
-    public GameObject lunarPart;
+    [AssetsOnly]public Sprite[] spritesLunar;
+    [AssetsOnly]public GameObject lunarPart;
 }
 [System.Serializable]
 public class EnCombatantSettings{
@@ -353,7 +364,7 @@ public class EnCombatantSettings{
     public float distY = 1.3f;
     public float distX = 0.3f;
     public float distYPlayer = 1.5f;
-    public GameObject saberPrefab;
+    [AssetsOnly]public GameObject saberPrefab;
 }
 [System.Serializable]
 public class EnShipSettings{
@@ -372,7 +383,7 @@ public class MechaLeechSettings{
 }
 [System.Serializable]
 public class HealingDroneSettings{
-    public GameObject healBallPrefab;
+    [AssetsOnly]public GameObject healBallPrefab;
     public float shootFrequency=0.2f;
     public float speedBullet=4f;
 [Header("Dodge")]
@@ -393,7 +404,7 @@ public class VortexWheelSettings{
     public float chargeMultipS=1.3f;
     Sprite[] sprites;
 [Header("Bullet")]
-	public GameObject projectile;
+	[AssetsOnly]public GameObject projectile;
 	public int numberOfProjectiles=4;
 	public float radius=5;
 	public float moveSpeed=5;

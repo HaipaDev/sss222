@@ -54,9 +54,7 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: powerupSpawnerTime, ns: , asm: Assembly-CSharp}
-      data:
-        spawnTime: {x: 9, y: 16}
+      type: {class: powerupSpawnerTypesPoly, ns: , asm: Assembly-CSharp}
 --- !u!114 &1734509379744776936
 MonoBehaviour:
   m_ObjectHideFlags: 0

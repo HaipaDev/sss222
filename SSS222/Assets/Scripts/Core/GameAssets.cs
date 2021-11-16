@@ -1,16 +1,17 @@
 ﻿using System;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class GameAssets : MonoBehaviour{
 //GameAssets.instance.Make("",);
 //GameAssets.instance.Get("");
 //GameAssets.instance.Spr("");
     public static GameAssets instance;
-	public GObject[] objects;
-	public GObject[] vfx;
-	public GSprite[] sprites;
-	public Sprite[] skins;
-	public Sprite[] skinOverlays;
+	[AssetsOnly]public GObject[] objects;
+	[AssetsOnly]public GObject[] vfx;
+	[AssetsOnly]public GSprite[] sprites;
+	[AssetsOnly]public Sprite[] skins;
+	[AssetsOnly]public Sprite[] skinOverlays;
     
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
 

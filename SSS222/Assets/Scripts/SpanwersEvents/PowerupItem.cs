@@ -10,7 +10,7 @@ public enum rarityPowerup{
 [CreateAssetMenu(menuName = "Powerup Item")]
 public class PowerupItem : ScriptableObject{
     [HeaderAttribute("Properties")]
-    [SerializeField] public string name;
+    [SerializeField] new public string name;
     [SerializeField] public GameObject item;
     [SerializeField] public float dropChance=1;
     [SerializeField] public rarityPowerup rarity;
