@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Waves : MonoBehaviour{
+    [Header("Config")]
     [SerializeField] public int startingWave=0;
     [SerializeField] public bool startingWaveRandom=false;
     public int waveIndex=0;
     public WaveConfig currentWave;
     [SerializeField] public bool uniqueWaves=true;
-    [SerializeField] float mTimeSpawns=2f;
-    public float timeSpawns=0f;
     float checkSpawns=5f;
+    //[SerializeField] float mTimeSpawns=2f;
+    
+    [Header("Current Values")]
+    public float timeSpawns=0f;
     float checkSpawnsTimer=0f;
 
     WaveDisplay waveDisplay;

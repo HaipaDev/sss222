@@ -59,7 +59,7 @@ public class SaveSerial : MonoBehaviour{
 	public PlayerData playerData=new PlayerData();
 	[System.Serializable]public class PlayerData{
 		public int[] highscore=new int[GameSession.gameModeMaxID];
-		public int skinID;
+		public string skinName="Mk.22";
 		public float[] chameleonColor=new float[3];
 	}
 	public void Save(){

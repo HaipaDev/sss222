@@ -7,11 +7,13 @@ public class GameAssets : MonoBehaviour{
 //GameAssets.instance.Get("");
 //GameAssets.instance.Spr("");
     public static GameAssets instance;
+    [AssetsOnly]public GameObject powerupSpawnerPrefab;
+    [AssetsOnly]public GameObject waveSpawnerPrefab;
+    [AssetsOnly]public GameObject disrupterSpawnerPrefab;
 	[AssetsOnly]public GObject[] objects;
 	[AssetsOnly]public GObject[] vfx;
 	[AssetsOnly]public GSprite[] sprites;
-	[AssetsOnly]public Sprite[] skins;
-	[AssetsOnly]public Sprite[] skinOverlays;
+	[AssetsOnly]public GSkin[] skins;
     
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
 
@@ -44,7 +46,7 @@ public class GameAssets : MonoBehaviour{
     public GameObject VFX(string obj, Vector2 pos, float duration){
 		GObject o = Array.Find(vfx, item => item.name == obj);
 		if (o == null){
-			Debug.LogWarning("Object: " + name + " not found!");
+			Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
@@ -58,7 +60,7 @@ public class GameAssets : MonoBehaviour{
     public GameObject Get(string obj){
 		GObject o = Array.Find(objects, item => item.name == obj);
 		if (o == null){
-			Debug.LogWarning("Object: " + name + " not found!");
+			Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
@@ -66,7 +68,7 @@ public class GameAssets : MonoBehaviour{
 	}public GameObject GetVFX(string obj){
 		GObject o = Array.Find(vfx, item => item.name == obj);
 		if (o == null){
-			Debug.LogWarning("Object: " + name + " not found!");
+			Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
@@ -77,44 +79,55 @@ public class GameAssets : MonoBehaviour{
     public Sprite Spr(string spr){
 		GSprite s = Array.Find(sprites, item => item.name == spr);
 		if (s == null){
-			Debug.LogWarning("Sprite: " + name + " not found!");
+			Debug.LogWarning("Sprite: " + spr + " not found!");
 			return null;
 		}
 		Sprite gs=s.spr;
         return gs;
 	}
 	
-	public Sprite GetSkin(int i){
-		//GSprite s = Array.Find(skins, item => item.name == spr);
-        //Sprite gs=s.spr;
-		Sprite s=skins[i];
+	public GSkin GetSkin(string str){
+		GSkin s = Array.Find(skins, item => item.name == str);
+        //Sprite gs=s.str;
+		//Sprite s=skins[i];
 		if (s == null){
-			Debug.LogWarning("Skin: " + i + " not found!");
-			return null;
-		}
-        return s;
-	}public Sprite GetOverlay(int i)
-{
-		//GSprite s = Array.Find(skins, item => item.name == spr);
-        //Sprite gs=s.spr;
-		Sprite s=skinOverlays[i];
-		if (s == null){
-			Debug.LogWarning("Overlay: " + i + " not found!");
+			Debug.LogWarning("Skin: " + str + " not found!");
 			return null;
 		}
         return s;
 	}
+	public int GetSkinID(string str){
+		int i = Array.FindIndex(skins, item => item.name == str);
+		if (i == null){
+			Debug.LogWarning("Skin: " + str + " not found!");
+			return 0;
+		}
+        return i;
+	}public GSkin GetSkinByID(int i){
+		if (skins[i] == null){
+			Debug.LogWarning("Skin by ID: " + i + " not found!");
+			return null;
+		}
+        return skins[i];
+	}
 }
 
 [System.Serializable]
-public class GObject {
+public class GObject{
 	public string name;
 
 	public GameObject gobj;
 }
 [System.Serializable]
-public class GSprite {
+public class GSprite{
 	public string name;
 
 	public Sprite spr;
+}
+[System.Serializable]
+public class GSkin{
+	public string name;
+
+	public Sprite spr;
+	public Sprite sprOverlay;
 }

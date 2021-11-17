@@ -43,6 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f481cee2169c24f9a7bceb0ca8c908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerupSpawnerPrefab: {fileID: 3860724879463956440, guid: c65d768f3c3f0f84da827b9eb6a21670,
+    type: 3}
+  waveSpawnerPrefab: {fileID: 356336301364335481, guid: f406453d807c7104bbf48d3e3680ba15,
+    type: 3}
+  disrupterSpawnerPrefab: {fileID: 471278204608894438, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
+    type: 3}
   objects:
   - name: Player
     gobj: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
@@ -355,9 +361,9 @@ MonoBehaviour:
   - name: upgradeFill_des
     spr: {fileID: 21300000, guid: a1e2036529aa2324ab1e0a53dcfae988, type: 3}
   skins:
-  - {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}
-  - {fileID: 21300000, guid: 8c3dccef1eacea141a8d89d0bd965366, type: 3}
-  - {fileID: 21300000, guid: 50d957dbcbb2637498ea21443c1e3c81, type: 3}
-  - {fileID: 21300000, guid: d28a8e7a0b538fc4ca72d5deb5d6acb0, type: 3}
-  skinOverlays:
-  - {fileID: 21300000, guid: 823400051cf2dd84495c524fba381fef, type: 3}
+  - name: Mk.22
+    spr: {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}
+    sprOverlay: {fileID: 0}
+  - name: Chameleon
+    spr: {fileID: 21300000, guid: 8c3dccef1eacea141a8d89d0bd965366, type: 3}
+    sprOverlay: {fileID: 21300000, guid: 823400051cf2dd84495c524fba381fef, type: 3}

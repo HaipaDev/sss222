@@ -22,22 +22,7 @@ public class LootTableWaves : MonoBehaviour{
     [SerializeField] ItemPercentageWaves[] itemsPercentage;
     public float sum;
     
-    private void Awake(){StartCoroutine(SetValues());}
-    IEnumerator SetValues(){
-        yield return new WaitForSeconds(0.125f);
-        var i=GameRules.instance;
-        if(i!=null){
-            var w=GetComponent<Waves>();
-            itemList=i.waveList;
-            w.startingWave=i.startingWave;
-            w.startingWaveRandom=i.startingWaveRandom;
-            w.uniqueWaves=i.uniqueWaves;
-        }
-        SumUp();
-    }
-    void OnValidate(){
-        SumUp();
-    }
+    void OnValidate(){SumUp();}
     private void Update() {
         if(UpgradeMenu.instance!=null)currentLvl=UpgradeMenu.instance.total_UpgradesLvl;
         else currentLvl=-4;

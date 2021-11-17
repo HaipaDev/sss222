@@ -10,6 +10,7 @@ using UnityEngine.Rendering.PostProcessing;
 //using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using Sirenix.OdinInspector;
 public class GameSession : MonoBehaviour{
     public static GameSession instance;
     public static bool GlobalTimeIsPaused;
@@ -114,7 +115,7 @@ public class GameSession : MonoBehaviour{
         cores=Mathf.Clamp(cores,0,99999);
         coins=Mathf.Clamp(coins,0,99999);
         
-        if(GameRules.instance!=null){
+        if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"){
             //Open Shop
             if(GameRules.instance.shopOn&&(shopScore>=shopScoreMax&&coins>0)){
                 if(GameRules.instance.shopCargoOn){Shop.instance.SpawnCargo();}
@@ -143,8 +144,10 @@ public class GameSession : MonoBehaviour{
                 
             }
 
-            if(Player.instance.timeFlyingCore>GameRules.instance.flyingTimeReq){AddXP(GameRules.instance.xp_flying);Player.instance.timeFlyingCore=0f;}
-            if(Player.instance.stayingTimerCore>GameRules.instance.stayingTimeReq){if(xp>-GameRules.instance.xp_staying)AddXP(GameRules.instance.xp_staying);Player.instance.stayingTimerCore=0f;}
+            if(Player.instance!=null){
+                if(Player.instance.timeFlyingCore>GameRules.instance.flyingTimeReq){AddXP(GameRules.instance.xp_flying);Player.instance.timeFlyingCore=0f;}
+                if(Player.instance.stayingTimerCore>GameRules.instance.stayingTimeReq){if(xp>-GameRules.instance.xp_staying)AddXP(GameRules.instance.xp_staying);Player.instance.stayingTimerCore=0f;}
+            }
         }
 
         //Set speed to normal
@@ -309,10 +312,10 @@ public class GameSession : MonoBehaviour{
     }
     public void SaveSettings(){SaveSerial.instance.SaveSettings();}
     public void SaveInventory(){
-        SaveSerial.instance.playerData.skinID=FindObjectOfType<Inventory>().skinID;
-        SaveSerial.instance.playerData.chameleonColor[0]=FindObjectOfType<Inventory>().chameleonColorArr[0];
-        SaveSerial.instance.playerData.chameleonColor[1]=FindObjectOfType<Inventory>().chameleonColorArr[1];
-        SaveSerial.instance.playerData.chameleonColor[2]=FindObjectOfType<Inventory>().chameleonColorArr[2];
+        SaveSerial.instance.playerData.skinName=FindObjectOfType<CustomizationInventory>().skinName;
+        SaveSerial.instance.playerData.chameleonColor[0]=FindObjectOfType<CustomizationInventory>().chameleonColorArr[0];
+        SaveSerial.instance.playerData.chameleonColor[1]=FindObjectOfType<CustomizationInventory>().chameleonColorArr[1];
+        SaveSerial.instance.playerData.chameleonColor[2]=FindObjectOfType<CustomizationInventory>().chameleonColorArr[2];
     }
     public void Save(){SaveSerial.instance.Save();SaveSerial.instance.SaveSettings();}
     public void Load(){SaveSerial.instance.Load();SaveSerial.instance.LoadSettings();}

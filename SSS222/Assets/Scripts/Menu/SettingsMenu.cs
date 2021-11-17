@@ -6,42 +6,43 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
+using Sirenix.OdinInspector;
 
 public class SettingsMenu : MonoBehaviour{
     [SerializeField] int panelActive=0;
     [SerializeField] GameObject[] panels;
     [Header("Game")]
-    [SerializeField]GameObject steeringToggle;
-    [SerializeField]GameObject vibrationsToggle;
-    [SerializeField]GameObject horizPlayfieldToggle;
-    [SerializeField]GameObject dtapMouseShootToggle;
-    [SerializeField]GameObject lefthandToggle;
-    [SerializeField]GameObject scbuttonsToggle;
-    [SerializeField]GameObject cheatToggle;
+    [SceneObjectsOnly][SerializeField]GameObject steeringToggle;
+    [SceneObjectsOnly][SerializeField]GameObject vibrationsToggle;
+    [SceneObjectsOnly][SerializeField]GameObject horizPlayfieldToggle;
+    [SceneObjectsOnly][SerializeField]GameObject dtapMouseShootToggle;
+    [SceneObjectsOnly][SerializeField]GameObject lefthandToggle;
+    [SceneObjectsOnly][SerializeField]GameObject scbuttonsToggle;
+    [SceneObjectsOnly][SerializeField]GameObject cheatToggle;
     [Header("Sound")]
     public AudioMixer audioMixer;
-    [SerializeField]GameObject masterSlider;
-    [SerializeField]GameObject soundSlider;
-    [SerializeField]GameObject musicSlider;
+    [SceneObjectsOnly][SerializeField]GameObject masterSlider;
+    [SceneObjectsOnly][SerializeField]GameObject soundSlider;
+    [SceneObjectsOnly][SerializeField]GameObject musicSlider;
     
     [Header("Graphics")]
-    [SerializeField]GameObject qualityDropdopwn;
-    [SerializeField]GameObject fullscreenToggle;
-    [SerializeField]GameObject pprocessingToggle;
-    [SerializeField]GameObject screenshakeToggle;
-    [SerializeField]GameObject dmgPopupsToggle;
-    [SerializeField]GameObject particlesToggle;
-    [SerializeField]GameObject screenflashToggle;
+    [SceneObjectsOnly][SerializeField]GameObject qualityDropdopwn;
+    [SceneObjectsOnly][SerializeField]GameObject fullscreenToggle;
+    [SceneObjectsOnly][SerializeField]GameObject pprocessingToggle;
+    [SceneObjectsOnly][SerializeField]GameObject screenshakeToggle;
+    [SceneObjectsOnly][SerializeField]GameObject dmgPopupsToggle;
+    [SceneObjectsOnly][SerializeField]GameObject particlesToggle;
+    [SceneObjectsOnly][SerializeField]GameObject screenflashToggle;
 
-    [SerializeField]GameObject hudVis_graphicsSlider;
-    [SerializeField]GameObject hudVis_textSlider;
-    [SerializeField]GameObject hudVis_barsSlider;
-    [SerializeField]GameObject hudVis_absorpSlider;
-    [SerializeField]GameObject hudVis_popupsSlider;
-    [SerializeField]GameObject hudVis_notifsSlider;
+    [SceneObjectsOnly][SerializeField]GameObject hudVis_graphicsSlider;
+    [SceneObjectsOnly][SerializeField]GameObject hudVis_textSlider;
+    [SceneObjectsOnly][SerializeField]GameObject hudVis_barsSlider;
+    [SceneObjectsOnly][SerializeField]GameObject hudVis_absorpSlider;
+    [SceneObjectsOnly][SerializeField]GameObject hudVis_popupsSlider;
+    [SceneObjectsOnly][SerializeField]GameObject hudVis_notifsSlider;
 
-    [SerializeField]GameObject pprocessingPrefab;
-    public PostProcessVolume postProcessVolume;
+    [AssetsOnly][SerializeField]GameObject pprocessingPrefab;
+    [SceneObjectsOnly]public PostProcessVolume postProcessVolume;
     private void Start(){
         if(SaveSerial.instance!=null){
             scbuttonsToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.scbuttons;

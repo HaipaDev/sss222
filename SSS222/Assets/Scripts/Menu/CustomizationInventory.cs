@@ -2,31 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
-public class Inventory : MonoBehaviour{
-    [SerializeField] public int skinID=0;
-    [SerializeField] Sprite[] skins;
-    [SerializeField] Sprite[] overlays;
+public class CustomizationInventory : MonoBehaviour{
     [HeaderAttribute("Objects")]
-    [SerializeField] Image skin;
-    [SerializeField] Image skinOverlay;
-
-    [SerializeField] GameObject sliders;
-    [SerializeField] Slider Hslider;
-    [SerializeField] Slider Sslider;
-    [SerializeField] Slider Vslider;
-    [SerializeField] Image SsliderIMG;
-    [SerializeField] Image VsliderIMG;
-    [SerializeField] Material gradientShader;
+    [SceneObjectsOnly][SerializeField] Image skin;
+    [SceneObjectsOnly][SerializeField] Image skinOverlay;
+    [SceneObjectsOnly][SerializeField] GameObject sliders;
+    [SceneObjectsOnly][SerializeField] Slider Hslider;
+    [SceneObjectsOnly][SerializeField] Slider Sslider;
+    [SceneObjectsOnly][SerializeField] Slider Vslider;
+    [SceneObjectsOnly][SerializeField] Image SsliderIMG;
+    [SceneObjectsOnly][SerializeField] Image VsliderIMG;
+    [AssetsOnly][SerializeField] Material gradientShader;
     [HeaderAttribute("Properties")]
-    public int chameleonOverlayID;
-    public Color chameleonColor;
+    [SerializeField] public string skinName="Mk.22";
+    public Color chameleonColor=Color.white;
     public float[] chameleonColorArr = new float[3];
     void Start(){
         //if(skinID<1){skinID=1;}
-        skins=FindObjectOfType<GameAssets>().skins;
-        overlays=FindObjectOfType<GameAssets>().skinOverlays;
-        skinID=SaveSerial.instance.playerData.skinID;
+        skinName=SaveSerial.instance.playerData.skinName;
         chameleonColorArr[0] = SaveSerial.instance.playerData.chameleonColor[0];
         chameleonColorArr[1] = SaveSerial.instance.playerData.chameleonColor[1];
         chameleonColorArr[2] = SaveSerial.instance.playerData.chameleonColor[2];
@@ -57,27 +52,29 @@ public class Inventory : MonoBehaviour{
         Color.RGBToHSV(chameleonColor, out chameleonColorArr[0], out chameleonColorArr[1], out chameleonColorArr[2]);
     }
     void Update() {
-        if (skinID==1){
+        if(GetSkin(skinName).sprOverlay!=null){
             foreach(Transform go in sliders.transform){go.gameObject.SetActive(true);}
             skinOverlay.gameObject.SetActive(true);
-            skin.sprite=skins[skinID];
-            skinOverlay.sprite = overlays[chameleonOverlayID];
-            //chameleonOvColor.a = chameleonOvAlpha;
-            skinOverlay.color = chameleonColor;
+            SetSkin(skinName);
+            SetSkinOverlay(skinName);
+            skinOverlay.color=chameleonColor;
         }
         else{
-            skin.sprite=skins[skinID];
+            SetSkin(skinName);
             foreach(Transform go in sliders.transform){if(go.gameObject.activeSelf==true)go.gameObject.SetActive(false);}
             skinOverlay.gameObject.SetActive(false);
         }
     }
-    public void ChangeSkin(int ID){
-        skinID=ID;
-    }public void NextSkin(){
-        if(skinID<skins.Length-1){skinID++;return;}
-        if(skinID==skins.Length-1)skinID=0;
+    GSkin GetSkin(string str){return GameAssets.instance.GetSkin(str);}
+    int GetSkinID(string str){return GameAssets.instance.GetSkinID(str);}
+    GSkin GetSkinByID(int i){return GameAssets.instance.GetSkinByID(i);}
+    public void SetSkin(string str){if(GetSkin(skinName)!=null){skinName=str;skin.sprite=GetSkin(skinName).spr;}}
+    public void SetSkinOverlay(string str){if(GetSkin(skinName)!=null){if(GetSkin(skinName).sprOverlay!=null){skinOverlay.sprite=GetSkin(skinName).sprOverlay;}}}
+    public void NextSkin(){
+        if(GetSkinID(skinName)<GameAssets.instance.skins.Length-1){SetSkin(GetSkinByID(GetSkinID(skinName)+1).name);return;}
+        if(GetSkinID(skinName)==GameAssets.instance.skins.Length-1)SetSkin(GetSkinByID(0).name);
     }public void PrevSkin(){
-        if(skinID>0){skinID--;return;}
-        if(skinID==0)skinID=skins.Length-1;
+        if(GetSkinID(skinName)>0){SetSkin(GetSkinByID(GetSkinID(skinName)-1).name);return;}
+        if(GetSkinID(skinName)==0)SetSkin(GetSkinByID(GameAssets.instance.skins.Length-1).name);
     }
 }

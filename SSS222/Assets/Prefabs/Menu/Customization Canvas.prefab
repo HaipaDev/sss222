@@ -399,8 +399,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3229481634824747828}
-        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+      - m_Target: {fileID: 5594342582179611756}
+        m_TargetAssemblyTypeName: CustomizationInventory, Assembly-CSharp
         m_MethodName: PrevSkin
         m_Mode: 1
         m_Arguments:
@@ -422,7 +422,7 @@ GameObject:
   - component: {fileID: 2803215468805790454}
   - component: {fileID: 6473304205415714926}
   m_Layer: 5
-  m_Name: HSVValueSlider
+  m_Name: ValueSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 8118606975335257374}
   - component: {fileID: 1483491976254879133}
   m_Layer: 5
-  m_Name: HSVSaturationSlider
+  m_Name: SaturationSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -868,7 +868,7 @@ GameObject:
   - component: {fileID: 3229481634824747822}
   - component: {fileID: 3229481634824747817}
   - component: {fileID: 3931574694302176952}
-  - component: {fileID: 3229481634824747828}
+  - component: {fileID: 5594342582179611756}
   - component: {fileID: 3931574695238749256}
   m_Layer: 5
   m_Name: Customization Canvas
@@ -964,8 +964,8 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
---- !u!114 &3229481634824747828
+    m_Bits: 1847
+--- !u!114 &5594342582179611756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -974,12 +974,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3229481634824747819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 910c60784ca874d439cba9682205b96c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a065de78c235b64589e47b9cde63da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinID: 0
-  skins: []
-  overlays: []
   skin: {fileID: 3931574695443819043}
   skinOverlay: {fileID: 3931574695098500451}
   sliders: {fileID: 8615086750861783177}
@@ -989,8 +986,8 @@ MonoBehaviour:
   SsliderIMG: {fileID: 8263351394400326136}
   VsliderIMG: {fileID: 8506514081449838815}
   gradientShader: {fileID: 2100000, guid: bf7a9cc50ed043444827dff4e850c6af, type: 2}
-  chameleonOverlayID: 0
-  chameleonColor: {r: 0.8962264, g: 0.13105197, b: 0.13105197, a: 1}
+  skinName: Mk.22
+  chameleonColor: {r: 1, g: 1, b: 1, a: 1}
   chameleonColorArr:
   - 0
   - 0
@@ -1131,7 +1128,7 @@ GameObject:
   - component: {fileID: 3931574694240650634}
   - component: {fileID: 3931574694240650635}
   m_Layer: 5
-  m_Name: HSVSlider
+  m_Name: HueSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2259,7 +2256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4642309220153895133}
   m_Layer: 5
-  m_Name: Sliders
+  m_Name: ColorSliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2408,8 +2405,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3229481634824747828}
-        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+      - m_Target: {fileID: 5594342582179611756}
+        m_TargetAssemblyTypeName: CustomizationInventory, Assembly-CSharp
         m_MethodName: NextSkin
         m_Mode: 1
         m_Arguments:

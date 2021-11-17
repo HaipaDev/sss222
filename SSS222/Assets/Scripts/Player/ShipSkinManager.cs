@@ -1,15 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class ShipSkinManager : MonoBehaviour{
-    public int skinID=0;
-    public bool addOverlay = false;
-    [SerializeField] Sprite[] skins;
-    [SerializeField] Sprite[] overlays;
-    [SerializeField] GameObject overlayPrefab;
+    [AssetsOnly][SerializeField] GameObject overlayPrefab;
     [HeaderAttribute("Properties")]
-    [SerializeField] int chameleonOverlayID;
+    public string skinName;
     [SerializeField] Color chameleonOvColor;
     
     //[SerializeField] int chameleonOvAlpha;
@@ -18,16 +15,12 @@ public class ShipSkinManager : MonoBehaviour{
     SpriteRenderer spr;
     SaveSerial saveSerial;
     Player player;
-    void Start(){
+    IEnumerator Start(){
         player=GetComponent<Player>();
         spr=GetComponent<SpriteRenderer>();
         saveSerial=FindObjectOfType<SaveSerial>();
         LoadValues();
-        //if(skinID<1){skinID=1;}
-        skins=FindObjectOfType<GameAssets>().skins;
-        overlays=FindObjectOfType<GameAssets>().skinOverlays;
-        if(skinID==1){addOverlay=true;}
-        if(addOverlay==true){
+        if(GetSkin(skinName).sprOverlay!=null){
             overlayOBJ=Instantiate(overlayPrefab,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
             overlayOBJ.transform.parent = gameObject.transform;
             overlayOBJ.transform.position=new Vector3(overlayOBJ.transform.position.x,overlayOBJ.transform.position.y,-0.01f);
@@ -35,20 +28,17 @@ public class ShipSkinManager : MonoBehaviour{
             overlay=overlayOBJ.GetComponent<SpriteRenderer>();
             if(GameSession.maskMode!=0)overlayOBJ.GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
         }
+
+        yield return new WaitForSeconds(0.05f);
+        SetSkin(skinName);
+        Color color=Color.white;
+        if(skinName.Contains("Chameleon")){color=chameleonOvColor;}
+        if(GetSkin(skinName).sprOverlay!=null)SetOverlay(GetSkin(skinName).sprOverlay,color);
     }
 
-    void Update(){
-        if(skinID==1){
-            SetSkin(skins[skinID]);
-            SetOverlay(overlays[chameleonOverlayID],chameleonOvColor);
-            //chameleonOvColor.a = chameleonOvAlpha;
-        }else{
-            SetSkin(skins[skinID]);
-        }
-    }
-    void SetSkin(Sprite sprite){
-        if(spr!=null)spr.sprite=sprite;
-    }
+    //void Update(){}
+    GSkin GetSkin(string str){return GameAssets.instance.GetSkin(str);}
+    void SetSkin(string str){if(this.spr!=null)this.spr.sprite=GetSkin(str).spr;}
     void SetOverlay(Sprite sprite, Color color){
         if(overlay!=null){
         overlay.sprite=sprite;
@@ -56,7 +46,7 @@ public class ShipSkinManager : MonoBehaviour{
         }
     }
     void LoadValues(){
-        skinID=saveSerial.playerData.skinID;
-        chameleonOvColor = Color.HSVToRGB(saveSerial.playerData.chameleonColor[0], saveSerial.playerData.chameleonColor[1], saveSerial.playerData.chameleonColor[2]);
+        skinName=saveSerial.playerData.skinName;
+        chameleonOvColor=Color.HSVToRGB(saveSerial.playerData.chameleonColor[0], saveSerial.playerData.chameleonColor[1], saveSerial.playerData.chameleonColor[2]);
     }
 }

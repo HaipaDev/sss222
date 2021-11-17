@@ -55,13 +55,12 @@ MonoBehaviour:
     password: 
   playerData:
     highscore: 0000000000000000000000000000000000000000
-    skinID: 0
+    skinName: Mk.22
     chameleonColor:
     - 0
     - 0
     - 0
   advD:
-    xp: 0
     total_UpgradesCount: 0
     total_UpgradesLvl: 0
     maxHealth_UpgradesCount: 0
@@ -106,9 +105,9 @@ MonoBehaviour:
     coinPopupsSum: 1
     corePopupsSum: 1
     scorePopupsSum: 0
-    hudVis_graphic: 0.9
+    hudVis_graphics: 0.9
     hudVis_text: 1
-    hudVis_notif: 1
-    hudVis_popup: 0.9
     hudVis_barFill: 1
     hudVis_absorpFill: 0.5
+    hudVis_popups: 0.9
+    hudVis_notif: 1

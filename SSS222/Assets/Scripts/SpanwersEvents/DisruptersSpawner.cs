@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DisruptersSpawner : MonoBehaviour{
-    public List<DisrupterConfig> disruptersList;
+    public List<DisrupterConfig> disruptersList=new List<DisrupterConfig>();
     [SerializeField]int rep=1;
     [SerializeField]DisrupterConfig currentCfg;
     [SerializeField]DisrupterConfig repCfg;
@@ -11,17 +11,11 @@ public class DisruptersSpawner : MonoBehaviour{
         StartCoroutine(SetValues());
     }
     public IEnumerator SetValues(){
-        //Set values
-        yield return new WaitForSecondsRealtime(0.1f);
-        var i=GameRules.instance;
-        if(i!=null){disruptersList=i.disrupterList;}
         yield return new WaitForSecondsRealtime(0.05f);
-        var di=0;
         List<DisrupterConfig> dcs=new List<DisrupterConfig>();
         foreach(DisrupterConfig dc in disruptersList){
             var da=Instantiate(dc);
             dcs.Add(da);
-            di++;
         }
         this.disruptersList=dcs;
         yield return new WaitForSecondsRealtime(0.01f);
