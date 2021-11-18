@@ -40,7 +40,10 @@ public class Enemy : MonoBehaviour{
 
     private void Awake(){
         StartCoroutine(SetValues());
-        if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
+        if(GameSession.maskMode!=0){
+            if(GetComponent<SpriteRenderer>()!=null)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
+            else{if(transform.GetChild(0)!=null)transform.GetChild(0).GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;}
+        }
     }
     IEnumerator SetValues(){
         //drops=(LootTableDrops)gameObject.AddComponent(typeof(LootTableDrops));

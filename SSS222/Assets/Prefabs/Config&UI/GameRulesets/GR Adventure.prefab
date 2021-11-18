@@ -401,6 +401,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: powerupSpawners.Array.data[0].powerupList.Array.data[4].levelReq
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[0].powerupList.Array.data[7].levelReq
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[0].powerupList.Array.data[8].levelReq
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[1].powerupList.Array.data[3].levelReq
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[1].powerupList.Array.data[4].levelReq
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[1].powerupList.Array.data[6].levelReq
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[1].powerupList.Array.data[7].levelReq
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[1].powerupList.Array.data[8].levelReq
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[0].powerupList.Array.data[7].dropChance
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: lvlEvents.Array.data[0].events.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}

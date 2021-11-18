@@ -48,6 +48,7 @@ public class GSceneManager : MonoBehaviour{
         if(GameSession.instance.CheckGameModeSelected("Adventure")){GameSession.instance.LoadAdventure();}
         else{GameSession.instance.ResetScore();}
         GameSession.instance.gameSpeed=1f;
+        GameRules.instance.EnterGameScene();
     }
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");/*GameSession.instance.SetGameModeSelected(0);*/}
     public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}
@@ -74,6 +75,7 @@ public class GSceneManager : MonoBehaviour{
         GameSession.instance.gameSpeed=1f;
         if(GameSession.instance.CheckGameModeSelected("Adventure")){
         yield return new WaitForSecondsRealtime(0.1f);GameSession.instance.LoadAdventure();}
+        GameRules.instance.EnterGameScene();
     }
     public void RestartScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

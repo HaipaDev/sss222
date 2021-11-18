@@ -245,15 +245,15 @@ MonoBehaviour:
       dropChance: 1.75
       levelReq: 3
     - name: 
+      lootItem: {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
+      rarity: 0
+      dropChance: 3
+      levelReq: 4
+    - name: 
       lootItem: {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
       rarity: 2
       dropChance: 0
       levelReq: 2
-    - name: 
-      lootItem: {fileID: 0}
-      rarity: 0
-      dropChance: 0
-      levelReq: 0
     psConfig: {fileID: 11400000, guid: 8fed4d5111fa39942b77b4f7a99cd98d, type: 2}
   waveList:
   - name: CometsFlyby

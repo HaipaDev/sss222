@@ -394,13 +394,13 @@ public class Player : MonoBehaviour{
         CountTimeMovementPressed();
         if((frozen!=true&&(!fuelOn||(fuelOn&&energy>0)))&&!GameSession.GlobalTimeIsPaused){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
-            if(transform.childCount>0){if(transform.GetChild(0).gameObject.activeSelf==false){transform.GetChild(0).gameObject.SetActive(true);}}
+            if(GetComponent<BackflameEffect>().BFlame!=null)if(GetComponent<BackflameEffect>().BFlame.activeSelf==false){GetComponent<BackflameEffect>().BFlame.SetActive(true);}
             if(inputType!=InputType.mouse&&inputType!=InputType.drag){MovePlayer();}
             else if(inputType==InputType.drag){MoveWithDrag();}
             else{MoveWithMouse();}
         }else{
+            if(GetComponent<BackflameEffect>().BFlame.activeSelf==true){GetComponent<BackflameEffect>().BFlame.SetActive(false);}
             if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
-            if(transform.childCount>0){if(transform.GetChild(0).gameObject.activeSelf==true){transform.GetChild(0).gameObject.SetActive(false);}}
         }
         if(shootTimer>0)shootTimer -= Time.deltaTime;
         if(instantiateTimer>0)instantiateTimer-=Time.deltaTime;
@@ -430,16 +430,16 @@ public class Player : MonoBehaviour{
         if(!GameSession.GlobalTimeIsPaused&&GameRules.instance.levelingOn&&UpgradeMenu.instance!=null&&GetComponent<BackflameEffect>()!=null){
             //Blue Flame for Hardcore
             if(GameSession.instance.CheckGameModeSelected("Hardcore")){
-                if((UpgradeMenu.instance.total_UpgradesLvl<bflameDmgTillLvl||bflameDmgTillLvl<=0)&&!transform.GetChild(0).name.Contains("Blue")){
+                if((UpgradeMenu.instance.total_UpgradesLvl<bflameDmgTillLvl||bflameDmgTillLvl<=0)&&!GetComponent<BackflameEffect>().BFlame.name.Contains("Blue")){
                     GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame_BluePlayer");
                 }
                 //Reverse: dmg from Lvl
-                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&!transform.GetChild(0).name.Contains("Dmg")){
+                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&!GetComponent<BackflameEffect>().BFlame.name.Contains("Dmg")){
                     GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlameDMG_BluePlayer");
                     fuelDrainAmnt*=2;
                 }
             }else{//Revert to default flame when Level above
-                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&transform.GetChild(0).name.Contains("Dmg")){
+                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&GetComponent<BackflameEffect>().BFlame.name.Contains("Dmg")){
                     GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame");
                 }
             }

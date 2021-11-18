@@ -249,8 +249,15 @@ public static GameRules instance;
         yield return new WaitForSecondsRealtime(0.05f);
         if(!GameSession.instance.CheckGameModeSelected(cfgName)){
             GameSession.instance.SetGameModeSelectedStr(cfgName);}
-
-        yield return new WaitForSecondsRealtime(0.02f);
+        yield return new WaitForSecondsRealtime(0.02f);    
+        if(SceneManager.GetActiveScene().name=="Game")EnterGameScene();
+    }
+    public void EnterGameScene(){StartCoroutine(EnterGameSceneI());}
+    IEnumerator EnterGameSceneI(){
+        yield return new WaitForSecondsRealtime(0.1f);
+        CreateSpawners();
+    }
+    void CreateSpawners(){
         //Set/Create WaveSpawner
         Waves ws;
         if(FindObjectOfType<Waves>()==null){
@@ -282,7 +289,7 @@ public static GameRules instance;
             ps[i].gameObject.name=powerupSpawners[i].psConfig.name;
         }
     }
-    Player p=Player.instance;
+    Player p;
     void Update(){
         if(Player.instance!=null&&p!=Player.instance){p=Player.instance;}
         if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
