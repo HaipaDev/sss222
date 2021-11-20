@@ -5,11 +5,13 @@ using UnityEngine;
 public class BounceThroughEnemies : MonoBehaviour{
     [SerializeField] public float speed=9f;
     [SerializeField] List<Enemy> enemiesHit;
-
+    void Start(){
+        if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
+    }
     void Update(){
         float step=speed*Time.deltaTime;
         var target=FindClosestEnemy();
-        if(target!=null)transform.position=Vector2.MoveTowards(transform.position,target.transform.position,step);
+        if(target!=null&&!GameSession.GlobalTimeIsPaused)transform.position=Vector2.MoveTowards(transform.position,target.transform.position,step);
     }
     public Enemy FindClosestEnemy(){
         KdTree<Enemy> Enemies=new KdTree<Enemy>();

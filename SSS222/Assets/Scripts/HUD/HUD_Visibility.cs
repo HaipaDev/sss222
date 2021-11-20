@@ -8,30 +8,37 @@ public class HUD_Visibility : MonoBehaviour{
     [SerializeField] bool overwriteSav;
     [SerializeField] float animVal;
     float savAlpha;
+    public float alphaVal;
     void Start(){
         savAlpha=GetTransparency();
     }
     void Update(){
-        if(type==HUDVis_type.graphics){SetTransparency(SaveSerial.instance.settingsData.hudVis_graphics);}
-        if(type==HUDVis_type.text){SetTransparency(SaveSerial.instance.settingsData.hudVis_text);}
-        if(type==HUDVis_type.barFill){SetTransparency(SaveSerial.instance.settingsData.hudVis_barFill);}
-        if(type==HUDVis_type.absorpFill){SetTransparency(SaveSerial.instance.settingsData.hudVis_absorpFill);}
-        if(type==HUDVis_type.popups){SetTransparency(SaveSerial.instance.settingsData.hudVis_popups);}
-        if(type==HUDVis_type.notif){SetTransparency(SaveSerial.instance.settingsData.hudVis_notif);}
+        if(type==HUDVis_type.graphics){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_graphics);}
+        if(type==HUDVis_type.text){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_text);}
+        if(type==HUDVis_type.barFill){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_barFill);}
+        if(type==HUDVis_type.absorpFill){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_absorpFill);}
+        if(type==HUDVis_type.popups){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_popups);}
+        if(type==HUDVis_type.notif){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_notif);}
+        //Skip if any other components should override
+        if(GetComponent<AmmoDisplay>()==null){
+        SetTrapnsparency();}
     }
-    void SetTransparency(float amnt){
+    void SetAlphaVal(float amnt){
+        if(overwriteSav)alphaVal=amnt;
+        else if(type==HUDVis_type.popups)alphaVal=animVal*amnt;
+        else alphaVal=savAlpha*amnt;
+    }
+    void SetTrapnsparency(){
         if(GetComponent<Image>()!=null){var img=GetComponent<Image>();var tempColor=img.color;
-          if(overwriteSav)tempColor.a=amnt;
-          else tempColor.a=savAlpha*amnt;
-          img.color=tempColor;}
-        if(GetComponent<TMPro.TextMeshProUGUI>()!=null){var txt=GetComponent<TMPro.TextMeshProUGUI>();
-          if(overwriteSav)txt.alpha=amnt;
-          else if(type==HUDVis_type.popups)txt.alpha=animVal*amnt;
-          else txt.alpha=savAlpha*amnt;}
+        tempColor.a=alphaVal;
+        }
+        else if(GetComponent<TMPro.TextMeshProUGUI>()!=null){var txt=GetComponent<TMPro.TextMeshProUGUI>();
+        txt.alpha=alphaVal;
+        }
     }
     float GetTransparency(){
         if(GetComponent<Image>()!=null){return GetComponent<Image>().color.a;}
-        if(GetComponent<TMPro.TextMeshProUGUI>()!=null){return GetComponent<TMPro.TextMeshProUGUI>().alpha;}
+        else if(GetComponent<TMPro.TextMeshProUGUI>()!=null){return GetComponent<TMPro.TextMeshProUGUI>().alpha;}
         else return 0;
     }
 }

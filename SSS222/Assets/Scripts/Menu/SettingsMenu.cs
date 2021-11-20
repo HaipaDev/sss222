@@ -45,32 +45,33 @@ public class SettingsMenu : MonoBehaviour{
     [SceneObjectsOnly]public PostProcessVolume postProcessVolume;
     private void Start(){
         if(SaveSerial.instance!=null){
-            scbuttonsToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.scbuttons;
-            dtapMouseShootToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.dtapMouseShoot;
-            lefthandToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.lefthand;
-            vibrationsToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.vibrations;
+            var s=SaveSerial.instance.settingsData;
+            scbuttonsToggle.GetComponent<Toggle>().isOn=s.scbuttons;
+            dtapMouseShootToggle.GetComponent<Toggle>().isOn=s.dtapMouseShoot;
+            lefthandToggle.GetComponent<Toggle>().isOn=s.lefthand;
+            vibrationsToggle.GetComponent<Toggle>().isOn=s.vibrations;
             cheatToggle.GetComponent<Toggle>().isOn=GameSession.instance.cheatmode;
-            bool h=false;if(SaveSerial.instance.settingsData.playfieldRot==PlaneDir.horiz){h=true;}horizPlayfieldToggle.GetComponent<Toggle>().isOn=h;
+            bool h=false;if(s.playfieldRot==PlaneDir.horiz){h=true;}horizPlayfieldToggle.GetComponent<Toggle>().isOn=h;
 
-            masterSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.masterVolume;
-            soundSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.soundVolume;
-            musicSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.musicVolume;
+            masterSlider.GetComponent<Slider>().value=s.masterVolume;
+            soundSlider.GetComponent<Slider>().value=s.soundVolume;
+            musicSlider.GetComponent<Slider>().value=s.musicVolume;
 
-            qualityDropdopwn.GetComponent<Dropdown>().value=SaveSerial.instance.settingsData.quality;
-            fullscreenToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.fullscreen;
-            pprocessingToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.pprocessing;
-            screenshakeToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.screenshake;
-            dmgPopupsToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.dmgPopups;
-            particlesToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.particles;
-            screenflashToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.screenflash;
+            qualityDropdopwn.GetComponent<Dropdown>().value=s.quality;
+            fullscreenToggle.GetComponent<Toggle>().isOn=s.fullscreen;
+            pprocessingToggle.GetComponent<Toggle>().isOn=s.pprocessing;
+            screenshakeToggle.GetComponent<Toggle>().isOn=s.screenshake;
+            dmgPopupsToggle.GetComponent<Toggle>().isOn=s.dmgPopups;
+            particlesToggle.GetComponent<Toggle>().isOn=s.particles;
+            screenflashToggle.GetComponent<Toggle>().isOn=s.screenflash;
 
             
-            hudVis_graphicsSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_graphics;
-            hudVis_textSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_text;
-            hudVis_barsSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_barFill;
-            hudVis_absorpSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_absorpFill;
-            hudVis_popupsSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_popups;
-            hudVis_notifsSlider.GetComponent<Slider>().value=SaveSerial.instance.settingsData.hudVis_notif;
+            hudVis_graphicsSlider.GetComponent<Slider>().value=s.hudVis_graphics;
+            hudVis_textSlider.GetComponent<Slider>().value=s.hudVis_text;
+            hudVis_barsSlider.GetComponent<Slider>().value=s.hudVis_barFill;
+            hudVis_absorpSlider.GetComponent<Slider>().value=s.hudVis_absorpFill;
+            hudVis_popupsSlider.GetComponent<Slider>().value=s.hudVis_popups;
+            hudVis_notifsSlider.GetComponent<Slider>().value=s.hudVis_notif;
         }
         if(SceneManager.GetActiveScene().name=="Options")OpenSettings();
 
@@ -82,12 +83,13 @@ public class SettingsMenu : MonoBehaviour{
     private void Update(){
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
     if(SaveSerial.instance!=null){
-        if(SaveSerial.instance.settingsData.pprocessing==true&&postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
-        if(SaveSerial.instance.settingsData.pprocessing==true&&FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume.enabled=true;}
-        if(SaveSerial.instance.settingsData.pprocessing==false&&FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
-        if(SaveSerial.instance.settingsData.masterVolume<=-40){SaveSerial.instance.settingsData.masterVolume=-80;}
-        if(SaveSerial.instance.settingsData.soundVolume<=-40){SaveSerial.instance.settingsData.soundVolume=-80;}
-        if(SaveSerial.instance.settingsData.musicVolume<=-40){SaveSerial.instance.settingsData.musicVolume=-80;}
+        var s=SaveSerial.instance.settingsData;
+        if(s.pprocessing==true&&postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
+        if(s.pprocessing==true&&FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume.enabled=true;}
+        if(s.pprocessing==false&&FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
+        if(s.masterVolume<=-40){s.masterVolume=-80;}
+        if(s.soundVolume<=-40){s.soundVolume=-80;}
+        if(s.musicVolume<=-40){s.musicVolume=-80;}
     }
     }
     public void SetPanelActive(int i){foreach(GameObject p in panels){p.SetActive(false);}panels[i].SetActive(true);panelActive=i;}
@@ -105,24 +107,25 @@ public class SettingsMenu : MonoBehaviour{
     public void SetQuality(int qualityIndex){
         QualitySettings.SetQualityLevel(qualityIndex);
         if(SaveSerial.instance!=null){
-            SaveSerial.instance.settingsData.quality=qualityIndex;
+            var s=SaveSerial.instance.settingsData;
+            s.quality=qualityIndex;
             if(qualityIndex<=1){
-                SaveSerial.instance.settingsData.pprocessing=false;
-                SaveSerial.instance.settingsData.dmgPopups=false;
+                s.pprocessing=false;
+                s.dmgPopups=false;
                 pprocessingToggle.GetComponent<Toggle>().isOn=false;
                 dmgPopupsToggle.GetComponent<Toggle>().isOn=false;
             }if(qualityIndex==0){
-                SaveSerial.instance.settingsData.screenshake=false;
-                SaveSerial.instance.settingsData.particles=false;
-                SaveSerial.instance.settingsData.screenflash=false;
+                s.screenshake=false;
+                s.particles=false;
+                s.screenflash=false;
                 screenshakeToggle.GetComponent<Toggle>().isOn=false;
                 particlesToggle.GetComponent<Toggle>().isOn=false;
                 screenflashToggle.GetComponent<Toggle>().isOn=false;
             }if(qualityIndex>1){
-                SaveSerial.instance.settingsData.particles=true;
+                s.particles=true;
                 particlesToggle.GetComponent<Toggle>().isOn=true;
             }if(qualityIndex>4){
-                SaveSerial.instance.settingsData.pprocessing=true;
+                s.pprocessing=true;
                 pprocessingToggle.GetComponent<Toggle>().isOn=true;
             }
         }
@@ -155,41 +158,39 @@ public class SettingsMenu : MonoBehaviour{
         }
     }
     public void SetSteering(){
-        SaveSerial s;
         if(SaveSerial.instance!=null){
-        s=SaveSerial.instance;
-        switch (s.settingsData.inputType){
+        var s=SaveSerial.instance.settingsData;
+        switch(s.inputType){
             case (InputType)0:
-                s.settingsData.inputType=(InputType)1;
+                s.inputType=(InputType)1;
                 break;
             case (InputType)1:
-                s.settingsData.inputType=(InputType)2;
+                s.inputType=(InputType)2;
                 break;
             case (InputType)2:
-                if(GameSession.instance.cheatmode)s.settingsData.inputType=(InputType)3;
-                else s.settingsData.inputType=(InputType)0;
+                if(GameSession.instance.cheatmode)s.inputType=(InputType)3;
+                else s.inputType=(InputType)0;
                 break;
             case (InputType)3:
-                s.settingsData.inputType=(InputType)0;
+                s.inputType=(InputType)0;
                 break;
         }
         foreach(Transform t in steeringToggle.transform.GetChild(0)){t.gameObject.SetActive(false);}
-        steeringToggle.transform.GetChild(0).GetChild((int)s.settingsData.inputType).gameObject.SetActive(true);
+        steeringToggle.transform.GetChild(0).GetChild((int)s.inputType).gameObject.SetActive(true);
         }
     }
     public void SetJoystick(){
-        SaveSerial s;
         if(SaveSerial.instance!=null){
-        s=SaveSerial.instance;
-        switch (s.settingsData.joystickType){
+        var s=SaveSerial.instance.settingsData;
+        switch(s.joystickType){
             case (JoystickType)0:
-                s.settingsData.joystickType=(JoystickType)1;
+                s.joystickType=(JoystickType)1;
                 break;
             case (JoystickType)1:
-                s.settingsData.joystickType=(JoystickType)2;
+                s.joystickType=(JoystickType)2;
                 break;
             case (JoystickType)2:
-                s.settingsData.joystickType=(JoystickType)0;
+                s.joystickType=(JoystickType)0;
                 break;
         }
         if(FindObjectOfType<Tag_Joystick>()!=null)FindObjectOfType<Tag_Joystick>().StartCoroutine(FindObjectOfType<Tag_Joystick>().ChangeType());

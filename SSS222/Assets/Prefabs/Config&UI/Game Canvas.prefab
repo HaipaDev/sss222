@@ -71,6 +71,7 @@ MonoBehaviour:
   type: 1
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!114 &1450433261998561884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1171,6 +1172,7 @@ MonoBehaviour:
   type: 0
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &793144839772054474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,6 +1430,7 @@ MonoBehaviour:
   type: 1
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &1024818671695279519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1579,6 +1582,7 @@ MonoBehaviour:
   type: 5
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &1255815044435384812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,6 +1676,7 @@ MonoBehaviour:
   type: 0
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!114 &6566526690485379905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1803,6 +1808,7 @@ MonoBehaviour:
   type: 0
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &1676674659974407079
 GameObject:
   m_ObjectHideFlags: 0
@@ -1841,8 +1847,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 438.85, y: 806.9}
-  m_SizeDelta: {x: 103.22, y: 60.6}
+  m_AnchoredPosition: {x: 438.85, y: 804.67}
+  m_SizeDelta: {x: 103.22, y: 59.341}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8420018892854600822
 CanvasRenderer:
@@ -1899,7 +1905,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 59.05
+  m_fontSize: 58.15
   m_fontSizeBase: 66
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1935,7 +1941,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.25883678, y: 0, z: -0.00062559673, w: 0.45224434}
+  m_margin: {x: -0.25883678, y: 0, z: -0.00062559673, w: 0.12407928}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1968,7 +1974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f27f552cf3beef449bee2982759579ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  type: 8
 --- !u!114 &7293689707689345972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1996,6 +2002,7 @@ MonoBehaviour:
   type: 1
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &2594579872914226361
 GameObject:
   m_ObjectHideFlags: 0
@@ -2162,6 +2169,7 @@ MonoBehaviour:
   type: 1
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &2614155989906725882
 GameObject:
   m_ObjectHideFlags: 0
@@ -2338,6 +2346,7 @@ MonoBehaviour:
   type: 0
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &2961776673731553432
 GameObject:
   m_ObjectHideFlags: 0
@@ -2446,6 +2455,7 @@ MonoBehaviour:
   type: 3
   overwriteSav: 1
   animVal: 0
+  alphaVal: 0
 --- !u!1 &3103151876643617579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2704,6 +2714,7 @@ MonoBehaviour:
   type: 2
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &3231403802486085155
 GameObject:
   m_ObjectHideFlags: 0
@@ -2884,6 +2895,7 @@ MonoBehaviour:
   type: 0
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &3461785058843410897
 GameObject:
   m_ObjectHideFlags: 0
@@ -3049,6 +3061,7 @@ MonoBehaviour:
   type: 5
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &4032319785275635303
 GameObject:
   m_ObjectHideFlags: 0
@@ -3157,6 +3170,7 @@ MonoBehaviour:
   type: 2
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &4131091799954824004
 GameObject:
   m_ObjectHideFlags: 0
@@ -3454,6 +3468,7 @@ MonoBehaviour:
   type: 0
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &4210565710816105855
 GameObject:
   m_ObjectHideFlags: 0
@@ -3561,6 +3576,7 @@ MonoBehaviour:
   type: 0
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &4740258267429615052
 GameObject:
   m_ObjectHideFlags: 0
@@ -3667,6 +3683,7 @@ MonoBehaviour:
   type: 2
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &4972673792521713051
 GameObject:
   m_ObjectHideFlags: 0
@@ -3760,6 +3777,7 @@ MonoBehaviour:
   type: 0
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &5137551067360054034
 GameObject:
   m_ObjectHideFlags: 0
@@ -3868,6 +3886,7 @@ MonoBehaviour:
   type: 3
   overwriteSav: 1
   animVal: 0
+  alphaVal: 0
 --- !u!1 &5508392005484056999
 GameObject:
   m_ObjectHideFlags: 0
@@ -4033,6 +4052,7 @@ MonoBehaviour:
   type: 5
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &6475302378365833151
 GameObject:
   m_ObjectHideFlags: 0
@@ -4139,6 +4159,7 @@ MonoBehaviour:
   type: 2
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &6576996009483924982
 GameObject:
   m_ObjectHideFlags: 0
@@ -4363,6 +4384,7 @@ MonoBehaviour:
   type: 1
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &7025448343729471930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4481,6 +4503,7 @@ MonoBehaviour:
   type: 0
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!1 &7293689707047259069
 GameObject:
   m_ObjectHideFlags: 0
@@ -4930,8 +4953,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 315.39017, y: 806.89996}
-  m_SizeDelta: {x: 84.22, y: 60.6}
+  m_AnchoredPosition: {x: 315.39017, y: 805.17}
+  m_SizeDelta: {x: 84.22, y: 58.341}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1952390940282037632
 CanvasRenderer:
@@ -4988,7 +5011,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 59.3
+  m_fontSize: 57.1
   m_fontSizeBase: 66
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5024,7 +5047,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.825409, y: 0.026423367, z: -0.6207466, w: 0.16661908}
+  m_margin: {x: 0.29804605, y: 0.026423367, z: -0.058994297, w: 0.16661908}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5060,6 +5083,7 @@ MonoBehaviour:
   type: 1
   overwriteSav: 0
   animVal: 0
+  alphaVal: 0
 --- !u!114 &6232951698105409575
 MonoBehaviour:
   m_ObjectHideFlags: 0

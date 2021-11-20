@@ -41,7 +41,7 @@ public class Waves : MonoBehaviour{
     }else{return null;}}
     public IEnumerator SpawnWaves(){
         if(!GameSession.GlobalTimeIsPaused&&timeSpawns<=0&&timeSpawns>-4){
-            if(currentWave==null)currentWave=lootTable.itemList[startingWave].lootItem;
+            if(currentWave==null&&lootTable.itemList.Count>0)currentWave=lootTable.itemList[startingWave].lootItem;
             yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
             timeSpawns=-4;
         }

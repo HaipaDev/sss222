@@ -24,7 +24,7 @@ public class PowerupDisplay : MonoBehaviour{
         //if(powerups!=true||(Player.instance!=null&&Player.instance.weaponsLimited)){
         if(textObj==null){if(transform.GetComponentInChildren<TMPro.TextMeshProUGUI>()!=null)textObj=transform.GetComponentInChildren<TMPro.TextMeshProUGUI>().gameObject;}
         if(textObj!=null){TMP=textObj.GetComponent<TMPro.TextMeshProUGUI>();}
-        if(transform.GetChild(0)!=null){bg=transform.GetChild(0).GetComponent<Image>();}
+        if(transform.GetComponentInChildren<Image>()!=null){bg=transform.GetComponentInChildren<Image>();}
         //}
         //color=img.color;
         if(bg!=null)color2=bg.color;

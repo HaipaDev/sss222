@@ -399,7 +399,7 @@ public class Player : MonoBehaviour{
             else if(inputType==InputType.drag){MoveWithDrag();}
             else{MoveWithMouse();}
         }else{
-            if(GetComponent<BackflameEffect>().BFlame.activeSelf==true){GetComponent<BackflameEffect>().BFlame.SetActive(false);}
+            if(GetComponent<BackflameEffect>().BFlame!=null)if(GetComponent<BackflameEffect>().BFlame.activeSelf==true){GetComponent<BackflameEffect>().BFlame.SetActive(false);}
             if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
         }
         if(shootTimer>0)shootTimer -= Time.deltaTime;
@@ -1241,6 +1241,7 @@ public class Player : MonoBehaviour{
     }}
     public void AddSubAmmo(float value,bool add=false, bool ignore=false){
         var v=(int)value;
+        if(ammo<0)ammo=0;
         if(inverter!=true||ignore){
             if(add){ammo+=v;AmmoPopUpHUD(v);}
             else{if(ammo>=v)ammo-=v;AmmoPopUpHUD(-v);}
