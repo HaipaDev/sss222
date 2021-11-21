@@ -9,7 +9,7 @@ public class Shredder : MonoBehaviour{
             if(FindObjectOfType<DisruptersSpawner>()!=null&&other.GetComponent<Tag_PlayerWeaponBlockable>()!=null){
                 var en=other.GetComponent<Tag_PlayerWeaponBlockable>().energy;
                 if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){en=0.05f;}
-                FindObjectOfType<DisruptersSpawner>().AddMissed(en);}
+                spawnReqsMono.AddMissed(en);}
             Destroy(other.gameObject,0.02f);
         }
     }

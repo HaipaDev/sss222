@@ -9,7 +9,7 @@ public class Waves : MonoBehaviour{
     public int waveIndex=0;
     public WaveConfig currentWave;
     [SerializeField] public bool uniqueWaves=true;
-    float checkSpawns=5f;
+    float checkSpawns=3f;
     //[SerializeField] float mTimeSpawns=2f;
     
     [Header("Current Values")]
@@ -48,7 +48,8 @@ public class Waves : MonoBehaviour{
     }
 
     public IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig){
-        if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddCounts(waveConfig);
+        spawnReqsMono.AddCounts(waveConfig);
+        //if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddCounts(waveConfig);
     switch(waveConfig.wavePathType){
         case wavePathType.startToEnd:
             for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
@@ -145,14 +146,15 @@ public class Waves : MonoBehaviour{
             GameSession.instance.EVscore=0;if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameRules.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameRules.instance.xp_wave);}
         }
 
-        //Check every 5s if no Enemies, force a wave spawn
-        if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
-        else if(checkSpawns>0){
-            if(FindObjectsOfType<Enemy>().Length==0){
-                if(currentWave==null){currentWave=GetRandomWave();}
-                StartCoroutine(SpawnWaves());
+        //Check if no Enemies for 3s, force a wave spawn
+        if(FindObjectsOfType<Enemy>().Length==0){
+            if(checkSpawnsTimer==-4)checkSpawnsTimer=checkSpawns;
+            if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
+            else if(checkSpawnsTimer<=0&&checkSpawnsTimer>-4){
+                    if(currentWave==null){currentWave=GetRandomWave();}
+                    StartCoroutine(SpawnWaves());
+                checkSpawnsTimer=checkSpawns;
             }
-            checkSpawnsTimer=checkSpawns;
-        }
+        }else{checkSpawnsTimer=-4;}
     }
 }

@@ -76,7 +76,10 @@ public class GameSession : MonoBehaviour{
         #endif
     }
     void SetUpSingleton(){if(GameSession.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
-    void Start(){Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);}
+    void Start(){
+        Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);
+        if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}
+    }
     IEnumerator SetGameRulesValues(){
     yield return new WaitForSeconds(0.03f);
     //Set values
@@ -225,9 +228,10 @@ public class GameSession : MonoBehaviour{
     }
     public void AddEnemyCount(){
         enemiesCount++;
-        if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddKills(1);
+        spawnReqsMono.AddKills();
+        /*if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddKills(1);
         var ps=System.Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupSpawnerType==powerupSpawnerType.kills);
-        foreach(var p in ps){p.enemiesCount++;}
+        foreach(var p in ps){p.enemiesCount++;}*/
     }
 
     public void ResetScore(){
@@ -389,8 +393,8 @@ public class GameSession : MonoBehaviour{
             }
             if(Input.GetKey(KeyCode.Alpha3) || fkey==""){
                 player=Player.instance;
-                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){var ps=Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupSpawnerType==powerupSpawnerType.time);foreach(var p in ps){p.timer=0.01f;}}
-                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){var ps=Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupSpawnerType==powerupSpawnerType.kills);foreach(var p in ps){p.enemiesCount=9999999;}}
+                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){}//var ps=Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupsSpawner.spawnReqsType==spawnReqsType.time);foreach(var p in ps){p.powerupsSpawner.timer=0.01f;}}
+                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){}//var ps=Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupsSpawner.spawnReqsType==spawnReqsType.kills);foreach(var p in ps){p.powerupsSpawner.enemiesCount=9999999;}}
                 if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.powerup="laser3";}
                 if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.powerup="mlaser";}
                 if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){player.powerup="lsaber";}

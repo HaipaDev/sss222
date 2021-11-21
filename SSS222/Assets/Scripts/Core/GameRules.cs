@@ -170,7 +170,7 @@ public static GameRules instance;
     public List<LootTableEntryShop> shopList;
     public float cargoSpeed=2;
     public float cargoHealth=44;
-    [SerializeField] public int[] repMinusCargoHit=new int[3]{1,2,4};
+    [SerializeField] public int[] repMinusCargoHit=new int[2]{1,3};
     [SerializeField] public int repMinusCargoKill=7;
     public bool repEnabled=true;
     public const int repLength=4;
@@ -254,12 +254,12 @@ public static GameRules instance;
     }
     public void EnterGameScene(){StartCoroutine(EnterGameSceneI());}
     IEnumerator EnterGameSceneI(){
-        yield return new WaitForSecondsRealtime(0.1f);
-        CreateSpawners();
+        yield return new WaitForSecondsRealtime(0.02f);
+        StartCoroutine(CreateSpawners());
     }
-    void CreateSpawners(){
+    IEnumerator CreateSpawners(){
         //Set/Create WaveSpawner
-        Waves ws;
+        /*Waves ws;
         if(FindObjectOfType<Waves>()==null){
             ws=Instantiate(GameAssets.instance.waveSpawnerPrefab).GetComponent<Waves>();
             ws.name="Waves";
@@ -276,17 +276,16 @@ public static GameRules instance;
             ds.name="DisruptersSpawner";
         }else{ds=FindObjectOfType<DisruptersSpawner>();}
         ds.disruptersList=disrupterList;
-
+        */
         //Set/Create PowerupSpawners
         List<PowerupsSpawner> ps=new List<PowerupsSpawner>();
         if(FindObjectsOfType<PowerupsSpawner>()!=null){
             foreach(PowerupsSpawner ps1 in FindObjectsOfType<PowerupsSpawner>()){ps.Add(ps1);}
         }for(int i=FindObjectsOfType<PowerupsSpawner>().Length;i<powerupSpawners.Count;i++)ps.Add(Instantiate(GameAssets.instance.powerupSpawnerPrefab).GetComponent<PowerupsSpawner>());
+        yield return new WaitForSecondsRealtime(0.005f);
         for(int i=0;i<powerupSpawners.Count;i++){
             ps[i].GetComponent<LootTablePowerups>().itemList=powerupSpawners[i].powerupList;
-            ps[i].powerupSpawnerType=powerupSpawners[i].psConfig.powerupSpawnerType;
-            ps[i].powerupSpawner=powerupSpawners[i].psConfig.powerupSpawner;
-            ps[i].gameObject.name=powerupSpawners[i].psConfig.name;
+            ps[i].powerupsSpawner=powerupSpawners[i].psConfig;
         }
     }
     Player p;

@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName="Disrupter Config")]
-public class DisrupterConfig:ScriptableObject{
+public class DisrupterConfig:ScriptableObject{//, ISpawnerConfig{//,IEnumerable{
     [HeaderAttribute("Properties")]
     public WaveConfig waveConfig;
-    public disrupterType disrupterType;
-    [SerializeReference]public disrupterSpawnProps spawnProps;
-    [System.Serializable]public class disrupterSpawnProps{
+    public spawnReqsType spawnReqsType;
+    [SerializeReference]public spawnReqs spawnReqs;
+    /*[Button("Validate)]*//*[ContextMenu("Validate")]void Vaildate(){
+        if(spawnReqsType==spawnReqsType.time){spawnReqs=new spawnReqs();spawnReqs.secondEnabled=false;spawnReqs.bothNeeded=false;}
+        if(spawnReqsType==spawnReqsType.energy){spawnReqs=new spawnEnergy();}
+        if(spawnReqsType==spawnReqsType.missed){spawnReqs=new spawnEnergy();}
+        if(spawnReqsType==spawnReqsType.pwrups){spawnReqs=new spawnPwrups();}
+        if(spawnReqsType==spawnReqsType.kills){spawnReqs=new spawnKills();}
+        if(spawnReqsType==spawnReqsType.dmg){spawnReqs=new spawnDmg();}
+        if(spawnReqsType==spawnReqsType.counts){spawnReqs=new spawnCounts();}
+    }*/
+    /*public class disrupterSpawnProps{
         public bool timeEnabled=true;
         public float timeS=20;
         public float timeE=50;
@@ -19,37 +28,26 @@ public class DisrupterConfig:ScriptableObject{
         public bool bothNeeded=true;
         public bool startTimeAfterSecond=false;
     }
-    [System.Serializable]public class spawnEnergy:disrupterSpawnProps{
+    public class spawnEnergy:disrupterSpawnProps{
         public float energyNeeded=100;
         public float energy;
     }
-    //[System.Serializable]public class spawnMissed:spawnEnergy{}
-    [System.Serializable]public class spawnPwrups:disrupterSpawnProps{
+    public class spawnPwrups:disrupterSpawnProps{
         public int pwrupsNeeded=2;
         public int pwrups;
     }
-    [System.Serializable]public class spawnKills:disrupterSpawnProps{
+    public class spawnKills:disrupterSpawnProps{
         public float killsNeeded=50;
         public float kills;
     }
-    [System.Serializable]public class spawnDmg:disrupterSpawnProps{
+    public class spawnDmg:disrupterSpawnProps{
         public float dmgNeeded=200;
         public float dmg;
     }
-    [System.Serializable]public class spawnCounts:disrupterSpawnProps{
+    public class spawnCounts:disrupterSpawnProps{
         public WaveConfig countsWave;
         public float countsNeeded=3;
         public float counts;
-    }
-    
-    [ContextMenu("Validate")]void Vaildate(){
-        if(disrupterType==disrupterType.time){spawnProps=new disrupterSpawnProps();spawnProps.secondEnabled=false;spawnProps.bothNeeded=false;}
-        if(disrupterType==disrupterType.energy){spawnProps=new spawnEnergy();}
-        if(disrupterType==disrupterType.missed){spawnProps=new spawnEnergy();}
-        if(disrupterType==disrupterType.pwrups){spawnProps=new spawnPwrups();}
-        if(disrupterType==disrupterType.kills){spawnProps=new spawnKills();}
-        if(disrupterType==disrupterType.dmg){spawnProps=new spawnDmg();}
-        if(disrupterType==disrupterType.counts){spawnProps=new spawnCounts();}
-    }
+    }*/
 }
 public enum disrupterType{time,energy,missed,pwrups,kills,dmg,counts}

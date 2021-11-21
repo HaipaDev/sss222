@@ -12,12 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2935d95c880e754489b2867953b82887, type: 3}
   m_Name: PowerupSpawnerClassic
   m_EditorClassIdentifier: 
-  powerupSpawnerType: 0
-  powerupSpawner:
+  spawnReqsType: 0
+  spawnReqs:
     id: 0
   references:
     version: 1
     00000000:
-      type: {class: powerupSpawnerTime, ns: , asm: Assembly-CSharp}
+      type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
       data:
-        spawnTime: {x: 10, y: 15}
+        timeEnabled: 1
+        time: {x: 10, y: 15}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        secondEnabled: 1
+        bothNeeded: 1
+        startTimeAfterSecond: 0

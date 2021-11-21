@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 19800000}
   - component: {fileID: 19900000}
   - component: {fileID: 4652590895439230806}
-  - component: {fileID: -3737957670055996786}
   - component: {fileID: 4232228275541627579}
   m_Layer: 0
   m_Name: BFlameBlue2UVFX-Dmg
@@ -4795,7 +4794,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -4837,18 +4836,6 @@ CircleCollider2D:
   m_Offset: {x: -0.00049068034, y: 0.12382677}
   serializedVersion: 2
   m_Radius: 0.375
---- !u!114 &-3737957670055996786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4232228275541627579
 MonoBehaviour:
   m_ObjectHideFlags: 0

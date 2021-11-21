@@ -1233,9 +1233,9 @@ public class Player : MonoBehaviour{
     if(energyOn&&!infEnergy){
         if(inverter!=true||ignore){
             if(add){energy+=value;EnergyPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
-            else{energy-=value;EnergyPopUpHUD(-value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
+            else{energy-=value;EnergyPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
         }else{
-            if(add){energy-=value;EnergyPopUpHUD(-value);if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
+            if(add){energy-=value;EnergyPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
             else{energy+=value;EnergyPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
         }
     }}
