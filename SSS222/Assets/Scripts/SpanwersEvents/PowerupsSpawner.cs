@@ -1,81 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class PowerupsSpawner : MonoBehaviour{
     [SerializeField] public PowerupsSpawnerConfig powerupsSpawner;
+    [SerializeField] public Vector2 powerupSpawnPosRange=new Vector2(-3f,3f);
     LootTablePowerups lootTable;
-    private void Awake() {
-        StartCoroutine(SetValues());
-    }
-    IEnumerator SetValues(){
-        yield return new WaitForSecondsRealtime(0.05f);
-        this.powerupsSpawner=Instantiate(powerupsSpawner);
-        yield return new WaitForSecondsRealtime(0.01f);
-        //if(powerupSpawnerType==powerupSpawnerType.time){powerupSpawner.timer=0;}
+    IEnumerator Start(){
+        yield return new WaitForSeconds(0.05f);
+        lootTable=GetComponent<LootTablePowerups>();
     }
     //void Start(){do{CheckSpawns();}while(true);}
-    void CheckSpawns(){
-    if(powerupsSpawner!=null){
+    void CheckSpawns(){if(powerupsSpawner!=null){
+    if(!powerupsSpawner.name.Contains("(Clone)")){this.powerupsSpawner=Instantiate(powerupsSpawner);}
+    else if(powerupsSpawner.name.Contains("(Clone)")){
         spawnReqs x=powerupsSpawner.spawnReqs;
         spawnReqsType xt=powerupsSpawner.spawnReqsType;
-        spawnReqsMono.instance.CheckSpawns(x,xt,this,SpawnPowerups());
+        spawnReqsMono.instance.CheckSpawns(x,xt,this,SpawnPowerup());
     }
-    }
+    }}
     void Update(){
         CheckSpawns();
         //if(!GameSession.GlobalTimeIsPaused){if(timer>0)timer-=Time.deltaTime;}
-        //if(powerupsSpawner.spawnReqs.timer<=0){SpawnPowerups();}
+        //if(powerupsSpawner.spawnReqs.timer<=0){SpawnPowerup();}
     }
-    [ContextMenu("Spawn Powerup")]public void SpawnPowerup(){
-        var powerupsPos = new Vector3(Random.Range(-3f, 3f), 7f, 0);
-        GameObject newPowerup;
-        if(lootTable!=null)
-        if(lootTable.GetItem()!=null)
-        if(lootTable.GetItem().item!=null)
-        newPowerup=Instantiate(
-            //GetRandomPowerup(),
-            lootTable.GetItem().item,
-            //powerups[index],
-            powerupsPos,
-            Quaternion.identity);
-        }
-    public IEnumerator SpawnPowerups(){
-        //var index = Random.Range(0, powerups.Count);
-        var powerupsPos = new Vector3(Random.Range(-3f, 3f), 7f, 0);
-        GameObject newPowerup;
-        if(lootTable!=null)
-        if(lootTable.GetItem()!=null)
-        if(lootTable.GetItem().item!=null)
-        newPowerup=Instantiate(
-            //GetRandomPowerup(),
-            lootTable.GetItem().item,
-            //powerups[index],
-            powerupsPos,
-            Quaternion.identity);
+    [Button("Spawn Powerup")][ContextMenu("Spawn Powerup")]public void SpawnPowerupCall(){StartCoroutine(SpawnPowerup());}
+    IEnumerator SpawnPowerup(){
+        Vector2 powerupsPos=new Vector2(Random.Range(powerupSpawnPosRange.x, powerupSpawnPosRange.y), 7f);
+        GameObject newPowerup=null;
+        PowerupItem lootItem=null;
+        if(lootTable!=null){
+            lootItem=lootTable.GetItem();
+            if(lootItem!=null){
+                if(lootItem.item!=null){
+                    newPowerup=Instantiate(
+                        lootTable.GetItem().item,
+                        powerupsPos,
+                        Quaternion.identity);
+                    Debug.Log("Powerup spawned: "+newPowerup.name);
+                }else Debug.LogWarning("Powerup object not assigned to"+lootItem+"!");
+            }else Debug.LogWarning("Loottable dropped a null object!");
+        }else{Debug.LogWarning("Loottable not assigned!");lootTable=GetComponent<LootTablePowerups>();
+            if(lootTable!=null){Debug.LogWarning("Fine I assigned it myself");StartCoroutine(SpawnPowerup());}}
         yield return null;
-        /*if(powerupSpawnerType==powerupSpawnerType.time){
-            powerupSpawnerTime ps=(powerupSpawnerTime)powerupSpawner;
-            timer=Mathf.RoundToInt(Random.Range(ps.spawnTime.x,ps.spawnTime.y));
-        }else if(powerupSpawnerType==powerupSpawnerType.kills){
-            powerupSpawnerKills ps=(powerupSpawnerKills)powerupSpawner;
-            timer=0.1f;
-            enemiesCount=0;
-        }*/
     }
 }
-
-/*public enum powerupSpawnerType{
-    time,
-    kills
-}
-
-public class powerupSpawnerTypesPoly{}
-
-public class powerupSpawnerTime:powerupSpawnerTypesPoly{
-    [SerializeField] public Vector2 spawnTime=new Vector2(9f,16f);
-}
-
-public class powerupSpawnerKills:powerupSpawnerTypesPoly{
-    [SerializeField] public int enemiesCountReq=20;
-}*/

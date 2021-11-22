@@ -78,7 +78,7 @@ public class GameSession : MonoBehaviour{
     void SetUpSingleton(){if(GameSession.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
     void Start(){
         Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);
-        if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}
+        if(SceneManager.GetActiveScene().name=="Game"&&GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}
     }
     IEnumerator SetGameRulesValues(){
     yield return new WaitForSeconds(0.03f);
@@ -207,9 +207,11 @@ public class GameSession : MonoBehaviour{
         if(UpgradeMenu.instance!=null)CalculateLuck();
         CheckCodes(".",".");
     }
-    public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
-    //public string GetGameVersion(){return SaveSerial.instance.settingsData.gameVersion;}
 
+    public void EnterGameScene(){
+        if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}
+    }
+    public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
     public void AddToScore(int scoreValue){
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);
         EVscore+=scoreValue;
@@ -248,6 +250,7 @@ public class GameSession : MonoBehaviour{
         rarePwrupMulti=1;
         legendPwrupMulti=1;
         gameSessionTime=0;
+        if(GetComponent<spawnReqsMono>()!=null)Destroy(GetComponent<spawnReqsMono>());
     }
     public void SaveHighscore(){
         if(score>SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]){SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]=score;}

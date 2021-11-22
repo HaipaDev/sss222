@@ -259,33 +259,42 @@ public static GameRules instance;
     }
     IEnumerator CreateSpawners(){
         //Set/Create WaveSpawner
-        /*Waves ws;
-        if(FindObjectOfType<Waves>()==null){
-            ws=Instantiate(GameAssets.instance.waveSpawnerPrefab).GetComponent<Waves>();
-            ws.name="Waves";
-        }else{ws=FindObjectOfType<Waves>();}
-        ws.startingWave=startingWave;
-        ws.GetComponent<LootTableWaves>().itemList=waveList;
-        ws.startingWaveRandom=startingWaveRandom;
-        ws.uniqueWaves=uniqueWaves;
+        if(waveList.Count>0){
+            Waves ws;
+            if(FindObjectOfType<Waves>()==null){
+                ws=Instantiate(GameAssets.instance.waveSpawnerPrefab).GetComponent<Waves>();
+                ws.name="Waves";
+            }else{ws=FindObjectOfType<Waves>();}
+            yield return new WaitForSecondsRealtime(0.005f);
+            ws.startingWave=startingWave;
+            ws.GetComponent<LootTableWaves>().itemList=waveList;
+            ws.startingWaveRandom=startingWaveRandom;
+            ws.uniqueWaves=uniqueWaves;
+        }
 
         //Set/Create DisruptersSpawner
-        DisruptersSpawner ds;
-        if(FindObjectOfType<DisruptersSpawner>()==null){
-            ds=Instantiate(GameAssets.instance.disrupterSpawnerPrefab).GetComponent<DisruptersSpawner>();
-            ds.name="DisruptersSpawner";
-        }else{ds=FindObjectOfType<DisruptersSpawner>();}
-        ds.disruptersList=disrupterList;
-        */
+        if(disrupterList.Count>0){
+            DisruptersSpawner ds;
+            if(FindObjectOfType<DisruptersSpawner>()==null){
+                ds=Instantiate(GameAssets.instance.disrupterSpawnerPrefab).GetComponent<DisruptersSpawner>();
+                ds.name="DisruptersSpawner";
+            }else{ds=FindObjectOfType<DisruptersSpawner>();}
+            yield return new WaitForSecondsRealtime(0.005f);
+            ds.disruptersList=disrupterList;
+        }
+        
         //Set/Create PowerupSpawners
-        List<PowerupsSpawner> ps=new List<PowerupsSpawner>();
-        if(FindObjectsOfType<PowerupsSpawner>()!=null){
-            foreach(PowerupsSpawner ps1 in FindObjectsOfType<PowerupsSpawner>()){ps.Add(ps1);}
-        }for(int i=FindObjectsOfType<PowerupsSpawner>().Length;i<powerupSpawners.Count;i++)ps.Add(Instantiate(GameAssets.instance.powerupSpawnerPrefab).GetComponent<PowerupsSpawner>());
-        yield return new WaitForSecondsRealtime(0.005f);
-        for(int i=0;i<powerupSpawners.Count;i++){
-            ps[i].GetComponent<LootTablePowerups>().itemList=powerupSpawners[i].powerupList;
-            ps[i].powerupsSpawner=powerupSpawners[i].psConfig;
+        if(powerupSpawners.Count>0){
+            List<PowerupsSpawner> ps=new List<PowerupsSpawner>();
+            if(FindObjectsOfType<PowerupsSpawner>()!=null){
+                foreach(PowerupsSpawner ps1 in FindObjectsOfType<PowerupsSpawner>()){ps.Add(ps1);}
+            }for(int i=FindObjectsOfType<PowerupsSpawner>().Length;i<powerupSpawners.Count;i++)ps.Add(Instantiate(GameAssets.instance.powerupSpawnerPrefab).GetComponent<PowerupsSpawner>());
+            yield return new WaitForSecondsRealtime(0.005f);
+            for(int i=0;i<powerupSpawners.Count;i++){if(powerupSpawners[i].powerupList.Count>0){
+                ps[i].GetComponent<LootTablePowerups>().itemList=powerupSpawners[i].powerupList;
+                ps[i].powerupsSpawner=powerupSpawners[i].psConfig;
+                ps[i].powerupSpawnPosRange=powerupSpawners[i].powerupSpawnPosRange;
+            }}
         }
     }
     Player p;
@@ -330,6 +339,7 @@ public static GameRules instance;
 public class PowerupsSpawnerGR{
     public List<LootTableEntryPowerup> powerupList;
     public PowerupsSpawnerConfig psConfig;
+    public Vector2 powerupSpawnPosRange=new Vector2(-3f,3f);
 }
 
 [System.Serializable]

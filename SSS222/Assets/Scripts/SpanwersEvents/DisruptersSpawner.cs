@@ -1,34 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class DisruptersSpawner : MonoBehaviour{
     public List<DisrupterConfig> disruptersList=new List<DisrupterConfig>();
     [SerializeField]int rep=1;
     [SerializeField]DisrupterConfig currentCfg;
     [SerializeField]DisrupterConfig repCfg;
-    private void Awake() {
-        StartCoroutine(SetValues());
-    }
+    void Awake() {StartCoroutine(SetValues());}
     IEnumerator SetValues(){
         yield return new WaitForSecondsRealtime(0.05f);
-        List<DisrupterConfig> dcs=new List<DisrupterConfig>();
-        foreach(DisrupterConfig dc in disruptersList){
-            var da=Instantiate(dc);
-            dcs.Add(da);
-        }
-        this.disruptersList=dcs;
-        yield return new WaitForSecondsRealtime(0.01f);
         foreach(DisrupterConfig dc in disruptersList){var d=dc.spawnReqs;if(d.timeEnabled){}
         if(d.startTimeAfterSecond){d.timer=-4;}}
     }
+
     IEnumerator Start(){do{yield return StartCoroutine(CheckSpawns());}while(true);}
     IEnumerator CheckSpawns(){
-    foreach(DisrupterConfig dc in disruptersList){
-        spawnReqs x=dc.spawnReqs;
-        spawnReqsType xt=dc.spawnReqsType;
-        spawnReqsMono.instance.CheckSpawns(x,xt,this,SpawnWave(dc));
-        for(var i=0;i<disruptersList.Count;i++){if(!disruptersList[i].name.Contains("(Clone)"))disruptersList[i]=Instantiate(dc);}
+    if(currentCfg!=null){
+        if(!currentCfg.name.Contains("(Clone)")){this.currentCfg=Instantiate(currentCfg);}
+        else if(currentCfg.name.Contains("(Clone)")){
+            foreach(DisrupterConfig dc in disruptersList){
+                spawnReqs x=dc.spawnReqs;
+                spawnReqsType xt=dc.spawnReqsType;
+                spawnReqsMono.instance.CheckSpawns(x,xt,this,SpawnWave(dc));
+                for(var i=0;i<disruptersList.Count;i++){if(!disruptersList[i].name.Contains("(Clone)"))disruptersList[i]=Instantiate(dc);}
+            }
+        }
+    }
+    for(int i=0;i<disruptersList.Count;i++){
+        if(!disruptersList[i].name.Contains("(Clone)")){this.disruptersList[i]=Instantiate(disruptersList[i]);}
     }
     int repI=1;
     if(repCfg!=null){repI=repCfg.spawnReqs.repeat;
@@ -38,6 +39,9 @@ public class DisruptersSpawner : MonoBehaviour{
     }
     private void RestartTime(DisrupterConfig dc){FindObjectOfType<spawnReqsMono>().RestartTime(dc.spawnReqs);}
     IEnumerator AddRep(float time){yield return new WaitForSeconds(time);rep++;}
+    [Button("Spawn CurrentCfg")][ContextMenu("Spawn CurrentCfg")]public void SpawnWaveCallCurrent(){
+        if(currentCfg==null){currentCfg=disruptersList[(int)Random.Range(0,disruptersList.Count)];}
+        StartCoroutine(SpawnWave(currentCfg));}
     IEnumerator SpawnWave(DisrupterConfig dc){
         currentCfg=dc;
         var d=dc.spawnReqs;

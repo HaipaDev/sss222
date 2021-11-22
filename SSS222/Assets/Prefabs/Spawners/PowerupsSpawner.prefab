@@ -44,17 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1f804133db36c4fb88cb24f950f7d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  powerupSpawnerType: 0
-  powerupSpawner:
-    id: 0
-  timer: 0
-  enemiesCount: 0
-  sum: 0
-  references:
-    version: 1
-    00000000:
-      type: {class: powerupSpawnerTypesPoly, ns: , asm: Assembly-CSharp}
+  powerupsSpawner: {fileID: 0}
+  powerupSpawnPosRange: {x: -3, y: 3}
 --- !u!114 &1734509379744776936
 MonoBehaviour:
   m_ObjectHideFlags: 0
