@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2935d95c880e754489b2867953b82887, type: 3}
-  m_Name: PowerupSpawnerClassic
+  m_Name: PowerupSpawnerWeapons
   m_EditorClassIdentifier: 
-  spawnReqsType: 0
+  spawnReqsType: 5
   spawnReqs:
     id: 0
   references:
     version: 1
     00000000:
-      type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
+      type: {class: spawnKills, ns: , asm: Assembly-CSharp}
       data:
-        timeEnabled: 1
-        time: {x: 10, y: 15}
+        timeEnabled: 0
+        time: {x: 10, y: 20}
         timer: -4
         repeat: 1
         repeatInterval: 0.75
-        secondEnabled: 0
         bothNeeded: 0
         startTimeAfterSecond: 0
+        killsNeeded: 20
+        kills: 0

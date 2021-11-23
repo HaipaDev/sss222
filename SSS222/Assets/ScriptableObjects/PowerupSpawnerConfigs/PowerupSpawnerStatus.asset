@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2935d95c880e754489b2867953b82887, type: 3}
-  m_Name: PowerupSpawnerClassic
+  m_Name: PowerupSpawnerStatus
   m_EditorClassIdentifier: 
   spawnReqsType: 0
   spawnReqs:
@@ -21,7 +21,7 @@ MonoBehaviour:
       type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
       data:
         timeEnabled: 1
-        time: {x: 10, y: 15}
+        time: {x: 9, y: 16}
         timer: -4
         repeat: 1
         repeatInterval: 0.75

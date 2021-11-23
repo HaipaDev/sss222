@@ -26,10 +26,10 @@ public class GameSession : MonoBehaviour{
     public int enemiesCount=0;
     [Header("GameRules/Event Values")]
     public bool anyUpgradesOn=true;
-    public int EVscore=0;
+    /*public int EVscore=0;
     public int EVscoreMax=0;
     public int shopScore=0;
-    public int shopScoreMax=0;
+    public int shopScoreMax=0;*/
     public float xpMax=100f;
     [Header("Luck Multiplier Values")]
     public float enballDropMulti=1;
@@ -93,12 +93,18 @@ public class GameSession : MonoBehaviour{
 
         if(GameRules.instance.modulesOn||GameRules.instance.statUpgOn||GameRules.instance.iteminvOn){anyUpgradesOn=true;}else{anyUpgradesOn=false;}
 
-        RandomizeShopScoreMax();
         RandomizeEVScoreMax();
+        RandomizeShopScoreMax();
     }
     }
-    public void RandomizeShopScoreMax(){shopScoreMax=UnityEngine.Random.Range(GameRules.instance.shopScoreMax.x,GameRules.instance.shopScoreMax.y);}
-    public void RandomizeEVScoreMax(){EVscoreMax=UnityEngine.Random.Range(GameRules.instance.EVscoreMax.x,GameRules.instance.EVscoreMax.y);}
+    public void RandomizeEVScoreMax(){
+        //EVscoreMax=UnityEngine.Random.Range(GameRules.instance.EVscoreMax.x,GameRules.instance.EVscoreMax.y);
+        if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-1);}
+    }
+    public void RandomizeShopScoreMax(){
+        //shopScoreMax=UnityEngine.Random.Range(GameRules.instance.shopScoreMax.x,GameRules.instance.shopScoreMax.y);
+        if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-2);}
+    }
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
         if(SceneManager.GetActiveScene().name=="Game"){
@@ -122,18 +128,7 @@ public class GameSession : MonoBehaviour{
         
         if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"){
             //Open Shop
-            if(GameRules.instance.shopOn&&(shopScore>=shopScoreMax&&coins>0)){
-                if(GameRules.instance.shopCargoOn){Shop.instance.SpawnCargo();}
-                else{Shop.shopOpen=true;
-                /*foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
-                    enemy.givePts=false;
-                    enemy.health=-1;
-                    enemy.Die();
-                }*/
-                gameSpeed=0f;}
-                GameSession.instance.RandomizeEVScoreMax();
-                shopScore=0;
-            }
+            
 
             if(xpTotal<0)xpTotal=0;
             if(GameRules.instance.xpOn&&xp>=xpMax&&GameRules.instance.levelingOn){
@@ -214,14 +209,12 @@ public class GameSession : MonoBehaviour{
     public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
     public void AddToScore(int scoreValue){
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);
-        EVscore+=scoreValue;
-        if(GameRules.instance.shopOn)shopScore+=Mathf.RoundToInt(scoreValue*scoreMulti);
+        spawnReqsMono.AddScore(Mathf.RoundToInt(scoreValue*scoreMulti));
+        //if(GameRules.instance.shopOn)spawnReqs.AddScore(Mathf.RoundToInt(scoreValue*scoreMulti),-2);
         GameCanvas.instance.ScorePopupSwitch(scoreValue*scoreMulti);
     }
-    public void MultiplyScore(float multipl){
-        score=Mathf.RoundToInt(score*multipl);
-    }
     public void AddToScoreNoEV(int scoreValue){score+=scoreValue;GameCanvas.instance.ScorePopupSwitch(scoreValue);}
+    public void MultiplyScore(float multipl){score=Mathf.RoundToInt(score*multipl);}
     public void AddXP(float xpValue){if(GameRules.instance.xpOn){xp+=xpValue;GameCanvas.instance.XpPopupSwitch(xpValue);}xpTotal+=xpValue;}
     public void DropXP(float xpAmnt, Vector2 pos, float rangeX=0.5f, float rangeY=0.5f){
         var amnt=Mathf.RoundToInt(xpAmnt);
@@ -238,8 +231,6 @@ public class GameSession : MonoBehaviour{
 
     public void ResetScore(){
         score=0;
-        EVscore=0;
-        shopScore=0;
         coins=0;
         xp=0;
         xpTotal=0;
@@ -388,8 +379,10 @@ public class GameSession : MonoBehaviour{
             if(Input.GetKey(KeyCode.Alpha2) || fkey=="2"){
                 if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){AddToScoreNoEV(100);}
                 if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){AddToScoreNoEV(1000);}
-                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){EVscore=EVscoreMax;}
-                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){coins+=1;shopScore=shopScoreMax;}
+                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){FindObjectOfType<Waves>().StartCoroutine(FindObjectOfType<Waves>().RandomizeWave());}//spawnReqsMono.AddScore(-5,-1);}
+                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){
+                    spawnReqsMono.AddScore(-5,-2);
+                }
                 if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){AddXP(100);}
                 if(Input.GetKeyDown(KeyCode.Y) || nkey=="Y"){coins+=100;cores+=100;}
                 if(Input.GetKeyDown(KeyCode.U) || nkey=="U"){FindObjectOfType<UpgradeMenu>().total_UpgradesLvl+=10;}

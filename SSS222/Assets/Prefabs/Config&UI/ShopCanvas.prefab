@@ -679,7 +679,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1847
 --- !u!114 &3679422391987501168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,6 +692,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9c48955f0426844b77ff75f33e92cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopSpawnReqsType: 1
+  shopSpawnReqs:
+    id: 0
   shopMenuUI: {fileID: 3679422391047689949}
   slotsContainer: {fileID: 4396388954008070026}
   slotPrefab: {fileID: 4955086252991357872, guid: f7f563039b7d3b44d860e2dfc4fd692d,
@@ -710,12 +713,23 @@ MonoBehaviour:
   purchaseTimer: -4
   lootTable: {fileID: 1227156221995543344}
   currentSlotsList: []
-  pco:
-    id: 0
   references:
     version: 1
     00000000:
-      type: {class: , ns: , asm: }
+      type: {class: spawnScore, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 1
+        time: {x: 10, y: 20}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        secondEnabled: 1
+        bothNeeded: 1
+        startTimeAfterSecond: 0
+        scoreMaxSetRange: {x: 200, y: 350}
+        scoreMax: 50
+        score: 0
+        specialId: -2
 --- !u!114 &1227156221995543344
 MonoBehaviour:
   m_ObjectHideFlags: 0

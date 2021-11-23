@@ -44,21 +44,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e544072ca3e4bb4ba0206583b2d59ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnerType: 2
-  waveConfigs:
-  - {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
-  - {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf, type: 2}
-  - {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc, type: 2}
-  - {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
-  - {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
+  waveSpawnReqsType: 1
+  waveSpawnReqs:
+    id: 0
   startingWave: 0
+  startingWaveRandom: 0
   waveIndex: 0
   currentWave: {fileID: 0}
-  looping: 1
-  progressiveWaves: 0
-  mTimeSpawns: 6
-  timeSpawns: 0
-  sum: 0
+  uniqueWaves: 1
+  references:
+    version: 1
+    00000000:
+      type: {class: spawnScore, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 0
+        time: {x: 10, y: 20}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        secondEnabled: 0
+        bothNeeded: 0
+        startTimeAfterSecond: 0
+        scoreMaxSetRange: {x: 15, y: 30}
+        scoreMax: 50
+        score: 0
+        specialId: -1
 --- !u!114 &1964853199674178980
 MonoBehaviour:
   m_ObjectHideFlags: 0

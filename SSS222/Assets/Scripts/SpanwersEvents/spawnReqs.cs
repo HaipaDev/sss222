@@ -8,48 +8,88 @@ public class spawnReqsMono:MonoBehaviour{
     //public static void AddEnergy(float val){foreach(ScriptableObject l in Array.Find(FindObjectsOfType<ScriptableObject>(),x=>x.GetType().GetField("spawnReqs")!=null)){var rd=l.GetType().GetField("spawnReqs");var sr=(spawnReqs)rd.GetValue(l);if(sr is spawnEnergy){var ss=(spawnEnergy)sr;ss.energy+=val;}}}
     public static void AddEnergy(float val){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnEnergy){var ss=(spawnEnergy)sr;ss.energy+=val;}}}
     public static void AddMissed(float val){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnEnergy){var ss=(spawnEnergy)sr;ss.energy+=val;}}}//Not sure how to get to that, since its the same class
+    public static void AddScore(int val,int id=0){
+        if(id==-1||id==-2){
+            List<spawnReqs> list=spawnReqsMono.instance.spawnReqsList.FindAll(x=>x is spawnScore);
+            List<spawnScore> list2=new List<spawnScore>();foreach(spawnReqs ssl in list){list2.Add((spawnScore)ssl);}
+            spawnScore ss=list2.Find(x=>x.specialId==id);if(ss.scoreMax!=-5&&val!=-5){ss.score+=val;}else if(val==-5){ss.score=ss.scoreMax;}
+        }else if(id>=0){
+            foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnScore){var ss=(spawnScore)sr;if(ss.scoreMax!=-5&&val!=-5){ss.score+=val;}else if(val==-5){ss.score=ss.scoreMax;}}}
+        }
+    }
+    public static void AddDmg(float val){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnDmg){var ss=(spawnDmg)sr;ss.dmg+=val;}}}
     public static void AddPwrups(int val=1){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnPwrups){var ss=(spawnPwrups)sr;ss.pwrups+=val;}}}
     public static void AddKills(int val=1){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnKills){var ss=(spawnKills)sr;ss.kills+=val;}}}
-    public static void AddDmg(float val){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnDmg){var ss=(spawnDmg)sr;ss.dmg+=val;}}}
-    public static void AddCounts(WaveConfig waveConfig){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnCounts){var ss=(spawnCounts)sr;if(waveConfig==ss.countsWave)ss.counts+=1;}}}
+    public static void AddWaveCounts(WaveConfig waveConfig){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnWaveCounts){var ss=(spawnWaveCounts)sr;if(waveConfig==ss.wave)ss.counts+=1;}}}
+    public static void AddPowerupCounts(PowerupItem powerupItem){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnPowerupCounts){var ss=(spawnPowerupCounts)sr;if(powerupItem==ss.powerupItem)ss.counts+=1;}}}
 
+    public static void RandomizeScoreMax(int id=0){
+        if(id==-1||id==-2){
+            List<spawnReqs> list=spawnReqsMono.instance.spawnReqsList.FindAll(x=>x is spawnScore);
+            List<spawnScore> list2=new List<spawnScore>();foreach(spawnReqs ssl in list){list2.Add((spawnScore)ssl);}
+            spawnScore ss=list2.Find(x=>x.specialId==id);ss.scoreMax=UnityEngine.Random.Range(ss.scoreMaxSetRange.x,ss.scoreMaxSetRange.y);
+        }else if(id>=0){
+            foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnScore){var ss=(spawnScore)sr;ss.scoreMax=UnityEngine.Random.Range(ss.scoreMaxSetRange.x,ss.scoreMaxSetRange.y);}}
+        }
+    }
     public static spawnReqsMono instance;
     void Awake(){if(spawnReqsMono.instance!=null){Destroy(this);}else{instance=this;}}
     public void CheckSpawns(spawnReqs x, spawnReqsType xt, MonoBehaviour mb, IEnumerator cor){
         if(!spawnReqsMono.instance.spawnReqsList.Contains(x)){spawnReqsMono.instance.spawnReqsList.Add(x);}
         if(x.timeEnabled){
-            if(x.timer==-4){RestartTime(x);}
+            if(x.timer==-4&&!x.startTimeAfterSecond){RestartTime(x);}
             if(x.timer>0&&!GameSession.GlobalTimeIsPaused){x.timer-=Time.deltaTime;}
-            if(x.timer<=0&&x.timer!=-4&&!x.bothNeeded){Debug.Log(mb);Debug.Log(cor);mb.StartCoroutine(cor);RestartTime(x);}
-        }else if((x.secondEnabled&&!x.bothNeeded)||(x.secondEnabled&&x.bothNeeded&&x.timeEnabled)){
+            if(x.timer<=0&&x.timer!=-4&&!x.bothNeeded){mb.StartCoroutine(cor);RestartTime(x);}
+        }else if((!x.bothNeeded)||(x.bothNeeded&&x.timeEnabled)){
             if(xt==spawnReqsType.energy||xt==spawnReqsType.missed){
                 var xs=(spawnEnergy)x;
-                if(xs.energy>=xs.energyNeeded){if(x.startTimeAfterSecond&&x.timer==-4){RestartTime(x);}if(x.timer<=0&&x.timer!=-4){xs.energy=0;mb.StartCoroutine(cor);}}
+                if(xs.energy>=xs.energyNeeded){ConditionCheck<spawnEnergy>(x,"energy");}
+            }
+            else if(xt==spawnReqsType.score){
+                var xs=(spawnScore)x;
+                if(xs.score>=xs.scoreMax){ConditionCheck<spawnScore>(x,"score");}
             }
             else if(xt==spawnReqsType.pwrups){
                 var xs=(spawnPwrups)x;
-                if(xs.pwrups>=xs.pwrupsNeeded){if(x.startTimeAfterSecond&&x.timer==-4){RestartTime(x);}if(x.timer<=0&&x.timer!=-4){xs.pwrups=0;mb.StartCoroutine(cor);}}
+                if(xs.pwrups>=xs.pwrupsNeeded){ConditionCheck<spawnPwrups>(x,"pwrups");}
             }
             else if(xt==spawnReqsType.kills){
                 var xs=(spawnKills)x;
-                if(xs.kills>=xs.killsNeeded){if(x.startTimeAfterSecond&&x.timer==-4){RestartTime(x);}if(x.timer<=0&&x.timer!=-4){xs.kills=0;mb.StartCoroutine(cor);}}
+                if(xs.kills>=xs.killsNeeded){ConditionCheck<spawnKills>(x,"kills");}
             }
             else if(xt==spawnReqsType.dmg){
                 var xs=(spawnDmg)x;
-                if(xs.dmg>=xs.dmgNeeded){if(x.startTimeAfterSecond&&x.timer==-4){RestartTime(x);}if(x.timer<=0&&x.timer!=-4){xs.dmg=0;mb.StartCoroutine(cor);}}
+                if(xs.dmg>=xs.dmgNeeded){ConditionCheck<spawnDmg>(x,"dmg");}
             }
-            else if(xt==spawnReqsType.counts){
-                var xs=(spawnCounts)x;
-                if(xs.counts>=xs.countsNeeded){if(x.startTimeAfterSecond&&x.timer==-4){RestartTime(x);}if(x.timer<=0&&x.timer!=-4){xs.counts=0;mb.StartCoroutine(cor);}}
+            else if(xt==spawnReqsType.waveCounts){
+                var xs=(spawnWaveCounts)x;
+                if(xs.counts>=xs.countsNeeded){ConditionCheck<spawnWaveCounts>(x,"counts");}
+            }
+            else if(xt==spawnReqsType.powerupCounts){
+                var xs=(spawnPowerupCounts)x;
+                if(xs.counts>=xs.countsNeeded){ConditionCheck<spawnPowerupCounts>(x,"counts");}
             }
         }
         void RestartTime(spawnReqs x){spawnReqsMono.instance.RestartTime(x);}
+        void ConditionCheck<T>(spawnReqs x, string val)where T:spawnReqs{T xs=(T)x;if(x.startTimeAfterSecond&&x.timer==-4){RestartTime(x);return;}if((xs.bothNeeded&&x.timer<=0&&x.timer!=-4)||(!xs.bothNeeded)){xs.GetType().GetField(val).SetValue(xs,0);mb.StartCoroutine(cor);}}
     }
     public void RestartTime(spawnReqs x){SetTime(x,UnityEngine.Random.Range(x.time.x,x.time.y));}
     public void SetTime(spawnReqs x, float tim){x.timer=tim;}
+
+    public static void Validate(ref spawnReqs spawnReqsRef, ref spawnReqsType spawnReqsTypeRef){
+    if(spawnReqsTypeRef==spawnReqsType.time){spawnReqsRef=new spawnReqs();spawnReqsRef.bothNeeded=false;}
+    if(spawnReqsTypeRef==spawnReqsType.energy){spawnReqsRef=new spawnEnergy();}
+    if(spawnReqsTypeRef==spawnReqsType.missed){spawnReqsRef=new spawnEnergy();}
+    if(spawnReqsTypeRef==spawnReqsType.score){spawnReqsRef=new spawnScore();spawnReqsRef.timeEnabled=false;spawnReqsRef.bothNeeded=false;}
+    if(spawnReqsTypeRef==spawnReqsType.pwrups){spawnReqsRef=new spawnPwrups();}
+    if(spawnReqsTypeRef==spawnReqsType.kills){spawnReqsRef=new spawnKills();}
+    if(spawnReqsTypeRef==spawnReqsType.dmg){spawnReqsRef=new spawnDmg();}
+    if(spawnReqsTypeRef==spawnReqsType.waveCounts){spawnReqsRef=new spawnWaveCounts();}
+    if(spawnReqsTypeRef==spawnReqsType.powerupCounts){spawnReqsRef=new spawnPowerupCounts();}
+    }
 }
 
-public enum spawnReqsType{time,energy,missed,pwrups,kills,dmg,counts}
+public enum spawnReqsType{time,score,energy,missed,pwrups,kills,dmg,waveCounts,powerupCounts}
 //public enum spawnerType{waves,powerups,disrupters}
 //public interface ISpawnerConfig{}
 [System.Serializable]public class spawnReqs{
@@ -59,13 +99,14 @@ public enum spawnReqsType{time,energy,missed,pwrups,kills,dmg,counts}
     public float timer=-4;
     public int repeat=1;
     public float repeatInterval=0.75f;
-    public bool secondEnabled=true;
     public bool bothNeeded=true;
     public bool startTimeAfterSecond=false;
 }
 [System.Serializable]public class spawnScore:spawnReqs{
-    public float EVscoreMax=100;
-    public float EVscore;
+    public Vector2Int scoreMaxSetRange=new Vector2Int(15,30);
+    public int scoreMax=-4;
+    public int score;
+    public int specialId=0;//-1 for Waves & -2 for Shop
 }
 [System.Serializable]public class spawnEnergy:spawnReqs{
     public float energyNeeded=100;
@@ -83,8 +124,13 @@ public enum spawnReqsType{time,energy,missed,pwrups,kills,dmg,counts}
     public float dmgNeeded=200;
     public float dmg;
 }
-[System.Serializable]public class spawnCounts:spawnReqs{
-    public WaveConfig countsWave;
+[System.Serializable]public class spawnWaveCounts:spawnReqs{
+    public WaveConfig wave;
+    public float countsNeeded=3;
+    public float counts;
+}
+[System.Serializable]public class spawnPowerupCounts:spawnReqs{
+    public PowerupItem powerupItem;
     public float countsNeeded=3;
     public float counts;
 }

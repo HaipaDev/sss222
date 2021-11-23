@@ -24,8 +24,6 @@ public static GameRules instance;
     public bool statUpgOn=false;
     public bool iteminvOn=true;
     public bool barrierOn=false;
-    public Vector2Int EVscoreMax=new Vector2Int(30,50);
-    public Vector2Int shopScoreMax=new Vector2Int(200,450);
     public float scoreMulti=1;
     public float luckMulti=1;
 #endregion
@@ -106,6 +104,11 @@ public static GameRules instance;
 [Header("Powerup Spawns")]
     public List<PowerupsSpawnerGR> powerupSpawners;
 [Header("Waves & Disrupters")]
+    [SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
+    #region//VaildateWaveSpawn
+    [Button("VaildateWaveSpawnReqs")][ContextMenu("VaildateWaveSpawnReqs")]void VaildateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
+    #endregion
+    [SerializeReference]public spawnReqs waveSpawnReqs=new spawnScore();
     public List<LootTableEntryWaves> waveList;
     public int startingWave=0;
     public bool startingWaveRandom=false;
@@ -167,6 +170,9 @@ public static GameRules instance;
 #endregion
 #region//Shop
 [Header("Shop")]
+    public spawnReqsType shopSpawnReqsType=spawnReqsType.score;
+    [Button("VaildateShopSpawnReqs")][ContextMenu("VaildateShopSpawnReqs")]void VaildateShopSpawnReqs(){spawnReqsMono.Validate(ref shopSpawnReqs, ref shopSpawnReqsType);}
+    [SerializeReference]public spawnReqs shopSpawnReqs=new spawnScore();
     public List<LootTableEntryShop> shopList;
     public float cargoSpeed=2;
     public float cargoHealth=44;

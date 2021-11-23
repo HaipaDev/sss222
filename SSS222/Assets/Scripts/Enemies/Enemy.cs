@@ -195,7 +195,7 @@ public class Enemy : MonoBehaviour{
     private void OnDestroy(){
         if(GetComponent<Goblin>()!=null)GetComponent<Goblin>().DropPowerup(false);
         if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
-        if(randomizeWaveDeath==true){GameSession.instance.EVscore=GameSession.instance.EVscoreMax;}
+        if(randomizeWaveDeath==true){spawnReqsMono.AddScore(-5,-1);;}
     }
     private void DestroyOutside(){
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){giveScore=true;health=-1;Die();}else{Destroy(gameObject,0.001f);if(GetComponent<Goblin>()!=null){foreach(GameObject obj in GetComponent<Goblin>().powerups)Destroy(obj);}}}

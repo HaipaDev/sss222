@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
 public class Shop : MonoBehaviour{
     public static Shop instance;
     public static bool shopOpen;
     public static bool shopOpened;
+    [Header("Config")]
+    [SerializeField]public spawnReqsType shopSpawnReqsType=spawnReqsType.score;
+    [SerializeReference]public spawnReqs shopSpawnReqs;
     public GameObject shopMenuUI;
     public GameObject slotsContainer;
-    public GameObject slotPrefab;
+    [AssetsOnly]public GameObject slotPrefab;
     public float shopTimeMax=10f;
 
     public int currentSlotID;
@@ -42,6 +46,7 @@ public class Shop : MonoBehaviour{
     }
 
     void Update(){
+        CheckSpawnReqs();
         if(shopOpen==true){OpenShop();}
         if(Input.GetKeyDown(KeyCode.Escape)){Resume();}
         if(repEnabled)LevelRep();
@@ -50,6 +55,27 @@ public class Shop : MonoBehaviour{
         if(purchaseTimer>0){purchaseTimer-=Time.unscaledDeltaTime;}
         if(purchaseTimer<=0&&purchaseTimer!=-4){GameSession.instance.gameSpeed=0;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=true;}purchaseTimer=-4;}
         if(currentSlotsList.FindAll(x=>x.limitCount>=x.limit).Count>lootTable.currentQueue.slotList.Count/2){NewQueue();}
+    }
+    void CheckSpawnReqs(){
+        if(shopSpawnReqs!=GameRules.instance.shopSpawnReqs)shopSpawnReqs=GameRules.instance.shopSpawnReqs;
+        if(shopSpawnReqsType!=GameRules.instance.shopSpawnReqsType)shopSpawnReqsType=GameRules.instance.shopSpawnReqsType;
+        spawnReqs x=shopSpawnReqs;
+        spawnReqsType xt=shopSpawnReqsType;
+        spawnReqsMono.instance.CheckSpawns(x,xt,this,CallOpenShop());
+    }
+    IEnumerator CallOpenShop(){
+        //do{//Make it wait for your money to spawn lmao
+        if(GameRules.instance.shopOn){//&&GameSession.instance.coins>0){
+            if(GameRules.instance.shopCargoOn){Shop.instance.SpawnCargo();}
+            else{Shop.shopOpen=true;
+            /*foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
+                enemy.givePts=false;
+                enemy.health=-1;
+                enemy.Die();
+            }*/
+            GameSession.instance.gameSpeed=0f;}
+            GameSession.instance.RandomizeShopScoreMax();
+        }/*}while(GameSession.instance.coins<=0);*/yield return null;
     }
     public void SpawnCargo(){
         var cargoDir=dir.up;
@@ -87,8 +113,7 @@ public class Shop : MonoBehaviour{
         GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;
     }
 
-    [ContextMenu("NewQueue")]
-    public void NewQueue(){StartCoroutine(NewQueueI());}
+    [Button("NewQueue")][ContextMenu("NewQueue")]public void NewQueue(){StartCoroutine(NewQueueI());}
     IEnumerator NewQueueI(){
         ClearSlots();
         yield return new WaitForSecondsRealtime(0.1f);
@@ -123,7 +148,7 @@ public class Shop : MonoBehaviour{
         }}}
     }
 
-    [SerializeReference]IEnumerator pco=null;
+    IEnumerator pco=null;
     public void Purchase(){
         //Actual purchasing is in ShopSlot
         if(purchaseTimer==-4){
@@ -155,4 +180,6 @@ public class Shop : MonoBehaviour{
             reputationSlot-=amnt;
         }
     }}
+
+    [Button("VaildateShopSpawnReqs")][ContextMenu("VaildateShopSpawnReqs")]void VaildateShopSpawnReqs(){spawnReqsMono.Validate(ref shopSpawnReqs, ref shopSpawnReqsType);}
 }

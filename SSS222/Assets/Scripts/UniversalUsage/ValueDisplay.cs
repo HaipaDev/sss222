@@ -20,7 +20,7 @@ public class ValueDisplay : MonoBehaviour{
     void ChangeText(){
     if(GameSession.instance!=null&&GameSession.instance!=null){
         if(value=="score") txt.text=GameSession.instance.score.ToString();
-        else if(value=="evscore") txt.text=GameSession.instance.EVscore.ToString();
+        //else if(value=="evscore") txt.text=GameSession.instance.EVscore.ToString();
         else if(value=="coins") txt.text=GameSession.instance.coins.ToString();
         else if(value=="cores") txt.text=GameSession.instance.cores.ToString();
         else if(value.Contains("highscore")) txt.text=GameSession.instance.GetHighscore(/*int.Parse(value.Split('e')[1])*/GameSession.instance.gameModeSelected).ToString();
@@ -81,10 +81,12 @@ public class ValueDisplay : MonoBehaviour{
         else if(value=="speedPlayerGR") txt.text=GameRules.instance.moveSpeedPlayer.ToString();
         else if(value=="healthPlayerGR") txt.text=GameRules.instance.healthPlayer.ToString();
         else if(value=="energyPlayerGR") txt.text=GameRules.instance.energyPlayer.ToString();
-        else if(value=="waveScoreRangeGR") if(GameRules.instance.EVscoreMax.x!=GameRules.instance.EVscoreMax.y){txt.text=GameRules.instance.EVscoreMax.x.ToString()+"-"+GameRules.instance.EVscoreMax.y.ToString();}
-                                            else txt.text=GameRules.instance.EVscoreMax.x.ToString();
-        else if(value=="shopScoreRangeGR") if(GameRules.instance.shopScoreMax.x!=GameRules.instance.shopScoreMax.y){txt.text=GameRules.instance.shopScoreMax.x.ToString()+"-"+GameRules.instance.shopScoreMax.y.ToString();}
-                                            else txt.text=GameRules.instance.shopScoreMax.x.ToString();
+        else if(value=="waveScoreRangeGR") if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;var ss=sr.scoreMaxSetRange;
+                                            if(ss.x!=ss.y){txt.text=ss.x.ToString()+"-"+ss.y.ToString();}
+                                            else txt.text=ss.x.ToString();}else txt.text="?";
+        else if(value=="shopScoreRangeGR") if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;var ss=sr.scoreMaxSetRange;
+                                            if(ss.x!=ss.y){txt.text=ss.x.ToString()+"-"+ss.y.ToString();}
+                                            else txt.text=ss.x.ToString();}else txt.text="?";
     }
     if(SaveSerial.instance!=null){
         if(value=="inputType"){txt.text=SaveSerial.instance.settingsData.inputType.ToString();}

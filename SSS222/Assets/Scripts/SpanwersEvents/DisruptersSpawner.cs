@@ -17,25 +17,25 @@ public class DisruptersSpawner : MonoBehaviour{
 
     IEnumerator Start(){do{yield return StartCoroutine(CheckSpawns());}while(true);}
     IEnumerator CheckSpawns(){
-    if(currentCfg!=null){
-        if(!currentCfg.name.Contains("(Clone)")){this.currentCfg=Instantiate(currentCfg);}
-        else if(currentCfg.name.Contains("(Clone)")){
-            foreach(DisrupterConfig dc in disruptersList){
-                spawnReqs x=dc.spawnReqs;
-                spawnReqsType xt=dc.spawnReqsType;
-                spawnReqsMono.instance.CheckSpawns(x,xt,this,SpawnWave(dc));
-                for(var i=0;i<disruptersList.Count;i++){if(!disruptersList[i].name.Contains("(Clone)"))disruptersList[i]=Instantiate(dc);}
+        if(currentCfg!=null){
+            if(!currentCfg.name.Contains("(Clone)")){this.currentCfg=Instantiate(currentCfg);}
+            else if(currentCfg.name.Contains("(Clone)")){
+                foreach(DisrupterConfig dc in disruptersList){
+                    spawnReqs x=dc.spawnReqs;
+                    spawnReqsType xt=dc.spawnReqsType;
+                    spawnReqsMono.instance.CheckSpawns(x,xt,this,SpawnWave(dc));
+                    for(var i=0;i<disruptersList.Count;i++){if(!disruptersList[i].name.Contains("(Clone)"))disruptersList[i]=Instantiate(dc);}
+                }
             }
         }
-    }
-    for(int i=0;i<disruptersList.Count;i++){
-        if(!disruptersList[i].name.Contains("(Clone)")){this.disruptersList[i]=Instantiate(disruptersList[i]);}
-    }
-    int repI=1;
-    if(repCfg!=null){repI=repCfg.spawnReqs.repeat;
-    if(rep<=repI){if(rep>1)StartCoroutine(SpawnWave(repCfg));yield return new WaitForSeconds(repCfg.spawnReqs.repeatInterval);}
-    //if(rep>=repI){rep=0;}
-    }
+        for(int i=0;i<disruptersList.Count;i++){
+            if(disruptersList[i]!=null)if(!disruptersList[i].name.Contains("(Clone)")){this.disruptersList[i]=Instantiate(disruptersList[i]);}
+        }
+        int repI=1;
+        if(repCfg!=null){repI=repCfg.spawnReqs.repeat;
+        if(rep<=repI){if(rep>1)StartCoroutine(SpawnWave(repCfg));yield return new WaitForSeconds(repCfg.spawnReqs.repeatInterval);}
+        //if(rep>=repI){rep=0;}
+        }
     }
     private void RestartTime(DisrupterConfig dc){FindObjectOfType<spawnReqsMono>().RestartTime(dc.spawnReqs);}
     IEnumerator AddRep(float time){yield return new WaitForSeconds(time);rep++;}

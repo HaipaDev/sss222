@@ -5,13 +5,14 @@ using Sirenix.OdinInspector;
 
 public class Waves : MonoBehaviour{
     [Header("Config")]
+    [SerializeField] public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
+    [SerializeReference] public spawnReqs waveSpawnReqs;
     [SerializeField] public int startingWave=0;
     [SerializeField] public bool startingWaveRandom=false;
     public int waveIndex=0;
     public WaveConfig currentWave;
     [SerializeField] public bool uniqueWaves=true;
     float checkSpawns=3f;
-    //[SerializeField] float mTimeSpawns=2f;
     
     [Header("Current Values")]
     public float timeSpawns=0f;
@@ -20,12 +21,24 @@ public class Waves : MonoBehaviour{
     WaveDisplay waveDisplay;
     LootTableWaves lootTable;
 
-    IEnumerator Start(){
-        yield return new WaitForSeconds(0.15f);
+    void Start(){
+        //yield return new WaitForSeconds(0.05f);
         waveDisplay=FindObjectOfType<WaveDisplay>();
         lootTable=GetComponent<LootTableWaves>();
         if(startingWaveRandom){currentWave=GetRandomWave();startingWave=waveIndex;}
-        do{yield return StartCoroutine(SpawnWaves());}while(true);
+    }
+    /*public IEnumerator CallRandomizeWave(){
+        RandomizeWave();
+        GameSession.instance.RandomizeEVScoreMax();
+        yield return null;
+    }*/
+
+    [Button("RandomizeWave")][ContextMenu("RandomizeWave")]public IEnumerator RandomizeWave(){
+        if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
+        currentWave=GetRandomWave();
+        if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameRules.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameRules.instance.xp_wave);}
+        GameSession.instance.RandomizeEVScoreMax();
+        yield return null;
     }
     public WaveConfig GetRandomWave(){
     if(lootTable!=null){
@@ -36,20 +49,42 @@ public class Waves : MonoBehaviour{
                 do{
                     wave=lootTable.GetItem();
                     return wave;
-                }while(wave!=currentWave);
+                }while(wave==currentWave);
             }else{return lootTable.GetItem();}
         }
     }else{return null;}}
-    public IEnumerator SpawnWaves(){
-        if(!GameSession.GlobalTimeIsPaused&&timeSpawns<=0&&timeSpawns>-4){
-            if(currentWave==null&&lootTable.itemList.Count>0)currentWave=lootTable.itemList[startingWave].lootItem;
-            yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
-            timeSpawns=-4;
-        }
+    
+    void CheckSpawnReqs(){
+        if(waveSpawnReqs!=GameRules.instance.waveSpawnReqs)waveSpawnReqs=GameRules.instance.waveSpawnReqs;
+        if(waveSpawnReqsType!=GameRules.instance.waveSpawnReqsType)waveSpawnReqsType=GameRules.instance.waveSpawnReqsType;
+        spawnReqs x=waveSpawnReqs;
+        spawnReqsType xt=waveSpawnReqsType;
+        spawnReqsMono.instance.CheckSpawns(x,xt,this,RandomizeWave());
+    }
+    void Update(){
+        CheckSpawnReqs();
+
+        if(currentWave==null&&lootTable.itemList.Count>0)currentWave=lootTable.itemList[startingWave].lootItem;
+        if(!GameSession.GlobalTimeIsPaused&&timeSpawns>0){timeSpawns-=Time.deltaTime;}
+        else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
+        else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){StartCoroutine(SpawnAllEnemiesInWave(currentWave));timeSpawns=currentWave.timeSpawnWave;}
+
+        //Check if no Enemies for 3s, force a wave spawn
+        if(FindObjectsOfType<Enemy>().Length==0){
+            if(checkSpawnsTimer==-4)checkSpawnsTimer=checkSpawns;
+            if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
+            else if(checkSpawnsTimer<=0&&checkSpawnsTimer>-4){
+                    if(currentWave==null){currentWave=GetRandomWave();}
+                    if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
+                    //StartCoroutine(SpawnWave());
+                checkSpawnsTimer=checkSpawns;
+            }
+        }else{checkSpawnsTimer=-4;}
     }
 
+    #region//SpawnAllEnemiesInWave
     public IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig){
-        spawnReqsMono.AddCounts(waveConfig);
+        spawnReqsMono.AddWaveCounts(waveConfig);
         //if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddCounts(waveConfig);
     switch(waveConfig.wavePathType){
         case wavePathType.startToEnd:
@@ -135,27 +170,8 @@ public class Waves : MonoBehaviour{
             break;
         default: yield return new WaitForSeconds(waveConfig.GetTimeSpawn());break;
     }}
+    #endregion
     public string GetWaveName(){return currentWave.waveName;}
-    void Update(){
-        if(!GameSession.GlobalTimeIsPaused){
-            if(timeSpawns>-0.01){timeSpawns-=Time.deltaTime;}
-            else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
-            else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){SpawnAllEnemiesInWave(currentWave);GameSession.instance.RandomizeEVScoreMax();timeSpawns=currentWave.timeSpawnWave;}
-        }
-        if(GameSession.instance!=null)if(GameSession.instance.EVscoreMax!=-5&&GameSession.instance.EVscore>=GameSession.instance.EVscoreMax){if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
-            timeSpawns=0;currentWave=GetRandomWave();
-            GameSession.instance.EVscore=0;if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameRules.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameRules.instance.xp_wave);}
-        }
 
-        //Check if no Enemies for 3s, force a wave spawn
-        if(FindObjectsOfType<Enemy>().Length==0){
-            if(checkSpawnsTimer==-4)checkSpawnsTimer=checkSpawns;
-            if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
-            else if(checkSpawnsTimer<=0&&checkSpawnsTimer>-4){
-                    if(currentWave==null){currentWave=GetRandomWave();}
-                    StartCoroutine(SpawnWaves());
-                checkSpawnsTimer=checkSpawns;
-            }
-        }else{checkSpawnsTimer=-4;}
-    }
+    [Button("VaildateWaveSpawnReqs")][ContextMenu("VaildateWaveSpawnReqs")]void VaildateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
 }

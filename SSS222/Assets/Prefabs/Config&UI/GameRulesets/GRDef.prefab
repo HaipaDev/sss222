@@ -55,8 +55,6 @@ MonoBehaviour:
   statUpgOn: 0
   iteminvOn: 1
   barrierOn: 0
-  EVscoreMax: {x: 30, y: 30}
-  shopScoreMax: {x: 200, y: 450}
   scoreMulti: 1
   luckMulti: 1
   startingPosPlayer: {x: 0, y: -6.24}
@@ -207,7 +205,8 @@ MonoBehaviour:
       rarity: 0
       dropChance: 3
       levelReq: 2
-    psConfig: {fileID: 11400000, guid: 3d89b30c12345484d8cc1cbf23082c6e, type: 2}
+    psConfig: {fileID: 11400000, guid: 2af57d09ed839a1419493c09a774c0c5, type: 2}
+    powerupSpawnPosRange: {x: -3, y: 3}
   - powerupList:
     - name: 
       lootItem: {fileID: 11400000, guid: 1368b36bec2ccca4e97ab92bed99ea99, type: 2}
@@ -254,7 +253,11 @@ MonoBehaviour:
       rarity: 2
       dropChance: 0
       levelReq: 2
-    psConfig: {fileID: 11400000, guid: 8fed4d5111fa39942b77b4f7a99cd98d, type: 2}
+    psConfig: {fileID: 11400000, guid: 7dd641c366f11184b9c4c84f9c30d17a, type: 2}
+    powerupSpawnPosRange: {x: -3, y: 3}
+  waveSpawnReqsType: 1
+  waveSpawnReqs:
+    id: 0
   waveList:
   - name: CometsFlyby
     lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
@@ -292,13 +295,13 @@ MonoBehaviour:
   startingWaveRandom: 0
   uniqueWaves: 1
   disrupterList:
-  - {fileID: 11400000, guid: d9eb91805a3041c4da5fe9fd53487598, type: 2}
-  - {fileID: 11400000, guid: 94fb1e161b67c8c42ac78517bba5d656, type: 2}
-  - {fileID: 11400000, guid: f76994eb4643acc4fb95ad8c4d97deb8, type: 2}
-  - {fileID: 11400000, guid: 67796b4b135ab994c9d4cbf15e0a728b, type: 2}
-  - {fileID: 11400000, guid: feed16e0d91c8bc49a5039c0f5de5bae, type: 2}
-  - {fileID: 11400000, guid: 313e63b1f688ca74d8fe6fc05250006d, type: 2}
-  - {fileID: 11400000, guid: 62a29b7fc10a69b45bf9ff41b6cda95a, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   enemies:
   - name: Bat
     size: {x: 1, y: 1}
@@ -682,6 +685,9 @@ MonoBehaviour:
   efxGoblinBt: {x: 6, y: 1}
   dmgGlareDev: 8
   efxGlareDev: {x: 1.5, y: 2}
+  shopSpawnReqsType: 1
+  shopSpawnReqs:
+    id: 1
   shopList:
   - name: 
     lootItem: {fileID: 11400000, guid: b082a4e514cd17e45aadeb523cbde903, type: 2}
@@ -791,3 +797,33 @@ MonoBehaviour:
   enDiss_enabled: 1
   enDiss_upgradeCost: 4
   enDiss_lvlReq: 4
+  references:
+    version: 1
+    00000000:
+      type: {class: spawnScore, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 0
+        time: {x: 10, y: 20}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        bothNeeded: 0
+        startTimeAfterSecond: 0
+        scoreMaxSetRange: {x: 15, y: 30}
+        scoreMax: -4
+        score: 0
+        specialId: -1
+    00000001:
+      type: {class: spawnScore, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 0
+        time: {x: 10, y: 20}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        bothNeeded: 0
+        startTimeAfterSecond: 0
+        scoreMaxSetRange: {x: 200, y: 450}
+        scoreMax: -4
+        score: 0
+        specialId: -2

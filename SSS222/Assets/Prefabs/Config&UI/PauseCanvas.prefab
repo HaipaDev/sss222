@@ -698,7 +698,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1847
 --- !u!114 &2392736167144779158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1097,6 +1097,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2392736167144779161}
     m_Modifications:
+    - target: {fileID: 402177101, guid: b72002d00f11d264d874c0d82f3a8a94, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 402177101, guid: b72002d00f11d264d874c0d82f3a8a94, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 402177101, guid: b72002d00f11d264d874c0d82f3a8a94, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 989703539, guid: b72002d00f11d264d874c0d82f3a8a94, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 989703539, guid: b72002d00f11d264d874c0d82f3a8a94, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 741746220695244795, guid: b72002d00f11d264d874c0d82f3a8a94,
         type: 3}
       propertyPath: m_AnchorMax.y
