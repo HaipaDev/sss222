@@ -59,7 +59,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestVial").name)){player.AddSubXP(5);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Battery").name)){player.AddSubEnergy(player.energyBatteryGet,true);}
                 if(other.GetComponent<Tag_Collectible>().isPowerup){//if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
-                    spawnReqsMono.AddPwrups();
+                    spawnReqsMono.AddPwrups(other.gameObject.name);
                     GameSession.instance.AddXP(GameRules.instance.xp_powerup);//XP For powerups
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("MicroMedkit").name)){player.hpAbsorpAmnt+=player.microMedkitHpAmnt;}

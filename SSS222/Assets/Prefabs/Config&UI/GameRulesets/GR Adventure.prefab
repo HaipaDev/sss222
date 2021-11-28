@@ -159,20 +159,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: disrupterList.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
       propertyPath: pwrupStatusList.Array.size
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: disrupterList.Array.data[6]
-      value: 
-      objectReference: {fileID: 11400000, guid: 62a29b7fc10a69b45bf9ff41b6cda95a,
-        type: 2}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: weaponProperties.Array.size

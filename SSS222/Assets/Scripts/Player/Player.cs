@@ -218,11 +218,8 @@ public class Player : MonoBehaviour{
     float hPressedTime;
     float vPressedTime;
     public float mPressedTime;
-    public float timeFlyingCore;
-    public float timeFlyingTotal;
-    public float stayingTimer;
-    public float stayingTimerCore;
-    public float stayingTimerTotal;
+    //public float timeFlyingTotal;
+    //public float stayingTimerTotal;
 
     Rigidbody2D rb;
     PlayerSkills pskills;
@@ -378,7 +375,7 @@ public class Player : MonoBehaviour{
         armorMulti=armorMultiInit;
     }
 
-    void Update(){
+    void Update(){  if(!GameSession.GlobalTimeIsPaused){
         SetInputType(SaveSerial.instance.settingsData.inputType);
         HandleInput(false);
         health=Mathf.Clamp(health,0,maxHP);
@@ -392,7 +389,7 @@ public class Player : MonoBehaviour{
         Regen();
         Die();
         CountTimeMovementPressed();
-        if((frozen!=true&&(!fuelOn||(fuelOn&&energy>0)))&&!GameSession.GlobalTimeIsPaused){
+        if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
             if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
             if(GetComponent<BackflameEffect>().BFlame!=null)if(GetComponent<BackflameEffect>().BFlame.activeSelf==false){GetComponent<BackflameEffect>().BFlame.SetActive(true);}
             if(inputType!=InputType.mouse&&inputType!=InputType.drag){MovePlayer();}
@@ -402,12 +399,12 @@ public class Player : MonoBehaviour{
             if(GetComponent<BackflameEffect>().BFlame!=null)if(GetComponent<BackflameEffect>().BFlame.activeSelf==true){GetComponent<BackflameEffect>().BFlame.SetActive(false);}
             if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
         }
-        if(shootTimer>0)shootTimer -= Time.deltaTime;
+        if(shootTimer>0)shootTimer-=Time.deltaTime;
         if(instantiateTimer>0)instantiateTimer-=Time.deltaTime;
         velocity=rb.velocity;
-        if(moving==false){stayingTimer+=Time.deltaTime;stayingTimerCore+=Time.deltaTime;stayingTimerTotal+=Time.deltaTime;/*if(hpRegenEnabled)*/timerHpRegen+=Time.deltaTime;}
-        if(moving==true){timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;stayingTimer=0;stayingTimerCore=0;
-        if(fuelOn){if(fuelDrainTimer<=0){if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt,false);}fuelDrainTimer=fuelDrainFreq;}else{fuelDrainTimer-=Time.deltaTime;}}
+        if(moving==false){spawnReqsMono.AddStayingTime(Time.deltaTime);GameSession.instance.stayingTimeXP+=Time.deltaTime;/*stayingTimerTotal+=Time.deltaTime;*/timerHpRegen+=Time.deltaTime;}
+        if(moving==true){spawnReqsMono.AddMovingTime(Time.deltaTime);GameSession.instance.movingTimeXP+=Time.deltaTime;//timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;
+            if(fuelOn){if(fuelDrainTimer<=0){if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt,false);}fuelDrainTimer=fuelDrainFreq;}else{fuelDrainTimer-=Time.deltaTime;}}
         }
 
         
@@ -427,7 +424,7 @@ public class Player : MonoBehaviour{
 
         if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
         
-        if(!GameSession.GlobalTimeIsPaused&&GameRules.instance.levelingOn&&UpgradeMenu.instance!=null&&GetComponent<BackflameEffect>()!=null){
+        if(GameRules.instance.levelingOn&&UpgradeMenu.instance!=null&&GetComponent<BackflameEffect>()!=null){
             //Blue Flame for Hardcore
             if(GameSession.instance.CheckGameModeSelected("Hardcore")){
                 if((UpgradeMenu.instance.total_UpgradesLvl<bflameDmgTillLvl||bflameDmgTillLvl<=0)&&!GetComponent<BackflameEffect>().BFlame.name.Contains("Blue")){
@@ -446,7 +443,7 @@ public class Player : MonoBehaviour{
         }
 
         if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
-    }
+    }}
     public void SetInputType(InputType type){inputType=type;}
     void FixedUpdate(){
         // If we're first at-bat, handle the input immediately and mark it already-handled.

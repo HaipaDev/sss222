@@ -24,6 +24,8 @@ public class GameSession : MonoBehaviour{
     public float xp=0f;
     public float xpTotal=0f;
     public int enemiesCount=0;
+    public float stayingTimeXP=0f;
+    public float movingTimeXP=0f;
     [Header("GameRules/Event Values")]
     public bool anyUpgradesOn=true;
     /*public int EVscore=0;
@@ -144,10 +146,8 @@ public class GameSession : MonoBehaviour{
                 
             }
 
-            if(Player.instance!=null){
-                if(Player.instance.timeFlyingCore>GameRules.instance.flyingTimeReq){AddXP(GameRules.instance.xp_flying);Player.instance.timeFlyingCore=0f;}
-                if(Player.instance.stayingTimerCore>GameRules.instance.stayingTimeReq){if(xp>-GameRules.instance.xp_staying)AddXP(GameRules.instance.xp_staying);Player.instance.stayingTimerCore=0f;}
-            }
+            if(stayingTimeXP>GameRules.instance.stayingTimeReq){AddXP(GameRules.instance.xp_staying);stayingTimeXP=0f;}
+            if(movingTimeXP>GameRules.instance.flyingTimeReq){AddXP(GameRules.instance.xp_flying);movingTimeXP=0f;}
         }
 
         //Set speed to normal
@@ -235,6 +235,8 @@ public class GameSession : MonoBehaviour{
         xp=0;
         xpTotal=0;
         cores=0;
+        stayingTimeXP=0;
+        movingTimeXP=0;
         enballDropMulti=1;
         coinDropMulti=1;
         coreDropMulti=1;

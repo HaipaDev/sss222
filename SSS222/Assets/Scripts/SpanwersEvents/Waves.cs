@@ -41,6 +41,7 @@ public class Waves : MonoBehaviour{
         currentWave=GetRandomWave();
         if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameRules.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameRules.instance.xp_wave);}
         GameSession.instance.RandomizeEVScoreMax();
+        spawnReqsMono.AddWaves();
         yield return null;
     }
     public WaveConfig GetRandomWave(){
@@ -65,30 +66,32 @@ public class Waves : MonoBehaviour{
         spawnReqsMono.instance.CheckSpawns(x,xt,this,"RandomizeWave");
     }
     void Update(){
-        CheckSpawnReqs();
+        if(!GameSession.GlobalTimeIsPaused){
+            CheckSpawnReqs();
 
-        if(currentWave==null&&lootTable.itemList.Count>0)currentWave=lootTable.itemList[startingWave].lootItem;
-        if(!GameSession.GlobalTimeIsPaused&&timeSpawns>0){timeSpawns-=Time.deltaTime;}
-        else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
-        else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){StartCoroutine(SpawnAllEnemiesInWave(currentWave));timeSpawns=currentWave.timeSpawnWave;}
+            if(currentWave==null&&lootTable.itemList.Count>0)currentWave=lootTable.itemList[startingWave].lootItem;
+            if(timeSpawns>0){timeSpawns-=Time.deltaTime;}
+            else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
+            else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){StartCoroutine(SpawnAllEnemiesInWave(currentWave));timeSpawns=currentWave.timeSpawnWave;}
+            
 
-        //Check if no Enemies for 3s, force a wave spawn
-        if(FindObjectsOfType<Enemy>().Length==0){
-            if(checkSpawnsTimer==-4)checkSpawnsTimer=checkSpawns;
-            if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
-            else if(checkSpawnsTimer<=0&&checkSpawnsTimer>-4){
-                    if(currentWave==null){currentWave=GetRandomWave();}
-                    if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
-                    //StartCoroutine(SpawnWave());
-                checkSpawnsTimer=checkSpawns;
-            }
-        }else{checkSpawnsTimer=-4;}
+            //Check if no Enemies for 3s, force a wave spawn
+            if(FindObjectsOfType<Enemy>().Length==0){
+                if(checkSpawnsTimer==-4)checkSpawnsTimer=checkSpawns;
+                if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
+                else if(checkSpawnsTimer<=0&&checkSpawnsTimer>-4){
+                        if(currentWave==null){currentWave=GetRandomWave();}
+                        if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
+                        //StartCoroutine(SpawnWave());
+                    checkSpawnsTimer=checkSpawns;
+                }
+            }else{checkSpawnsTimer=-4;}
+        }
     }
 
     #region//SpawnAllEnemiesInWave
     public IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig){
         spawnReqsMono.AddWaveCounts(waveConfig);
-        //if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddCounts(waveConfig);
     switch(waveConfig.wavePathType){
         case wavePathType.startToEnd:
             for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){

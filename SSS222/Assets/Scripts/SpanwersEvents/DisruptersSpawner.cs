@@ -14,7 +14,7 @@ public class DisruptersSpawner : MonoBehaviour{
         foreach(DisrupterConfig dc in disruptersList){var d=dc.spawnReqs;if(d.timeEnabled){}
         if(d.startTimeAfterSecond){d.timer=-4;}}
     }
-    void Update(){CheckSpawnReqs();}
+    void Update(){if(!GameSession.GlobalTimeIsPaused)CheckSpawnReqs();}
     //IEnumerator Start(){do{yield return StartCoroutine(CheckSpawnReqs());}while(true);}
     void CheckSpawnReqs(){
         if(currentCfg!=null){if(!currentCfg.name.Contains("(Clone)")){currentCfg=Instantiate(currentCfg);}}

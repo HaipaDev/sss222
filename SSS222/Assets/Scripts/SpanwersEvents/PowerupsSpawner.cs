@@ -11,7 +11,6 @@ public class PowerupsSpawner : MonoBehaviour{
         yield return new WaitForSeconds(0.05f);
         lootTable=GetComponent<LootTablePowerups>();
     }
-    //void Start(){do{CheckSpawns();}while(true);}
     void CheckSpawnReqs(){if(powerupsSpawner!=null){
         if(!powerupsSpawner.name.Contains("(Clone)")){gameObject.name=powerupsSpawner.name;this.powerupsSpawner=Instantiate(powerupsSpawner);}
         else if(powerupsSpawner.name.Contains("(Clone)")){
@@ -21,9 +20,7 @@ public class PowerupsSpawner : MonoBehaviour{
         }
     }}
     void Update(){
-        CheckSpawnReqs();
-        //if(!GameSession.GlobalTimeIsPaused){if(timer>0)timer-=Time.deltaTime;}
-        //if(powerupsSpawner.spawnReqs.timer<=0){SpawnPowerup();}
+        if(!GameSession.GlobalTimeIsPaused)CheckSpawnReqs();
     }
     [Button("Spawn Powerup")][ContextMenu("Spawn Powerup")]public void SpawnPowerupCall(){StartCoroutine(SpawnPowerup());}
     IEnumerator SpawnPowerup(){
