@@ -5,8 +5,9 @@ using Sirenix.OdinInspector;
 
 [CreateAssetMenu(menuName = "Powerup Spawner Config")]
 public class PowerupsSpawnerConfig : ScriptableObject{//, ISpawnerConfig{//,IEnumerable{
+    [InlineButton("VaildateSpawnReqs","Validate")]
     [SerializeField] public spawnReqsType spawnReqsType;
     [SerializeReference] public spawnReqs spawnReqs=new spawnReqs();
     
-    [Button("VaildateSpawnReqs")][ContextMenu("VaildateSpawnReqs")]void VaildateSpawnReqs(){spawnReqsMono.Validate(ref spawnReqs, ref spawnReqsType);}
+    [ContextMenu("VaildateSpawnReqs")]void VaildateSpawnReqs(){spawnReqsMono.Validate(ref spawnReqs, ref spawnReqsType);}
 }

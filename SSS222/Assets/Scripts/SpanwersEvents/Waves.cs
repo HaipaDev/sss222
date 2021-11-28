@@ -4,10 +4,12 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 public class Waves : MonoBehaviour{
-    [Header("Config")]
+    [Header("SpawnReqs")]
+    [InlineButton("ValidateWaveSpawnReqs","Validate")]
     [SerializeField] public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
     [SerializeReference] public spawnReqs waveSpawnReqs;
-    [SerializeField] public int startingWave=0;
+    [Header("Config")]
+    [DisableIf("startingWaveRandom")][SerializeField] public int startingWave=0;
     [SerializeField] public bool startingWaveRandom=false;
     public int waveIndex=0;
     public WaveConfig currentWave;
@@ -33,7 +35,8 @@ public class Waves : MonoBehaviour{
         yield return null;
     }*/
 
-    [Button("RandomizeWave")][ContextMenu("RandomizeWave")]public IEnumerator RandomizeWave(){
+    [Button("Spawn RandomizeWave")][ContextMenu("RandomizeWave")]public void RandomizeWaveCall(){StartCoroutine(RandomizeWave());}
+    public IEnumerator RandomizeWave(){
         if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
         currentWave=GetRandomWave();
         if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameRules.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameRules.instance.xp_wave);}
@@ -59,7 +62,7 @@ public class Waves : MonoBehaviour{
         if(waveSpawnReqsType!=GameRules.instance.waveSpawnReqsType)waveSpawnReqsType=GameRules.instance.waveSpawnReqsType;
         spawnReqs x=waveSpawnReqs;
         spawnReqsType xt=waveSpawnReqsType;
-        spawnReqsMono.instance.CheckSpawns(x,xt,this,RandomizeWave());
+        spawnReqsMono.instance.CheckSpawns(x,xt,this,"RandomizeWave");
     }
     void Update(){
         CheckSpawnReqs();
@@ -173,5 +176,5 @@ public class Waves : MonoBehaviour{
     #endregion
     public string GetWaveName(){return currentWave.waveName;}
 
-    [Button("VaildateWaveSpawnReqs")][ContextMenu("VaildateWaveSpawnReqs")]void VaildateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
+    [ContextMenu("ValidateWaveSpawnReqs")]void ValidateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
 }

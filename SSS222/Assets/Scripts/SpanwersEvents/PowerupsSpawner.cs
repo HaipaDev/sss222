@@ -12,16 +12,16 @@ public class PowerupsSpawner : MonoBehaviour{
         lootTable=GetComponent<LootTablePowerups>();
     }
     //void Start(){do{CheckSpawns();}while(true);}
-    void CheckSpawns(){if(powerupsSpawner!=null){
-        if(!powerupsSpawner.name.Contains("(Clone)")){this.powerupsSpawner=Instantiate(powerupsSpawner);}
+    void CheckSpawnReqs(){if(powerupsSpawner!=null){
+        if(!powerupsSpawner.name.Contains("(Clone)")){gameObject.name=powerupsSpawner.name;this.powerupsSpawner=Instantiate(powerupsSpawner);}
         else if(powerupsSpawner.name.Contains("(Clone)")){
             spawnReqs x=powerupsSpawner.spawnReqs;
             spawnReqsType xt=powerupsSpawner.spawnReqsType;
-            spawnReqsMono.instance.CheckSpawns(x,xt,this,SpawnPowerup());
+            spawnReqsMono.instance.CheckSpawns(x,xt,this,"SpawnPowerup");
         }
     }}
     void Update(){
-        CheckSpawns();
+        CheckSpawnReqs();
         //if(!GameSession.GlobalTimeIsPaused){if(timer>0)timer-=Time.deltaTime;}
         //if(powerupsSpawner.spawnReqs.timer<=0){SpawnPowerup();}
     }
@@ -38,11 +38,12 @@ public class PowerupsSpawner : MonoBehaviour{
                         lootTable.GetItem().item,
                         powerupsPos,
                         Quaternion.identity);
-                    //Debug.Log("Powerup spawned: "+newPowerup.name);
-                }else Debug.LogWarning("Powerup object not assigned to"+lootItem+"!");
-            }else Debug.LogWarning("Loottable dropped a null object!");
-        }else{Debug.LogWarning("Loottable not assigned!");lootTable=GetComponent<LootTablePowerups>();
-            if(lootTable!=null){Debug.LogWarning("Fine I assigned it myself");StartCoroutine(SpawnPowerup());}}
-        yield return null;
+                    Debug.Log("Powerup spawned: "+newPowerup.name);
+                }else Debug.LogWarning("Powerup prefab not assigned to "+lootItem+" !");
+            }else Debug.LogWarning("Loottable randomized a null item!");
+        }else{Debug.LogError("Loottable not assigned!");lootTable=GetComponent<LootTablePowerups>();
+            if(lootTable!=null){Debug.LogWarning("Fine I assigned it myself");yield return StartCoroutine(SpawnPowerup());}
+        }
+        yield break;
     }
 }

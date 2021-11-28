@@ -432,20 +432,19 @@ PrefabInstance:
         type: 3}
       propertyPath: powerupSpawners.Array.data[0].psConfig
       value: 
-      objectReference: {fileID: 11400000, guid: 3d89b30c12345484d8cc1cbf23082c6e,
+      objectReference: {fileID: 11400000, guid: 2af57d09ed839a1419493c09a774c0c5,
         type: 2}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: powerupSpawners.Array.data[1].psConfig
       value: 
-      objectReference: {fileID: 11400000, guid: 8fed4d5111fa39942b77b4f7a99cd98d,
+      objectReference: {fileID: 11400000, guid: 7dd641c366f11184b9c4c84f9c30d17a,
         type: 2}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: powerupSpawners.Array.data[2].psConfig
       value: 
-      objectReference: {fileID: 11400000, guid: 8fed4d5111fa39942b77b4f7a99cd98d,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: pwrupStatusList.Array.data[2].levelReq

@@ -10,22 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79d422e32c874b4f990eb161a8699ea, type: 3}
-  m_Name: MechaLeech
+  m_Name: VortexWheel
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: dc236037e97902b4ea54a36d1885fbea, type: 2}
-  spawnReqsType: 0
+  waveConfig: {fileID: 11400000, guid: d3645a391c2cd6942953c457b255cdcb, type: 2}
+  spawnReqsType: 2
   spawnReqs:
     id: 0
   references:
     version: 1
     00000000:
-      type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
+      type: {class: spawnEnergy, ns: , asm: Assembly-CSharp}
       data:
         timeEnabled: 1
-        time: {x: 45, y: 75}
+        time: {x: 20, y: 50}
         timer: -4
         repeat: 1
         repeatInterval: 0.75
         repI: 1
-        bothNeeded: 0
+        bothNeeded: 1
         startTimeAfterSecond: 0
+        energyNeeded: 100
+        energy: 0
