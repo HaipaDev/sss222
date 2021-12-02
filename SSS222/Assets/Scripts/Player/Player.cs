@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
 //using UnityEngine.InputSystem;
 //using UnityEditor;
+using Sirenix.OdinInspector;
 
 public class Player : MonoBehaviour{
     public static Player instance;
@@ -22,20 +22,19 @@ public class Player : MonoBehaviour{
     [SerializeField] float paddingX = -0.125f;
     [SerializeField] float paddingY = 0.45f;
     [SerializeField] public float moveSpeedInit = 5f;
-    public float moveSpeed = 5f;//A variable for later modifications like Upgrades
-    public float moveSpeedCurrent;
-    public float health = 100f;
+    [DisableInEditorMode]public float moveSpeed = 5f;//A variable for later modifications like Upgrades
+    [DisableInEditorMode]public float moveSpeedCurrent;
+    [DisableInEditorMode]public float health = 100f;
     [SerializeField] public float maxHP = 100f;
     [SerializeField] public string powerup = "null";
     [SerializeField] public bool energyOn = true;
-    public float energy = 120f;
-    //[SerializeField] public float maxEnergyStarting = 30f;
+    [DisableInEditorMode]public float energy = 120f;
     [SerializeField] public float maxEnergy = 120f;
     [SerializeField] public bool ammoOn=true;
     [SerializeField] public int ammo = -4;
     [SerializeField] public string powerupDefault = "laser";
-    public bool weaponsLimited=false;
-    public float powerupTimer=-4;
+    [SerializeField] public bool weaponsLimited=false;
+    [DisableInEditorMode]public float powerupTimer=-4;
     [SerializeField] public bool losePwrupOutOfEn;
     [SerializeField] public bool losePwrupOutOfAmmo;
     [SerializeField] public bool fuelOn=false;
@@ -44,26 +43,26 @@ public class Player : MonoBehaviour{
     [SerializeField] public float fuelDrainTimer=-4;
     [SerializeField] public int energyRefillUnlocked;
     [SerializeField] public bool overheatOn=true;
-    public float overheatTimer = -4f;
+    [DisableInEditorMode]public float overheatTimer = -4f;
     [SerializeField] public float overheatTimerMax = 8.66f;
     [SerializeField] public float overheatCdTimer;
     [SerializeField] public float overheatCooldown = 0.65f;
-    public bool overheated;
+    [DisableInEditorMode]public bool overheated;
     [SerializeField] public float overheatedTime=3;
-    public float overheatedTimer;
+    [DisableInEditorMode]public float overheatedTimer;
     [SerializeField] public bool recoilOn=true;
 
     public bool enRegenEnabled;
     public float enAbsorpAmnt;
     public float energyDissAbsorp=18;
-    public float timerEnRegen;
+    [DisableInEditorMode]public float timerEnRegen;
     [SerializeField] public float freqEnRegen=1f;
     [SerializeField] public float enRegenAmnt=2f;
     [SerializeField] public float energyForRegen=10f;
     public bool hpRegenEnabled;
     public float hpAbsorpAmnt;
     public float crystalMendAbsorp=10;
-    public float timerHpRegen;
+    [DisableInEditorMode]public float timerHpRegen;
     [SerializeField] public float freqHpRegen=2f;
     [SerializeField] public float hpRegenAmnt=0.5f;
     //[SerializeField] public float hpForRegen=0f;
@@ -701,34 +700,20 @@ public class Player : MonoBehaviour{
         
     }
 
-    private void Die(){
-        if(health<=0&&dead!=true){
-            dead=true;
-            Hide();
-            Destroy(gameObject, 0.05f);//Kill player
-            pskills.DeathSkills();
-            if(GameSession.instance.analyticsOn==true){
-            AnalyticsResult analyticsResult=Analytics.CustomEvent("Death",
-            new Dictionary<string,object>{
-                { "Mode: ", GameRules.instance.cfgName },
-                { "Score: ", GameSession.instance.score },
-                { "Time: ", GameSession.instance.GetGameSessionTime() },
-                { "Source: ", GetComponent<PlayerCollider>().lastHitObj },
-                { "Damage: ", GetComponent<PlayerCollider>().lastHitDmg },
-                { "Full Report: ", GameRules.instance.cfgName+", "+GameSession.instance.score+", "+GameSession.instance.GetGameSessionTimeFormat()+", "+GetComponent<PlayerCollider>().lastHitObj+", "+GetComponent<PlayerCollider>().lastHitDmg }
-            });
-            Debug.Log("analyticsResult: "+analyticsResult);
-            Debug.Log("Full Report: "+GameRules.instance.cfgName+", "+GameSession.instance.score+", "+GameSession.instance.GetGameSessionTimeFormat()+", "+GetComponent<PlayerCollider>().lastHitObj+", "+GetComponent<PlayerCollider>().lastHitDmg);
-            }
-            //Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
+    private void Die(){if(health<=0&&dead!=true){
+        dead=true;
+        Hide();
+        Destroy(gameObject, 0.05f);
+        pskills.DeathSkills();
+        GameSession.instance.SetAnalytics();
+        //Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
 
-            GameObject explosion = GameAssets.instance.VFX("Explosion",transform.position,0.5f);//Destroy(explosion, 0.5f);
-            AudioManager.instance.Play("Death");
-            GameOverCanvas.instance.OpenGameOverCanvas(true);
+        GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);
+        AudioManager.instance.Play("Death");
+        GameOverCanvas.instance.OpenGameOverCanvas();
 
-            foreach(Tag_DestroyPlayerDead go in FindObjectsOfType<Tag_DestroyPlayerDead>()){Destroy(go.gameObject);}
-        }
-    }
+        foreach(Tag_DestroyPlayerDead go in FindObjectsOfType<Tag_DestroyPlayerDead>()){Destroy(go.gameObject);}
+    }}
     private void Hide(){
         GetComponent<SpriteRenderer>().enabled=false;
         GetComponent<Collider2D>().enabled=false;

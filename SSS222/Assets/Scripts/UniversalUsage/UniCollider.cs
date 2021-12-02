@@ -1,3 +1,5 @@
+using System;
+//using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,24 +7,36 @@ using UnityEngine;
 public class UniCollider : MonoBehaviour{
     public static List<colliTypes> colliTypesForEn=new List<colliTypes>{colliTypes.player,colliTypes.playerWeapons};
     public static List<colliTypes> colliTypesForPl=new List<colliTypes>{colliTypes.enemies,colliTypes.enemyWeapons};
-    //public float dmgTimer;
-    public static float TriggerEnter(Collider2D other, Transform transform, List<colliTypes> collis){
-        var dmgVal=GameRules.instance;
+
+    public static float TriggerCollision(Collider2D other, Transform transform, List<colliTypes> collis, bool phasing=false){
+        DamageValues dmgVal;
+        List<GObject> assets=new List<GObject>();
+        foreach(GObject gobj in GameAssets.instance.objects){assets.Add(gobj);}
+        foreach(GObject vfx in GameAssets.instance.vfx){assets.Add(vfx);}
+        //assets=assets.Concat(GameAssets.instance.vfx.ToList());
+        dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==assets.Find(x=>other.gameObject.name.Contains(x.gobj.name)).name);
         float dmg=0;
-        if(collis.Contains(colliTypes.player)){
-            
+        if(dmgVal!=null)if(collis.Contains(dmgVal.colliType)){
+            if(!phasing)dmg=dmgVal.dmg;else dmg=dmgVal.dmgPhase;
+            if(!dmgVal.phase){Destroy(other.gameObject);}
+            else{var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq==null){dmgPhaseFreq=other.gameObject.AddComponent<Tag_DmgPhaseFreq>();}
+                dmgPhaseFreq.phaseFreqFirst=dmgVal.timePhaseFirst;
+                dmgPhaseFreq.phaseFreq=dmgVal.timePhase;
+            }
+            AudioManager.instance.Play(dmgVal.sound);
         }
-        if(collis.Contains(colliTypes.playerWeapons)){
+        #region //Old
+        /*if(collis.Contains(colliTypes.playerWeapons)){
         #region//Player Weapons
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Laser").name)){dmg=dmgVal.dmgLaser;Destroy(other.gameObject);AudioManager.instance.Play("EnemyHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Laser").name)){dmg=dmgVal.dmgLaser;AudioManager.instance.Play("EnemyHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("MLaser").name)){
                     AudioManager.instance.Play("MLaserHit");
                     /*var mlaserHitSound=other.GetComponent<RandomSound>().sound;
                     if(other.GetComponent<RandomSound>().playLimitForThis==true){mlaserHitSound=other.GetComponent<RandomSound>().sound2;}
                     AudioSource.PlayClipAtPoint(mlaserHitSound, new Vector2(transform.position.x, transform.position.y));*/
-                dmg=dmgVal.dmgMiniLaser;Destroy(other.gameObject);
+            /*    dmg=dmgVal.dmgMiniLaser;
             }
-            if (other.gameObject.name.Contains(GameAssets.instance.Get("HRocket").name)){dmg=dmgVal.dmgHRocket;Destroy(other.gameObject);AudioManager.instance.Play("HRocketHit");
+            if (other.gameObject.name.Contains(GameAssets.instance.Get("HRocket").name)){dmg=dmgVal.dmgHRocket;AudioManager.instance.Play("HRocketHit");
                 GameAssets.instance.VFX("ExplosionSmall", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
             }
             if(other.gameObject.name.Contains(GameAssets.instance.Get("LSaber").name)){dmg=(float)System.Math.Round(dmgVal.dmgLSaberIni,2);AudioManager.instance.Play("LSaberHit");}
@@ -33,7 +47,7 @@ public class UniCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowBt").name)){dmg=dmgVal.dmgShadowBT;
             if(GameRules.instance.dmgShadowBT_player!=0){Player.instance.Damage(dmgVal.dmgShadowBT_player,dmgType.shadow);}}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("CBullet").name)){dmg=dmgVal.dmgCBullet;AudioManager.instance.Play("CStreamHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("QRocket").name)){dmg=dmgVal.dmgQRocket;Destroy(other.gameObject);AudioManager.instance.Play("QRocketHit");
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("QRocket").name)){dmg=dmgVal.dmgQRocket;AudioManager.instance.Play("QRocketHit");
                 GameAssets.instance.VFX("ExplosionSmall", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
             }
             if(other.gameObject.name.Contains(GameAssets.instance.Get("PRocket").name)){dmg=dmgVal.dmgPRocket;}
@@ -41,6 +55,14 @@ public class UniCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("PLaser").name)){dmg=other.GetComponent<DamageOverDist>().dmg;if(transform.GetComponent<EnemyHacked>()==null){transform.gameObject.AddComponent<EnemyHacked>();}Destroy(other.gameObject,0.01f);AudioManager.instance.Play("PLaserHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=dmgVal.dmgMPulse;AudioManager.instance.Play("MLaserHit");}
 
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=dmgVal.dmgShipFlame;}
+            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!transform.gameObject.name.Contains("Comet")){dmg=-dmgVal.dmgBlueFlame;}else if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&transform.gameObject.name.Contains("Comet")){dmg=0;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Phaser").name)){dmg=dmgVal.dmgPhaser;AudioManager.instance.Play("PhaserHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("LSaber").name)){dmg=dmgVal.dmgLSaber;AudioManager.instance.Play("EnemyHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Plasma").name)){dmg=dmgVal.dmgPRocketExpl;}//AudioSource.PlayClipAtPoint(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("CBullet").name)){dmg=dmgVal.dmgCBullet;AudioManager.instance.Play("CStreamHit");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){dmg=(float)System.Math.Round(dmgVal.dmgLSaber/3,2);Player.instance.energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y));}
+            //if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=0;AudioManager.instance.Play("PRocketHit");}
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=dmgVal.dmgShipFlame;}
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!transform.gameObject.name.Contains("Comet")){dmg=-dmgVal.dmgBlueFlame;}else if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&transform.gameObject.name.Contains("Comet")){dmg=0;}
         #endregion
@@ -58,6 +80,9 @@ public class UniCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("Vortex").name)){dmg=dmgVal.dmgVortex;}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("Stinger").name)){dmg=dmgVal.dmgStinger;if(player!=null){player.Weaken(dmgVal.efxStinger.x,dmgVal.efxStinger.y);}}
             if(other.gameObject.name.Contains(GameAssets.instance.Get("GlareDevil").name)){dmg=dmgVal.dmgGlareDev;if(player!=null){player.Blind(dmgVal.efxGlareDev.x,dmgVal.efxGlareDev.y);player.Weaken(dmgVal.efxGlareDev.x,dmgVal.efxGlareDev.y);}}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("Leech").name)){dmg=dmgVal.dmgLeech;AudioManager.instance.Play("LeechBite");}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){dmg=dmgVal.dmgHLaser;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){dmg=dmgVal.dmgVLaser;}
         #endregion
         }if(collis.Contains(colliTypes.enemyWeapons)){
         #region//Enemy Weapons
@@ -69,41 +94,13 @@ public class UniCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=dmgVal.dmgEnSaber;}
             if(other.gameObject.name.Contains("StickBomb")){dmg=0;}
             
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("GoblinBt").name)){dmg=dmgVal.dmgGoblinBt; if(player!=null){/*player.Blind(3,2);*/player.Fragile(dmgVal.efxGoblinBt.x,dmgVal.efxGoblinBt.y);player.Hack(dmgVal.efxGoblinBt.x);}AudioManager.instance.Play("GoblinBtHit");;}
-        #endregion
-        }
-        return dmg;
-    }
-    public static float TriggerStay(Collider2D other, Transform transform, List<colliTypes> collis){
-        var dmgVal=GameRules.instance;
-        float dmg=0;
-        if(collis.Contains(colliTypes.player)){
-            
-        }if(collis.Contains(colliTypes.playerWeapons)){
-        #region//PlayerWeapons
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Phaser").name)){dmg=dmgVal.dmgPhaser;AudioManager.instance.Play("PhaserHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("LSaber").name)){dmg=dmgVal.dmgLSaber;AudioManager.instance.Play("EnemyHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Plasma").name)){dmg=dmgVal.dmgPRocketExpl;}//AudioSource.PlayClipAtPoint(procketHitSFX, new Vector2(transform.position.x, transform.position.y));}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("CBullet").name)){dmg=dmgVal.dmgCBullet;AudioManager.instance.Play("CStreamHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("LClaws").name)){dmg=(float)System.Math.Round(dmgVal.dmgLSaber/3,2);Player.instance.energy-=0.1f;}//AudioSource.PlayClipAtPoint(lclawsHitSFX, new Vector2(transform.position.x, transform.position.y));}
-            //if(other.gameObject.name.Contains(GameAssets.instance.Get("MPulse").name)){dmg=0;AudioManager.instance.Play("PRocketHit");}
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)){dmg=dmgVal.dmgShipFlame;}
-            if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&!transform.gameObject.name.Contains("Comet")){dmg=-dmgVal.dmgBlueFlame;}else if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)&&transform.gameObject.name.Contains("Comet")){dmg=0;}
-        #endregion
-        }if(collis.Contains(colliTypes.enemies)){
-        #region//Enemies bodies
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("Leech").name)){dmg=dmgVal.dmgLeech;AudioManager.instance.Play("LeechBite");}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){dmg=dmgVal.dmgHLaser;}
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){dmg=dmgVal.dmgVLaser;}
-        #endregion
-        }if(collis.Contains(colliTypes.enemyWeapons)){
-        #region//Enemy Weapons
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=dmgVal.dmgEnSaber;}
+            if(other.gameObject.name.Contains(GameAssets.instance.Get("GoblinBt").name)){dmg=dmgVal.dmgGoblinBt; if(player!=null){/*player.Blind(3,2);*//*player.Fragile(dmgVal.efxGoblinBt.x,dmgVal.efxGoblinBt.y);player.Hack(dmgVal.efxGoblinBt.x);}AudioManager.instance.Play("GoblinBtHit");;}
+            /*if(other.gameObject.name.Contains(GameAssets.instance.Get("EnSaber").name)){dmg=dmgVal.dmgEnSaber;}
             if(other.gameObject.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)){dmg=-dmgVal.dmgBlueFlame;}
             if(other.gameObject.name.Contains("StickBomb")){dmg=0;}
         #endregion
-        }
-
+        }*/
+        #endregion
         return dmg;
     }
 

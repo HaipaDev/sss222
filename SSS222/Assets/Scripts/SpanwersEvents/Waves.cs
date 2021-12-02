@@ -80,9 +80,10 @@ public class Waves : MonoBehaviour{
                 if(checkSpawnsTimer==-4)checkSpawnsTimer=checkSpawns;
                 if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
                 else if(checkSpawnsTimer<=0&&checkSpawnsTimer>-4){
-                        if(currentWave==null){currentWave=GetRandomWave();}
-                        if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
-                        //StartCoroutine(SpawnWave());
+                    Debug.LogWarning("No enemies found, forcing a spawn!");
+                    if(currentWave==null){currentWave=GetRandomWave();}
+                    if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
+                    //StartCoroutine(SpawnWave());
                     checkSpawnsTimer=checkSpawns;
                 }
             }else{checkSpawnsTimer=-4;}

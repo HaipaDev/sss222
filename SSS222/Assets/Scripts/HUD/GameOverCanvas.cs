@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class GameOverCanvas : MonoBehaviour{
     public static GameOverCanvas instance;
-    public bool gameOver;
-    private void Awake() {
-        instance=this;
-    }
-    public void OpenGameOverCanvas(bool open){
+    [HideInInspector]public bool gameOver;
+    void Awake(){instance=this;}
+    public void OpenGameOverCanvas(bool open=true){
         gameOver=open;
         transform.GetChild(0).gameObject.SetActive(open);
         //Replace colors

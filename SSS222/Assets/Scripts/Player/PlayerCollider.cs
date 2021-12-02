@@ -23,7 +23,7 @@ public class PlayerCollider : MonoBehaviour{
             if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){
                 bool en=true;
                 bool destroy=true;
-                dmg=UniCollider.TriggerEnter(other,transform,collisionTypes);
+                dmg=UniCollider.TriggerCollision(other,transform,collisionTypes);
                 if(other.GetComponent<Enemy>()==null)en=false;
                 if(other.GetComponent<Tag_CollideDontDestroy>()!=null)destroy=false;
 
@@ -84,6 +84,7 @@ public class PlayerCollider : MonoBehaviour{
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("InverterPwrup").name)){
                     if(player.energyOn){
+                        lastHitDmg=player.health;
                         var tempHP=player.health; var tempEn=player.energy;
                         player.energy=tempHP; player.health=tempEn;
                     }
@@ -203,20 +204,21 @@ public class PlayerCollider : MonoBehaviour{
     void AmmoAdd(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
     void AmmoAddDupl(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
     private void OnTriggerStay2D(Collider2D other){
-    if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){if(dmgTimer<=0){
-        if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
-        float dmg=UniCollider.TriggerStay(other,transform,collisionTypes);
-        if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=GameRules.instance.dmgZone;}
+    if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
+        if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq.phaseTimer<=0){
+            if(dmgPhaseFreq.phaseTimer!=-4){
+                if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
+                float dmg=UniCollider.TriggerCollision(other,transform,collisionTypes,true);
+                //if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=GameRules.instance.dmgZone;}
 
-        UniCollider.DMG_VFX(3,other,transform,dmg);
-        if(dmg>0)player.Damage(dmg,dmgType.silent);
-        if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;
-    }else{dmgTimer-=Time.deltaTime;}}
-    }
+                UniCollider.DMG_VFX(3,other,transform,dmg);
+                if(dmg>0)player.Damage(dmg,dmgType.silent);
+            }
+            dmgPhaseFreq.SetTimer();
+        }}
+    }}
+
     private void OnTriggerExit2D(Collider2D other){
-        if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){if(other.GetComponent<Tag_DmgPhaseFreq>()!=null)dmgTimer=other.GetComponent<Tag_DmgPhaseFreq>().dmgFreq;}
-        //GameObject dmgpopupHud=GameObject.Find("HPDiffParrent");
-        //dmgpopupHud.GetComponent<AnimationOn>().AnimationSet(true);
+        if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){other.GetComponent<Tag_DmgPhaseFreq>().ResetTimer();}
    }
-    public GameObject GetRandomizerPwrup(){return GameAssets.instance.Get("RandomizerPwrup");}
 }

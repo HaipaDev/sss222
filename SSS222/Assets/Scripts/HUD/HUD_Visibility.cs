@@ -31,6 +31,7 @@ public class HUD_Visibility : MonoBehaviour{
     void SetTrapnsparency(){
         if(GetComponent<Image>()!=null){var img=GetComponent<Image>();var tempColor=img.color;
         tempColor.a=alphaVal;
+        img.color=tempColor;
         }
         else if(GetComponent<TMPro.TextMeshProUGUI>()!=null){var txt=GetComponent<TMPro.TextMeshProUGUI>();
         txt.alpha=alphaVal;

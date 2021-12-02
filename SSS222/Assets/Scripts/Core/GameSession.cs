@@ -7,10 +7,12 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using BayatGames.SaveGameFree;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Analytics;
 //using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Sirenix.OdinInspector;
+
 public class GameSession : MonoBehaviour{
     public static GameSession instance;
     public static bool GlobalTimeIsPaused;
@@ -334,10 +336,25 @@ public class GameSession : MonoBehaviour{
     }
     float settingsOpenTimer;
     public void CloseSettings(bool goToPause){
-    if(GameSession.instance!=null){
-        if(SceneManager.GetActiveScene().name=="Options"){if(GSceneManager.instance!=null)GSceneManager.instance.LoadStartMenu();}
+        if(SceneManager.GetActiveScene().name=="Options"){GSceneManager.instance.LoadStartMenu();}
         else if(SceneManager.GetActiveScene().name=="Game"&&PauseMenu.GameIsPaused){if(FindObjectOfType<SettingsMenu>()!=null)FindObjectOfType<SettingsMenu>().Close();if(FindObjectOfType<PauseMenu>()!=null&&goToPause)FindObjectOfType<PauseMenu>().Pause();}
-    }}
+    }
+
+    public void SetAnalytics(){
+        if(analyticsOn==true){
+        AnalyticsResult analyticsResult=Analytics.CustomEvent("Death",
+        new Dictionary<string,object>{
+            { "Mode: ", GameRules.instance.cfgName },
+            { "Score: ", score },
+            { "Time: ", GetGameSessionTime() },
+            { "Source: ", Player.instance.GetComponent<PlayerCollider>().lastHitObj },
+            { "Damage: ", Player.instance.GetComponent<PlayerCollider>().lastHitDmg },
+            { "Full Report: ", GameRules.instance.cfgName+", "+score+", "+instance.GetGameSessionTimeFormat()+", "+Player.instance.GetComponent<PlayerCollider>().lastHitObj+", "+Player.instance.GetComponent<PlayerCollider>().lastHitDmg }
+        });
+        Debug.Log("analyticsResult: "+analyticsResult);
+        Debug.Log("Full Report: "+GameRules.instance.cfgName+", "+score+", "+instance.GetGameSessionTimeFormat()+", "+Player.instance.GetComponent<PlayerCollider>().lastHitObj+", "+Player.instance.GetComponent<PlayerCollider>().lastHitDmg);
+        }
+    }
 
     void CalculateLuck(){
         if(luckMulti<2.5f){

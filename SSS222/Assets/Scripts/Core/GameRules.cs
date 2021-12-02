@@ -127,7 +127,8 @@ public static GameRules instance;
 #endregion
 #region//Damage Values
 [Header("Damage Values")]
-    public float dmgZone=2;
+    public List<DamageValues> dmgValues;
+    /*public float dmgZone=2;
     public float dmgShipFlame=1;
     public float dmgLaser=5f;
     public float dmgPhaser=0.5f;
@@ -166,7 +167,7 @@ public static GameRules instance;
     public float dmgGoblinBt=7f;
     public Vector2 efxGoblinBt=new Vector2(6,0.8f);
     public float dmgGlareDev = 8f;
-    public Vector2 efxGlareDev=new Vector2(1.5f,2f);
+    public Vector2 efxGlareDev=new Vector2(1.5f,2f);*/
 #endregion
 #region//Shop
 [Header("Shop")]
@@ -359,6 +360,29 @@ public class ListEvents{
 
 
 [System.Serializable]
+public class DamageValues{
+    public string name;
+    public colliTypes colliType=colliTypes.playerWeapons;
+    public float dmg=1f;
+    public bool phase=false;
+    [HideIf("@this.phase == false")]public float dmgPhase=0.5f;
+    [HideIf("@this.phase == false")]public float timePhaseFirst=0f;
+    [HideIf("@this.phase == false")]public float timePhase=0.33f;
+    public bool dmgFx=false;
+    [HideIf("@this.dmgFx == false")]public DmgFxValues[] dmgFxValues;
+    public string sound="EnemyHit";
+}
+public enum dmgFxType{}
+[System.Serializable]
+public class DmgFxValues{
+    public dmgFxType dmgFxType;
+    public float length=1f;
+    public float power=1f;
+    public bool onPhase=false;
+}
+
+
+[System.Serializable]
 public class EnemyClass{
     public string name;
     public Vector2 size = Vector2.one;
@@ -434,10 +458,6 @@ public class HealingDroneSettings{
     public float dodgeSpeed=2f;
     public float dodgeTime=0.5f;
 }
-/*[System.Serializable]
-public class GoblinThiefSettings{
-    
-}*/
 [System.Serializable]
 public class VortexWheelSettings{
     public float startTimer=3f;

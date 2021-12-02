@@ -3,9 +3,6 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 public class GameAssets : MonoBehaviour{
-//GameAssets.instance.Make("",);
-//GameAssets.instance.Get("");
-//GameAssets.instance.Spr("");
     public static GameAssets instance;
     [AssetsOnly]public GameObject powerupSpawnerPrefab;
     [AssetsOnly]public GameObject waveSpawnerPrefab;

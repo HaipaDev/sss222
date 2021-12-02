@@ -646,45 +646,21 @@ MonoBehaviour:
     goblinBossSprite: {fileID: 21300000, guid: 39a25c8b6bd02054f89bc66720513032, type: 3}
     goblinBossHP: 50
     goblinBossDrops: []
-  dmgZone: 2
-  dmgShipFlame: 1
-  dmgLaser: 5
-  dmgPhaser: 0.5
-  dmgHRocket: 13.5
-  dmgMiniLaser: 0.32
-  dmgLSaber: 0.86
-  dmgLSaberIni: 7.77
-  dmgLClaws: 7
-  dmgLClawsTouch: 0.23
-  dmgGloomyScythes: 40.5
-  dmgGloomyScythes_player: 1
-  dmgShadowBT: 40.5
-  dmgShadowBT_player: 0
-  dmgQRocket: 14.5
-  dmgPRocket: 0
-  dmgPRocketExpl: 0.5
-  dmgCBullet: 2
-  dmgPlaser: 6.78
-  dmgMPulse: 50
-  dmgBlueFlame: 0.2
-  dmgComet: 10
-  dmgBat: 36
-  dmgSoundwave: 16.5
-  dmgEnemyShip1: 80
-  dmgEBt: 24.5
-  dmgEnSaber: 2.5
-  dmgGoblin: 16
-  dmgHealDrone: 75
-  dmgVortex: 70
-  dmgLeech: 4
-  dmgVLaser: 90
-  dmgHLaser: 16
-  dmgStinger: 33.3
-  efxStinger: {x: 20, y: 1}
-  dmgGoblinBt: 2.2
-  efxGoblinBt: {x: 6, y: 1}
-  dmgGlareDev: 8
-  efxGlareDev: {x: 1.5, y: 2}
+  dmgValues:
+  - name: Laser
+    colliType: 1
+    dmg: 5
+    phase: 0
+    dmgPhase: 0.5
+    timePhaseFirst: 1
+    timePhase: 0.33
+    dmgFx: 0
+    dmgFxValues:
+    - dmgFxType: 0
+      length: 1
+      power: 1
+      onPhase: 0
+    sound: EnemyHit
   shopSpawnReqsType: 1
   shopSpawnReqs:
     id: 1
@@ -811,7 +787,7 @@ MonoBehaviour:
         bothNeeded: 0
         startTimeAfterSecond: 0
         scoreMaxSetRange: {x: 15, y: 30}
-        scoreMax: -4
+        scoreNeeded: 1
         score: 0
         specialId: -1
     00000001:
@@ -826,6 +802,6 @@ MonoBehaviour:
         bothNeeded: 0
         startTimeAfterSecond: 0
         scoreMaxSetRange: {x: 200, y: 450}
-        scoreMax: -4
+        scoreNeeded: 1
         score: 0
         specialId: -2
