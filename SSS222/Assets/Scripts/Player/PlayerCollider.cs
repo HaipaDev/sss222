@@ -9,7 +9,7 @@ public class PlayerCollider : MonoBehaviour{
     public float dmgTimer;
     public string lastHitObj;
     public float lastHitDmg;
-    public List<colliTypes> collisionTypes=UniCollider.colliTypesForPl;
+    [HideInInspector]public List<colliTypes> collisionTypes=UniCollider.colliTypesForPl;
 
     Player player;
     void Start(){player=Player.instance;}
@@ -22,30 +22,25 @@ public class PlayerCollider : MonoBehaviour{
             #region//Enemies
             if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){
                 bool en=true;
-                bool destroy=true;
                 dmg=UniCollider.TriggerCollision(other,transform,collisionTypes);
                 if(other.GetComponent<Enemy>()==null)en=false;
-                if(other.GetComponent<Tag_CollideDontDestroy>()!=null)destroy=false;
 
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){
                     if(player.dashing==false){
                         if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);}
-                        //else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
-                        if(destroy==true){
-                            if(en!=true){Destroy(other.gameObject,0.05f);}
-                            else{other.GetComponent<Enemy>().giveScore=false;other.GetComponent<Enemy>().health=-1;other.GetComponent<Enemy>().Die();}
-                        }
+                        else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
+                        if(en!=true){Destroy(other.gameObject,0.05f);}
+                        else{other.GetComponent<Enemy>().giveScore=false;other.GetComponent<Enemy>().health=-1;other.GetComponent<Enemy>().Die();}
                         GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,transform.position.y+0.5f),0.3f);
                     }
                     else if(player.shadow==true&&player.dashing==true){
-                        //if(destroy == true){
                         if(en!=true){Destroy(other.gameObject,0.05f);}
                         else{other.GetComponent<Enemy>().health=-1;other.GetComponent<Enemy>().Die();}
-                        //}else{}
                    }
                 }else{
                     if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);}
-                    //else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
+                    else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
+                    PlayerEffects(other.gameObject.name);
                 }
             }
             #endregion
@@ -64,15 +59,15 @@ public class PlayerCollider : MonoBehaviour{
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("MicroMedkit").name)){player.hpAbsorpAmnt+=player.microMedkitHpAmnt;}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)){
-                    if(player.health>=player.maxHP){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}
-                    else if(player.health!=player.maxHP&&player.health>(player.maxHP-player.medkitHpAmnt)){
-                        int val=Mathf.RoundToInt(player.medkitHpAmnt-(player.maxHP-player.health));
+                    if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}
+                    else if(player.health!=player.healthMax&&player.health>(player.healthMax-player.medkitHpAmnt)){
+                        int val=Mathf.RoundToInt(player.medkitHpAmnt-(player.healthMax-player.health));
                         if(val>0)GameSession.instance.AddToScoreNoEV(val);}
                     HPAdd(player.medkitHpAmnt);
                     player.AddSubEnergy(player.medkitEnergyGet,true);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorCPwrup").name)){
-                    if(player.health>=player.maxHP){GameSession.instance.AddToScoreNoEV(25);}
+                    if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(25);}
                     else{HPAdd(player.medkitHpAmnt);}
                 }
                 void HPAdd(float hp){player.Damage(hp,dmgType.heal);}
@@ -104,7 +99,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("GCloverPwrup").name)){
                     player.SetStatus("gclover");
                     GameSession.instance.MultiplyScore(1.25f);
-                    player.energy=player.maxEnergy;
+                    player.energy=player.energyMax;
                     GameAssets.instance.VFX("GCloverOutVFX", Vector2.zero,1f);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowPwrup").name)||other.gameObject.name.Contains(GameAssets.instance.Get("ShadowtracesPwrup").name)){
@@ -206,13 +201,14 @@ public class PlayerCollider : MonoBehaviour{
     private void OnTriggerStay2D(Collider2D other){
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq.phaseTimer<=0){
-            if(dmgPhaseFreq.phaseTimer!=-4){
+            if(dmgPhaseFreq.phaseTimer!=-4&&(dmgPhaseFreq.phaseCount<=dmgPhaseFreq.phaseCountLimit||dmgPhaseFreq.phaseCountLimit==0)){
                 if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
                 float dmg=UniCollider.TriggerCollision(other,transform,collisionTypes,true);
                 //if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=GameRules.instance.dmgZone;}
 
                 UniCollider.DMG_VFX(3,other,transform,dmg);
                 if(dmg>0)player.Damage(dmg,dmgType.silent);
+                PlayerEffects(other.gameObject.name,true);
             }
             dmgPhaseFreq.SetTimer();
         }}
@@ -220,5 +216,14 @@ public class PlayerCollider : MonoBehaviour{
 
     private void OnTriggerExit2D(Collider2D other){
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){other.GetComponent<Tag_DmgPhaseFreq>().ResetTimer();}
+   }
+
+   void PlayerEffects(string goName,bool phase=false){//Not working yet
+        if(UniCollider.GetDmgVal(goName)!=null){
+            if(UniCollider.GetDmgVal(goName).dmgFx){
+                DmgFxValues weak=System.Array.Find(UniCollider.GetDmgVal(goName).dmgFxValues,x=>x.dmgFxType==dmgFxType.weak);
+                if(weak!=null&&(!phase||(phase&&weak.onPhase))){player.Weaken(weak.length,weak.power);}
+            }
+        }else{Debug.LogError("No DmgVal for "+goName);}
    }
 }

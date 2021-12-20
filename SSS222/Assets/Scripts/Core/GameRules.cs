@@ -37,10 +37,10 @@ public static GameRules instance;
     public float paddingY=0.45f;
     public float moveSpeedPlayer=5f;
     public float healthPlayer=150;
-    public float maxHPPlayer=150;
+    public float healthMaxPlayer=150;
     public bool energyOnPlayer=true;
     public float energyPlayer=180;
-    public float maxEnergyPlayer=180;
+    public float energyMaxPlayer=180;
     public bool ammoOn=false;
     public bool fuelOn=false;
     public float fuelDrainAmnt=0.1f;
@@ -203,14 +203,14 @@ public static GameRules instance;
     public int saveBarsFromLvl=5;
     public int total_UpgradesCountMax=5;
     public int other_UpgradesCountMax=10;
-    public float maxHealth_UpgradeAmnt=5f;
+    public float healthMax_UpgradeAmnt=5f;
     public bool hpStat_enabled=true;
-    public int maxHealth_UpgradeCost=1;
-    public int maxHealth_UpgradesCountMax=5;
+    public int healthMax_UpgradeCost=1;
+    public int healthMax_UpgradesCountMax=5;
     public bool energyStat_enabled=true;
-    public float maxEnergy_UpgradeAmnt=5f;
-    public int maxEnergy_UpgradeCost=1;
-    public int maxEnergy_UpgradesCountMax=4;
+    public float energyMax_UpgradeAmnt=5f;
+    public int energyMax_UpgradeCost=1;
+    public int energyMax_UpgradesCountMax=4;
     public bool speedStat_enabled=true;
     public float speed_UpgradeAmnt=0.1f;
     public int speed_UpgradeCost=1;
@@ -330,8 +330,8 @@ public static GameRules instance;
         if(cometSettings.lunarDrops.Count==0)cometSettings.lunarDrops.Add(new LootTableEntryDrops(){name="Coin",ammount=new Vector2(6,12),dropChance=101});
     }
     #region//Custom Events
-    public void MultiplyMaxHealth(float amnt){p.maxHP*=amnt;}
-    public void MultiplyMaxEnergy(float amnt){p.maxEnergy*=amnt;}
+    public void MultiplyhealthMax(float amnt){p.healthMax*=amnt;}
+    public void MultiplyenergyMax(float amnt){p.energyMax*=amnt;}
     public void ShootMultiAdd(float amnt){p.shootMulti+=amnt;}
     public void ArmorMultiAdd(float amnt){p.armorMultiInit+=amnt;}
     public void LaserShootSpeed(float amnt){if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=amnt;}}
@@ -366,13 +366,15 @@ public class DamageValues{
     public float dmg=1f;
     public bool phase=false;
     [HideIf("@this.phase == false")]public float dmgPhase=0.5f;
-    [HideIf("@this.phase == false")]public float timePhaseFirst=0f;
-    [HideIf("@this.phase == false")]public float timePhase=0.33f;
-    public bool dmgFx=false;
-    [HideIf("@this.dmgFx == false")]public DmgFxValues[] dmgFxValues;
+    [HideIf("@this.phase == false")]public float phaseFreqFirst=0f;
+    [HideIf("@this.phase == false")]public float phaseFreq=0.33f;
+    [HideIf("@this.phase == false")]public int phaseCountLimit=0;
+    [HideIf("@this.colliType==colliTypes.player || this.colliType==colliTypes.playerWeapons")]public bool dmgFx=false;
+    [HideIf("@this.dmgFx==false || (this.colliType==colliTypes.player || this.colliType==colliTypes.playerWeapons)")]
+    public DmgFxValues[] dmgFxValues;
     public string sound="EnemyHit";
 }
-public enum dmgFxType{}
+public enum dmgFxType{fire,decay,electrc,freeze,armor,fragile,power,weak,hack,blind,speed,slow,infenergy}
 [System.Serializable]
 public class DmgFxValues{
     public dmgFxType dmgFxType;
@@ -387,7 +389,8 @@ public class EnemyClass{
     public string name;
     public Vector2 size = Vector2.one;
     public Sprite spr;
-    public float health=100;
+    public float healthStart=25;
+    public float healthMax=25;
     public bool shooting = false;
     public Vector2 shootTime=new Vector2(1.75f,2.8f);
     [AssetsOnly]public GameObject bullet;
@@ -474,15 +477,15 @@ public class VortexWheelSettings{
 }
 [System.Serializable]
 public class GlareDevilSettings{
-    public float radius=3f;
-    public float timerMax=3.3f;
+    public float radiusBlind=3f;
+    public float timerBlindMax=3.3f;
     public Vector2 efxBlind=new Vector2(4,4);
 }
 
 [System.Serializable]
 public class GoblinBossSettings{
     public Sprite goblinBossSprite;
-    public float goblinBossHP=50f;
+    public float goblinbossHealth=50f;
     public List<LootTableEntryDrops> goblinBossDrops;
 }
 

@@ -30,12 +30,12 @@ public class ValueDisplay : MonoBehaviour{
     if(Player.instance!=null){
         if(value=="hpOffMax"){
             if(GameSession.instance.CheckGameModeSelected("Classic")||Player.instance.health<=5){
-                txt.text=System.Math.Round(Player.instance.health,1).ToString()+"/"+Player.instance.maxHP.ToString();}//Round to .1
-            else txt.text=Mathf.RoundToInt(Player.instance.health).ToString()+"/"+Player.instance.maxHP.ToString();
+                txt.text=System.Math.Round(Player.instance.health,1).ToString()+"/"+Player.instance.healthMax.ToString();}//Round to .1
+            else txt.text=Mathf.RoundToInt(Player.instance.health).ToString()+"/"+Player.instance.healthMax.ToString();
     }
-        else if(value=="energyOffMax") txt.text=Mathf.RoundToInt(Player.instance.energy).ToString()+"/"+Player.instance.maxEnergy.ToString();
-        else if(value=="max_hp") txt.text=Player.instance.maxHP.ToString();
-        else if(value=="max_energy") txt.text=Player.instance.maxEnergy.ToString();
+        else if(value=="energyOffMax") txt.text=Mathf.RoundToInt(Player.instance.energy).ToString()+"/"+Player.instance.energyMax.ToString();
+        else if(value=="max_hp") txt.text=Player.instance.healthMax.ToString();
+        else if(value=="max_energy") txt.text=Player.instance.energyMax.ToString();
         else if(value=="speed") txt.text=(Player.instance.moveSpeed).ToString();
         else if(value=="hpRegen") if(Player.instance.hpRegenEnabled==true){txt.text=Player.instance.hpRegenAmnt.ToString();}else{txt.text="0";}
         else if(value=="enRegen") if(Player.instance.enRegenEnabled==true){txt.text=Player.instance.enRegenAmnt.ToString();}else{txt.text="0";}
@@ -55,13 +55,13 @@ public class ValueDisplay : MonoBehaviour{
     }
     if(UpgradeMenu.instance!=null){
         if(value=="lvl_ship") txt.text="Ship Level: "+UpgradeMenu.instance.total_UpgradesLvl.ToString();
-        else if(value=="lvl_hp") txt.text="Lvl. "+UpgradeMenu.instance.maxHealth_UpgradesLvl.ToString();
-        else if(value=="lvl_energy") txt.text="Lvl. "+UpgradeMenu.instance.maxEnergy_UpgradesLvl.ToString();
+        else if(value=="lvl_hp") txt.text="Lvl. "+UpgradeMenu.instance.healthMax_UpgradesLvl.ToString();
+        else if(value=="lvl_energy") txt.text="Lvl. "+UpgradeMenu.instance.energyMax_UpgradesLvl.ToString();
         else if(value=="lvl_speed") txt.text="Lvl. "+UpgradeMenu.instance.speed_UpgradesLvl.ToString();
         else if(value=="lvl_luck") txt.text="Lvl. "+UpgradeMenu.instance.luck_UpgradesLvl.ToString();
 
-        else if(value=="maxHealth_upgradeCost") txt.text=UpgradeMenu.instance.maxHealth_UpgradeCost.ToString();
-        else if(value=="maxEnergy_upgradeCost") txt.text=UpgradeMenu.instance.maxEnergy_UpgradeCost.ToString();
+        else if(value=="healthMax_upgradeCost") txt.text=UpgradeMenu.instance.healthMax_UpgradeCost.ToString();
+        else if(value=="energyMax_upgradeCost") txt.text=UpgradeMenu.instance.energyMax_UpgradeCost.ToString();
         else if(value=="speed_upgradeCost") txt.text=UpgradeMenu.instance.speed_UpgradeCost.ToString();
         else if(value=="luck_upgradeCost") txt.text=UpgradeMenu.instance.luck_UpgradeCost.ToString();
         else if(value=="defaultPowerup_upgradeCost1") txt.text=UpgradeMenu.instance.defaultPowerup_upgradeCost1.ToString();

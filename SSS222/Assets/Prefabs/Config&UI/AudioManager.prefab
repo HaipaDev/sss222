@@ -175,7 +175,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: CelestBall
     clip: {fileID: 8300000, guid: 4e5544358b668414390afdeb35dab0bb, type: 3}
-    volume: 1
+    volume: 0.8
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0.1
@@ -535,6 +535,15 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: ButtonPress
     clip: {fileID: 8300000, guid: c059e6a5aa53e0f4c99b093e759b5924, type: 3}
+    volume: 0.4
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.05
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: GlareDevil
+    clip: {fileID: 8300000, guid: eb9879178862a7b47b81d7e991593ae9, type: 3}
     volume: 0.4
     volumeVariance: 0
     pitch: 1

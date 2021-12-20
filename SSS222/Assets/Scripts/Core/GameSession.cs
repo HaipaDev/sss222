@@ -261,10 +261,10 @@ public class GameSession : MonoBehaviour{
         if(u!=null&&s!=null&&ss!=null){
         if(ss.total_UpgradesLvl>=u.saveBarsFromLvl){ss.total_UpgradesCount=u.total_UpgradesCount;}
         ss.total_UpgradesLvl=u.total_UpgradesLvl;
-        ss.maxHealth_UpgradesCount=u.maxHealth_UpgradesCount;
-        ss.maxHealth_UpgradesLvl=u.maxHealth_UpgradesLvl;
-        ss.maxEnergy_UpgradesCount=u.maxEnergy_UpgradesCount;
-        ss.maxEnergy_UpgradesLvl=u.maxEnergy_UpgradesLvl;
+        ss.healthMax_UpgradesCount=u.healthMax_UpgradesCount;
+        ss.healthMax_UpgradesLvl=u.healthMax_UpgradesLvl;
+        ss.energyMax_UpgradesCount=u.energyMax_UpgradesCount;
+        ss.energyMax_UpgradesLvl=u.energyMax_UpgradesLvl;
         ss.speed_UpgradesCount=u.speed_UpgradesCount;
         ss.speed_UpgradesLvl=u.speed_UpgradesLvl;
         ss.luck_UpgradesCount=u.luck_UpgradesCount;
@@ -291,10 +291,10 @@ public class GameSession : MonoBehaviour{
         if(u!=null&&s!=null&&s.advD!=null){
         u.total_UpgradesCount=ss.total_UpgradesCount;
         u.total_UpgradesLvl=ss.total_UpgradesLvl;
-        u.maxHealth_UpgradesCount=ss.maxHealth_UpgradesCount;
-        u.maxHealth_UpgradesLvl=ss.maxHealth_UpgradesLvl;
-        u.maxEnergy_UpgradesCount=ss.maxEnergy_UpgradesCount;
-        u.maxEnergy_UpgradesLvl=ss.maxEnergy_UpgradesLvl;
+        u.healthMax_UpgradesCount=ss.healthMax_UpgradesCount;
+        u.healthMax_UpgradesLvl=ss.healthMax_UpgradesLvl;
+        u.energyMax_UpgradesCount=ss.energyMax_UpgradesCount;
+        u.energyMax_UpgradesLvl=ss.energyMax_UpgradesLvl;
         u.speed_UpgradesCount=ss.speed_UpgradesCount;
         u.speed_UpgradesLvl=ss.speed_UpgradesLvl;
         u.luck_UpgradesCount=ss.luck_UpgradesCount;
@@ -390,8 +390,8 @@ public class GameSession : MonoBehaviour{
         if(cheatmode==true){
             if(Input.GetKey(KeyCode.Alpha1) || fkey=="1"){
                 player=Player.instance;
-                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){player.health=player.maxHP;}
-                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){player.energy=player.maxEnergy;}
+                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){player.health=player.healthMax;}
+                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){player.energy=player.energyMax;}
                 if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.gclover=true;player.gcloverTimer=player.gcloverTime;}
                 if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.health=0;}
             }

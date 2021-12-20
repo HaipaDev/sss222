@@ -719,23 +719,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: dmgValues.Array.data[0].phase
+      propertyPath: dmgValues.Array.data[1].dmgFx
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: dmgValues.Array.data[1].phase
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: dmgValues.Array.data[13].dmgFx
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
-      propertyPath: dmgValues.Array.data[0].dmgPhase
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: dmgValues.Array.data[0].timePhase
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: dmgValues.Array.data[0].timePhaseFirst
+      propertyPath: dmgValues.Array.data[14].dmgFxValues.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: dmgValues.Array.data[13].dmgFxValues.Array.data[0].power
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: dmgValues.Array.data[14].dmgFxValues.Array.data[0].power
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: dmgValues.Array.data[13].dmgFxValues.Array.data[0].length
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: dmgValues.Array.data[14].dmgFxValues.Array.data[0].length
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -1478,12 +1498,12 @@ PrefabInstance:
     - target: {fileID: 5070146239176450900, guid: ff9793f039b72f14994587665385df16,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -261
+      value: 261
       objectReference: {fileID: 0}
     - target: {fileID: 8797093643959647985, guid: ff9793f039b72f14994587665385df16,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 261
+      value: -261
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff9793f039b72f14994587665385df16, type: 3}
@@ -1833,22 +1853,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -6162074867996871907, guid: 66b81f7bdde32c745aab52038b28a5f4,
-        type: 3}
-      propertyPath: skinID
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3388790463455218104, guid: 66b81f7bdde32c745aab52038b28a5f4,
-        type: 3}
-      propertyPath: timerUI
-      value: 
-      objectReference: {fileID: 7293689707689345922}
-    - target: {fileID: 4546529352650547392, guid: 66b81f7bdde32c745aab52038b28a5f4,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831,
-        type: 3}
     - target: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4,
         type: 3}
       propertyPath: m_Name
@@ -2022,6 +2026,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -1675.3762
+      objectReference: {fileID: 0}
+    - target: {fileID: 3055374916924061257, guid: 96d69890f517e4c48943f992c4f243a5,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 1847
       objectReference: {fileID: 0}
     - target: {fileID: 3055374916924061258, guid: 96d69890f517e4c48943f992c4f243a5,
         type: 3}
@@ -2765,12 +2774,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db6f21db03d81e24fa8a1e4230da0599, type: 3}
---- !u!1 &7293689707689345922 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 527702707809119719, guid: db6f21db03d81e24fa8a1e4230da0599,
-    type: 3}
-  m_PrefabInstance: {fileID: 7293689707689345921}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &7541194906445405455 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7541194906445405455, guid: 9c31fcef3b72c694095fd2d3da75b5af,

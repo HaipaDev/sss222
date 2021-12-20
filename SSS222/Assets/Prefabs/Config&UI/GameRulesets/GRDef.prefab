@@ -64,11 +64,11 @@ MonoBehaviour:
   paddingX: -0.125
   paddingY: 0.45
   moveSpeedPlayer: 7.5
-  healthPlayer: 100
-  maxHPPlayer: 100
+  healthPlayer: 150
+  healthMaxPlayer: 150
   energyOnPlayer: 1
   energyPlayer: 30
-  maxEnergyPlayer: 60
+  energyMaxPlayer: 180
   ammoOn: 1
   fuelOn: 0
   fuelDrainAmnt: 0.1
@@ -306,7 +306,8 @@ MonoBehaviour:
   - name: Bat
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
-    health: 40
+    healthStart: 40
+    healthMax: 40
     shooting: 1
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
@@ -333,7 +334,8 @@ MonoBehaviour:
   - name: Comet
     size: {x: 1, y: 1}
     spr: {fileID: 0}
-    health: 15
+    healthStart: 15
+    healthMax: 15
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 0}
@@ -359,7 +361,8 @@ MonoBehaviour:
   - name: Enemy Combatant
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
-    health: 95
+    healthStart: 95
+    healthMax: 95
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 0}
@@ -385,7 +388,8 @@ MonoBehaviour:
   - name: Enemy Ship
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
-    health: 120
+    healthStart: 120
+    healthMax: 120
     shooting: 1
     shootTime: {x: 0.64, y: 0.94}
     bullet: {fileID: 5313808222654050488, guid: 7ee89741fb82f0a45a71870919d506a7,
@@ -415,7 +419,8 @@ MonoBehaviour:
   - name: Glare Devil
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
-    health: 33
+    healthStart: 33
+    healthMax: 33
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 0}
@@ -441,7 +446,8 @@ MonoBehaviour:
   - name: Goblin Thief
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
-    health: 16
+    healthStart: 16
+    healthMax: 16
     shooting: 0
     shootTime: {x: 1.8, y: 2.2}
     bullet: {fileID: 5313808222654050488, guid: 31832a8c249783e449d9e8aad6457ca7,
@@ -468,7 +474,8 @@ MonoBehaviour:
   - name: Healing Drone
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
-    health: 115
+    healthStart: 115
+    healthMax: 115
     shooting: 1
     shootTime: {x: 0.2, y: 0.2}
     bullet: {fileID: 0}
@@ -497,7 +504,8 @@ MonoBehaviour:
   - name: Mecha Leech
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
-    health: 26
+    healthStart: 26
+    healthMax: 26
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 0}
@@ -523,7 +531,8 @@ MonoBehaviour:
   - name: Stinger
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
-    health: 17
+    healthStart: 17
+    healthMax: 17
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 0}
@@ -549,7 +558,8 @@ MonoBehaviour:
   - name: Vortex Wheel
     size: {x: 1, y: 1}
     spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
-    health: 95
+    healthStart: 95
+    healthMax: 95
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2,
@@ -639,12 +649,12 @@ MonoBehaviour:
     radius: 5
     moveSpeed: 5
   glareDevilSettings:
-    radius: 3
-    timerMax: 3.3
+    radiusBlind: 3
+    timerBlindMax: 3.3
     efxBlind: {x: 4, y: 4}
   goblinBossSettings:
     goblinBossSprite: {fileID: 21300000, guid: 39a25c8b6bd02054f89bc66720513032, type: 3}
-    goblinBossHP: 50
+    goblinbossHealth: 50
     goblinBossDrops: []
   dmgValues:
   - name: Laser
@@ -652,8 +662,9 @@ MonoBehaviour:
     dmg: 5
     phase: 0
     dmgPhase: 0.5
-    timePhaseFirst: 1
-    timePhase: 0.33
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
     dmgFx: 0
     dmgFxValues:
     - dmgFxType: 0
@@ -661,6 +672,344 @@ MonoBehaviour:
       power: 1
       onPhase: 0
     sound: EnemyHit
+  - name: MLaser
+    colliType: 1
+    dmg: 0.33
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: MLaserHit
+  - name: LSaber
+    colliType: 1
+    dmg: 7.77
+    phase: 1
+    dmgPhase: 0.86
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: LSaberHit
+  - name: Phaser
+    colliType: 1
+    dmg: 0.5
+    phase: 1
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: PhaserHit
+  - name: HRocket
+    colliType: 1
+    dmg: 13.5
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: HRocketHit
+  - name: QRocket
+    colliType: 1
+    dmg: 14.5
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: QRocketHit
+  - name: PRocket
+    colliType: 1
+    dmg: 0
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: PRocketHit
+  - name: Plasma
+    colliType: 1
+    dmg: 1
+    phase: 1
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: PlasmaExplosion
+  - name: CBullet
+    colliType: 1
+    dmg: 2
+    phase: 1
+    dmgPhase: 2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: CStreamHit
+  - name: PLaser
+    colliType: 1
+    dmg: 6.78
+    phase: 0
+    dmgPhase: 2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: PLaserHit
+  - name: GloomyScythes
+    colliType: 1
+    dmg: 40.5
+    phase: 1
+    dmgPhase: 40.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: EnemyHit
+  - name: ShadowBT
+    colliType: 1
+    dmg: 40.5
+    phase: 1
+    dmgPhase: 40.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: EnemyHit
+  - name: MPulse
+    colliType: 1
+    dmg: 130
+    phase: 0
+    dmgPhase: 1
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: MLaserHit
+  - name: ShipFlame
+    colliType: 1
+    dmg: 1
+    phase: 0
+    dmgPhase: 1
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: Overheat
+  - name: Zone
+    colliType: 5
+    dmg: 0
+    phase: 1
+    dmgPhase: 2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues: []
+    sound: MLaserHit
+  - name: BlueFlame
+    colliType: 3
+    dmg: 0
+    phase: 1
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: Overheat
+  - name: Comet
+    colliType: 2
+    dmg: 10
+    phase: 0
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+  - name: Bat
+    colliType: 2
+    dmg: 23
+    phase: 0
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+  - name: Soundwave
+    colliType: 3
+    dmg: 16.5
+    phase: 0
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: SoundwaveHit
+  - name: EnShip
+    colliType: 2
+    dmg: 60
+    phase: 0
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+  - name: EnBt
+    colliType: 3
+    dmg: 24.5
+    phase: 0
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues: []
+    sound: 
+  - name: EnSaber
+    colliType: 3
+    dmg: 3
+    phase: 1
+    dmgPhase: 2.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+  - name: Goblin
+    colliType: 2
+    dmg: 16
+    phase: 0
+    dmgPhase: 2.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+  - name: GoblinBt
+    colliType: 3
+    dmg: 2
+    phase: 0
+    dmgPhase: 2.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues:
+    - dmgFxType: 5
+      length: 6
+      power: 0.8
+      onPhase: 0
+    sound: 
+  - name: HDrone
+    colliType: 2
+    dmg: 75
+    phase: 0
+    dmgPhase: 2.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+  - name: Vortex
+    colliType: 2
+    dmg: 70
+    phase: 0
+    dmgPhase: 2.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues: []
+    sound: 
+  - name: Leech
+    colliType: 2
+    dmg: 4
+    phase: 1
+    dmgPhase: 4
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: LeechBite
+  - name: VLaser
+    colliType: 4
+    dmg: 90
+    phase: 1
+    dmgPhase: 75
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+  - name: HLaser
+    colliType: 4
+    dmg: 16
+    phase: 1
+    dmgPhase: 14
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+  - name: Stinger
+    colliType: 2
+    dmg: 33.3
+    phase: 0
+    dmgPhase: 14
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues:
+    - dmgFxType: 7
+      length: 10
+      power: 1
+      onPhase: 0
+    sound: 
+  - name: GlareDevil
+    colliType: 2
+    dmg: 9.9
+    phase: 0
+    dmgPhase: 14
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
   shopSpawnReqsType: 1
   shopSpawnReqs:
     id: 1
@@ -736,14 +1085,14 @@ MonoBehaviour:
   saveBarsFromLvl: 0
   total_UpgradesCountMax: 5
   other_UpgradesCountMax: 10
-  maxHealth_UpgradeAmnt: 5
+  healthMax_UpgradeAmnt: 5
   hpStat_enabled: 1
-  maxHealth_UpgradeCost: 1
-  maxHealth_UpgradesCountMax: 3
+  healthMax_UpgradeCost: 1
+  healthMax_UpgradesCountMax: 5
   energyStat_enabled: 1
-  maxEnergy_UpgradeAmnt: 5
-  maxEnergy_UpgradeCost: 1
-  maxEnergy_UpgradesCountMax: 4
+  energyMax_UpgradeAmnt: 5
+  energyMax_UpgradeCost: 1
+  energyMax_UpgradesCountMax: 4
   speedStat_enabled: 1
   speed_UpgradeAmnt: 0.1
   speed_UpgradeCost: 1

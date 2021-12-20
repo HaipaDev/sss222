@@ -173,11 +173,11 @@ MonoBehaviour:
   moveSpeed: 5
   moveSpeedCurrent: 0
   health: 150
-  maxHP: 150
+  healthMax: 150
   powerup: laser
   energyOn: 1
   energy: 180
-  maxEnergy: 180
+  energyMax: 120
   ammoOn: 1
   ammo: -4
   powerupDefault: laser
@@ -295,6 +295,7 @@ MonoBehaviour:
   dashingEnabled: 1
   shadowTime: 12
   shadowLength: 0.2
+  shadowtracesSpeed: 1.3
   dashSpeed: 20
   startDashTime: 0.08
   inverterTime: 10
@@ -344,11 +345,6 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   shipScale: 0.89
   mPressedTime: 0
-  timeFlyingCore: 0
-  timeFlyingTotal: 0
-  stayingTimer: 0
-  stayingTimerCore: 0
-  stayingTimerTotal: 0
   joystick: {fileID: 0}
   moving: 0
   tpPos: {x: 0, y: 0}
@@ -404,8 +400,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  timerUI: {fileID: 0}
-  portalVFX: {fileID: 100000, guid: 1ee2c03a099f4cb4b8f86c863bfedf81, type: 3}
   cooldownQ: 0
   cooldownE: 0
   currentSkillID: -1
@@ -541,11 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e1bc0376da4f34bb96c9aab489ea09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinID: 0
-  addOverlay: 0
-  skins: []
-  overlays: []
   overlayPrefab: {fileID: 4881046078246147718, guid: ecc7f2d405fb33542808b48eca5c3d11,
     type: 3}
-  chameleonOverlayID: 0
+  skinName: 
   chameleonOvColor: {r: 1, g: 1, b: 1, a: 1}

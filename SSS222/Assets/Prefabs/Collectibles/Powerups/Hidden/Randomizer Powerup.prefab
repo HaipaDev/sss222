@@ -12,10 +12,8 @@ GameObject:
   - component: {fileID: 8780570276352314872}
   - component: {fileID: 8355397771474675314}
   - component: {fileID: -6171021230754350541}
-  - component: {fileID: -2125712858211102709}
   - component: {fileID: -2469076448820819903}
   - component: {fileID: 4197360955643394306}
-  - component: {fileID: 4305882262000766416}
   - component: {fileID: -6444293445127140414}
   m_Layer: 0
   m_Name: Randomizer Powerup
@@ -137,20 +135,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5833333, y: 0.5833333}
   m_EdgeRadius: 0
---- !u!114 &-2125712858211102709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5649215481239408911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c942e59cf2bc3a74c9f71af997ea7e2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dir: 1
-  speed: 4
 --- !u!114 &-2469076448820819903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dir: 1
+  speed: 4
   isPowerup: 1
+  isDestructible: 1
 --- !u!114 &4197360955643394306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,18 +167,6 @@ MonoBehaviour:
   itemsPercentage: []
   sum: 0
   restart: 0
---- !u!114 &4305882262000766416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5649215481239408911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b04326831ef30704a84404316f25314d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-6444293445127140414
 MonoBehaviour:
   m_ObjectHideFlags: 0

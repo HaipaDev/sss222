@@ -14,7 +14,7 @@ public class HPBar : MonoBehaviour{
     void Update(){
     if(Player.instance!=null){
         //if(GameSession.instance.gameModeSelected!=Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e => e.cfgName.Contains("Classic")))
-        GetComponent<Image>().fillAmount=(Player.instance.health/Player.instance.maxHP);
+        GetComponent<Image>().fillAmount=(Player.instance.health/Player.instance.healthMax);
         /*else{
             if(Player.instance.health==0){GetComponent<Image>().fillAmount=0;}
             if(Player.instance.health==0.5f){GetComponent<Image>().fillAmount=0.17f;}

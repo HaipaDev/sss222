@@ -5,26 +5,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UniCollider : MonoBehaviour{
-    public static List<colliTypes> colliTypesForEn=new List<colliTypes>{colliTypes.player,colliTypes.playerWeapons};
-    public static List<colliTypes> colliTypesForPl=new List<colliTypes>{colliTypes.enemies,colliTypes.enemyWeapons};
+    public static List<colliTypes> colliTypesForEn=new List<colliTypes>{colliTypes.player,colliTypes.playerWeapons,colliTypes.world};
+    public static List<colliTypes> colliTypesForPl=new List<colliTypes>{colliTypes.enemies,colliTypes.enemyWeapons,colliTypes.world,colliTypes.zone};
 
-    public static float TriggerCollision(Collider2D other, Transform transform, List<colliTypes> collis, bool phasing=false){
+    public static float TriggerCollision(Collider2D other, Transform transform, List<colliTypes> collis, bool triggerStay=false){
         DamageValues dmgVal;
-        List<GObject> assets=new List<GObject>();
-        foreach(GObject gobj in GameAssets.instance.objects){assets.Add(gobj);}
-        foreach(GObject vfx in GameAssets.instance.vfx){assets.Add(vfx);}
-        //assets=assets.Concat(GameAssets.instance.vfx.ToList());
-        dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==assets.Find(x=>other.gameObject.name.Contains(x.gobj.name)).name);
+        dmgVal=GetDmgVal(other.gameObject.name);
         float dmg=0;
         if(dmgVal!=null)if(collis.Contains(dmgVal.colliType)){
-            if(!phasing)dmg=dmgVal.dmg;else dmg=dmgVal.dmgPhase;
-            if(!dmgVal.phase){Destroy(other.gameObject);}
+            dmg=dmgVal.dmg;if(triggerStay)dmg=dmgVal.dmgPhase;
+            if(!dmgVal.phase){Destroy(other.gameObject,0.01f);}
             else{var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq==null){dmgPhaseFreq=other.gameObject.AddComponent<Tag_DmgPhaseFreq>();}
-                dmgPhaseFreq.phaseFreqFirst=dmgVal.timePhaseFirst;
-                dmgPhaseFreq.phaseFreq=dmgVal.timePhase;
+                dmgPhaseFreq.phaseFreqFirst=dmgVal.phaseFreqFirst;
+                dmgPhaseFreq.phaseFreq=dmgVal.phaseFreq;
+                dmgPhaseFreq.phaseCountLimit=dmgVal.phaseCountLimit;
             }
             AudioManager.instance.Play(dmgVal.sound);
-        }
+        }else{Debug.LogWarning("DamageValues not defined for "+other.gameObject.name);}
         #region //Old
         /*if(collis.Contains(colliTypes.playerWeapons)){
         #region//Player Weapons
@@ -137,9 +134,18 @@ public class UniCollider : MonoBehaviour{
             else if(dmg<0){GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1.5f,true);}
         }
     }
+    public static DamageValues GetDmgVal(string objName){
+        DamageValues dmgVal=null;
+        List<GObject> assets=new List<GObject>();
+        foreach(GObject gobj in GameAssets.instance.objects){assets.Add(gobj);}
+        foreach(GObject vfx in GameAssets.instance.vfx){assets.Add(vfx);}
+        dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==assets.Find(x=>objName.Contains(x.gobj.name)).name);
+        if(dmgVal!=null)return dmgVal;
+        else Debug.LogWarning("DamageValues not defined for "+objName);return null;
+    }
 }
 
 
 public enum colliTypes{
-    player,playerWeapons,enemies,enemyWeapons
+    player,playerWeapons,enemies,enemyWeapons,world,zone
 }

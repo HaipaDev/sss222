@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 
 public class Goblin : MonoBehaviour{
     [SerializeField] Sprite bossSprite;
-    [SerializeField] float bossHp;
+    [SerializeField] float bossHealth;
     [SerializeField] public List<LootTableEntryDrops> bossDrops;
     public List<float> dropValues;
     public List<GameObject> powerups;
@@ -25,7 +25,7 @@ public class Goblin : MonoBehaviour{
         var i=GameRules.instance;if(i!=null){
             var e=i.goblinBossSettings;
             bossSprite=e.goblinBossSprite;
-            bossHp=e.goblinBossHP;
+            bossHealth=e.goblinbossHealth;
             bossDrops=e.goblinBossDrops;
         }
 
@@ -49,7 +49,7 @@ public class Goblin : MonoBehaviour{
                 //Instantiate(powerup,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
                 pwrup.SetActive(true);
                 pwrup.transform.position=transform.position;
-                if(pwrup.GetComponent<GoDir>()!=null)pwrup.GetComponent<Rigidbody2D>().velocity=Vector2.down*pwrup.GetComponent<GoDir>().GetSpeed();
+                if(pwrup.GetComponent<Tag_Collectible>()!=null)pwrup.GetComponent<Tag_Collectible>().SetDirSpeed();
             }
         }
         }
@@ -99,7 +99,7 @@ public class Goblin : MonoBehaviour{
         if(GetComponent<BackflameEffect>().BFlame!=null){Destroy(GetComponent<BackflameEffect>().BFlame);}GetComponent<BackflameEffect>().enabled=false;
         confused=false;Destroy(transform.GetChild(0));
         GetComponent<SpriteRenderer>().sprite=bossSprite;
-        GetComponent<Enemy>().healthStart=bossHp;GetComponent<Enemy>().health=bossHp;
+        GetComponent<Enemy>().health=bossHealth;GetComponent<Enemy>().healthMax=bossHealth;
         GetComponent<Enemy>().shooting=true;
         pos.x=transform.position.x;transform.rotation=new Quaternion(0,0,0,0);
         rb.velocity=Vector2.zero;GetComponent<Tag_PauseVelocity>().velPaused=Vector2.zero;

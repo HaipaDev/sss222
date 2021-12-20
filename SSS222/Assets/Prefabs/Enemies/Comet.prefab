@@ -104,11 +104,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 2
   Name: Comet
   size: {x: 1, y: 1}
   spr: {fileID: 0}
-  healthStart: 100
   health: 15
+  healthMax: 15
   shooting: 0
   shootTime: {x: 1.75, y: 2.8}
   shotCounter: 0
@@ -140,8 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9957469ac0c594981c65e4fda467ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmgTimer: 0
-  collisionTypes: 0000000001000000
+  collisionTypes: 000000000100000004000000
 --- !u!114 &6543032046267015800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,11 +175,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sizes: {x: 0.4, y: 1.4}
-  size: 0
+  size: 1
   healthBySize: 1
   damageBySpeedSize: 1
   scoreBySize: 0
-  randomAngle: 1
   scoreSizes: []
   sprites:
   - {fileID: 21300000, guid: 99983d2108c82d9488eb046ba733b402, type: 3}

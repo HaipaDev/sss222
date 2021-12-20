@@ -22,12 +22,12 @@ public class UpgradeMenu : MonoBehaviour{
     public float prevGameSpeed=1f;
     [Header("Upgrade Values")]
     public int total_UpgradesCountMax=5;
-    public float maxHealth_UpgradeAmnt=5f;
-    public int maxHealth_UpgradeCost=1;
-    public int maxHealth_UpgradesCountMax=5;
-    public float maxEnergy_UpgradeAmnt=5f;
-    public int maxEnergy_UpgradeCost=1;
-    public int maxEnergy_UpgradesCountMax=4;
+    public float healthMax_UpgradeAmnt=5f;
+    public int healthMax_UpgradeCost=1;
+    public int healthMax_UpgradesCountMax=5;
+    public float energyMax_UpgradeAmnt=5f;
+    public int energyMax_UpgradeCost=1;
+    public int energyMax_UpgradesCountMax=4;
     public float speed_UpgradeAmnt=0.1f;
     public int speed_UpgradeCost=1;
     public int speed_UpgradesCountMax=5;
@@ -56,10 +56,10 @@ public class UpgradeMenu : MonoBehaviour{
     public int total_UpgradesCount;
     public int saveBarsFromLvl=5;
     public int total_UpgradesLvl=0;
-    public int maxHealth_UpgradesCount;
-    public int maxHealth_UpgradesLvl=1;
-    public int maxEnergy_UpgradesCount;
-    public int maxEnergy_UpgradesLvl=1;
+    public int healthMax_UpgradesCount;
+    public int healthMax_UpgradesLvl=1;
+    public int energyMax_UpgradesCount;
+    public int energyMax_UpgradesLvl=1;
     public int speed_UpgradesCount;
     public int speed_UpgradesLvl=1;
     public int luck_UpgradesCount;
@@ -87,12 +87,12 @@ public class UpgradeMenu : MonoBehaviour{
     if(i!=null){
         saveBarsFromLvl=i.saveBarsFromLvl;
         total_UpgradesCountMax=i.total_UpgradesCountMax;
-        maxHealth_UpgradeAmnt=i.maxHealth_UpgradeAmnt;
-        maxHealth_UpgradeCost=i.maxHealth_UpgradeCost;
-        maxHealth_UpgradesCountMax=i.maxHealth_UpgradesCountMax;
-        maxEnergy_UpgradeAmnt=i.maxEnergy_UpgradeAmnt;
-        maxEnergy_UpgradeCost=i.maxEnergy_UpgradeCost;
-        maxEnergy_UpgradesCountMax=i.maxEnergy_UpgradesCountMax;
+        healthMax_UpgradeAmnt=i.healthMax_UpgradeAmnt;
+        healthMax_UpgradeCost=i.healthMax_UpgradeCost;
+        healthMax_UpgradesCountMax=i.healthMax_UpgradesCountMax;
+        energyMax_UpgradeAmnt=i.energyMax_UpgradeAmnt;
+        energyMax_UpgradeCost=i.energyMax_UpgradeCost;
+        energyMax_UpgradesCountMax=i.energyMax_UpgradesCountMax;
         speed_UpgradeAmnt=i.speed_UpgradeAmnt;
         speed_UpgradeCost=i.speed_UpgradeCost;
         speed_UpgradesCountMax=i.speed_UpgradesCountMax;
@@ -288,9 +288,9 @@ public class UpgradeMenu : MonoBehaviour{
     //    else{AudioManager.instance.Play("Deny");}//var go=EventSystem.current.currentSelectedGameObject; go.GetComponent<Image>().color=Color.red; go.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;}
     //}*/
     //public void AddFloat(ref float value,float amnt,int cost){if(GameSession.instance.cores>=cost){value+=amnt;}}
-    //if(GameSession.instance.cores>=maxHealth_UpgradeCost)player.maxHP+=maxHealth_UpgradeAmnt;GameSession.instance.cores-=maxHealth_UpgradeCost;
-    public void AddMaxHP(){UpgradeFloat(ref player.maxHP,maxHealth_UpgradeAmnt,maxHealth_UpgradeCost, true, ref player.health, ref maxHealth_UpgradesCount, ref maxHealth_UpgradesLvl,false);}
-    public void AddMaxEnergy(){UpgradeFloat(ref player.maxEnergy,maxEnergy_UpgradeAmnt,maxEnergy_UpgradeCost, true, ref player.energy, ref maxEnergy_UpgradesCount, ref maxEnergy_UpgradesLvl,false);}
+    //if(GameSession.instance.cores>=healthMax_UpgradeCost)player.healthMax+=healthMax_UpgradeAmnt;GameSession.instance.cores-=healthMax_UpgradeCost;
+    public void AddhealthMax(){UpgradeFloat(ref player.healthMax,healthMax_UpgradeAmnt,healthMax_UpgradeCost, true, ref player.health, ref healthMax_UpgradesCount, ref healthMax_UpgradesLvl,false);}
+    public void AddenergyMax(){UpgradeFloat(ref player.energyMax,energyMax_UpgradeAmnt,energyMax_UpgradeCost, true, ref player.energy, ref energyMax_UpgradesCount, ref energyMax_UpgradesLvl,false);}
     public async void AddSpeed(){float placeholder=0;UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt,speed_UpgradeCost, false, ref placeholder, ref speed_UpgradesCount, ref speed_UpgradesLvl,false);
     if(player.speedPrev.Count==1){player.speedPrev[0]=player.moveSpeed;player.moveSpeedCurrent=player.speedPrev[0];}}
     public void AddSpeedBypass(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt/2,0, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount, ref speed_UpgradesLvl,true);}
@@ -363,18 +363,18 @@ public class UpgradeMenu : MonoBehaviour{
         }
         
 
-        if(maxHealth_UpgradesCount==1 && maxHealth_UpgradesLvl==0){maxHealth_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}
-        if(maxHealth_UpgradesCount>=maxHealth_UpgradesCountMax){LastBar(maxHealth_UpgradesCountMax,"maxHealth_UpgradesCount");maxHealth_UpgradesCount=0;maxHealth_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(75);}
-        if(maxEnergy_UpgradesCount==1 && maxEnergy_UpgradesLvl==0){maxEnergy_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}
-        if(maxEnergy_UpgradesCount>=maxEnergy_UpgradesCountMax){LastBar(maxEnergy_UpgradesCountMax,"maxEnergy_UpgradesCount");maxEnergy_UpgradesCount=0;maxEnergy_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(75);}
+        if(healthMax_UpgradesCount==1 && healthMax_UpgradesLvl==0){healthMax_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}
+        if(healthMax_UpgradesCount>=healthMax_UpgradesCountMax){LastBar(healthMax_UpgradesCountMax,"healthMax_UpgradesCount");healthMax_UpgradesCount=0;healthMax_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(75);}
+        if(energyMax_UpgradesCount==1 && energyMax_UpgradesLvl==0){energyMax_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}
+        if(energyMax_UpgradesCount>=energyMax_UpgradesCountMax){LastBar(energyMax_UpgradesCountMax,"energyMax_UpgradesCount");energyMax_UpgradesCount=0;energyMax_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(75);}
         if(speed_UpgradesCount==1 && speed_UpgradesLvl==0){speed_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}
         if(speed_UpgradesCount>=speed_UpgradesCountMax){LastBar(speed_UpgradesCountMax,"speed_UpgradesCount");speed_UpgradesCount=0;speed_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(75);}
         if(luck_UpgradesCount==1 && luck_UpgradesLvl==0){luck_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(15);}
         if(luck_UpgradesCount>=luck_UpgradesCountMax){LastBar(luck_UpgradesCountMax,"luck_UpgradesCount");luck_UpgradesCount=0;luck_UpgradesLvl++;GameSession.instance.AddToScoreNoEV(75);}
 
 
-        if(maxHealth_UpgradesLvl>0)maxHealth_UpgradeCost=maxHealth_UpgradesLvl;
-        if(maxEnergy_UpgradesLvl>0)maxEnergy_UpgradeCost=maxEnergy_UpgradesLvl;
+        if(healthMax_UpgradesLvl>0)healthMax_UpgradeCost=healthMax_UpgradesLvl;
+        if(energyMax_UpgradesLvl>0)energyMax_UpgradeCost=energyMax_UpgradesLvl;
         if(speed_UpgradesLvl>0)speed_UpgradeCost=speed_UpgradesLvl;
         if(luck_UpgradesLvl>0)luck_UpgradeCost=luck_UpgradesLvl;
 

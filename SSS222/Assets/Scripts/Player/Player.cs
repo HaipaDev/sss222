@@ -24,12 +24,12 @@ public class Player : MonoBehaviour{
     [SerializeField] public float moveSpeedInit = 5f;
     [DisableInEditorMode]public float moveSpeed = 5f;//A variable for later modifications like Upgrades
     [DisableInEditorMode]public float moveSpeedCurrent;
-    [DisableInEditorMode]public float health = 100f;
-    [SerializeField] public float maxHP = 100f;
+    [SerializeField]public float health = 100f;
+    [SerializeField] public float healthMax = 100f;
     [SerializeField] public string powerup = "null";
     [SerializeField] public bool energyOn = true;
     [DisableInEditorMode]public float energy = 120f;
-    [SerializeField] public float maxEnergy = 120f;
+    [SerializeField] public float energyMax = 120f;
     [SerializeField] public bool ammoOn=true;
     [SerializeField] public int ammo = -4;
     [SerializeField] public string powerupDefault = "laser";
@@ -270,8 +270,8 @@ public class Player : MonoBehaviour{
         var u=UpgradeMenu.instance;
         if(GameSession.instance.CheckGameModeSelected("Adventure")){
             if(u!=null){
-                maxHP+=(Mathf.Clamp(u.maxHealth_UpgradesLvl-1,0,999)*(u.maxHealth_UpgradesCountMax*u.maxHealth_UpgradeAmnt))+(u.maxHealth_UpgradeAmnt*u.maxHealth_UpgradesCount);/*if(u.total_UpgradesLvl>0)*/health=maxHP;
-                maxEnergy+=(Mathf.Clamp(u.maxEnergy_UpgradesLvl-1,0,999)*(u.maxEnergy_UpgradesCountMax*u.maxEnergy_UpgradeAmnt))+(u.maxEnergy_UpgradeAmnt*u.maxEnergy_UpgradesCount);if(u.total_UpgradesLvl>0)energy=maxEnergy;
+                healthMax+=(Mathf.Clamp(u.healthMax_UpgradesLvl-1,0,999)*(u.healthMax_UpgradesCountMax*u.healthMax_UpgradeAmnt))+(u.healthMax_UpgradeAmnt*u.healthMax_UpgradesCount);/*if(u.total_UpgradesLvl>0)*/health=healthMax;
+                energyMax+=(Mathf.Clamp(u.energyMax_UpgradesLvl-1,0,999)*(u.energyMax_UpgradesCountMax*u.energyMax_UpgradeAmnt))+(u.energyMax_UpgradeAmnt*u.energyMax_UpgradesCount);if(u.total_UpgradesLvl>0)energy=energyMax;
             }else{Debug.LogError("UpgradeMenu not found");}
         }else if(GameSession.instance.CheckGameModeSelected("Hardcore")){
             GetComponent<AudioSource>().playOnAwake=true;
@@ -294,10 +294,10 @@ public class Player : MonoBehaviour{
         moveSpeedInit=i.moveSpeedPlayer;
         autoShoot=i.autoShootPlayer;
         health=i.healthPlayer;
-        maxHP=i.maxHPPlayer;
+        healthMax=i.healthMaxPlayer;
         energyOn=i.energyOnPlayer;
         energy=i.energyPlayer;
-        maxEnergy=i.maxEnergyPlayer;
+        energyMax=i.energyMaxPlayer;
         ammoOn=i.ammoOn;
         fuelOn=i.fuelOn;
         fuelDrainAmnt=i.fuelDrainAmnt;
@@ -377,8 +377,8 @@ public class Player : MonoBehaviour{
     void Update(){  if(!GameSession.GlobalTimeIsPaused){
         SetInputType(SaveSerial.instance.settingsData.inputType);
         HandleInput(false);
-        health=Mathf.Clamp(health,0,maxHP);
-        energy=Mathf.Clamp(energy,0,maxEnergy);
+        health=Mathf.Clamp(health,0,healthMax);
+        energy=Mathf.Clamp(energy,0,energyMax);
         ammo=Mathf.Clamp(ammo,-4,999);
         LosePowerup();
         if(!ammoOn)ammo=-4;
@@ -861,7 +861,7 @@ public class Player : MonoBehaviour{
         if(flipTimer<=0&&flipTimer>-4){ResetStatus("flip");AudioManager.instance.Play("PowerupOff");}
 
         if(gclover==true){
-            health=maxHP;
+            health=healthMax;
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover=true;
         }else{
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover=false;
@@ -1027,8 +1027,8 @@ public class Player : MonoBehaviour{
             if(enAbsorpAmnt<0){enAbsorpAmnt=0;}
             if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt==0){if(GameSession.instance.coins>=crystalMend_refillCost){hpAbsorpAmnt+=crystalMendAbsorp;GameSession.instance.coins-=crystalMend_refillCost;}}
             if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt==0){if(GameSession.instance.xp>=energyDiss_refillCost){enAbsorpAmnt+=energyDissAbsorp;GameSession.instance.xp-=energyDiss_refillCost;}}
-            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<maxHP)Damage(hpRegenAmnt,dmgType.heal);hpAbsorpAmnt-=hpRegenAmnt;timerHpRegen=0;}
-            if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<maxEnergy)AddSubEnergy(enRegenAmnt,true);enAbsorpAmnt-=enRegenAmnt;timerEnRegen=0;}
+            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax)Damage(hpRegenAmnt,dmgType.heal);hpAbsorpAmnt-=hpRegenAmnt;timerHpRegen=0;}
+            if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax)AddSubEnergy(enRegenAmnt,true);enAbsorpAmnt-=enRegenAmnt;timerEnRegen=0;}
             //if(hpRegenEnabled==true&&timerHpRegen>=freqHpRegen){Damage(hpRegenAmnt,dmgType.heal);timerHpRegen=0;}
             //if(energyOn)if(enRegenEnabled==true&&timerEnRegen>=freqEnRegen&&energy>energyForRegen){AddSubEnergy(enRegenAmnt,true);timerEnRegen=0;}
         }
@@ -1115,10 +1115,6 @@ public class Player : MonoBehaviour{
         if(strength!=1)blindStrenght=strength;
         else blindStrenght=1.5f;
         SetStatus("blind");
-    }public void InfEnergy(float duration){
-        infPrevEnergy=energy;
-        infEnergyTime=duration;
-        SetStatus("infEnergy");
     }public void Speed(float duration,float strength=1){
         speedTime=duration;
         if(speed!=true){
@@ -1135,6 +1131,10 @@ public class Player : MonoBehaviour{
             else slowStrength=1.5f;
             SetStatus("slow");
         }
+    }public void InfEnergy(float duration){
+        infPrevEnergy=energy;
+        infEnergyTime=duration;
+        SetStatus("infEnergy");
     }
 #endregion
 
@@ -1177,13 +1177,7 @@ public class Player : MonoBehaviour{
             }
         }
         ResizeStatuses();
-    }void ResizeStatuses(){
-        //int notEmpty=0;
-        foreach(string status in statuses){
-            if(status=="")statuses.Remove(status);//notEmpty++;
-        }
-        //Array.Resize(ref statuses,notEmpty);
-    }
+    }public void ResizeStatuses(){statuses.RemoveAll(x=>x=="");}
 
     public void ResetStatusRandom(){
         var i=UnityEngine.Random.Range(0,statuses.Count-1);
@@ -1200,12 +1194,13 @@ public class Player : MonoBehaviour{
     }
 
     public void Damage(float dmg, dmgType type, bool ignore=true, float electrTime=4f){//Later add on possible Inverter options
-        if(type!=dmgType.heal&&type!=dmgType.healSilent&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;HPPopUpHUD(-dmgTot);}
+        if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;HPPopUpHUD(-dmgTot);}
         else if(gclover){AudioManager.instance.Play("GCloverHit");}
+
         if(type==dmgType.silent){damaged=true;}
         if(type==dmgType.normal){damaged=true;AudioManager.instance.Play("ShipHit");}
         if(type==dmgType.flame){flamed=true;AudioManager.instance.Play("Overheat");}
-        if(type==dmgType.decay){damaged=true;AudioManager.instance.Play("Decay");}
+        if(type==dmgType.decay){if(dmg!=0&&health>dmg*2){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HPPopUpHUD(-dmgTot);damaged=true;AudioManager.instance.Play("Decay");}}
         if(type==dmgType.electr){electricified=true;Electrc(electrTime);}//electricified=true;AudioManager.instance.Play("Electric");}
         if(type==dmgType.shadow){shadowed=true;AudioManager.instance.Play("ShadowHit");}
         if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);}}

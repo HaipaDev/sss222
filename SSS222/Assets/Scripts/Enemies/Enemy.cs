@@ -7,11 +7,12 @@ using UnityEngine.Audio;
 
 public class Enemy : MonoBehaviour{
     [Header("Enemy")]
+    [SerializeField] public enemyType type;
     [SerializeField] public string Name;
     [SerializeField] public Vector2 size=Vector2.one;
     [SerializeField] public Sprite spr;
-    [SerializeField] public float healthStart=100f;
     public float health=100f;
+    public float healthMax=100f;
     [SerializeField] public bool shooting=false;
     [SerializeField] public Vector2 shootTime=new Vector2(1.75f,2.8f);
     public float shotCounter;
@@ -37,13 +38,16 @@ public class Enemy : MonoBehaviour{
     GameObject dmgCountPopup;
 
     Rigidbody2D rb;
+    SpriteRenderer sprRender;
 
-    private void Awake(){
-        StartCoroutine(SetValues());
+    void Awake(){
+        if(GetComponent<SpriteRenderer>()!=null){sprRender=GetComponent<SpriteRenderer>();}
+        else{if(transform.GetChild(0)!=null){sprRender=transform.GetChild(0).GetComponent<SpriteRenderer>();}}
         if(GameSession.maskMode!=0){
-            if(GetComponent<SpriteRenderer>()!=null)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
+            if(sprRender!=null)sprRender.maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
             else{if(transform.GetChild(0)!=null)transform.GetChild(0).GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;}
         }
+        StartCoroutine(SetValues());
     }
     IEnumerator SetValues(){
         //drops=(LootTableDrops)gameObject.AddComponent(typeof(LootTableDrops));
@@ -53,9 +57,10 @@ public class Enemy : MonoBehaviour{
         EnemyClass e=null;
         foreach(EnemyClass enemy in i.enemies){if(enemy.name==Name){e=enemy;}}
         if(e!=null){
-            size=e.size;
-            if(GetComponent<CometRandomProperties>()==null){transform.localScale=size;spr=e.spr;GetComponent<SpriteRenderer>().sprite=spr;}
-            healthStart=e.health;
+            if(GetComponent<CometRandomProperties>()==null)size=e.size;
+            spr=e.spr;
+            health=e.healthStart;
+            healthMax=e.healthMax;
             shooting=e.shooting;
             shootTime=e.shootTime;
             bullet=e.bullet;
@@ -71,7 +76,6 @@ public class Enemy : MonoBehaviour{
             xpChance=e.xpChance;
             drops=e.drops;
         }
-            health=healthStart;
 
             //dropValues=drops.dropList;
             if(shooting)shotCounter=Random.Range(shootTime.x,shootTime.y);
@@ -92,7 +96,6 @@ public class Enemy : MonoBehaviour{
     void Start(){
         rb=GetComponent<Rigidbody2D>();
         if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
-        shotCounter=Random.Range(shootTime.x,shootTime.y);
     }
     void Update(){
         if(shooting){Shoot();}
@@ -101,7 +104,12 @@ public class Enemy : MonoBehaviour{
         if(destroyOut)DestroyOutside();
         DispDmgCountUp();
 
-        //Rotate if Stinger?
+        health=Mathf.Clamp(health,-1000,healthMax);
+
+        if((Vector2)transform.localScale!=size)transform.localScale=size;
+        if(sprRender.sprite!=spr)sprRender.sprite=spr;
+
+        //Flip if Stinger?
         if(gameObject.name.Contains("Stinger")){
         if(Time.timeScale>0.0001f){
         if(Player.instance!=null){
@@ -153,7 +161,7 @@ public class Enemy : MonoBehaviour{
         if(GetComponent<CometRandomProperties>()!=null){
             var comet=GetComponent<CometRandomProperties>();
             if(comet.scoreBySize){
-                for(var i=0;i<comet.scoreSizes.Length&&(comet.Size()>comet.scoreSizes[i].size&&(i+1<comet.scoreSizes.Length&&comet.Size()<comet.scoreSizes[i+1].size));i++){score=comet.scoreSizes[i].score;}
+                for(var i=0;i<comet.scoreSizes.Length&&(comet.size>comet.scoreSizes[i].size&&(i+1<comet.scoreSizes.Length&&comet.size<comet.scoreSizes[i+1].size));i++){score=comet.scoreSizes[i].score;}
             }
             if(comet.isLunar){
                 var lunarScore=comet.LunarScore();
@@ -211,4 +219,8 @@ public class Enemy : MonoBehaviour{
         dmgCount=0;
     }
     void DispDmgCountUp(){if(dmgCountPopup!=null)dmgCountPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmgCount,1).ToString();}
+
+    public bool _healable(){if(type==enemyType.living||type==enemyType.mecha){return true;}else{return false;}}
 }
+
+public enum enemyType{living,mecha,other}

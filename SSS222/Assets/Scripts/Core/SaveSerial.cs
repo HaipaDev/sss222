@@ -14,9 +14,11 @@ public class SaveSerial : MonoBehaviour{
 	[SerializeField] string filenameLogin = "hyperGamerLogin";
 	bool loginEncode=false;
 	[SerializeField] string filename = "playerData";
-	bool dataEncode=true;
+	bool dataEncode=false;
+	//bool dataEncodeValues=true;
 	[SerializeField] string filenameAdventure = "adventureData";
-	bool adventureEncode=true;
+	bool adventureEncode=false;
+	//bool adventureEncodeValues=true;
 	[SerializeField] string filenameSettings = "gameSettings.cfg";
 	bool settingsEncode=false;
 	public int maxRegisteredHyperGamers=3;
@@ -92,10 +94,10 @@ public class SaveSerial : MonoBehaviour{
 	[System.Serializable]public class AdventureData{
 		public int total_UpgradesCount=0;
 		public int total_UpgradesLvl=0;
-		public int maxHealth_UpgradesCount=0;
-		public int maxHealth_UpgradesLvl=0;
-		public int maxEnergy_UpgradesCount=0;
-		public int maxEnergy_UpgradesLvl=0;
+		public int healthMax_UpgradesCount=0;
+		public int healthMax_UpgradesLvl=0;
+		public int energyMax_UpgradesCount=0;
+		public int energyMax_UpgradesLvl=0;
 		public int speed_UpgradesCount=0;
 		public int speed_UpgradesLvl=0;
 		public int luck_UpgradesCount=0;

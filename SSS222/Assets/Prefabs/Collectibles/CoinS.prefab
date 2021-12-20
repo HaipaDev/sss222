@@ -12,11 +12,10 @@ GameObject:
   - component: {fileID: 4910493507970672345}
   - component: {fileID: -2139053641053774133}
   - component: {fileID: 3700841201686134059}
-  - component: {fileID: -2526951079648213008}
-  - component: {fileID: 1529301144}
-  - component: {fileID: 3676386598028052292}
-  - component: {fileID: 972416664606367055}
   - component: {fileID: -5383710884614058826}
+  - component: {fileID: -2526951079648213008}
+  - component: {fileID: 3676386598028052292}
+  - component: {fileID: 1529301144}
   - component: {fileID: -6575572109222253960}
   m_Layer: 0
   m_Name: CoinS
@@ -138,6 +137,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-5383710884614058826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056705403108089519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir: 1
+  speed: 0
+  isPowerup: 0
+  isDestructible: 1
 --- !u!114 &-2526951079648213008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +182,20 @@ MonoBehaviour:
   dirYYUp: 0
   OOR_YY: 1.5
   followClosestEnemy: 0
+--- !u!114 &3676386598028052292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056705403108089519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distReqMulti: 6
+  speedFollowMulti: 5
 --- !u!114 &1529301144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,46 +215,6 @@ MonoBehaviour:
   emissionSpeed: 7.63
   xx: 0
   yy: 0
---- !u!114 &3676386598028052292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056705403108089519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4cdab4d0916c8148b49bb187a0e8071, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distReqMulti: 6
-  speedFollowMulti: 5
---- !u!114 &972416664606367055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056705403108089519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 1
---- !u!114 &-5383710884614058826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056705403108089519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0118ea76e3480414c8f41117ba025172, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPowerup: 0
 --- !u!114 &-6575572109222253960
 MonoBehaviour:
   m_ObjectHideFlags: 0
