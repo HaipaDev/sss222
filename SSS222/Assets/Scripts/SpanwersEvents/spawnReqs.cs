@@ -48,7 +48,7 @@ public class spawnReqsMono:MonoBehaviour{
             if(x.timer<=0&&x.timer!=-4&&!x.bothNeeded){
                 if(xt==spawnReqsType.time)ConditionCheck<spawnReqs>(x,"","");
             }
-        }else if(x.GetType().IsSubclassOf(typeof(spawnReqs))){
+        }if(x.GetType().IsSubclassOf(typeof(spawnReqs))){
             switch(xt){
                 case spawnReqsType.score:ConditionCheck<spawnScore>(x,"score","scoreNeeded");break;
                 case spawnReqsType.energy:ConditionCheck<spawnEnergy>(x,"energy","energyNeeded");break;
@@ -74,12 +74,12 @@ public class spawnReqsMono:MonoBehaviour{
                 if(((xs.bothNeeded&&(xs.timeEnabled&&xs.timer<=0&&xs.timer>-4))||(!xs.bothNeeded))||xs.timer==-5){
                     if(xs.repeat>1&&xs.timer!=-5){
                         StartCoroutine(RepSpawns());
-                        if(!String.IsNullOrEmpty(val)){xs.GetType().GetField(val).SetValue(xs,-5);}
                         SetTimer(xs,-5);
+                        if(xs.GetType().IsSubclassOf(typeof(spawnReqs)))if(!String.IsNullOrEmpty(val)){xs.GetType().GetField(val).SetValue(xs,-5);}
                     }else{
                         mb.StartCoroutine(cor,corInfo);
                         if(xs.timeEnabled){RestartTimer(xs);}
-                        if(!String.IsNullOrEmpty(val))xs.GetType().GetField(val).SetValue(xs,0);
+                        if(xs.GetType().IsSubclassOf(typeof(spawnReqs)))if(!String.IsNullOrEmpty(val))xs.GetType().GetField(val).SetValue(xs,0);
                     }
 
                     if(xs.repI>xs.repeat){
@@ -111,6 +111,21 @@ public class spawnReqsMono:MonoBehaviour{
         if(xt==spawnReqsType.movingTime){x=new spawnMovingTime();x.timeEnabled=false;}
         if(!x.timeEnabled){x.bothNeeded=false;x.startTimeAfterSecond=false;}
     }
+
+    public static void RestartAllValues(){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){
+        if(sr is spawnReqs&&!sr.GetType().IsSubclassOf(typeof(spawnReqs))){var ss=(spawnReqs)sr;if(ss.timer!=-5)ss.timer=-4;}
+        if(sr is spawnScore){var ss=(spawnScore)sr;if(ss.score!=-5)ss.score=0;}
+        if(sr is spawnEnergy&&!sr.GetType().IsSubclassOf(typeof(spawnEnergy))){var ss=(spawnEnergy)sr;if(ss.energy!=-5)ss.energy=0;}
+        if(sr is spawnMissed){var ss=(spawnMissed)sr;if(ss.energy!=-5)ss.energy=0;}
+        if(sr is spawnDmg){var ss=(spawnDmg)sr;if(ss.dmg!=-5)ss.dmg=0;}
+        if(sr is spawnKills){var ss=(spawnKills)sr;if(ss.kills!=-5)ss.kills=0;}
+        if(sr is spawnWavesTotal){var ss=(spawnWavesTotal)sr;if(ss.waves!=-5)ss.waves=0;}
+        if(sr is spawnWaveCounts){var ss=(spawnWaveCounts)sr;if(ss.counts!=-5)ss.counts=0;}
+        if(sr is spawnPowerupsTotal){var ss=(spawnPowerupsTotal)sr;if(ss.pwrups!=-5)ss.pwrups=0;}
+        if(sr is spawnPowerupCounts){var ss=(spawnPowerupCounts)sr;if(ss.counts!=-5)ss.counts=0;}
+        if(sr is spawnStayingTime&&!sr.GetType().IsSubclassOf(typeof(spawnStayingTime))){var ss=(spawnStayingTime)sr;if(ss.timer2!=-5)ss.timer2=0;}
+        if(sr is spawnMovingTime){var ss=(spawnMovingTime)sr;if(ss.timer2!=-5)ss.timer2=0;}
+    }}
 }
 
 public enum spawnReqsType{time,score,energy,missed,dmg,kills,wavesTotal,waveCounts,powerupsTotal,powerupCounts,stayingTime,movingTime}
