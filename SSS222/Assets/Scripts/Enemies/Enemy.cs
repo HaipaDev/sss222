@@ -4,15 +4,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using Sirenix.OdinInspector;
 
 public class Enemy : MonoBehaviour{
     [Header("Enemy")]
     [SerializeField] public enemyType type;
     [SerializeField] public string Name;
     [SerializeField] public Vector2 size=Vector2.one;
+    [DisableInEditorMode] public float sizeAvg=1;
     [SerializeField] public Sprite spr;
     public float health=100f;
     public float healthMax=100f;
+    public bool healthBySize=false;
     [SerializeField] public bool shooting=false;
     [SerializeField] public Vector2 shootTime=new Vector2(1.75f,2.8f);
     public float shotCounter;
@@ -61,6 +64,7 @@ public class Enemy : MonoBehaviour{
             spr=e.spr;
             health=e.healthStart;
             healthMax=e.healthMax;
+            healthBySize=e.healthBySize;
             shooting=e.shooting;
             shootTime=e.shootTime;
             bullet=e.bullet;
@@ -77,8 +81,6 @@ public class Enemy : MonoBehaviour{
             drops=e.drops;
         }
 
-            //dropValues=drops.dropList;
-            if(shooting)shotCounter=Random.Range(shootTime.x,shootTime.y);
             yield return new WaitForSeconds(0.04f);
             for(var d=0;d<drops.Count;d++){dropValues.Add(drops[d].dropChance);}
             dropValues[0]*=GameSession.instance.enballDropMulti;
@@ -96,6 +98,9 @@ public class Enemy : MonoBehaviour{
     void Start(){
         rb=GetComponent<Rigidbody2D>();
         if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
+
+        if(shooting)shotCounter=Random.Range(shootTime.x,shootTime.y);
+        if(healthBySize){healthMax=Mathf.RoundToInt(healthMax*sizeAvg);health=Mathf.RoundToInt(health*sizeAvg);}
     }
     void Update(){
         if(shooting){Shoot();}
@@ -107,7 +112,8 @@ public class Enemy : MonoBehaviour{
         health=Mathf.Clamp(health,-1000,healthMax);
 
         if((Vector2)transform.localScale!=size)transform.localScale=size;
-        if(sprRender.sprite!=spr)sprRender.sprite=spr;
+        if(sizeAvg!=(size.x+size.y)/2)sizeAvg=(size.x+size.y)/2;
+        if(sprRender.sprite!=spr&&GetComponent<VortexWheel>()==null)sprRender.sprite=spr;
     }
     
     private void Shoot(){
@@ -197,9 +203,9 @@ public class Enemy : MonoBehaviour{
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){giveScore=true;health=-1;Die();}else{Destroy(gameObject,0.001f);if(GetComponent<Goblin>()!=null){foreach(GameObject obj in GetComponent<Goblin>().powerups)Destroy(obj);}}}
     }
     public void Kill(bool giveScore=true){
+        this.giveScore=giveScore;
         health=-1;
         Die();
-        this.giveScore=giveScore;
     }
     //Collisions in EnemyCollider
     public void DispDmgCount(Vector2 pos){if(SaveSerial.instance.settingsData.dmgPopups)StartCoroutine(DispDmgCountI(pos));}

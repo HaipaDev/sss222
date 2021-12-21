@@ -7,8 +7,6 @@ public class CometRandomProperties : MonoBehaviour{
     [Header("Basic")]
     [SerializeField] Vector2 sizes=new Vector2(0.4f,1.4f);
     [DisableInEditorMode]public float size=1;
-    [SerializeField] public bool healthBySize=true;
-    [SerializeField] public bool damageBySpeedSize=true;
     [SerializeField] public bool scoreBySize=false;
     [SerializeField] public CometScoreSize[] scoreSizes;
     [SerializeField] Sprite[] sprites;
@@ -40,8 +38,6 @@ public class CometRandomProperties : MonoBehaviour{
         if(i!=null){
             var c=i.cometSettings;
             sizes=c.sizes;
-            healthBySize=c.healthBySize;
-            damageBySpeedSize=c.damageBySpeedSize;
             scoreBySize=c.scoreBySize;
             scoreSizes=c.scoreSizes;
             sprites=c.sprites;
@@ -70,8 +66,6 @@ public class CometRandomProperties : MonoBehaviour{
         en.spr=sprites[spriteIndex];
         size=(float)System.Math.Round(Random.Range(sizes.x, sizes.y),2);
         en.size=new Vector2(en.size.x*size,en.size.y*size);
-
-        if(healthBySize){en.healthMax=Mathf.RoundToInt(en.healthMax*size);en.health=en.healthMax;}
 
         if(Random.Range(0,100)<lunarCometChance)MakeLunar();
         rotationSpeed=Random.Range(2.8f,4.7f)*(GetComponent<Rigidbody2D>().velocity.y*-1);

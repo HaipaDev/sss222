@@ -11,22 +11,20 @@ public class VortexWheel : MonoBehaviour{
     [SerializeField] public float chargeMultipS=1.3f;
     [SerializeField] Sprite[] sprites;
     [Header("Values")]
-    Tag_PlayerWeaponBlockable[] WeapsArr;
-    KdTree<Tag_PlayerWeaponBlockable> Weaps;
-    //public float chargeEnergy;
+    Tag_PlayerWeapon[] WeapsArr;
+    KdTree<Tag_PlayerWeapon> Weaps;
     public float timer=-4;
     
     float timeToDie;
     Sprite spr;
     void Awake(){
-    //Set Values
-    var i=GameRules.instance;
-    if(i!=null){
-        var e=i.vortexWheelSettings;
-        startTimer=e.startTimer;
-        chargeMultip=e.chargeMultip;
-        chargeMultipS=e.chargeMultipS;
-    }
+        var i=GameRules.instance;
+        if(i!=null){
+            var e=i.vortexWheelSettings;
+            startTimer=e.startTimer;
+            chargeMultip=e.chargeMultip;
+            chargeMultipS=e.chargeMultipS;
+        }
     }
     void Start(){
         spr=GetComponent<SpriteRenderer>().sprite;
@@ -35,22 +33,17 @@ public class VortexWheel : MonoBehaviour{
     }
 
     void Update(){
-        Weaps=FindAllLaserWeapons();
-        Discharge();
-        GetComponent<SpriteRenderer>().sprite=spr;
-        /*WeapsArr = FindObjectsOfType<Tag_PlayerWeaponBlockable>();
-        foreach(Tag_PlayerWeaponBlockable weap in WeapsArr){
-            chargeEnergy++;
-            WeapsArr.RemoveAll(enemy);
-        }*/
+        if(!GameSession.GlobalTimeIsPaused){
+            Weaps=FindAllLaserWeapons();
+            Discharge();
+            GetComponent<SpriteRenderer>().sprite=spr;
+        }
     }
-    public KdTree<Tag_PlayerWeaponBlockable> FindAllLaserWeapons(){
-        KdTree<Tag_PlayerWeaponBlockable> Weaps = new KdTree<Tag_PlayerWeaponBlockable>();
+    public KdTree<Tag_PlayerWeapon> FindAllLaserWeapons(){
+        KdTree<Tag_PlayerWeapon> Weaps = new KdTree<Tag_PlayerWeapon>();
         //List<string> sublist = Enemies.FindAll(isHealingDrone);
-        foreach(Tag_PlayerWeaponBlockable weap in FindObjectsOfType<Tag_PlayerWeaponBlockable>()){
+        foreach(Tag_PlayerWeapon weap in FindObjectsOfType<Tag_PlayerWeapon>()){
             if(weap.charged==false){Weaps.Add(weap);
-            //chargeEnergy++;
-            //chargeEnergy+=weap.energy;
             
                 if(timer==-4){timer=startTimer;}
                 else{if(timer>-4){
@@ -59,21 +52,12 @@ public class VortexWheel : MonoBehaviour{
                 }
             }
             weap.charged=true;
-            //if(enemy.GetComponent<HealingDrone>()!=null){Enemies.RemoveAt(System.Array.IndexOf(EnemiesArr, this));}
-            //Debug.Log(System.Array.IndexOf(EnemiesArr, this));
-            //Enemies.Find(this.GetComponent<HealingDrone>() healDrone);
-            //Enemies.RemoveAll(this.GetComponent<HealingDrone>() healDrone);
         }
-        //Tag_PlayerWeaponBlockable closest = Weaps.FindClosest(transform.position);
         return Weaps;
     }
 
     void Discharge(){
-        //if(Time.timeScale>0.0001f)chargeEnergy+=0.01f;
-        //if(timer>0)
         if(timer>-4)timer+=Time.deltaTime;
-        //if(timer<-4)timer=-4;
-        //if(timer<=0 && timer>-4){StartCoroutine(Die());}
         if(timer>timeToDie){StartCoroutine(Die());}
         
         if(timer<=0 && timer>-4){StartCoroutine(Shoot());}

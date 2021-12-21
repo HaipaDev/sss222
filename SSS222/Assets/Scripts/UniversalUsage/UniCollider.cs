@@ -15,6 +15,10 @@ public class UniCollider : MonoBehaviour{
             dmgVal=GetDmgVal(other.gameObject.name);
             if(dmgVal!=null){if(collis.Contains(dmgVal.colliType)){
                 dmg=dmgVal.dmg;if(triggerStay)dmg=dmgVal.dmgPhase;
+                if(dmgVal.dmgBySize&&!dmgVal.dmgBySpeed){dmg*=((other.gameObject.transform.localScale.x+other.gameObject.transform.localScale.y)/2);}
+                else if(!dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.magnitude);}
+                else if(dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=((other.gameObject.transform.localScale.x+other.gameObject.transform.localScale.y)/2)*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.magnitude);}
+
                 if(!dmgVal.phase){Destroy(other.gameObject,0.01f);}
                 else{var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq==null){dmgPhaseFreq=other.gameObject.AddComponent<Tag_DmgPhaseFreq>();}
                     dmgPhaseFreq.phaseFreqFirst=dmgVal.phaseFreqFirst;
@@ -26,7 +30,7 @@ public class UniCollider : MonoBehaviour{
                 }
                 if(!triggerStay)if(!String.IsNullOrEmpty(dmgVal.sound))AudioManager.instance.Play(dmgVal.sound);
             }
-            }else{Debug.LogWarning("DamageValues not defined for "+other.gameObject.name);}
+            }//else{Debug.LogWarning("DamageValues not defined for "+other.gameObject.name);}
         }
         #region //Old
         /*if(collis.Contains(colliTypes.playerWeapons)){

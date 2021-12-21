@@ -15,13 +15,12 @@ public class PlayerCollider : MonoBehaviour{
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
             float dmg=0;
             if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
-            //if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);player.Damage(damageValues.dmgZone,dmgType.silent);}
 
-            #region//Enemies
-            if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){
-                dmg=UniCollider.TriggerCollision(other,transform,collisionTypes);
-
-                if(!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){
+            #region//Enemies, World etc
+            if(!other.gameObject.CompareTag("Powerups")){
+                DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
+                if(dmgVal!=null)dmg=UniCollider.TriggerCollision(other,transform,collisionTypes);
+                if(!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){
                     if(player.dashing==false){
                         if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
                         else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
@@ -51,7 +50,7 @@ public class PlayerCollider : MonoBehaviour{
                     spawnReqsMono.AddPwrups(other.gameObject.name);
                     GameSession.instance.AddXP(GameRules.instance.xp_powerup);//XP For powerups
                 }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("MicroMedkit").name)){player.hpAbsorpAmnt+=player.microMedkitHpAmnt;}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("LunarGel").name)){player.hpAbsorpAmnt+=player.microMedkitHpAmnt;}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)){
                     if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}
                     else if(player.health!=player.healthMax&&player.health>(player.healthMax-player.medkitHpAmnt)){
@@ -197,8 +196,9 @@ public class PlayerCollider : MonoBehaviour{
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq.phaseTimer<=0){
             if(dmgPhaseFreq.phaseTimer!=-4&&(dmgPhaseFreq.phaseCount<=dmgPhaseFreq.phaseCountLimit||dmgPhaseFreq.phaseCountLimit==0)){
                 if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
-                float dmg=UniCollider.TriggerCollision(other,transform,collisionTypes,true);
-                //if(other.GetComponent<Tag_OutsideZone>()!=null){player.Hack(1f);dmg=GameRules.instance.dmgZone;}
+                float dmg=0;
+                DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
+                if(dmgVal!=null)dmg=UniCollider.TriggerCollision(other,transform,collisionTypes);
 
                 UniCollider.DMG_VFX(3,other,transform,dmg);
                 if(dmg>0)player.Damage(dmg,dmgType.silent);

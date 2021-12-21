@@ -364,6 +364,8 @@ public class DamageValues{
     public string name;
     public colliTypes colliType=colliTypes.playerWeapons;
     public float dmg=1f;
+    public bool dmgBySize=false;
+    public bool dmgBySpeed=false;
     public bool phase=false;
     [HideIf("@this.phase == false")]public float dmgPhase=0.5f;
     [HideIf("@this.phase == false")]public float phaseFreqFirst=0f;
@@ -392,6 +394,7 @@ public class EnemyClass{
     public Sprite spr;
     public float healthStart=25;
     public float healthMax=25;
+    public bool healthBySize=false;
     public bool shooting = false;
     public Vector2 shootTime=new Vector2(1.75f,2.8f);
     [AssetsOnly]public GameObject bullet;
@@ -411,8 +414,6 @@ public class EnemyClass{
 public class CometSettings{
 [Header("Basic")]
     public Vector2 sizes=new Vector2(0.4f,1.4f);
-    public bool healthBySize=true;
-    public bool damageBySpeedSize=true;
     public bool scoreBySize=false;
     public CometScoreSize[] scoreSizes;
     [AssetsOnly]public Sprite[] sprites;

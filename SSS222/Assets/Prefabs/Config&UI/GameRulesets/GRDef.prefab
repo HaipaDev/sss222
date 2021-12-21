@@ -308,6 +308,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
     healthStart: 40
     healthMax: 40
+    healthBySize: 0
     shooting: 1
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
@@ -336,6 +337,7 @@ MonoBehaviour:
     spr: {fileID: 0}
     healthStart: 15
     healthMax: 15
+    healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 0}
@@ -363,6 +365,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
     healthStart: 95
     healthMax: 95
+    healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 0}
@@ -390,6 +393,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
     healthStart: 120
     healthMax: 120
+    healthBySize: 0
     shooting: 1
     shootTime: {x: 0.64, y: 0.94}
     bullet: {fileID: 5313808222654050488, guid: 7ee89741fb82f0a45a71870919d506a7,
@@ -421,6 +425,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
     healthStart: 33
     healthMax: 33
+    healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 0}
@@ -448,6 +453,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
     healthStart: 16
     healthMax: 16
+    healthBySize: 0
     shooting: 0
     shootTime: {x: 1.8, y: 2.2}
     bullet: {fileID: 5313808222654050488, guid: 31832a8c249783e449d9e8aad6457ca7,
@@ -476,6 +482,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
     healthStart: 115
     healthMax: 115
+    healthBySize: 0
     shooting: 1
     shootTime: {x: 0.2, y: 0.2}
     bullet: {fileID: 0}
@@ -506,6 +513,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
     healthStart: 26
     healthMax: 26
+    healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 0}
@@ -533,6 +541,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
     healthStart: 17
     healthMax: 17
+    healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 0}
@@ -560,6 +569,7 @@ MonoBehaviour:
     spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
     healthStart: 95
     healthMax: 95
+    healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
     bullet: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2,
@@ -585,8 +595,6 @@ MonoBehaviour:
       dropChance: 30
   cometSettings:
     sizes: {x: 0.4, y: 1.4}
-    healthBySize: 1
-    damageBySpeedSize: 1
     scoreBySize: 0
     scoreSizes: []
     sprites:
@@ -660,6 +668,8 @@ MonoBehaviour:
   - name: Laser
     colliType: 1
     dmg: 5
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -676,6 +686,8 @@ MonoBehaviour:
   - name: MLaser
     colliType: 1
     dmg: 0.33
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -688,6 +700,8 @@ MonoBehaviour:
   - name: LSaber
     colliType: 1
     dmg: 7.77
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 0.86
     phaseFreqFirst: 0
@@ -700,6 +714,8 @@ MonoBehaviour:
   - name: Phaser
     colliType: 1
     dmg: 0.5
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -712,6 +728,8 @@ MonoBehaviour:
   - name: HRocket
     colliType: 1
     dmg: 13.5
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -724,6 +742,8 @@ MonoBehaviour:
   - name: QRocket
     colliType: 1
     dmg: 14.5
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -736,6 +756,8 @@ MonoBehaviour:
   - name: PRocket
     colliType: 1
     dmg: 0
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -748,6 +770,8 @@ MonoBehaviour:
   - name: Plasma
     colliType: 1
     dmg: 1
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -760,6 +784,8 @@ MonoBehaviour:
   - name: CBullet
     colliType: 1
     dmg: 2
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 2
     phaseFreqFirst: 0
@@ -772,6 +798,8 @@ MonoBehaviour:
   - name: PLaser
     colliType: 1
     dmg: 6.78
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 2
     phaseFreqFirst: 0
@@ -784,6 +812,8 @@ MonoBehaviour:
   - name: GloomyScythes
     colliType: 1
     dmg: 40.5
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 40.5
     phaseFreqFirst: 0
@@ -796,6 +826,8 @@ MonoBehaviour:
   - name: ShadowBT
     colliType: 1
     dmg: 40.5
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 40.5
     phaseFreqFirst: 0
@@ -808,6 +840,8 @@ MonoBehaviour:
   - name: MPulse
     colliType: 1
     dmg: 130
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 1
     phaseFreqFirst: 0
@@ -817,9 +851,11 @@ MonoBehaviour:
     dmgFxValues: []
     sound: MLaserHit
     soundPhase: 
-  - name: ShipFlame
+  - name: BFlameDMG
     colliType: 1
     dmg: 1
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 1
     phaseFreqFirst: 0
@@ -832,6 +868,8 @@ MonoBehaviour:
   - name: Zone
     colliType: 5
     dmg: 0
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 2
     phaseFreqFirst: 0
@@ -845,21 +883,25 @@ MonoBehaviour:
       onPhase: 0
     sound: MLaserHit
     soundPhase: 
-  - name: BlueFlame
-    colliType: 3
+  - name: BFlameLunar
+    colliType: 4
     dmg: 0
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
-    dmgPhase: 0.2
+    dmgPhase: -0.2
     phaseFreqFirst: 0
     phaseFreq: 0.33
     phaseCountLimit: 0
     dmgFx: 0
     dmgFxValues: []
-    sound: Overheat
+    sound: 
     soundPhase: 
   - name: Comet
     colliType: 2
     dmg: 10
+    dmgBySize: 1
+    dmgBySpeed: 1
     phase: 0
     dmgPhase: 0.2
     phaseFreqFirst: 0
@@ -872,6 +914,8 @@ MonoBehaviour:
   - name: Bat
     colliType: 2
     dmg: 23
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 0.2
     phaseFreqFirst: 0
@@ -884,6 +928,8 @@ MonoBehaviour:
   - name: Soundwave
     colliType: 3
     dmg: 16.5
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 0.2
     phaseFreqFirst: 0
@@ -896,6 +942,8 @@ MonoBehaviour:
   - name: EnShip
     colliType: 2
     dmg: 60
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 0.2
     phaseFreqFirst: 0
@@ -908,6 +956,8 @@ MonoBehaviour:
   - name: EnBt
     colliType: 3
     dmg: 24.5
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 0.2
     phaseFreqFirst: 0
@@ -920,6 +970,8 @@ MonoBehaviour:
   - name: EnSaber
     colliType: 3
     dmg: 3
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -932,6 +984,8 @@ MonoBehaviour:
   - name: Goblin
     colliType: 2
     dmg: 16
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -944,6 +998,8 @@ MonoBehaviour:
   - name: GoblinBt
     colliType: 3
     dmg: 2
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -960,6 +1016,8 @@ MonoBehaviour:
   - name: HDrone
     colliType: 2
     dmg: 75
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -972,6 +1030,8 @@ MonoBehaviour:
   - name: Vortex
     colliType: 2
     dmg: 70
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -984,6 +1044,8 @@ MonoBehaviour:
   - name: Leech
     colliType: 2
     dmg: 4
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 4
     phaseFreqFirst: 0
@@ -996,6 +1058,8 @@ MonoBehaviour:
   - name: VLaser
     colliType: 4
     dmg: 90
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 75
     phaseFreqFirst: 0
@@ -1008,6 +1072,8 @@ MonoBehaviour:
   - name: HLaser
     colliType: 4
     dmg: 16
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 1
     dmgPhase: 14
     phaseFreqFirst: 0
@@ -1020,6 +1086,8 @@ MonoBehaviour:
   - name: Stinger
     colliType: 2
     dmg: 33.3
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 14
     phaseFreqFirst: 0
@@ -1036,6 +1104,8 @@ MonoBehaviour:
   - name: GlareDevil
     colliType: 2
     dmg: 9.9
+    dmgBySize: 0
+    dmgBySpeed: 0
     phase: 0
     dmgPhase: 14
     phaseFreqFirst: 0
