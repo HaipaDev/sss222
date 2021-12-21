@@ -9,19 +9,25 @@ public class UniCollider : MonoBehaviour{
     public static List<colliTypes> colliTypesForPl=new List<colliTypes>{colliTypes.enemies,colliTypes.enemyWeapons,colliTypes.world,colliTypes.zone};
 
     public static float TriggerCollision(Collider2D other, Transform transform, List<colliTypes> collis, bool triggerStay=false){
-        DamageValues dmgVal;
-        dmgVal=GetDmgVal(other.gameObject.name);
         float dmg=0;
-        if(dmgVal!=null)if(collis.Contains(dmgVal.colliType)){
-            dmg=dmgVal.dmg;if(triggerStay)dmg=dmgVal.dmgPhase;
-            if(!dmgVal.phase){Destroy(other.gameObject,0.01f);}
-            else{var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq==null){dmgPhaseFreq=other.gameObject.AddComponent<Tag_DmgPhaseFreq>();}
-                dmgPhaseFreq.phaseFreqFirst=dmgVal.phaseFreqFirst;
-                dmgPhaseFreq.phaseFreq=dmgVal.phaseFreq;
-                dmgPhaseFreq.phaseCountLimit=dmgVal.phaseCountLimit;
+        if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null){
+            DamageValues dmgVal;
+            dmgVal=GetDmgVal(other.gameObject.name);
+            if(dmgVal!=null){if(collis.Contains(dmgVal.colliType)){
+                dmg=dmgVal.dmg;if(triggerStay)dmg=dmgVal.dmgPhase;
+                if(!dmgVal.phase){Destroy(other.gameObject,0.01f);}
+                else{var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq==null){dmgPhaseFreq=other.gameObject.AddComponent<Tag_DmgPhaseFreq>();}
+                    dmgPhaseFreq.phaseFreqFirst=dmgVal.phaseFreqFirst;
+                    dmgPhaseFreq.phaseFreq=dmgVal.phaseFreq;
+                    dmgPhaseFreq.phaseCountLimit=dmgVal.phaseCountLimit;
+                    dmgPhaseFreq.soundPhase=dmgVal.soundPhase;
+                    if(dmgVal.soundPhase=="-"){dmgPhaseFreq.soundPhase=dmgVal.sound;}
+                    else if(dmgVal.soundPhase=="."){dmgPhaseFreq.soundPhase="EnemyHit";}
+                }
+                if(!triggerStay)if(!String.IsNullOrEmpty(dmgVal.sound))AudioManager.instance.Play(dmgVal.sound);
             }
-            AudioManager.instance.Play(dmgVal.sound);
-        }else{Debug.LogWarning("DamageValues not defined for "+other.gameObject.name);}
+            }else{Debug.LogWarning("DamageValues not defined for "+other.gameObject.name);}
+        }
         #region //Old
         /*if(collis.Contains(colliTypes.playerWeapons)){
         #region//Player Weapons
@@ -135,13 +141,15 @@ public class UniCollider : MonoBehaviour{
         }
     }
     public static DamageValues GetDmgVal(string objName){
-        DamageValues dmgVal=null;
-        List<GObject> assets=new List<GObject>();
-        foreach(GObject gobj in GameAssets.instance.objects){assets.Add(gobj);}
-        foreach(GObject vfx in GameAssets.instance.vfx){assets.Add(vfx);}
-        dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==assets.Find(x=>objName.Contains(x.gobj.name)).name);
-        if(dmgVal!=null)return dmgVal;
-        else Debug.LogWarning("DamageValues not defined for "+objName);return null;
+            DamageValues dmgVal=null;
+            List<GObject> assets=new List<GObject>();
+            foreach(GObject gobj in GameAssets.instance.objects){assets.Add(gobj);}
+            foreach(GObject vfx in GameAssets.instance.vfx){assets.Add(vfx);}
+        //if(assets.Find(x=>objName.Contains(x.gobj.name)).gobj.GetComponent<Player>()==null&&assets.Find(x=>objName.Contains(x.gobj.name)).gobj.GetComponent<Tag_Collectible>()==null){
+            dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==assets.Find(x=>objName.Contains(x.gobj.name)).name);
+            if(dmgVal!=null)return dmgVal;
+            else Debug.LogWarning("DamageValues not defined for "+objName);return null;
+        //}else{return null;}
     }
 }
 

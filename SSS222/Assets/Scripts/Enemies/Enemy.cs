@@ -196,6 +196,11 @@ public class Enemy : MonoBehaviour{
     private void DestroyOutside(){
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){giveScore=true;health=-1;Die();}else{Destroy(gameObject,0.001f);if(GetComponent<Goblin>()!=null){foreach(GameObject obj in GetComponent<Goblin>().powerups)Destroy(obj);}}}
     }
+    public void Kill(bool giveScore=true){
+        health=-1;
+        Die();
+        this.giveScore=giveScore;
+    }
     //Collisions in EnemyCollider
     public void DispDmgCount(Vector2 pos){if(SaveSerial.instance.settingsData.dmgPopups)StartCoroutine(DispDmgCountI(pos));}
     IEnumerator DispDmgCountI(Vector2 pos){

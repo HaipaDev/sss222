@@ -20,10 +20,7 @@ GameObject:
   - component: {fileID: 3111251860985306412}
   - component: {fileID: -7376020833809441554}
   - component: {fileID: -6723330439813553621}
-  - component: {fileID: -3458073233683693476}
-  - component: {fileID: -3609200207216390652}
   - component: {fileID: -6762143650873762682}
-  - component: {fileID: 9190681407786714349}
   m_Layer: 8
   m_Name: CBullet
   m_TagString: PlayerWeapons
@@ -354,32 +351,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energy: 0
   charged: 0
---- !u!114 &-3458073233683693476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 1
---- !u!114 &-3609200207216390652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmgFreq: 0.001
 --- !u!114 &-6762143650873762682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,16 +364,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healAmnt: 0.05
---- !u!114 &9190681407786714349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}

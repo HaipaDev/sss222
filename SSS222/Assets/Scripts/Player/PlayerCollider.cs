@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class PlayerCollider : MonoBehaviour{
     [Header("Other")]
-    //[SerializeField] float dmgFreq=0.38f;
     public float dmgTimer;
     public string lastHitObj;
     public float lastHitDmg;
@@ -21,24 +19,20 @@ public class PlayerCollider : MonoBehaviour{
 
             #region//Enemies
             if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("EnemyBullet")){
-                bool en=true;
                 dmg=UniCollider.TriggerCollision(other,transform,collisionTypes);
-                if(other.GetComponent<Enemy>()==null)en=false;
 
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){
                     if(player.dashing==false){
-                        if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);}
+                        if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
                         else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
-                        if(en!=true){Destroy(other.gameObject,0.05f);}
-                        else{other.GetComponent<Enemy>().giveScore=false;other.GetComponent<Enemy>().health=-1;other.GetComponent<Enemy>().Die();}
                         GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,transform.position.y+0.5f),0.3f);
+                        if(!UniCollider.GetDmgVal(other.gameObject.name).phase)if(other.GetComponent<Enemy>()!=null){other.GetComponent<Enemy>().Kill(false);}
                     }
                     else if(player.shadow==true&&player.dashing==true){
-                        if(en!=true){Destroy(other.gameObject,0.05f);}
-                        else{other.GetComponent<Enemy>().health=-1;other.GetComponent<Enemy>().Die();}
+                        if(other.GetComponent<Enemy>()!=null){other.GetComponent<Enemy>().Kill();}
                    }
                 }else{
-                    if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);}
+                    if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
                     else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
                     PlayerEffects(other.gameObject.name);
                 }

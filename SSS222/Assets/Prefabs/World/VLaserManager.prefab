@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -2605585119503773840}
   m_Layer: 9
   m_Name: VLaserManager
-  m_TagString: Untagged
+  m_TagString: World
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -576,6 +576,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VLaser
+      objectReference: {fileID: 0}
+    - target: {fileID: 4689941537683564806, guid: 660228baf8367524f9272152de705b66,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4689941537683564827, guid: 660228baf8367524f9272152de705b66,
         type: 3}

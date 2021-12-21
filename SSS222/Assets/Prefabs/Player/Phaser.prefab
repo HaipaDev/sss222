@@ -17,8 +17,6 @@ GameObject:
   - component: {fileID: -1614445912447373513}
   - component: {fileID: 8464121177970184819}
   - component: {fileID: 1697403453669450582}
-  - component: {fileID: -3755903585265302669}
-  - component: {fileID: 2812514462483792702}
   m_Layer: 8
   m_Name: Phaser
   m_TagString: PlayerWeapons
@@ -294,29 +292,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energy: 0
   charged: 0
---- !u!114 &-3755903585265302669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmgFreq: 0.001
---- !u!114 &2812514462483792702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}

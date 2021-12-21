@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: -5823106282040684117}
   - component: {fileID: 879952983271955742}
   - component: {fileID: -4856174234144377300}
-  - component: {fileID: -6654065331181963354}
   m_Layer: 8
   m_Name: QRocket
   m_TagString: PlayerWeapons
@@ -343,16 +342,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
---- !u!114 &-6654065331181963354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}

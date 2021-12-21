@@ -20,7 +20,6 @@ GameObject:
   - component: {fileID: 5620140849490479444}
   - component: {fileID: -363052344023367521}
   - component: {fileID: 7858718171525832638}
-  - component: {fileID: -2395087299572466748}
   m_Layer: 8
   m_Name: MLaserC
   m_TagString: PlayerWeapons
@@ -358,16 +357,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
---- !u!114 &-2395087299572466748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}

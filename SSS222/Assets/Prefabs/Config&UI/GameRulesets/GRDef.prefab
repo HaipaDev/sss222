@@ -672,6 +672,7 @@ MonoBehaviour:
       power: 1
       onPhase: 0
     sound: EnemyHit
+    soundPhase: 
   - name: MLaser
     colliType: 1
     dmg: 0.33
@@ -683,28 +684,31 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: MLaserHit
+    soundPhase: 
   - name: LSaber
     colliType: 1
     dmg: 7.77
     phase: 1
     dmgPhase: 0.86
     phaseFreqFirst: 0
-    phaseFreq: 0.33
+    phaseFreq: 0.04
     phaseCountLimit: 0
     dmgFx: 0
     dmgFxValues: []
     sound: LSaberHit
+    soundPhase: .
   - name: Phaser
     colliType: 1
     dmg: 0.5
     phase: 1
     dmgPhase: 0.5
     phaseFreqFirst: 0
-    phaseFreq: 0.33
+    phaseFreq: 0.05
     phaseCountLimit: 0
     dmgFx: 0
     dmgFxValues: []
     sound: PhaserHit
+    soundPhase: '-'
   - name: HRocket
     colliType: 1
     dmg: 13.5
@@ -716,6 +720,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: HRocketHit
+    soundPhase: 
   - name: QRocket
     colliType: 1
     dmg: 14.5
@@ -727,6 +732,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: QRocketHit
+    soundPhase: 
   - name: PRocket
     colliType: 1
     dmg: 0
@@ -738,6 +744,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: PRocketHit
+    soundPhase: 
   - name: Plasma
     colliType: 1
     dmg: 1
@@ -749,6 +756,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: PlasmaExplosion
+    soundPhase: 
   - name: CBullet
     colliType: 1
     dmg: 2
@@ -760,6 +768,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: CStreamHit
+    soundPhase: 
   - name: PLaser
     colliType: 1
     dmg: 6.78
@@ -771,6 +780,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: PLaserHit
+    soundPhase: 
   - name: GloomyScythes
     colliType: 1
     dmg: 40.5
@@ -782,6 +792,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: EnemyHit
+    soundPhase: 
   - name: ShadowBT
     colliType: 1
     dmg: 40.5
@@ -793,6 +804,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: EnemyHit
+    soundPhase: 
   - name: MPulse
     colliType: 1
     dmg: 130
@@ -804,6 +816,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: MLaserHit
+    soundPhase: 
   - name: ShipFlame
     colliType: 1
     dmg: 1
@@ -812,9 +825,10 @@ MonoBehaviour:
     phaseFreqFirst: 0
     phaseFreq: 0.33
     phaseCountLimit: 0
-    dmgFx: 0
+    dmgFx: 1
     dmgFxValues: []
     sound: Overheat
+    soundPhase: 
   - name: Zone
     colliType: 5
     dmg: 0
@@ -824,8 +838,13 @@ MonoBehaviour:
     phaseFreq: 0.33
     phaseCountLimit: 0
     dmgFx: 1
-    dmgFxValues: []
+    dmgFxValues:
+    - dmgFxType: 8
+      length: 2
+      power: 1
+      onPhase: 0
     sound: MLaserHit
+    soundPhase: 
   - name: BlueFlame
     colliType: 3
     dmg: 0
@@ -837,6 +856,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: Overheat
+    soundPhase: 
   - name: Comet
     colliType: 2
     dmg: 10
@@ -848,6 +868,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: 
+    soundPhase: 
   - name: Bat
     colliType: 2
     dmg: 23
@@ -859,6 +880,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: 
+    soundPhase: 
   - name: Soundwave
     colliType: 3
     dmg: 16.5
@@ -870,6 +892,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: SoundwaveHit
+    soundPhase: 
   - name: EnShip
     colliType: 2
     dmg: 60
@@ -881,6 +904,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: 
+    soundPhase: 
   - name: EnBt
     colliType: 3
     dmg: 24.5
@@ -892,6 +916,7 @@ MonoBehaviour:
     dmgFx: 1
     dmgFxValues: []
     sound: 
+    soundPhase: 
   - name: EnSaber
     colliType: 3
     dmg: 3
@@ -903,6 +928,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: 
+    soundPhase: 
   - name: Goblin
     colliType: 2
     dmg: 16
@@ -914,6 +940,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: 
+    soundPhase: 
   - name: GoblinBt
     colliType: 3
     dmg: 2
@@ -929,6 +956,7 @@ MonoBehaviour:
       power: 0.8
       onPhase: 0
     sound: 
+    soundPhase: 
   - name: HDrone
     colliType: 2
     dmg: 75
@@ -940,6 +968,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: 
+    soundPhase: 
   - name: Vortex
     colliType: 2
     dmg: 70
@@ -951,6 +980,7 @@ MonoBehaviour:
     dmgFx: 1
     dmgFxValues: []
     sound: 
+    soundPhase: 
   - name: Leech
     colliType: 2
     dmg: 4
@@ -962,6 +992,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: LeechBite
+    soundPhase: '-'
   - name: VLaser
     colliType: 4
     dmg: 90
@@ -973,6 +1004,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: 
+    soundPhase: 
   - name: HLaser
     colliType: 4
     dmg: 16
@@ -984,6 +1016,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: 
+    soundPhase: 
   - name: Stinger
     colliType: 2
     dmg: 33.3
@@ -999,6 +1032,7 @@ MonoBehaviour:
       power: 1
       onPhase: 0
     sound: 
+    soundPhase: 
   - name: GlareDevil
     colliType: 2
     dmg: 9.9
@@ -1010,6 +1044,7 @@ MonoBehaviour:
     dmgFx: 0
     dmgFxValues: []
     sound: 
+    soundPhase: 
   shopSpawnReqsType: 1
   shopSpawnReqs:
     id: 1

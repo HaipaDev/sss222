@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyCollider : MonoBehaviour{
     [HideInInspector]public List<colliTypes> collisionTypes=UniCollider.colliTypesForEn;
     void OnTriggerEnter2D(Collider2D other){
-        //if(Player.instance.shadowRaycast[Player.instance.shadowRaycast.FindIndex(Player.instance.shadowRaycast.Count,(x) => x == this)]==this){Die();}
         if(!other.CompareTag(tag)){
             if(other==Player.instance){if(Player.instance.dashing==true){GetComponent<Enemy>().Die();}else{return;}}
 
@@ -22,8 +21,7 @@ public class EnemyCollider : MonoBehaviour{
             if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)||other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)){GetComponent<Enemy>().giveScore=false;GetComponent<Enemy>().Die();}
         }
     }
-    void OnTriggerStay2D(Collider2D other){
-    if(!other.CompareTag(tag)){
+    void OnTriggerStay2D(Collider2D other){     if(!other.CompareTag(tag)){
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq.phaseTimer<=0){
             if(dmgPhaseFreq.phaseTimer!=-4&&(dmgPhaseFreq.phaseCount<=dmgPhaseFreq.phaseCountLimit||dmgPhaseFreq.phaseCountLimit==0)){
                 float dmg=UniCollider.TriggerCollision(other,transform,collisionTypes,true);

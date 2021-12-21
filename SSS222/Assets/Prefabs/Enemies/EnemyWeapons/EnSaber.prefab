@@ -15,9 +15,6 @@ GameObject:
   - component: {fileID: 1265304716601146569}
   - component: {fileID: 4688364101293123351}
   - component: {fileID: 5239081426931158637}
-  - component: {fileID: 3335024609016532008}
-  - component: {fileID: -6549206056605608955}
-  - component: {fileID: -4609015006554659745}
   m_Layer: 9
   m_Name: EnSaber
   m_TagString: Enemy
@@ -81,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 253ce222720f65544ba3977b269812c9, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.29317617, g: 0.20069422, b: 0.7735849, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -267,51 +264,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 0
---- !u!114 &3335024609016532008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4755926375889011706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2506537cb16da42a716c515120ac19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 6432250634095115783, guid: 952ed2444cd0f874592ef3f85ca7a108, type: 3}
-  targetTag: 
-  xx: 0
-  yy: -1.12
-  targetObj: {fileID: 0}
---- !u!114 &-6549206056605608955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4755926375889011706}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d0c611dac366a34589785d400347ed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetObj: {fileID: 0}
-  speedFollow: 60
-  destroyAfter: 1
-  particlesOnDeath: 0
-  particlesPrefab: {fileID: 0}
-  particleDestroyTime: 0.05
---- !u!114 &-4609015006554659745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4755926375889011706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91f6045237e60644b821afbacc05e85c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPos: {x: 0, y: 0}

@@ -373,6 +373,7 @@ public class DamageValues{
     [HideIf("@this.dmgFx==false || (this.colliType==colliTypes.player || this.colliType==colliTypes.playerWeapons)")]
     public DmgFxValues[] dmgFxValues;
     public string sound="EnemyHit";
+    public string soundPhase="";
 }
 public enum dmgFxType{fire,decay,electrc,freeze,armor,fragile,power,weak,hack,blind,speed,slow,infenergy}
 [System.Serializable]

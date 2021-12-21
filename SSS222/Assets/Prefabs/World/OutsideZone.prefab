@@ -105,19 +105,19 @@ ParticleSystem:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 789854342820154918}
-  serializedVersion: 6
+  serializedVersion: 8
   lengthInSec: 0.1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
+  emitterVelocityMode: 0
   looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
-  useRigidbodyForVelocity: 0
   startDelay:
     serializedVersion: 2
     minMaxState: 0
@@ -667,6 +667,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     maxNumParticles: 1000
+    customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -3677,19 +3678,20 @@ ParticleSystem:
     range: {x: 0, y: 1}
   CollisionModule:
     enabled: 0
-    serializedVersion: 3
+    serializedVersion: 4
     type: 0
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
     multiplyColliderForceByCollisionAngle: 1
-    plane0: {fileID: 0}
-    plane1: {fileID: 0}
-    plane2: {fileID: 0}
-    plane3: {fileID: 0}
-    plane4: {fileID: 0}
-    plane5: {fileID: 0}
+    m_Planes:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
@@ -3863,17 +3865,20 @@ ParticleSystem:
     interiorCollisions: 0
   TriggerModule:
     enabled: 0
-    collisionShape0: {fileID: 0}
-    collisionShape1: {fileID: 0}
-    collisionShape2: {fileID: 0}
-    collisionShape3: {fileID: 0}
-    collisionShape4: {fileID: 0}
-    collisionShape5: {fileID: 0}
+    serializedVersion: 2
     inside: 1
     outside: 0
     enter: 0
     exit: 0
+    colliderQueryMode: 0
     radiusScale: 1
+    primitives:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -4824,6 +4829,7 @@ ParticleSystemRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -4889,11 +4895,9 @@ GameObject:
   - component: {fileID: 3938964661001370557}
   - component: {fileID: 2097542818692711332}
   - component: {fileID: 1551385550936324973}
-  - component: {fileID: 2309271737268275989}
-  - component: {fileID: 3858334291750695040}
   m_Layer: 0
   m_Name: Up
-  m_TagString: Untagged
+  m_TagString: World
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4950,31 +4954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f11ab34ce337fa43a006df0483f7007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2309271737268275989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1551385550936324972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3858334291750695040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1551385550936324972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmgFreq: 0.5
 --- !u!1 &2917131996660522435
 GameObject:
   m_ObjectHideFlags: 0
@@ -4986,7 +4965,7 @@ GameObject:
   - component: {fileID: 6777835646587142782}
   m_Layer: 0
   m_Name: OutsideZone
-  m_TagString: Untagged
+  m_TagString: World
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5022,11 +5001,9 @@ GameObject:
   - component: {fileID: 1949776688816107119}
   - component: {fileID: 3512531700669011574}
   - component: {fileID: 4045178166859181759}
-  - component: {fileID: 984267986653978311}
-  - component: {fileID: 3858334291750695038}
   m_Layer: 0
   m_Name: Right
-  m_TagString: Untagged
+  m_TagString: World
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5083,31 +5060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f11ab34ce337fa43a006df0483f7007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &984267986653978311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4045178166859181758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3858334291750695038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4045178166859181758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmgFreq: 0.5
 --- !u!1 &7289856875629792565
 GameObject:
   m_ObjectHideFlags: 0
@@ -5119,11 +5071,9 @@ GameObject:
   - component: {fileID: 5046113753937759716}
   - component: {fileID: 7905680814488696317}
   - component: {fileID: 7289856875629792566}
-  - component: {fileID: 5810004901813058894}
-  - component: {fileID: 3858334291750695037}
   m_Layer: 0
   m_Name: Left
-  m_TagString: Untagged
+  m_TagString: World
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5180,31 +5130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f11ab34ce337fa43a006df0483f7007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5810004901813058894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7289856875629792565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3858334291750695037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7289856875629792565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmgFreq: 0.5
 --- !u!1 &8497112762649996992
 GameObject:
   m_ObjectHideFlags: 0
@@ -5216,11 +5141,9 @@ GameObject:
   - component: {fileID: 6252804449036070417}
   - component: {fileID: 9040861822379529736}
   - component: {fileID: 8497112762649996993}
-  - component: {fileID: 4638779708001148601}
-  - component: {fileID: 3858334291750695039}
   m_Layer: 0
   m_Name: Down
-  m_TagString: Untagged
+  m_TagString: World
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5277,31 +5200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f11ab34ce337fa43a006df0483f7007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4638779708001148601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8497112762649996992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc982bb0472c0b84291d53081b371de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3858334291750695039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8497112762649996992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmgFreq: 0.5
 --- !u!1 &8681944085019668206
 GameObject:
   m_ObjectHideFlags: 0
@@ -5341,19 +5239,19 @@ ParticleSystem:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8681944085019668206}
-  serializedVersion: 6
+  serializedVersion: 8
   lengthInSec: 0.1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
+  emitterVelocityMode: 0
   looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
-  useRigidbodyForVelocity: 0
   startDelay:
     serializedVersion: 2
     minMaxState: 0
@@ -5903,6 +5801,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     maxNumParticles: 1000
+    customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -8913,19 +8812,20 @@ ParticleSystem:
     range: {x: 0, y: 1}
   CollisionModule:
     enabled: 0
-    serializedVersion: 3
+    serializedVersion: 4
     type: 0
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
     multiplyColliderForceByCollisionAngle: 1
-    plane0: {fileID: 0}
-    plane1: {fileID: 0}
-    plane2: {fileID: 0}
-    plane3: {fileID: 0}
-    plane4: {fileID: 0}
-    plane5: {fileID: 0}
+    m_Planes:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
@@ -9099,17 +8999,20 @@ ParticleSystem:
     interiorCollisions: 0
   TriggerModule:
     enabled: 0
-    collisionShape0: {fileID: 0}
-    collisionShape1: {fileID: 0}
-    collisionShape2: {fileID: 0}
-    collisionShape3: {fileID: 0}
-    collisionShape4: {fileID: 0}
-    collisionShape5: {fileID: 0}
+    serializedVersion: 2
     inside: 1
     outside: 0
     enter: 0
     exit: 0
+    colliderQueryMode: 0
     radiusScale: 1
+    primitives:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -10061,6 +9964,7 @@ ParticleSystemRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0

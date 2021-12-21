@@ -18,8 +18,6 @@ GameObject:
   - component: {fileID: -9072771260210855088}
   - component: {fileID: -1996952101110769926}
   - component: {fileID: 2657704310505367730}
-  - component: {fileID: -2505882778043258903}
-  - component: {fileID: -445038033793677522}
   m_Layer: 8
   m_Name: GloomyScythe
   m_TagString: PlayerWeapons
@@ -318,29 +316,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-2505882778043258903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d61ca8d9f150394dbc357ff02614ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmgFreq: 0.16
---- !u!114 &-445038033793677522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}
