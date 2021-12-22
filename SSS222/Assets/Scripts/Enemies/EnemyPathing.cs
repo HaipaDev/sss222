@@ -50,17 +50,14 @@ public class EnemyPathing : MonoBehaviour{
             }
             else{transform.position=waypointsS[waypointIndex].transform.position;}
             }
-        }
-        //velPaused=rb.velocity;
+        }else{Debug.LogWarning(gameObject.name+" WaveConfig not found.");}
     }
     
-    void Update(){
-        if(waveConfig!=null&&!GameSession.GlobalTimeIsPaused)Move();
-        else if(waveConfig==null){Debug.LogWarning(gameObject.name+" WaveConfig not found.");}
-        //if(GameSession.GlobalTimeIsPaused){if(rb.velocity!=Vector2.zero){velPaused=rb.velocity;rb.velocity=Vector2.zero;}}else{if(velPaused!=Vector2.zero)rb.velocity=velPaused;}
-    }
+    void Update(){  if(!GameSession.GlobalTimeIsPaused){
+        Move();
+    }}
     public void SetWaveConfig(WaveConfig waveConfig){this.waveConfig = waveConfig;}
-    void Move(){
+    void Move(){    if(waveConfig!=null){
         if(waveConfig.wavePathType==wavePathType.startToEnd){//Start-End Path
             if (transform.position!= waypointsE[waypointIndex].transform.position){
                 var targetPos = waypointsE[waypointIndex].transform.position;
@@ -100,5 +97,5 @@ public class EnemyPathing : MonoBehaviour{
                 }
             }
         }
-    }
+    }}
 }

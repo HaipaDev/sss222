@@ -384,6 +384,7 @@ public class DmgFxValues{
     public float length=1f;
     public float power=1f;
     public bool onPhase=false;
+    public float chance=100f;
 }
 
 

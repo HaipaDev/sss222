@@ -10,7 +10,7 @@ public class UniCollider : MonoBehaviour{
 
     public static float TriggerCollision(Collider2D other, Transform transform, List<colliTypes> collis, bool triggerStay=false){
         float dmg=0;
-        if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null){
+        if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
             DamageValues dmgVal;
             dmgVal=GetDmgVal(other.gameObject.name);
             if(dmgVal!=null){if(collis.Contains(dmgVal.colliType)){
@@ -145,19 +145,15 @@ public class UniCollider : MonoBehaviour{
         }
     }
     public static DamageValues GetDmgVal(string objName){
-            DamageValues dmgVal=null;
-            List<GObject> assets=new List<GObject>();
-            foreach(GObject gobj in GameAssets.instance.objects){assets.Add(gobj);}
-            foreach(GObject vfx in GameAssets.instance.vfx){assets.Add(vfx);}
-        //if(assets.Find(x=>objName.Contains(x.gobj.name)).gobj.GetComponent<Player>()==null&&assets.Find(x=>objName.Contains(x.gobj.name)).gobj.GetComponent<Tag_Collectible>()==null){
-            dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==assets.Find(x=>objName.Contains(x.gobj.name)).name);
-            if(dmgVal!=null)return dmgVal;
-            else Debug.LogWarning("DamageValues not defined for "+objName);return null;
-        //}else{return null;}
+        DamageValues dmgVal=null;
+        List<GObject> assets=new List<GObject>();
+        foreach(GObject gobj in GameAssets.instance.objects){assets.Add(gobj);}
+        foreach(GObject vfx in GameAssets.instance.vfx){assets.Add(vfx);}
+        var asset=assets.Find(x=>objName.Contains(x.gobj.name));
+        if(asset!=null)dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==asset.name);
+        if(dmgVal!=null)return dmgVal;
+        else Debug.LogWarning("DamageValues not defined for "+objName);return null;
     }
 }
 
-
-public enum colliTypes{
-    player,playerWeapons,enemies,enemyWeapons,world,zone
-}
+public enum colliTypes{player,playerWeapons,enemies,enemyWeapons,world,zone}

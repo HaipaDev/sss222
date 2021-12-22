@@ -81,7 +81,7 @@ public class Waves : MonoBehaviour{
                 if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
                 else if(checkSpawnsTimer<=0&&checkSpawnsTimer>-4){
                     Debug.LogWarning("No enemies found, forcing a spawn!");
-                    if(currentWave==null){currentWave=GetRandomWave();}
+                    currentWave=GetRandomWave();
                     if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
                     //StartCoroutine(SpawnWave());
                     checkSpawnsTimer=checkSpawns;

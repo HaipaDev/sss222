@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class PlayerCollider : MonoBehaviour{
     [Header("Other")]
     public float dmgTimer;
     public string lastHitObj;
     public float lastHitDmg;
-    [HideInInspector]public List<colliTypes> collisionTypes=UniCollider.colliTypesForPl;
+    public List<colliTypes> collisionTypes=UniCollider.colliTypesForPl;
 
     Player player;
     void Start(){player=Player.instance;}
-    private void OnTriggerEnter2D(Collider2D other){
+    void OnTriggerEnter2D(Collider2D other){
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
             float dmg=0;
             if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
@@ -20,6 +21,7 @@ public class PlayerCollider : MonoBehaviour{
             if(!other.gameObject.CompareTag("Powerups")){
                 DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
                 if(dmgVal!=null)dmg=UniCollider.TriggerCollision(other,transform,collisionTypes);
+                if(player.dashing==false)PlayerEffects(other.gameObject.name);
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){
                     if(player.dashing==false){
                         if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
@@ -33,7 +35,6 @@ public class PlayerCollider : MonoBehaviour{
                 }else{
                     if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
                     else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
-                    PlayerEffects(other.gameObject.name);
                 }
             }
             #endregion
@@ -191,18 +192,20 @@ public class PlayerCollider : MonoBehaviour{
     void EnergyAddDupl(){player.AddSubEnergy(player.enPwrupDuplicate,true);}
     void AmmoAdd(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
     void AmmoAddDupl(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
-    private void OnTriggerStay2D(Collider2D other){
+
+
+    void OnTriggerStay2D(Collider2D other){
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq.phaseTimer<=0){
             if(dmgPhaseFreq.phaseTimer!=-4&&(dmgPhaseFreq.phaseCount<=dmgPhaseFreq.phaseCountLimit||dmgPhaseFreq.phaseCountLimit==0)){
                 if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
                 float dmg=0;
                 DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
-                if(dmgVal!=null)dmg=UniCollider.TriggerCollision(other,transform,collisionTypes);
+                if(dmgVal!=null)dmg=UniCollider.TriggerCollision(other,transform,collisionTypes,true);
+                PlayerEffects(other.gameObject.name,true);
 
                 UniCollider.DMG_VFX(3,other,transform,dmg);
                 if(dmg>0)player.Damage(dmg,dmgType.silent);
-                PlayerEffects(other.gameObject.name,true);
             }
             dmgPhaseFreq.SetTimer();
         }}
@@ -212,12 +215,28 @@ public class PlayerCollider : MonoBehaviour{
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){other.GetComponent<Tag_DmgPhaseFreq>().ResetTimer();}
    }
 
-   void PlayerEffects(string goName,bool phase=false){//Not working yet
-        if(UniCollider.GetDmgVal(goName)!=null){
-            if(UniCollider.GetDmgVal(goName).dmgFx){
-                DmgFxValues weak=System.Array.Find(UniCollider.GetDmgVal(goName).dmgFxValues,x=>x.dmgFxType==dmgFxType.weak);
-                if(weak!=null&&(!phase||(phase&&weak.onPhase))){player.Weaken(weak.length,weak.power);}
+   void PlayerEffects(string goName,bool phase=false){
+        DamageValues dmgVal=UniCollider.GetDmgVal(goName);
+        if(dmgVal!=null){
+            if(dmgVal.dmgFx){
+                foreach(DmgFxValues fx in dmgVal.dmgFxValues){
+                    if((!phase||(phase&&fx.onPhase))&&(fx.chance>=Random.Range(0f,100f))){
+                        if(fx.dmgFxType==dmgFxType.fire){player.OnFire(fx.length,fx.power);}
+                        if(fx.dmgFxType==dmgFxType.decay){player.Decay(fx.length,fx.power);}
+                        if(fx.dmgFxType==dmgFxType.electrc){player.Electrc(fx.length);}
+                        if(fx.dmgFxType==dmgFxType.freeze){player.Freeze(fx.length);}
+                        if(fx.dmgFxType==dmgFxType.armor){player.Armor(fx.length,fx.power);}
+                        if(fx.dmgFxType==dmgFxType.fragile){player.Fragile(fx.length,fx.power);}
+                        if(fx.dmgFxType==dmgFxType.power){player.Power(fx.length,fx.power);}
+                        if(fx.dmgFxType==dmgFxType.weak){player.Weaken(fx.length,fx.power);}
+                        if(fx.dmgFxType==dmgFxType.hack){player.Hack(fx.length);}
+                        if(fx.dmgFxType==dmgFxType.blind){player.Blind(fx.length,fx.power);}
+                        if(fx.dmgFxType==dmgFxType.speed){player.Speed(fx.length,fx.power);}
+                        if(fx.dmgFxType==dmgFxType.slow){player.Slow(fx.length,fx.power);}
+                        if(fx.dmgFxType==dmgFxType.infenergy){player.InfEnergy(fx.length);}
+                    }
+                }
             }
-        }else{Debug.LogError("No DmgVal for "+goName);}
+        }
    }
 }

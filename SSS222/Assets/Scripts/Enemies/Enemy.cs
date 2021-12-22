@@ -164,7 +164,7 @@ public class Enemy : MonoBehaviour{
             }
         }
         if(giveScore==true)GameSession.instance.AddToScore(score);
-        if(GameRules.instance.xpOn)if(xpAmnt!=0&&xpChance<Random.Range(0,100)){
+        if(GameRules.instance.xpOn)if(xpAmnt!=0&&xpChance>=Random.Range(0f,100f)){
             if(xpAmnt/5>=1){for(var i=0;i<(int)(xpAmnt/5);i++){GameAssets.instance.Make("CelestVial",transform.position);}}
             GameSession.instance.DropXP(xpAmnt%5,transform.position);
         }

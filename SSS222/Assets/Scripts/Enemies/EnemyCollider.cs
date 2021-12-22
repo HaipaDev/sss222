@@ -4,9 +4,8 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 public class EnemyCollider : MonoBehaviour{
-    [DisableInPlayMode]public List<colliTypes> collisionTypes=UniCollider.colliTypesForEn;
-    void OnTriggerEnter2D(Collider2D other){
-        if(!other.CompareTag(tag)){
+    public List<colliTypes> collisionTypes=UniCollider.colliTypesForEn;
+    void OnTriggerEnter2D(Collider2D other){    if(!other.CompareTag(tag)){ if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
             float dmg=0;
             DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
             if(dmgVal!=null)dmg=UniCollider.TriggerCollision(other,transform,collisionTypes);
@@ -19,10 +18,8 @@ public class EnemyCollider : MonoBehaviour{
                 GetComponent<Enemy>().health-=dmg;
                 UniCollider.DMG_VFX(0,other,transform,dmg);
             }
-            
-        }
-    }
-    void OnTriggerStay2D(Collider2D other){     if(!other.CompareTag(tag)){
+    }}}
+    void OnTriggerStay2D(Collider2D other){     if(!other.CompareTag(tag)){ if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq.phaseTimer<=0){
             if(dmgPhaseFreq.phaseTimer!=-4&&(dmgPhaseFreq.phaseCount<=dmgPhaseFreq.phaseCountLimit||dmgPhaseFreq.phaseCountLimit==0)){
                 float dmg=0;
@@ -40,7 +37,7 @@ public class EnemyCollider : MonoBehaviour{
             }
             dmgPhaseFreq.SetTimer();
         }}
-    }}
+    }}}
     void OnTriggerExit2D(Collider2D other){
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){other.GetComponent<Tag_DmgPhaseFreq>().ResetTimer();}
     }
