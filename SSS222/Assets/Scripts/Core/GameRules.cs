@@ -376,6 +376,7 @@ public class DamageValues{
     public DmgFxValues[] dmgFxValues;
     public string sound="EnemyHit";
     public string soundPhase="";
+    public bool dispDmgCount=false;
 }
 public enum dmgFxType{fire,decay,electrc,freeze,armor,fragile,power,weak,hack,blind,speed,slow,infenergy}
 [System.Serializable]

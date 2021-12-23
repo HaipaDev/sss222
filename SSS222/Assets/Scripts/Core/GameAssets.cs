@@ -95,7 +95,7 @@ public class GameAssets : MonoBehaviour{
 	}
 	public int GetSkinID(string str){
 		int i = Array.FindIndex(skins, item => item.name == str);
-		if (i == null){
+		if (Array.Find(skins,item => item.name == str) == null){
 			Debug.LogWarning("Skin: " + str + " not found!");
 			return 0;
 		}

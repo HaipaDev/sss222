@@ -7,7 +7,7 @@ public class BackflameEffect : MonoBehaviour{
     //[SerializeField] bool twice=true;
     [SerializeField] public float xx = 0f;
     [SerializeField] public float yy = -0.6f;
-    [SerializeField] float time = 0.3f;
+    //[SerializeField] float time = 0.3f;
     [SerializeField] bool onTop=true;
     [SerializeField] bool stayStill=true;
     [SerializeField] float angle;

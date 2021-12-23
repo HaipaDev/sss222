@@ -8,7 +8,7 @@ public class ValueDisplay : MonoBehaviour{
     TMPro.TextMeshProUGUI txt;
     PlayerSkills pskills;
     [SerializeField] public string value="score";
-    [SerializeField] float valueLimitD=-1;
+    //[SerializeField] float valueLimitD=-1;
     [SerializeField] bool changeOnValidate;
 
     void Start(){

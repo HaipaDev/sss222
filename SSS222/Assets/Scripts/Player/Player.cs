@@ -227,10 +227,8 @@ public class Player : MonoBehaviour{
     IEnumerator shootCoroutine;
     //FollowMouse followMouse;
 
-    float xMin;
-    float xMax;
-    float yMin;
-    float yMax;
+    Vector2 xRange;
+    Vector2 yRange;
 
     bool hasHandledInputThisFrame = false;
     bool scaleUp;
@@ -513,16 +511,16 @@ public class Player : MonoBehaviour{
         var newXpos=transform.position.x;
         var newYpos=transform.position.y;
 
-        if(moveX==true)newXpos=Mathf.Clamp(transform.position.x,xMin,xMax)+deltaX;
-        if(moveY==true)newYpos=Mathf.Clamp(transform.position.y,yMin,yMax)+deltaY;
+        if(moveX==true)newXpos=Mathf.Clamp(transform.position.x,xRange.x,xRange.y)+deltaX;
+        if(moveY==true)newYpos=Mathf.Clamp(transform.position.y,yRange.x,yRange.y)+deltaY;
         transform.position=new Vector2(newXpos,newYpos);
         
     }
 
     private void MoveWithMouse(){
         mouseDir=mousePos-(Vector2)transform.position;
-        mousePos.x=Mathf.Clamp(mousePos.x,xMin,xMax);
-        mousePos.y=Mathf.Clamp(mousePos.y,yMin,yMax);
+        mousePos.x=Mathf.Clamp(mousePos.x,xRange.x,xRange.y);
+        mousePos.y=Mathf.Clamp(mousePos.y,yRange.x,yRange.y);
         //dist in FixedUpdate()
         float distX=0;if(moveX){distX=Mathf.Abs(mousePos.x-transform.position.x);}
         float distY=0;if(moveY){distY=Mathf.Abs(mousePos.y-transform.position.y);}
@@ -545,8 +543,8 @@ public class Player : MonoBehaviour{
         var newXpos=transform.position.x;
         var newYpos=transform.position.y;
 
-        if(moveX)newXpos=Mathf.Clamp(transform.position.x,xMin,xMax);
-        if(moveY)newYpos=Mathf.Clamp(transform.position.y,yMin,yMax);
+        if(moveX)newXpos=Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
+        if(moveY)newYpos=Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
 
         transform.position=new Vector2(newXpos,newYpos);
     }
@@ -555,8 +553,8 @@ public class Player : MonoBehaviour{
     Vector2 dragStopMousePos;
     public void MoveWithDrag(){
         //mouseDir=mousePos-(Vector2)dragStartPos;
-        mousePos.x=Mathf.Clamp(mousePos.x,xMin,xMax);
-        mousePos.y=Mathf.Clamp(mousePos.y,yMin,yMax);
+        mousePos.x=Mathf.Clamp(mousePos.x,xRange.x,xRange.y);
+        mousePos.y=Mathf.Clamp(mousePos.y,yRange.x,yRange.y);
 
         if(Input.GetButtonDown("Fire1")){if(dragStartPos==Vector2.zero){dragStartPos=mousePos;}}
         else if(Input.GetButtonUp("Fire1")){dragStartPos=Vector2.zero;}
@@ -591,18 +589,16 @@ public class Player : MonoBehaviour{
         var newXpos=transform.position.x;
         var newYpos=transform.position.y;
 
-        if(moveX)newXpos=Mathf.Clamp(transform.position.x,xMin,xMax);
-        if(moveY)newYpos=Mathf.Clamp(transform.position.y,yMin,yMax);
+        if(moveX)newXpos=Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
+        if(moveY)newYpos=Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
 
         transform.position=new Vector2(newXpos,newYpos);
     }
     #endregion
 
     void SetUpMoveBoundaries(){
-        xMin=-3.87f+paddingX;
-        xMax=3.87f-paddingX;
-        yMin=-6.95f+paddingY;
-        yMax=7f-paddingY;
+        xRange=new Vector2(Playfield.xRange.x+paddingX,Playfield.xRange.y-paddingX);
+        yRange=new Vector2(Playfield.yRange.x+paddingY,Playfield.yRange.y-paddingY);
     }
 
     //const float DCLICK_SHOOT_TIME=0.2f;
@@ -814,7 +810,7 @@ public class Player : MonoBehaviour{
         }else{yield break;}
     }}}
     private void DrawOtherWeapons(){
-        var cargoDist=2.8f;
+        //var cargoDist=2.8f;
         GameObject go=null;
         WeaponProperties w=null;
         if(GetWeaponProperty(powerup)!=null)w=GetWeaponProperty(powerup);else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}else Debug.LogWarning(powerup+" not added to WeaponProperties List");
@@ -1188,7 +1184,7 @@ public class Player : MonoBehaviour{
     public void SetPowerup(string name){
         powerup=name;
         WeaponProperties w=null;if(GetWeaponProperty(powerup)!=null){w=GetWeaponProperty(powerup);}else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}
-        if(w!=null&&w.duration>0)powerupTimer=w.duration;else Debug.LogWarning("WeeaponProperty not existant");
+        if(w!=null&&w.duration>0){powerupTimer=w.duration;}else if(w==null){Debug.LogWarning("WeaponProperty for "+name+" not defined");}
         //var i=this.GetType().GetField(name+"Duration").GetValue(this);
         //this.GetType().GetField("powerupTimer").SetValue(this,i);
     }

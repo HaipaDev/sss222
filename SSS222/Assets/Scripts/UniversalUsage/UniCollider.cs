@@ -112,16 +112,18 @@ public class UniCollider : MonoBehaviour{
     }
 
     public static void DMG_VFX(int type,Collider2D other, Transform transform, float dmg, int colorDef=ColorInt32.dmgColor){
+    if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
+        DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
         if(type==0){//Enemy - TriggerEnter
             GameAssets.instance.VFX("FlareHit", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
             if(GameSession.instance.dmgPopups==true&&dmg>0){
-                if(!other.gameObject.name.Contains(GameAssets.instance.Get("PLaser").name)){
-                    GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(colorDef));
-                }else{
+                if(dmgVal!=null&&dmgVal.dispDmgCount){
                     if(transform.GetComponent<Enemy>()!=null){
                     transform.GetComponent<Enemy>().dmgCount+=dmg;
                     if(transform.GetComponent<Enemy>().dmgCounted==false)transform.GetComponent<Enemy>().DispDmgCount(other.transform.position);
                     }
+                }else{
+                    GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(colorDef));
                 }
             }else if(GameSession.instance.dmgPopups==true&&dmg<0){
                 GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor));
@@ -143,7 +145,7 @@ public class UniCollider : MonoBehaviour{
             if(GameSession.instance.dmgPopups==true&&dmg>0&&!player.gclover&&!player.dashing){GameCanvas.instance.DMGPopup(dmg,other.transform.position,Color.red,2,true);}
             else if(dmg<0){GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1.5f,true);}
         }
-    }
+    }}
     public static DamageValues GetDmgVal(string objName){
         DamageValues dmgVal=null;
         List<GObject> assets=new List<GObject>();

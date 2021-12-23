@@ -14,7 +14,7 @@ public class PowerupDisplay : MonoBehaviour{
     Image img;
     TMPro.TextMeshProUGUI TMP;
 
-    Color color;
+    //Color color;
     Color color2;
     Image bg;
     void Start(){
@@ -56,8 +56,8 @@ public class PowerupDisplay : MonoBehaviour{
             if(pwrup!=null)name=pwrup;
             if(pwrup.Contains("A")&&name!=null){name=pwrup.Trim('A');}
             img.sprite=GameAssets.instance.Spr(name+"Pwrup");
-            if(pwrup=="null")color.a=0;
-            else color.a=1;
+            //if(pwrup=="null")color.a=0;
+            //else color.a=1;
         }else{
             if(Player.instance!=null){
                 if(Player.instance.statuses.Count>number){if(Player.instance.statuses[number]!=""){state=Player.instance.statuses[number];}else state="";}else state="";
@@ -72,7 +72,7 @@ public class PowerupDisplay : MonoBehaviour{
                     color2.a = 0f;
                     TMP.text = "";*/
                 }else{
-                    color.a = 1f;
+                    //color.a = 1f;
                     color2.a = 130/255f;
                     /*var sprr=this.GetType().GetField(state+"Sprite").GetValue(this);
                     this.GetType().GetField("sprite").SetValue(this,sprr);
