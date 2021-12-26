@@ -8,8 +8,8 @@ using Sirenix.OdinInspector;
 
 public class Enemy : MonoBehaviour{
     [Header("Enemy")]
-    [SerializeField] public enemyType type;
     [SerializeField] public string Name;
+    [SerializeField] public enemyType type;
     [SerializeField] public Vector2 size=Vector2.one;
     [DisableInEditorMode] public float sizeAvg=1;
     [SerializeField] public Sprite spr;
@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour{
     [SerializeField] float bulletDist=0.35f;
     [SerializeField] bool randomizeWaveDeath=false;
     [SerializeField] bool flyOff=false;
+    [SerializeField] public bool killOnDash=true;
     [Header("Drops & Points")]
     [SerializeField] public bool giveScore=true;
     [SerializeField] Vector2 scoreValue=new Vector2(1,10);
@@ -58,9 +59,10 @@ public class Enemy : MonoBehaviour{
         var i=GameRules.instance;
         if(i!=null){
         EnemyClass e=null;
-        foreach(EnemyClass enemy in i.enemies){if(enemy.name==Name){e=enemy;}}
+        e=System.Array.Find(i.enemies,x=>x.name==Name);
         if(e!=null){
-            if(GetComponent<CometRandomProperties>()==null)size=e.size;
+            type=e.type;
+            size=e.size;
             spr=e.spr;
             health=e.healthStart;
             healthMax=e.healthMax;
@@ -73,6 +75,7 @@ public class Enemy : MonoBehaviour{
             bulletDist=e.bulletDist;
             randomizeWaveDeath=e.randomizeWaveDeath;
             flyOff=e.flyOff;
+            killOnDash=e.killOnDash;
             
             giveScore=e.giveScore;
             scoreValue=e.scoreValue;

@@ -310,11 +310,6 @@ public static GameRules instance;
         if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
     }
     void OnValidate(){
-        /*foreach(var p in powerupsSpawners){
-            if(p.powerupSpawnerType==powerupSpawnerType.time){p.powerupSpawner=new powerupSpawnerTime();}
-            if(p.powerupSpawnerType==powerupSpawnerType.kills){p.powerupSpawner=new powerupSpawnerKills();}
-        }*/
-
         if(!shopOn)shopCargoOn=false;
         foreach(ListEvents le in lvlEvents){le.name="Levels: "+le.lvls.x+"-"+le.lvls.y;}
         foreach(EnemyClass e in enemies){
@@ -328,6 +323,13 @@ public static GameRules instance;
         }
         cometSettings.lunarDrops[0].name="Coin";
         if(cometSettings.lunarDrops.Count==0)cometSettings.lunarDrops.Add(new LootTableEntryDrops(){name="Coin",ammount=new Vector2(6,12),dropChance=101});
+
+        /*foreach(DamageValues dmgVal in dmgValues){
+            foreach(colliEventsClass co in dmgVal.colliEvents){
+                if(co.colliEventsType==colliEventsType.vfx){co.colliEvents=new colliEvent_VFX();}
+                if(co.colliEventsType==colliEventsType.playerDmg){co.colliEvents=new colliEvent_PlayerDmg();}
+            }
+        }*/
     }
     #region//Custom Events
     public void MultiplyhealthMax(float amnt){p.healthMax*=amnt;}
@@ -377,21 +379,59 @@ public class DamageValues{
     public string sound="EnemyHit";
     public string soundPhase="";
     public bool dispDmgCount=false;
+    public colliEvents[] colliEvents;
+    //public colliEventsClass[] colliEvents;
 }
 public enum dmgFxType{fire,decay,electrc,freeze,armor,fragile,power,weak,hack,blind,speed,slow,infenergy}
 [System.Serializable]
 public class DmgFxValues{
     public dmgFxType dmgFxType;
+    //public dmgFxReqs[] dmgFxReqs;
     public float length=1f;
     public float power=1f;
     public bool onPhase=false;
     public float chance=100f;
 }
+[System.Serializable]
+public class colliEvents{
+    public bool onPhase=false;
+    public string vfx="";
+    public Vector2 vfxPos;
+    public float dmgPlayer;
+    public dmgType dmgPlayerType=dmgType.silent;
+}
+/*[System.Serializable]
+public class colliEventsClass{
+    public colliEventsType colliEventsType;
+    public colliEvents colliEvents;
+}
+public enum colliEventsType{vfx,playerDmg}
+[System.Serializable]
+public class colliEvents{
+    public bool onPhase=false;
+}
+[System.Serializable]
+public class colliEvent_VFX:colliEvents{
+    public string name="ExplosionSmall";
+    public Vector2 pos;
+}
+[System.Serializable]
+public class colliEvent_PlayerDmg:colliEvents{
+    public float dmg=1;
+}*/
+
+
+/*public class dmgFxReqs{}
+public class dmgFxReqs_angle:dmgFxReqs{
+    public float angleP;
+}*/
+
 
 
 [System.Serializable]
 public class EnemyClass{
     public string name;
+    public enemyType type;
     public Vector2 size = Vector2.one;
     public Sprite spr;
     public float healthStart=25;
@@ -405,6 +445,7 @@ public class EnemyClass{
     public float bulletDist=0.35f;
     public bool randomizeWaveDeath = false;
     public bool flyOff = false;
+    public bool killOnDash=true;
 [Header("Drops & Points")]
     public bool giveScore = true;
     public Vector2 scoreValue=new Vector2(1,10);

@@ -22,12 +22,9 @@ public class GlareDevil : MonoBehaviour{
         path=GetComponent<EnemyPathing>();
     }
     void Update(){  if(!GameSession.GlobalTimeIsPaused){
-        if(Player.instance!=null){
-            if(path.waypointIndex==path.waypointsL.Count-1){GetComponent<SpriteRenderer>().flipX=false;transform.GetChild(0).position=new Vector3(transform.position.x+(-GetComponent<Glow>().GetXX()),transform.position.y+GetComponent<Glow>().GetYY(),0.01f);}
-            if(path.waypointIndex==1){GetComponent<SpriteRenderer>().flipX=true;transform.GetChild(0).position=new Vector3(transform.position.x+GetComponent<Glow>().GetXX(),transform.position.y+GetComponent<Glow>().GetYY(),0.01f);}
-            //transform.GetChild(0).GetComponent<ParticleSystem>().Play();
-            if(Vector2.Distance(Player.instance.transform.position,transform.position)<radiusBlind){Blind();}
-        }
+        if(path.waypointIndex==path.waypointsL.Count-1){GetComponent<SpriteRenderer>().flipX=false;transform.GetChild(0).position=new Vector3(transform.position.x+(-GetComponent<Glow>().GetXX()),transform.position.y+GetComponent<Glow>().GetYY(),0.01f);}
+        if(path.waypointIndex==1){GetComponent<SpriteRenderer>().flipX=true;transform.GetChild(0).position=new Vector3(transform.position.x+GetComponent<Glow>().GetXX(),transform.position.y+GetComponent<Glow>().GetYY(),0.01f);}
+        if(Player.instance!=null)if(Vector2.Distance(Player.instance.transform.position,transform.position)<radiusBlind){Blind();}
         if(timerBlind>0)timerBlind-=Time.deltaTime;
     }}
     void Blind(){if(timerBlind<=0&&timerBlind!=-4){Player.instance.Blind(efxBlind.x,efxBlind.y);AudioManager.instance.Play("GlareDevil");timerBlind=timerBlindMax;}}

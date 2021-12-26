@@ -8,7 +8,7 @@ public class PlayerCollider : MonoBehaviour{
     public float dmgTimer;
     public string lastHitObj;
     public float lastHitDmg;
-    public List<colliTypes> collisionTypes=UniCollider.colliTypesForPl;
+    public List<colliTypes> colliTypes=UniCollider.colliTypesForPl;
 
     Player player;
     void Start(){player=Player.instance;}
@@ -20,17 +20,20 @@ public class PlayerCollider : MonoBehaviour{
             #region//Enemies, World etc
             if(!other.gameObject.CompareTag("Powerups")){
                 DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
-                if(dmgVal!=null)dmg=UniCollider.TriggerCollision(other,transform,collisionTypes);
-                if(player.dashing==false)PlayerEffects(other.gameObject.name);
+                if(dmgVal!=null){
+                    dmg=UniCollider.TriggerCollision(other,transform,colliTypes);
+                    if(player.dashing==false)PlayerEffects(other.gameObject.name);
+                } 
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){
+                    Enemy en=other.GetComponent<Enemy>();
                     if(player.dashing==false){
                         if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
                         else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
                         GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,transform.position.y+0.5f),0.3f);
-                        if(!UniCollider.GetDmgVal(other.gameObject.name).phase)if(other.GetComponent<Enemy>()!=null){other.GetComponent<Enemy>().Kill(false);}
+                        if(!UniCollider.GetDmgVal(other.gameObject.name).phase)if(en!=null){en.Kill(false);}
                     }
                     else if(player.shadow==true&&player.dashing==true){
-                        if(other.GetComponent<Enemy>()!=null){other.GetComponent<Enemy>().Kill();}
+                        if(en!=null){if(en.killOnDash){en.Kill();}else{float dmgS=UniCollider.GetDmgValAbs("Shadowdash").dmg;en.health-=dmgS;UniCollider.DMG_VFX(0,other,other.transform,dmgS);}}
                    }
                 }else{
                     if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
@@ -201,8 +204,10 @@ public class PlayerCollider : MonoBehaviour{
                 if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
                 float dmg=0;
                 DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
-                if(dmgVal!=null)dmg=UniCollider.TriggerCollision(other,transform,collisionTypes,true);
-                PlayerEffects(other.gameObject.name,true);
+                if(dmgVal!=null){
+                    dmg=UniCollider.TriggerCollision(other,transform,colliTypes,true);
+                    PlayerEffects(other.gameObject.name,true);
+                }
 
                 UniCollider.DMG_VFX(3,other,transform,dmg);
                 if(dmg>0)player.Damage(dmg,dmgType.silent);
@@ -218,22 +223,24 @@ public class PlayerCollider : MonoBehaviour{
    void PlayerEffects(string goName,bool phase=false){
         DamageValues dmgVal=UniCollider.GetDmgVal(goName);
         if(dmgVal!=null){
-            if(dmgVal.dmgFx){
-                foreach(DmgFxValues fx in dmgVal.dmgFxValues){
-                    if((!phase||(phase&&fx.onPhase))&&(fx.chance>=Random.Range(0f,100f))){
-                        if(fx.dmgFxType==dmgFxType.fire){player.OnFire(fx.length,fx.power);}
-                        if(fx.dmgFxType==dmgFxType.decay){player.Decay(fx.length,fx.power);}
-                        if(fx.dmgFxType==dmgFxType.electrc){player.Electrc(fx.length);}
-                        if(fx.dmgFxType==dmgFxType.freeze){player.Freeze(fx.length);}
-                        if(fx.dmgFxType==dmgFxType.armor){player.Armor(fx.length,fx.power);}
-                        if(fx.dmgFxType==dmgFxType.fragile){player.Fragile(fx.length,fx.power);}
-                        if(fx.dmgFxType==dmgFxType.power){player.Power(fx.length,fx.power);}
-                        if(fx.dmgFxType==dmgFxType.weak){player.Weaken(fx.length,fx.power);}
-                        if(fx.dmgFxType==dmgFxType.hack){player.Hack(fx.length);}
-                        if(fx.dmgFxType==dmgFxType.blind){player.Blind(fx.length,fx.power);}
-                        if(fx.dmgFxType==dmgFxType.speed){player.Speed(fx.length,fx.power);}
-                        if(fx.dmgFxType==dmgFxType.slow){player.Slow(fx.length,fx.power);}
-                        if(fx.dmgFxType==dmgFxType.infenergy){player.InfEnergy(fx.length);}
+            if(colliTypes.Contains(dmgVal.colliType)){
+                if(dmgVal.dmgFx){
+                    foreach(DmgFxValues fx in dmgVal.dmgFxValues){
+                        if((!phase||(phase&&fx.onPhase))&&(fx.chance>=Random.Range(0f,100f))){
+                            if(fx.dmgFxType==dmgFxType.fire){player.OnFire(fx.length,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.decay){player.Decay(fx.length,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.electrc){player.Electrc(fx.length);}
+                            if(fx.dmgFxType==dmgFxType.freeze){player.Freeze(fx.length);}
+                            if(fx.dmgFxType==dmgFxType.armor){player.Armor(fx.length,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.fragile){player.Fragile(fx.length,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.power){player.Power(fx.length,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.weak){player.Weaken(fx.length,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.hack){player.Hack(fx.length);}
+                            if(fx.dmgFxType==dmgFxType.blind){player.Blind(fx.length,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.speed){player.Speed(fx.length,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.slow){player.Slow(fx.length,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.infenergy){player.InfEnergy(fx.length);}
+                        }
                     }
                 }
             }

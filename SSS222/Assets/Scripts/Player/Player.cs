@@ -387,14 +387,18 @@ public class Player : MonoBehaviour{
         Die();
         CountTimeMovementPressed();
         if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
-            if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
-            if(GetComponent<BackflameEffect>().BFlame!=null)if(GetComponent<BackflameEffect>().BFlame.activeSelf==false){GetComponent<BackflameEffect>().BFlame.SetActive(true);}
+            if(GetComponent<BackflameEffect>()!=null){
+                if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
+                if(GetComponent<BackflameEffect>().BFlame!=null)if(GetComponent<BackflameEffect>().BFlame.activeSelf==false){GetComponent<BackflameEffect>().BFlame.SetActive(true);}
+            }
             if(inputType!=InputType.mouse&&inputType!=InputType.drag){MovePlayer();}
             else if(inputType==InputType.drag){MoveWithDrag();}
             else{MoveWithMouse();}
         }else{
-            if(GetComponent<BackflameEffect>().BFlame!=null)if(GetComponent<BackflameEffect>().BFlame.activeSelf==true){GetComponent<BackflameEffect>().BFlame.SetActive(false);}
-            if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
+            if(GetComponent<BackflameEffect>()!=null){
+                if(GetComponent<BackflameEffect>().BFlame!=null)if(GetComponent<BackflameEffect>().BFlame.activeSelf==true){GetComponent<BackflameEffect>().BFlame.SetActive(false);}
+                if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
+            }
         }
         if(shootTimer>0)shootTimer-=Time.deltaTime;
         if(instantiateTimer>0)instantiateTimer-=Time.deltaTime;
@@ -425,11 +429,11 @@ public class Player : MonoBehaviour{
             //Blue Flame for Hardcore
             if(GameSession.instance.CheckGameModeSelected("Hardcore")){
                 if((UpgradeMenu.instance.total_UpgradesLvl<bflameDmgTillLvl||bflameDmgTillLvl<=0)&&!GetComponent<BackflameEffect>().BFlame.name.Contains("Blue")){
-                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame_BluePlayer");
+                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame_Blue");
                 }
                 //Reverse: dmg from Lvl
                 if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&!GetComponent<BackflameEffect>().BFlame.name.Contains("Dmg")){
-                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlameDMG_BluePlayer");
+                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlameDMG_Blue");
                     fuelDrainAmnt*=2;
                 }
             }else{//Revert to default flame when Level above
@@ -865,8 +869,8 @@ public class Player : MonoBehaviour{
         if(gcloverTimer<=0&&gcloverTimer>-4){AudioManager.instance.Play("GCloverOff");ResetStatus("gclover");}
 
         if(shadowTimer<=0&&shadowTimer>-4){AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();ResetStatus("shadow");}
-        if(shadow==true){Shadow();if(GetComponent<BackflameEffect>().enabled==true)GetComponent<BackflameEffect>().enabled=false;}
-        else{dashTime=-4;if(GetComponent<BackflameEffect>().enabled==false)GetComponent<BackflameEffect>().enabled=true;}
+        if(shadow==true){Shadow();if(GetComponent<BackflameEffect>()!=null){if(GetComponent<BackflameEffect>().enabled==true)GetComponent<BackflameEffect>().enabled=false;}}
+        else{dashTime=-4;if(GetComponent<BackflameEffect>()!=null){if(GetComponent<BackflameEffect>().enabled==false)GetComponent<BackflameEffect>().enabled=true;}}
         if(dashingEnabled){
             if(shadow==true&&dashTime<=0&&dashTime!=-4){rb.velocity=Vector2.zero; dashing=false; /*moveX=moveXwas;moveY=moveYwas;*/ dashTime=-4;}
             else{if(!GameSession.GlobalTimeIsPaused){dashTime-=Time.deltaTime;}

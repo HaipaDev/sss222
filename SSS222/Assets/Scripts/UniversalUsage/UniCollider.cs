@@ -13,12 +13,18 @@ public class UniCollider : MonoBehaviour{
         if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
             DamageValues dmgVal;
             dmgVal=GetDmgVal(other.gameObject.name);
+            if(dmgVal==null){dmgVal=GetDmgValAbs(other.gameObject.name.Split('_')[0]);}
             if(dmgVal!=null){if(collis.Contains(dmgVal.colliType)){
                 dmg=dmgVal.dmg;if(triggerStay)dmg=dmgVal.dmgPhase;
                 if(dmgVal.dmgBySize&&!dmgVal.dmgBySpeed){dmg*=((other.gameObject.transform.localScale.x+other.gameObject.transform.localScale.y)/2);}
                 else if(!dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.magnitude);}
                 else if(dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=((other.gameObject.transform.localScale.x+other.gameObject.transform.localScale.y)/2)*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.magnitude);}
-
+                
+                foreach(colliEvents co in dmgVal.colliEvents){
+                    if(!String.IsNullOrEmpty(co.vfx)){if(GameAssets.instance.GetVFX(co.vfx)!=null)Instantiate(GameAssets.instance.GetVFX(co.vfx),(Vector2)transform.position+co.vfxPos,Quaternion.identity);}
+                    if(co.dmgPlayer!=0){if(Player.instance!=null){Player.instance.Damage(co.dmgPlayer,co.dmgPlayerType);}}
+                }
+                
                 if(!dmgVal.phase){Destroy(other.gameObject,0.01f);}
                 else{var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq==null){dmgPhaseFreq=other.gameObject.AddComponent<Tag_DmgPhaseFreq>();}
                     dmgPhaseFreq.phaseFreqFirst=dmgVal.phaseFreqFirst;
@@ -153,8 +159,16 @@ public class UniCollider : MonoBehaviour{
         foreach(GObject vfx in GameAssets.instance.vfx){assets.Add(vfx);}
         var asset=assets.Find(x=>objName.Contains(x.gobj.name));
         if(asset!=null)dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==asset.name);
+        if(dmgVal==null){dmgVal=GetDmgValAbs(objName.Split('_')[0]);}
         if(dmgVal!=null)return dmgVal;
         else Debug.LogWarning("DamageValues not defined for "+objName);return null;
+    }
+    public static DamageValues GetDmgValAbs(string dmgValName){
+        DamageValues dmgVal=null;
+        List<GObject> assets=new List<GObject>();
+        dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==dmgValName);
+        if(dmgVal!=null)return dmgVal;
+        else Debug.LogWarning("DamageValuesAbs not defined for "+dmgValName);return null;
     }
 }
 

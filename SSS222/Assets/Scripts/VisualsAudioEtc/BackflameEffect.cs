@@ -16,9 +16,10 @@ public class BackflameEffect : MonoBehaviour{
         var xxx=transform.position.x+xx;
         var yyy=transform.position.y+yy;
         float zz=0f;
+        if(onTop==true){zz=transform.position.z-0.01f;}
         if(BFlame==null){
-            if(onTop==true){zz=transform.position.z-0.01f;}
             if(part!=null){BFlame=Instantiate(part,new Vector3(xxx,yyy,zz),Quaternion.identity,transform);}else{Debug.LogWarning("No particle attached to BackflameEffect of "+gameObject.name);}
+        }if(BFlame!=null){
             if(stayStill==true){BFlame.transform.eulerAngles=Vector3.zero;}
             else{BFlame.transform.eulerAngles=new Vector3(0,0,angle);}
             if(SaveSerial.instance.settingsData.particles||_exceptions())BFlame.GetComponent<ParticleSystem>().Play();
@@ -29,7 +30,8 @@ public class BackflameEffect : MonoBehaviour{
     public void ClearBFlame(){Destroy(BFlame);BFlame=null;}
     bool _exceptions(){if(BFlame.GetComponent<DamageParticle>()!=null
     ||BFlame.name.Contains(GameAssets.instance.GetVFX("BFlameDMG").name)
-    ||BFlame.name.Contains(GameAssets.instance.GetVFX("BFlameBlueDMG").name)
+    ||BFlame.name.Contains(GameAssets.instance.GetVFX("BFlameDMG_Blue").name)
     )
-    return true;else if(SaveSerial.instance.settingsData.quality==0)return false;else return false;}
+    return true;
+    else if(SaveSerial.instance.settingsData.quality==0)return false;else return false;}
 }

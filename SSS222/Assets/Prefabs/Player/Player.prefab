@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 1949430517914965929}
   - component: {fileID: 3388790463455218104}
   - component: {fileID: 502397296}
-  - component: {fileID: 1143734159}
   - component: {fileID: -6162074867996871907}
+  - component: {fileID: 1143734159}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -343,7 +343,7 @@ MonoBehaviour:
   mouseDir: {x: 0, y: 0}
   dist: 0
   velocity: {x: 0, y: 0}
-  shipScale: 0.89
+  shipScale: 0.95
   mPressedTime: 0
   joystick: {fileID: 0}
   moving: 0
@@ -421,11 +421,26 @@ MonoBehaviour:
   part: {fileID: 100000, guid: e2ce195318a38844aa897f96496098c8, type: 3}
   xx: 0
   yy: -0.6
-  time: 0.3
   onTop: 1
   stayStill: 0
   angle: 0
   BFlame: {fileID: 0}
+--- !u!114 &-6162074867996871907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4546529352650547393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e1bc0376da4f34bb96c9aab489ea09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlayPrefab: {fileID: 4881046078246147718, guid: ecc7f2d405fb33542808b48eca5c3d11,
+    type: 3}
+  skinName: 
+  chameleonOvColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!82 &1143734159
 AudioSource:
   m_ObjectHideFlags: 0
@@ -523,19 +538,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-6162074867996871907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4546529352650547393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71e1bc0376da4f34bb96c9aab489ea09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  overlayPrefab: {fileID: 4881046078246147718, guid: ecc7f2d405fb33542808b48eca5c3d11,
-    type: 3}
-  skinName: 
-  chameleonOvColor: {r: 1, g: 1, b: 1, a: 1}
