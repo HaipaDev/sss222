@@ -15,7 +15,7 @@ public class UniCollider : MonoBehaviour{
             dmgVal=GetDmgVal(other.gameObject.name);
             if(dmgVal==null){dmgVal=GetDmgValAbs(other.gameObject.name.Split('_')[0]);}
             if(dmgVal!=null){if(collis.Contains(dmgVal.colliType)){
-                dmg=dmgVal.dmg;if(triggerStay)dmg=dmgVal.dmgPhase;
+                dmg=dmgVal.dmg;if(triggerStay){dmg=dmgVal.dmgPhase;}
                 if(dmgVal.dmgBySize&&!dmgVal.dmgBySpeed){dmg*=((other.gameObject.transform.localScale.x+other.gameObject.transform.localScale.y)/2);}
                 else if(!dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.magnitude);}
                 else if(dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=((other.gameObject.transform.localScale.x+other.gameObject.transform.localScale.y)/2)*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.magnitude);}
@@ -33,6 +33,8 @@ public class UniCollider : MonoBehaviour{
                     dmgPhaseFreq.soundPhase=dmgVal.soundPhase;
                     if(dmgVal.soundPhase=="-"){dmgPhaseFreq.soundPhase=dmgVal.sound;}
                     else if(dmgVal.soundPhase=="."){dmgPhaseFreq.soundPhase="EnemyHit";}
+
+                    dmgPhaseFreq.SetTimer();
                 }
                 if(!triggerStay)if(!String.IsNullOrEmpty(dmgVal.sound))AudioManager.instance.Play(dmgVal.sound);
             }

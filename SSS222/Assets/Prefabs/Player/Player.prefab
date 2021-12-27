@@ -218,7 +218,7 @@ MonoBehaviour:
   armorMulti: 1
   dmgMulti: 1
   shootMulti: 1
-  shipScaleDefault: 0.89
+  shipScaleDefault: 0.95
   bulletResize: 0
   bflameDmgTillLvl: 1
   statuses: []
@@ -366,7 +366,7 @@ MonoBehaviour:
   dmgTimer: 0
   lastHitObj: 
   lastHitDmg: 0
-  collisionTypes: 02000000030000000400000005000000
+  colliTypes: 02000000030000000400000005000000
 --- !u!114 &3388790463455218104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,8 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 100000, guid: e2ce195318a38844aa897f96496098c8, type: 3}
-  xx: 0
-  yy: -0.6
+  offset: {x: 0, y: -0.6}
   onTop: 1
   stayStill: 0
   angle: 0

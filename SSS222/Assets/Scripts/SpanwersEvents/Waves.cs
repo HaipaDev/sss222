@@ -96,12 +96,14 @@ public class Waves : MonoBehaviour{
     switch(waveConfig.wavePathType){
         case wavePathType.startToEnd:
             for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
-                var newEnemy=Instantiate(
+                GameObject go=Instantiate(
                     waveConfig.GetEnemyPrefab(),
                     waveConfig.GetWaypointsStart()[enCount].position,
                     Quaternion.identity);
-                newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                newEnemy.GetComponent<EnemyPathing>().enemyIndex=enCount;
+                if(go.GetComponent<EnemyPathing>()!=null){
+                    go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                    go.GetComponent<EnemyPathing>().enemyIndex=enCount;
+                }else{Debug.LogError("No EnemyPathing for "+go.name);}
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             break;
@@ -110,12 +112,14 @@ public class Waves : MonoBehaviour{
                 Vector2 pos;
                 pos.x=Random.Range(waveConfig.GetWaypointsSingle()[0].position.x,waveConfig.GetWaypointsSingle()[1].position.x);
                 pos.y=Random.Range(waveConfig.GetWaypointsSingle()[0].position.y,waveConfig.GetWaypointsSingle()[1].position.y);
-                var newEnemy=Instantiate(
+                GameObject go=Instantiate(
                     waveConfig.GetEnemyPrefab(),
                     pos,
                     Quaternion.identity);
-                newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                // newEnemy.GetComponent<EnemyPathing>().enemyIndex=enCount;
+                if(go.GetComponent<EnemyPathing>()!=null){
+                    go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                    // go.GetComponent<EnemyPathing>().enemyIndex=enCount;
+                }
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             break;
@@ -123,12 +127,14 @@ public class Waves : MonoBehaviour{
             var pR=(WaveConfig.pathRandom)waveConfig.wavePaths;
             var RpathIndex=Random.Range(0, pR.pathsRandom.Count);
             for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
-                var newEnemy=Instantiate(
+                GameObject go=Instantiate(
                     waveConfig.GetEnemyPrefab(),
                     waveConfig.GetWaypointsRandomPath(RpathIndex)[0].position,
                     Quaternion.identity);
-                newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                newEnemy.GetComponent<EnemyPathing>().enemyIndex=RpathIndex;
+                if(go.GetComponent<EnemyPathing>()!=null){
+                    go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                    go.GetComponent<EnemyPathing>().enemyIndex=RpathIndex;
+                }else{Debug.LogError("No EnemyPathing for "+go.name);}
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             break;
@@ -141,13 +147,15 @@ public class Waves : MonoBehaviour{
                 var pos=waveConfig.GetWaypointRandomPoint().position;
                 var w=(WaveConfig.pathRandomPoint)waveConfig.wavePaths;
                 if(w.closestToPlayer&&Player.instance!=null){pos=waveConfig.GetWaypointClosestToPlayer().position;}
-                var newEnemy=Instantiate(
+                GameObject go=Instantiate(
                     waveConfig.GetEnemyPrefab(),
                     pos,
                     Quaternion.identity);
-                newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                newEnemy.GetComponent<EnemyPathing>().waypointIndex=Random.Range(0,waypoints.Count);
-                //newEnemy.GetComponent<EnemyPathing>().waypointIndex=enCount;
+                if(go.GetComponent<EnemyPathing>()!=null){
+                    go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                    go.GetComponent<EnemyPathing>().waypointIndex=Random.Range(0,waypoints.Count);
+                    //go.GetComponent<EnemyPathing>().waypointIndex=enCount;
+                }else{Debug.LogError("No EnemyPathing for "+go.name);}
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             break;
@@ -155,23 +163,27 @@ public class Waves : MonoBehaviour{
             if(Player.instance!=null){
                 var pS=(WaveConfig.shipPlace)waveConfig.wavePaths;
                 for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
-                    var newEnemy=Instantiate(
+                    GameObject go=Instantiate(
                         waveConfig.GetEnemyPrefab(),
                         waveConfig.GetShipPlaceCoords(waveConfig),
                     Quaternion.identity);
-                    if(GetComponent<EnemyPathing>()!=null)newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                    if(GetComponent<EnemyPathing>()!=null){
+                        go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                    }else{Debug.LogError("No EnemyPathing for "+go.name);}
                     yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
                 }
             }
             break;
         case wavePathType.loopPath:
             for(int enCount=0; enCount<waveConfig.GetNumberOfEnemies(); enCount++){
-                var newEnemy=Instantiate(
+                GameObject go=Instantiate(
                     waveConfig.GetEnemyPrefab(),
                     waveConfig.GetWaypointsSingle()[enCount].position,
                     Quaternion.identity);
-                newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                newEnemy.GetComponent<EnemyPathing>().enemyIndex=enCount;
+                if(go.GetComponent<EnemyPathing>()!=null){
+                    go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                    go.GetComponent<EnemyPathing>().enemyIndex=enCount;
+                }else{Debug.LogError("No EnemyPathing for "+go.name);}
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             break;

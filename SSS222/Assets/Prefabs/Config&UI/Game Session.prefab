@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8689102416231088193}
   - component: {fileID: 1110796801287457597}
-  - component: {fileID: -8367683804401754267}
-  - component: {fileID: 324381181996544345}
   m_Layer: 0
   m_Name: Game Session
   m_TagString: Untagged
@@ -53,11 +51,9 @@ MonoBehaviour:
   xp: 0
   xpTotal: 0
   enemiesCount: 0
+  stayingTimeXP: 0
+  movingTimeXP: 0
   anyUpgradesOn: 1
-  EVscore: 0
-  EVscoreMax: 30
-  shopScore: 0
-  shopScoreMax: 250
   xpMax: 100
   enballDropMulti: 1
   coinDropMulti: 1
@@ -82,27 +78,3 @@ MonoBehaviour:
   gameModeSelected: 0
   restartTimer: -4
   gameSessionTime: 0
---- !u!114 &-8367683804401754267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2670168737584117729}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396e9563a336a7347afd0df5ce55c7a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &324381181996544345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2670168737584117729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 297224bda570ad64d8cce041efb91a30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

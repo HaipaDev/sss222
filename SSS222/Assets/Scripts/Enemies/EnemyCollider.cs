@@ -33,9 +33,7 @@ public class EnemyCollider : MonoBehaviour{
                     GetComponent<Enemy>().health-=dmg;
                     UniCollider.DMG_VFX(1,other,transform,dmg);
                 }
-                
             }
-            dmgPhaseFreq.SetTimer();
         }}
     }}}
     void OnTriggerExit2D(Collider2D other){
