@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SoundwaveA
+  m_Name: Soundwave
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -93,16 +93,16 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 7073126606480019904, guid: d3e8bdc4e2a78034da9c80cfb608a018,
+      value: {fileID: 1246187176296099750, guid: d01a0821fb80edf41ac51f6c157969c4,
         type: 3}
     - time: 0.25
-      value: {fileID: -8486837943327761747, guid: d3e8bdc4e2a78034da9c80cfb608a018,
+      value: {fileID: 7840470197516808625, guid: d01a0821fb80edf41ac51f6c157969c4,
         type: 3}
     - time: 0.5
-      value: {fileID: 2556156891659517640, guid: d3e8bdc4e2a78034da9c80cfb608a018,
+      value: {fileID: -3055086457686638893, guid: d01a0821fb80edf41ac51f6c157969c4,
         type: 3}
     - time: 0.8333333
-      value: {fileID: -8486837943327761747, guid: d3e8bdc4e2a78034da9c80cfb608a018,
+      value: {fileID: 7840470197516808625, guid: d01a0821fb80edf41ac51f6c157969c4,
         type: 3}
     attribute: m_Sprite
     path: 
@@ -130,10 +130,10 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 7073126606480019904, guid: d3e8bdc4e2a78034da9c80cfb608a018, type: 3}
-    - {fileID: -8486837943327761747, guid: d3e8bdc4e2a78034da9c80cfb608a018, type: 3}
-    - {fileID: 2556156891659517640, guid: d3e8bdc4e2a78034da9c80cfb608a018, type: 3}
-    - {fileID: -8486837943327761747, guid: d3e8bdc4e2a78034da9c80cfb608a018, type: 3}
+    - {fileID: 1246187176296099750, guid: d01a0821fb80edf41ac51f6c157969c4, type: 3}
+    - {fileID: 7840470197516808625, guid: d01a0821fb80edf41ac51f6c157969c4, type: 3}
+    - {fileID: -3055086457686638893, guid: d01a0821fb80edf41ac51f6c157969c4, type: 3}
+    - {fileID: 7840470197516808625, guid: d01a0821fb80edf41ac51f6c157969c4, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

@@ -99,10 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a146ca398aa994084b41a9c1b4e79d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vlaser: 0
+  timerWarn: 0.1
+  timerCharging: 0.3
+  timerStay: 1
   stage: 0
-  timerExcl: 0.1
-  timerHlaserCharging: 0.3
-  timerHlaser: 1
   timer: -4
 --- !u!1 &5659793074958058510
 GameObject:

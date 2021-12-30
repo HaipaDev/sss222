@@ -723,6 +723,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: hlaserSettings.hlaserAnimation
+      value: 
+      objectReference: {fileID: 9100000, guid: 64d66b7c328eef6449e06a1c71f2dce2, type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: vlaserSettings.hlaserAnimation
+      value: 
+      objectReference: {fileID: 9100000, guid: 64d66b7c328eef6449e06a1c71f2dce2, type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: weaponProperties.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: da916730931875347ab349643d645f00,
@@ -856,6 +866,16 @@ PrefabInstance:
       propertyPath: enemies.Array.data[5].bulletDist
       value: 0.24
       objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: hlaserSettings.chargingAnimation
+      value: 
+      objectReference: {fileID: 9100000, guid: d383d5d131f9b0644b252328d54c84d2, type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: vlaserSettings.chargingAnimation
+      value: 
+      objectReference: {fileID: 9100000, guid: d383d5d131f9b0644b252328d54c84d2, type: 2}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: dmgValues.Array.data[11].dmgPhase

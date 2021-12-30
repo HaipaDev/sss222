@@ -684,6 +684,18 @@ MonoBehaviour:
     goblinBossSprite: {fileID: 21300000, guid: 39a25c8b6bd02054f89bc66720513032, type: 3}
     goblinbossHealth: 50
     goblinBossDrops: []
+  vlaserSettings:
+    timerWarn: 0.8
+    timerCharging: 1
+    timerStay: 3.3
+    chargingAnimation: {fileID: 9100000, guid: e934db25d7e0e1f46b62468ae3d791cc, type: 2}
+    hlaserAnimation: {fileID: 9100000, guid: a1f3b8815cf17fa4d882ceb6a891db8d, type: 2}
+  hlaserSettings:
+    timerWarn: 0.1
+    timerCharging: 0.3
+    timerStay: 1
+    chargingAnimation: {fileID: 9100000, guid: e934db25d7e0e1f46b62468ae3d791cc, type: 2}
+    hlaserAnimation: {fileID: 9100000, guid: a1f3b8815cf17fa4d882ceb6a891db8d, type: 2}
   dmgValues:
   - name: Shadowdash
     colliType: 0

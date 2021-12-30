@@ -124,50 +124,12 @@ public static GameRules instance;
     public VortexWheelSettings vortexWheelSettings;
     public GlareDevilSettings glareDevilSettings;
     public GoblinBossSettings goblinBossSettings;
+    public HLaserSettings vlaserSettings;
+    public HLaserSettings hlaserSettings;
 #endregion
 #region//Damage Values
 [Header("Damage Values")]
     public List<DamageValues> dmgValues;
-    /*public float dmgZone=2;
-    public float dmgShipFlame=1;
-    public float dmgLaser=5f;
-    public float dmgPhaser=0.5f;
-    public float dmgHRocket=13.5f;
-    public float dmgMiniLaser=0.32f;
-    public float dmgLSaber=0.86f;
-    public float dmgLSaberIni=7.77f;
-    public float dmgLClaws=7f;
-    public float dmgLClawsTouch=0.23f;
-    public float dmgGloomyScythes=40.5f;
-    public float dmgGloomyScythes_player=1f;
-    public float dmgShadowBT=40.5f;
-    public float dmgShadowBT_player=0f;
-    public float dmgQRocket=14.5f;
-    public float dmgPRocket=0f;
-    public float dmgPRocketExpl=0.5f;
-    public float dmgCBullet=2f;
-    public float dmgPlaser=6.78f;
-    public float dmgMPulse=130f;
-    //
-    public float dmgBlueFlame=0.2f;
-    public float dmgComet=10f;
-    public float dmgBat=36f;
-    public float dmgSoundwave=16.5f;
-    public float dmgEnemyShip1=80f;
-    public float dmgEBt=24.5f;
-    public float dmgEnSaber=2.5f;
-    public float dmgGoblin=16f;
-    public float dmgHealDrone=75f;
-    public float dmgVortex=70f;
-    public float dmgLeech=4f;
-    public float dmgVLaser=90f;
-    public float dmgHLaser=16f;
-    public float dmgStinger=33.3f;
-    public Vector2 efxStinger=new Vector2(20,1);
-    public float dmgGoblinBt=7f;
-    public Vector2 efxGoblinBt=new Vector2(6,0.8f);
-    public float dmgGlareDev = 8f;
-    public Vector2 efxGlareDev=new Vector2(1.5f,2f);*/
 #endregion
 #region//Shop
 [Header("Shop")]
@@ -514,7 +476,7 @@ public class VortexWheelSettings{
     public float chargeMultip=0.8f;
     public float chargeMultipS=1.3f;
     Sprite[] sprites;
-[Header("Bullet")]
+    [Header("Bullet")]
 	[AssetsOnly]public GameObject projectile;
 	public int numberOfProjectiles=4;
 	public float radius=5;
@@ -526,12 +488,19 @@ public class GlareDevilSettings{
     public float timerBlindMax=3.3f;
     public Vector2 efxBlind=new Vector2(4,4);
 }
-
 [System.Serializable]
 public class GoblinBossSettings{
     public Sprite goblinBossSprite;
     public float goblinbossHealth=50f;
     public List<LootTableEntryDrops> goblinBossDrops;
+}
+[System.Serializable]
+public class HLaserSettings{
+    public float timerWarn=0.8f;
+    public float timerCharging=1f;
+    public float timerStay=3.3f;
+    public RuntimeAnimatorController chargingAnimation;
+    public RuntimeAnimatorController hlaserAnimation;
 }
 
 
