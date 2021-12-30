@@ -424,6 +424,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: enemies.Array.data[1].spr
+      value: 
+      objectReference: {fileID: 21300000, guid: 5ec7136927b5bf9479ec955cbeec1375,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: enemies.Array.data[2].spr
       value: 
       objectReference: {fileID: 21300000, guid: ec5062004304d664a832f10560d73d6d,
@@ -1016,6 +1022,36 @@ PrefabInstance:
       propertyPath: pwrupStatusList.Array.data[9].name
       value: HRockets
       objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cometSettings.sprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 5ec7136927b5bf9479ec955cbeec1375,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cometSettings.sprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 89e723b51930d4e449732dc9ff147a3e,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cometSettings.sprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8e24bcbd7156edf45b029a929d7ce4ab,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cometSettings.sprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: ebd26b50b0fd26548b3c923cb166f9e8,
+        type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cometSettings.sprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: ed48e6589613e724894bad22b211604f,
+        type: 3}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: dmgValues.Array.data[17].dmgBySpeed

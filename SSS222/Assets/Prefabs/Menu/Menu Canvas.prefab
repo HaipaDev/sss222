@@ -496,7 +496,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -399.9, y: -895}
+  m_AnchoredPosition: {x: -400, y: -895}
   m_SizeDelta: {x: 271.59424, y: 151.89044}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1542442389
@@ -527,7 +527,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.6t2
+  m_text: 0.6t3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4949b6fb520a4654ea3c7bdd9b500e11, type: 2}
   m_sharedMaterial: {fileID: -978371348157908502, guid: 4949b6fb520a4654ea3c7bdd9b500e11,
@@ -555,7 +555,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 156.45
+  m_fontSize: 155.1
   m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -591,7 +591,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.89382225, y: 0.28532586, z: -1.3258842, w: 0.21012254}
+  m_margin: {x: 0.09862468, y: 0.0017336333, z: 0.003324151, w: 0.053277466}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -666,7 +666,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: gameVersion
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &1766808194
 GameObject:
@@ -1277,7 +1276,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: highscore
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &2069664168863968223
 GameObject:
@@ -3245,7 +3243,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1847
 --- !u!1 &7332801927278242730
 GameObject:
   m_ObjectHideFlags: 0

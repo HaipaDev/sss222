@@ -298,7 +298,6 @@ GameObject:
   - component: {fileID: 3901649613940167583}
   - component: {fileID: 8662698040201135491}
   - component: {fileID: 8112162855438566483}
-  - component: {fileID: 6180457302279877014}
   - component: {fileID: 5100845521976585217}
   - component: {fileID: 35971218642252253}
   m_Layer: 9
@@ -363,7 +362,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -7952282665067591186, guid: a286d18132cc9c14db95ebff7080ccca,
+  m_Sprite: {fileID: -8011055773725140315, guid: 7fd60846c8f9ab04c85bebb5a2bc6814,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -413,7 +412,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.7333333, y: 1.3333334}
+    oldSize: {x: 2.9333334, y: 1.3333334}
     newSize: {x: 0.32, y: 0.96}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -441,21 +440,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!111 &6180457302279877014
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8112162855438566480}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 0a1d860d99e2f3a4198e5a5678f6e9ac, type: 2}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!82 &5100845521976585217
 AudioSource:
   m_ObjectHideFlags: 0
@@ -572,6 +556,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4583750446306744267}
     m_Modifications:
+    - target: {fileID: 4689941537683564804, guid: 660228baf8367524f9272152de705b66,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 6.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4689941537683564804, guid: 660228baf8367524f9272152de705b66,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 9.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4689941537683564804, guid: 660228baf8367524f9272152de705b66,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4689941537683564805, guid: 660228baf8367524f9272152de705b66,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a1f3b8815cf17fa4d882ceb6a891db8d, type: 2}
     - target: {fileID: 4689941537683564806, guid: 660228baf8367524f9272152de705b66,
         type: 3}
       propertyPath: m_Name

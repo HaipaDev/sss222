@@ -165,12 +165,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
   Name: Stinger
+  type: 0
   size: {x: 1, y: 1}
+  sizeAvg: 1
   spr: {fileID: 0}
   health: 17
   healthMax: 17
+  healthBySize: 0
   shooting: 0
   shootTime: {x: 1.75, y: 2.8}
   shotCounter: 0
@@ -180,6 +182,7 @@ MonoBehaviour:
   bulletDist: 0.35
   randomizeWaveDeath: 0
   flyOff: 0
+  killOnDash: 1
   giveScore: 1
   scoreValue: {x: 1, y: 10}
   xpAmnt: 1.5

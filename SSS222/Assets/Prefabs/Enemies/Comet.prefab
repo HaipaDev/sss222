@@ -108,7 +108,7 @@ MonoBehaviour:
   type: 2
   size: {x: 1, y: 1}
   sizeAvg: 1
-  spr: {fileID: 0}
+  spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
   health: 15
   healthMax: 15
   healthBySize: 0
@@ -161,7 +161,6 @@ MonoBehaviour:
   offset: {x: 0, y: 0.33}
   onTop: 0
   stayStill: 1
-  angle: 0
   BFlame: {fileID: 0}
 --- !u!114 &1490166543656379823
 MonoBehaviour:
@@ -180,11 +179,11 @@ MonoBehaviour:
   scoreBySize: 0
   scoreSizes: []
   sprites:
-  - {fileID: 21300000, guid: 99983d2108c82d9488eb046ba733b402, type: 3}
-  - {fileID: 21300000, guid: 9a41682c86a2e8646ab244683f0ab5e5, type: 3}
-  - {fileID: 21300000, guid: 934315a3b0cb1ac4ea7e145834d70dc7, type: 3}
-  - {fileID: 21300000, guid: dac756e11ea5f20458ac92124d3795de, type: 3}
-  - {fileID: 21300000, guid: a6f4957e5f138db408124ac4b05f0c0e, type: 3}
+  - {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
+  - {fileID: 21300000, guid: a96cf92567942b24da6085ec658da836, type: 3}
+  - {fileID: 21300000, guid: c8b78c577bddf8241b2e4e08235ef51d, type: 3}
+  - {fileID: 21300000, guid: c6e185be8e4515c41927fc135dc00be7, type: 3}
+  - {fileID: 21300000, guid: 2634062faf6b61048a41b04b5bd131ed, type: 3}
   bflamePart: {fileID: 0}
   sizeMultLunar: {x: 0.88, y: 1.55}
   lunarCometChance: 10
@@ -372,12 +371,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 99983d2108c82d9488eb046ba733b402, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8888889, y: 0.8888889}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

@@ -369,7 +369,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: timerTeleport
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &426448641
 GameObject:
@@ -1400,7 +1399,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: energyOffMax
-  valueLimitD: -1
   changeOnValidate: 1
 --- !u!114 &9069062583499244427
 MonoBehaviour:
@@ -1960,7 +1958,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: cores
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!114 &3014525795709322815
 MonoBehaviour:
@@ -2152,7 +2149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: hpOffMax
-  valueLimitD: -1
   changeOnValidate: 1
 --- !u!114 &7824376300298021762
 MonoBehaviour:
@@ -2304,7 +2300,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1847
 --- !u!114 &4882882321122474710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2604,7 +2600,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: evscore
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &3188765470237850405
 GameObject:
@@ -4367,7 +4362,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: score
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!114 &7641223027102124766
 MonoBehaviour:
@@ -5066,7 +5060,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: coins
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!114 &4833640774576842606
 MonoBehaviour:
@@ -5276,6 +5269,51 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2614155989906725886}
     m_Modifications:
+    - target: {fileID: 799342203077165380, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 161.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 799342203077165380, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 101
+      objectReference: {fileID: 0}
+    - target: {fileID: 799342203077165380, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 466.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1182530626917101333, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_Name
+      value: Cooldown_par
+      objectReference: {fileID: 0}
+    - target: {fileID: 2249936804335594906, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 161.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 2249936804335594906, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 101
+      objectReference: {fileID: 0}
+    - target: {fileID: 2249936804335594906, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 466.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 2249936804335594906, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 389.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 2277942862980892974, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 14.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2665643112130673543, guid: 8403b980781c67245b276530776781ee,
         type: 3}
       propertyPath: m_Pivot.x
@@ -5385,6 +5423,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OnScreen Buttons
+      objectReference: {fileID: 0}
+    - target: {fileID: 4884042196747786513, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208916419471422291, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_Name
+      value: Cooldown_par
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966662211686577789, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 13.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8474227279966909029, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8403b980781c67245b276530776781ee, type: 3}

@@ -539,6 +539,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Loader Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6138851717242086470, guid: a1d042a2d7fa16449ba3191e111a4031,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 1847
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1d042a2d7fa16449ba3191e111a4031, type: 3}
 --- !u!1001 &7685272909815653152
