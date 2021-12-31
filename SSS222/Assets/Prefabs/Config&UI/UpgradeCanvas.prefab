@@ -810,7 +810,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: hpRegen_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &448643371
 GameObject:
@@ -1243,7 +1242,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxEnergy_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &558831843
 GameObject:
@@ -1619,7 +1617,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: hpRegen
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &722767386
 GameObject:
@@ -1905,7 +1902,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speed_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &850068982
 GameObject:
@@ -2131,7 +2127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &893997693
 GameObject:
@@ -2705,7 +2700,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &1203874881
 GameObject:
@@ -4015,7 +4009,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &1562664457
 GameObject:
@@ -4561,7 +4554,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_hp
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &1885648730
 GameObject:
@@ -5402,7 +5394,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &791438352
 MonoBehaviour:
@@ -5828,7 +5819,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxLuck_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &96323918771997997
 GameObject:
@@ -6189,7 +6179,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &108760457192348690
 GameObject:
@@ -6340,7 +6329,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: teleport_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &167424701111590079
 GameObject:
@@ -6975,7 +6963,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &212506202870301260
 GameObject:
@@ -7127,7 +7114,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_enRegen
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &1557194838014847605
 MonoBehaviour:
@@ -7290,7 +7276,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &270784861456126853
 GameObject:
@@ -7768,7 +7753,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &8783083043466485427
 MonoBehaviour:
@@ -7931,7 +7915,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: enRegen
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &318800531048406911
 GameObject:
@@ -8443,7 +8426,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &376085760302378434
 GameObject:
@@ -8594,7 +8576,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &408133278511570814
 GameObject:
@@ -8981,7 +8962,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &7505075958281441905
 MonoBehaviour:
@@ -9657,7 +9637,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_hp
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &7675237889268696517
 MonoBehaviour:
@@ -9820,7 +9799,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxHealth_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &646416323513814658
 GameObject:
@@ -10046,7 +10024,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: enRegen
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &680570492051783612
 GameObject:
@@ -10548,7 +10525,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: luck_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &706851360853376008
 GameObject:
@@ -10901,7 +10877,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_hp
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &2323230948657338219
 MonoBehaviour:
@@ -12357,7 +12332,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: luck_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &1072660853705942638
 GameObject:
@@ -12508,7 +12482,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speed_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &1123281332748786713
 GameObject:
@@ -13408,7 +13381,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &4167328698248066230
 MonoBehaviour:
@@ -14412,7 +14384,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_hp
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &1602832663109501328
 GameObject:
@@ -15320,7 +15291,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &1198756822134630601
 MonoBehaviour:
@@ -15675,7 +15645,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: hpRegen_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &1792672096433369279
 GameObject:
@@ -16667,7 +16636,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &2027437097523885695
 GameObject:
@@ -16818,7 +16786,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxSpeed_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &2071703074325791058
 GameObject:
@@ -17400,7 +17367,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_hp
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &2139596021481782479
 GameObject:
@@ -18236,7 +18202,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxHealth_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &2263042893973173022
 GameObject:
@@ -18560,7 +18525,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &6736453541635834800
 MonoBehaviour:
@@ -18787,7 +18751,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxSpeed_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &2370301821617327360
 GameObject:
@@ -19209,7 +19172,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: mPulse_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &2402352764056982732
 GameObject:
@@ -20396,7 +20358,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speed_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &2564659208018317997
 GameObject:
@@ -20547,7 +20508,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: defaultPowerup_upgradeCost3
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &2566569623989549956
 GameObject:
@@ -21244,7 +21204,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: defaultPowerup_upgradeCost2
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &2718398415202491420
 GameObject:
@@ -21396,7 +21355,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &3008708667091349739
 MonoBehaviour:
@@ -22694,7 +22652,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1847
 --- !u!114 &2701126105686274912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22719,12 +22677,12 @@ MonoBehaviour:
   lvlbar: {fileID: 3062890652429657256}
   prevGameSpeed: 1
   total_UpgradesCountMax: 5
-  maxHealth_UpgradeAmnt: 5
-  maxHealth_UpgradeCost: 1
-  maxHealth_UpgradesCountMax: 3
-  maxEnergy_UpgradeAmnt: 5
-  maxEnergy_UpgradeCost: 1
-  maxEnergy_UpgradesCountMax: 4
+  healthMax_UpgradeAmnt: 5
+  healthMax_UpgradeCost: 1
+  healthMax_UpgradesCountMax: 5
+  energyMax_UpgradeAmnt: 5
+  energyMax_UpgradeCost: 1
+  energyMax_UpgradesCountMax: 4
   speed_UpgradeAmnt: 0.1
   speed_UpgradeCost: 1
   speed_UpgradesCountMax: 6
@@ -22747,12 +22705,12 @@ MonoBehaviour:
   enDiss_upgradeCost: 4
   enDiss_lvlReq: 5
   total_UpgradesCount: 0
-  lvlAboveSaveBars: 5
+  saveBarsFromLvl: 5
   total_UpgradesLvl: 0
-  maxHealth_UpgradesCount: 0
-  maxHealth_UpgradesLvl: 0
-  maxEnergy_UpgradesCount: 0
-  maxEnergy_UpgradesLvl: 0
+  healthMax_UpgradesCount: 0
+  healthMax_UpgradesLvl: 1
+  energyMax_UpgradesCount: 0
+  energyMax_UpgradesLvl: 1
   speed_UpgradesCount: 0
   speed_UpgradesLvl: 0
   luck_UpgradesCount: 0
@@ -23025,7 +22983,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxEnergy_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &3083877070075699693
 GameObject:
@@ -23582,7 +23539,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_hp
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &6420369307428458342
 MonoBehaviour:
@@ -23896,7 +23852,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: defaultPowerup_upgradeCost1
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &3293564566073286805
 GameObject:
@@ -24089,7 +24044,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &7173730294918549880
 MonoBehaviour:
@@ -24290,7 +24244,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: enRegen_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &3337458934688864878
 GameObject:
@@ -24516,7 +24469,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxEnergy_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &3366752416438669334
 GameObject:
@@ -24841,7 +24793,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &7899613470119394235
 MonoBehaviour:
@@ -25080,7 +25031,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speed_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &3496060775210319633
 GameObject:
@@ -25637,7 +25587,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: luck_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &3631677345651009556
 GameObject:
@@ -27052,7 +27001,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: mPulse_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &3817774552865236196
 GameObject:
@@ -27818,7 +27766,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &3924698933739839886
 GameObject:
@@ -27969,7 +27916,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: hpRegen
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &3932096395323865925
 GameObject:
@@ -29405,7 +29351,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &5586210966123634070
 MonoBehaviour:
@@ -29851,14 +29796,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.66258407, g: 0.2981043, b: 0.8207547, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4bf39b49527298e46828e681dcfab0dc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9b41932acbee54b4f911fbcdcae37bed, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -30139,7 +30084,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &4491755924696783326
 GameObject:
@@ -30910,7 +30854,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &1365835094291394028
 MonoBehaviour:
@@ -31225,7 +31168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &2566429244098472720
 MonoBehaviour:
@@ -31861,7 +31803,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_hp
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &5806691226341216156
 MonoBehaviour:
@@ -32673,7 +32614,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &539855561181815877
 MonoBehaviour:
@@ -33246,7 +33186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &5115642482119477908
 GameObject:
@@ -35177,7 +35116,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_hp
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &3655843110645367357
 MonoBehaviour:
@@ -37255,7 +37193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &859369711
 MonoBehaviour:
@@ -37418,7 +37355,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxHealth_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &5888479923425435563
 GameObject:
@@ -37569,7 +37505,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxEnergy_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &5895110779223098978
 GameObject:
@@ -38455,7 +38390,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxLuck_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &6090042022786938147
 GameObject:
@@ -38981,7 +38915,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxHealth_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &6163930966214256876
 GameObject:
@@ -39364,7 +39297,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &6194006062440090065
 GameObject:
@@ -39747,7 +39679,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_hp
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &6243639410165463423
 GameObject:
@@ -40046,7 +39977,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_hpRegen
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &7369255209163816242
 MonoBehaviour:
@@ -41915,7 +41845,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxHealth_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &6779358804591939889
 GameObject:
@@ -42066,7 +41995,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &6791228718895705920
 GameObject:
@@ -42390,7 +42318,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &6837212259409886906
 GameObject:
@@ -43054,7 +42981,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &7002735058933786765
 GameObject:
@@ -43303,7 +43229,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &6368733704311668141
 MonoBehaviour:
@@ -43680,7 +43605,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: enRegen_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &7162162828270951887
 GameObject:
@@ -43966,7 +43890,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: enDiss_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &7261966149574371927
 GameObject:
@@ -44397,7 +44320,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &7358464690736532374
 GameObject:
@@ -44688,7 +44610,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &7410555468716791710
 MonoBehaviour:
@@ -45002,7 +44923,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: luck_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &7433279212999065917
 GameObject:
@@ -45328,7 +45248,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxEnergy_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &7459681931926954019
 GameObject:
@@ -46777,7 +46696,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_enRegen
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &5625893988881323146
 MonoBehaviour:
@@ -47075,7 +46993,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: crMend_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &7749379666779380979
 GameObject:
@@ -47511,7 +47428,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speed
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &7849036588811377781
 GameObject:
@@ -48422,7 +48338,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &2823683286937631646
 MonoBehaviour:
@@ -49148,7 +49063,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &8051360248868303554
 GameObject:
@@ -49467,7 +49381,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_hpRegen
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &2054485305
 MonoBehaviour:
@@ -49707,7 +49620,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_hp
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &8158078476667111262
 GameObject:
@@ -50038,7 +49950,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &8221669945921545994
 GameObject:
@@ -51335,7 +51246,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_ship
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &8289521827860003086
 GameObject:
@@ -51524,7 +51434,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: luck
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &8327935653148305381
 GameObject:
@@ -52378,7 +52287,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvl_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!114 &3297041683384509408
 MonoBehaviour:
@@ -53615,7 +53523,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: max_energy
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &8817697855376336126
 GameObject:
@@ -55285,7 +55192,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: maxEnergy_upgradeCost
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1001 &76837749648567005
 PrefabInstance:
