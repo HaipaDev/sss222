@@ -161,12 +161,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 100000, guid: 096832bfc2651eb4b92bc8012922197b, type: 3}
-  xx: 0
-  yy: -0.6
-  time: 0.3
+  offset: {x: 0, y: 0.33}
   onTop: 1
   stayStill: 1
-  angle: 0
   BFlame: {fileID: 0}
 --- !u!114 &-9117117712606669741
 MonoBehaviour:
@@ -195,4 +192,4 @@ MonoBehaviour:
   dmgTimer: 0
   lastHitObj: 
   lastHitDmg: 0
-  collisionTypes: 0200000003000000
+  colliTypes: 02000000030000000400000005000000

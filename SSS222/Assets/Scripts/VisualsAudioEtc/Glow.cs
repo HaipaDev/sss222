@@ -3,38 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Glow : MonoBehaviour{
-    [SerializeField] GameObject glowVFX;
+    [SerializeField] string assetName="GlowAuto";
+    [SerializeField] bool materialClone=true;
+    [SerializeField] public Color color=Color.white;
+    [SerializeField] float size=0f;
+    //[SerializeField] float alpha=0.5f;
+    [SerializeField] float emissionSpeed=0f;
+    [SerializeField] int maxParticles=0;
+    [SerializeField] public Vector2 offset;
+    
     ParticleSystem ps;
-    public Color colorGlow = Color.red;
-    [SerializeField] float sizeGlow = 1f;
-    [SerializeField] float alphaGlow = 0.5f;
-    [SerializeField] float emissionSpeed = 7.63f;
-    //[SerializeField] float speed=
-    [SerializeField] float xx = 0;
-    [SerializeField] float yy = 0;
+    Material mat;
     void Start(){
-        var go=Instantiate(glowVFX,new Vector2(transform.position.x+xx,transform.position.y+yy),Quaternion.identity);
-        go.transform.parent=transform;
-        //transform.position=new Vector3(transform.position.x,transform.position.y,transform.position.z-0.01f);
-        ps=go.GetComponent<ParticleSystem>();
-        var col=ps.colorOverLifetime;
-        col.enabled=true;
-        colorGlow.a=alphaGlow;
-        col.color=colorGlow;
-        var size=ps.sizeOverLifetime;
-        size.enabled=true;
-        size.size=sizeGlow;
-        var emission=ps.emission;
-        emission.rateOverTime=emissionSpeed;
-    }
+        GameObject go=Instantiate(GameAssets.instance.GetVFX(assetName),transform);
+        go.transform.localPosition=offset;
 
-    void Update(){
-        if(!SaveSerial.instance.settingsData.particles&&ps.isPlaying){ps.Stop();}
-        if(SaveSerial.instance.settingsData.particles&&ps.isStopped){ps.Play();}
-        if(sizeGlow==-1){
-            sizeGlow=(transform.localScale.x+transform.localScale.y)/2;
+        if(go!=null){ps=go.GetComponent<ParticleSystem>();}else{Debug.LogWarning("No particle created for "+gameObject.name);}
+        if(ps!=null){
+            if(materialClone){
+                mat=ps.GetComponent<Renderer>().material=Instantiate(ps.GetComponent<Renderer>().material);
+                mat.SetTexture("_MainTex",GetComponent<SpriteRenderer>().sprite.texture);
+            }
+            var col=ps.colorOverLifetime;
+            col.enabled=true;
+            //color.a=alpha;
+            col.color=color;
+            var sizePs=ps.sizeOverLifetime;
+            sizePs.enabled=true;
+            if(size!=0)sizePs.size=size;
+            var emission=ps.emission;
+            if(maxParticles!=0)ps.maxParticles=maxParticles;
+            if(emissionSpeed!=0)emission.rateOverTime=emissionSpeed;
         }
     }
-    public float GetXX(){return xx;}
-    public float GetYY(){return yy;}
+    void Update(){
+        if(ps!=null){
+            if(!SaveSerial.instance.settingsData.particles&&ps.isPlaying){ps.Stop();}
+            if(SaveSerial.instance.settingsData.particles&&ps.isStopped){ps.Play();}
+        }
+
+        if(size==-1){size=(transform.localScale.x+transform.localScale.y)/2;}
+    }
+    void OnDestroy(){Destroy(mat);}
 }

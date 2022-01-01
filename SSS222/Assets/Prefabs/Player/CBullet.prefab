@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: 3229580754545001376}
   - component: {fileID: 3111251860985306412}
   - component: {fileID: -7376020833809441554}
-  - component: {fileID: -6723330439813553621}
   - component: {fileID: -6762143650873762682}
   m_Layer: 8
   m_Name: CBullet
@@ -337,20 +336,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-6723330439813553621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7c0a6cd33104f458caa6bbc316b8c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   energy: 0
   charged: 0
+  blockable: 1
 --- !u!114 &-6762143650873762682
 MonoBehaviour:
   m_ObjectHideFlags: 0

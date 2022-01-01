@@ -16,9 +16,7 @@ GameObject:
   - component: {fileID: 5381357303093761109}
   - component: {fileID: 4830943442673253679}
   - component: {fileID: 487403076291435772}
-  - component: {fileID: -6390383646227157615}
   - component: {fileID: 6021504876835340968}
-  - component: {fileID: 9015679668162711525}
   m_Layer: 8
   m_Name: LaserClassic
   m_TagString: PlayerWeapons
@@ -151,13 +149,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0.30704877, g: 0.6735923, b: 0.9433962, a: 1}
-  sizeGlow: 2
-  alphaGlow: 0.55
-  emissionSpeed: 7.63
-  xx: 0
-  yy: 0
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 0.3803922, g: 0.8980393, b: 1, a: 0.33333334}
+  size: 0
+  emissionSpeed: 0
+  offset: {x: 0, y: 0}
 --- !u!82 &5381357303093761109
 AudioSource:
   m_ObjectHideFlags: 0
@@ -282,18 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energy: 0
   charged: 0
---- !u!114 &-6390383646227157615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7c0a6cd33104f458caa6bbc316b8c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  blockable: 1
 --- !u!114 &6021504876835340968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,16 +293,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
---- !u!114 &9015679668162711525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}
