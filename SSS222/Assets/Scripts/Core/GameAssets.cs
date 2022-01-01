@@ -40,7 +40,7 @@ public class GameAssets : MonoBehaviour{
 		}
         return objref;
 	}
-    public GameObject VFX(string obj, Vector2 pos, float duration){
+    public GameObject VFX(string obj, Vector2 pos, float duration=0){
 		GObject o = Array.Find(vfx, item => item.name == obj);
 		if (o == null){
 			Debug.LogWarning("Object: " + obj + " not found!");
@@ -50,7 +50,7 @@ public class GameAssets : MonoBehaviour{
         GameObject objref;
 		if(SaveSerial.instance.settingsData.particles){
 			objref=Instantiate(gobj,pos,Quaternion.identity);
-			Destroy(objref,duration);
+			if(duration!=0)Destroy(objref,duration);
 			return objref;
 		}else return null;
 	}

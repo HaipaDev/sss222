@@ -321,8 +321,9 @@ MonoBehaviour:
   energyBallGet: 9
   energyBatteryGet: 11
   medkitEnergyGet: 40
-  microMedkitHpAmnt: 10
   medkitHpAmnt: 25
+  microMedkitHpAmnt: 10
+  healbeamHpAmnt: 0.05
   pwrupEnergyGet: 36
   enForPwrupRefill: 25
   enPwrupDuplicate: 42
@@ -418,7 +419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 100000, guid: e2ce195318a38844aa897f96496098c8, type: 3}
+  part: BFlameDMG
   offset: {x: 0, y: -0.6}
   onTop: 1
   stayStill: 0

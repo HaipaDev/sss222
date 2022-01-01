@@ -208,13 +208,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0, g: 1, b: 0.6677432, a: 1}
-  sizeGlow: 0.92
-  alphaGlow: 0.55
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 0.18823531, g: 0.7176471, b: 0.75294125, a: 0.11764706}
+  size: {x: 0, y: 0.5}
   emissionSpeed: 7.63
-  xx: 0
-  yy: 0
+  maxParticles: 0
+  offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!114 &-6575572109222253960
 MonoBehaviour:
   m_ObjectHideFlags: 0

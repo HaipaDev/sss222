@@ -149,13 +149,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: 814a845166329ad418dec84cf1d1821d, type: 3}
-  colorGlow: {r: 0.04705883, g: 0.9333334, b: 0.07450981, a: 1}
-  sizeGlow: 0.5
-  alphaGlow: 0.35
-  emissionSpeed: 9.9
-  xx: 0
-  yy: 0
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 0.1137255, g: 0.4666667, b: 0.18431373, a: 1}
+  size: {x: 0, y: 1.35}
+  emissionSpeed: 0
+  maxParticles: 2
+  offset: {x: 0, y: 0.1}
+  alignToDirection: 1
 --- !u!82 &4688364101293123351
 AudioSource:
   m_ObjectHideFlags: 0
@@ -291,3 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energy: 0
+  charged: 0
+  blockable: 0

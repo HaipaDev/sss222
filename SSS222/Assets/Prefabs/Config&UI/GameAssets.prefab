@@ -72,9 +72,11 @@ MonoBehaviour:
     gobj: {fileID: 1056705403108089519, guid: 0311d6b525027ad43918a62b48acaba8, type: 3}
   - name: LunarGel
     gobj: {fileID: 1056705403108089519, guid: 2b95db0bd9edebc4b97375103e5a2d9a, type: 3}
-  - name: ArmorPwrup
+  - name: HealBeam
+    gobj: {fileID: 1056705403108089519, guid: e61cb35e261ac5c4cb7c31637c23fa31, type: 3}
+  - name: MedkitPwrup
     gobj: {fileID: 5649215481239408911, guid: b68538418da2b5943be6fd26f9e0ddec, type: 3}
-  - name: ArmorCPwrup
+  - name: MedkitCPwrup
     gobj: {fileID: 530782707432221319, guid: 79e3a62b1e44c5c42afcffa470e5736a, type: 3}
   - name: Laser2Pwrup
     gobj: {fileID: 274471404120805607, guid: c16ad10c3be8d894a81ec53963a84d36, type: 3}
@@ -253,24 +255,30 @@ MonoBehaviour:
     gobj: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3, type: 3}
   - name: BFlame
     gobj: {fileID: 100000, guid: 081b45b1b47b4094f818a7a47a0c69b6, type: 3}
-  - name: BFlameUp
-    gobj: {fileID: 100000, guid: 44969502b54f72e428a5d2b497b6f591, type: 3}
   - name: BFlameDMG
     gobj: {fileID: 100000, guid: e2ce195318a38844aa897f96496098c8, type: 3}
   - name: BFlameDMG_Blue
     gobj: {fileID: 100000, guid: 561679754ef7963449b5f744b1d64097, type: 3}
   - name: BFlame_Blue
     gobj: {fileID: 100000, guid: 09bfca06e04f3034ea40cc0b27b5b489, type: 3}
+  - name: BFlameComet
+    gobj: {fileID: 100000, guid: 0f7e2bf3d8f33c5408bfbf96c2047b91, type: 3}
   - name: BFlameLunar
     gobj: {fileID: 100000, guid: c9a649e528b32914aa6bb629e3597592, type: 3}
+  - name: BFlameSmall
+    gobj: {fileID: 100000, guid: 747999461e9c60f48aea8f29b15de217, type: 3}
+  - name: BFlameRocket
+    gobj: {fileID: 100000, guid: 1590ac5f4c2282a4fa80fd5f46f0431a, type: 3}
   - name: UpgradeVFX
     gobj: {fileID: 100000, guid: c2cf9899dba98ca4c969605b8668920c, type: 3}
   - name: UpgradeVFX_des
     gobj: {fileID: 100000, guid: a9bd96d3777054a408f218a7a005c2fc, type: 3}
   - name: PortalVFX
     gobj: {fileID: 100000, guid: 1ee2c03a099f4cb4b8f86c863bfedf81, type: 3}
-  - name: GlowLaser
-    gobj: {fileID: 5456100369316469715, guid: 6d0be4922e647294c9ce40ae09c65175, type: 3}
+  - name: Glow
+    gobj: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
+  - name: GlowFlare
+    gobj: {fileID: 5379464388435197209, guid: de53cbdb23236bf4db0feeff47998b6f, type: 3}
   - name: GlowAuto
     gobj: {fileID: 5456100369316469715, guid: e45a71fd80682364aa6998873618c195, type: 3}
   sprites:

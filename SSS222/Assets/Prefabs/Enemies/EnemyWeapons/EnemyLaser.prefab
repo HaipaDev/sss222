@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -5322619781845389620}
   - component: {fileID: -7807203169211813935}
   m_Layer: 9
-  m_Name: EnemyLaser-Violet
+  m_Name: EnemyLaser
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,13 +149,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0.6483054, g: 0, b: 1, a: 1}
-  sizeGlow: 2
-  alphaGlow: 0.4
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 0.2901961, g: 0.13725491, b: 0.6862745, a: 1}
+  size: 0
   emissionSpeed: 7.63
-  xx: 0
-  yy: 0
+  maxParticles: 0
+  offset: {x: 0, y: 0}
 --- !u!82 &-3868070912757826984
 AudioSource:
   m_ObjectHideFlags: 0

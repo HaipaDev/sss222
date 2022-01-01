@@ -89,8 +89,9 @@ public static GameRules instance;
     public float energyBallGet=6f;
     public float energyBatteryGet=11f;
     public float medkitEnergyGet=26f;
-    public float microMedkitHpAmnt=10f;
     public float medkitHpAmnt=25f;
+    public float microMedkitHpAmnt=10f;
+    public float healbeamHpAmnt=0.05f;
     public float pwrupEnergyGet=36f;
     public float enForPwrupRefill=25f;
     public float enPwrupDuplicate=42f;
@@ -358,9 +359,11 @@ public class DmgFxValues{
 public class colliEvents{
     public bool onPhase=false;
     public string vfx="";
-    public Vector2 vfxPos;
-    public float dmgPlayer;
+    public Vector2 vfxPos=Vector2.zero;
+    public float dmgPlayer=0f;
     public dmgType dmgPlayerType=dmgType.silent;
+    public string assetMake="";
+    public Vector2 assetPos=Vector2.zero;
 }
 /*[System.Serializable]
 public class colliEventsClass{
@@ -422,7 +425,6 @@ public class CometSettings{
     public bool scoreBySize=false;
     public CometScoreSize[] scoreSizes;
     [AssetsOnly]public Sprite[] sprites;
-    [AssetsOnly]public GameObject bflamePart;
 [Header("Lunar")]
     public Vector2 sizeMultLunar=new Vector2(0.88f,1.55f);
     public int lunarCometChance=10;
@@ -431,7 +433,7 @@ public class CometSettings{
     public Vector2 lunarScore;
     public List<LootTableEntryDrops> lunarDrops;
     [AssetsOnly]public Sprite[] spritesLunar;
-    [AssetsOnly]public GameObject lunarPart;
+    [AssetsOnly]public string lunarPart="BFlameLunar";
 }
 [System.Serializable]
 public class EnCombatantSettings{
@@ -448,8 +450,6 @@ public class EnShipSettings{
     public float speedFollow = 2f;
     public float vspeed = 0.1f;
     public float distY = 1.3f;
-    public float distX = 0.3f;
-    public bool getClose = false;
 }
 [System.Serializable]
 public class MechaLeechSettings{

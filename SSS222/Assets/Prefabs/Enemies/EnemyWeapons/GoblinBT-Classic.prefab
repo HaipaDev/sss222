@@ -149,13 +149,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 1, g: 0, b: 0.6190028, a: 1}
-  sizeGlow: 1.4
-  alphaGlow: 0.3
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 0.9960785, g: 0.4784314, b: 0.7568628, a: 1}
+  size: 0
   emissionSpeed: 7.63
-  xx: 0
-  yy: 0
+  maxParticles: 0
+  offset: {x: 0, y: 0}
 --- !u!82 &-3868070912757826984
 AudioSource:
   m_ObjectHideFlags: 0

@@ -145,18 +145,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0.8962264, g: 0.7072106, b: 0.20714669, a: 1}
-  sizeGlow: 2
-  alphaGlow: 0.325
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 1, g: 0.85098046, b: 0.3019608, a: 1}
+  size: {x: 0, y: 0}
   emissionSpeed: 9.9
-  xx: 0
-  yy: -0.13
+  maxParticles: 0
+  offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!82 &2972373951465921495
 AudioSource:
   m_ObjectHideFlags: 0
@@ -308,12 +309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 100000, guid: 081b45b1b47b4094f818a7a47a0c69b6, type: 3}
-  xx: 0
-  yy: -0.6
+  part: BFlameRocket
+  offset: {x: 0, y: -0.5}
   onTop: 1
   stayStill: 1
-  angle: 0
   BFlame: {fileID: 0}
 --- !u!114 &1804059341044045333
 MonoBehaviour:
@@ -329,3 +328,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energy: 0
   charged: 0
+  blockable: 0

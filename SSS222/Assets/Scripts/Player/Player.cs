@@ -179,8 +179,9 @@ public class Player : MonoBehaviour{
     [SerializeField] public float energyBallGet=6f;
     [SerializeField] public float energyBatteryGet=11f;
     [SerializeField] public float medkitEnergyGet=40f;
-    [SerializeField] public float microMedkitHpAmnt=10f;
     [SerializeField] public float medkitHpAmnt=25f;
+    [SerializeField] public float microMedkitHpAmnt=10f;
+    [SerializeField] public float healbeamHpAmnt=0.05f;
     [SerializeField] public float pwrupEnergyGet=36f;
     [SerializeField] public float enForPwrupRefill=25f;
     [SerializeField] public float enPwrupDuplicate=42f;
@@ -352,8 +353,9 @@ public class Player : MonoBehaviour{
         energyBallGet=i.energyBallGet;
         energyBatteryGet=i.energyBatteryGet;
         medkitEnergyGet=i.medkitEnergyGet;
-        microMedkitHpAmnt=i.microMedkitHpAmnt;
         medkitHpAmnt=i.medkitHpAmnt;
+        microMedkitHpAmnt=i.microMedkitHpAmnt;
+        healbeamHpAmnt=i.healbeamHpAmnt;
         pwrupEnergyGet=i.pwrupEnergyGet;
         enForPwrupRefill=i.enForPwrupRefill;
         enPwrupDuplicate=i.enPwrupDuplicate;
@@ -429,16 +431,16 @@ public class Player : MonoBehaviour{
             //Blue Flame for Hardcore
             if(GameSession.instance.CheckGameModeSelected("Hardcore")){
                 if((UpgradeMenu.instance.total_UpgradesLvl<bflameDmgTillLvl||bflameDmgTillLvl<=0)&&!GetComponent<BackflameEffect>().BFlame.name.Contains("Blue")){
-                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame_Blue");
+                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part="BFlame_Blue";
                 }
                 //Reverse: dmg from Lvl
                 if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&!GetComponent<BackflameEffect>().BFlame.name.Contains("Dmg")){
-                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlameDMG_Blue");
+                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part="BFlameDMG_Blue";
                     fuelDrainAmnt*=2;
                 }
             }else{//Revert to default flame when Level above
                 if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&GetComponent<BackflameEffect>().BFlame.name.Contains("Dmg")){
-                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part=GameAssets.instance.GetVFX("BFlame");
+                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part="BFlame";
                 }
             }
         }
@@ -1019,16 +1021,16 @@ public class Player : MonoBehaviour{
             //yield return new WaitForSeconds(0.2f);
         }
     }
-    void Regen(){
+    void Regen(){//Move to a universal modules script instead of PlayerSkills
         //if(UpgradeMenu.instance.crMend_upgraded>0){hpRegenEnabled=true;}
         //if(UpgradeMenu.instance.enDiss_upgraded>0){enRegenEnabled=true;}
         if(!GameSession.GlobalTimeIsPaused){
-            if(hpAbsorpAmnt<0){hpAbsorpAmnt=0;}
-            if(enAbsorpAmnt<0){enAbsorpAmnt=0;}
-            if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt==0){if(GameSession.instance.coins>=crystalMend_refillCost){hpAbsorpAmnt+=crystalMendAbsorp;GameSession.instance.coins-=crystalMend_refillCost;}}
-            if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt==0){if(GameSession.instance.xp>=energyDiss_refillCost){enAbsorpAmnt+=energyDissAbsorp;GameSession.instance.xp-=energyDiss_refillCost;}}
-            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax)Damage(hpRegenAmnt,dmgType.heal);hpAbsorpAmnt-=hpRegenAmnt;timerHpRegen=0;}
-            if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax)AddSubEnergy(enRegenAmnt,true);enAbsorpAmnt-=enRegenAmnt;timerEnRegen=0;}
+            hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax);
+            enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax);
+            if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt<=0){if(GameSession.instance.coins>=crystalMend_refillCost){HPAbsorp(crystalMendAbsorp);GameSession.instance.coins-=crystalMend_refillCost;}}
+            if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt<=0){if(GameSession.instance.xp>=energyDiss_refillCost){EnAbsorp(energyDissAbsorp);GameSession.instance.xp-=energyDiss_refillCost;}}
+            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax)Damage(hpRegenAmnt,dmgType.heal);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}
+            if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax)AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}
             //if(hpRegenEnabled==true&&timerHpRegen>=freqHpRegen){Damage(hpRegenAmnt,dmgType.heal);timerHpRegen=0;}
             //if(energyOn)if(enRegenEnabled==true&&timerEnRegen>=freqEnRegen&&energy>energyForRegen){AddSubEnergy(enRegenAmnt,true);timerEnRegen=0;}
         }
@@ -1193,7 +1195,7 @@ public class Player : MonoBehaviour{
         //this.GetType().GetField("powerupTimer").SetValue(this,i);
     }
 
-    public void Damage(float dmg, dmgType type, bool ignore=true, float electrTime=4f){//Later add on possible Inverter options
+    public void Damage(float dmg, dmgType type, bool ignore=true, float electrTime=4f){//Later add on possible Inverter options?
         if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;HPPopUpHUD(-dmgTot);}
         else if(gclover){AudioManager.instance.Play("GCloverHit");}
 
@@ -1228,30 +1230,49 @@ public class Player : MonoBehaviour{
         }
     }
     public void AddSubCoins(int value,bool add=true, bool ignore=false){
-    if(inverter!=true||ignore){
-        if(add){GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
-        else{GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
-    }else{
-        if(add){GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
-        else{GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
-    }
+        if(inverter!=true||ignore){
+            if(add){GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
+            else{GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
+        }else{
+            if(add){GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
+            else{GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
+        }
     }public void AddSubXP(float value,bool add=true, bool ignore=false){
-    if(inverter!=true||ignore){
-        if(add){GameSession.instance.AddXP(value);}
-        else{GameSession.instance.AddXP(-value);}
-    }else{
-        if(add){GameSession.instance.AddXP(-value);}
-        else{GameSession.instance.AddXP(value);}
-    }
+        if(inverter!=true||ignore){
+            if(add){GameSession.instance.AddXP(value);}
+            else{GameSession.instance.AddXP(-value);}
+        }else{
+            if(add){GameSession.instance.AddXP(-value);}
+            else{GameSession.instance.AddXP(value);}
+        }
     }public void AddSubCores(int value,bool add=true, bool ignore=false){
-    if(inverter!=true||ignore){
-        if(add){GameSession.instance.cores+=value;CoresPopUpHUD(value);}
-        else{GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
-    }else{
-        if(add){GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
-        else{GameSession.instance.cores+=value;CoresPopUpHUD(value);}
+        if(inverter!=true||ignore){
+            if(add){GameSession.instance.cores+=value;CoresPopUpHUD(value);}
+            else{GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
+        }else{
+            if(add){GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
+            else{GameSession.instance.cores+=value;CoresPopUpHUD(value);}
+        }
     }
+    public void HPAbsorp(float value, bool add=true, bool ignore=true){
+        if(inverter!=true||ignore){
+            if(add){hpAbsorpAmnt+=value;/*HPAbsorpPopUpHUD(value);*/}
+            else{hpAbsorpAmnt-=value;/*HPAbsorpPopUpHUD(-value);*/}
+        }else{
+            if(add){hpAbsorpAmnt-=value;/*HPAbsorpPopUpHUD(-value);*/}
+            else{hpAbsorpAmnt+=value;/*HPAbsorpPopUpHUD(value);*/}
+        }
     }
+    public void EnAbsorp(float value, bool add=true, bool ignore=true){
+        if(inverter!=true||ignore){
+            if(add){enAbsorpAmnt+=value;/*EnAbsorpPopUpHUD(value);*/}
+            else{enAbsorpAmnt-=value;/*EnAbsorpPopUpHUD(-value);*/}
+        }else{
+            if(add){enAbsorpAmnt-=value;/*EnAbsorpPopUpHUD(-value);*/}
+            else{enAbsorpAmnt+=value;/*EnAbsorpPopUpHUD(value);*/}
+        }
+    }
+
     public void Overheat(float value,bool add=true, bool ignore=false){
         if(overheatOn){
         if(overheatTimerMax!=-4){

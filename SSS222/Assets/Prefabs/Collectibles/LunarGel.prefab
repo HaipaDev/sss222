@@ -207,10 +207,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0.6148985, g: 0.8867924, b: 0.834695, a: 1}
-  sizeGlow: 1.05
-  alphaGlow: 0.2
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 0.37647063, g: 0.94117653, b: 0.654902, a: 1}
+  size: 0
   emissionSpeed: 7.63
-  xx: 0
-  yy: 0
+  maxParticles: 0
+  offset: {x: 0, y: 0}

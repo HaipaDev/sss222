@@ -54,8 +54,10 @@ public class PlayerCollider : MonoBehaviour{
                     spawnReqsMono.AddPwrups(other.gameObject.name);
                     GameSession.instance.AddXP(GameRules.instance.xp_powerup);//XP For powerups
                 }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("LunarGel").name)){player.hpAbsorpAmnt+=player.microMedkitHpAmnt;}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorPwrup").name)){
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("LunarGel").name)){player.HPAbsorp(player.microMedkitHpAmnt);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("HealBeam").name)){player.HPAbsorp(player.healbeamHpAmnt);}
+
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("MedkitPwrup").name)){
                     if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}
                     else if(player.health!=player.healthMax&&player.health>(player.healthMax-player.medkitHpAmnt)){
                         int val=Mathf.RoundToInt(player.medkitHpAmnt-(player.healthMax-player.health));
@@ -63,7 +65,7 @@ public class PlayerCollider : MonoBehaviour{
                     HPAdd(player.medkitHpAmnt);
                     player.AddSubEnergy(player.medkitEnergyGet,true);
                 }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("ArmorCPwrup").name)){
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("MedkitCPwrup").name)){
                     if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(25);}
                     else{HPAdd(player.medkitHpAmnt);}
                 }
@@ -170,6 +172,7 @@ public class PlayerCollider : MonoBehaviour{
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){AudioManager.instance.Play("Coin");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){AudioManager.instance.Play("CoreCollect");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestBall").name)||other.gameObject.name.Contains(GameAssets.instance.Get("CelestVial").name)){AudioManager.instance.Play("CelestBall");}
+                else if(other.gameObject.name.Contains(GameAssets.instance.Get("HealBeam").name)){AudioManager.instance.Play("Heal");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("GCloverPwrup").name)){AudioManager.instance.Play("GClover");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("ShadowBtPwrup").name)){AudioManager.instance.Play("ShadowGet");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("MatrixPwrup").name)){AudioManager.instance.Play("MatrixGet");}

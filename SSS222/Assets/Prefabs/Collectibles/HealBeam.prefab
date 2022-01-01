@@ -15,11 +15,9 @@ GameObject:
   - component: {fileID: -7162176373737096900}
   - component: {fileID: -2526951079648213008}
   - component: {fileID: -8348096473155390100}
-  - component: {fileID: 1529301144}
-  - component: {fileID: -3365304752130786154}
-  - component: {fileID: -58683458582889640}
+  - component: {fileID: 8131407421759383529}
   m_Layer: 0
-  m_Name: CelestBall
+  m_Name: HealBeam
   m_TagString: Powerups
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,8 +32,9 @@ Transform:
   m_GameObject: {fileID: 1056705403108089519}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
-  m_Children: []
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4393045954358128343}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -80,8 +79,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 94bddd41f443a164ab7408e3790fbacc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 871dab6c8ed58084b912b8f246e1ef5f, type: 3}
+  m_Color: {r: 0.3647059, g: 0.9333334, b: 0.65882355, a: 0.05490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -106,7 +105,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.16666667
+  m_Radius: 0.05
 --- !u!50 &3700841201686134059
 Rigidbody2D:
   serializedVersion: 4
@@ -162,8 +161,8 @@ MonoBehaviour:
   targetTag: 
   targetObj: {fileID: 0}
   dist: 0
-  distReq: 20
-  speedFollow: 8
+  distReq: 50
+  speedFollow: 10
   vspeed: 2.4
   hspeed: 0
   rotateTowards: 0
@@ -187,51 +186,84 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distReqMulti: 6
   speedFollowMulti: 5
---- !u!114 &1529301144
+--- !u!114 &8131407421759383529
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056705403108089519}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d0c611dac366a34589785d400347ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: GlowAuto
-  materialClone: 1
-  color: {r: 0.45882356, g: 0.12941177, b: 0.79215693, a: 1}
-  size: 0
-  emissionSpeed: 7.63
-  maxParticles: 0
-  offset: {x: 0, y: 0}
---- !u!114 &-3365304752130786154
-MonoBehaviour:
+  targetObj: {fileID: 0}
+  speedFollow: 5
+  destroyAfter: 0
+  particlesOnDeath: 0
+  particlesPrefab: {fileID: 0}
+  particleDestroyTime: 0.05
+--- !u!1001 &4393045954358260823
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 861680964580927169}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_Name
+      value: HealBeamVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 750b42c66664f8b41b9505b433794896, type: 3}
+--- !u!4 &4393045954358128343 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 750b42c66664f8b41b9505b433794896,
+    type: 3}
+  m_PrefabInstance: {fileID: 4393045954358260823}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056705403108089519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b04326831ef30704a84404316f25314d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-58683458582889640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056705403108089519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: {fileID: 100000, guid: c4c1d093c2811664aa894979eab321ce, type: 3}
-  offset: {x: 0, y: 0.33}
-  onTop: 1
-  stayStill: 1
-  BFlame: {fileID: 0}

@@ -10,7 +10,6 @@ public class CometRandomProperties : MonoBehaviour{
     [SerializeField] public bool scoreBySize=false;
     [SerializeField] public CometScoreSize[] scoreSizes;
     [SerializeField] Sprite[] sprites;
-    [SerializeField] GameObject bflamePart;
     [Header("Lunar")]
     [SerializeField] Vector2 sizeMultLunar=new Vector2(0.88f,1.55f);
     [SerializeField] int lunarCometChance=10;
@@ -21,7 +20,7 @@ public class CometRandomProperties : MonoBehaviour{
     [SerializeField] public List<LootTableEntryDrops> lunarDrops;
     public List<float> dropValues;
     [SerializeField] Sprite[] spritesLunar;
-    [SerializeField] GameObject lunarPart;
+    [SerializeField] string lunarPart="BFlameLunar";
     [DisableInEditorMode]public int healhitCount;
     [DisableInEditorMode]public bool isLunar;
 
@@ -41,7 +40,6 @@ public class CometRandomProperties : MonoBehaviour{
             scoreBySize=c.scoreBySize;
             scoreSizes=c.scoreSizes;
             sprites=c.sprites;
-            bflamePart=c.bflamePart;
 
             sizeMultLunar=c.sizeMultLunar;
             lunarCometChance=c.lunarCometChance;

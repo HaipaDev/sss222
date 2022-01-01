@@ -23,6 +23,7 @@ public class UniCollider : MonoBehaviour{
                 foreach(colliEvents co in dmgVal.colliEvents){
                     if(!String.IsNullOrEmpty(co.vfx)){if(GameAssets.instance.GetVFX(co.vfx)!=null)Instantiate(GameAssets.instance.GetVFX(co.vfx),(Vector2)transform.position+co.vfxPos,Quaternion.identity);}
                     if(co.dmgPlayer!=0){if(Player.instance!=null){Player.instance.Damage(co.dmgPlayer,co.dmgPlayerType);}}
+                    if(!String.IsNullOrEmpty(co.assetMake)){if(GameAssets.instance.Get(co.assetMake)!=null)Instantiate(GameAssets.instance.Get(co.assetMake),(Vector2)transform.position+co.assetPos,Quaternion.identity);}
                 }
                 
                 if(!dmgVal.phase){Destroy(other.gameObject,0.01f);}
@@ -46,7 +47,9 @@ public class UniCollider : MonoBehaviour{
     if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
         DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
         if(type==0){//Enemy - TriggerEnter
-            GameAssets.instance.VFX("FlareHit", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
+            GameObject flare=GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,other.transform.position.y));
+            Vector2 flareScale=new Vector2(other.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,other.gameObject.GetComponent<SpriteRenderer>().bounds.size.y)*3*other.transform.localScale;
+            flare.transform.localScale=flareScale;
             if(GameSession.instance.dmgPopups==true&&dmg>0){
                 if(dmgVal!=null&&dmgVal.dispDmgCount){
                     if(transform.GetComponent<Enemy>()!=null){
@@ -60,7 +63,9 @@ public class UniCollider : MonoBehaviour{
                 GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor));
             }
         }else if(type==1){//Enemy - TriggerStay
-            GameAssets.instance.VFX("FlareHit", new Vector2(transform.position.x,transform.position.y-0.5f),0.3f);
+            GameObject flare=GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,other.transform.position.y));
+            Vector2 flareScale=new Vector2(other.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,other.gameObject.GetComponent<SpriteRenderer>().bounds.size.y)*3*other.transform.localScale;
+            flare.transform.localScale=flareScale;
             if(GameSession.instance.dmgPopups==true&&dmg>0){
                 GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPhaseColor));
             }else if(GameSession.instance.dmgPopups==true&&dmg<0){
