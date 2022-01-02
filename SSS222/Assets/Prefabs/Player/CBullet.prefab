@@ -12,14 +12,13 @@ GameObject:
   - component: {fileID: 1844801458717974007}
   - component: {fileID: 5461616768932919024}
   - component: {fileID: 8966845945320289331}
+  - component: {fileID: -7376020833809441554}
   - component: {fileID: 24842559518470676}
   - component: {fileID: 5820739300652673482}
   - component: {fileID: 6441261333678637232}
   - component: {fileID: 343902056029052478}
   - component: {fileID: 3229580754545001376}
   - component: {fileID: 3111251860985306412}
-  - component: {fileID: -7376020833809441554}
-  - component: {fileID: -6762143650873762682}
   m_Layer: 8
   m_Name: CBullet
   m_TagString: PlayerWeapons
@@ -140,6 +139,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.35212886, y: 0.36185026}
   m_EdgeRadius: 0
+--- !u!114 &-7376020833809441554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energy: 0
+  charged: 0
+  blockable: 1
 --- !u!114 &24842559518470676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,10 +169,11 @@ MonoBehaviour:
   assetName: GlowAuto
   materialClone: 1
   color: {r: 0.37647063, g: 0.94117653, b: 0.654902, a: 1}
-  size: 0
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
   maxParticles: 0
   offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!82 &5820739300652673482
 AudioSource:
   m_ObjectHideFlags: 0
@@ -324,31 +339,3 @@ MonoBehaviour:
   savedVel: {x: 0, y: 0}
   timesHitMax: 5
   timesHit: 0
---- !u!114 &-7376020833809441554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energy: 0
-  charged: 0
-  blockable: 1
---- !u!114 &-6762143650873762682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71c8551a370c1e943adfb784753e97e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healAmnt: 0.05

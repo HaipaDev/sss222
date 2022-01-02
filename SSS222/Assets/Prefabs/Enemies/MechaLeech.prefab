@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 7191012222464984588}
   - component: {fileID: 2210935845360015125}
   m_Layer: 9
-  m_Name: Mecha Leech
+  m_Name: MechaLeech
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Mecha Leech
+  Name: Leech
   type: 1
   size: {x: 1, y: 1}
   sizeAvg: 1

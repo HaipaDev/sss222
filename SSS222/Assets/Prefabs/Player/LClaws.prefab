@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 598148505458578218}
   - component: {fileID: 6493221173547759661}
   - component: {fileID: 7901463439627549422}
+  - component: {fileID: -393988683514688926}
   - component: {fileID: 1265304716601146569}
   - component: {fileID: 4688364101293123351}
   - component: {fileID: 5239081426931158637}
   - component: {fileID: 3335024609016532008}
   - component: {fileID: -4609015006554659745}
-  - component: {fileID: -393988683514688926}
   - component: {fileID: -666085093926352585}
   - component: {fileID: 187051419354476101}
   - component: {fileID: 4678851650050105784}
@@ -141,6 +141,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.91238904, y: 1.3406224}
   m_EdgeRadius: 0
+--- !u!114 &-393988683514688926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4755926375889011706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energy: 0
+  charged: 0
+  blockable: 0
 --- !u!114 &1265304716601146569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,13 +168,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0.04705883, g: 0.9333334, b: 0.07450981, a: 1}
-  sizeGlow: 3
-  alphaGlow: 0.45
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  size: {x: 0, y: 0}
   emissionSpeed: 9.9
-  xx: 0.1
-  yy: -0.25
+  maxParticles: 0
+  offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!82 &4688364101293123351
 AudioSource:
   m_ObjectHideFlags: 0
@@ -300,20 +316,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPos: {x: 0, y: 0}
---- !u!114 &-393988683514688926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4755926375889011706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energy: 0
-  charged: 0
 --- !u!114 &-666085093926352585
 MonoBehaviour:
   m_ObjectHideFlags: 0

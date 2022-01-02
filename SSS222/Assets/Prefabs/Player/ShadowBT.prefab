@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 284585900876537960}
   - component: {fileID: 5882422370530315119}
   - component: {fileID: -1866281790211962452}
+  - component: {fileID: -2338192596990494976}
   - component: {fileID: 1887362649180442507}
   - component: {fileID: 5381357303093761109}
   - component: {fileID: 4830943442673253679}
   - component: {fileID: -9072771260210855088}
-  - component: {fileID: -2338192596990494976}
   m_Layer: 8
   m_Name: ShadowBT
   m_TagString: PlayerWeapons
@@ -137,6 +137,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.22032945, y: 0.44444445}
   m_EdgeRadius: 0
+--- !u!114 &-2338192596990494976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energy: 0
+  charged: 0
+  blockable: 0
 --- !u!114 &1887362649180442507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,13 +164,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  colorGlow: {r: 0, g: 0, b: 0, a: 1}
-  sizeGlow: 2
-  alphaGlow: 0.55
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
-  xx: 0
-  yy: 0
+  maxParticles: 0
+  offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!82 &5381357303093761109
 AudioSource:
   m_ObjectHideFlags: 0
@@ -278,24 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 100000, guid: 096832bfc2651eb4b92bc8012922197b, type: 3}
-  xx: 0
-  yy: -0.6
+  part: 
+  offset: {x: 0, y: 0.33}
   onTop: 1
-  stayStill: 1
-  angle: 0
   BFlame: {fileID: 0}
---- !u!114 &-2338192596990494976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energy: 0
-  charged: 0

@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 6945281760528642026}
   - component: {fileID: 3617263865581978861}
   - component: {fileID: 398629252145694254}
+  - component: {fileID: 1804059341044045333}
   - component: {fileID: 8764242355317768201}
   - component: {fileID: 2972373951465921495}
   - component: {fileID: 2349578145357705901}
   - component: {fileID: 7799905236334044251}
   - component: {fileID: -7128104713871850210}
-  - component: {fileID: 1804059341044045333}
   m_Layer: 8
   m_Name: HRocket
   m_TagString: PlayerWeapons
@@ -138,6 +138,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.29879326, y: 0.48065853}
   m_EdgeRadius: 0
+--- !u!114 &1804059341044045333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energy: 0
+  charged: 0
+  blockable: 0
 --- !u!114 &8764242355317768201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,20 +327,4 @@ MonoBehaviour:
   part: BFlameRocket
   offset: {x: 0, y: -0.5}
   onTop: 1
-  stayStill: 1
   BFlame: {fileID: 0}
---- !u!114 &1804059341044045333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energy: 0
-  charged: 0
-  blockable: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HealingDrone : MonoBehaviour{
-    //[Header("Properties")]
+    [Header("Properties")]
     [SerializeField] GameObject healBallPrefab;
     [SerializeField] float shootFrequency=0.2f;
     [SerializeField] float speedBullet=4f;
@@ -22,12 +22,13 @@ public class HealingDrone : MonoBehaviour{
     void Update(){
         closestEnemy=FindClosestHealableEnemy();
         var shootHealBullets=ShootHealBullets();
-        if(shoot==true&&GetComponent<Enemy>().shooting){StartCoroutine(shootHealBullets);shoot=false;}
+        if(closestEnemy!=null||(GetComponent<Enemy>()!=null&&GetComponent<Enemy>().health<GetComponent<Enemy>().healthMax)){
+            if(shoot==true&&GetComponent<Enemy>().shooting){StartCoroutine(shootHealBullets);shoot=false;}}
     }
 
     IEnumerator ShootHealBullets(){
         yield return new WaitForSeconds(shootFrequency);
-        var healBall=Instantiate(healBallPrefab,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+        GameObject healBall=Instantiate(healBallPrefab,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
         float step=speedBullet*Time.deltaTime;
         if(closestEnemy!=null){
             healBall.GetComponent<FollowOneObject>().targetObj=closestEnemy.gameObject;

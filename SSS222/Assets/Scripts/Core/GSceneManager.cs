@@ -69,7 +69,7 @@ public class GSceneManager : MonoBehaviour{
         GameSession.instance.SaveHighscore();
         //if(GameSession.instance.CheckGameModeSelected("Adventure"))GameSession.instance.SaveAdventure();//not sure if Restart should save or not
         yield return new WaitForSecondsRealtime(0.01f);
-        spawnReqsMono.RestartAllValues();
+        spawnReqsMono.ResetSpawnReqsList();
         GameSession.instance.ResetScore();
         GameSession.instance.ResetMusicPitch();
         yield return new WaitForSecondsRealtime(0.05f);

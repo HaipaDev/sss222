@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 1844801458717974007}
   - component: {fileID: 5461616768932919024}
   - component: {fileID: 8966845945320289331}
+  - component: {fileID: 5620140849490479444}
   - component: {fileID: 24842559518470676}
   - component: {fileID: 5820739300652673482}
   - component: {fileID: 6441261333678637232}
   - component: {fileID: 343902056029052478}
   - component: {fileID: -8148520281533814548}
-  - component: {fileID: 5620140849490479444}
   - component: {fileID: 7858718171525832638}
   m_Layer: 8
   m_Name: MLaserC
@@ -139,6 +139,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
+--- !u!114 &5620140849490479444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energy: 0
+  charged: 0
+  blockable: 1
 --- !u!114 &24842559518470676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,21 +333,6 @@ MonoBehaviour:
   id2: 0
   sound: {fileID: 0}
   sound2: {fileID: 0}
---- !u!114 &5620140849490479444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energy: 0
-  charged: 0
-  blockable: 1
 --- !u!114 &7858718171525832638
 MonoBehaviour:
   m_ObjectHideFlags: 0

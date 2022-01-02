@@ -34,10 +34,9 @@ public class UniCollider : MonoBehaviour{
                     dmgPhaseFreq.soundPhase=dmgVal.soundPhase;
                     if(dmgVal.soundPhase=="-"){dmgPhaseFreq.soundPhase=dmgVal.sound;}
                     else if(dmgVal.soundPhase=="."){dmgPhaseFreq.soundPhase="EnemyHit";}
-
-                    dmgPhaseFreq.SetTimer();
                 }
-                if(!triggerStay)if(!String.IsNullOrEmpty(dmgVal.sound))AudioManager.instance.Play(dmgVal.sound);
+                if(!triggerStay){if(!String.IsNullOrEmpty(dmgVal.sound))AudioManager.instance.Play(dmgVal.sound);}
+                //else{other.GetComponent<Tag_DmgPhaseFreq>().SetTimer();}//well that doesnt work
             }}
         }
         return dmg;
@@ -48,7 +47,8 @@ public class UniCollider : MonoBehaviour{
         DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
         if(type==0){//Enemy - TriggerEnter
             GameObject flare=GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,other.transform.position.y));
-            Vector2 flareScale=new Vector2(other.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,other.gameObject.GetComponent<SpriteRenderer>().bounds.size.y)*3*other.transform.localScale;
+            Vector2 flareScale=Vector2.one;
+            if(other.gameObject.GetComponent<SpriteRenderer>()!=null)flareScale=new Vector2(other.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,other.gameObject.GetComponent<SpriteRenderer>().bounds.size.y)*3;flareScale*=other.transform.localScale;
             flare.transform.localScale=flareScale;
             if(GameSession.instance.dmgPopups==true&&dmg>0){
                 if(dmgVal!=null&&dmgVal.dispDmgCount){
@@ -64,7 +64,8 @@ public class UniCollider : MonoBehaviour{
             }
         }else if(type==1){//Enemy - TriggerStay
             GameObject flare=GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,other.transform.position.y));
-            Vector2 flareScale=new Vector2(other.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,other.gameObject.GetComponent<SpriteRenderer>().bounds.size.y)*3*other.transform.localScale;
+            Vector2 flareScale=Vector2.one;
+            if(other.gameObject.GetComponent<SpriteRenderer>()!=null)flareScale=new Vector2(other.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,other.gameObject.GetComponent<SpriteRenderer>().bounds.size.y)*3;flareScale*=other.transform.localScale;
             flare.transform.localScale=flareScale;
             if(GameSession.instance.dmgPopups==true&&dmg>0){
                 GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPhaseColor));

@@ -126,6 +126,7 @@ public class spawnReqsMono:MonoBehaviour{
         if(sr is spawnStayingTime&&!sr.GetType().IsSubclassOf(typeof(spawnStayingTime))){var ss=(spawnStayingTime)sr;if(ss.timer2!=-5)ss.timer2=0;}
         if(sr is spawnMovingTime){var ss=(spawnMovingTime)sr;if(ss.timer2!=-5)ss.timer2=0;}
     }}
+    public static void ResetSpawnReqsList(){spawnReqsMono.instance.spawnReqsList=new List<spawnReqs>();}
 }
 
 public enum spawnReqsType{time,score,energy,missed,dmg,kills,wavesTotal,waveCounts,powerupsTotal,powerupCounts,stayingTime,movingTime}

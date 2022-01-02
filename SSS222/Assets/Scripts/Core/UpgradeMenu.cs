@@ -292,7 +292,7 @@ public class UpgradeMenu : MonoBehaviour{
     public void AddhealthMax(){UpgradeFloat(ref player.healthMax,healthMax_UpgradeAmnt,healthMax_UpgradeCost, true, ref player.health, ref healthMax_UpgradesCount, ref healthMax_UpgradesLvl,false);}
     public void AddenergyMax(){UpgradeFloat(ref player.energyMax,energyMax_UpgradeAmnt,energyMax_UpgradeCost, true, ref player.energy, ref energyMax_UpgradesCount, ref energyMax_UpgradesLvl,false);}
     public async void AddSpeed(){float placeholder=0;UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt,speed_UpgradeCost, false, ref placeholder, ref speed_UpgradesCount, ref speed_UpgradesLvl,false);
-    if(player.speedPrev.Count==1){player.speedPrev[0]=player.moveSpeed;player.moveSpeedCurrent=player.speedPrev[0];}}
+        if(player.speedPrev.Count==1){player.speedPrev[0]=player.moveSpeed;player.moveSpeedCurrent=player.speedPrev[0];}}
     public void AddSpeedBypass(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt/2,0, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount, ref speed_UpgradesLvl,true);}
     //public void AddHpRegen(){UpgradeAfterStartingVal(ref player.hpRegenEnabled,ref player.hpRegenAmnt,0.1f,0.2f,hpRegen_UpgradeAmnt,hpRegen_UpgradeCost, false, ref player.hpRegenAmnt,ref hpRegen_UpgradesCount,ref hpRegen_UpgradesLvl,false);}
     //public void AddEnRegen(){UpgradeAfterStartingVal(ref player.enRegenEnabled,ref player.enRegenAmnt,0.5f,1f,enRegen_UpgradeAmnt,enRegen_UpgradeCost, false, ref player.enRegenAmnt,ref enRegen_UpgradesCount,ref enRegen_UpgradesLvl,false);}

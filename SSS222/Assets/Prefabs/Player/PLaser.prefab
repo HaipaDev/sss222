@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 284585900876537960}
   - component: {fileID: 5882422370530315119}
   - component: {fileID: -1866281790211962452}
+  - component: {fileID: 487403076291435772}
   - component: {fileID: 1887362649180442507}
   - component: {fileID: 5381357303093761109}
   - component: {fileID: 4830943442673253679}
-  - component: {fileID: 487403076291435772}
   - component: {fileID: 4869733932467409640}
   m_Layer: 8
   m_Name: PLaser
@@ -137,6 +137,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.22032945, y: 0.44444445}
   m_EdgeRadius: 0
+--- !u!114 &487403076291435772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energy: 0
+  charged: 0
+  blockable: 0
 --- !u!114 &1887362649180442507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,10 +167,11 @@ MonoBehaviour:
   assetName: GlowAuto
   materialClone: 1
   color: {r: 0.21960786, g: 0.08627451, b: 0.4156863, a: 1}
-  size: 0
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
   maxParticles: 0
   offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!82 &5381357303093761109
 AudioSource:
   m_ObjectHideFlags: 0
@@ -266,21 +282,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 0
---- !u!114 &487403076291435772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energy: 0
-  charged: 0
-  blockable: 0
 --- !u!114 &4869733932467409640
 MonoBehaviour:
   m_ObjectHideFlags: 0

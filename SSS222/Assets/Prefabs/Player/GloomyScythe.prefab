@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 284585900876537960}
   - component: {fileID: 5882422370530315119}
   - component: {fileID: 405315226629103612}
+  - component: {fileID: 2657704310505367730}
   - component: {fileID: 1887362649180442507}
   - component: {fileID: 5381357303093761109}
   - component: {fileID: 4830943442673253679}
   - component: {fileID: -9072771260210855088}
   - component: {fileID: -1996952101110769926}
-  - component: {fileID: 2657704310505367730}
   m_Layer: 8
   m_Name: GloomyScythe
   m_TagString: PlayerWeapons
@@ -128,6 +128,21 @@ CapsuleCollider2D:
   m_Offset: {x: -0.02, y: 0.06}
   m_Size: {x: 1.05, y: 0.25}
   m_Direction: 1
+--- !u!114 &2657704310505367730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energy: 0
+  charged: 0
+  blockable: 0
 --- !u!114 &1887362649180442507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,13 +155,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 4825125176181819323, guid: 88961786c52cb5146bb7b41417f996bf, type: 3}
-  colorGlow: {r: 0, g: 0, b: 0, a: 1}
-  sizeGlow: 3.5
-  alphaGlow: 0.25
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
-  xx: 0
-  yy: 0
+  maxParticles: 0
+  offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!82 &5381357303093761109
 AudioSource:
   m_ObjectHideFlags: 0
@@ -269,12 +285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 100000, guid: 096832bfc2651eb4b92bc8012922197b, type: 3}
-  xx: 0
-  yy: -0.6
+  part: 
+  offset: {x: 0, y: 0.33}
   onTop: 1
-  stayStill: 1
-  angle: 0
   BFlame: {fileID: 0}
 --- !u!114 &-1996952101110769926
 MonoBehaviour:
@@ -293,17 +306,3 @@ MonoBehaviour:
   waitTimer: 0
   scytheFlySFX: {fileID: 8300000, guid: c23309e0609f07a4a912f49e84fbd57d, type: 3}
   vSpeedMax: 9
---- !u!114 &2657704310505367730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energy: 0
-  charged: 0

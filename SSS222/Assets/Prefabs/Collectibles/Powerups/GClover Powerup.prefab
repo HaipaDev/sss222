@@ -275,11 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 100000, guid: fd3813f35d961b340bc6f97d38400a8c, type: 3}
-  xx: 0
-  yy: 0.6
-  time: 0.3
+  part: 
+  offset: {x: 0, y: 0.33}
   onTop: 1
-  stayStill: 1
-  angle: 0
   BFlame: {fileID: 0}

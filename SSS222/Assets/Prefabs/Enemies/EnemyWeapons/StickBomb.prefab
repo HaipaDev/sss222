@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1844801458717974007}
   - component: {fileID: 5461616768932919024}
   - component: {fileID: 8966845945320289331}
+  - component: {fileID: 4073240222007797126}
   - component: {fileID: 24842559518470676}
   - component: {fileID: 5820739300652673482}
   - component: {fileID: 6441261333678637232}
@@ -21,7 +22,6 @@ GameObject:
   - component: {fileID: -477606771839660972}
   - component: {fileID: -1806142457920749441}
   - component: {fileID: 2138168064270286247}
-  - component: {fileID: 2931916237291476981}
   m_Layer: 0
   m_Name: StickBomb
   m_TagString: EnemyBullet
@@ -142,6 +142,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.35, y: 0.35}
   m_EdgeRadius: 0
+--- !u!114 &4073240222007797126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041420664094412071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6d234feb55f7f4ca9c9206124b41b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockable: 0
 --- !u!114 &24842559518470676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,10 +170,11 @@ MonoBehaviour:
   assetName: GlowAuto
   materialClone: 1
   color: {r: 0.3019608, g: 0.9176471, b: 0.91372555, a: 1}
-  size: 0
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
   maxParticles: 0
   offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!82 &5820739300652673482
 AudioSource:
   m_ObjectHideFlags: 0
@@ -397,16 +411,3 @@ MonoBehaviour:
   stage: 0
   count: 0
   dist: 0
---- !u!114 &2931916237291476981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6041420664094412071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}

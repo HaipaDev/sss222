@@ -34,6 +34,7 @@ public class EnemyCollider : MonoBehaviour{
                     UniCollider.DMG_VFX(1,other,transform,dmg);
                 }
             }
+            dmgPhaseFreq.SetTimer();
         }}
     }}}
     void OnTriggerExit2D(Collider2D other){

@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 284585900876537960}
   - component: {fileID: 5882422370530315119}
   - component: {fileID: -1866281790211962452}
+  - component: {fileID: -5417336276213146982}
   - component: {fileID: 1614588365907247811}
   - component: {fileID: -3868070912757826984}
   - component: {fileID: 6410541325448673402}
-  - component: {fileID: -5322619781845389620}
   - component: {fileID: -7807203169211813935}
   m_Layer: 9
   m_Name: EnemyLaser
@@ -137,6 +137,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.21, y: 0.41}
   m_EdgeRadius: 0
+--- !u!114 &-5417336276213146982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6d234feb55f7f4ca9c9206124b41b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockable: 1
 --- !u!114 &1614588365907247811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,10 +165,11 @@ MonoBehaviour:
   assetName: GlowAuto
   materialClone: 1
   color: {r: 0.2901961, g: 0.13725491, b: 0.6862745, a: 1}
-  size: 0
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
   maxParticles: 0
   offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!82 &-3868070912757826984
 AudioSource:
   m_ObjectHideFlags: 0
@@ -266,19 +280,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
---- !u!114 &-5322619781845389620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f0f7bd6734d3044a56764fc750e4e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velPaused: {x: 0, y: 0}
 --- !u!114 &-7807203169211813935
 MonoBehaviour:
   m_ObjectHideFlags: 0

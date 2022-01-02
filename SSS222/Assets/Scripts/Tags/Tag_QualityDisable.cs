@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Tag_QualityDisable : MonoBehaviour{
-    [SerializeField]QualityLevel level=(QualityLevel)1;
+    [SerializeField]int level=1;
     [SerializeField]bool moreThan=false;
     [SerializeField]bool components;//by default disable all childObjects
     [SerializeField]bool button;
@@ -39,5 +39,5 @@ public class Tag_QualityDisable : MonoBehaviour{
             }
         }
     }
-    bool _condition(){if((!moreThan&&QualitySettings.GetQualityLevel()<=(int)level) || (moreThan&&QualitySettings.GetQualityLevel()>=(int)level))return true;else return false;}
+    bool _condition(){if((!moreThan&&QualitySettings.GetQualityLevel()<=level) || (moreThan&&QualitySettings.GetQualityLevel()>=level))return true;else return false;}
 }

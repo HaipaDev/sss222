@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 598148505458578218}
   - component: {fileID: 6493221173547759661}
   - component: {fileID: 7901463439627549422}
+  - component: {fileID: -4513945739733942048}
   - component: {fileID: 1265304716601146569}
   - component: {fileID: 4688364101293123351}
   - component: {fileID: 5239081426931158637}
@@ -135,6 +136,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 1.35}
   m_EdgeRadius: 0
+--- !u!114 &-4513945739733942048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4755926375889011706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6d234feb55f7f4ca9c9206124b41b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockable: 0
 --- !u!114 &1265304716601146569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,13 +161,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: 814a845166329ad418dec84cf1d1821d, type: 3}
-  colorGlow: {r: 0.93333334, g: 0.04705882, b: 0.117009, a: 1}
-  sizeGlow: 0.5
-  alphaGlow: 0.35
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  size: {x: 0, y: 0}
   emissionSpeed: 9.9
-  xx: 0
-  yy: 0
+  maxParticles: 0
+  offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!82 &4688364101293123351
 AudioSource:
   m_ObjectHideFlags: 0

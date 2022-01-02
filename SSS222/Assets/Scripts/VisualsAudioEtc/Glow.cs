@@ -24,8 +24,8 @@ public class Glow : MonoBehaviour{
                 mat=ps.GetComponent<Renderer>().material=Instantiate(ps.GetComponent<Renderer>().material);
                 mat.SetTexture("_MainTex",GetComponent<SpriteRenderer>().sprite.texture);
             }
-            ps.startColor=color;
             var main=ps.main;
+            main.startColor=color;
             if(size!=Vector2.zero){
                 main.startSize3D=true;
                 if(size.x!=0)main.startSizeXMultiplier=size.x;
@@ -33,7 +33,7 @@ public class Glow : MonoBehaviour{
             }
             if(alignToDirection){var shape=ps.shape;shape.alignToDirection=true;}
             var emission=ps.emission;
-            if(maxParticles!=0)ps.maxParticles=maxParticles;
+            if(maxParticles!=0)main.maxParticles=maxParticles;
             if(emissionSpeed!=0)emission.rateOverTime=emissionSpeed;
         }
     }

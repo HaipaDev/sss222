@@ -213,8 +213,10 @@ public class PlayerCollider : MonoBehaviour{
                 }
 
                 UniCollider.DMG_VFX(3,other,transform,dmg);
-                if(dmg>0)player.Damage(dmg,dmgType.silent);
+                if(dmg>0){player.Damage(dmg,dmgType.silent);}
+                else if(dmg<0){player.Damage(dmg,dmgType.heal);}//?
             }
+            dmgPhaseFreq.SetTimer();
         }}
     }}
 
