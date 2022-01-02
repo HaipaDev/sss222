@@ -8,9 +8,9 @@ public class EnShip : MonoBehaviour{
     Vector2 posY;
     Vector2 selfPos;
     Transform target;
-    [SerializeField] float speedFollow = 2f;
-    [SerializeField] float vspeed = 0.1f;
-    [SerializeField] float distY = 1.3f;
+    [SerializeField] float speedFollow=3.75f;
+    [SerializeField] float vspeed=2f;
+    [SerializeField] float distY=1.3f;
     void Awake(){
         var i=GameRules.instance;
         if(i!=null){
@@ -31,13 +31,14 @@ public class EnShip : MonoBehaviour{
         selfPos=new Vector2(transform.position.x,transform.position.y);
         var distX=Vector2.Distance(playerPosX,selfPos);
 
-        if(transform.position.y>posY.y){transform.position=new Vector2(Player.instance.transform.position.x,transform.position.y-vspeed);}//Fly in
+        if(transform.position.y>posY.y){selfPos=new Vector2(playerPosX.x,selfPos.y-stepY);}//Fly in
         else{
             if(distX>0.1f){
                 var dir=(playerPosX-selfPos).normalized;
-                selfPos+=dir*speedFollow*Time.deltaTime;
-                transform.position=selfPos;
+                selfPos+=dir*stepX;
             }
         }
+
+        transform.position=selfPos;
     }}
 }

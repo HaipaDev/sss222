@@ -136,7 +136,6 @@ MonoBehaviour:
   medkitEnergyGet: 40
   medkitHpAmnt: 25
   microMedkitHpAmnt: 10
-  healbeamHpAmnt: 0.05
   pwrupEnergyGet: 36
   enForPwrupRefill: 25
   enPwrupDuplicate: 42
@@ -303,6 +302,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 794b89b153a6d9c4493292ea975209f5, type: 2}
   - {fileID: 11400000, guid: 6c71f72b3df0c8241a69f571269f4e96, type: 2}
   - {fileID: 11400000, guid: 469591656e933a1479b0a101085ab211, type: 2}
+  enemyDefenseHit: 1
+  enemyDefensePhase: 1
   enemies:
   - name: Bat
     type: 0
@@ -310,6 +311,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
     healthStart: 40
     healthMax: 40
+    defense: 0
     healthBySize: 0
     shooting: 1
     shootTime: {x: 1.75, y: 2.8}
@@ -341,6 +343,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
     healthStart: 15
     healthMax: 15
+    defense: 0
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
@@ -371,6 +374,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
     healthStart: 95
     healthMax: 95
+    defense: 4
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
@@ -401,6 +405,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
     healthStart: 120
     healthMax: 120
+    defense: 4
     healthBySize: 0
     shooting: 1
     shootTime: {x: 0.64, y: 0.94}
@@ -435,6 +440,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
     healthStart: 33
     healthMax: 33
+    defense: 0
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
@@ -465,6 +471,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
     healthStart: 16
     healthMax: 16
+    defense: 0
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.8, y: 2.2}
@@ -496,6 +503,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
     healthStart: 115
     healthMax: 115
+    defense: 3
     healthBySize: 0
     shooting: 1
     shootTime: {x: 0.2, y: 0.2}
@@ -529,6 +537,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
     healthStart: 26
     healthMax: 26
+    defense: 2
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
@@ -559,6 +568,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
     healthStart: 17
     healthMax: 17
+    defense: 1
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
@@ -587,8 +597,9 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
-    healthStart: 95
-    healthMax: 95
+    healthStart: 66
+    healthMax: 66
+    defense: 5
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
@@ -647,8 +658,8 @@ MonoBehaviour:
     saberPrefab: {fileID: 4755926375889011706, guid: fa37e96c01257824c9c337b429cc5496,
       type: 3}
   enShipSettings:
-    speedFollow: 2
-    vspeed: 0.1
+    speedFollow: 3.75
+    vspeed: 2
     distY: 1.3
   mechaLeechSettings:
     catch_distance: 1.5
@@ -700,6 +711,7 @@ MonoBehaviour:
     dmg: 20
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -721,6 +733,7 @@ MonoBehaviour:
     dmg: 5
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -742,6 +755,7 @@ MonoBehaviour:
     dmg: 0.33
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -758,6 +772,7 @@ MonoBehaviour:
     dmg: 7.77
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 2
     phase: 1
     dmgPhase: 0.86
     phaseFreqFirst: 0
@@ -774,6 +789,7 @@ MonoBehaviour:
     dmg: 0.5
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 3
     phase: 1
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -790,6 +806,7 @@ MonoBehaviour:
     dmg: 13.5
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 3
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -806,6 +823,7 @@ MonoBehaviour:
       vfxPos: {x: 0, y: -0.5}
       dmgPlayer: 0
       dmgPlayerType: 1
+      healBeamPlayer: 0
       assetMake: 
       assetPos: {x: 0, y: 0}
   - name: QRocket
@@ -813,6 +831,7 @@ MonoBehaviour:
     dmg: 14.5
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 4
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -829,6 +848,7 @@ MonoBehaviour:
       vfxPos: {x: 0, y: -0.5}
       dmgPlayer: 0
       dmgPlayerType: 1
+      healBeamPlayer: 0
       assetMake: 
       assetPos: {x: 0, y: 0}
   - name: PRocket
@@ -836,6 +856,7 @@ MonoBehaviour:
     dmg: 0
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -852,6 +873,7 @@ MonoBehaviour:
     dmg: 1
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 1
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -868,8 +890,9 @@ MonoBehaviour:
     dmg: 2
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 1
     phase: 1
-    dmgPhase: 2
+    dmgPhase: 1
     phaseFreqFirst: 0
     phaseFreq: 0.33
     phaseCountLimit: 0
@@ -884,13 +907,15 @@ MonoBehaviour:
       vfxPos: {x: 0, y: 0}
       dmgPlayer: 0
       dmgPlayerType: 1
-      assetMake: HealBeam
+      healBeamPlayer: -6
+      assetMake: 
       assetPos: {x: 0, y: 0}
   - name: PLaser
     colliType: 1
     dmg: 6.78
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 5
     phase: 0
     dmgPhase: 2
     phaseFreqFirst: 0
@@ -907,6 +932,7 @@ MonoBehaviour:
     dmg: 40.5
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 10
     phase: 1
     dmgPhase: 10
     phaseFreqFirst: 0
@@ -923,6 +949,7 @@ MonoBehaviour:
       vfxPos: {x: 0, y: 0}
       dmgPlayer: 0.1
       dmgPlayerType: 1
+      healBeamPlayer: 0
       assetMake: 
       assetPos: {x: 0, y: 0}
   - name: ShadowBT
@@ -930,6 +957,7 @@ MonoBehaviour:
     dmg: 40.5
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 1
     dmgPhase: 10
     phaseFreqFirst: 0
@@ -946,6 +974,7 @@ MonoBehaviour:
     dmg: 111
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 5
     phase: 1
     dmgPhase: 0
     phaseFreqFirst: 0
@@ -962,6 +991,7 @@ MonoBehaviour:
     dmg: 1
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: -2
     phase: 0
     dmgPhase: 1
     phaseFreqFirst: 0
@@ -978,6 +1008,7 @@ MonoBehaviour:
     dmg: 0
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: -1
     phase: 1
     dmgPhase: 2
     phaseFreqFirst: 0.33
@@ -999,6 +1030,7 @@ MonoBehaviour:
     dmg: 0
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 1
     dmgPhase: -0.2
     phaseFreqFirst: 0
@@ -1015,6 +1047,7 @@ MonoBehaviour:
     dmg: 10
     dmgBySize: 1
     dmgBySpeed: 1
+    armorPenetr: 0
     phase: 0
     dmgPhase: 0.2
     phaseFreqFirst: 0
@@ -1031,6 +1064,7 @@ MonoBehaviour:
     dmg: 23
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 0.2
     phaseFreqFirst: 0
@@ -1047,6 +1081,7 @@ MonoBehaviour:
     dmg: 16.5
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 0.2
     phaseFreqFirst: 0
@@ -1063,6 +1098,7 @@ MonoBehaviour:
     dmg: 60
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 0.2
     phaseFreqFirst: 0
@@ -1079,6 +1115,7 @@ MonoBehaviour:
     dmg: 24.5
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 0.2
     phaseFreqFirst: 0
@@ -1100,6 +1137,7 @@ MonoBehaviour:
     dmg: 3
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 1
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -1116,6 +1154,7 @@ MonoBehaviour:
     dmg: 16
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -1132,6 +1171,7 @@ MonoBehaviour:
     dmg: 2
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -1153,6 +1193,7 @@ MonoBehaviour:
     dmg: 75
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -1169,6 +1210,7 @@ MonoBehaviour:
     dmg: 70
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -1185,6 +1227,7 @@ MonoBehaviour:
     dmg: 4
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 1
     dmgPhase: 4
     phaseFreqFirst: 0.15
@@ -1201,6 +1244,7 @@ MonoBehaviour:
     dmg: 90
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 1
     dmgPhase: 75
     phaseFreqFirst: 0
@@ -1217,6 +1261,7 @@ MonoBehaviour:
     dmg: 16
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 1
     dmgPhase: 14
     phaseFreqFirst: 0
@@ -1233,6 +1278,7 @@ MonoBehaviour:
     dmg: 33.3
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 14
     phaseFreqFirst: 0
@@ -1254,6 +1300,7 @@ MonoBehaviour:
     dmg: 9.9
     dmgBySize: 0
     dmgBySpeed: 0
+    armorPenetr: 0
     phase: 0
     dmgPhase: 14
     phaseFreqFirst: 0

@@ -100,9 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vlaser: 1
-  timerExcl: 0.8
-  timerHlaserCharging: 1
-  timerHlaser: 3.3
+  timerWarn: 0.8
+  timerCharging: 1
+  timerStay: 3.3
   stage: 0
   timer: -4
 --- !u!1 &3053376030239355070
@@ -557,6 +557,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4583750446306744267}
     m_Modifications:
+    - target: {fileID: 3569397532825650921, guid: 660228baf8367524f9272152de705b66,
+        type: 3}
+      propertyPath: size.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569397532825650921, guid: 660228baf8367524f9272152de705b66,
+        type: 3}
+      propertyPath: offset.y
+      value: -4.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4689941537683564804, guid: 660228baf8367524f9272152de705b66,
         type: 3}
       propertyPath: m_Size.x

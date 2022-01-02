@@ -91,7 +91,6 @@ public static GameRules instance;
     public float medkitEnergyGet=26f;
     public float medkitHpAmnt=25f;
     public float microMedkitHpAmnt=10f;
-    public float healbeamHpAmnt=0.05f;
     public float pwrupEnergyGet=36f;
     public float enForPwrupRefill=25f;
     public float enPwrupDuplicate=42f;
@@ -116,6 +115,8 @@ public static GameRules instance;
     public bool uniqueWaves=true;
     public List<DisrupterConfig> disrupterList;
 [Header("Enemies")]
+    public bool enemyDefenseHit=true;
+    public bool enemyDefensePhase=true;
     public EnemyClass[] enemies;
     public CometSettings cometSettings;
     public EnCombatantSettings enCombatantSettings;
@@ -331,6 +332,7 @@ public class DamageValues{
     public float dmg=1f;
     public bool dmgBySize=false;
     public bool dmgBySpeed=false;
+    public int armorPenetr=0;
     public bool phase=false;
     [HideIf("@this.phase == false")]public float dmgPhase=0.5f;
     [HideIf("@this.phase == false")]public float phaseFreqFirst=0f;
@@ -362,6 +364,7 @@ public class colliEvents{
     public Vector2 vfxPos=Vector2.zero;
     public float dmgPlayer=0f;
     public dmgType dmgPlayerType=dmgType.silent;
+    public float healBeamPlayer=0f;
     public string assetMake="";
     public Vector2 assetPos=Vector2.zero;
 }
@@ -401,6 +404,7 @@ public class EnemyClass{
     public Sprite spr;
     public float healthStart=25;
     public float healthMax=25;
+    public int defense=0;
     public bool healthBySize=false;
     public bool shooting = false;
     public Vector2 shootTime=new Vector2(1.75f,2.8f);

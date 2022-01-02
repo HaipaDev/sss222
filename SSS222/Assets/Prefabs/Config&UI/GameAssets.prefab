@@ -277,10 +277,12 @@ MonoBehaviour:
     gobj: {fileID: 100000, guid: 1ee2c03a099f4cb4b8f86c863bfedf81, type: 3}
   - name: Glow
     gobj: {fileID: 100000, guid: 5c67f18bd93ef564e9393a37d0897fe5, type: 3}
-  - name: GlowFlare
-    gobj: {fileID: 5379464388435197209, guid: de53cbdb23236bf4db0feeff47998b6f, type: 3}
   - name: GlowAuto
     gobj: {fileID: 5456100369316469715, guid: e45a71fd80682364aa6998873618c195, type: 3}
+  - name: GlowFlare
+    gobj: {fileID: 5379464388435197209, guid: de53cbdb23236bf4db0feeff47998b6f, type: 3}
+  - name: GlowHLaser
+    gobj: {fileID: 4161022518797961643, guid: cdcb4e7cc77e3c14781127037dfea4b3, type: 3}
   sprites:
   - name: armorPwrup
     spr: {fileID: 21300000, guid: 0aec6e8aedd36884fb81df377f1676ba, type: 3}

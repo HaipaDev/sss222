@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -2526951079648213008}
   - component: {fileID: -8348096473155390100}
   - component: {fileID: 8131407421759383529}
+  - component: {fileID: 6434095215573821072}
   m_Layer: 0
   m_Name: HealBeam
   m_TagString: Powerups
@@ -204,6 +205,20 @@ MonoBehaviour:
   particlesOnDeath: 0
   particlesPrefab: {fileID: 0}
   particleDestroyTime: 0.05
+--- !u!114 &6434095215573821072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056705403108089519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b25764341d540418c95cac2cd3ae55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 0.125
+  absorp: 1
 --- !u!1001 &4393045954358260823
 PrefabInstance:
   m_ObjectHideFlags: 0

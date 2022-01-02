@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour{
     [SerializeField] public Sprite spr;
     public float health=100f;
     public float healthMax=100f;
+    public int defense=0;
+    public bool defenseOnPhase=true;
     public bool healthBySize=false;
     [SerializeField] public bool shooting=false;
     [SerializeField] public Vector2 shootTime=new Vector2(1.75f,2.8f);
@@ -66,6 +68,7 @@ public class Enemy : MonoBehaviour{
             spr=e.spr;
             health=e.healthStart;
             healthMax=e.healthMax;
+            defense=e.defense;
             healthBySize=e.healthBySize;
             shooting=e.shooting;
             shootTime=e.shootTime;
@@ -210,6 +213,7 @@ public class Enemy : MonoBehaviour{
         health=-1;
         Die();
     }
+    public void Damage(float dmg){health-=dmg;}
     //Collisions in EnemyCollider
     public void DispDmgCount(Vector2 pos){if(SaveSerial.instance.settingsData.dmgPopups)StartCoroutine(DispDmgCountI(pos));}
     IEnumerator DispDmgCountI(Vector2 pos){

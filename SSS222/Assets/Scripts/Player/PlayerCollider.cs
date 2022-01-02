@@ -55,7 +55,11 @@ public class PlayerCollider : MonoBehaviour{
                     GameSession.instance.AddXP(GameRules.instance.xp_powerup);//XP For powerups
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("LunarGel").name)){player.HPAbsorp(player.microMedkitHpAmnt);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("HealBeam").name)){player.HPAbsorp(player.healbeamHpAmnt);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("HealBeam").name)){
+                    HealBeam hb=other.GetComponent<HealBeam>();
+                    if(hb.absorp)player.HPAbsorp(hb.value);
+                    else HPAdd(hb.value);
+                }
 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("MedkitPwrup").name)){
                     if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}

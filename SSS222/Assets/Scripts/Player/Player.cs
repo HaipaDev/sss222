@@ -181,7 +181,6 @@ public class Player : MonoBehaviour{
     [SerializeField] public float medkitEnergyGet=40f;
     [SerializeField] public float medkitHpAmnt=25f;
     [SerializeField] public float microMedkitHpAmnt=10f;
-    [SerializeField] public float healbeamHpAmnt=0.05f;
     [SerializeField] public float pwrupEnergyGet=36f;
     [SerializeField] public float enForPwrupRefill=25f;
     [SerializeField] public float enPwrupDuplicate=42f;
@@ -355,7 +354,6 @@ public class Player : MonoBehaviour{
         medkitEnergyGet=i.medkitEnergyGet;
         medkitHpAmnt=i.medkitHpAmnt;
         microMedkitHpAmnt=i.microMedkitHpAmnt;
-        healbeamHpAmnt=i.healbeamHpAmnt;
         pwrupEnergyGet=i.pwrupEnergyGet;
         enForPwrupRefill=i.enForPwrupRefill;
         enPwrupDuplicate=i.enPwrupDuplicate;

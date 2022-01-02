@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5312594039208143061}
   - component: {fileID: 4689941537683564805}
   - component: {fileID: 8596212957677666647}
+  - component: {fileID: 3569397532825650921}
   m_Layer: 0
   m_Name: VLaser
   m_TagString: World
@@ -31,8 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.76, z: 0}
   m_LocalScale: {x: 0.45, y: 1.88, z: 1}
-  m_Children:
-  - {fileID: 6884021545227160888}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -252,78 +252,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &7365108256789469363
-PrefabInstance:
+--- !u!114 &3569397532825650921
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 4689941537683564827}
-    m_Modifications:
-    - target: {fileID: 4161022518797961643, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_Name
-      value: GlowAuto
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cdcb4e7cc77e3c14781127037dfea4b3, type: 3}
---- !u!4 &6884021545227160888 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4161022518798128523, guid: cdcb4e7cc77e3c14781127037dfea4b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 7365108256789469363}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4689941537683564806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assetName: GlowHLaser
+  materialClone: 0
+  color: {r: 1, g: 1, b: 1, a: 1}
+  size: {x: 0, y: 0}
+  emissionSpeed: 0
+  maxParticles: 0
+  offset: {x: 0, y: 0}
+  alignToDirection: 1

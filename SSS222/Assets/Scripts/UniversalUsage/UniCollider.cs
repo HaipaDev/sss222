@@ -23,7 +23,19 @@ public class UniCollider : MonoBehaviour{
                 foreach(colliEvents co in dmgVal.colliEvents){
                     if(!String.IsNullOrEmpty(co.vfx)){if(GameAssets.instance.GetVFX(co.vfx)!=null)Instantiate(GameAssets.instance.GetVFX(co.vfx),(Vector2)transform.position+co.vfxPos,Quaternion.identity);}
                     if(co.dmgPlayer!=0){if(Player.instance!=null){Player.instance.Damage(co.dmgPlayer,co.dmgPlayerType);}}
-                    if(!String.IsNullOrEmpty(co.assetMake)){if(GameAssets.instance.Get(co.assetMake)!=null)Instantiate(GameAssets.instance.Get(co.assetMake),(Vector2)transform.position+co.assetPos,Quaternion.identity);}
+                    if(!String.IsNullOrEmpty(co.assetMake)){if(GameAssets.instance.Get(co.assetMake)!=null)GameAssets.instance.Make(co.assetMake,(Vector2)transform.position+co.assetPos);}
+                    if(co.healBeamPlayer!=0){
+                        GameObject go=Instantiate(GameAssets.instance.Get("HealBeam"),(Vector2)transform.position+co.assetPos,Quaternion.identity);
+                        HealBeam hb=go.GetComponent<HealBeam>();
+                        if(co.healBeamPlayer>0){hb.value=co.healBeamPlayer;}
+                        else if(co.healBeamPlayer==-1||co.healBeamPlayer==-7){hb.value=dmg;}
+                        else if(co.healBeamPlayer==-2||co.healBeamPlayer==-8){hb.value=dmg/2;}
+                        else if(co.healBeamPlayer==-3||co.healBeamPlayer==-9){hb.value=dmg/4;}
+                        else if(co.healBeamPlayer==-4||co.healBeamPlayer==-10){hb.value=dmg/8;}
+                        else if(co.healBeamPlayer==-5||co.healBeamPlayer==-11){hb.value=dmg/12;}
+                        else if(co.healBeamPlayer==-6||co.healBeamPlayer==-12){hb.value=dmg/16;}
+                        if(co.healBeamPlayer<=-7){hb.absorp=false;}
+                    }
                 }
                 
                 if(!dmgVal.phase){Destroy(other.gameObject,0.01f);}
@@ -100,6 +112,15 @@ public class UniCollider : MonoBehaviour{
         dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==dmgValName);
         if(dmgVal!=null)return dmgVal;
         else Debug.LogWarning("DamageValuesAbs not defined for "+dmgValName);return null;
+    }
+    public static int GetArmorPenetr(int value,int defense){
+        int armorPenetr=value;
+        if(value>0){}
+        else if(value==-1){armorPenetr=defense;}
+        else if(value==-2){armorPenetr=defense/2;}
+        else if(value==-3){armorPenetr=defense/4;}
+        else if(value==-4){armorPenetr=defense/8;}
+        return armorPenetr;
     }
 }
 

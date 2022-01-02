@@ -32,13 +32,13 @@ public class CargoShip : MonoBehaviour{
             //GetComponentInChildren<TMPro.TextMeshProUGUI>().gameObject.SetActive(false);
             transform.GetChild(0).gameObject.SetActive(true);
         }
-        if(other.CompareTag("PlayerWeapons")&&other.GetComponent<HealthLeech>()==null){
+        if(other.CompareTag("PlayerWeapons")&&!other.GetComponent<Tag_PlayerWeapon>().healing){
             float dmg=UniCollider.TriggerCollision(other,transform,new List<colliTypes>(){colliTypes.playerWeapons});
             if(shieldOn)dmg*=0.75f;
             if(dmg!=0)health-=dmg;
 
             UniCollider.DMG_VFX(0,other,transform,dmg,ColorInt32.dmgPlayerColor);
-        }else if(other.GetComponent<HealthLeech>()!=null){Shop.instance.reputation+=1;}
+        }else if(other.GetComponent<Tag_PlayerWeapon>().healing){Shop.instance.reputation+=1;}
         if(other.GetComponent<Shredder>()!=null){Destroy(gameObject);}
     }
     void Update(){
