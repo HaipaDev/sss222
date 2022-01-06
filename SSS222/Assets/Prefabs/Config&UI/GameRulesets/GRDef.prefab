@@ -67,7 +67,7 @@ MonoBehaviour:
   healthPlayer: 150
   healthMaxPlayer: 150
   energyOnPlayer: 1
-  energyPlayer: 30
+  energyPlayer: 60
   energyMaxPlayer: 180
   ammoOn: 1
   fuelOn: 0
@@ -89,6 +89,7 @@ MonoBehaviour:
   overheatCooldown: 0.5
   overheatedTime: 3
   recoilOnPlayer: 1
+  playerWeaponsFade: 1
   weaponProperties:
   - {fileID: 11400000, guid: c02591e544d31e44c9fecff122d832be, type: 2}
   - {fileID: 11400000, guid: 466aaf3a96073854faf4eafb373c65f1, type: 2}
@@ -131,7 +132,7 @@ MonoBehaviour:
   onfireDmg: 1
   decayTickrate: 0.5
   decayDmg: 0.5
-  energyBallGet: 1
+  energyBallGet: 1.5
   energyBatteryGet: 11
   medkitEnergyGet: 40
   medkitHpAmnt: 25
@@ -1224,14 +1225,14 @@ MonoBehaviour:
     colliEvents: []
   - name: Leech
     colliType: 2
-    dmg: 4
+    dmg: 0
     dmgBySize: 0
     dmgBySpeed: 0
     armorPenetr: 0
     phase: 1
     dmgPhase: 4
-    phaseFreqFirst: 0.15
-    phaseFreq: 0.33
+    phaseFreqFirst: 1
+    phaseFreq: 0.6
     phaseCountLimit: 0
     dmgFx: 0
     dmgFxValues: []

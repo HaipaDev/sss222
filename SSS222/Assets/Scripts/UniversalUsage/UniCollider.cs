@@ -54,7 +54,8 @@ public class UniCollider : MonoBehaviour{
         return dmg;
     }
 
-    public static void DMG_VFX(int type,Collider2D other, Transform transform, float dmg, int colorDef=ColorInt32.dmgColor){
+    public static void DMG_VFX(int type,Collider2D other, Transform transform, float dmg, int colorDef=0){
+        if(colorDef==0){colorDef=ColorInt32.dmgColor;}
     if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
         DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
         if(type==0){//Enemy - TriggerEnter
@@ -69,10 +70,10 @@ public class UniCollider : MonoBehaviour{
                     if(transform.GetComponent<Enemy>().dmgCounted==false)transform.GetComponent<Enemy>().DispDmgCount(other.transform.position);
                     }
                 }else{
-                    GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(colorDef));
+                    WorldCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(colorDef));
                 }
             }else if(GameSession.instance.dmgPopups==true&&dmg<0){
-                GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor));
+                WorldCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor));
             }
         }else if(type==1){//Enemy - TriggerStay
             GameObject flare=GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,other.transform.position.y));
@@ -80,19 +81,21 @@ public class UniCollider : MonoBehaviour{
             if(other.gameObject.GetComponent<SpriteRenderer>()!=null)flareScale=new Vector2(other.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,other.gameObject.GetComponent<SpriteRenderer>().bounds.size.y)*3;flareScale*=other.transform.localScale;
             flare.transform.localScale=flareScale;
             if(GameSession.instance.dmgPopups==true&&dmg>0){
-                GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPhaseColor));
+                WorldCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPhaseColor));
             }else if(GameSession.instance.dmgPopups==true&&dmg<0){
-                GameCanvas.instance.DMGPopup(-dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor));
+                WorldCanvas.instance.DMGPopup(-dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor));
             }
         }else if(type==2){//Player - TriggerEnter
             var player=Player.instance;
-            if(GameSession.instance.dmgPopups==true&&dmg!=0&&!player.gclover&&!player.dashing){
-                GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPlayerColor),2,true);
-            }
+            if(GameSession.instance.dmgPopups==true&&dmg>0&&!player.gclover&&!player.dashing){WorldCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPlayerHitColor),2,true);}
+            else if(dmg<0){WorldCanvas.instance.DMGPopup(-dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1.5f);}
         }else if(type==3){//Player - TriggerStay
             var player=Player.instance;
-            if(GameSession.instance.dmgPopups==true&&dmg>0&&!player.gclover&&!player.dashing){GameCanvas.instance.DMGPopup(dmg,other.transform.position,Color.red,2,true);}
-            else if(dmg<0){GameCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1.5f,true);}
+            if(GameSession.instance.dmgPopups==true&&dmg>0&&!player.gclover&&!player.dashing){WorldCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgPlayerPhaseColor),2,true);}
+            else if(dmg<0){WorldCanvas.instance.DMGPopup(-dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1.4f);}
+        }else if(type==-1){//Default / Cargo
+            if(GameSession.instance.dmgPopups==true&&dmg>0){WorldCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.grey),2);}
+            else if(dmg<0){WorldCanvas.instance.DMGPopup(-dmg,other.transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1.4f);}
         }
     }}
     public static DamageValues GetDmgVal(string objName){

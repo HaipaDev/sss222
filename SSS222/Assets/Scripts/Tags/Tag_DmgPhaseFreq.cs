@@ -8,7 +8,7 @@ public class Tag_DmgPhaseFreq:MonoBehaviour{
     public int phaseCountLimit=0;public int phaseCount=0;
     public string soundPhase;
     public void ResetTimer(){firstDone=false;phaseTimer=phaseTimer=-4;phaseCount=0;}
-    public void SetTimer(){phaseCount++;if(phaseTimer==-4){if(!firstDone){phaseTimer=phaseFreqFirst;firstDone=true;}else{phaseTimer=phaseFreq;}}}
+    public void SetTimer(){if(phaseTimer==-4){if(!firstDone){phaseTimer=phaseFreqFirst;firstDone=true;}else{phaseTimer=phaseFreq;}phaseCount++;return;}}
     public void Update(){   if(!GameSession.GlobalTimeIsPaused){
         if(phaseFreqFirst==0){firstDone=true;}
         if(phaseTimer>0){phaseTimer-=Time.deltaTime;}

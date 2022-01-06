@@ -37,7 +37,7 @@ public class CargoShip : MonoBehaviour{
             if(shieldOn)dmg*=0.75f;
             if(dmg!=0)health-=dmg;
 
-            UniCollider.DMG_VFX(0,other,transform,dmg,ColorInt32.dmgPlayerColor);
+            UniCollider.DMG_VFX(-1,other,transform,dmg);
         }else if(other.GetComponent<Tag_PlayerWeapon>().healing){Shop.instance.reputation+=1;}
         if(other.GetComponent<Shredder>()!=null){Destroy(gameObject);}
     }

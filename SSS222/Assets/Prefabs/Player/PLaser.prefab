@@ -152,6 +152,8 @@ MonoBehaviour:
   energy: 0
   charged: 0
   blockable: 0
+  healing: 0
+  opacity: 1
 --- !u!114 &1887362649180442507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,9 +168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   assetName: GlowAuto
   materialClone: 1
-  color: {r: 0.21960786, g: 0.08627451, b: 0.4156863, a: 1}
-  size: {x: 0, y: 0}
-  emissionSpeed: 7.63
+  color: {r: 0.3170064, g: 0.17221434, b: 0.8113208, a: 1}
+  size: {x: 0.6, y: 0.6}
+  emissionSpeed: 30
   maxParticles: 0
   offset: {x: 0, y: 0}
   alignToDirection: 0

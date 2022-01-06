@@ -219,7 +219,7 @@ public class Enemy : MonoBehaviour{
     IEnumerator DispDmgCountI(Vector2 pos){
         dmgCounted=true;
         //In Update, DispDmgCountUp
-        dmgCountPopup=GameCanvas.instance.DMGPopupReturn(0,pos,Color.yellow);
+        dmgCountPopup=WorldCanvas.instance.DMGPopup(0,pos,ColorInt32.Int2Color(ColorInt32.dmgColor));
         yield return new WaitForSeconds(0.2f);
         dmgCounted=false;
         dmgCount=0;

@@ -444,7 +444,10 @@ public class Player : MonoBehaviour{
         }
 
         if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
-    }}
+    }
+    Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
+    Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
+    }
     public void SetInputType(InputType type){inputType=type;}
     void FixedUpdate(){
         // If we're first at-bat, handle the input immediately and mark it already-handled.
@@ -515,8 +518,8 @@ public class Player : MonoBehaviour{
         var newXpos=transform.position.x;
         var newYpos=transform.position.y;
 
-        if(moveX==true)newXpos=Mathf.Clamp(transform.position.x,xRange.x,xRange.y)+deltaX;
-        if(moveY==true)newYpos=Mathf.Clamp(transform.position.y,yRange.x,yRange.y)+deltaY;
+        if(moveX==true)newXpos=Mathf.Clamp(newXpos,xRange.x,xRange.y)+deltaX;
+        if(moveY==true)newYpos=Mathf.Clamp(newYpos,yRange.x,yRange.y)+deltaY;
         transform.position=new Vector2(newXpos,newYpos);
         
     }
@@ -879,11 +882,13 @@ public class Player : MonoBehaviour{
             if(shadow==false){dashing=false;}
         }
 
-        if(inverter==true){if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==false){
-        FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=false;FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().enabled=true;FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=true;}}
-        else{if(FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled==true){FindObjectOfType<InvertAllAudio>().GetComponent<SpriteRenderer>().enabled=false;}if(FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic==false){FindObjectOfType<InvertAllAudio>().GetComponent<InvertAllAudio>().revertMusic=true;}
-        if(FindObjectOfType<MusicPlayer>()!=null&&FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch==-1){FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;}}
-        if(inverterTimer>=inverterTime&&inverterTimer<inverterTime+4){inverterTimer=inverterTime+4;ResetStatus("inverter");}
+        if(blind==true){if(!BlindnessUI.instance!=null){if(!BlindnessUI.instance.on)BlindnessUI.instance.on=true;}}
+        if(blindTimer<=0&&blindTimer>-4){if(!BlindnessUI.instance!=null){BlindnessUI.instance.on=false;}}
+
+        if(inverter==true){if(!InverterFx.instance!=null){if(!InverterFx.instance.on)InverterFx.instance.on=true;}}
+        //else{if(InverterFx.instance.on){InverterFx.instance.on=false;}if(InverterFx.instance.revertMusic==false){InverterFx.instance.revertMusic=true;}
+        //    if(MusicPlayer.instance!=null&&MusicPlayer.instance.GetComponent<AudioSource>().pitch==-1){MusicPlayer.instance.GetComponent<AudioSource>().pitch=1;}}
+        if(inverterTimer>=inverterTime&&inverterTimer<inverterTime+4){inverterTimer=inverterTime+4;ResetStatus("inverter");if(!InverterFx.instance!=null){InverterFx.instance.on=false;InverterFx.instance.reverted=false;}}
 
         if(magnet==true){
             if(FindObjectsOfType<Tag_MagnetAffected>()!=null){
@@ -1203,7 +1208,7 @@ public class Player : MonoBehaviour{
         if(type==dmgType.decay){if(dmg!=0&&health>dmg*2){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HPPopUpHUD(-dmgTot);damaged=true;AudioManager.instance.Play("Decay");}}
         if(type==dmgType.electr){electricified=true;Electrc(electrTime);}//electricified=true;AudioManager.instance.Play("Electric");}
         if(type==dmgType.shadow){shadowed=true;AudioManager.instance.Play("ShadowHit");}
-        if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);}}
+        if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);UniCollider.DMG_VFX(2,GetComponent<Collider2D>(),transform,-dmg);}}
         if(type==dmgType.healSilent){if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);}}
     }
     public void AddSubEnergy(float value,bool add=false, bool ignore=false){

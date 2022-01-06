@@ -18,7 +18,7 @@ public class HealPellet : MonoBehaviour{
         if(targetObj!=null&&other.gameObject==targetObj){
             if(targetObj.GetComponent<Enemy>().health<targetObj.GetComponent<Enemy>().healthMax){
                 targetObj.GetComponent<Enemy>().health+=healAmnt;
-                GameCanvas.instance.DMGPopup(healAmnt,transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1,false);
+                WorldCanvas.instance.DMGPopup(healAmnt,transform.position,ColorInt32.Int2Color(ColorInt32.dmgHealColor),1,false);
             }
             GetComponent<FollowOneObject>().targetObj=null;
             targetObj=null;

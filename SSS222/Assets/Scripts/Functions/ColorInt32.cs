@@ -6,19 +6,21 @@
 public class ColorInt32{
     public const int cyan = 16777215;
     public const int clear = 0;
-    public const int grey = 2139062271;
-    public const int gray = 2139062271;
+    public const int grey = 2139062271;public const int gray = 2139062271;
     public const int magenta = -16711681;
     public const int red = -16776961;
+    public const int orange = -9043201;
     public const int yellow = -1374977;
     public const int black = 255;
     public const int white = -1;
     public const int green = 16711935;
     public const int blue = 65535;
-    public const int dmgColor=-473622271;
-    public const int dmgPhaseColor=-778812159;
-    public const int dmgPlayerColor=-782940927;
-    public const int dmgHealColor=434360065;
+
+    public static int dmgColor=-473622271;
+    public static int dmgPhaseColor=-758829057;
+    public static int dmgPlayerHitColor=-16776961;
+    public static int dmgPlayerPhaseColor=-782940927;
+    public static int dmgHealColor=434360065;
 
     public static Color32 Int2Color(int i){
         byte[] result = new byte[4];

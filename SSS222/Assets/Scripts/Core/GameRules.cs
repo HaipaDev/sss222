@@ -61,6 +61,7 @@ public static GameRules instance;
     public float overheatCooldown = 0.65f;
     public float overheatedTime=3;
     public bool recoilOnPlayer=true;
+    public bool playerWeaponsFade=true;
     public List<WeaponProperties> weaponProperties;
 [Header("State Defaults")]
     public float flipTime = 7f;

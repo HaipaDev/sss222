@@ -173,6 +173,7 @@ public class SaveSerial : MonoBehaviour{
 		public bool corePopupsSum;
 		public bool scorePopupsSum;
 		
+		public bool playerWeaponsFade=true;
 		public float hudVis_graphics=0.9f;
 		public float hudVis_text=1f;
 		public float hudVis_barFill=1f;

@@ -70,33 +70,7 @@ public class GameCanvas : MonoBehaviour{
         if(coreTimer>0){coreTimer-=Time.unscaledDeltaTime;}
     }
     }
-    public static GameObject CreateOnUI(GameObject obj, Vector2 position){
-        GameCanvas canvas=FindObjectOfType<GameCanvas>();
-        GameObject childObject=Instantiate(obj,Camera.main.WorldToScreenPoint(position),Quaternion.identity,canvas.transform);
-        //childObject.transform.parent = canvas.transform;
-        childObject.transform.SetParent(canvas.transform);
-        childObject.transform.position=Camera.main.WorldToScreenPoint(position);
-        return childObject;
-    }
 
-    public void DMGPopup(float dmg, Vector2 pos, Color color, float scale=1, bool isPlayer=false){
-    if(SaveSerial.instance.settingsData.dmgPopups){
-        GameObject dmgpopup=GameCanvas.CreateOnUI(GameAssets.instance.GetVFX("DMGPopup"),pos);
-        dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=color;
-        dmgpopup.transform.localScale=new Vector2(scale,scale);
-        if(Player.instance!=null&&isPlayer)dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg/Player.instance.armorMulti,2).ToString();
-        else{dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg,1).ToString();}
-    }
-    }public GameObject DMGPopupReturn(float dmg, Vector2 pos, Color color, float scale=1, bool isPlayer=false){
-    if(SaveSerial.instance.settingsData.dmgPopups){
-        GameObject dmgpopup=GameCanvas.CreateOnUI(GameAssets.instance.GetVFX("DMGPopup"),pos);
-        dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=color;
-        dmgpopup.transform.localScale=new Vector2(scale,scale);
-        if(Player.instance!=null&&isPlayer)dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg/Player.instance.armorMulti,2).ToString();
-        else{dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=System.Math.Round(dmg,1).ToString();}
-        return dmgpopup;
-    }else{Debug.LogWarning("DMGPopups are disabled!");return null;}
-    }
     public void HpPopupSwitch(float amnt){if(SaveSerial.instance.settingsData.hpPopupsSum){HpDispCount(amnt);}else{HPPopUpHUD(amnt);}}
     void HpDispCount(float amnt){
         if(hpTimer<=0){hpCount=0;}

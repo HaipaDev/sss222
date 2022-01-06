@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4546529352650547399}
   - component: {fileID: 4546529352650547392}
-  - component: {fileID: 4887282828838490148}
   - component: {fileID: 153409864}
+  - component: {fileID: 8822671776099359042}
   - component: {fileID: 4546529352650547398}
   - component: {fileID: 1949430517914965929}
   - component: {fileID: 3388790463455218104}
@@ -91,45 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &4887282828838490148
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4546529352650547393}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.12462122, y: 0.50047344}
-      - {x: -0.25196975, y: 0.2522225}
-      - {x: -0.49758542, y: 0.25070113}
-      - {x: -0.49838793, y: -0.1241046}
-      - {x: -0.37442362, y: -0.37471923}
-      - {x: -0.25237536, y: -0.49807718}
-      - {x: 0.25069582, y: -0.49726886}
-      - {x: 0.3729086, y: -0.36651933}
-      - {x: 0.43999022, y: -0.24706548}
-      - {x: 0.4963212, y: -0.1184969}
-      - {x: 0.4969084, y: 0.24974942}
-      - {x: 0.2505435, y: 0.2520623}
-      - {x: 0.11845493, y: 0.5008006}
-      - {x: -0.011699584, y: 0.49991056}
 --- !u!50 &153409864
 Rigidbody2D:
   serializedVersion: 4
@@ -138,7 +99,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4546529352650547393}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -151,6 +112,22 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!58 &8822671776099359042
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4546529352650547393}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.07}
+  serializedVersion: 2
+  m_Radius: 0.33
 --- !u!114 &4546529352650547398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,7 +300,6 @@ MonoBehaviour:
   medkitEnergyGet: 40
   medkitHpAmnt: 25
   microMedkitHpAmnt: 10
-  healbeamHpAmnt: 0.05
   pwrupEnergyGet: 36
   enForPwrupRefill: 25
   enPwrupDuplicate: 42
@@ -422,7 +398,6 @@ MonoBehaviour:
   part: BFlameDMG
   offset: {x: 0, y: -0.6}
   onTop: 1
-  stayStill: 0
   BFlame: {fileID: 0}
 --- !u!114 &-6162074867996871907
 MonoBehaviour:

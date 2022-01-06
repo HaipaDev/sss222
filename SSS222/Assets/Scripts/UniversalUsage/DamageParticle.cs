@@ -22,7 +22,7 @@ public class DamageParticle : MonoBehaviour{
             var player=other.GetComponent<Player>();
             player.Damage(dmgPlayer,dmgType);
             if(FindObjectOfType<GameSession>().dmgPopups==true){
-                GameObject dmgpopup=GameCanvas.CreateOnUI(GameAssets.instance.GetVFX("DMGPopup"),transform.position);
+                GameObject dmgpopup=WorldCanvas.CreateOnUI(GameAssets.instance.GetVFX("DMGPopup"),transform.position);
                 dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().color=Color.red;
                 dmgpopup.transform.localScale=new Vector2(2,2);
                 dmgpopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=dmgPlayer.ToString();

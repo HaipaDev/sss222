@@ -56,6 +56,7 @@ public class EnemyCollider : MonoBehaviour{
         else{if(!GameRules.instance.enemyDefensePhase||!en.defenseOnPhase){def=0;armorPenetr=0;}defMulti=0.2f;}
         float totalDef=Mathf.Clamp((Mathf.Clamp((def-armorPenetr)*defMulti,0,999)),0,99999f);
         if(dmg>totalDef)dmg-=totalDef;
+        if(def==-99){dmg=0;}
         return dmg;
     }
 }

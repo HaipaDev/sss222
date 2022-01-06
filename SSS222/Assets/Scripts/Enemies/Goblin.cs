@@ -97,10 +97,11 @@ public class Goblin : MonoBehaviour{
         bossForm=true;
         GetComponent<Follow>().enabled=false;
         if(GetComponent<BackflameEffect>().BFlame!=null){Destroy(GetComponent<BackflameEffect>().BFlame);}GetComponent<BackflameEffect>().enabled=false;
-        confused=false;Destroy(transform.GetChild(0));
-        GetComponent<SpriteRenderer>().sprite=bossSprite;
-        GetComponent<Enemy>().health=bossHealth;GetComponent<Enemy>().healthMax=bossHealth;
-        GetComponent<Enemy>().shooting=true;
+        confused=false;Destroy(transform.GetChild(0).gameObject);
+        Enemy en=GetComponent<Enemy>();
+        en.spr=bossSprite;
+        en.health=bossHealth;en.healthMax=bossHealth;
+        en.shooting=true;
         pos.x=transform.position.x;transform.rotation=new Quaternion(0,0,0,0);
         rb.velocity=Vector2.zero;GetComponent<Tag_PauseVelocity>().velPaused=Vector2.zero;
         AudioManager.instance.Play("GoblinTransform");

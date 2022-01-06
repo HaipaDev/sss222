@@ -43,7 +43,10 @@ public class ValueDisplay : MonoBehaviour{
     if(pskills!=null){
         if(value=="cooldownQ") txt.text=System.Math.Round(pskills.cooldownQ,0).ToString();
         else if(value=="cooldownE") txt.text=System.Math.Round(pskills.cooldownE,0).ToString();
-        else if(value=="timerTeleport")if(FindObjectOfType<PlayerSkills>()!=null){txt.text=System.Math.Round(pskills.timerTeleport,1).ToString();}else{Destroy(transform.parent.gameObject);}
+        else if(value=="timerTeleport"){
+            if(FindObjectOfType<PlayerSkills>()!=null){txt.text=System.Math.Round(pskills.timerTeleport,1).ToString();}else{Destroy(transform.parent.gameObject);}
+            if(txt.text=="-4"){var tempColor=txt.color;tempColor.a=0;txt.color=tempColor;}
+        }
     }
     if(GameSession.instance!=null){
         if(value=="scoreMulti") txt.text=GameSession.instance.scoreMulti.ToString();

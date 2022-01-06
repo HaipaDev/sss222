@@ -51,8 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa19b9539baff354cbb402b21d7b1a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  targetTag: Player
+  target: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
+  targetTag: 
   xx: -0.225
   yy: -0.55
   targetObj: {fileID: 0}
@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 426448645}
   - component: {fileID: 426448644}
   - component: {fileID: 426448643}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UIMask 9:16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +402,7 @@ RectTransform:
   m_Children:
   - {fileID: 1313311996}
   m_Father: {fileID: 2614155989906725886}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -758,7 +758,7 @@ GameObject:
   - component: {fileID: 1313311999}
   - component: {fileID: 1313311997}
   - component: {fileID: 7293689707689345924}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BlindnessIMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -799,7 +799,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313311995}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -852,6 +852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   on: 0
+  scaleWithPlayer: 1
   scale: 3
 --- !u!1 &1990238223
 GameObject:
@@ -999,7 +1000,7 @@ GameObject:
   - component: {fileID: 7307942493656991853}
   - component: {fileID: 2448556441822183890}
   - component: {fileID: 7111113542552770319}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BlackIMG R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1077,7 +1078,7 @@ GameObject:
   - component: {fileID: 3068342378965951179}
   - component: {fileID: 5140739138100907664}
   m_Layer: 5
-  m_Name: ArmorStripClassic
+  m_Name: HPStripClassic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1183,7 +1184,7 @@ GameObject:
   - component: {fileID: 2307142550897012198}
   - component: {fileID: 2732498621337873408}
   - component: {fileID: 5654739211575375854}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BlackIMG U
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2199,8 +2200,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 553459525993391737}
-  - {fileID: 426448642}
   - {fileID: 5018658343598317162}
+  - {fileID: 426448642}
   - {fileID: 9145456492723046542}
   - {fileID: 8978571983505979409}
   - {fileID: 6463286346786911909}
@@ -2249,7 +2250,7 @@ Canvas:
   m_GameObject: {fileID: 2614155989906725882}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2334,7 +2335,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2614155989906725882}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0724842366b6ea4eaeab0d5c14d8f32, type: 3}
   m_Name: 
@@ -2668,7 +2669,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 26b343ef55e21234f95c33b8fb2d9f94, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1651dd3610a115245aee0c5dd2b2ab36, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2721,7 +2722,7 @@ GameObject:
   - component: {fileID: 4287984598807912713}
   - component: {fileID: 8140580937706377609}
   - component: {fileID: 4981420086522293353}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BlackIMG D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2799,7 +2800,7 @@ GameObject:
   - component: {fileID: 8468706595807341055}
   - component: {fileID: 9211831479371136713}
   m_Layer: 5
-  m_Name: ArmorStripMask
+  m_Name: HPStripMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3124,7 +3125,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 754bbf7b54ca3374f837898725e67e1c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ed35832f94e65f144ae13a71f1a7402d, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3177,7 +3178,7 @@ GameObject:
   - component: {fileID: 2090446289948646505}
   - component: {fileID: 3140619692028168949}
   - component: {fileID: 6262489211550631202}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BlackIMG L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3256,7 +3257,7 @@ GameObject:
   - component: {fileID: 1092023153117021453}
   - component: {fileID: 7340926316836002657}
   - component: {fileID: 2526445842965112904}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScoreImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3639,7 +3640,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9b8faffd21e893b4a8324e8be2b2aff2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b571b41bbe460444948e2acc2965c18, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3692,7 +3693,7 @@ GameObject:
   - component: {fileID: 7678470644506103469}
   - component: {fileID: 5697100848935337276}
   m_Layer: 5
-  m_Name: ArmorStrip
+  m_Name: HPStrip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4062,7 +4063,7 @@ GameObject:
   - component: {fileID: 2153220069919150057}
   - component: {fileID: 4585426114174769688}
   m_Layer: 5
-  m_Name: ArmorStripFill
+  m_Name: HPStripFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4510,7 +4511,7 @@ GameObject:
   - component: {fileID: 8555937217956512324}
   - component: {fileID: 2283225445529110286}
   - component: {fileID: 1522960445}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Screenflash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4609,7 +4610,7 @@ GameObject:
   - component: {fileID: 3999934975353760172}
   - component: {fileID: 4078102690499197108}
   - component: {fileID: 7387654990401732031}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UIMask 16:9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4708,7 +4709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5018658343598317162}
   - component: {fileID: 2742157932259664620}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BlackIMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4731,7 +4732,7 @@ RectTransform:
   - {fileID: 4287984598807912713}
   - {fileID: 2307142550897012198}
   m_Father: {fileID: 2614155989906725886}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4760,7 +4761,7 @@ GameObject:
   - component: {fileID: 6275853863762861448}
   - component: {fileID: 5302011594876530934}
   m_Layer: 5
-  m_Name: Armor
+  m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4814,7 +4815,8 @@ GameObject:
   - component: {fileID: 1152290698318281361}
   - component: {fileID: 4813294461202038994}
   - component: {fileID: 2216864966615824458}
-  m_Layer: 0
+  - component: {fileID: 3012685175014605860}
+  m_Layer: 5
   m_Name: BlindnessIMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4885,7 +4887,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8329480943627786079}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa19b9539baff354cbb402b21d7b1a7f, type: 3}
   m_Name: 
@@ -4908,7 +4910,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   on: 0
+  scaleWithPlayer: 1
   scale: 3
+--- !u!114 &3012685175014605860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8329480943627786079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de2506537cb16da42a716c515120ac19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
+  targetTag: 
+  xx: 0
+  yy: 0
+  targetObj: {fileID: 0}
 --- !u!1 &8684379468643623505
 GameObject:
   m_ObjectHideFlags: 0
