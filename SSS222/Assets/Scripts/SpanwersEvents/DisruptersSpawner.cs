@@ -39,5 +39,6 @@ public class DisruptersSpawner : MonoBehaviour{
         currentCfg=dc;
         yield return StartCoroutine(FindObjectOfType<Waves>().SpawnAllEnemiesInWave(dc.waveConfig));
     }
+    //void OnDestroy(){DestroyAll();}
     public void DestroyAll(){foreach(DisrupterConfig dc in disruptersList){Destroy(dc);}disruptersList.Clear();}
 }

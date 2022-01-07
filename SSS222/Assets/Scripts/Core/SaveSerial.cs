@@ -166,7 +166,9 @@ public class SaveSerial : MonoBehaviour{
 
 		public float popupSumTime=0.25f;
 		public bool hpPopupsSum;
+		public bool hpAbsorpPopupsSum;
 		public bool enPopupsSum;
+		public bool enAbsorpPopupsSum;
 		public bool ammoPopupsSum;
 		public bool xpPopupsSum;
 		public bool coinPopupsSum;

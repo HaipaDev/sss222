@@ -31,7 +31,7 @@ public class Waves : MonoBehaviour{
     }
     /*public IEnumerator CallRandomizeWave(){
         RandomizeWave();
-        GameSession.instance.RandomizeEVScoreMax();
+        GameSession.instance.RandomizeWaveScoreMax();
         yield return null;
     }*/
 
@@ -40,7 +40,7 @@ public class Waves : MonoBehaviour{
         if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
         currentWave=GetRandomWave();
         if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameRules.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameRules.instance.xp_wave);}
-        GameSession.instance.RandomizeEVScoreMax();
+        GameSession.instance.RandomizeWaveScoreMax();
         spawnReqsMono.AddWaves();
         yield return null;
     }

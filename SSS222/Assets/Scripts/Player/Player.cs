@@ -882,13 +882,13 @@ public class Player : MonoBehaviour{
             if(shadow==false){dashing=false;}
         }
 
-        if(blind==true){if(!BlindnessUI.instance!=null){if(!BlindnessUI.instance.on)BlindnessUI.instance.on=true;}}
-        if(blindTimer<=0&&blindTimer>-4){if(!BlindnessUI.instance!=null){BlindnessUI.instance.on=false;}}
+        if(blind==true){if(BlindnessUI.instance!=null){if(!BlindnessUI.instance.on)BlindnessUI.instance.on=true;}}
+        if(blindTimer<=0&&blindTimer>-4){if(BlindnessUI.instance!=null){BlindnessUI.instance.on=false;}}
 
-        if(inverter==true){if(!InverterFx.instance!=null){if(!InverterFx.instance.on)InverterFx.instance.on=true;}}
+        if(inverter==true){if(InverterFx.instance!=null){if(!InverterFx.instance.on)InverterFx.instance.on=true;}}
         //else{if(InverterFx.instance.on){InverterFx.instance.on=false;}if(InverterFx.instance.revertMusic==false){InverterFx.instance.revertMusic=true;}
         //    if(MusicPlayer.instance!=null&&MusicPlayer.instance.GetComponent<AudioSource>().pitch==-1){MusicPlayer.instance.GetComponent<AudioSource>().pitch=1;}}
-        if(inverterTimer>=inverterTime&&inverterTimer<inverterTime+4){inverterTimer=inverterTime+4;ResetStatus("inverter");if(!InverterFx.instance!=null){InverterFx.instance.on=false;InverterFx.instance.reverted=false;}}
+        if(inverterTimer>=inverterTime&&inverterTimer<inverterTime+4){inverterTimer=inverterTime+4;ResetStatus("inverter");if(InverterFx.instance!=null){InverterFx.instance.on=false;InverterFx.instance.reverted=false;}}
 
         if(magnet==true){
             if(FindObjectsOfType<Tag_MagnetAffected>()!=null){
@@ -1199,26 +1199,26 @@ public class Player : MonoBehaviour{
     }
 
     public void Damage(float dmg, dmgType type, bool ignore=true, float electrTime=4f){//Later add on possible Inverter options?
-        if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;HPPopUpHUD(-dmgTot);}
+        if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;HpPopUpHUD(-dmgTot);}
         else if(gclover){AudioManager.instance.Play("GCloverHit");}
 
         if(type==dmgType.silent){damaged=true;}
         if(type==dmgType.normal){damaged=true;AudioManager.instance.Play("ShipHit");}
         if(type==dmgType.flame){flamed=true;AudioManager.instance.Play("Overheat");}
-        if(type==dmgType.decay){if(dmg!=0&&health>dmg*2){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HPPopUpHUD(-dmgTot);damaged=true;AudioManager.instance.Play("Decay");}}
+        if(type==dmgType.decay){if(dmg!=0&&health>dmg*2){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HpPopUpHUD(-dmgTot);damaged=true;AudioManager.instance.Play("Decay");}}
         if(type==dmgType.electr){electricified=true;Electrc(electrTime);}//electricified=true;AudioManager.instance.Play("Electric");}
         if(type==dmgType.shadow){shadowed=true;AudioManager.instance.Play("ShadowHit");}
-        if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);UniCollider.DMG_VFX(2,GetComponent<Collider2D>(),transform,-dmg);}}
-        if(type==dmgType.healSilent){if(dmg!=0){health+=dmg;HPPopUpHUD(dmg);}}
+        if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;HpPopUpHUD(dmg);UniCollider.DMG_VFX(2,GetComponent<Collider2D>(),transform,-dmg);}}
+        if(type==dmgType.healSilent){if(dmg!=0){health+=dmg;HpPopUpHUD(dmg);}}
     }
     public void AddSubEnergy(float value,bool add=false, bool ignore=false){
     if(energyOn&&!infEnergy){
         if(inverter!=true||ignore){
-            if(add){energy+=value;EnergyPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
-            else{energy-=value;EnergyPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
+            if(add){energy+=value;EnPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
+            else{energy-=value;EnPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
         }else{
-            if(add){energy-=value;EnergyPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
-            else{energy+=value;EnergyPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
+            if(add){energy-=value;EnPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
+            else{energy+=value;EnPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
         }
     }}
     public void AddSubAmmo(float value,bool add=false, bool ignore=false){
@@ -1259,20 +1259,20 @@ public class Player : MonoBehaviour{
     }
     public void HPAbsorp(float value, bool add=true, bool ignore=true){
         if(inverter!=true||ignore){
-            if(add){hpAbsorpAmnt+=value;/*HPAbsorpPopUpHUD(value);*/}
-            else{hpAbsorpAmnt-=value;/*HPAbsorpPopUpHUD(-value);*/}
+            if(add){hpAbsorpAmnt+=value;HpAbsorpPopUpHUD(value);}
+            else{hpAbsorpAmnt-=value;HpAbsorpPopUpHUD(-value);}
         }else{
-            if(add){hpAbsorpAmnt-=value;/*HPAbsorpPopUpHUD(-value);*/}
-            else{hpAbsorpAmnt+=value;/*HPAbsorpPopUpHUD(value);*/}
+            if(add){hpAbsorpAmnt-=value;HpAbsorpPopUpHUD(-value);}
+            else{hpAbsorpAmnt+=value;HpAbsorpPopUpHUD(value);}
         }
     }
     public void EnAbsorp(float value, bool add=true, bool ignore=true){
         if(inverter!=true||ignore){
-            if(add){enAbsorpAmnt+=value;/*EnAbsorpPopUpHUD(value);*/}
-            else{enAbsorpAmnt-=value;/*EnAbsorpPopUpHUD(-value);*/}
+            if(add){enAbsorpAmnt+=value;EnAbsorpPopUpHUD(value);}
+            else{enAbsorpAmnt-=value;EnAbsorpPopUpHUD(-value);}
         }else{
-            if(add){enAbsorpAmnt-=value;/*EnAbsorpPopUpHUD(-value);*/}
-            else{enAbsorpAmnt+=value;/*EnAbsorpPopUpHUD(value);*/}
+            if(add){enAbsorpAmnt-=value;EnAbsorpPopUpHUD(-value);}
+            else{enAbsorpAmnt+=value;EnAbsorpPopUpHUD(value);}
         }
     }
 
@@ -1357,12 +1357,14 @@ public class Player : MonoBehaviour{
     private void SetActiveAllChildren(Transform transform, bool value){foreach (Transform child in transform){child.gameObject.SetActive(value);SetActiveAllChildren(child, value);}}
 #endregion
 #region//Pop-Ups
-void HPPopUpHUD(float amnt){GameCanvas.instance.HpPopupSwitch(amnt);}
-void EnergyPopUpHUD(float amnt){GameCanvas.instance.EnPopupSwitch(amnt);}
-void AmmoPopUpHUD(float amnt){GameCanvas.instance.AmmoPopupSwitch(amnt);}
+void HpPopUpHUD(float amnt){GameCanvas.instance.HpPopupSwitch(amnt);}
+void HpAbsorpPopUpHUD(float amnt){GameCanvas.instance.HpAbsorpPopupSwitch(amnt);}
+void EnPopUpHUD(float amnt){GameCanvas.instance.EnPopupSwitch(amnt);}
+void EnAbsorpPopUpHUD(float amnt){GameCanvas.instance.EnAbsorpPopupSwitch(amnt);}
 void CoinsPopUpHUD(float amnt){GameCanvas.instance.CoinPopupSwitch(amnt);}
 void CoresPopUpHUD(float amnt){GameCanvas.instance.CorePopupSwitch(amnt);}
-void ScorePopUpHUD(float amnt){GameCanvas.instance.ScorePopupSwitch(amnt);}
 void XPPopUpHUD(float amnt){GameCanvas.instance.XpPopupSwitch(amnt);}
+void ScorePopUpHUD(float amnt){GameCanvas.instance.ScorePopupSwitch(amnt);}
+void AmmoPopUpHUD(float amnt){GameCanvas.instance.AmmoPopupSwitch(amnt);}
 #endregion
 }

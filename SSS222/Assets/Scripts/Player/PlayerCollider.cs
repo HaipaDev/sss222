@@ -54,10 +54,10 @@ public class PlayerCollider : MonoBehaviour{
                     spawnReqsMono.AddPwrups(other.gameObject.name);
                     GameSession.instance.AddXP(GameRules.instance.xp_powerup);//XP For powerups
                 }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("LunarGel").name)){player.HPAbsorp(player.microMedkitHpAmnt);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("LunarGel").name)){HPAbsorp(player.microMedkitHpAmnt);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("HealBeam").name)){
                     HealBeam hb=other.GetComponent<HealBeam>();
-                    if(hb.absorp)player.HPAbsorp(hb.value);
+                    if(hb.absorp)HPAbsorp(hb.value);
                     else HPAdd(hb.value);
                 }
 
@@ -73,7 +73,6 @@ public class PlayerCollider : MonoBehaviour{
                     if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(25);}
                     else{HPAdd(player.medkitHpAmnt);}
                 }
-                void HPAdd(float hp){player.Damage(hp,dmgType.heal);}
                 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("FlipPwrup").name)) {
                     if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
@@ -171,6 +170,10 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("SpeedPwrup").name)){player.Speed(10);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("SlowPwrup").name)){player.Slow(10);}
 
+
+                void HPAdd(float hp){player.Damage(hp,dmgType.heal);UniCollider.DMG_VFX(2,other,transform,-hp);}
+                void HPAbsorp(float hp){player.HPAbsorp(hp);UniCollider.DMG_VFX(4,other,transform,hp);}
+                
 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){AudioManager.instance.Play("EnergyBall");}
                 else if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){AudioManager.instance.Play("Coin");}

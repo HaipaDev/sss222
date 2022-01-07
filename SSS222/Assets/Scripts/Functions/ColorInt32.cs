@@ -19,8 +19,9 @@ public class ColorInt32{
     public static int dmgColor=-473622271;
     public static int dmgPhaseColor=-758829057;
     public static int dmgPlayerHitColor=-16776961;
-    public static int dmgPlayerPhaseColor=-782940927;
+    public static int dmgPlayerPhaseColor=-9043201;
     public static int dmgHealColor=434360065;
+    public static int dmgPlayerHealColor=-16711681;
 
     public static Color32 Int2Color(int i){
         byte[] result = new byte[4];

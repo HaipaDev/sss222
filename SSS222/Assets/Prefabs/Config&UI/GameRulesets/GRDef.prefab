@@ -373,8 +373,8 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
-    healthStart: 95
-    healthMax: 95
+    healthStart: 60
+    healthMax: 60
     defense: 4
     healthBySize: 0
     shooting: 0
@@ -404,8 +404,8 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
-    healthStart: 120
-    healthMax: 120
+    healthStart: 60
+    healthMax: 60
     defense: 4
     healthBySize: 0
     shooting: 1
@@ -502,8 +502,8 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
-    healthStart: 115
-    healthMax: 115
+    healthStart: 77
+    healthMax: 77
     defense: 3
     healthBySize: 0
     shooting: 1
@@ -1231,8 +1231,8 @@ MonoBehaviour:
     armorPenetr: 0
     phase: 1
     dmgPhase: 4
-    phaseFreqFirst: 1
-    phaseFreq: 0.6
+    phaseFreqFirst: 0.8
+    phaseFreq: 0.4
     phaseCountLimit: 0
     dmgFx: 0
     dmgFxValues: []

@@ -86,9 +86,7 @@ public class GameSession : MonoBehaviour{
     }
     IEnumerator SetGameRulesValues(){
     yield return new WaitForSeconds(0.03f);
-    //Set values
-    var i=GameRules.instance;
-    if(i!=null){
+    var i=GameRules.instance;if(i!=null){
         ///Main
         defaultGameSpeed=i.defaultGameSpeed;gameSpeed=defaultGameSpeed;
         scoreMulti=i.scoreMulti;
@@ -97,17 +95,24 @@ public class GameSession : MonoBehaviour{
 
         if(GameRules.instance.modulesOn||GameRules.instance.statUpgOn||GameRules.instance.iteminvOn){anyUpgradesOn=true;}else{anyUpgradesOn=false;}
 
-        RandomizeEVScoreMax();
+        RandomizeWaveScoreMax();
         RandomizeShopScoreMax();
+    }}
+    
+    public void EnterGameScene(){
+        if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}
+        StartCoroutine(SetGameRulesValues());
+        RandomizeWaveScoreMax();
+        RandomizeShopScoreMax();
+        
+        if(SaveSerial.instance.settingsData.playfieldRot==PlaneDir.horiz){FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,90);FindObjectOfType<Camera>().orthographicSize=horizCameraSize;}
+        else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=vertCameraSize;}
     }
-    }
-    public void RandomizeEVScoreMax(){
-        //EVscoreMax=UnityEngine.Random.Range(GameRules.instance.EVscoreMax.x,GameRules.instance.EVscoreMax.y);
-        if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-1);}
+    public void RandomizeWaveScoreMax(){
+        if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;if(sr!=null){if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-1);}}
     }
     public void RandomizeShopScoreMax(){
-        //shopScoreMax=UnityEngine.Random.Range(GameRules.instance.shopScoreMax.x,GameRules.instance.shopScoreMax.y);
-        if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-2);}
+        if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;if(sr!=null){if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-2);}}
     }
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
@@ -116,13 +121,6 @@ public class GameSession : MonoBehaviour{
         if(PauseMenu.GameIsPaused||Shop.shopOpened||UpgradeMenu.UpgradeMenuIsOpen){GlobalTimeIsPausedNotSlowed=true;}else{GlobalTimeIsPausedNotSlowed=false;}
         }else{GlobalTimeIsPaused=false;}
 
-        //Set values on Enter Game Room
-        if(!setValues&&(SceneManager.GetActiveScene().name=="Game")){
-            StartCoroutine(SetGameRulesValues());
-            if(SaveSerial.instance.settingsData.playfieldRot==PlaneDir.horiz){FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,90);FindObjectOfType<Camera>().orthographicSize=horizCameraSize;}
-            else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=vertCameraSize;}
-            setValues=true;
-        }
         if(SceneManager.GetActiveScene().name=="Game"&&Player.instance!=null&&!GlobalTimeIsPaused){gameSessionTime+=Time.unscaledDeltaTime;}
         if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
         
@@ -205,9 +203,6 @@ public class GameSession : MonoBehaviour{
         CheckCodes(".",".");
     }
 
-    public void EnterGameScene(){
-        if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}
-    }
     public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
     public void AddToScore(int scoreValue){
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);

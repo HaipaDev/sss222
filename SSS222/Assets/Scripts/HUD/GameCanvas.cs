@@ -1,90 +1,113 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using Sirenix.OdinInspector;
 
 public class GameCanvas : MonoBehaviour{
     public static GameCanvas instance;
     float popupSumTime=0.25f;
-    GameObject hpPopup;
-    [SerializeField] float hpCount;
-    [SerializeField] float hpTimer;
-    GameObject enPopup;
-    [SerializeField] float enCount;
-    [SerializeField] float enTimer;
-    GameObject ammoPopup;
-    [SerializeField] float ammoCount;
-    [SerializeField] float ammoTimer;
-    //[SerializeField] bool enCounted;
-    GameObject xpPopup;
-    [SerializeField] float xpCount;
-    [SerializeField] float xpTimer;
-    GameObject scPopup;
-    [SerializeField] float scCount;
-    [SerializeField] float scTimer;
-    GameObject coinPopup;
-    [SerializeField] float coinCount;
-    [SerializeField] float coinTimer;
-    GameObject corePopup;
-    [SerializeField] float coreCount;
-    [SerializeField] float coreTimer;
-    void Awake(){
-        instance=this;
-        hpPopup=GameObject.Find("HPDiffParrent");
-        enPopup=GameObject.Find("EnergyDiffParrent");
-        ammoPopup=GameObject.Find("AmmoDiffParrent");
-        xpPopup=GameObject.Find("XPDiffParrent");
-        coinPopup=GameObject.Find("CoinsDiffParrent");
-        corePopup=GameObject.Find("CoresDiffParrent");
-        scPopup=GameObject.Find("ScoreDiffParrent");
-    }
+    [SceneObjectsOnly][SerializeField] GameObject hpPopup;
+    [DisableInEditorMode][SerializeField] float hpCount;
+    [DisableInEditorMode][SerializeField] float hpTimer;
+    [SceneObjectsOnly][SerializeField] GameObject hpAbsorpPopup;
+    [DisableInEditorMode][SerializeField] float hpAbsorpCount;
+    [DisableInEditorMode][SerializeField] float hpAbsorpTimer;
+    [SceneObjectsOnly][SerializeField] GameObject enPopup;
+    [DisableInEditorMode][SerializeField] float enCount;
+    [DisableInEditorMode][SerializeField] float enTimer;
+    [SceneObjectsOnly][SerializeField] GameObject enAbsorpPopup;
+    [DisableInEditorMode][SerializeField] float enAbsorpCount;
+    [DisableInEditorMode][SerializeField] float enAbsorpTimer;
+    [SceneObjectsOnly][SerializeField] GameObject coinPopup;
+    [DisableInEditorMode][SerializeField] float coinCount;
+    [DisableInEditorMode][SerializeField] float coinTimer;
+    [SceneObjectsOnly][SerializeField] GameObject corePopup;
+    [DisableInEditorMode][SerializeField] float coreCount;
+    [DisableInEditorMode][SerializeField] float coreTimer;
+    [SceneObjectsOnly][SerializeField] GameObject xpPopup;
+    [DisableInEditorMode][SerializeField] float xpCount;
+    [DisableInEditorMode][SerializeField] float xpTimer;
+    [SceneObjectsOnly][SerializeField] GameObject scPopup;
+    [DisableInEditorMode][SerializeField] float scCount;
+    [DisableInEditorMode][SerializeField] float scTimer;
+    [SceneObjectsOnly][SerializeField] GameObject ammoPopup;
+    [DisableInEditorMode][SerializeField] float ammoCount;
+    [DisableInEditorMode][SerializeField] float ammoTimer;
+    void Awake(){if(GameCanvas.instance!=null){Destroy(gameObject);}else{instance=this;}}
     void Update(){
-        popupSumTime=SaveSerial.instance.settingsData.popupSumTime;
-        if(hpPopup!=null&&hpCount!=0){string symbol="-";if(hpCount>0){symbol="+";}hpPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=
+        if(SaveSerial.instance!=null)if(popupSumTime!=SaveSerial.instance.settingsData.popupSumTime){popupSumTime=SaveSerial.instance.settingsData.popupSumTime;}
+
+        if(hpPopup!=null&&hpCount!=0){string symbol="-";if(hpCount>0){symbol="+";}hpPopup.GetComponentInChildren<TextMeshProUGUI>().text=
         symbol+System.Math.Abs(System.Math.Round(hpCount,1)).ToString();}
 
-        if(enPopup!=null&&enCount!=0){string symbol="-";if(enCount>0){symbol="+";}enPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=
+        if(hpAbsorpPopup!=null&&hpAbsorpCount!=0){string symbol="-";if(hpAbsorpCount>0){symbol="+";}hpAbsorpPopup.GetComponentInChildren<TextMeshProUGUI>().text=
+        symbol+System.Math.Abs(System.Math.Round(hpAbsorpCount,1)).ToString();}
+
+        if(enPopup!=null&&enCount!=0){string symbol="-";if(enCount>0){symbol="+";}enPopup.GetComponentInChildren<TextMeshProUGUI>().text=
         symbol+System.Math.Abs(System.Math.Round(enCount,1)).ToString();}
 
-        if(ammoPopup!=null&&ammoCount!=0){string symbol="-";if(ammoCount>0){symbol="+";}enPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=
-        symbol+System.Math.Abs(System.Math.Round(ammoCount,1)).ToString();}
+        if(enAbsorpPopup!=null&&enAbsorpCount!=0){string symbol="-";if(enAbsorpCount>0){symbol="+";}enAbsorpPopup.GetComponentInChildren<TextMeshProUGUI>().text=
+        symbol+System.Math.Abs(System.Math.Round(enAbsorpCount,1)).ToString();}
 
-        if(xpPopup!=null&&xpCount!=0){string symbol="-";if(xpCount>0){symbol="+";}xpPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=
-        symbol+System.Math.Abs(System.Math.Round(xpCount,1)).ToString();}
-
-        if(scPopup!=null&&scCount!=0){string symbol="-";if(scCount>0){symbol="+";}scPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=
-        symbol+System.Math.Abs(System.Math.Round(scCount,1)).ToString();}
-
-        if(coinPopup!=null&&coinCount!=0){string symbol="-";if(coinCount>0){symbol="+";}coinPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=
+        if(coinPopup!=null&&coinCount!=0){string symbol="-";if(coinCount>0){symbol="+";}coinPopup.GetComponentInChildren<TextMeshProUGUI>().text=
         symbol+System.Math.Abs(System.Math.Round(coinCount,1)).ToString();}
 
-        if(corePopup!=null&&coreCount!=0){string symbol="-";if(coreCount>0){symbol="+";}corePopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=
+        if(corePopup!=null&&coreCount!=0){string symbol="-";if(coreCount>0){symbol="+";}corePopup.GetComponentInChildren<TextMeshProUGUI>().text=
         symbol+System.Math.Abs(System.Math.Round(coreCount,1)).ToString();}
 
-    if(Time.timeScale>0.0001f){
+        if(xpPopup!=null&&xpCount!=0){string symbol="-";if(xpCount>0){symbol="+";}xpPopup.GetComponentInChildren<TextMeshProUGUI>().text=
+        symbol+System.Math.Abs(System.Math.Round(xpCount,1)).ToString();}
+
+        if(scPopup!=null&&scCount!=0){string symbol="-";if(scCount>0){symbol="+";}scPopup.GetComponentInChildren<TextMeshProUGUI>().text=
+        symbol+System.Math.Abs(System.Math.Round(scCount,1)).ToString();}
+
+        if(ammoPopup!=null&&ammoCount!=0){string symbol="-";if(ammoCount>0){symbol="+";}ammoPopup.GetComponentInChildren<TextMeshProUGUI>().text=
+        symbol+System.Math.Abs(System.Math.Round(ammoCount,1)).ToString();}
+
+    if(!GameSession.GlobalTimeIsPaused){
         if(hpTimer>0){hpTimer-=Time.unscaledDeltaTime;}
+        if(hpAbsorpTimer>0){hpAbsorpTimer-=Time.unscaledDeltaTime;}
         if(enTimer>0){enTimer-=Time.unscaledDeltaTime;}
-        if(ammoTimer>0){ammoTimer-=Time.unscaledDeltaTime;}
-        if(xpTimer>0){xpTimer-=Time.unscaledDeltaTime;}
-        if(scTimer>0){scTimer-=Time.unscaledDeltaTime;}
+        if(enAbsorpTimer>0){enAbsorpTimer-=Time.unscaledDeltaTime;}
         if(coinTimer>0){coinTimer-=Time.unscaledDeltaTime;}
         if(coreTimer>0){coreTimer-=Time.unscaledDeltaTime;}
+        if(xpTimer>0){xpTimer-=Time.unscaledDeltaTime;}
+        if(scTimer>0){scTimer-=Time.unscaledDeltaTime;}
+        if(ammoTimer>0){ammoTimer-=Time.unscaledDeltaTime;}
     }
     }
 
-    public void HpPopupSwitch(float amnt){if(SaveSerial.instance.settingsData.hpPopupsSum){HpDispCount(amnt);}else{HPPopUpHUD(amnt);}}
+    public void HpPopupSwitch(float amnt){if(SaveSerial.instance.settingsData.hpPopupsSum){HpDispCount(amnt);}else{HpPopUpHUD(amnt);}}
     void HpDispCount(float amnt){
         if(hpTimer<=0){hpCount=0;}
         hpTimer=popupSumTime;
-        if(hpTimer>0){if((hpCount==0)||(amnt<0&&hpCount<0)||(amnt>0&&hpCount>0)){}else{hpCount=0;}hpCount+=amnt;if(hpCount!=0)HPPopUpHUD(hpCount);}
+        if(hpTimer>0){if((hpCount==0)||(amnt<0&&hpCount<0)||(amnt>0&&hpCount>0)){}else{hpCount=0;}hpCount+=amnt;if(hpCount!=0)HpPopUpHUD(hpCount);}
     }
-    void HPPopUpHUD(float amnt){
+    void HpPopUpHUD(float amnt){
         if(hpPopup!=null){
         hpPopup.GetComponent<AnimationOn>().AnimationSet(true);
         //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(amnt<0)symbol="-";
-        hpPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
-        }else{Debug.LogWarning("HPPopUpHUD not present");}
+        hpPopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        }else{Debug.LogWarning("HpPopUpHUD not present");}
+    }
+    public void HpAbsorpPopupSwitch(float amnt){if(SaveSerial.instance.settingsData.hpAbsorpPopupsSum){HpAbsorpDispCount(amnt);}else{HpAbsorpPopUpHUD(amnt);}}
+    void HpAbsorpDispCount(float amnt){
+        if(hpAbsorpTimer<=0){hpAbsorpCount=0;}
+        hpAbsorpTimer=popupSumTime;
+        if(hpAbsorpTimer>0){if((hpAbsorpCount==0)||(amnt<0&&hpAbsorpCount<0)||(amnt>0&&hpAbsorpCount>0)){}else{hpAbsorpCount=0;}hpAbsorpCount+=amnt;if(hpAbsorpCount!=0)HpAbsorpPopUpHUD(hpAbsorpCount);}
+    }
+    void HpAbsorpPopUpHUD(float amnt){
+        if(hpAbsorpPopup!=null){
+        hpAbsorpPopup.GetComponent<AnimationOn>().AnimationSet(true);
+        //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
+        string symbol="+";
+        if(amnt<0)symbol="-";
+        hpAbsorpPopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        }else{Debug.LogWarning("hpAbsorpPopUpHUD not present");}
     }
 
     public void EnPopupSwitch(float amnt){if(SaveSerial.instance.settingsData.enPopupsSum){EnDispCount(amnt);}else{EnPopUpHUD(amnt);}}
@@ -93,14 +116,6 @@ public class GameCanvas : MonoBehaviour{
         enTimer=popupSumTime;
         if(enTimer>0){if((enCount==0)||(amnt<0&&enCount<0)||(amnt>0&&enCount>0)){}else{enCount=0;}enCount+=amnt;if(enCount!=0)EnPopUpHUD(enCount);}
     }
-    /*IEnumerator enCor;
-    public void EnDispCount(float amnt){if((enCount==0)||(amnt<0&&enCount<0)||(amnt>0&&enCount>0)){}else{enCount=0;}enCount+=amnt;EnPopUpHUD(enCount);
-        if(!enCounted){enCor=EnDispCountI(amnt);StopCoroutine(enCor);StartCoroutine(enCor);}else{StopCoroutine(enCor);enCounted=false;}}
-    IEnumerator EnDispCountI(float amnt){
-        yield return new WaitForSeconds(popupSumTime);
-        enCounted=true;
-        enCount=0;
-    }*/
     public void EnPopUpHUD(float amnt){
         if(enPopup!=null){
         enPopup.GetComponent<AnimationOn>().AnimationSet(true);
@@ -108,24 +123,23 @@ public class GameCanvas : MonoBehaviour{
         string symbol="+";
         if(amnt<0)symbol="-";
         if(Player.instance!=null&&(!Player.instance.infEnergy)||(Player.instance.infEnergy&&symbol=="+")){
-        enPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();}
+        enPopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();}
         }else{Debug.LogWarning("EnergyPopUpHUD not present");}
     }
-
-    public void XpPopupSwitch(float amnt){if(SaveSerial.instance.settingsData.xpPopupsSum){XpDispCount(amnt);}else{XPPopUpHUD(amnt);}}
-    void XpDispCount(float amnt){
-        if(xpTimer<=0){xpCount=0;}
-        xpTimer=popupSumTime;
-        if(xpTimer>0){if((xpCount==0)||(amnt<0&&xpCount<0)||(amnt>0&&xpCount>0)){}else{xpCount=0;}xpCount+=amnt;if(xpCount!=0)XPPopUpHUD(xpCount);}
+    public void EnAbsorpPopupSwitch(float amnt){if(SaveSerial.instance.settingsData.enAbsorpPopupsSum){EnAbsorpDispCount(amnt);}else{EnAbsorpPopUpHUD(amnt);}}
+    void EnAbsorpDispCount(float amnt){
+        if(enAbsorpTimer<=0){enAbsorpCount=0;}
+        enAbsorpTimer=popupSumTime;
+        if(enAbsorpTimer>0){if((enAbsorpCount==0)||(amnt<0&&enAbsorpCount<0)||(amnt>0&&enAbsorpCount>0)){}else{enAbsorpCount=0;}enAbsorpCount+=amnt;if(enAbsorpCount!=0)EnAbsorpPopUpHUD(enAbsorpCount);}
     }
-    public void XPPopUpHUD(float amnt){
-        if(xpPopup!=null){
-        xpPopup.GetComponent<AnimationOn>().AnimationSet(true);
-        //xppopupHud.GetComponent<Animator>().SetTrigger(0);
+    void EnAbsorpPopUpHUD(float amnt){
+        if(enAbsorpPopup!=null){
+        enAbsorpPopup.GetComponent<AnimationOn>().AnimationSet(true);
+        //dmgpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(amnt<0)symbol="-";
-        xpPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
-        }else{Debug.LogWarning("XPPopUpHUD not present");}
+        enAbsorpPopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        }else{Debug.LogWarning("enAbsorpPopUpHUD not present");}
     }
 
     public void CoinPopupSwitch(float amnt){if(SaveSerial.instance.settingsData.coinPopupsSum){CoinDispCount(amnt);}else{CoinPopUpHUD(amnt);}}
@@ -140,7 +154,7 @@ public class GameCanvas : MonoBehaviour{
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(amnt<0)symbol="-";
-        coinPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        coinPopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
         }else{Debug.LogWarning("CoinsPopUpHUD not present");}
     }
 
@@ -156,8 +170,40 @@ public class GameCanvas : MonoBehaviour{
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(amnt<0)symbol="-";
-        corePopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        corePopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
         }else{Debug.LogWarning("CoresPopUpHUD not present");}
+    }
+
+    public void XpPopupSwitch(float amnt){if(SaveSerial.instance.settingsData.xpPopupsSum){XpDispCount(amnt);}else{XPPopUpHUD(amnt);}}
+    void XpDispCount(float amnt){
+        if(xpTimer<=0){xpCount=0;}
+        xpTimer=popupSumTime;
+        if(xpTimer>0){if((xpCount==0)||(amnt<0&&xpCount<0)||(amnt>0&&xpCount>0)){}else{xpCount=0;}xpCount+=amnt;if(xpCount!=0)XPPopUpHUD(xpCount);}
+    }
+    public void XPPopUpHUD(float amnt){
+        if(xpPopup!=null){
+        xpPopup.GetComponent<AnimationOn>().AnimationSet(true);
+        //xppopupHud.GetComponent<Animator>().SetTrigger(0);
+        string symbol="+";
+        if(amnt<0)symbol="-";
+        xpPopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        }else{Debug.LogWarning("XPPopUpHUD not present");}
+    }
+
+    public void ScorePopupSwitch(float amnt){if(SaveSerial.instance.settingsData.scorePopupsSum){ScoreDispCount(amnt);}else{ScorePopUpHUD(amnt);}}
+    void ScoreDispCount(float amnt){
+        if(scTimer<=0){scCount=0;}
+        scTimer=popupSumTime;
+        if(scTimer>0){if((scCount==0)||(amnt<0&&scCount<0)||(amnt>0&&scCount>0)){}else{scCount=0;}scCount+=amnt;if(scCount!=0)ScorePopUpHUD(scCount);}
+    }
+    void ScorePopUpHUD(float amnt){
+        if(scPopup!=null){
+        scPopup.GetComponent<AnimationOn>().AnimationSet(true);
+        //scpupupHud.GetComponent<Animator>().SetTrigger(0);
+        string symbol="+";
+        if(amnt<0)symbol="-";
+        scPopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        }else{Debug.LogWarning("ScorePopUpHUD not present");}
     }
 
     public void AmmoPopupSwitch(float amnt){if(SaveSerial.instance.settingsData.ammoPopupsSum){AmmoDispCount(amnt);}else{AmmoPopUpHUD(amnt);}}
@@ -173,25 +219,9 @@ public class GameCanvas : MonoBehaviour{
         string symbol="+";
         if(amnt<0)symbol="-";
         if(Player.instance!=null&&(!Player.instance.infEnergy)||(Player.instance.infEnergy&&symbol=="+")){
-        ammoPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
+        ammoPopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
         //energyUsedCount+=Mathf.Abs(amnt);
         }
         }else{Debug.LogWarning("AmmoPopUpHUD not present");}
-    }
-
-    public void ScorePopupSwitch(float amnt){if(SaveSerial.instance.settingsData.scorePopupsSum){ScoreDispCount(amnt);}else{ScorePopUpHUD(amnt);}}
-    void ScoreDispCount(float amnt){
-        if(scTimer<=0){scCount=0;}
-        scTimer=popupSumTime;
-        if(scTimer>0){if((scCount==0)||(amnt<0&&scCount<0)||(amnt>0&&scCount>0)){}else{scCount=0;}scCount+=amnt;if(scCount!=0)ScorePopUpHUD(scCount);}
-    }
-    void ScorePopUpHUD(float amnt){
-        if(scPopup!=null){
-        scPopup.GetComponent<AnimationOn>().AnimationSet(true);
-        //scpupupHud.GetComponent<Animator>().SetTrigger(0);
-        string symbol="+";
-        if(amnt<0)symbol="-";
-        scPopup.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
-        }else{Debug.LogWarning("ScorePopUpHUD not present");}
     }
 }

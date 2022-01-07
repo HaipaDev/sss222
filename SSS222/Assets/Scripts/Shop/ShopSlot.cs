@@ -43,7 +43,7 @@ public class ShopSlot : MonoBehaviour{
             case 0:Instantiate(GameAssets.instance.Get("Laser2Pwrup"),pos,Quaternion.identity);break;
             case 1:Instantiate(GameAssets.instance.Get("Laser3Pwrup"),pos,Quaternion.identity);break;
             case 2:Instantiate(GameAssets.instance.Get("ArmorPwrup"),pos,Quaternion.identity);break;
-            case 3:Instantiate(GameAssets.instance.Get("MicroMedkit"),pos,Quaternion.identity);break;
+            case 3:Instantiate(GameAssets.instance.Get("LunarGel"),pos,Quaternion.identity);break;
             case 4:Instantiate(GameAssets.instance.Get("Battery"),pos,Quaternion.identity);break;
             case 5:Instantiate(GameAssets.instance.Get("ScalerPwrup"),pos,Quaternion.identity);break;
             case 6:Instantiate(GameAssets.instance.Get("ShadowdashPwrup"),pos,Quaternion.identity);break;

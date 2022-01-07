@@ -33,7 +33,7 @@ public class spawnReqsMono:MonoBehaviour{
         if(id==-1||id==-2){
             List<spawnReqs> list=spawnReqsMono.instance.spawnReqsList.FindAll(x=>x is spawnScore);
             List<spawnScore> list2=new List<spawnScore>();foreach(spawnReqs ssl in list){list2.Add((spawnScore)ssl);}
-            spawnScore ss=list2.Find(x=>x.specialId==id);ss.scoreNeeded=UnityEngine.Random.Range(ss.scoreMaxSetRange.x,ss.scoreMaxSetRange.y);
+            spawnScore ss=list2.Find(x=>x.specialId==id);if(ss!=null)ss.scoreNeeded=UnityEngine.Random.Range(ss.scoreMaxSetRange.x,ss.scoreMaxSetRange.y);else{Debug.LogError("No spawnReqs with specialId = "+id);}
         }else if(id>=0){
             foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnScore){var ss=(spawnScore)sr;ss.scoreNeeded=UnityEngine.Random.Range(ss.scoreMaxSetRange.x,ss.scoreMaxSetRange.y);}}
         }
@@ -69,7 +69,7 @@ public class spawnReqsMono:MonoBehaviour{
         void ConditionCheck<T>(spawnReqs x, string val, string valMax)where T:spawnReqs{ T xs=(T)x;
             string valCur="1";if(!String.IsNullOrEmpty(val))valCur=xs.GetType().GetField(val).GetValue(xs).ToString();
             string valMaxx="0";if(!String.IsNullOrEmpty(valMax))valMaxx=xs.GetType().GetField(valMax).GetValue(xs).ToString();
-            if(float.Parse(valCur)>=float.Parse(valMaxx)){
+            if(float.Parse(valCur)!=-4&&(float.Parse(valCur)>=float.Parse(valMaxx))){
                 if(xs.startTimeAfterSecond&&xs.timer==-4){RestartTimer(xs);return;}
                 if(((xs.bothNeeded&&(xs.timeEnabled&&xs.timer<=0&&xs.timer>-4))||(!xs.bothNeeded))||xs.timer==-5){
                     if(xs.repeat>1&&xs.timer!=-5){

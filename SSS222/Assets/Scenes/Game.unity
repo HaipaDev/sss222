@@ -717,11 +717,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GRDef
       objectReference: {fileID: 0}
-    - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: m_RootOrder
@@ -1395,12 +1390,12 @@ PrefabInstance:
     - target: {fileID: 5070146239176450900, guid: ff9793f039b72f14994587665385df16,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 261
+      value: -261
       objectReference: {fileID: 0}
     - target: {fileID: 8797093643959647985, guid: ff9793f039b72f14994587665385df16,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -261
+      value: 261
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff9793f039b72f14994587665385df16, type: 3}
@@ -2493,6 +2488,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 527702707809119641, guid: db6f21db03d81e24fa8a1e4230da0599,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -171.00003
+      objectReference: {fileID: 0}
     - target: {fileID: 2528102501405751206, guid: db6f21db03d81e24fa8a1e4230da0599,
         type: 3}
       propertyPath: m_Camera
