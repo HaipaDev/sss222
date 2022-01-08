@@ -38,6 +38,7 @@ public static GameRules instance;
     public float moveSpeedPlayer=5f;
     public float healthPlayer=150;
     public float healthMaxPlayer=150;
+    public int defense=0;
     public bool energyOnPlayer=true;
     public float energyPlayer=180;
     public float energyMaxPlayer=180;
@@ -50,7 +51,7 @@ public static GameRules instance;
     public bool weaponsLimited;
     public bool losePwrupOutOfEn;
     public bool losePwrupOutOfAmmo;
-    public float armorMultiPlayer=1f;
+    //public float armorMultiPlayer=1f;
     public float dmgMultiPlayer=1f;
     public float shootMultiPlayer=1f;
     public float shipScaleDefault=0.89f;
@@ -299,8 +300,9 @@ public static GameRules instance;
     #region//Custom Events
     public void MultiplyhealthMax(float amnt){p.healthMax*=amnt;}
     public void MultiplyenergyMax(float amnt){p.energyMax*=amnt;}
+    //public void ArmorMultiAdd(float amnt){p.armorMultiInit+=amnt;}
+    public void DmgMultiAdd(float amnt){p.dmgMultiInit+=amnt;}
     public void ShootMultiAdd(float amnt){p.shootMulti+=amnt;}
-    public void ArmorMultiAdd(float amnt){p.armorMultiInit+=amnt;}
     public void LaserShootSpeed(float amnt){if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=amnt;}}
     public void MLaserBulletAmnt(int amnt){if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=amnt;}}
     public void ChangeMaxXP(int amnt){GameSession.instance.xpMax=amnt;}

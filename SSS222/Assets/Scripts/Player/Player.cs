@@ -26,12 +26,13 @@ public class Player : MonoBehaviour{
     [DisableInEditorMode]public float moveSpeedCurrent;
     [SerializeField]public float health = 100f;
     [SerializeField] public float healthMax = 100f;
-    [SerializeField] public string powerup = "null";
+    [SerializeField] public int defense = 0;
     [SerializeField] public bool energyOn = true;
     [DisableInEditorMode]public float energy = 120f;
     [SerializeField] public float energyMax = 120f;
     [SerializeField] public bool ammoOn=true;
     [SerializeField] public int ammo = -4;
+    [SerializeField] public string powerup = "null";
     [SerializeField] public string powerupDefault = "laser";
     [SerializeField] public bool weaponsLimited=false;
     [DisableInEditorMode]public float powerupTimer=-4;
@@ -66,10 +67,10 @@ public class Player : MonoBehaviour{
     [SerializeField] public float freqHpRegen=2f;
     [SerializeField] public float hpRegenAmnt=0.5f;
     //[SerializeField] public float hpForRegen=0f;
-    [SerializeField] public float armorMultiInit=1f;
+    //[SerializeField] public float armorMultiInit=1f;
     [SerializeField] public float dmgMultiInit=1f;
     [SerializeField] public float shootMultiInit=1f;
-    public float armorMulti=1f;
+    //public float armorMulti=1f;
     public float dmgMulti=1f;
     public float shootMulti=1f;
     [SerializeField] public float shipScaleDefault=0.89f;
@@ -293,6 +294,7 @@ public class Player : MonoBehaviour{
         autoShoot=i.autoShootPlayer;
         health=i.healthPlayer;
         healthMax=i.healthMaxPlayer;
+        defense=i.defense;
         energyOn=i.energyOnPlayer;
         energy=i.energyPlayer;
         energyMax=i.energyMaxPlayer;
@@ -303,7 +305,7 @@ public class Player : MonoBehaviour{
         powerup=i.powerupStarting;powerupDefault=i.powerupDefault;
         weaponsLimited=i.weaponsLimited;
         losePwrupOutOfEn=i.losePwrupOutOfEn;losePwrupOutOfAmmo=i.losePwrupOutOfAmmo;
-        armorMultiInit=i.armorMultiPlayer;
+        //armorMultiInit=i.armorMultiPlayer;
         dmgMultiInit=i.dmgMultiPlayer;
         shootMultiInit=i.shootMultiPlayer;
         shipScaleDefault=i.shipScaleDefault;
@@ -368,8 +370,8 @@ public class Player : MonoBehaviour{
         moveSpeedCurrent=moveSpeed;
         speedPrev[0]=moveSpeed;
         shootMulti=shootMultiInit;
+        //armorMulti=armorMultiInit;
         dmgMulti=dmgMultiInit;
-        armorMulti=armorMultiInit;
     }
 
     void Update(){  if(!GameSession.GlobalTimeIsPaused){
@@ -999,8 +1001,8 @@ public class Player : MonoBehaviour{
             if(blindTimer>0){blindTimer-=Time.deltaTime;}else{if(blindTimer>-4)ResetStatus("blind");}
             if(speedTimer>0){speedTimer-=Time.deltaTime;}else{if(speedTimer>-4)if(speed){speedStrength=1;RevertToSpeedPrev();}ResetStatus("speed");}
             if(slowTimer>0){slowTimer-=Time.deltaTime;}else{if(slowTimer>-4)if(slow){slowStrength=1;RevertToSpeedPrev();}ResetStatus("slow");}
-            if(armored==true&&fragile!=true){armorMulti=armorMultiInit*armoredStrength;}else if(armored!=true&&fragile==true){armorMulti=armorMultiInit/fragileStrength;}
-            if(armored!=true&&fragile!=true){armorMulti=armorMultiInit;}if(armored==true&&fragile==true){armorMulti=(dmgMultiInit/fragileStrength)*armoredStrength;}
+            //if(armored==true&&fragile!=true){armorMulti=armorMultiInit*armoredStrength;}else if(armored!=true&&fragile==true){armorMulti=armorMultiInit/fragileStrength;}
+            //if(armored!=true&&fragile!=true){armorMulti=armorMultiInit;}if(armored==true&&fragile==true){armorMulti=(dmgMultiInit/fragileStrength)*armoredStrength;}
             if(power==true&&weakns!=true){dmgMulti=dmgMultiInit*powerStrength;}else if(power!=true&&weakns==true){dmgMulti=dmgMultiInit/weaknsStrength;}
             if(power!=true&&weakns!=true){dmgMulti=dmgMultiInit;}if(power==true&&weakns==true){dmgMulti=(dmgMultiInit/weaknsStrength)*powerStrength;}
             if(onfire){if(frozen){ResetStatus("frozen");/*Damage(1,dmgType.silent);*/}}
@@ -1199,7 +1201,7 @@ public class Player : MonoBehaviour{
     }
 
     public void Damage(float dmg, dmgType type, bool ignore=true, float electrTime=4f){//Later add on possible Inverter options?
-        if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg/armorMulti,2);health-=dmgTot;HpPopUpHUD(-dmgTot);}
+        if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HpPopUpHUD(-dmgTot);}
         else if(gclover){AudioManager.instance.Play("GCloverHit");}
 
         if(type==dmgType.silent){damaged=true;}

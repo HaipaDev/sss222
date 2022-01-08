@@ -14,7 +14,7 @@ public class PlayerCollider : MonoBehaviour{
     void Start(){player=Player.instance;}
     void OnTriggerEnter2D(Collider2D other){
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
-            float dmg=0;
+            float dmg=0;int armorPenetr=0;
             if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
 
             #region//Enemies, World etc
@@ -22,8 +22,11 @@ public class PlayerCollider : MonoBehaviour{
                 DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
                 if(dmgVal!=null){
                     dmg=UniCollider.TriggerCollision(other,transform,colliTypes);
+                    armorPenetr=UniCollider.GetArmorPenetr(dmgVal.armorPenetr,player.defense);
                     if(player.dashing==false)PlayerEffects(other.gameObject.name);
-                } 
+                }
+                if(dmg>0){dmg=CalculateDmg(dmg,armorPenetr);}
+                else if(dmg<0){player.Damage(dmg,dmgType.heal);}
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){
                     Enemy en=other.GetComponent<Enemy>();
                     if(player.dashing==false){
@@ -212,16 +215,17 @@ public class PlayerCollider : MonoBehaviour{
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq.phaseTimer<=0){
             if(dmgPhaseFreq.phaseTimer!=-4&&(dmgPhaseFreq.phaseCount<=dmgPhaseFreq.phaseCountLimit||dmgPhaseFreq.phaseCountLimit==0)){
                 if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
-                float dmg=0;
+                float dmg=0;int armorPenetr=0;
                 DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
                 if(dmgVal!=null){
                     dmg=UniCollider.TriggerCollision(other,transform,colliTypes,true);
+                    armorPenetr=UniCollider.GetArmorPenetr(dmgVal.armorPenetr,player.defense);
                     PlayerEffects(other.gameObject.name,true);
                 }
-
-                UniCollider.DMG_VFX(3,other,transform,dmg);
-                if(dmg>0){player.Damage(dmg,dmgType.silent);}
+                
+                if(dmg>0){dmg=CalculateDmg(dmg,armorPenetr,true);player.Damage(dmg,dmgType.silent);}
                 else if(dmg<0){player.Damage(dmg,dmgType.heal);}//?
+                UniCollider.DMG_VFX(3,other,transform,dmg);
             }
             dmgPhaseFreq.SetTimer();
         }}
@@ -229,8 +233,20 @@ public class PlayerCollider : MonoBehaviour{
 
     private void OnTriggerExit2D(Collider2D other){
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){other.GetComponent<Tag_DmgPhaseFreq>().ResetTimer();}
-   }
-
+    }
+    float CalculateDmg(float dmgVal,int armorPenetrVal,bool phase=false){
+        float dmg=dmgVal;
+        int def=player.defense;int armorPenetr=armorPenetrVal;float defMulti=0.5f;
+        if(phase){defMulti=0.2f;}
+        float totalDef=Mathf.Clamp((Mathf.Clamp((def-armorPenetr)*defMulti,0,999)),0,99999f);
+        dmg=Mathf.Clamp(dmg-=totalDef,0f,999999f);
+        if(def==-1){dmg/=2;}
+        if(def==-2){dmg/=4;}
+        if(def==-3){dmg/=8;}
+        if(def==-4){dmg/=16;}
+        if(def==-99){dmg=0;}
+        return dmg;
+    }
    void PlayerEffects(string goName,bool phase=false){
         DamageValues dmgVal=UniCollider.GetDmgVal(goName);
         if(dmgVal!=null){

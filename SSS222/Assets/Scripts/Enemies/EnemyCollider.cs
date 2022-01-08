@@ -5,7 +5,9 @@ using Sirenix.OdinInspector;
 
 public class EnemyCollider : MonoBehaviour{
     public List<colliTypes> collisionTypes=UniCollider.colliTypesForEn;
-    void OnTriggerEnter2D(Collider2D other){Enemy en=GetComponent<Enemy>();  if(!other.CompareTag(tag)){if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
+    Enemy en;
+    void Start(){en=GetComponent<Enemy>();}
+    void OnTriggerEnter2D(Collider2D other){  if(!other.CompareTag(tag)){if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
             float dmg=0f;int armorPenetr=0;
             DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
             if(dmgVal!=null){
@@ -23,7 +25,7 @@ public class EnemyCollider : MonoBehaviour{
                 UniCollider.DMG_VFX(0,other,transform,dmg);
             }
     }}}
-    void OnTriggerStay2D(Collider2D other){Enemy en=GetComponent<Enemy>();  if(!other.CompareTag(tag)){if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
+    void OnTriggerStay2D(Collider2D other){  if(!other.CompareTag(tag)){if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq.phaseTimer<=0){
             if(dmgPhaseFreq.phaseTimer!=-4&&(dmgPhaseFreq.phaseCount<=dmgPhaseFreq.phaseCountLimit||dmgPhaseFreq.phaseCountLimit==0)){
                 float dmg=0f;int armorPenetr=0;
@@ -50,12 +52,16 @@ public class EnemyCollider : MonoBehaviour{
     }
 
     float CalculateDmg(float dmgVal,int armorPenetrVal,bool phase=false){
-        Enemy en=GetComponent<Enemy>();float dmg=dmgVal;
+        float dmg=dmgVal;
         int def=en.defense;int armorPenetr=armorPenetrVal;float defMulti=0.5f;
         if(!phase){if(!GameRules.instance.enemyDefenseHit){def=0;armorPenetr=0;}}
         else{if(!GameRules.instance.enemyDefensePhase||!en.defenseOnPhase){def=0;armorPenetr=0;}defMulti=0.2f;}
         float totalDef=Mathf.Clamp((Mathf.Clamp((def-armorPenetr)*defMulti,0,999)),0,99999f);
-        if(dmg>totalDef)dmg-=totalDef;
+        dmg=Mathf.Clamp(dmg-=totalDef,0f,999999f);
+        if(def==-1){dmg/=2;}
+        if(def==-2){dmg/=4;}
+        if(def==-3){dmg/=8;}
+        if(def==-4){dmg/=16;}
         if(def==-99){dmg=0;}
         return dmg;
     }
