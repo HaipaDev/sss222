@@ -590,6 +590,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreSubmitCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1041459370042147209, guid: 6338ca31a4d167b4eb7e37806c091982,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 1847
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6338ca31a4d167b4eb7e37806c091982, type: 3}
 --- !u!1001 &5673888052050347140

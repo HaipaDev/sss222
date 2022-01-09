@@ -2272,7 +2272,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: loginUsername
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &4844326165350760556
 GameObject:
@@ -3718,7 +3717,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -4939,7 +4938,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: registerMessage
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &6141385065881925176
 GameObject:
@@ -5090,7 +5088,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: loginMessage
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &7073785910971622200
 GameObject:

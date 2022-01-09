@@ -419,7 +419,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: reputation
-  valueLimitD: 0
   changeOnValidate: 0
 --- !u!1 &3244563092208274429
 GameObject:
@@ -656,7 +655,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -723,11 +722,11 @@ MonoBehaviour:
         timer: -4
         repeat: 1
         repeatInterval: 0.75
-        secondEnabled: 1
+        repI: 1
         bothNeeded: 1
         startTimeAfterSecond: 0
         scoreMaxSetRange: {x: 200, y: 350}
-        scoreMax: 50
+        scoreNeeded: 1
         score: 0
         specialId: -2
 --- !u!114 &1227156221995543344

@@ -15,6 +15,7 @@ public class GameCreator : MonoBehaviour{
     [AssetsOnly][SerializeField] GameObject gSceneManagerPrefab;
     [AssetsOnly][SerializeField] GameObject audioManagerPrefab;
     [AssetsOnly][SerializeField] GameObject dbaccessPrefab;
+    [AssetsOnly][SerializeField] GameObject discordPresencePrefab;
     //[SerializeField] int gamerulesetsID;
     [AssetsOnly][SerializeField] public GameRules[] gamerulesetsPrefabs;
     private void Awake(){
@@ -31,6 +32,7 @@ public class GameCreator : MonoBehaviour{
         if(FindObjectOfType<GSceneManager>()==null){Instantiate(gSceneManagerPrefab);}
         if(FindObjectOfType<AudioManager>()==null){Instantiate(audioManagerPrefab);}
         if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
+        if(FindObjectOfType<DiscordPresence.PresenceManager>()==null){Instantiate(discordPresencePrefab);}
         if(FindObjectOfType<GameRules>()==null&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Instantiate(GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.gameModeSelected]);}
         //if(FindObjectOfType<GameRules>()==null&&SceneManager.GetActiveScene().name=="SandboxMenu"){Instantiate(gamerulesetsPrefabs[4].GetGamerules());}
         if(FindObjectOfType<PostProcessVolume>()!=null&& FindObjectOfType<SaveSerial>().settingsData.pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}

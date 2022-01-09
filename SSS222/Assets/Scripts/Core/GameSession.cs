@@ -66,6 +66,8 @@ public class GameSession : MonoBehaviour{
     PostProcessVolume postProcessVolume;
     bool setValues;
     public float gameSessionTime=0;
+    public float presenceTimer=0;
+    public bool presenceTimeSet=false;
     //[SerializeField] InputMaster inputMaster;
     [Range(0,2)]public static int maskMode=1;
     //public string gameVersion;
@@ -83,6 +85,8 @@ public class GameSession : MonoBehaviour{
     void Start(){
         Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);
         if(SceneManager.GetActiveScene().name=="Game"&&GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}
+
+        presenceTimeSet=false;
     }
     IEnumerator SetGameRulesValues(){
     yield return new WaitForSeconds(0.03f);
@@ -197,6 +201,24 @@ public class GameSession : MonoBehaviour{
         if(SaveSerial.instance!=null){
         if(SaveSerial.instance.settingsData.pprocessing==true && postProcessVolume!=null){postProcessVolume.GetComponent<PostProcessVolume>().enabled=true;}
         if(SaveSerial.instance.settingsData.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
+        }
+
+        if(presenceTimer>0){presenceTimer-=Time.unscaledDeltaTime;}
+        if(presenceTimer<=0){
+            string presenceDetails="";
+            string presenceStatus="";
+            string sceneName=SceneManager.GetActiveScene().name;
+            if(sceneName!="Game"){presenceStatus="In Menus";presenceDetails="";}
+            else{presenceStatus=GameRules.instance.cfgName;presenceDetails="Score: "+score+" | "+"Game Time: "+GetGameSessionTimeFormat();}
+            if(presenceTimeSet==false){
+                DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                int presenceTimeTotal = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
+                DiscordPresence.PresenceManager.UpdatePresence(detail: presenceDetails, state: presenceStatus, start: presenceTimeTotal);
+                presenceTimeSet=true;
+            }
+            DiscordPresence.PresenceManager.UpdatePresence(detail: presenceDetails, state: presenceStatus);
+
+            presenceTimer=1f;
         }
 
         if(UpgradeMenu.instance!=null)CalculateLuck();

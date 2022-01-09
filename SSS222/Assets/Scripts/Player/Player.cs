@@ -26,7 +26,9 @@ public class Player : MonoBehaviour{
     [DisableInEditorMode]public float moveSpeedCurrent;
     [SerializeField]public float health = 100f;
     [SerializeField] public float healthMax = 100f;
-    [SerializeField] public int defense = 0;
+    [SerializeField] public int defenseInit = 0;
+    [SerializeField] public int defenseModifBase = 0;
+    [DisableInEditorMode]public int defense = 0;
     [SerializeField] public bool energyOn = true;
     [DisableInEditorMode]public float energy = 120f;
     [SerializeField] public float energyMax = 120f;
@@ -294,7 +296,7 @@ public class Player : MonoBehaviour{
         autoShoot=i.autoShootPlayer;
         health=i.healthPlayer;
         healthMax=i.healthMaxPlayer;
-        defense=i.defense;
+        defenseInit=i.defensePlayer;
         energyOn=i.energyOnPlayer;
         energy=i.energyPlayer;
         energyMax=i.energyMaxPlayer;
@@ -369,6 +371,7 @@ public class Player : MonoBehaviour{
         moveSpeed=moveSpeedInit;
         moveSpeedCurrent=moveSpeed;
         speedPrev[0]=moveSpeed;
+        defenseModifBase=defenseInit;
         shootMulti=shootMultiInit;
         //armorMulti=armorMultiInit;
         dmgMulti=dmgMultiInit;
@@ -385,6 +388,7 @@ public class Player : MonoBehaviour{
         DrawOtherWeapons();
         if(GetComponent<PlayerSkills>()!=null){if(GetComponent<PlayerSkills>().timerTeleport==-4){Shoot();}}else{Shoot();}
         States();
+        CalculateDefenseSpeed();
         Regen();
         Die();
         CountTimeMovementPressed();
@@ -1014,6 +1018,11 @@ public class Player : MonoBehaviour{
             //if(speeded!=true&&slowed!=true){moveSpeedCurrent=moveSpeed;}if(speeded==true&&slowed==true){}
         }
     }
+    void CalculateDefenseSpeed(){
+        int defArmored=0;
+        //if(armoredStrength)
+        defense=defenseModifBase+defArmored;
+    }
     
     private void Shadow(){
         if(!GameSession.GlobalTimeIsPaused&&instantiateTimer<=0){
@@ -1093,13 +1102,13 @@ public class Player : MonoBehaviour{
         frozenTime=duration;
         SetStatus("frozen");
     }
-    public void Armor(float duration,float strength=1){
+    public void Armor(float duration,/*int*/float strength=1){
         armoredTime=duration;
         if(strength!=1)armoredStrength=strength;
         else armoredStrength=1.5f;
         SetStatus("armored");
     }
-    public void Fragile(float duration,float strength=1){
+    public void Fragile(float duration,/*int*/float strength=1){
         fragileTime=duration;
         if(strength!=1)fragileStrength=strength;
         else fragileStrength=1.5f;

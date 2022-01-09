@@ -545,6 +545,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Credits Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8163902411163050575, guid: 4d31eb2d2f3e4c446b9b78bae9113795,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 1847
+      objectReference: {fileID: 0}
     - target: {fileID: 8163902411398865725, guid: 4d31eb2d2f3e4c446b9b78bae9113795,
         type: 3}
       propertyPath: m_AnchorMax.y

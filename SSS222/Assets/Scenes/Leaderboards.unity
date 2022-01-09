@@ -474,10 +474,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4556867966459715275, guid: 7feecce0b8d69f240a48919687ca3aac,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556867966459715275, guid: 7feecce0b8d69f240a48919687ca3aac,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556867966459715275, guid: 7feecce0b8d69f240a48919687ca3aac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556867966459715275, guid: 7feecce0b8d69f240a48919687ca3aac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4556867966550291124, guid: 7feecce0b8d69f240a48919687ca3aac,
         type: 3}
       propertyPath: m_Name
       value: LeaderbordsCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556867966550291125, guid: 7feecce0b8d69f240a48919687ca3aac,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 1847
       objectReference: {fileID: 0}
     - target: {fileID: 4556867966550291128, guid: 7feecce0b8d69f240a48919687ca3aac,
         type: 3}
@@ -582,6 +607,31 @@ PrefabInstance:
     - target: {fileID: 4556867966550291128, guid: 7feecce0b8d69f240a48919687ca3aac,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556867967027559797, guid: 7feecce0b8d69f240a48919687ca3aac,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556867967027559797, guid: 7feecce0b8d69f240a48919687ca3aac,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556867967027559797, guid: 7feecce0b8d69f240a48919687ca3aac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556867967027559797, guid: 7feecce0b8d69f240a48919687ca3aac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556867967840950504, guid: 7feecce0b8d69f240a48919687ca3aac,
+        type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

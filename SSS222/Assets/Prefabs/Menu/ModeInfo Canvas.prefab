@@ -969,7 +969,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -2867,7 +2867,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: cfgName
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &3922210798113064155
 GameObject:
@@ -3121,7 +3120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: energyPlayerGR
-  valueLimitD: -1
   changeOnValidate: 1
 --- !u!1 &3922210798163369877
 GameObject:
@@ -3272,7 +3270,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speedPlayerGR
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &3922210798250269988
 GameObject:
@@ -3678,7 +3675,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: shopScoreRangeGR
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!114 &3922210798297869115
 MonoBehaviour:
@@ -5333,7 +5329,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: healthPlayerGR
-  valueLimitD: -1
   changeOnValidate: 1
 --- !u!1 &3922210798788270474
 GameObject:
@@ -5811,7 +5806,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: waveScoreRangeGR
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &3922210798915912116
 GameObject:
@@ -6072,7 +6066,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 26b343ef55e21234f95c33b8fb2d9f94, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1651dd3610a115245aee0c5dd2b2ab36, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6680,7 +6674,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: highscore
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &3922210799231838352
 GameObject:

@@ -284,7 +284,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: highscore
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &1041459368854556128
 GameObject:
@@ -968,7 +967,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -1493,7 +1492,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: cfgNameCurrent
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1 &4906420209040628439
 GameObject:
@@ -1644,7 +1642,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: submitMessage
-  valueLimitD: -1
   changeOnValidate: 0
 --- !u!1001 &7148071220335746827
 PrefabInstance:

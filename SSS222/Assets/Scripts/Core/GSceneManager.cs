@@ -45,9 +45,14 @@ public class GSceneManager : MonoBehaviour{
         /*GameSession.instance.SetGameModeSelected(0);*/
     }
     public void LoadGameScene(){
+        if(GameSession.instance.CheckGameModeSelected("Adventure")){SceneManager.LoadScene("AdventureZones");GameSession.instance.LoadAdventure();}
+        else {SceneManager.LoadScene("Game");GameSession.instance.ResetScore();}
+        GameSession.instance.gameSpeed=1f;
+        GameSession.instance.EnterGameScene();
+        GameRules.instance.EnterGameScene();
+    }
+    public void LoadAdventureZone(int i){
         SceneManager.LoadScene("Game");
-        if(GameSession.instance.CheckGameModeSelected("Adventure")){GameSession.instance.LoadAdventure();}
-        else{GameSession.instance.ResetScore();}
         GameSession.instance.gameSpeed=1f;
         GameSession.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
@@ -90,6 +95,9 @@ public class GSceneManager : MonoBehaviour{
     public void QuitGame(){
         Application.Quit();
     }
+    /*void OnApplicationQuit(){
+        GameSession.
+    }*/
     public void Restart(){
         SceneManager.LoadScene("Loading");
         GameSession.instance.speedChanged=false;
@@ -100,7 +108,7 @@ public class GSceneManager : MonoBehaviour{
             var scene=SceneManager.GetActiveScene().name;
             if(scene=="ChooseGameMode"||scene=="Customization"||scene=="Credits"||scene=="Leaderboards"||scene=="Login"){
                 LoadStartMenu();
-            }else if(scene=="InfoGameMode"){
+            }else if(scene=="InfoGameMode"||scene=="AdventureZones"){
                 LoadGameModeChooseScene();
             }else if(scene=="ScoreSubmit"){
                 LoadGameModeInfoScene();

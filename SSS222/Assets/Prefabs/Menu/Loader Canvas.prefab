@@ -397,13 +397,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: cd451fc8ef5186941a1f2e1136df069f, type: 3}
-  colorGlow: {r: 0.36311856, g: 0.6272988, b: 0.9056604, a: 1}
-  sizeGlow: 1
-  alphaGlow: 1
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
-  xx: 0
-  yy: 0
+  maxParticles: 0
+  offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!1 &1551866918186262268
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,10 +556,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 100000, guid: 737765a6cb5dfdc4bbfa6345851747f6, type: 3}
+  part: 
   offset: {x: 0, y: 0.33}
   onTop: 1
-  stayStill: 1
   BFlame: {fileID: 0}
 --- !u!82 &1551866918276255668
 AudioSource:
@@ -746,13 +746,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowVFX: {fileID: 100000, guid: cd451fc8ef5186941a1f2e1136df069f, type: 3}
-  colorGlow: {r: 0.36311856, g: 0.6272988, b: 0.9056604, a: 1}
-  sizeGlow: 1
-  alphaGlow: 1
+  assetName: GlowAuto
+  materialClone: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
-  xx: 0
-  yy: 0
+  maxParticles: 0
+  offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!82 &1551866918437985222
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1096,7 +1097,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96

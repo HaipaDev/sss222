@@ -38,7 +38,7 @@ public static GameRules instance;
     public float moveSpeedPlayer=5f;
     public float healthPlayer=150;
     public float healthMaxPlayer=150;
-    public int defense=0;
+    public int defensePlayer=0;
     public bool energyOnPlayer=true;
     public float energyPlayer=180;
     public float energyMaxPlayer=180;

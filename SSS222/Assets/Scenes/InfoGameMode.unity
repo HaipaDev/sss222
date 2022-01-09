@@ -570,6 +570,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ModeInfo Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3922210797703332220, guid: 8bb4f7aeb1658914a82d0207fe7a7a8f,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 1847
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bb4f7aeb1658914a82d0207fe7a7a8f, type: 3}
 --- !u!1001 &5673888052050347140

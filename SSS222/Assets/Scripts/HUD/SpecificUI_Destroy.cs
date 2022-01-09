@@ -5,7 +5,8 @@ using UnityEngine;
 public class SpecificUI_Destroy : MonoBehaviour{
     [SerializeField] specifiUI_type type;
     void Start(){
-        StartCoroutine(Check());
+        if(GameRules.instance!=null)StartCoroutine(Check());
+        else Destroy(this);
     }
 
     IEnumerator Check(){
