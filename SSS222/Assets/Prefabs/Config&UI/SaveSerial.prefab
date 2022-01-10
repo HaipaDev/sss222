@@ -58,15 +58,15 @@ MonoBehaviour:
     skinName: Mk.22
     chameleonColor:
     - 0
-    - 0
-    - 0
+    - 1
+    - 1
   advD:
     total_UpgradesCount: 0
     total_UpgradesLvl: 0
-    maxHealth_UpgradesCount: 0
-    maxHealth_UpgradesLvl: 0
-    maxEnergy_UpgradesCount: 0
-    maxEnergy_UpgradesLvl: 0
+    healthMax_UpgradesCount: 0
+    healthMax_UpgradesLvl: 0
+    energyMax_UpgradesCount: 0
+    energyMax_UpgradesLvl: 0
     speed_UpgradesCount: 0
     speed_UpgradesLvl: 0
     luck_UpgradesCount: 0
@@ -99,12 +99,15 @@ MonoBehaviour:
     screenflash: 1
     popupSumTime: 0.25
     hpPopupsSum: 1
+    hpAbsorpPopupsSum: 0
     enPopupsSum: 1
+    enAbsorpPopupsSum: 0
     ammoPopupsSum: 0
     xpPopupsSum: 1
     coinPopupsSum: 1
     corePopupsSum: 1
     scorePopupsSum: 0
+    playerWeaponsFade: 1
     hudVis_graphics: 0.9
     hudVis_text: 1
     hudVis_barFill: 1

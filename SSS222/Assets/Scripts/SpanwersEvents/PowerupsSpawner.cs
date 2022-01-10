@@ -35,7 +35,7 @@ public class PowerupsSpawner : MonoBehaviour{
                         lootTable.GetItem().item,
                         powerupsPos,
                         Quaternion.identity);
-                    Debug.Log("Powerup spawned: "+newPowerup.name);
+                    //Debug.Log("Powerup spawned: "+newPowerup.name);
                 }else Debug.LogWarning("Powerup prefab not assigned to "+lootItem+" !");
             }else Debug.LogWarning("Loottable randomized a null item!");
         }else{Debug.LogError("Loottable not assigned!");lootTable=GetComponent<LootTablePowerups>();

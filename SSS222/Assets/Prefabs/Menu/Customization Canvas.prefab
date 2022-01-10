@@ -987,7 +987,7 @@ MonoBehaviour:
   VsliderIMG: {fileID: 8506514081449838815}
   gradientShader: {fileID: 2100000, guid: bf7a9cc50ed043444827dff4e850c6af, type: 2}
   skinName: Mk.22
-  chameleonColor: {r: 1, g: 1, b: 1, a: 1}
+  chameleonColor: {r: 0.5294118, g: 0.019607844, b: 0.03137255, a: 1}
   chameleonColorArr:
   - 0
   - 0
@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5294118, g: 0.019607844, b: 0.03529412, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2143,11 +2143,11 @@ RectTransform:
   m_Father: {fileID: 3229481634824747823}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: 894}
-  m_SizeDelta: {x: 468.9, y: 95.5}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 95.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6756089844036761175
 CanvasRenderer:
   m_ObjectHideFlags: 0

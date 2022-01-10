@@ -6,8 +6,8 @@ using Sirenix.OdinInspector;
 public class ShipSkinManager : MonoBehaviour{
     [AssetsOnly][SerializeField] GameObject overlayPrefab;
     [HeaderAttribute("Properties")]
-    public string skinName;
-    [SerializeField] Color chameleonOvColor;
+    public string skinName="Mk.22";
+    [SerializeField] Color chameleonOvColor=Color.red;
     
     //[SerializeField] int chameleonOvAlpha;
     GameObject overlayOBJ;

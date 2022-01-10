@@ -426,7 +426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000021457672, y: 850.84204}
+  m_AnchoredPosition: {x: -0.000021457672, y: 850.8423}
   m_SizeDelta: {x: 1073.7246, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &828070021082844330
@@ -1542,11 +1542,11 @@ RectTransform:
   m_Father: {fileID: 8972392137798979312}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.9, y: 894}
-  m_SizeDelta: {x: 853.06384, y: 95.5}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 95.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &979331269215847304
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2322,7 +2322,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4f681af4b997bc643b5f6ffa0d923dac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a16a2d3ff0e7324459ea79bbed2b6489, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2452,7 +2452,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3796344145703097159}
   m_HandleRect: {fileID: 6955439429379832065}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0.9999998
   m_Size: 0.56620723
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4601,14 +4601,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.82745105, g: 0.09411766, b: 0.09411766, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8893a6f2ae2832542bed33a9e10d8d5a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ae556c081ee79da43a0be88b54ec3126, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4719,7 +4719,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1847
 --- !u!1 &9042572394075625830
 GameObject:
   m_ObjectHideFlags: 0

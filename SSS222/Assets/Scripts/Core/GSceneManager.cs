@@ -63,8 +63,10 @@ public class GSceneManager : MonoBehaviour{
     public void LoadGameModeInfoSceneSetStr(string str){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGameModeSelectedStr(str);}
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
     public void LoadCustomizationScene(){SceneManager.LoadScene("Customization");}
+    public void LoadSocialsScene(){SceneManager.LoadScene("Socials");}
     public void LoadLoginScene(){SceneManager.LoadScene("Login");}
     public void LoadLeaderboardsScene(){SceneManager.LoadScene("Leaderboards");}
+    public void LoadAchievementsScene(){SceneManager.LoadScene("Achievements");}
     public void LoadScoreSubmitScene(){SceneManager.LoadScene("ScoreSubmit");}
     public void LoadCreditsScene(){SceneManager.LoadScene("Credits");}
     public void LoadWebsite(string url){Application.OpenURL(url);}
@@ -106,7 +108,7 @@ public class GSceneManager : MonoBehaviour{
     void CheckESC(){
     if(Input.GetKeyDown(KeyCode.Escape)){
             var scene=SceneManager.GetActiveScene().name;
-            if(scene=="ChooseGameMode"||scene=="Customization"||scene=="Credits"||scene=="Leaderboards"||scene=="Login"){
+            if(scene=="ChooseGameMode"||scene=="Customization"||scene=="Credits"||scene=="Login"||scene=="Socials"||scene=="Leaderboards"||scene=="Achievements"){
                 LoadStartMenu();
             }else if(scene=="InfoGameMode"||scene=="AdventureZones"){
                 LoadGameModeChooseScene();
