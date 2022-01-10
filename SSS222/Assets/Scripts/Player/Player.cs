@@ -54,6 +54,7 @@ public class Player : MonoBehaviour{
     [SerializeField] public float overheatedTime=3;
     [DisableInEditorMode]public float overheatedTimer;
     [SerializeField] public bool recoilOn=true;
+    [SerializeField] public float critChance=4f;
 
     public bool enRegenEnabled;
     public float enAbsorpAmnt;
@@ -315,6 +316,7 @@ public class Player : MonoBehaviour{
         bflameDmgTillLvl=i.bflameDmgTillLvl;
         overheatOn=i.overheatOnPlayer;
         recoilOn=i.recoilOnPlayer;
+        critChance=i.critChancePlayer;
         ///State Defaults
         flipTime=i.flipTime;
         gcloverTime=i.gcloverTime;

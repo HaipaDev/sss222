@@ -62,6 +62,7 @@ public static GameRules instance;
     public float overheatCooldown = 0.65f;
     public float overheatedTime=3;
     public bool recoilOnPlayer=true;
+    public float critChancePlayer=4f;
     public bool playerWeaponsFade=true;
     public List<WeaponProperties> weaponProperties;
 [Header("State Defaults")]
@@ -166,7 +167,7 @@ public static GameRules instance;
 #endregion
 #region//Upgrades
 [Header("Upgrades")]
-    public int saveBarsFromLvl=5;
+    [ShowIf("@this.cfgName.Contains(\"Adventure\")")]public int saveBarsFromLvl=5;
     public int total_UpgradesCountMax=5;
     public int other_UpgradesCountMax=10;
     public float healthMax_UpgradeAmnt=5f;
@@ -214,7 +215,7 @@ public static GameRules instance;
 #region//Voids
     void Awake(){SetupSingleton();}
     void SetupSingleton(){
-        if(GameRules.instance!=null||!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
+        if(GameRules.instance!=null||!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode"||SceneManager.GetActiveScene().name=="AdventureZones")){Destroy(gameObject);}
         else{DontDestroyOnLoad(gameObject);instance=this;}
     }
     IEnumerator Start(){
