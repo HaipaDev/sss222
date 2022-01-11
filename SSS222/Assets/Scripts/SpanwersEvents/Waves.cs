@@ -167,9 +167,9 @@ public class Waves : MonoBehaviour{
                         waveConfig.GetEnemyPrefab(),
                         waveConfig.GetShipPlaceCoords(waveConfig),
                     Quaternion.identity);
-                    if(GetComponent<EnemyPathing>()!=null){
+                    if(go.GetComponent<EnemyPathing>()!=null){if(!go.GetComponent<EnemyPathing>().off){
                         go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                    }else{Debug.LogError("No EnemyPathing for "+go.name);}
+                    }}else{Debug.LogError("No EnemyPathing for "+go.name);}
                     yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
                 }
             }

@@ -7,8 +7,8 @@ using Sirenix.OdinInspector;
 public class ShipUI : MonoBehaviour{
     [DisableIf("followMouse")][SerializeField] bool followSelectedButton=true;
     [ShowIf("followSelectedButton")][SerializeField] RectTransform buttonsList;
-    [ShowIf("followSelectedButton")][SerializeField] float spacingY=-100f;
-    [ShowIf("followSelectedButton")][SerializeField] float speedFollowButton=500f;
+    [ShowIf("followSelectedButton")][SerializeField] float spacingY=-400f;
+    [ShowIf("followSelectedButton")][SerializeField] float speedFollowButton=5000f;
 
     [DisableIf("followSelectedButton")][SerializeField] bool followMouse=false;
     [ShowIf("followMouse")][SerializeField] bool followMouseOnDrag=true;
@@ -30,9 +30,8 @@ public class ShipUI : MonoBehaviour{
         var Canvas=transform.root.GetComponent<Canvas>();
         var step=Time.unscaledDeltaTime;
         if(followSelectedButton){if(selectedButton!=null){
-            step=speedFollowButton*Time.unscaledDeltaTime;//*(Canvas.GetComponent<RectTransform>().sizeDelta.x/1000);
-            var _spacingY=spacingY;//+(Canvas.GetComponent<RectTransform>().sizeDelta.y/1000);
-            transform.localPosition=Vector2.MoveTowards(transform.localPosition,new Vector2(selectedButton.transform.localPosition.x,selectedButton.transform.localPosition.y+_spacingY),step);
+            step=speedFollowButton*Time.unscaledDeltaTime;
+            transform.localPosition=Vector2.MoveTowards(transform.localPosition,new Vector2(selectedButton.transform.localPosition.x,selectedButton.transform.localPosition.y+spacingY),step);
         }}
         else if(followMouse){
             if((followMouseOnDrag&&Input.GetMouseButton(0))||!followMouseOnDrag){

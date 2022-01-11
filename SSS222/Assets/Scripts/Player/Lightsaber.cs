@@ -5,7 +5,6 @@ using UnityEngine;
 public class Lightsaber : MonoBehaviour{
     [SerializeField]Vector2 startPos;
     void Awake(){
-        if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
         if((Vector2)transform.localPosition!=Vector2.zero)startPos=transform.localPosition;
     }
     void Update(){

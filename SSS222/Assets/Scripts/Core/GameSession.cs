@@ -252,10 +252,12 @@ public class GameSession : MonoBehaviour{
 
     public void ResetScore(){
         score=0;
+        if(!CheckGameModeSelected("Adventure")){
         coins=0;
+        cores=0;
+        }
         xp=0;
         xpTotal=0;
-        cores=0;
         stayingTimeXP=0;
         movingTimeXP=0;
         enballDropMulti=1;
@@ -266,9 +268,13 @@ public class GameSession : MonoBehaviour{
         gameSessionTime=0;
         if(GetComponent<spawnReqsMono>()!=null)Destroy(GetComponent<spawnReqsMono>());
     }
+    public void ResetAfterAdventure(){
+        coins=0;
+        cores=0;
+    }
     public void SaveHighscore(){
-        if(score>SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]){SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]=score;}
         if(CheckGameModeSelected("Adventure")){SaveAdventure();}
+        else{if(score>SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]){SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]=score;}}
     }
     public void SaveAdventure(){StartCoroutine(SaveAdventureI());}
     IEnumerator SaveAdventureI(){
@@ -277,30 +283,41 @@ public class GameSession : MonoBehaviour{
         var u=UpgradeMenu.instance;
         var s=SaveSerial.instance;
         var ss=SaveSerial.instance.advD;
-        if(u!=null&&s!=null&&ss!=null){
-        if(ss.total_UpgradesLvl>=u.saveBarsFromLvl){ss.total_UpgradesCount=u.total_UpgradesCount;}
-        ss.total_UpgradesLvl=u.total_UpgradesLvl;
-        ss.healthMax_UpgradesCount=u.healthMax_UpgradesCount;
-        ss.healthMax_UpgradesLvl=u.healthMax_UpgradesLvl;
-        ss.energyMax_UpgradesCount=u.energyMax_UpgradesCount;
-        ss.energyMax_UpgradesLvl=u.energyMax_UpgradesLvl;
-        ss.speed_UpgradesCount=u.speed_UpgradesCount;
-        ss.speed_UpgradesLvl=u.speed_UpgradesLvl;
-        ss.luck_UpgradesCount=u.luck_UpgradesCount;
-        ss.luck_UpgradesLvl=u.luck_UpgradesLvl;
-        //
-        ss.mPulse_upgraded=u.mPulse_upgraded;
-        ss.teleport_upgraded=u.teleport_upgraded;
-        ss.crMend_upgraded=u.crMend_upgraded;
-        ss.enDiss_upgraded=u.enDiss_upgraded;
-        yield return new WaitForSecondsRealtime(0.02f);
-        Debug.Log("Adventure data saved in GameSession");
-        yield return new WaitForSecondsRealtime(0.033f);
-        SaveSerial.instance.SaveAdventure();
-        }else{if(u==null){Debug.LogError("UpgradeMenu not present");}else if(s==null){Debug.LogError("SaveSerial not present");}else if(s.advD==null){Debug.LogError("Adventure Data null");}}
-        
+        if(s==null){Debug.LogError("SaveSerial not present");}
+        if(ss!=null){
+            ss.coins=coins;
+            ss.cores=cores;
+            if(u!=null){
+            if(ss.total_UpgradesLvl>=u.saveBarsFromLvl){ss.total_UpgradesCount=u.total_UpgradesCount;}
+            ss.total_UpgradesLvl=u.total_UpgradesLvl;
+            ss.healthMax_UpgradesCount=u.healthMax_UpgradesCount;
+            ss.healthMax_UpgradesLvl=u.healthMax_UpgradesLvl;
+            ss.energyMax_UpgradesCount=u.energyMax_UpgradesCount;
+            ss.energyMax_UpgradesLvl=u.energyMax_UpgradesLvl;
+            ss.speed_UpgradesCount=u.speed_UpgradesCount;
+            ss.speed_UpgradesLvl=u.speed_UpgradesLvl;
+            ss.luck_UpgradesCount=u.luck_UpgradesCount;
+            ss.luck_UpgradesLvl=u.luck_UpgradesLvl;
+            //
+            ss.mPulse_upgraded=u.mPulse_upgraded;
+            ss.teleport_upgraded=u.teleport_upgraded;
+            ss.crMend_upgraded=u.crMend_upgraded;
+            ss.enDiss_upgraded=u.enDiss_upgraded;
+            yield return new WaitForSecondsRealtime(0.02f);
+            Debug.Log("Adventure data saved in GameSession");
+            yield return new WaitForSecondsRealtime(0.033f);
+            SaveSerial.instance.SaveAdventure();
+            }else{Debug.LogError("UpgradeMenu not present");}
+        }else{Debug.LogError("Adventure Data null");}
     }
-    public void LoadAdventure(){SaveSerial.instance.LoadAdventure();StartCoroutine(LoadAdventureI());}//LoadAdventure() in GSceneManager.cs
+    //LoadAdventure() in GSceneManager.cs
+    public void LoadAdventurePre(){
+        SaveSerial.instance.LoadAdventure();
+        var ss=SaveSerial.instance.advD;
+        coins=ss.coins;
+        cores=ss.cores;
+    }
+    public void LoadAdventurePost(){StartCoroutine(LoadAdventureI());}
     IEnumerator LoadAdventureI(){
         //First load from SaveSerial
         yield return new WaitForSecondsRealtime(0.04f);
@@ -373,6 +390,11 @@ public class GameSession : MonoBehaviour{
         Debug.Log("analyticsResult: "+analyticsResult);
         Debug.Log("Full Report: "+GameRules.instance.cfgName+", "+score+", "+instance.GetGameSessionTimeFormat()+", "+Player.instance.GetComponent<PlayerCollider>().lastHitObj+", "+Player.instance.GetComponent<PlayerCollider>().lastHitDmg);
         }
+    }
+
+    public void DieAdventure(){
+        coins/=2;
+        cores/=3;
     }
 
     void CalculateLuck(){

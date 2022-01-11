@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPathing : MonoBehaviour{
+    [SerializeField] public bool off=false;
     [SerializeField] public WaveConfig waveConfig;
     List<Transform> waypointsS;
     List<Transform> waypointsE;

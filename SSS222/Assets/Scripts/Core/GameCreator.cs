@@ -18,6 +18,7 @@ public class GameCreator : MonoBehaviour{
     [AssetsOnly][SerializeField] GameObject discordPresencePrefab;
     //[SerializeField] int gamerulesetsID;
     [AssetsOnly][SerializeField] public GameRules[] gamerulesetsPrefabs;
+    [AssetsOnly][SerializeField] public GameRules[] adventureZonesPrefabs;
     private void Awake(){
         instance=this;
         Load();

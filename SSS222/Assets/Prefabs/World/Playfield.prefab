@@ -31,7 +31,7 @@ Transform:
   - {fileID: 8442221730895284199}
   - {fileID: 4098373494019360665}
   - {fileID: 7343614877764838418}
-  m_Father: {fileID: 7169796854456506021}
+  m_Father: {fileID: 1048078021299677003}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &835133039367275997
@@ -207,7 +207,7 @@ Transform:
   - {fileID: 8481057334671386247}
   - {fileID: 3726061353072530606}
   - {fileID: 3726061352537928053}
-  m_Father: {fileID: 7169796854456506021}
+  m_Father: {fileID: 1048078021299677003}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2752264518051090447
@@ -704,7 +704,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7169796854456506021}
+  - component: {fileID: 1048078021299677003}
   - component: {fileID: 7334622889953493149}
   m_Layer: 0
   m_Name: Playfield
@@ -713,8 +713,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7169796854456506021
-Transform:
+--- !u!224 &1048078021299677003
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -729,6 +729,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7334622889953493149
 MonoBehaviour:
   m_ObjectHideFlags: 0

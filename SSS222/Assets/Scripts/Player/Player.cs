@@ -719,6 +719,8 @@ public class Player : MonoBehaviour{
         GameSession.instance.SetAnalytics();
         //Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
 
+        if(GameSession.instance.CheckGameModeSelected("Adventure")){GameSession.instance.DieAdventure();}
+
         GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);
         AudioManager.instance.Play("Death");
         GameOverCanvas.instance.OpenGameOverCanvas();

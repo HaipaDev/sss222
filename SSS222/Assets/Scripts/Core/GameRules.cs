@@ -274,7 +274,7 @@ public static GameRules instance;
     Player p;
     void Update(){
         if(Player.instance!=null&&p!=Player.instance){p=Player.instance;}
-        if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Destroy(gameObject);}
+        if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode"||SceneManager.GetActiveScene().name=="AdventureZones")){Destroy(gameObject);}
     }
     void OnValidate(){
         if(!shopOn)shopCargoOn=false;

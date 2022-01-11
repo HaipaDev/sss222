@@ -9,8 +9,7 @@ public class Tag_PlayerWeapon:MonoBehaviour{
     public bool healing;
     [SerializeField] float opacity=0.3f;
     void Start(){
-        if(GetComponent<Tag_PauseVelocity>()==null){
-        gameObject.AddComponent<Tag_PauseVelocity>();
+        if(GetComponent<Tag_PauseVelocity>()==null)gameObject.AddComponent<Tag_PauseVelocity>();
         if(GameRules.instance.playerWeaponsFade&&SaveSerial.instance.settingsData.playerWeaponsFade){
             var spr=GetComponent<SpriteRenderer>();
             var tempColor=spr.color;
@@ -18,5 +17,6 @@ public class Tag_PlayerWeapon:MonoBehaviour{
             spr.color=tempColor;
             GetComponent<Glow>().color.a=opacity;
         }
-    }}
+        if(GameSession.maskMode!=0)if(GetComponent<SpriteRenderer>()!=null)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
+    }
 }

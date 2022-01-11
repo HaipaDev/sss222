@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -3670235290477086464}
   - component: {fileID: 8981922279404870772}
   m_Layer: 9
-  m_Name: Enemy Combatant
+  m_Name: EnemyCombatant
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,11 +146,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6432250634095115783}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  off: 1
   waveConfig: {fileID: 0}
   waypointsL: []
   waypointIndex: 0
@@ -167,12 +168,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
   Name: Enemy Combatant
+  type: 1
   size: {x: 1, y: 1}
+  sizeAvg: 1
   spr: {fileID: 0}
   health: 95
   healthMax: 95
+  defense: 0
+  defenseOnPhase: 1
+  healthBySize: 0
   shooting: 0
   shootTime: {x: 1.75, y: 2.8}
   shotCounter: 0
@@ -182,6 +187,7 @@ MonoBehaviour:
   bulletDist: 0.35
   randomizeWaveDeath: 1
   flyOff: 1
+  killOnDash: 1
   giveScore: 1
   scoreValue: {x: 1, y: 10}
   xpAmnt: 1
@@ -220,8 +226,6 @@ MonoBehaviour:
   speedFollow: 1
   vspeed: 0.1
   distY: 1.3
-  distX: 0.3
-  getClose: 1
 --- !u!114 &-3670235290477086464
 MonoBehaviour:
   m_ObjectHideFlags: 0
