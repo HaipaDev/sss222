@@ -717,6 +717,7 @@ public class Player : MonoBehaviour{
         Destroy(gameObject, 0.05f);
         pskills.DeathSkills();
         GameSession.instance.SetAnalytics();
+        StatsAchievsManager.instance.AddDeaths();
         //Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
 
         if(GameSession.instance.CheckGameModeSelected("Adventure")){GameSession.instance.DieAdventure();}

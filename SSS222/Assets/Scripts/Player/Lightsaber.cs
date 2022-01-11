@@ -19,7 +19,8 @@ public class Lightsaber : MonoBehaviour{
     void OnTriggerEnter2D(Collider2D other){
         if(!other.CompareTag(tag)){
             if(other.GetComponent<Tag_EnemyWeapon>()!=null){
-                    if(other.GetComponent<Tag_EnemyWeapon>().blockable){
+                if(other.GetComponent<Tag_EnemyWeapon>().blockable){
+                    StatsAchievsManager.instance.SaberBlocked();
                     Destroy(other.gameObject,0.01f);
                     AudioManager.instance.Play("LSaberBlock");
                 }

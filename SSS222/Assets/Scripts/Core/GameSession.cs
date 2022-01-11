@@ -228,6 +228,7 @@ public class GameSession : MonoBehaviour{
     }
 
     public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
+    public int GetHighscoreByName(string str){return SaveSerial.instance.playerData.highscore[GetGameModeID(str)];}
     public void AddToScore(int scoreValue){
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);
         spawnReqsMono.AddScore(Mathf.RoundToInt(scoreValue*scoreMulti));
@@ -275,6 +276,8 @@ public class GameSession : MonoBehaviour{
     public void SaveHighscore(){
         if(CheckGameModeSelected("Adventure")){SaveAdventure();}
         else{if(score>SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]){SaveSerial.instance.playerData.highscore[GameSession.instance.gameModeSelected]=score;}}
+        StatsAchievsManager.instance.AddScoreTotal(score);
+        StatsAchievsManager.instance.AddPlaytime(GetGameSessionTime());
     }
     public void SaveAdventure(){StartCoroutine(SaveAdventureI());}
     IEnumerator SaveAdventureI(){
@@ -471,7 +474,7 @@ public class GameSession : MonoBehaviour{
     public void SetGameModeSelected(int i){gameModeSelected=i;}
     public void SetGameModeSelectedStr(string name){gameModeSelected=Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
     public bool CheckGameModeSelected(string name){if(gameModeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))){return true;}else{return false;}}
-    public int GetGameModeID(string str){return Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
+    public int GetGameModeID(string name){return Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
     public string GetGameModeName(int id){return GameCreator.instance.gamerulesetsPrefabs[id].cfgName;}
     public string GetCurrentGameModeName(){return GameCreator.instance.gamerulesetsPrefabs[gameModeSelected].cfgName;}
     public void SetCheatmode(){if(!cheatmode){cheatmode=true;return;}else{cheatmode=false;return;}}

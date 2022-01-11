@@ -16,6 +16,7 @@ public class GameCreator : MonoBehaviour{
     [AssetsOnly][SerializeField] GameObject audioManagerPrefab;
     [AssetsOnly][SerializeField] GameObject dbaccessPrefab;
     [AssetsOnly][SerializeField] GameObject discordPresencePrefab;
+    [AssetsOnly][SerializeField] GameObject statsAchievsManagerPrefab;
     //[SerializeField] int gamerulesetsID;
     [AssetsOnly][SerializeField] public GameRules[] gamerulesetsPrefabs;
     [AssetsOnly][SerializeField] public GameRules[] adventureZonesPrefabs;
@@ -34,6 +35,7 @@ public class GameCreator : MonoBehaviour{
         if(FindObjectOfType<AudioManager>()==null){Instantiate(audioManagerPrefab);}
         if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
         if(FindObjectOfType<DiscordPresence.PresenceManager>()==null){Instantiate(discordPresencePrefab);}
+        if(FindObjectOfType<StatsAchievsManager>()==null){Instantiate(statsAchievsManagerPrefab);}
         if(FindObjectOfType<GameRules>()==null&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){Instantiate(GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.gameModeSelected]);}
         //if(FindObjectOfType<GameRules>()==null&&SceneManager.GetActiveScene().name=="SandboxMenu"){Instantiate(gamerulesetsPrefabs[4].GetGamerules());}
         if(FindObjectOfType<PostProcessVolume>()!=null&& FindObjectOfType<SaveSerial>().settingsData.pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
