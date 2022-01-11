@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.20372018, g: 0.24497145, b: 0.3962264, a: 0.6627451}
+  m_Color: {r: 0.20372018, g: 0.24497145, b: 0.3962264, a: 0.003921569}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.822937, y: 0.00048828125}
+  m_AnchoredPosition: {x: 0.822937, y: -0.000061035156}
   m_SizeDelta: {x: -1.645874, y: -6.0614014}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1115087087875373800
@@ -558,7 +558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3752513548998515920
 RectTransform:
   m_ObjectHideFlags: 0
@@ -685,7 +685,7 @@ GameObject:
   - component: {fileID: 5647643527216594404}
   - component: {fileID: 8332457561037275445}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -705,11 +705,11 @@ RectTransform:
   m_Father: {fileID: 4923450889857843743}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.60498, y: 794.32}
-  m_SizeDelta: {x: -25.522, y: -1860.5}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -78.965}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &5647643527216594404
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -738,7 +738,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CELESTIAL LADDER
+  m_text: CELESTIAL LADDER (Powerups)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49a9807d678fff544a6041ff504d860d, type: 2}
   m_sharedMaterial: {fileID: 7516542502403631768, guid: 49a9807d678fff544a6041ff504d860d,
@@ -766,10 +766,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 44
   m_fontSizeBase: 44
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -907,125 +907,9 @@ MonoBehaviour:
     type: 3}
   gridElement: {fileID: 3269978038850704063, guid: 73c2e20ab81e3e4458e8347f4d67b88d,
     type: 3}
-  lists:
-  - {fileID: 0}
-  powerups:
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  - name: 
-    lootItem: {fileID: 0}
-    rarity: 0
-    dropChance: 0
-    levelReq: 0
-  levels: 00000000010000000200000003000000
+  lists: []
+  powerups: []
+  levels: 
   sum: 0
 --- !u!1 &7286292824437646062
 GameObject:
@@ -1147,7 +1031,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4254326082191286146}
   m_HandleRect: {fileID: 6760129626585728098}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

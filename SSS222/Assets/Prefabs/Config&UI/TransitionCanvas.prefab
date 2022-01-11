@@ -84,6 +84,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &2096478727153817197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,7 +101,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1847
 --- !u!95 &2096478727153817202
 Animator:
   serializedVersion: 3
@@ -175,6 +176,10 @@ PrefabInstance:
       value: ExplosionHuge1VFX
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: da540b0f4e559b34c827d09600179d09, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: da540b0f4e559b34c827d09600179d09, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.8042687
       objectReference: {fileID: 0}
@@ -187,6 +192,10 @@ PrefabInstance:
       value: 102.76563
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: da540b0f4e559b34c827d09600179d09, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: da540b0f4e559b34c827d09600179d09, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -197,14 +206,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: da540b0f4e559b34c827d09600179d09, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: da540b0f4e559b34c827d09600179d09, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: da540b0f4e559b34c827d09600179d09, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: da540b0f4e559b34c827d09600179d09, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

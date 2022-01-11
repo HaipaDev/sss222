@@ -208,8 +208,10 @@ public class GameSession : MonoBehaviour{
             string presenceDetails="";
             string presenceStatus="";
             string sceneName=SceneManager.GetActiveScene().name;
-            if(sceneName!="Game"){presenceStatus="In Menus";presenceDetails="";}
-            else{presenceStatus=GameRules.instance.cfgName;presenceDetails="Score: "+score+" | "+"Game Time: "+GetGameSessionTimeFormat();}
+            string nickname="";if(SaveSerial.instance!=null){if(SaveSerial.instance.hyperGamerLoginData!=null){nickname=SaveSerial.instance.hyperGamerLoginData.username;}}
+            string nickInfo="";if(!String.IsNullOrEmpty(nickname))nickInfo=" | "+nickname;
+            if(sceneName!="Game"){presenceStatus="In Menus"+nickInfo;presenceDetails="";}
+            else{presenceStatus=GameRules.instance.cfgName+nickInfo;presenceDetails="Score: "+score+" | "+"Game Time: "+GetGameSessionTimeFormat();}
             if(presenceTimeSet==false){
                 DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                 int presenceTimeTotal = (int)(DateTime.UtcNow - epochStart).TotalSeconds;

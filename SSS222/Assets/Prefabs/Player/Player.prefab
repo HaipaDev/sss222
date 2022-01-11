@@ -151,12 +151,15 @@ MonoBehaviour:
   moveSpeedCurrent: 0
   health: 150
   healthMax: 150
-  powerup: laser
+  defenseInit: 0
+  defenseModifBase: 0
+  defense: 0
   energyOn: 1
   energy: 180
   energyMax: 120
   ammoOn: 1
   ammo: -4
+  powerup: laser
   powerupDefault: laser
   weaponsLimited: 0
   powerupTimer: -4
@@ -176,6 +179,7 @@ MonoBehaviour:
   overheatedTime: 3
   overheatedTimer: -4
   recoilOn: 1
+  critChance: 4
   enRegenEnabled: 0
   enAbsorpAmnt: 0
   energyDissAbsorp: 18
@@ -189,10 +193,8 @@ MonoBehaviour:
   timerHpRegen: 0
   freqHpRegen: 1
   hpRegenAmnt: 0.5
-  armorMultiInit: 1
   dmgMultiInit: 1
   shootMultiInit: 1
-  armorMulti: 1
   dmgMulti: 1
   shootMulti: 1
   shipScaleDefault: 0.95

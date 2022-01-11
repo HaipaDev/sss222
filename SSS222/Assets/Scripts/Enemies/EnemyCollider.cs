@@ -71,6 +71,6 @@ public class EnemyCollider : MonoBehaviour{
         if(def==-4){dmg/=16;}
         if(def==-99){dmg=0;}
         if(crit){dmg*=2f;}
-        return dmg;
+        return (float)System.Math.Round(dmg,2);
     }
 }

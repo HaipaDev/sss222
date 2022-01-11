@@ -245,7 +245,7 @@ public class PlayerCollider : MonoBehaviour{
         if(def==-3){dmg/=8;}
         if(def==-4){dmg/=16;}
         if(def==-99){dmg=0;}
-        return dmg;
+        return (float)System.Math.Round(dmg,2);
     }
    void PlayerEffects(string goName,bool phase=false){
         DamageValues dmgVal=UniCollider.GetDmgVal(goName);

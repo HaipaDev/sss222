@@ -124,6 +124,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &165244337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4272775868205103633, guid: c3243b564edf95f46895bf4210dd31a4,
+    type: 3}
+  m_PrefabInstance: {fileID: 4663692514586871309}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &495317271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -312,12 +318,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1231841060 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4663692512742735592, guid: c3243b564edf95f46895bf4210dd31a4,
-    type: 3}
-  m_PrefabInstance: {fileID: 4663692514586871309}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1750130226
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 1231841060}
+  m_FirstSelected: {fileID: 165244337}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1750130229
@@ -807,7 +807,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 4663692514586871309}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1231841060}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
