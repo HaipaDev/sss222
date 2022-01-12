@@ -87,7 +87,7 @@ public class CometRandomProperties : MonoBehaviour{
 
         float sizeL=(float)System.Math.Round(Random.Range(sizeMultLunar.x, sizeMultLunar.y),2);
         en.size=new Vector2(en.size.x*sizeL, en.size.y*sizeL);
-        en.health*=lunarHealthMulti;
+        en.healthMax*=lunarHealthMulti;en.health*=lunarHealthMulti;
         rb.velocity*=lunarSpeedMulti;
         if(!GameRules.instance.crystalsOn)dropValues[0]=102;
     }

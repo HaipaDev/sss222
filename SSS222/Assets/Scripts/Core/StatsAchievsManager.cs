@@ -5,20 +5,28 @@ using Sirenix.OdinInspector;
 
 public class StatsAchievsManager : MonoBehaviour{
     public static StatsAchievsManager instance;
-    public List<StatsGameMode> statsGameModeList;
-    public StatsTotal statsTotal;
+    [Header("Achievements")]
     public List<Achievement> achievsList;
+    [Header("Stats")]
+    public List<StatsGameMode> statsGameModesList;
+    public StatsTotal statsTotal;
+    public bool statsTotalSummed;
     void Awake(){if(StatsAchievsManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
-    void Start(){foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){statsGameModeList.Add(new StatsGameMode(){gmName=gr.cfgName});}}
+    void Start(){foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){statsGameModesList.Add(new StatsGameMode(){gmName=gr.cfgName});}}
     void Update(){
         CheckAllAchievs();
         SumStatsTotal();
     }
+    void OnValidate(){if(!statsTotalSummed)ClearStatsTotal();}
 
     #region//Achievs
     void CheckAllAchievs(){
         if(GameSession.instance.GetHighscoreByName("Arcade")>=100){CompleteAchiev("Get 100 points in Arcade");}
-        //if(GetTotalKillsComet()>=1000){CompleteAchiev("Destroy 1k comets");}
+        if(GameSession.instance.GetHighscoreByName("Arcade")>=1000){CompleteAchiev("Get 1k points in Arcade");}
+        if(GameSession.instance.GetHighscoreByName("Arcade")>=10000){CompleteAchiev("Get 10k points in Arcade");}
+        if(statsTotal.deaths>=100){CompleteAchiev("Die a 100 times");}
+        if(statsTotal.killsComets>=1000){CompleteAchiev("Destroy 1k comets");}
+        if(statsTotal.killsMecha>=500){CompleteAchiev("Destroy 500 mechanical enemies");}
     }
     
     public void CompleteAchiev(string str){
@@ -34,18 +42,37 @@ public class StatsAchievsManager : MonoBehaviour{
 
     #region//Stats
     void SumStatsTotal(){
-        //statsTotal.killsComets=;
+        if(!statsTotalSummed){
+            var i=0;
+            for(;i<statsGameModesList.Count;i++){
+                statsTotal.scoreTotal+=statsGameModesList[i].scoreTotal;
+                statsTotal.playtime+=statsGameModesList[i].playtime;
+                statsTotal.deaths+=statsGameModesList[i].deaths;
+                statsTotal.killsTotal+=statsGameModesList[i].killsTotal;
+                statsTotal.killsLiving+=statsGameModesList[i].killsLiving;
+                statsTotal.killsMecha+=statsGameModesList[i].killsMecha;
+                //statsTotal.killsViolet+=statsGameModesList[i].killsViolet;
+                statsTotal.killsComets+=statsGameModesList[i].killsComets;
+            }
+            if(i==statsGameModesList.Count){statsTotalSummed=true;}
+        }
     }
-    public StatsGameMode GetStatsForCurrentGameMode(){return statsGameModeList.Find(x=>x.gmName.Contains(GameSession.instance.GetCurrentGameModeName()));}
-    public StatsGameMode GetStatsForGameMode(string str){return statsGameModeList.Find(x=>x.gmName.Contains(str));}
+    public void ClearStatsTotal(){statsTotalSummed=false;statsTotal=new StatsTotal();}
+    public StatsGameMode GetStatsForCurrentGameMode(){return statsGameModesList.Find(x=>x.gmName.Contains(GameSession.instance.GetCurrentGameModeName()));}
+    public StatsGameMode GetStatsForGameMode(string str){return statsGameModesList.Find(x=>x.gmName.Contains(str));}
 
-    public void AddScoreTotal(int i){var s=GetStatsForCurrentGameMode();s.scoreTotal+=i;}
-    public void AddPlaytime(int i){var s=GetStatsForCurrentGameMode();s.playtime+=i;}
-    public void AddDeaths(){var s=GetStatsForCurrentGameMode();s.deaths++;}
-    public void AddKills(string name){
-        var s=GetStatsForCurrentGameMode();s.killsTotal++;
+    public void AddScoreTotal(int i){var s=GetStatsForCurrentGameMode();s.scoreTotal+=i;ClearStatsTotal();}
+    public void AddPlaytime(int i){var s=GetStatsForCurrentGameMode();s.playtime+=i;ClearStatsTotal();}
+    public void AddDeaths(){var s=GetStatsForCurrentGameMode();s.deaths++;ClearStatsTotal();}
+    public void AddKills(string name,enemyType type){
+        var s=GetStatsForCurrentGameMode();s.killsTotal++;ClearStatsTotal();
+        if(type==enemyType.living){AddKillsLiving();}
+        if(type==enemyType.mecha){AddKillsMecha();}
         if(name.Contains("Comet")){AddKillsComets();}
     }
+    public void AddKillsLiving(){var s=GetStatsForCurrentGameMode();s.killsLiving++;}
+    public void AddKillsMecha(){var s=GetStatsForCurrentGameMode();s.killsMecha++;}
+    //public void AddKillsViolet(){var s=GetStatsForCurrentGameMode();s.killsViolet++;}
     public void AddKillsComets(){var s=GetStatsForCurrentGameMode();s.killsComets++;}
     #endregion
 }
@@ -64,9 +91,10 @@ public class StatsGameMode{ public string gmName;
     public int playtime;
     public int deaths;
     public int killsTotal;
+    public int killsLiving;
+    public int killsMecha;
+    //public int killsViolet;
     public int killsComets;
-    public int killsMechas;
-    public int killsViolet;
 }
 [System.Serializable]
 public class StatsTotal{
@@ -74,7 +102,8 @@ public class StatsTotal{
     public int playtime;
     public int deaths;
     public int killsTotal;
+    public int killsLiving;
+    public int killsMecha;
+    //public int killsViolet;
     public int killsComets;
-    public int killsMechas;
-    public int killsViolet;
 }

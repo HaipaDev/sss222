@@ -43,18 +43,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf5a09e3460a01479dd6600658eca12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statsGameModeList: []
-  statsTotal:
-    killsTotal: 0
-    killsComets: 0
-    killsMechas: 0
-    killsViolet: 0
   achievsList:
   - name: Small steps
     desc: Get 100 points in Arcade
+    icon: {fileID: 0}
+    completed: 0
+  - name: Bigger steps
+    desc: Get 1k points in Arcade
+    icon: {fileID: 0}
+    completed: 0
+  - name: Space Master
+    desc: Get 10k points in Arcade
+    icon: {fileID: 0}
+    completed: 0
+  - name: Reapers Buddy
+    desc: Die a 100 times
+    icon: {fileID: 0}
+    completed: 0
+  - name: Comet Crusher
+    desc: Destroy 1k comets
+    icon: {fileID: 0}
+    completed: 0
+  - name: Mecha Destroyer
+    desc: Destroy 500 mechanical enemies
     icon: {fileID: 0}
     completed: 0
   - name: I wont let you
     desc: Block a projectile with Saber
     icon: {fileID: 0}
     completed: 0
+  statsGameModesList: []
+  statsTotal:
+    scoreTotal: 0
+    playtime: 0
+    deaths: 0
+    killsTotal: 0
+    killsLiving: 0
+    killsMecha: 0
+    killsComets: 0
+  statsTotalSummed: 0

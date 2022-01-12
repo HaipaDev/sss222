@@ -20,7 +20,7 @@ public class EnemyCollider : MonoBehaviour{
             
             if(dmgVal!=null){
                 if(dmgVal.colliType==colliTypes.playerWeapons||dmgVal.colliType==colliTypes.player){
-                    if(Player.instance!=null){dmg*=Player.instance.dmgMulti;if(Random.Range(0,100)<=Player.instance.critChance)crit=true;}}
+                    if(Player.instance!=null){dmg*=Player.instance.dmgMulti;if(Random.Range(0,100)<=Player.instance.critChance&&Player.instance.critChance>0)crit=true;}}
                 if(dmg!=0){
                     if(dmg>0)dmg=CalculateDmg(dmgVal,dmg,armorPenetr,crit,false);
                     en.Damage(dmg);
@@ -43,7 +43,7 @@ public class EnemyCollider : MonoBehaviour{
 
             if(dmgVal!=null){
                 if(dmgVal.colliType==colliTypes.playerWeapons||dmgVal.colliType==colliTypes.player){
-                    if(Player.instance!=null){dmg*=Player.instance.dmgMulti;if(Random.Range(0,100)<=Player.instance.critChance)crit=true;}}}
+                    if(Player.instance!=null){dmg*=Player.instance.dmgMulti;if(Random.Range(0,100)<=Player.instance.critChance&&Player.instance.critChance>0)crit=true;}}}
                 if(dmg!=0){
                     if(dmg>0)dmg=CalculateDmg(dmgVal,dmg,armorPenetr,crit,true);
                     en.Damage(dmg);

@@ -157,7 +157,7 @@ public class Enemy : MonoBehaviour{
     }
     public void Die(){if(health<=0&&health!=-1000){
         GameSession.instance.AddEnemyCount();
-        StatsAchievsManager.instance.AddKills(Name);
+        StatsAchievsManager.instance.AddKills(Name,type);
         int score=Random.Range((int)scoreValue.x,(int)scoreValue.y);
         if(GetComponent<CometRandomProperties>()!=null){
             var comet=GetComponent<CometRandomProperties>();
