@@ -476,7 +476,8 @@ public class GameSession : MonoBehaviour{
     public bool CheckGameModeSelected(string name){if(gameModeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))){return true;}else{return false;}}
     public int GetGameModeID(string name){return Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
     public string GetGameModeName(int id){return GameCreator.instance.gamerulesetsPrefabs[id].cfgName;}
-    public string GetCurrentGameModeName(){return GameCreator.instance.gamerulesetsPrefabs[gameModeSelected].cfgName;}
+    public string GetCurrentGameModeName(){if(gameModeSelected>=0&&gameModeSelected<GameCreator.instance.gamerulesetsPrefabs.Length){return GameCreator.instance.gamerulesetsPrefabs[gameModeSelected].cfgName;}
+    else if(Mathf.Abs(gameModeSelected)<GameCreator.instance.adventureZonesPrefabs.Length){return GameCreator.instance.adventureZonesPrefabs[gameModeSelected].cfgName;}else{return null;}}
     public void SetCheatmode(){if(!cheatmode){cheatmode=true;return;}else{cheatmode=false;return;}}
 }
 public enum dir{up,down,left,right}

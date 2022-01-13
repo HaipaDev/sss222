@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 
 public class Loader : MonoBehaviour{
-    public float timer=1f;
-    public AudioMixer audioMixer;
-    bool loaded;
-    private void Load(){
+    [SerializeField] AudioMixer audioMixer;
+    [SerializeField] bool loaded;
+    [SerializeField] bool forceLoad;
+    void Load(){
         if(Application.platform==RuntimePlatform.Android){SaveSerial.instance.settingsData.inputType=/*InputType.touch;*/InputType.mouse;SaveSerial.instance.settingsData.dtapMouseShoot=true;
         SaveSerial.instance.settingsData.pprocessing=false;SaveSerial.instance.settingsData.scbuttons=true;}
         else{SaveSerial.instance.settingsData.inputType=InputType.mouse;SaveSerial.instance.settingsData.dtapMouseShoot=false;
@@ -26,9 +26,11 @@ public class Loader : MonoBehaviour{
         audioMixer.SetFloat("SoundVolume", SaveSerial.instance.settingsData.soundVolume);
         audioMixer.SetFloat("MusicVolume", SaveSerial.instance.settingsData.musicVolume);
     }
+    public void ForceLoad(){
+        if(loaded)GSceneManager.instance.LoadStartMenu();
+    }
     void Update(){
         Load();
-        timer-=Time.deltaTime;
-        if(timer<=0){if(SceneManager.GetActiveScene().name=="Loading"){SceneManager.LoadScene("Menu");}Destroy(gameObject);}
+        if(forceLoad){ForceLoad();}
     }
 }
