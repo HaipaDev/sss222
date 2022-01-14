@@ -270,12 +270,12 @@ public class Player : MonoBehaviour{
         yield return new WaitForSeconds(0.06f);
 
         var u=UpgradeMenu.instance;
-        if(GameSession.instance.CheckGameModeSelected("Adventure")){
+        if(GameSession.instance.CheckGamemodeSelected("Adventure")){
             if(u!=null){
                 healthMax+=(Mathf.Clamp(u.healthMax_UpgradesLvl-1,0,999)*(u.healthMax_UpgradesCountMax*u.healthMax_UpgradeAmnt))+(u.healthMax_UpgradeAmnt*u.healthMax_UpgradesCount);/*if(u.total_UpgradesLvl>0)*/health=healthMax;
                 energyMax+=(Mathf.Clamp(u.energyMax_UpgradesLvl-1,0,999)*(u.energyMax_UpgradesCountMax*u.energyMax_UpgradeAmnt))+(u.energyMax_UpgradeAmnt*u.energyMax_UpgradesCount);if(u.total_UpgradesLvl>0)energy=energyMax;
             }else{Debug.LogError("UpgradeMenu not found");}
-        }else if(GameSession.instance.CheckGameModeSelected("Hardcore")){
+        }else if(GameSession.instance.CheckGamemodeSelected("Hardcore")){
             GetComponent<AudioSource>().playOnAwake=true;
             GetComponent<AudioSource>().loop=true;
             GetComponent<AudioSource>().enabled=true;
@@ -387,7 +387,7 @@ public class Player : MonoBehaviour{
         ammo=Mathf.Clamp(ammo,-4,999);
         LosePowerup();
         if(!ammoOn)ammo=-4;
-        DrawOtherWeapons();
+        DrawMeleeWeapons();
         if(GetComponent<PlayerSkills>()!=null){if(GetComponent<PlayerSkills>().timerTeleport==-4){Shoot();}}else{Shoot();}
         States();
         CalculateDefenseSpeed();
@@ -435,7 +435,7 @@ public class Player : MonoBehaviour{
         
         if(GameRules.instance.levelingOn&&UpgradeMenu.instance!=null&&GetComponent<BackflameEffect>()!=null){
             //Blue Flame for Hardcore
-            if(GameSession.instance.CheckGameModeSelected("Hardcore")){
+            if(GameSession.instance.CheckGamemodeSelected("Hardcore")){
                 if((UpgradeMenu.instance.total_UpgradesLvl<bflameDmgTillLvl||bflameDmgTillLvl<=0)&&!GetComponent<BackflameEffect>().BFlame.name.Contains("Blue")){
                     GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part="BFlame_Blue";
                 }
@@ -720,7 +720,7 @@ public class Player : MonoBehaviour{
         StatsAchievsManager.instance.AddDeaths();
         //Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
 
-        if(GameSession.instance.CheckGameModeSelected("Adventure")){GameSession.instance.DieAdventure();}
+        if(GameSession.instance.CheckGamemodeSelected("Adventure")){GameSession.instance.DieAdventure();}
 
         GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);
         AudioManager.instance.Play("Death");
@@ -748,17 +748,15 @@ public class Player : MonoBehaviour{
         if(w.costType==costType.ammo){wc=(costTypeAmmo)w.costTypeProperties;}
         if(w.costType==costType.crystalAmmo){wc=(costTypeCrystalAmmo)w.costTypeProperties;wcCA=(costTypeCrystalAmmo)wc;}
         if(w.costType==costType.blackEnergy){wc=(costTypeBlackEnergy)w.costTypeProperties;wcBE=(costTypeBlackEnergy)wc;}
-        if(w.weaponType==weaponType.bullet||w.weaponType==weaponType.hybrid){
-            if(w.costType==costType.boomerang&&instantiateTimer<=0){ammo=1;}
+        if(w.weaponType==weaponType.bullet){
             if((w.costType==costType.energy&&((energyOn&&energy>0)||(!energyOn)))
-            ||((w.costType==costType.ammo&&ammo>0)||(w.costType==costType.boomerang&&ammo==1))
+            ||((w.costType==costType.ammo&&ammo>0))
             ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(ammo>0||GameSession.instance.coins>0))
             ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(GameSession.instance.xp>0))){
                 if(overheated!=true&&electrc!=true){
                     weaponTypeBullet wp=null;
                     if(w.weaponType==weaponType.bullet){wp=(weaponTypeBullet)w.weaponTypeProperties;}
                     string asset=w.assetName;
-                    if(w.weaponType==weaponType.hybrid){weaponTypeHybrid hybrid=(weaponTypeHybrid)w.weaponTypeProperties;wp=hybrid.b;asset=hybrid.bulletAsset;}
                     GameObject bulletL=null,bulletR=null;
                     GameObject flareL=null,flareR=null;
                     Vector2 posL=(Vector2)transform.position+wp.leftAnchor*shipScale,posR=(Vector2)transform.position+wp.rightAnchor*shipScale;
@@ -779,8 +777,8 @@ public class Player : MonoBehaviour{
                             if(i>0){speedoffxL=wp.serialOffsetSpeed.x;speedoffyL=wp.serialOffsetSpeed.y;
                                 if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxL=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyL=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
                                 sL=new Vector2(sL.x-=speedoffxL,sL.y+=speedoffyL);}
-                            if(w.costType!=costType.boomerang)if(bulletL.GetComponent<Rigidbody2D>()!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;
-                            else{if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();}
+                            if(bulletL.GetComponent<Rigidbody2D>()!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;
+                            //if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();
                             if(bulletL.GetComponent<BounceThroughEnemies>()!=null)bulletL.GetComponent<BounceThroughEnemies>().speed=sL.y;
                             if(bulletL.GetComponent<BounceBetweenEnemies>()!=null)bulletL.GetComponent<BounceBetweenEnemies>().speed=sL.y;
                             bulletL.transform.Rotate(rL);
@@ -798,8 +796,8 @@ public class Player : MonoBehaviour{
                             if(i>0){speedoffxR=wp.serialOffsetSpeed.x;speedoffyR=wp.serialOffsetSpeed.y;
                                 if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxR=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyR=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
                                 sR=new Vector2(sR.x+=speedoffxR,sR.y+=speedoffyR);}
-                            if(w.costType!=costType.boomerang)if(bulletR.GetComponent<Rigidbody2D>()!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;
-                            else{if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();}
+                            if(bulletR.GetComponent<Rigidbody2D>()!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;
+                            //if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();
                             if(bulletR.GetComponent<BounceThroughEnemies>()!=null)bulletR.GetComponent<BounceThroughEnemies>().speed=sR.y;
                             if(bulletR.GetComponent<BounceBetweenEnemies>()!=null)bulletR.GetComponent<BounceBetweenEnemies>().speed=sR.y;
                             bulletR.transform.Rotate(rR);
@@ -817,8 +815,7 @@ public class Player : MonoBehaviour{
                     if(w.costType==costType.ammo){if(ammo>=wc.cost)AddSubAmmo(wc.cost,false);else{AddSubAmmo(ammo-wc.cost,false);}}
                     if(w.costType==costType.crystalAmmo){if(ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
                     if(w.costType==costType.blackEnergy){if(GameSession.instance.xp>=wc.cost){AddSubXP(wc.cost,false);}if(w.costType==costType.blackEnergy){AddSubEnergy(wcBE.regularEnergyCost);}}
-                    if(w.ovheat!=0&&w.costType!=costType.boomerang)Overheat(w.ovheat);
-                    if(w.costType==costType.boomerang){ammo=-1;instantiateTimer=w.ovheat;}
+                    if(w.ovheat!=0)Overheat(w.ovheat);
                     if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
                     shootTimer=(wp.shootDelay/wp.tapDelayMulti)/shootMulti;
                     yield return new WaitForSeconds((wp.shootDelay/wp.holdDelayMulti)/shootMulti);
@@ -827,15 +824,14 @@ public class Player : MonoBehaviour{
         }else{yield break;}
         }else{yield break;}
     }}}
-    private void DrawOtherWeapons(){
+    private void DrawMeleeWeapons(){
         //var cargoDist=2.8f;
         GameObject go=null;
         WeaponProperties w=null;
         if(GetWeaponProperty(powerup)!=null)w=GetWeaponProperty(powerup);else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}else Debug.LogWarning(powerup+" not added to WeaponProperties List");
-        if(w!=null&&(w.weaponType==weaponType.held||w.weaponType==weaponType.hybrid)){
-            weaponTypeHeld wp=null;
-            if(w.weaponType==weaponType.held){wp=(weaponTypeHeld)w.weaponTypeProperties;}
-            if(w.weaponType==weaponType.hybrid){weaponTypeHybrid hybrid=(weaponTypeHybrid)w.weaponTypeProperties;wp=hybrid.h;}
+        if(w!=null&&w.weaponType==weaponType.melee){
+            weaponTypeMelee wp=null;
+            if(w.weaponType==weaponType.melee){wp=(weaponTypeMelee)w.weaponTypeProperties;}
             costTypeProperties wc=null;
             if(w.costType==costType.energy){wc=(costTypeEnergy)w.costTypeProperties;}
             if(powerup!=wp.nameActive&&(w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){
@@ -844,12 +840,12 @@ public class Player : MonoBehaviour{
                 //if(go!=null){go.transform.position=go.transform.position+new Vector3(wp.offset.x,wp.offset.y,go.transform.position.z);}
                 if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+new Vector3(wp.offset.x,wp.offset.y,0.01f);}
                 //if(go!=null){if(go.GetComponent<Lightsaber>()!=null){go.GetComponent<Lightsaber>().SetStartPos(go.transform.position);}}
-                weaponEnTimer=wp.energyPeriod;
+                weaponEnTimer=wp.costPeriod;
                 powerup=wp.nameActive;
             }else{
                 if(powerup==wp.nameActive){
                     if(weaponEnTimer>0){weaponEnTimer-=Time.deltaTime;}
-                    if(weaponEnTimer<=0){weaponEnTimer=wp.energyPeriod;AddSubEnergy((float)System.Math.Round(wc.cost*shipScale,2),false);}
+                    if(weaponEnTimer<=0){weaponEnTimer=wp.costPeriod;AddSubEnergy((float)System.Math.Round(wc.cost*shipScale,2),false);}
                     GameObject asset=GameAssets.instance.Get(w.assetName);
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
                     if(powerup==wp.nameActive&&go==null)powerup=w.name;
@@ -865,7 +861,7 @@ public class Player : MonoBehaviour{
                 go.SetActive(false);}else{go.SetActive(true);}
             }*/
         }
-    DestroyHeldWeapons();
+    DestroyMeleeWeapons();
     }
 #endregion
  
@@ -1311,35 +1307,26 @@ public class Player : MonoBehaviour{
         foreach(WeaponProperties w in weaponProperties){
             if(w.weaponType==weaponType.bullet){
                 if(w.name==name){return w;}//else{Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
-            }else if(w.weaponType==weaponType.held){
-                weaponTypeHeld wp=(weaponTypeHeld)w.weaponTypeProperties;
+            }else if(w.weaponType==weaponType.melee){
+                weaponTypeMelee wp=(weaponTypeMelee)w.weaponTypeProperties;
                 if(w.name==name){return w;}
                 if(wp.nameActive==name){return null;}
                 //if(w.name!=name&&wp.nameActive!=name){Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
-            }else if(w.weaponType==weaponType.hybrid){
-                weaponTypeHybrid hybrid=(weaponTypeHybrid)w.weaponTypeProperties;
-                weaponTypeHeld wp=(weaponTypeHeld)hybrid.h;
-                if(w.name==name){return w;}
-                if(wp.nameActive==name){return null;}
-            }//else{Debug.LogWarning("Type not set in GetWeaponProperty();");}
+            }
         }return null;
     }public WeaponProperties GetWeaponPropertyActive(string name){
         foreach(WeaponProperties w in weaponProperties){
-            if(w.weaponType==weaponType.held){
-                weaponTypeHeld wp=(weaponTypeHeld)w.weaponTypeProperties;
+            if(w.weaponType==weaponType.melee){
+                weaponTypeMelee wp=(weaponTypeMelee)w.weaponTypeProperties;
                 if(wp.nameActive==name){return w;}
                 //if(w.name!=name&&wp.nameActive!=name){Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
-            }else if(w.weaponType==weaponType.hybrid){
-                weaponTypeHybrid hybrid=(weaponTypeHybrid)w.weaponTypeProperties;
-                weaponTypeHeld wp=(weaponTypeHeld)hybrid.h;
-                if(wp.nameActive==name){return w;}
-            }//else{Debug.LogWarning("Type not set in GetWeaponPropertyActive();");}
+            }
         }return null;
     }
-    void DestroyHeldWeapons(){
+    void DestroyMeleeWeapons(){
         foreach(WeaponProperties ws in weaponProperties){
-            if(ws.weaponType==weaponType.held){
-                var wpt=(weaponTypeHeld)ws.weaponTypeProperties;
+            if(ws.weaponType==weaponType.melee){
+                var wpt=(weaponTypeMelee)ws.weaponTypeProperties;
                 if(powerup!=ws.name&&powerup!=wpt.nameActive){
                     GameObject asset=GameAssets.instance.Get(ws.assetName);
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(ws.assetName)){Destroy(t.gameObject);}}
@@ -1349,7 +1336,7 @@ public class Player : MonoBehaviour{
     }
     void LosePowerup(){
         if(losePwrupOutOfEn&&energy<=0&&powerup!=powerupDefault){SetPowerup(powerupDefault);}
-        if(ammoOn&&((GetWeaponProperty(powerup)!=null&&GetWeaponProperty(powerup).costType==costType.ammo)||(GetWeaponPropertyActive(powerup)!=null&&GetWeaponPropertyActive(powerup).costType!=costType.boomerang)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){SetPowerup(powerup=powerupDefault);ammo=-4;}
+        if(ammoOn&&((GetWeaponProperty(powerup)!=null&&GetWeaponProperty(powerup).costType==costType.ammo)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){SetPowerup(powerup=powerupDefault);ammo=-4;}
     }
 
     public void SetSpeedPrev(){

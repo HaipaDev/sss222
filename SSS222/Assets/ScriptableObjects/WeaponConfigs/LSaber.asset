@@ -25,12 +25,12 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: weaponTypeHeld, ns: , asm: Assembly-CSharp}
+      type: {class: weaponTypeMelee, ns: , asm: Assembly-CSharp}
       data:
         nameActive: lsaberA
         offset: {x: 0, y: 1}
-        energyPeriod: 0.15
+        costPeriod: 0.15
     00000001:
       type: {class: costTypeEnergy, ns: , asm: Assembly-CSharp}
       data:
-        cost: 0.4
+        cost: 0.3

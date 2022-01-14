@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour{
+    public static PauseMenu instance;
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public GameObject optionsUI;
@@ -11,6 +12,7 @@ public class PauseMenu : MonoBehaviour{
     IEnumerator slowDownCo;
     //Shop shop;
     IEnumerator Start(){
+        instance=this;
         yield return new WaitForSeconds(0.05f);
         Resume();
         //shop=FindObjectOfType<Shop>();

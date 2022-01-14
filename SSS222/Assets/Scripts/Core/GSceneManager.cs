@@ -43,7 +43,7 @@ public class GSceneManager : MonoBehaviour{
         yield return new WaitForSecondsRealtime(0.01f);
         GameSession.instance.speedChanged=false;GameSession.instance.defaultGameSpeed=1f;GameSession.instance.gameSpeed=1f;
         GameSession.instance.ResetAfterAdventure();
-        /*GameSession.instance.SetGameModeSelected(0);*/
+        /*GameSession.instance.SetGamemodeSelected(0);*/
     }
     public void LoadGameScene(){
         SceneManager.LoadScene("Game");GameSession.instance.ResetScore();
@@ -52,17 +52,18 @@ public class GSceneManager : MonoBehaviour{
         GameRules.instance.EnterGameScene();
     }
     public void LoadAdventureZone(int i){
+        GameSession.instance.SetGamemodeSelected(i);
         SceneManager.LoadScene("Game");
         GameSession.instance.gameSpeed=1f;
         GameSession.instance.LoadAdventurePost();
         GameSession.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }
-    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");/*GameSession.instance.SetGameModeSelected(0);*/}
+    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");/*GameSession.instance.SetGamemodeSelected(0);*/}
     public void LoadAdventureZonesScene(){SceneManager.LoadScene("AdventureZones");GameSession.instance.LoadAdventurePre();}
     public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}
-    public void LoadGameModeInfoSceneSet(int i){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGameModeSelected(i);}
-    public void LoadGameModeInfoSceneSetStr(string str){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGameModeSelectedStr(str);}
+    public void LoadGameModeInfoSceneSet(int i){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGamemodeSelected(i);}
+    public void LoadGameModeInfoSceneSetStr(string str){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGamemodeSelectedStr(str);}
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
     public void LoadCustomizationScene(){SceneManager.LoadScene("Customization");}
     public void LoadSocialsScene(){SceneManager.LoadScene("Socials");}
@@ -77,7 +78,7 @@ public class GSceneManager : MonoBehaviour{
     public void RestartGame(){GSceneManager.instance.StartCoroutine(GSceneManager.instance.RestartGameI());}
     IEnumerator RestartGameI(){
         GameSession.instance.SaveHighscore();
-        //if(GameSession.instance.CheckGameModeSelected("Adventure"))GameSession.instance.SaveAdventure();//not sure if Restart should save or not
+        //if(GameSession.instance.CheckGamemodeSelected("Adventure"))GameSession.instance.SaveAdventure();//not sure if Restart should save or not
         yield return new WaitForSecondsRealtime(0.01f);
         spawnReqsMono.RestartAllValues();
         spawnReqsMono.ResetSpawnReqsList();
@@ -87,7 +88,7 @@ public class GSceneManager : MonoBehaviour{
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameSession.instance.speedChanged=false;
         GameSession.instance.gameSpeed=1f;
-        if(GameSession.instance.CheckGameModeSelected("Adventure")){
+        if(GameSession.instance.CheckGamemodeSelected("Adventure")){
         yield return new WaitForSecondsRealtime(0.1f);GameSession.instance.LoadAdventurePost();}
         GameSession.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();

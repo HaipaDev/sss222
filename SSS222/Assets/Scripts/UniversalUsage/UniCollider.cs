@@ -137,3 +137,4 @@ public class UniCollider : MonoBehaviour{
 }
 
 public enum colliTypes{player,playerWeapons,enemies,enemyWeapons,world,zone}
+public enum dmgType{normal,silent,flame,shadow,decay,electr,heal,healSilent}

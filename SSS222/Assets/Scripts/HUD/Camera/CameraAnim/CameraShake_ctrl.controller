@@ -43,7 +43,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Main Camera
+  m_Name: CameraShake_ctrl
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: shake
@@ -67,7 +67,7 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
 --- !u!1102 &669707145875441385
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -119,7 +119,7 @@ AnimatorStateTransition:
   m_CanTransitionToSelf: 1
 --- !u!1107 &5507008529129929847
 AnimatorStateMachine:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -128,10 +128,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 669707145875441385}
-    m_Position: {x: 240, y: 0, z: 0}
+    m_Position: {x: 260, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7664805008560463236}
-    m_Position: {x: 300, y: 100, z: 0}
+    m_Position: {x: 240, y: -20, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -144,7 +144,7 @@ AnimatorStateMachine:
   m_DefaultState: {fileID: 669707145875441385}
 --- !u!1102 &7664805008560463236
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}

@@ -5,12 +5,12 @@ using UnityEngine.UI;
 using TMPro;
 
 public class AdventureZoneData : MonoBehaviour{
-    [SerializeField] int id=0;
+    [SerializeField] int id=1;
     void Start(){
         GetComponent<Button>().onClick.AddListener(OnClickButtonEvent);
-        GetComponentInChildren<TextMeshProUGUI>().text=(id+1).ToString();
+        GetComponentInChildren<TextMeshProUGUI>().text=Mathf.Abs(id).ToString();
     }
     void OnClickButtonEvent(){
-        GSceneManager.instance.LoadAdventureZone(id);
+        GSceneManager.instance.LoadAdventureZone(-id);
     }
 }

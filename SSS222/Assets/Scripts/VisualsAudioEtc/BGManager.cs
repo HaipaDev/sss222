@@ -11,8 +11,8 @@ public class BGManager : MonoBehaviour{
         /*if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Game"){*/yield return new WaitForSecondsRealtime(0.075f);//}else{}
 
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name!="Loading"){
-            if(GameSession.instance.CheckGameModeSelected("Hardcore")){SetColorMat(hardcoreMat);}
-            else if(GameSession.instance.CheckGameModeSelected("Classic")){SetColorMat(classicMat);}
+            if(GameSession.instance.CheckGamemodeSelected("Hardcore")){SetColorMat(hardcoreMat);}
+            else if(GameSession.instance.CheckGamemodeSelected("Classic")){SetColorMat(classicMat);}
             else{SetColorMat(defMat);}
         }
     }

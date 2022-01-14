@@ -12,10 +12,12 @@ public class AchievPopups : MonoBehaviour{
     [SerializeField] Image icon;
     public bool playing;
     public bool finished;
+    public string firstInQueueName;
     void Awake(){if(AchievPopups.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
     void Update(){
         if(!playing&&queue.Count>0){PopupAchiev();playing=true;}
-        if(finished){RemoveDoneFromQueue();GetComponent<Animator>().ResetTrigger("Play");finished=false;}
+        if(finished){RemoveDoneFromQueue();GetComponent<Animator>().ResetTrigger("Play");}
+        else{if(queue.Count>0)firstInQueueName=queue[0].name;}
     }
     void PopupAchiev(){
         finished=false;
@@ -28,6 +30,6 @@ public class AchievPopups : MonoBehaviour{
         if(!queue.Contains(a))queue.Add(a);
     }
     public void RemoveDoneFromQueue(){
-        if(queue.Count>0){queue.RemoveAt(0);}return;
+        if(queue.Count>0){if(queue[0].name==firstInQueueName)queue.RemoveAt(0);}finished=false;return;
     }
 }

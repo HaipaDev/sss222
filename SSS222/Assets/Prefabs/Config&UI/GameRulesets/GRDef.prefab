@@ -66,6 +66,7 @@ MonoBehaviour:
   moveSpeedPlayer: 7.5
   healthPlayer: 150
   healthMaxPlayer: 150
+  defensePlayer: 0
   energyOnPlayer: 1
   energyPlayer: 60
   energyMaxPlayer: 180
@@ -78,7 +79,6 @@ MonoBehaviour:
   weaponsLimited: 0
   losePwrupOutOfEn: 1
   losePwrupOutOfAmmo: 1
-  armorMultiPlayer: 1
   dmgMultiPlayer: 1
   shootMultiPlayer: 1
   shipScaleDefault: 0.95
@@ -89,6 +89,7 @@ MonoBehaviour:
   overheatCooldown: 0.5
   overheatedTime: 3
   recoilOnPlayer: 1
+  critChancePlayer: 4
   playerWeaponsFade: 1
   weaponProperties:
   - {fileID: 11400000, guid: c02591e544d31e44c9fecff122d832be, type: 2}
@@ -96,7 +97,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b365b34ef3f6bed4b852bce204bfe8f3, type: 2}
   - {fileID: 11400000, guid: 49cc28bde08a8444d925542f523215f2, type: 2}
   - {fileID: 11400000, guid: b154f23a4342bb34db4c4811ecf62a91, type: 2}
-  - {fileID: 11400000, guid: 06682e2bb692b854cb933bc149bc8fa6, type: 2}
   - {fileID: 11400000, guid: 44fef545084b37043a427b9fa004d1c6, type: 2}
   - {fileID: 11400000, guid: 390ccedfd644e144ebfac9dbe0d34fb0, type: 2}
   - {fileID: 11400000, guid: dbf3681dcbec09945ad44292f5d3a124, type: 2}

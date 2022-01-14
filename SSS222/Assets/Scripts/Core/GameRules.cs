@@ -221,8 +221,8 @@ public static GameRules instance;
     IEnumerator Start(){
         //Set gameModeSelected if artificially turned on gamemode etc
         yield return new WaitForSecondsRealtime(0.05f);
-        if(!GameSession.instance.CheckGameModeSelected(cfgName)){
-            GameSession.instance.SetGameModeSelectedStr(cfgName);}
+        if(!GameSession.instance.CheckGamemodeSelected(cfgName)){
+            GameSession.instance.SetGamemodeSelectedStr(cfgName);}
         yield return new WaitForSecondsRealtime(0.02f);    
         if(SceneManager.GetActiveScene().name=="Game")EnterGameScene();
     }

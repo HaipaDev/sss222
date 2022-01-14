@@ -14,8 +14,7 @@ public class WeaponProperties:ScriptableObject{
     [SerializeField] public float duration=10;
     [ContextMenu("Validate")]void Vaildate(){
         if(weaponType==weaponType.bullet){weaponTypeProperties=new weaponTypeBullet();}
-        if(weaponType==weaponType.held){weaponTypeProperties=new weaponTypeHeld();}
-        if(weaponType==weaponType.hybrid){weaponTypeProperties=new weaponTypeHybrid();}
+        if(weaponType==weaponType.melee){weaponTypeProperties=new weaponTypeMelee();}
     }[ContextMenu("ValidateCost")]void VaildateCost(){
         if(costType==costType.energy){costTypeProperties=new costTypeEnergy();}
         if(costType==costType.ammo){costTypeProperties=new costTypeAmmo();}
@@ -23,13 +22,13 @@ public class WeaponProperties:ScriptableObject{
         if(costType==costType.blackEnergy){costTypeProperties=new costTypeBlackEnergy();}
     }
 }
-public enum costType{energy,ammo,boomerang,crystalAmmo,blackEnergy}
+public enum costType{energy,ammo,crystalAmmo,blackEnergy}
 [System.Serializable]public class costTypeProperties{public float cost;}
 [System.Serializable]public class costTypeEnergy:costTypeProperties{}
 [System.Serializable]public class costTypeAmmo:costTypeProperties{public int ammoSize=20;}
 [System.Serializable]public class costTypeCrystalAmmo:costTypeProperties{public float regularEnergyCost=0;public int crystalCost=1;public int crystalAmmoCrafted=20;}
 [System.Serializable]public class costTypeBlackEnergy:costTypeProperties{public float regularEnergyCost=0;}
-[System.Serializable]public enum weaponType{bullet,held,hybrid}
+[System.Serializable]public enum weaponType{bullet,melee,hybrid}
 [System.Serializable]public class weaponTypeProperties{}
 [System.Serializable]public class weaponTypeBullet:weaponTypeProperties{
     public bool leftSide=true;
@@ -54,13 +53,8 @@ public enum costType{energy,ammo,boomerang,crystalAmmo,blackEnergy}
     public bool flare=true;
     public float flareDur=0.3f;
 }
-[System.Serializable]public class weaponTypeHeld:weaponTypeProperties{
+[System.Serializable]public class weaponTypeMelee:weaponTypeProperties{
     public string nameActive;
     public Vector2 offset=new Vector2(0,1);
-    public float energyPeriod=0.15f;
-}
-[System.Serializable]public class weaponTypeHybrid:weaponTypeProperties{
-    public string bulletAsset;
-    public weaponTypeBullet b=new weaponTypeBullet();
-    public weaponTypeHeld h=new weaponTypeHeld();
+    public float costPeriod=0.15f;
 }

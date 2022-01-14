@@ -7,7 +7,7 @@ using TMPro;
 using static TMPro.TMP_Dropdown;
 using System.Linq;
 
-public class GameModeDropdown : MonoBehaviour{
+public class GamemodeDropdown : MonoBehaviour{
     [SerializeField]List<string> skip=new List<string>(0);
     TMP_Dropdown dd;
     void Start(){
@@ -23,7 +23,7 @@ public class GameModeDropdown : MonoBehaviour{
         }
         dd.ClearOptions();
         dd.AddOptions(options);
-        dd.value=dd.options.FindIndex(d=>d.text.Contains(GameSession.instance.GetCurrentGameModeName()));//GameSession.instance.GetGameModeID(dd.options[dd.value].text);
+        dd.value=dd.options.FindIndex(d=>d.text.Contains(GameSession.instance.GetCurrentGamemodeName()));//GameSession.instance.GetGamemodeID(dd.options[dd.value].text);
     }
-    public void SetGamemode(){GameSession.instance.SetGameModeSelectedStr(dd.options[dd.value].text);if(FindObjectOfType<DisplayLeaderboard>()!=null)FindObjectOfType<DisplayLeaderboard>().DisplayCurrentUserHighscore();}
+    public void SetGamemode(){GameSession.instance.SetGamemodeSelectedStr(dd.options[dd.value].text);if(FindObjectOfType<DisplayLeaderboard>()!=null)FindObjectOfType<DisplayLeaderboard>().DisplayCurrentUserHighscore();}
 }

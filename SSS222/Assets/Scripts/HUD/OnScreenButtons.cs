@@ -18,18 +18,16 @@ public class OnScreenButtons : MonoBehaviour{
         }
     }
     public void Pause(){
-        var pause=FindObjectOfType<PauseMenu>();
         if(PauseMenu.GameIsPaused!=true){
-            if(Shop.shopOpened!=true && UpgradeMenu.UpgradeMenuIsOpen!=true){pause.pauseMenuUI.SetActive(true);
-            pause.Pause();}
-        }else{pause.Resume();}
+            if(Shop.shopOpened!=true&&UpgradeMenu.UpgradeMenuIsOpen!=true){PauseMenu.instance.pauseMenuUI.SetActive(true);
+            PauseMenu.instance.Pause();}
+        }else{PauseMenu.instance.Resume();}
     }
     public void OpenUpgrade(){
-        var umenu=FindObjectOfType<UpgradeMenu>();
         if(UpgradeMenu.UpgradeMenuIsOpen!=true){
-            if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && Player.instance!=null){umenu.upgradeMenuUI.SetActive(true);
-            umenu.Open();}
-        }else{umenu.Resume();}
+            if(PauseMenu.GameIsPaused!=true&&Shop.shopOpened!=true&&Player.instance!=null){UpgradeMenu.instance.upgradeMenuUI.SetActive(true);
+            UpgradeMenu.instance.Open();}
+        }else{UpgradeMenu.instance.Resume();}
     }
 
     public void UseSkillQ(){

@@ -23,13 +23,13 @@ public class ValueDisplay : MonoBehaviour{
         //else if(value=="evscore") txt.text=GameSession.instance.EVscore.ToString();
         else if(value=="coins") txt.text=GameSession.instance.coins.ToString();
         else if(value=="cores") txt.text=GameSession.instance.cores.ToString();
-        else if(value.Contains("highscore")) txt.text=GameSession.instance.GetHighscore(/*int.Parse(value.Split('e')[1])*/GameSession.instance.gameModeSelected).ToString();
+        else if(value.Contains("highscore")) txt.text=GameSession.instance.GetHighscoreCurrent().ToString();
         else if(value=="gameVersion") txt.text="v"+GameSession.instance.gameVersion;
         else if(value=="timePlayed") txt.text=GameSession.instance.GetGameSessionTimeFormat();
     }
     if(Player.instance!=null){
         if(value=="hpOffMax"){
-            if(GameSession.instance.CheckGameModeSelected("Classic")||Player.instance.health<=5){
+            if(GameSession.instance.CheckGamemodeSelected("Classic")||Player.instance.health<=5){
                 txt.text=System.Math.Round(Player.instance.health,1).ToString()+"/"+Player.instance.healthMax.ToString();}//Round to .1
             else txt.text=Mathf.RoundToInt(Player.instance.health).ToString()+"/"+Player.instance.healthMax.ToString();
     }
@@ -80,7 +80,7 @@ public class ValueDisplay : MonoBehaviour{
     }
     if(GameRules.instance!=null){
         if(value=="cfgName")if(GameRules.instance!=null){txt.text=GameRules.instance.cfgName;}else{Debug.LogError("GameRules Not Present");}
-        else if(value=="cfgNameCurrent")txt.text=GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.gameModeSelected].cfgName;
+        else if(value=="cfgNameCurrent")txt.text=GameSession.instance.GetGameRulesCurrent().cfgName;
         else if(value=="speedPlayerGR") txt.text=GameRules.instance.moveSpeedPlayer.ToString();
         else if(value=="healthPlayerGR") txt.text=GameRules.instance.healthPlayer.ToString();
         else if(value=="energyPlayerGR") txt.text=GameRules.instance.energyPlayer.ToString();
@@ -98,8 +98,7 @@ public class ValueDisplay : MonoBehaviour{
         else if(value=="loginUsername"){txt.text=SaveSerial.instance.hyperGamerLoginData.username.ToString();}
     }
     if(DBAccess.instance!=null){
-        if(value=="registerMessage"){txt.text=DBAccess.instance.registerMessage;}
-        else if(value=="loginMessage"){txt.text=DBAccess.instance.loginMessage;}
+        if(value=="loginMessage"){txt.text=DBAccess.instance.loginMessage;}
         else if(value=="submitMessage"){txt.text=DBAccess.instance.submitMessage;}
     }
         

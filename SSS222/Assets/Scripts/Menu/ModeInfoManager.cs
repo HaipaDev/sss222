@@ -10,7 +10,7 @@ public class ModeInfoManager : MonoBehaviour{
     [SerializeField] Sprite[] startSprites;
     void Start(){
         SetActivePanel(0);
-        startIMG.sprite=startSprites[GameSession.instance.gameModeSelected];
+        startIMG.sprite=startSprites[GameSession.instance.gamemodeSelected-1];
     }
     void Update(){
         

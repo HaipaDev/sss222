@@ -123,7 +123,7 @@ public class UpgradeMenu : MonoBehaviour{
         instance=this;
         player=Player.instance;
         pskills=Player.instance.GetComponent<PlayerSkills>();
-        if(GameSession.instance.CheckGameModeSelected("Adventure")){LvlEventsAdventure();}
+        if(GameSession.instance.CheckGamemodeSelected("Adventure")){LvlEventsAdventure();}
         Resume();
     }
     void Update(){
