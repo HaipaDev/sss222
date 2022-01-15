@@ -17,6 +17,7 @@ public class Loader : MonoBehaviour{
             SaveSerial.instance.Load();
             SaveSerial.instance.LoadLogin();
             SaveSerial.instance.LoadSettings();
+            SaveSerial.instance.LoadStats();
             loaded=true;
         }
         if(Application.platform!=RuntimePlatform.Android){Screen.fullScreen=SaveSerial.instance.settingsData.fullscreen;if(SaveSerial.instance.settingsData.fullscreen)Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);

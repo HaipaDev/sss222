@@ -24,6 +24,9 @@ public class GSceneManager : MonoBehaviour{
 
     public void LoadStartMenu(){
         SaveSerial.instance.Save();
+        SaveSerial.instance.SaveLogin();
+        StatsAchievsManager.instance.SaveStats();
+        SaveSerial.instance.SaveStats();
         GameSession.instance.ResetMusicPitch();
         SceneManager.LoadScene("Menu");
         if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
@@ -37,7 +40,9 @@ public class GSceneManager : MonoBehaviour{
         }
         yield return new WaitForSecondsRealtime(0.05f);
         SaveSerial.instance.Save();
-        if(GameSession.instance.cheatmode)SaveSerial.instance.SaveLogin();//Only save login when cheatmode on
+        SaveSerial.instance.SaveLogin();
+        StatsAchievsManager.instance.SaveStats();
+        SaveSerial.instance.SaveStats();
         GameSession.instance.ResetMusicPitch();
         SceneManager.LoadScene("Menu");
         yield return new WaitForSecondsRealtime(0.01f);

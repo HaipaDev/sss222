@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filenameLogin: hyperGamerLogin
   filename: playerData
+  statsFilename: statsData
   filenameAdventure: adventureData
   filenameSettings: gameSettings.cfg
   maxRegisteredHyperGamers: 3
@@ -54,12 +55,15 @@ MonoBehaviour:
     username: 
     password: 
   playerData:
-    highscore: 00000000000000000000000000000000
+    highscore: 
     skinName: Mk.22
     chameleonColor:
     - 0
     - 1
     - 1
+    achievsCompleted: 
+  statsData:
+    statsGamemodesList: []
   advD:
     coins: 0
     cores: 0

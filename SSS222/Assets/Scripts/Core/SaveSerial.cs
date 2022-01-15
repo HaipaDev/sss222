@@ -10,12 +10,21 @@ using BayatGames.SaveGameFree.Serializers;
 
 public class SaveSerial : MonoBehaviour{
 	public static SaveSerial instance;
-	void Awake(){if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}playerData.highscore=new int[GameSession.gameModeMaxID];}
+	void Awake(){if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
+	IEnumerator Start(){
+		yield return new WaitForSecondsRealtime(0.01f);
+		playerData.highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()];
+		playerData.achievsCompleted=new bool[StatsAchievsManager.GetAchievsListCount()];
+		statsData.statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()];
+	}
 	[SerializeField] string filenameLogin = "hyperGamerLogin";
 	bool loginEncode=false;
 	[SerializeField] string filename = "playerData";
 	bool dataEncode=false;
 	//bool dataEncodeValues=true;
+	[SerializeField] string statsFilename = "statsData";
+	bool statsEncode=false;
+	//bool statsEncodeValues=true;
 	[SerializeField] string filenameAdventure = "adventureData";
 	bool adventureEncode=false;
 	//bool adventureEncodeValues=true;
@@ -58,11 +67,12 @@ public class SaveSerial : MonoBehaviour{
 	}
 #endregion
 #region//Player Data
-	public PlayerData playerData=new PlayerData();
+	public PlayerData playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()],achievsCompleted=new bool[StatsAchievsManager.GetAchievsListCount()]};
 	[System.Serializable]public class PlayerData{
-		public int[] highscore=new int[GameSession.gameModeMaxID];
+		public int[] highscore=new int[0];
 		public string skinName="Mk.22";
-		public float[] chameleonColor=new float[3]{1,1,1};
+		public float[] chameleonColor=new float[3]{0,1,1};
+		public bool[] achievsCompleted=new bool[0];
 	}
 	public void Save(){
 		SaveGame.Encode = dataEncode;
@@ -81,12 +91,41 @@ public class SaveSerial : MonoBehaviour{
 		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
 	}
 	public void Delete(){
-		playerData=new PlayerData();
+		playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()],achievsCompleted=new bool[StatsAchievsManager.GetAchievsListCount()]};
 		GC.Collect();
 		if (File.Exists(Application.persistentDataPath + "/"+filename)){
 			File.Delete(Application.persistentDataPath + "/"+filename);
 			Debug.Log("Game Data deleted");
 		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
+	}
+#endregion
+#region//Stats Data
+	public StatsData statsData=new StatsData(){statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()]};
+	[System.Serializable]public class StatsData{
+		public StatsGamemode[] statsGamemodesList=new StatsGamemode[0];
+	}
+	public void SaveStats(){
+		SaveGame.Encode = statsEncode;
+		SaveGame.Serializer = new SaveGameJsonSerializer();
+		SaveGame.Save(statsFilename, statsData);
+		Debug.Log("Stats Data saved");
+	}
+	public void LoadStats(){
+		if (File.Exists(Application.persistentDataPath + "/"+statsFilename)){
+			SaveGame.Encode = statsEncode;
+			SaveGame.Serializer = new SaveGameJsonSerializer();
+			statsData = SaveGame.Load<StatsData>(statsFilename);
+
+			Debug.Log("Stats Data loaded");
+		}else Debug.Log("Stats Data file not found in "+Application.persistentDataPath+"/"+statsFilename);
+	}
+	public void DeleteStats(){
+		statsData=new StatsData(){statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()]};
+		GC.Collect();
+		if (File.Exists(Application.persistentDataPath + "/"+statsFilename)){
+			File.Delete(Application.persistentDataPath + "/"+statsFilename);
+			Debug.Log("Stats Data deleted");
+		}else Debug.Log("Stats Data file not found in "+Application.persistentDataPath+"/"+statsFilename);
 	}
 #endregion
 #region //Adventure Data

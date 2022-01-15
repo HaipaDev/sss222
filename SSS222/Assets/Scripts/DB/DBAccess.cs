@@ -22,6 +22,7 @@ public class DBAccess : MonoBehaviour{
     IMongoCollection<Model_Score> scores_meteormadness;
     IMongoCollection<Model_Score> scores_hardcore;
     IMongoCollection<HyperGamer> hyperGamers;
+    public string registerMessage;
     public string loginMessage;
     public string submitMessage;
     void Awake(){instance=this;SetUpSingleton();}
@@ -81,56 +82,69 @@ public class DBAccess : MonoBehaviour{
 
 
 
-    public async void RegisterHyperGamer(string username, string password){
+    public async void RegisterHyperGamer(string username,string password){
         System.Threading.CancellationToken cancellationToken=System.Threading.CancellationToken.None;
-        var loginDataUsername=await hyperGamers.FindAsync(e=>e.username==username,null,(System.Threading.CancellationToken)cancellationToken);
+        var loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
+        //if(loginData.ToList().Count>0){
+            //loginData=await hyperGamers.FindAsync(e => e.username==username&&e.password==password);
         bool collectionBiggerThan0=false;
-        if(loginDataUsername.ToList().Count>0){collectionBiggerThan0=true;}
-        //loginDataUsername=await hyperGamers.FindAsync(e=>e.username==username);
-        if(collectionBiggerThan0&&loginDataUsername.ToList()[0].username==username){
-            SetLoginMessage("That user already exists");
+        if(loginUsername.ToList().Count>0){collectionBiggerThan0=true;}
+        loginUsername=await hyperGamers.FindAsync(e=>e.username==username);
+        if(collectionBiggerThan0&&loginUsername.ToList()[0].username==username){
+            SetLoginMessage("You cant register an account that already exists");
         }else if(SaveSerial.instance.hyperGamerLoginData.registeredCount>=SaveSerial.instance.maxRegisteredHyperGamers){
-            SetLoginMessage("3 accounts per device is the limit");
+            SetLoginMessage("You cant register more than 3 accounts");
         }else{
-            HyperGamer document=new HyperGamer { username=username, password=password, dateRegister=System.DateTime.Now, dateLastLogin=System.DateTime.Now };
+            HyperGamer document=new HyperGamer{username=username,password=password,dateRegister=System.DateTime.Now,dateLastLogin=System.DateTime.Now};
             await hyperGamers.InsertOneAsync(document);
-            SaveSerial.instance.SetLogin(username,password);SaveSerial.instance.hyperGamerLoginData.registeredCount++;SaveSerial.instance.SaveLogin();
+            SaveSerial.instance.SetLogin(username,password);SaveSerial.instance.SaveLogin();SaveSerial.instance.hyperGamerLoginData.registeredCount++;
         }
     }
-    public async void LoginHyperGamer(string username, string password){
+    public async void LoginHyperGamer(string username,string password){
         System.Threading.CancellationToken cancellationToken=System.Threading.CancellationToken.None;
-        var loginDataUsername=await hyperGamers.FindAsync(e=>e.username==username,null,(System.Threading.CancellationToken)cancellationToken);
+        var loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
         bool collectionBiggerThan0=false;
-        if(loginDataUsername.ToList().Count>0){collectionBiggerThan0=true;}
-        //loginDataUsername=await hyperGamers.FindAsync(e=>e.username==username);
-        if(collectionBiggerThan0&&loginDataUsername.ToList()[0].password!=password){
-            SetLoginMessage("Wrong password");return;}
-        var loginData=await hyperGamers.FindAsync(e=>e.username==username&&e.password==password);
-        if(loginData.ToList().Count>0){SaveSerial.instance.SetLogin(username,password);
-            await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.dateLastLogin,System.DateTime.Now));
+        if(loginUsername.ToList().Count>0){collectionBiggerThan0=true;
+            loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
+            if(collectionBiggerThan0&&loginUsername.ToList()[0].password!=password){
+                SetLoginMessage("Wrong password");
+            }
+            loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
+            if(collectionBiggerThan0&&loginUsername.ToList()[0].password==password){
+                loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
+                SaveSerial.instance.SetLogin(username,password);
+                await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.dateLastLogin,System.DateTime.Now));
+            }
         }else{SetLoginMessage("Login not found");}
     }
 
 
-    public void SetLoginMessage(string msg){DBAccess.instance.StartCoroutine(DBAccess.instance.SetLoginMessageI(msg));}
-    IEnumerator SetLoginMessageI(string msg){loginMessage=msg;yield return new WaitForSecondsRealtime(2);loginMessage="";}
-    public void SetSubmitMessage(string msg){DBAccess.instance.StartCoroutine(DBAccess.instance.SetSubmitMessageI(msg));}
-    IEnumerator SetSubmitMessageI(string msg){submitMessage=msg;yield return new WaitForSecondsRealtime(2);submitMessage="";}
+    public void SetLoginMessage(string msg){StartCoroutine(SetLoginMessageI(msg));}
+    IEnumerator SetLoginMessageI(string msg){DBAccess.instance.loginMessage=msg;yield return new WaitForSecondsRealtime(2);DBAccess.instance.loginMessage="";}
+    public void SetSubmitMessage(string msg){StartCoroutine(SetSubmitMessageI(msg));}
+    IEnumerator SetSubmitMessageI(string msg){DBAccess.instance.submitMessage=msg;yield return new WaitForSecondsRealtime(2);DBAccess.instance.submitMessage="";}
+}
+// Model_User Sample
+[System.Serializable]
+public class Model_Score {
+    public ObjectId _id { set; get; }
+    
+    //public int id { set; get; }
+    public string name {  set; get; }
+    public int score { set; get; }
+    public string version { set; get; }
+    public System.DateTime date { set; get; }
+    
+    //Possible Methods ...
+        
 }
 [System.Serializable]
 public class HyperGamer {
     public ObjectId _id { set; get; }
     
+
     public string username {  set; get; }
     public string password { set; get; }
     public System.DateTime dateLastLogin { set; get; }
     public System.DateTime dateRegister { set; get; }
-}
-[System.Serializable]
-public class Model_Score {
-    public ObjectId _id { set; get; }
-    public string name {  set; get; }
-    public int score { set; get; }
-    public string version { set; get; }
-    public System.DateTime date { set; get; }
 }

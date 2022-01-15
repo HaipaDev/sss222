@@ -45,43 +45,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievsList:
-  - name: Small steps
+  - id: 0
+    name: Small steps
     desc: Get 100 points in Arcade
     icon: {fileID: 21300000, guid: b258df9be38c13144afc0317e9d7602d, type: 3}
     completed: 0
-  - name: Bigger steps
+  - id: 1
+    name: Bigger steps
     desc: Get 1k points in Arcade
     icon: {fileID: 21300000, guid: 77fdc71bd5cd27f43905e251bfe4794d, type: 3}
     completed: 0
-  - name: Space Master
+  - id: 2
+    name: Space Master
     desc: Get 10k points in Arcade
     icon: {fileID: 21300000, guid: ce120e20f26ca4345a78a799f3c7bdf0, type: 3}
     completed: 0
-  - name: Reapers Buddy
+  - id: 3
+    name: Reapers Buddy
     desc: Die a 100 times
     icon: {fileID: 21300000, guid: 521746cb3c8742d469a5b09b01b42543, type: 3}
     completed: 0
-  - name: Comet Crusher
+  - id: 4
+    name: Comet Crusher
     desc: Destroy 1k comets
     icon: {fileID: 21300000, guid: 82e9175ec3d22a34f9362edab32ce785, type: 3}
     completed: 0
-  - name: Mecha Destroyer
+  - id: 5
+    name: Mecha Destroyer
     desc: Destroy 500 mechanical enemies
     icon: {fileID: 21300000, guid: bc4f18be8785b114597c63af6b7ad907, type: 3}
     completed: 0
-  - name: I wont let you
+  - id: 6
+    name: I wont let you
     desc: Block a projectile with Saber
     icon: {fileID: 21300000, guid: 4cf5741bd33303a42842aee57938a833, type: 3}
     completed: 0
+  _achievsListCount: 7
+  achievsLoaded: 0
   statsGamemodesList: []
   statsTotal:
     scoreTotal: 0
     playtime: 0
     deaths: 0
+    powerups: 0
     killsTotal: 0
     killsLiving: 0
     killsMecha: 0
     killsComets: 0
+    shotsTotal: 0
+  _statsGamemodesListCount: 4
+  statsLoaded: 0
   statsTotalSummed: 0
 --- !u!1001 &753093157466381974
 PrefabInstance:

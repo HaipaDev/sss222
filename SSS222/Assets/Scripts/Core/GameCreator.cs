@@ -19,13 +19,12 @@ public class GameCreator : MonoBehaviour{
     [AssetsOnly][SerializeField] GameObject statsAchievsManagerPrefab;
     //[SerializeField] int gamerulesetsID;
     [AssetsOnly][SerializeField] public GameRules[] gamerulesetsPrefabs;
+    [AssetsOnly][SerializeField] public int _gamerulesetsPrefabsLength;
     [AssetsOnly][SerializeField] public GameRules[] adventureZonesPrefabs;
     private void Awake(){
         instance=this;
         Load();
-        //StartCoroutine(LoadI());
     }
-    //IEnumerator LoadI(){
     void Load(){
         if(FindObjectOfType<GameSession>()==null){Instantiate(gameSessionPrefab);}
         //if(FindObjectOfType<Loader>()==null){Instantiate(loaderPrefab);}
@@ -43,4 +42,6 @@ public class GameCreator : MonoBehaviour{
         //yield return new WaitForSeconds(0.5f);
         //Destroy(gameObject);
     }
+
+    public static int GetGamerulesetsPrefabsLength(){return GameCreator.instance._gamerulesetsPrefabsLength;}
 }

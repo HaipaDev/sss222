@@ -711,13 +711,11 @@ public class Player : MonoBehaviour{
         
     }
 
-    private void Die(){if(health<=0&&dead!=true){
-        dead=true;
+    private void Die(){if(health<=0&&!dead){
         Hide();
-        Destroy(gameObject, 0.05f);
         pskills.DeathSkills();
-        GameSession.instance.SetAnalytics();
         StatsAchievsManager.instance.AddDeaths();
+        GameSession.instance.SetAnalytics();
         //Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
 
         if(GameSession.instance.CheckGamemodeSelected("Adventure")){GameSession.instance.DieAdventure();}
@@ -727,6 +725,9 @@ public class Player : MonoBehaviour{
         GameOverCanvas.instance.OpenGameOverCanvas();
 
         foreach(Tag_DestroyPlayerDead go in FindObjectsOfType<Tag_DestroyPlayerDead>()){Destroy(go.gameObject);}
+        
+        Destroy(gameObject);
+        dead=true;
     }}
     private void Hide(){
         GetComponent<SpriteRenderer>().enabled=false;
@@ -818,6 +819,7 @@ public class Player : MonoBehaviour{
                     if(w.ovheat!=0)Overheat(w.ovheat);
                     if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
                     shootTimer=(wp.shootDelay/wp.tapDelayMulti)/shootMulti;
+                    StatsAchievsManager.instance.AddShotsTotal();
                     yield return new WaitForSeconds((wp.shootDelay/wp.holdDelayMulti)/shootMulti);
                 }else{yield break;}
                 }else{if(!autoShoot){AudioManager.instance.Play("NoEnergy");} shootTimer=0f; shootCoroutine=null; yield break;}

@@ -360,18 +360,21 @@ public class GameSession : MonoBehaviour{
         SaveSerial.instance.playerData.chameleonColor[1]=FindObjectOfType<CustomizationInventory>().chameleonColorArr[1];
         SaveSerial.instance.playerData.chameleonColor[2]=FindObjectOfType<CustomizationInventory>().chameleonColorArr[2];
     }
-    public void Save(){SaveSerial.instance.Save();SaveSerial.instance.SaveSettings();}
-    public void Load(){SaveSerial.instance.Load();SaveSerial.instance.LoadSettings();}
-    public void DeleteAll(){SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure();ResetSettings();GSceneManager.instance.LoadStartMenu();}
+    public void DeleteAll(){SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure();DeleteStatsAchievs();ResetSettings();GSceneManager.instance.LoadStartMenu();}
     public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}
     public void ResetSettings(){
         SaveSerial.instance.ResetSettings();
         GSceneManager.instance.RestartScene();
         SaveSerial.instance.SaveSettings();
-        var s=FindObjectOfType<SettingsMenu>();
+    }
+    public void DeleteStatsAchievs(){
+        GameObject sa=FindObjectOfType<StatsAchievsManager>().gameObject;
+        Destroy(sa.GetComponent<StatsAchievsManager>());
+        sa.AddComponent<StatsAchievsManager>();
+        SaveSerial.instance.DeleteStats();
     }
     public void ResetMusicPitch(){
-        if(FindObjectOfType<MusicPlayer>()!=null)FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().pitch=1;
+        if(MusicPlayer.instance!=null)MusicPlayer.instance.GetComponent<AudioSource>().pitch=1;
     }
     float settingsOpenTimer;
     public void CloseSettings(bool goToPause){
@@ -463,10 +466,17 @@ public class GameSession : MonoBehaviour{
         }
     }
     public string FormatTime(float time){
-        int minutes=(int) time / 60 ;
-        int seconds=(int) time - 60 * minutes;
+        int minutes=(int) time / 60;
+        int seconds=(int) time - (60*minutes);
         //int milliseconds=(int) (1000 * (time - minutes * 60 - seconds));
-    return string.Format("{0:00}:{1:00}"/*:{2:000}"*/, minutes, seconds/*, milliseconds*/ );
+        return string.Format("{0:00}:{1:00}"/*:{2:000}"*/, minutes, seconds/*, milliseconds*/ );
+    }
+    public string FormatTimeWithHours(float time){
+        int hours=(int) time / 3600;
+        int minutes=(int) time / 60;
+        int seconds=(int) time -(60*minutes);
+        minutes=(int) time/60 -(60*hours);
+        return string.Format("{0:0}:{1:00}:{2:00}", hours, minutes, seconds);
     }
     public string GetGameSessionTimeFormat(){return FormatTime(currentPlaytime);}
     public int GetGameSessionTime(){return Mathf.RoundToInt(currentPlaytime);}
@@ -494,8 +504,8 @@ public class GameSession : MonoBehaviour{
 
         
     //public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
-    public int GetHighscoreByName(string str){return SaveSerial.instance.playerData.highscore[GetGamemodeID(str)];}
-    public int GetHighscoreCurrent(){return SaveSerial.instance.playerData.highscore[GetGamemodeIDCurrentM1()];}
+    public int GetHighscoreByName(string str){int i=0;if(SaveSerial.instance.playerData.highscore.Length>GetGamemodeID(str)){i=SaveSerial.instance.playerData.highscore[GetGamemodeID(str)];}return i;}
+    public int GetHighscoreCurrent(){int i=0;if(SaveSerial.instance.playerData.highscore.Length>GetGamemodeIDCurrentM1()){i=SaveSerial.instance.playerData.highscore[GetGamemodeIDCurrentM1()];}return i;}
     public void SetCheatmode(){if(!cheatmode){cheatmode=true;return;}else{cheatmode=false;return;}}
 }
 public enum dir{up,down,left,right}
