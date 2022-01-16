@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,8 +7,10 @@ using Sirenix.OdinInspector;
 
 public class CustomizationInventory : MonoBehaviour{
     [HeaderAttribute("Objects")]
-    [SceneObjectsOnly][SerializeField] Image skin;
-    [SceneObjectsOnly][SerializeField] Image skinOverlay;
+    [AssetsOnly][SerializeField] GameObject skinElementPrefab;
+    [SceneObjectsOnly][SerializeField] Image shipUI;
+    [DisableInEditorMode][SceneObjectsOnly][SerializeField] Image shipUI_Overlay;
+    [SceneObjectsOnly][SerializeField] RectTransform listContent;
     [SceneObjectsOnly][SerializeField] GameObject sliders;
     [SceneObjectsOnly][SerializeField] Slider Hslider;
     [SceneObjectsOnly][SerializeField] Slider Sslider;
@@ -15,24 +18,28 @@ public class CustomizationInventory : MonoBehaviour{
     [SceneObjectsOnly][SerializeField] Image SsliderIMG;
     [SceneObjectsOnly][SerializeField] Image VsliderIMG;
     [AssetsOnly][SerializeField] Material gradientShader;
+    [HeaderAttribute("Rarity Colors")]    
+    public Color defColor=Color.grey;
+    public Color commonColor=Color.green;
+    public Color rareColor=Color.blue;
+    public Color epicColor=Color.magenta;
+    public Color legendColor=Color.yellow;
     [HeaderAttribute("Properties")]
+    [SerializeField] public SkinCategory categorySelected=SkinCategory.reOne;
     [SerializeField] public string skinName="Mk.22";
-    public Color chameleonColor=Color.white;
-    public float[] chameleonColorArr = new float[3];
+    public Color overlayColor=Color.red;
+    public float[] overlayColorArr = new float[3]{0,1,1};
     void Start(){
-        //if(skinID<1){skinID=1;}
         skinName=SaveSerial.instance.playerData.skinName;
-        chameleonColorArr[0] = SaveSerial.instance.playerData.chameleonColor[0];
-        chameleonColorArr[1] = SaveSerial.instance.playerData.chameleonColor[1];
-        chameleonColorArr[2] = SaveSerial.instance.playerData.chameleonColor[2];
+        overlayColorArr[0] = SaveSerial.instance.playerData.overlayColor[0];
+        overlayColorArr[1] = SaveSerial.instance.playerData.overlayColor[1];
+        overlayColorArr[2] = SaveSerial.instance.playerData.overlayColor[2];
         
-        chameleonColor = Color.HSVToRGB(chameleonColorArr[0], chameleonColorArr[1], chameleonColorArr[2]);
-        skinOverlay.color = chameleonColor;
-        //float H;float S=1; float V=1;
-        //Color.RGBToHSV(chameleonColor,out H,out S,out V);
-        Hslider.value = chameleonColorArr[0];
-        Sslider.value = chameleonColorArr[1];
-        Vslider.value = chameleonColorArr[2];
+        overlayColor = Color.HSVToRGB(overlayColorArr[0], overlayColorArr[1], overlayColorArr[2]);
+        if(shipUI_Overlay!=null)shipUI_Overlay.color = overlayColor;
+        Hslider.value = overlayColorArr[0];
+        Sslider.value = overlayColorArr[1];
+        Vslider.value = overlayColorArr[2];
         Hslider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         Sslider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         Vslider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
@@ -41,40 +48,58 @@ public class CustomizationInventory : MonoBehaviour{
         VsliderIMG.material = SsliderIMG.material;
         SsliderIMG.material.SetColor("_Color2", Color.HSVToRGB(Hslider.value,1,1));
         VsliderIMG.color = Color.HSVToRGB(Hslider.value, 1, 1);
+        CreateAllSkins();
     }
-
-    // Invoked when the value of the slider changes.
+    void OnDestroy(){Destroy(SsliderIMG.material);}
+    void OnDisable(){Destroy(SsliderIMG.material);}
     public void ValueChangeCheck(){
-        chameleonColor = Color.HSVToRGB(Hslider.value, Sslider.value, Vslider.value);
-        skinOverlay.color = chameleonColor;
+        overlayColor = Color.HSVToRGB(Hslider.value, Sslider.value, Vslider.value);
+        if(shipUI_Overlay!=null)shipUI_Overlay.color = overlayColor;
         SsliderIMG.material.SetColor("_Color2", Color.HSVToRGB(Hslider.value,1,1));
         VsliderIMG.color = Color.HSVToRGB(Hslider.value, 1, 1);
-        Color.RGBToHSV(chameleonColor, out chameleonColorArr[0], out chameleonColorArr[1], out chameleonColorArr[2]);
+        Color.RGBToHSV(overlayColor, out overlayColorArr[0], out overlayColorArr[1], out overlayColorArr[2]);
     }
-    void Update() {
+    void Update(){
+        if(shipUI.transform.childCount>1){shipUI_Overlay=shipUI.transform.GetChild(1).GetComponent<Image>();}
         if(GetSkin(skinName).sprOverlay!=null){
             foreach(Transform go in sliders.transform){go.gameObject.SetActive(true);}
-            skinOverlay.gameObject.SetActive(true);
-            SetSkin(skinName);
+            if(shipUI_Overlay!=null)shipUI_Overlay.gameObject.SetActive(true);
+            //SetSkin(skinName);
             SetSkinOverlay(skinName);
-            skinOverlay.color=chameleonColor;
+            if(shipUI_Overlay!=null)shipUI_Overlay.color=overlayColor;
         }
         else{
-            SetSkin(skinName);
+            //SetSkin(skinName);
             foreach(Transform go in sliders.transform){if(go.gameObject.activeSelf==true)go.gameObject.SetActive(false);}
-            skinOverlay.gameObject.SetActive(false);
+            if(shipUI_Overlay!=null)shipUI_Overlay.gameObject.SetActive(false);
         }
+    }
+
+    void CreateAllSkins(){
+        var currentCategorySkins=Array.FindAll(GameAssets.instance.skins,x=>x.category==categorySelected);
+        foreach(GSkin gs in currentCategorySkins){
+            var go=Instantiate(skinElementPrefab,listContent);
+            go.name="SkinElement_"+gs.name;
+            go.GetComponent<Button>().onClick.AddListener(delegate{SetSkin(gs.name);});
+            go.GetComponent<Image>().color=GetRarityColor(gs.rarity);
+            go.transform.GetChild(0).GetComponent<Image>().sprite=gs.spr;
+        }
+    }
+    //void ChangeCategory(){CreateAllSkins;}
+
+    Color GetRarityColor(SkinRarity rarity){
+        var col=Color.white;
+        if(rarity==SkinRarity.def){col=defColor;}
+        else if(rarity==SkinRarity.common){col=commonColor;}
+        else if(rarity==SkinRarity.rare){col=rareColor;}
+        else if(rarity==SkinRarity.epic){col=epicColor;}
+        else if(rarity==SkinRarity.legend){col=legendColor;}
+        return col;
     }
     GSkin GetSkin(string str){return GameAssets.instance.GetSkin(str);}
     int GetSkinID(string str){return GameAssets.instance.GetSkinID(str);}
     GSkin GetSkinByID(int i){return GameAssets.instance.GetSkinByID(i);}
-    public void SetSkin(string str){if(GetSkin(skinName)!=null){skinName=str;skin.sprite=GetSkin(skinName).spr;}}
-    public void SetSkinOverlay(string str){if(GetSkin(skinName)!=null){if(GetSkin(skinName).sprOverlay!=null){skinOverlay.sprite=GetSkin(skinName).sprOverlay;}}}
-    public void NextSkin(){
-        if(GetSkinID(skinName)<GameAssets.instance.skins.Length-1){SetSkin(GetSkinByID(GetSkinID(skinName)+1).name);return;}
-        if(GetSkinID(skinName)==GameAssets.instance.skins.Length-1)SetSkin(GetSkinByID(0).name);
-    }public void PrevSkin(){
-        if(GetSkinID(skinName)>0){SetSkin(GetSkinByID(GetSkinID(skinName)-1).name);return;}
-        if(GetSkinID(skinName)==0)SetSkin(GetSkinByID(GameAssets.instance.skins.Length-1).name);
-    }
+    //public void SetSkinCurrent(){shipUI.sprite=GetSkin(skinName).spr;}
+    public void SetSkin(string str){if(GetSkin(str)!=null){skinName=str;shipUI.sprite=GetSkin(str).spr;}}
+    public void SetSkinOverlay(string str){if(GetSkin(skinName)!=null){if(GetSkin(skinName).sprOverlay!=null){shipUI_Overlay.sprite=GetSkin(skinName).sprOverlay;}}}
 }

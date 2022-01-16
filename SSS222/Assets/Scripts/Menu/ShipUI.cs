@@ -13,6 +13,7 @@ public class ShipUI : MonoBehaviour{
     [DisableIf("followSelectedButton")][SerializeField] bool followMouse=false;
     [ShowIf("followMouse")][SerializeField] bool followMouseOnDrag=true;
     [ShowIf("followMouse")][SerializeField] float speedFollowMouse=500f;
+    [ShowIf("followMouse")][SerializeField] float distanceFollowMouse=200f;
 
     RectTransform rt;
     void Start(){
@@ -22,21 +23,21 @@ public class ShipUI : MonoBehaviour{
         transform.GetChild(0).GetComponent<UnityEngine.UI.Extensions.UIParticleSystem>().material=ps.GetComponent<Renderer>().material;
     }
     void Update(){
-        Tag_ButtonSelected selectedButton=null;
-        foreach(Tag_ButtonSelected b in buttonsList.transform.GetComponentsInChildren<Tag_ButtonSelected>()){
-            if(b.selected)selectedButton=b;
-        }
-
-        var Canvas=transform.root.GetComponent<Canvas>();
         var step=Time.unscaledDeltaTime;
-        if(followSelectedButton){if(selectedButton!=null){
-            step=speedFollowButton*Time.unscaledDeltaTime;
-            transform.localPosition=Vector2.MoveTowards(transform.localPosition,new Vector2(selectedButton.transform.localPosition.x,selectedButton.transform.localPosition.y+spacingY),step);
-        }}
+        if(followSelectedButton){
+            Tag_ButtonSelected selectedButton=null;
+            foreach(Tag_ButtonSelected b in buttonsList.transform.GetComponentsInChildren<Tag_ButtonSelected>()){if(b.selected)selectedButton=b;}
+            if(selectedButton!=null){
+                step=speedFollowButton*Time.unscaledDeltaTime;
+                transform.localPosition=Vector2.MoveTowards(transform.localPosition,new Vector2(selectedButton.transform.localPosition.x,selectedButton.transform.localPosition.y+spacingY),step);
+            }
+        }
         else if(followMouse){
             if((followMouseOnDrag&&Input.GetMouseButton(0))||!followMouseOnDrag){
                 step=speedFollowMouse*Time.unscaledDeltaTime;
-                transform.position=Vector2.MoveTowards(transform.position,Input.mousePosition,step);
+                if(((Input.mousePosition.x<transform.position.x+distanceFollowMouse&&Input.mousePosition.x>transform.position.x-distanceFollowMouse)&&
+                (Input.mousePosition.y<transform.position.y+distanceFollowMouse&&Input.mousePosition.y>transform.position.y-distanceFollowMouse))||distanceFollowMouse==0){
+                    transform.position=Vector2.MoveTowards(transform.position,Input.mousePosition,step);}
             }
         }
     }

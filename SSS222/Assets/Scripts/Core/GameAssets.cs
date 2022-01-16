@@ -127,4 +127,14 @@ public class GSkin{
 
 	public Sprite spr;
 	public Sprite sprOverlay;
+	public SkinRarity rarity=SkinRarity.common;
+	public SkinCategory category;
+	public GSkinVariant variants;
 }
+[System.Serializable]
+public class GSkinVariant{
+	public Sprite spr;
+	public Sprite sprOverlay;
+}
+public enum SkinRarity{def,common,rare,epic,legend}
+public enum SkinCategory{special,shop,reOne,twoPiece}

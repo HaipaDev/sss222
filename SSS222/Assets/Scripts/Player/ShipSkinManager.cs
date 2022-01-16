@@ -8,9 +8,7 @@ public class ShipSkinManager : MonoBehaviour{
     [AssetsOnly][SerializeField] GameObject overlayPrefab;
     [HeaderAttribute("Properties")]
     public string skinName="Mk.22";
-    [SerializeField] Color chameleonOvColor=Color.red;
-    
-    //[SerializeField] int chameleonOvAlpha;
+    [SerializeField] Color overlayColor=Color.red;
     GameObject overlayOBJ;
     SpriteRenderer overlaySpr;
     Image overlayImg;
@@ -32,7 +30,7 @@ public class ShipSkinManager : MonoBehaviour{
         yield return new WaitForSeconds(0.05f);
         SetSkin(skinName);
         Color color=Color.white;
-        if(skinName.Contains("Chameleon")){color=chameleonOvColor;}
+        if(skinName.Contains("Chameleon")){color=overlayColor;}
         if(GetSkin(skinName).sprOverlay!=null)SetOverlay(GetSkin(skinName).sprOverlay,color);
     }
 
@@ -51,6 +49,6 @@ public class ShipSkinManager : MonoBehaviour{
     }
     void LoadValues(){
         skinName=SaveSerial.instance.playerData.skinName;
-        chameleonOvColor=Color.HSVToRGB(SaveSerial.instance.playerData.chameleonColor[0], SaveSerial.instance.playerData.chameleonColor[1], SaveSerial.instance.playerData.chameleonColor[2]);
+        overlayColor=Color.HSVToRGB(SaveSerial.instance.playerData.overlayColor[0], SaveSerial.instance.playerData.overlayColor[1], SaveSerial.instance.playerData.overlayColor[2]);
     }
 }

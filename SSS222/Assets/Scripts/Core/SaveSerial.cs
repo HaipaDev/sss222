@@ -71,7 +71,7 @@ public class SaveSerial : MonoBehaviour{
 	[System.Serializable]public class PlayerData{
 		public int[] highscore=new int[0];
 		public string skinName="Mk.22";
-		public float[] chameleonColor=new float[3]{0,1,1};
+		public float[] overlayColor=new float[3]{0,1,1};
 		public bool[] achievsCompleted=new bool[0];
 	}
 	public void Save(){

@@ -90,12 +90,12 @@ PrefabInstance:
     - target: {fileID: 4637613446949488407, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -254
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4637613446949488407, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: -370
       objectReference: {fileID: 0}
     - target: {fileID: 4637613446949488407, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
@@ -130,7 +130,7 @@ PrefabInstance:
     - target: {fileID: 8372861476689930743, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_Name
-      value: ShipUI_CustomizePreview
+      value: ShipUI_CustomizePreview Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8685612909260543129, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
@@ -147,5 +147,6 @@ PrefabInstance:
       propertyPath: followSelectedButton
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5761278737977677134, guid: 33b13d5c324265444a994a7b4c39d52c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 33b13d5c324265444a994a7b4c39d52c, type: 3}
