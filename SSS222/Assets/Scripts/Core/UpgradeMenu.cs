@@ -16,7 +16,7 @@ public class UpgradeMenu : MonoBehaviour{
     public GameObject lvltreeUI2;
     public GameObject invMenu;
     public GameObject statsMenu;
-    public GameObject skillsMenu;
+    public GameObject modulesMenu;
     public GameObject backButton;
     public XPBars lvlbar;
     public float prevGameSpeed=1f;
@@ -169,17 +169,17 @@ public class UpgradeMenu : MonoBehaviour{
     public void OpenInv(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
         invMenu.SetActive(true);
         statsMenu.SetActive(false);
-        skillsMenu.SetActive(false);
+        modulesMenu.SetActive(false);
     }
     public void OpenStats(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
         invMenu.SetActive(false);
         statsMenu.SetActive(false);
-        skillsMenu.SetActive(true);
+        modulesMenu.SetActive(true);
     }
-    public void OpenSkills(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
+    public void OpenModules(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
         invMenu.SetActive(false);
         statsMenu.SetActive(false);
-        skillsMenu.SetActive(true);
+        modulesMenu.SetActive(true);
     }
     public void OpenLvlTree(){
         upgradeMenuUI.SetActive(false);
@@ -196,7 +196,7 @@ public class UpgradeMenu : MonoBehaviour{
         if(lvltreeUI2.activeSelf){lvltreeUI1.SetActive(true);lvltreeUI2.SetActive(false);return;}
     }
     public void Back(){
-        statsMenu.SetActive(false);skillsMenu.SetActive(false);
+        statsMenu.SetActive(false);modulesMenu.SetActive(false);
         upgradeMenu2UI.SetActive(false);lvltreeUI.SetActive(false);
         upgradeMenuUI.SetActive(true);
     }
@@ -289,8 +289,8 @@ public class UpgradeMenu : MonoBehaviour{
     //}*/
     //public void AddFloat(ref float value,float amnt,int cost){if(GameSession.instance.cores>=cost){value+=amnt;}}
     //if(GameSession.instance.cores>=healthMax_UpgradeCost)player.healthMax+=healthMax_UpgradeAmnt;GameSession.instance.cores-=healthMax_UpgradeCost;
-    public void AddhealthMax(){UpgradeFloat(ref player.healthMax,healthMax_UpgradeAmnt,healthMax_UpgradeCost, true, ref player.health, ref healthMax_UpgradesCount, ref healthMax_UpgradesLvl,false);}
-    public void AddenergyMax(){UpgradeFloat(ref player.energyMax,energyMax_UpgradeAmnt,energyMax_UpgradeCost, true, ref player.energy, ref energyMax_UpgradesCount, ref energyMax_UpgradesLvl,false);}
+    public void AddHealthMax(){UpgradeFloat(ref player.healthMax,healthMax_UpgradeAmnt,healthMax_UpgradeCost, true, ref player.health, ref healthMax_UpgradesCount, ref healthMax_UpgradesLvl,false);}
+    public void AddEnergyMax(){UpgradeFloat(ref player.energyMax,energyMax_UpgradeAmnt,energyMax_UpgradeCost, true, ref player.energy, ref energyMax_UpgradesCount, ref energyMax_UpgradesLvl,false);}
     public async void AddSpeed(){float placeholder=0;UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt,speed_UpgradeCost, false, ref placeholder, ref speed_UpgradesCount, ref speed_UpgradesLvl,false);
         if(player.speedPrev.Count==1){player.speedPrev[0]=player.moveSpeed;player.moveSpeedCurrent=player.speedPrev[0];}}
     public void AddSpeedBypass(){UpgradeFloat(ref player.moveSpeed,speed_UpgradeAmnt/2,0, false, ref player.moveSpeedCurrent,ref speed_UpgradesCount, ref speed_UpgradesLvl,true);}
@@ -392,7 +392,7 @@ public class UpgradeMenu : MonoBehaviour{
     }
     void LevelUp(){
         AudioManager.instance.Play("LvlUp2");
-        FindObjectOfType<OnScreenButtons>().transform.GetChild(0).GetComponent<Animator>().SetTrigger("on");
+        FindObjectOfType<OnScreenButtons>().GetComponent<Animator>().SetTrigger("on");
     }
     public void LvlEvents(){
         if(GameRules.instance!=null){

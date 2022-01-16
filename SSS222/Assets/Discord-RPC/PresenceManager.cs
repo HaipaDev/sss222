@@ -13,8 +13,8 @@ namespace DiscordPresence
     [Serializable]
     public class DiscordJoinRequestEvent : UnityEvent<DiscordRpc.JoinRequest> { }
 
-    public class PresenceManager : MonoBehaviour
-    {
+    public class PresenceManager : MonoBehaviour{
+        public static PresenceManager instance;
         public DiscordRpc.RichPresence presence = new DiscordRpc.RichPresence();
         public string applicationId;
         public string optionalSteamId;
@@ -30,7 +30,7 @@ namespace DiscordPresence
 
         DiscordRpc.EventHandlers handlers;
 
-        public static PresenceManager instance;
+        public bool initialized;
 
         /*public void OnClick()
         {
@@ -103,26 +103,23 @@ namespace DiscordPresence
 
         #region Monobehaviour Callbacks
         // Singleton
-        void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
-            }
-            else if (instance != this)
-            {
-                Destroy(gameObject);
-            }
-            DontDestroyOnLoad(gameObject);
+        void Awake(){
+            if(instance==null){instance=this;DontDestroyOnLoad(gameObject);}else if (instance!=this){Destroy(gameObject);}
         }
 
-        void Update()
-        {
-            DiscordRpc.RunCallbacks();
+        void Update(){
+            if(SaveSerial.instance!=null){if(SaveSerial.instance.settingsData!=null){
+                if(SaveSerial.instance.settingsData.discordRPC==true){if(!initialized)InitDiscordRPC();}
+                else{if(initialized)ShutdownDiscordRPC();}
+            }}
+            if(initialized)DiscordRpc.RunCallbacks();
         }
 
-        void OnEnable()
-        {
+        void OnEnable(){
+            if(SaveSerial.instance!=null){if(SaveSerial.instance.settingsData!=null)if(SaveSerial.instance.settingsData.discordRPC==true){InitDiscordRPC();}}
+            else{InitDiscordRPC();}
+        }
+        public void InitDiscordRPC(){
             Debug.Log("Discord: init");
             callbackCalls = 0;
 
@@ -134,18 +131,19 @@ namespace DiscordPresence
             handlers.spectateCallback += SpectateCallback;
             handlers.requestCallback += RequestCallback;
             DiscordRpc.Initialize(applicationId, ref handlers, true, optionalSteamId);
+            if(!initialized){initialized=true;}
         }
 
-        void OnDisable()
-        {
+        void OnDisable(){
+            ShutdownDiscordRPC();
+        }
+        public void ShutdownDiscordRPC(){
             Debug.Log("Discord: shutdown");
             DiscordRpc.Shutdown();
+            if(initialized){initialized=false;}
         }
 
-        void OnDestroy()
-        {
-
-        }
+        void OnDestroy(){}
         #endregion
 
         #region Update Presence Method

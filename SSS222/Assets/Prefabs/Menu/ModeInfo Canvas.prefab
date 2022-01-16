@@ -8648,11 +8648,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LvlTree
       objectReference: {fileID: 0}
-    - target: {fileID: 3960355476571393644, guid: a82aefb0501b31049956607bde9eae3e,
-        type: 3}
-      propertyPath: lists.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4923450889857843743, guid: a82aefb0501b31049956607bde9eae3e,
         type: 3}
       propertyPath: m_Pivot.x
@@ -8757,31 +8752,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6760129626585728098, guid: a82aefb0501b31049956607bde9eae3e,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6760129626585728098, guid: a82aefb0501b31049956607bde9eae3e,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332457561037275445, guid: a82aefb0501b31049956607bde9eae3e,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332457561037275445, guid: a82aefb0501b31049956607bde9eae3e,
-        type: 3}
-      propertyPath: m_fontSizeMin
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332457561037275445, guid: a82aefb0501b31049956607bde9eae3e,
-        type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a82aefb0501b31049956607bde9eae3e, type: 3}
