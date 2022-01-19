@@ -5,11 +5,10 @@ using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
 public class ShipSkinManager : MonoBehaviour{
-    [AssetsOnly][SerializeField] GameObject overlayPrefab;
     [HeaderAttribute("Properties")]
     public string skinName="Mk.22";
+    [SceneObjectsOnly][SerializeField] public GameObject overlayObj;
     [SerializeField] Color overlayColor=Color.red;
-    GameObject overlayOBJ;
     SpriteRenderer overlaySpr;
     Image overlayImg;
     SpriteRenderer spr;
@@ -19,19 +18,16 @@ public class ShipSkinManager : MonoBehaviour{
         if(spr==null)img=GetComponent<Image>();
         LoadValues();
         if(GetSkin(skinName).sprOverlay!=null){
-            overlayOBJ=Instantiate(overlayPrefab,new Vector2(transform.position.x,transform.position.y),Quaternion.identity,transform);
-            overlayOBJ.transform.position=new Vector3(overlayOBJ.transform.position.x,overlayOBJ.transform.position.y,-0.01f);
-            overlayOBJ.transform.localScale=Vector2.one;
-            overlaySpr=overlayOBJ.GetComponent<SpriteRenderer>();
-            if(overlaySpr==null){overlayImg=overlayOBJ.GetComponent<Image>();}
+            overlayObj.transform.position=new Vector3(overlayObj.transform.position.x,overlayObj.transform.position.y,transform.root.position.z-0.01f);
+            overlayObj.transform.localScale=Vector2.one;
+            overlaySpr=overlayObj.GetComponent<SpriteRenderer>();
+            if(overlaySpr==null){overlayImg=overlayObj.GetComponent<Image>();}
             if(GameSession.maskMode!=0&&overlaySpr!=null){overlaySpr.maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;}
         }
 
         yield return new WaitForSeconds(0.05f);
         SetSkin(skinName);
-        Color color=Color.white;
-        if(skinName.Contains("Chameleon")){color=overlayColor;}
-        if(GetSkin(skinName).sprOverlay!=null)SetOverlay(GetSkin(skinName).sprOverlay,color);
+        if(GetSkin(skinName).sprOverlay!=null)SetOverlay(GetSkin(skinName).sprOverlay,overlayColor);
     }
 
     //void Update(){}

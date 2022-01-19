@@ -127,6 +127,11 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6905578048429410905, guid: 33b13d5c324265444a994a7b4c39d52c,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8372861476689930743, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_Name

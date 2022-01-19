@@ -8,7 +8,7 @@ public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHa
     [SerializeField]EventSystem es;
     [SerializeField]Button btn;
     [SerializeField]Button btnLast;
-    [SerializeField]GameObject currentSelected;
+    [SerializeField]public GameObject currentSelected;
     [SerializeField]GameObject lastSelected;
     [SerializeField]bool inputSelecting=true;
     //[SerializeField]Vector2 mousePosCanv;

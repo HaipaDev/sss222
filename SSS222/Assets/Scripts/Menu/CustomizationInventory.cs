@@ -6,11 +6,12 @@ using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
 public class CustomizationInventory : MonoBehaviour{
+    public static CustomizationInventory instance;
     [HeaderAttribute("Objects")]
     [AssetsOnly][SerializeField] GameObject skinElementPrefab;
+    [SceneObjectsOnly][SerializeField] RectTransform listContent;
     [SceneObjectsOnly][SerializeField] Image shipUI;
     [DisableInEditorMode][SceneObjectsOnly][SerializeField] Image shipUI_Overlay;
-    [SceneObjectsOnly][SerializeField] RectTransform listContent;
     [SceneObjectsOnly][SerializeField] GameObject sliders;
     [SceneObjectsOnly][SerializeField] Slider Hslider;
     [SceneObjectsOnly][SerializeField] Slider Sslider;
@@ -25,12 +26,14 @@ public class CustomizationInventory : MonoBehaviour{
     public Color epicColor=Color.magenta;
     public Color legendColor=Color.yellow;
     [HeaderAttribute("Properties")]
-    [SerializeField] public SkinCategory categorySelected=SkinCategory.reOne;
+    [SerializeField] public SkinCategory categorySelected=SkinCategory.twoPiece;
     [SerializeField] public string skinName="Mk.22";
     public Color overlayColor=Color.red;
     public float[] overlayColorArr = new float[3]{0,1,1};
+    void Awake(){instance=this;}
     void Start(){
         skinName=SaveSerial.instance.playerData.skinName;
+        categorySelected=Array.Find(GameAssets.instance.skins,x=>x.name.Contains(SaveSerial.instance.playerData.skinName)).category;
         overlayColorArr[0] = SaveSerial.instance.playerData.overlayColor[0];
         overlayColorArr[1] = SaveSerial.instance.playerData.overlayColor[1];
         overlayColorArr[2] = SaveSerial.instance.playerData.overlayColor[2];
@@ -48,7 +51,7 @@ public class CustomizationInventory : MonoBehaviour{
         VsliderIMG.material = SsliderIMG.material;
         SsliderIMG.material.SetColor("_Color2", Color.HSVToRGB(Hslider.value,1,1));
         VsliderIMG.color = Color.HSVToRGB(Hslider.value, 1, 1);
-        CreateAllSkins();
+        DeleteAllElements();CreateAllElements();
     }
     void OnDestroy(){Destroy(SsliderIMG.material);}
     void OnDisable(){Destroy(SsliderIMG.material);}
@@ -60,9 +63,9 @@ public class CustomizationInventory : MonoBehaviour{
         Color.RGBToHSV(overlayColor, out overlayColorArr[0], out overlayColorArr[1], out overlayColorArr[2]);
     }
     void Update(){
-        if(shipUI.transform.childCount>1){shipUI_Overlay=shipUI.transform.GetChild(1).GetComponent<Image>();}
+        if(shipUI.GetComponent<ShipSkinManager>().overlayObj!=null){shipUI_Overlay=shipUI.GetComponent<ShipSkinManager>().overlayObj.GetComponent<Image>();}
         if(GetSkin(skinName).sprOverlay!=null){
-            foreach(Transform go in sliders.transform){go.gameObject.SetActive(true);}
+            foreach(Transform t in sliders.transform){t.gameObject.SetActive(true);}
             if(shipUI_Overlay!=null)shipUI_Overlay.gameObject.SetActive(true);
             //SetSkin(skinName);
             SetSkinOverlay(skinName);
@@ -70,12 +73,12 @@ public class CustomizationInventory : MonoBehaviour{
         }
         else{
             //SetSkin(skinName);
-            foreach(Transform go in sliders.transform){if(go.gameObject.activeSelf==true)go.gameObject.SetActive(false);}
+            foreach(Transform t in sliders.transform){if(t.gameObject.activeSelf==true)t.gameObject.SetActive(false);}
             if(shipUI_Overlay!=null)shipUI_Overlay.gameObject.SetActive(false);
         }
     }
 
-    void CreateAllSkins(){
+    void CreateAllElements(){
         var currentCategorySkins=Array.FindAll(GameAssets.instance.skins,x=>x.category==categorySelected);
         foreach(GSkin gs in currentCategorySkins){
             var go=Instantiate(skinElementPrefab,listContent);
@@ -85,7 +88,17 @@ public class CustomizationInventory : MonoBehaviour{
             go.transform.GetChild(0).GetComponent<Image>().sprite=gs.spr;
         }
     }
-    //void ChangeCategory(){CreateAllSkins;}
+    void DeleteAllElements(){foreach(Transform t in listContent){Destroy(t.gameObject);}}
+
+    
+    [HideInInspector]public string[] _SkinCategoryNames=new string[]{"Special","Shop","ReOne","TwoPiece"};
+    public void ChangeCategory(string str){
+        if(str.Contains(_SkinCategoryNames[0])){categorySelected=SkinCategory.special;}
+        else if(str.Contains(_SkinCategoryNames[1])){categorySelected=SkinCategory.shop;}
+        else if(str.Contains(_SkinCategoryNames[2])){categorySelected=SkinCategory.reOne;}
+        else if(str.Contains(_SkinCategoryNames[3])){categorySelected=SkinCategory.twoPiece;}
+        DeleteAllElements();CreateAllElements();
+    }
 
     Color GetRarityColor(SkinRarity rarity){
         var col=Color.white;
@@ -101,5 +114,8 @@ public class CustomizationInventory : MonoBehaviour{
     GSkin GetSkinByID(int i){return GameAssets.instance.GetSkinByID(i);}
     //public void SetSkinCurrent(){shipUI.sprite=GetSkin(skinName).spr;}
     public void SetSkin(string str){if(GetSkin(str)!=null){skinName=str;shipUI.sprite=GetSkin(str).spr;}}
-    public void SetSkinOverlay(string str){if(GetSkin(skinName)!=null){if(GetSkin(skinName).sprOverlay!=null){shipUI_Overlay.sprite=GetSkin(skinName).sprOverlay;}}}
+    public void SetSkinOverlay(string str){if(GetSkin(skinName)!=null){
+        if(GetSkin(skinName).sprOverlay!=null){
+            shipUI_Overlay.sprite=
+            GetSkin(skinName).sprOverlay;}}}
 }
