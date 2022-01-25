@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using Sirenix.OdinInspector;
 
 public class UpgradeMenu : MonoBehaviour{
     public static UpgradeMenu instance;
@@ -393,6 +394,7 @@ public class UpgradeMenu : MonoBehaviour{
     void LevelUp(){
         AudioManager.instance.Play("LvlUp2");
         FindObjectOfType<OnScreenButtons>().GetComponent<Animator>().SetTrigger("on");
+        FindObjectOfType<OnScreenButtons>().lvldUp=true;
     }
     public void LvlEvents(){
         if(GameRules.instance!=null){

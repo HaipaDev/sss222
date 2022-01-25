@@ -355,10 +355,10 @@ public class GameSession : MonoBehaviour{
     }
     public void SaveSettings(){SaveSerial.instance.SaveSettings();}
     public void SaveInventory(){
-        SaveSerial.instance.playerData.skinName=FindObjectOfType<CustomizationInventory>().skinName;
-        SaveSerial.instance.playerData.overlayColor[0]=FindObjectOfType<CustomizationInventory>().overlayColorArr[0];
-        SaveSerial.instance.playerData.overlayColor[1]=FindObjectOfType<CustomizationInventory>().overlayColorArr[1];
-        SaveSerial.instance.playerData.overlayColor[2]=FindObjectOfType<CustomizationInventory>().overlayColorArr[2];
+        SaveSerial.instance.playerData.skinName=CustomizationInventory.instance.skinName;
+        SaveSerial.instance.playerData.overlayColor[0]=CustomizationInventory.instance.overlayColorArr[0];
+        SaveSerial.instance.playerData.overlayColor[1]=CustomizationInventory.instance.overlayColorArr[1];
+        SaveSerial.instance.playerData.overlayColor[2]=CustomizationInventory.instance.overlayColorArr[2];
     }
     public void DeleteAll(){SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure();DeleteStatsAchievs();ResetSettings();GSceneManager.instance.LoadStartMenu();}
     public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}

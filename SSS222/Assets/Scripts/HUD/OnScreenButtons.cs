@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class OnScreenButtons : MonoBehaviour{
+    [Sirenix.OdinInspector.HideInPlayMode]public bool lvldUp;
     void Update(){
         if(SaveSerial.instance.settingsData.scbuttons==false&&transform.GetChild(0).GetComponent<Animator>()!=null&&!transform.GetChild(0).GetComponent<Animator>().GetBool("on")){
             foreach(Button bt in GetComponentsInChildren<Button>()){

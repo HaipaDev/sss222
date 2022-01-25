@@ -93,6 +93,14 @@ public class GameAssets : MonoBehaviour{
 		}
         return s;
 	}
+	public GSkinVariant GetSkinVariant(string str,int id){
+		GSkinVariant s = Array.Find(skins, item => item.name == str).variants[id];
+		if (s == null){
+			Debug.LogWarning("SkinVariant by id: " + id + " not found!");
+			return null;
+		}
+        return s;
+	}
 	public int GetSkinID(string str){
 		int i = Array.FindIndex(skins, item => item.name == str);
 		if (Array.Find(skins,item => item.name == str) == null){
@@ -112,24 +120,22 @@ public class GameAssets : MonoBehaviour{
 [System.Serializable]
 public class GObject{
 	public string name;
-
 	public GameObject gobj;
 }
 [System.Serializable]
 public class GSprite{
 	public string name;
-
 	public Sprite spr;
 }
 [System.Serializable]
 public class GSkin{
 	public string name;
-
 	public Sprite spr;
 	public Sprite sprOverlay;
 	public SkinRarity rarity=SkinRarity.common;
 	public SkinCategory category;
-	public GSkinVariant variants;
+	public int variantSelected=-1;
+	public GSkinVariant[] variants;
 }
 [System.Serializable]
 public class GSkinVariant{

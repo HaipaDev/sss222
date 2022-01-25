@@ -775,7 +775,7 @@ MonoBehaviour:
     dmgBySpeed: 0
     armorPenetr: 2
     phase: 1
-    dmgPhase: 0.86
+    dmgPhase: 1.33
     phaseFreqFirst: 0
     phaseFreq: 0.02
     phaseCountLimit: 0
@@ -1333,9 +1333,9 @@ MonoBehaviour:
   xp_shop: 3
   xp_powerup: 1
   xp_flying: 7
-  flyingTimeReq: 25
-  xp_staying: -2
-  stayingTimeReq: 4
+  flyingTimeReq: 10
+  xp_staying: 2
+  stayingTimeReq: 15
   lvlEvents:
   - name: 'Levels: 0-0'
     events:

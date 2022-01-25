@@ -7,10 +7,10 @@ using TMPro;
 public class AdventureZoneData : MonoBehaviour{
     [SerializeField] int id=1;
     void Start(){
-        GetComponent<Button>().onClick.AddListener(OnClickButtonEvent);
+        GetComponent<Button>().onClick.AddListener(LoadZone);
         GetComponentInChildren<TextMeshProUGUI>().text=Mathf.Abs(id).ToString();
     }
-    void OnClickButtonEvent(){
+    void LoadZone(){
         GSceneManager.instance.LoadAdventureZone(-id);
     }
 }

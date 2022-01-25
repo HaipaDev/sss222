@@ -58,6 +58,8 @@ public class ValueDisplay : MonoBehaviour{
     }
     if(UpgradeMenu.instance!=null){
         if(value=="lvl_ship") txt.text="Ship Level: "+UpgradeMenu.instance.total_UpgradesLvl.ToString();
+        else if(value=="lvlPopup") txt.text="Lvl up! ("+UpgradeMenu.instance.total_UpgradesLvl.ToString()+")";
+
         else if(value=="lvl_hp") txt.text="Lvl. "+UpgradeMenu.instance.healthMax_UpgradesLvl.ToString();
         else if(value=="lvl_energy") txt.text="Lvl. "+UpgradeMenu.instance.energyMax_UpgradesLvl.ToString();
         else if(value=="lvl_speed") txt.text="Lvl. "+UpgradeMenu.instance.speed_UpgradesLvl.ToString();

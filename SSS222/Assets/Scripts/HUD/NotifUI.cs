@@ -11,9 +11,15 @@ public class NotifUI : MonoBehaviour{
         }else if(type==notifUI_type.dontShoot){
             if(FindObjectOfType<VortexWheel>()!=null&&FindObjectOfType<VortexWheel>().timer<FindObjectOfType<VortexWheel>().GetTimeToDie()){GetComponent<TMPro.TextMeshProUGUI>().enabled=true;}
             else{GetComponent<TMPro.TextMeshProUGUI>().enabled=false;}
+        }else if(type==notifUI_type.lvlUp){
+            if(FindObjectOfType<OnScreenButtons>()!=null&&FindObjectOfType<OnScreenButtons>().lvldUp==true){GetComponent<TMPro.TextMeshProUGUI>().enabled=true;}
+            else{GetComponent<TMPro.TextMeshProUGUI>().enabled=false;}
+        }else if(type==notifUI_type.noEnergy){
+            if((GameRules.instance!=null&&Player.instance!=null)&&(GameRules.instance.energyOnPlayer&&Player.instance.energy<=0)){GetComponent<TMPro.TextMeshProUGUI>().enabled=true;}
+            else{GetComponent<TMPro.TextMeshProUGUI>().enabled=false;}
         }
     }
 }
 enum notifUI_type{
-    shake,dontShoot
+    shake,dontShoot,lvlUp,noEnergy
 }

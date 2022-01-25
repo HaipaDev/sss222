@@ -15,7 +15,7 @@ public class FixScrollRectWithButtons : MonoBehaviour{
     [DisableInEditorMode][SerializeField]float timerDelay=-4;
     [DisableInEditorMode][SerializeField]float timerDelay2=-4;
     [DisableInEditorMode][SerializeField]MouseOperations.MouseEventFlags fakeButton;
-    void Update(){
+    void Update(){  if(transform.GetComponentsInChildren<Button>().Length>0){
         if((timerUp<=0&&timerHeld>=timeHeldNeeded)||(Input.GetAxis("Mouse ScrollWheel")!=0)){
             if(transform.GetComponentsInChildren<Button>()[0].enabled){foreach(Button b in transform.GetComponentsInChildren<Button>()){
                 b.enabled=false;b.GetComponent<Image>().raycastTarget=false;
@@ -45,5 +45,5 @@ public class FixScrollRectWithButtons : MonoBehaviour{
 
         if(Input.GetMouseButton(0)&&fakeButton!=MouseOperations.MouseEventFlags.LeftDown){if(timerHeld>=0)timerHeld+=Time.unscaledDeltaTime;}
         else if(!Input.GetMouseButton(0)&&fakeButton!=MouseOperations.MouseEventFlags.LeftUp){if(timerUp>=0)timerUp+=Time.unscaledDeltaTime;}
-    }
+    }}
 }
