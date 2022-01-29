@@ -21,15 +21,17 @@ public class GSceneManager : MonoBehaviour{
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
         //transitioner=FindObjectOfType<Tag_Transition>().GetComponent<Animator>();
     }
-
+    public void LoadStartMenuLoader(){SceneManager.LoadScene("Menu");}
     public void LoadStartMenu(){
         SaveSerial.instance.Save();
         SaveSerial.instance.SaveLogin();
-        StatsAchievsManager.instance.SaveStats();
-        SaveSerial.instance.SaveStats();
-        GameSession.instance.ResetMusicPitch();
+        if(StatsAchievsManager.instance!=null){
+            StatsAchievsManager.instance.SaveStats();
+            SaveSerial.instance.SaveStats();
+        }
+        if(GameSession.instance!=null)
         SceneManager.LoadScene("Menu");
-        if(SceneManager.GetActiveScene().name=="Menu"){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
+        if(GameSession.instance!=null){GameSession.instance.ResetMusicPitch();if(SceneManager.GetActiveScene().name=="Menu")GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
     }
     public void LoadStartMenuGame(){GSceneManager.instance.StartCoroutine(LoadStartMenuGameI());}
     IEnumerator LoadStartMenuGameI(){

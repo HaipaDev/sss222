@@ -7,7 +7,7 @@ using TMPro;
 using System.Linq;
 
 public class Leaderboard : MonoBehaviour{
-    //TextMeshProUGUI txt;
+    [SerializeField] DisplayLeaderboard currentUserScore;
     [SerializeField] GameObject container;
     [SerializeField] int containerChildCount;
     [SerializeField] GameObject leaderboardElement1;
@@ -56,6 +56,8 @@ public class Leaderboard : MonoBehaviour{
                 go.GetComponent<DisplayLeaderboard>().score=resultSorted[i].score;
             }
         }
+        
+        if(currentUserScore!=null){currentUserScore.DisplayCurrentUserHighscore();}
         
         //foreach(var element in resultSorted){output+=element.name+": "+element.score+"\n";}
         //txt.text=output;

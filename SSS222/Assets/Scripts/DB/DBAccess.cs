@@ -112,7 +112,7 @@ public class DBAccess : MonoBehaviour{
             loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
             if(collectionBiggerThan0&&loginUsername.ToList()[0].password==password){
                 loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
-                SaveSerial.instance.SetLogin(username,password);
+                SaveSerial.instance.SetLogin(username,password);SaveSerial.instance.SaveLogin();
                 await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.dateLastLogin,System.DateTime.Now));
             }
         }else{SetLoginMessage("Login not found");}

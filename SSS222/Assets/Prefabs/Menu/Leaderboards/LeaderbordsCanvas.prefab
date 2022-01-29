@@ -576,6 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c958b87a5c04db4288dac84c59f8552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentUserScore: {fileID: 8932288784627484607}
   container: {fileID: 4556867967840950507}
   containerChildCount: 0
   leaderboardElement1: {fileID: 583442804269776071, guid: c7de1c1a09b75d6468440b2e761c8d29,
@@ -2299,6 +2300,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 7808651676909729045}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8932288784627484607 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1704676260801360554, guid: 2fb83fff01b24344fa4a5882c46b3e1e,
+    type: 3}
+  m_PrefabInstance: {fileID: 7808651676909729045}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878bcf9dc3b472045b12e80f4da14273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8451100064918621133
 PrefabInstance:
   m_ObjectHideFlags: 0

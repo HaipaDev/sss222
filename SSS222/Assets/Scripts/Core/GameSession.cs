@@ -198,9 +198,9 @@ public class GameSession : MonoBehaviour{
 
         //Postprocessing
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
-        if(SaveSerial.instance!=null){
-        if(SaveSerial.instance.settingsData.pprocessing==true && postProcessVolume!=null){postProcessVolume.GetComponent<PostProcessVolume>().enabled=true;}
-        if(SaveSerial.instance.settingsData.pprocessing==false && FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
+        if(SaveSerial.instance!=null&&postProcessVolume!=null){
+            if(SaveSerial.instance.settingsData.pprocessing==true){postProcessVolume.GetComponent<PostProcessVolume>().enabled=true;}
+            else{postProcessVolume.GetComponent<PostProcessVolume>().enabled=false;}
         }
 
         if(presenceTimer>0){presenceTimer-=Time.unscaledDeltaTime;}

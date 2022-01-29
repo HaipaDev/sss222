@@ -23,14 +23,17 @@ public class GameCreator : MonoBehaviour{
     [AssetsOnly][SerializeField] public GameRules[] adventureZonesPrefabs;
     private void Awake(){
         instance=this;
-        Load();
+        if(SceneManager.GetActiveScene().name=="Loading")LoadPre();
+        else Load();
+    }
+    void LoadPre(){
+        if(FindObjectOfType<SaveSerial>()==null){Instantiate(saveSerialPrefab);}
+        if(FindObjectOfType<GSceneManager>()==null){Instantiate(gSceneManagerPrefab);}
     }
     void Load(){
+        LoadPre();
         if(FindObjectOfType<GameSession>()==null){Instantiate(gameSessionPrefab);}
-        //if(FindObjectOfType<Loader>()==null){Instantiate(loaderPrefab);}
-        if(FindObjectOfType<SaveSerial>()==null){Instantiate(saveSerialPrefab);}
         if(FindObjectOfType<GameAssets>()==null){Instantiate(gameAssetsPrefab);}
-        if(FindObjectOfType<GSceneManager>()==null){Instantiate(gSceneManagerPrefab);}
         if(FindObjectOfType<AudioManager>()==null){Instantiate(audioManagerPrefab);}
         if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
         if(FindObjectOfType<DiscordPresence.PresenceManager>()==null){Instantiate(discordPresencePrefab);}

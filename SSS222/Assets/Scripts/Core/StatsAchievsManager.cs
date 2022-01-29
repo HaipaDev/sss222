@@ -110,7 +110,7 @@ public class StatsAchievsManager : MonoBehaviour{
             SaveSerial.instance.statsData.statsGamemodesList[i]=statsGamemodesList[i];}
     }}
     public void LoadStats(){if(SaveSerial.instance!=null)if(SaveSerial.instance.statsData!=null){
-        for(var i=0;i<achievsList.Count&&i<SaveSerial.instance.statsData.statsGamemodesList.Length;i++){
+        for(var i=0;i<SaveSerial.instance.statsData.statsGamemodesList.Length;i++){
             statsGamemodesList[i]=SaveSerial.instance.statsData.statsGamemodesList[i];}}
         statsLoaded=true;
     }

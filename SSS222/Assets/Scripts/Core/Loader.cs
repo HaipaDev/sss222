@@ -28,7 +28,7 @@ public class Loader : MonoBehaviour{
         audioMixer.SetFloat("MusicVolume", SaveSerial.instance.settingsData.musicVolume);
     }
     public void ForceLoad(){
-        if(loaded)GSceneManager.instance.LoadStartMenu();
+        if(loaded)GSceneManager.instance.LoadStartMenuLoader();
     }
     void Update(){
         Load();

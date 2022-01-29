@@ -14,13 +14,12 @@ public class DisplayLeaderboard : MonoBehaviour{
     public int score;
     TextMeshProUGUI txtRank;
     TextMeshProUGUI txtScore;
-    void Start() {
+    void Start(){
+        txtRank=transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        txtScore=transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         DisplayCurrentUserHighscore();
     }
     void Update(){
-        txtRank=transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        txtScore=transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-
         txtRank.text="#"+rank.ToString();
         txtScore.text=username+" : \n"+score.ToString();
     }
@@ -48,6 +47,7 @@ public class DisplayLeaderboard : MonoBehaviour{
             if(currentUserScore>0){
                 rank=currentUserRank+1;
             }else{
+                rank=0;
                 currentUserName=SaveSerial.instance.hyperGamerLoginData.username;
             }
             username=currentUserName;
