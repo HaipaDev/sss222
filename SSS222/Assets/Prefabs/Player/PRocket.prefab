@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 3617263865581978861}
   - component: {fileID: 398629252145694254}
   - component: {fileID: -5706639723197656910}
-  - component: {fileID: 8764242355317768201}
-  - component: {fileID: 2972373951465921495}
   - component: {fileID: 2349578145357705901}
   - component: {fileID: -8274517681537142345}
-  - component: {fileID: 4325923379415193658}
+  - component: {fileID: 8764242355317768201}
+  - component: {fileID: 7274758916845513542}
+  - component: {fileID: 2972373951465921495}
   - component: {fileID: 5528135550288439540}
   m_Layer: 8
   m_Name: PRocket
@@ -156,6 +156,43 @@ MonoBehaviour:
   blockable: 0
   healing: 0
   opacity: 0.8
+--- !u!114 &2349578145357705901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101f6d01480354a42b7e084db3999f04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 0
+--- !u!114 &-8274517681537142345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f4125681d46b58409734c1af1829930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chanceForR: 50
+  hspeed: 1.2
+  randomSpeed: 1
+  hspeedS: 1.1
+  hspeedE: 2.2
+  dynamicSpeed: 1
+  timeToChangeSpeed: 0.35
+  randomChangeTime: 1
+  timeToChangeSpeedS: 0.1
+  timeToChangeSpeedE: 0.45
+  timerSpeed: 0
+  dir: 1
 --- !u!114 &8764242355317768201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +213,22 @@ MonoBehaviour:
   maxParticles: 0
   offset: {x: 0, y: 0}
   alignToDirection: 0
+--- !u!114 &7274758916845513542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d790abe7d01ea94490a672728321956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: TrailRocket
+  offset: {x: 0, y: -0.25}
+  onTop: 0
+  trailObj: {fileID: 0}
 --- !u!82 &2972373951465921495
 AudioSource:
   m_ObjectHideFlags: 0
@@ -273,59 +326,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2349578145357705901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101f6d01480354a42b7e084db3999f04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interval: 0
---- !u!114 &-8274517681537142345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f4125681d46b58409734c1af1829930, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chanceForR: 50
-  hspeed: 1.2
-  randomSpeed: 1
-  hspeedS: 1.1
-  hspeedE: 2.2
-  dynamicSpeed: 1
-  timeToChangeSpeed: 0.35
-  randomChangeTime: 1
-  timeToChangeSpeedS: 0.1
-  timeToChangeSpeedE: 0.45
-  timerSpeed: 0
-  dir: 1
---- !u!114 &4325923379415193658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: BFlameRocket
-  offset: {x: 0, y: -0.5}
-  onTop: 1
-  BFlame: {fileID: 0}
 --- !u!114 &5528135550288439540
 MonoBehaviour:
   m_ObjectHideFlags: 0

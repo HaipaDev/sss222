@@ -648,7 +648,7 @@ MonoBehaviour:
     spritesLunar:
     - {fileID: 21300000, guid: 8f5604571a603dc4ca74f76f5a8c070e, type: 3}
     - {fileID: 21300000, guid: 4ca5f58d98a9d514e98f96344392f882, type: 3}
-    lunarPart: BFlameLunar
+    lunarPart: TrailLunar
   enCombatantSettings:
     speedFollowX: 3.5
     speedFollowY: 4
@@ -987,16 +987,16 @@ MonoBehaviour:
     soundPhase: 
     dispDmgCount: 0
     colliEvents: []
-  - name: BFlameDMG
+  - name: PlayerExhaust
     colliType: 1
-    dmg: 1
+    dmg: 0
     dmgBySize: 0
     dmgBySpeed: 0
     armorPenetr: -2
-    phase: 0
+    phase: 1
     dmgPhase: 1
     phaseFreqFirst: 0
-    phaseFreq: 0.33
+    phaseFreq: 0.04
     phaseCountLimit: 0
     dmgFx: 1
     dmgFxValues: []

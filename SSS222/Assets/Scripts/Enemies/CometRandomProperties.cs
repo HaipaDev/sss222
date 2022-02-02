@@ -20,13 +20,13 @@ public class CometRandomProperties : MonoBehaviour{
     [SerializeField] public List<LootTableEntryDrops> lunarDrops;
     public List<float> dropValues;
     [SerializeField] Sprite[] spritesLunar;
-    [SerializeField] string lunarPart="BFlameLunar";
+    [SerializeField] string lunarPart="Trail_Lunar";
     [DisableInEditorMode]public int healhitCount;
     [DisableInEditorMode]public bool isLunar;
 
     Enemy en;
     Rigidbody2D rb;
-    BackflameEffect bFlame;
+    TrailVFX trail;
     float rotationSpeed=1;
 
     void Awake(){StartCoroutine(SetValues());}
@@ -57,7 +57,7 @@ public class CometRandomProperties : MonoBehaviour{
     IEnumerator Start(){
         en=GetComponent<Enemy>();
         rb=GetComponent<Rigidbody2D>();
-        bFlame=GetComponent<BackflameEffect>();
+        trail=GetComponent<TrailVFX>();
 
         yield return new WaitForSeconds(0.03f);
         int spriteIndex=Random.Range(0, sprites.Length);
@@ -83,7 +83,7 @@ public class CometRandomProperties : MonoBehaviour{
     void TransformIntoLunar(){
         int spriteIndex=Random.Range(0,spritesLunar.Length);
         en.spr=spritesLunar[spriteIndex];
-        if(bFlame!=null){bFlame.ClearBFlame();bFlame.part=lunarPart;}
+        if(trail!=null){trail.SetNewTrail(lunarPart);}
 
         float sizeL=(float)System.Math.Round(Random.Range(sizeMultLunar.x, sizeMultLunar.y),2);
         en.size=new Vector2(en.size.x*sizeL, en.size.y*sizeL);

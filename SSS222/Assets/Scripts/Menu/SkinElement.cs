@@ -8,12 +8,12 @@ using Sirenix.OdinInspector;
 
 public class SkinElement : MonoBehaviour, IPointerClickHandler{
     [SerializeField] public string skinName="Mk.22";
-    [SerializeField] public SkinRarity rarity;
+    [SerializeField] public CstmzRarity rarity;
     [SerializeField] public bool variant;
     [EnableIf("@this.variant")][SerializeField] public int variantId=-1;
     void Update(){
         GetComponent<Image>().color=CustomizationInventory.instance.GetRarityColor(rarity);
-        if(ShipSkinManager.instance.GetOverlaySprite(skinName+_VariantID())!=null){transform.GetChild(2).GetComponent<Image>().color=CustomizationInventory.instance.overlayColor;}
+        if(ShipCustomizationManager.instance.GetOverlaySprite(skinName+_VariantID())!=null){transform.GetChild(2).GetComponent<Image>().color=CustomizationInventory.instance.overlayColor;}
         else{transform.GetChild(2).GetComponent<Image>().color=Color.clear;}
     }
     public void SetSkin(){CustomizationInventory.instance.SetSkin(skinName);}

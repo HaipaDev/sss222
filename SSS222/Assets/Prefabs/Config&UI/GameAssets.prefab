@@ -249,21 +249,21 @@ MonoBehaviour:
     gobj: {fileID: 3124785819795321136, guid: 2ffa9d133e17fa14ca644e117ada1cf3, type: 3}
   - name: DMGPopupCrit
     gobj: {fileID: 3124785819795321136, guid: 4ba3480efa6a7284886941a144835fee, type: 3}
-  - name: BFlame
+  - name: TrailDef
     gobj: {fileID: 100000, guid: 081b45b1b47b4094f818a7a47a0c69b6, type: 3}
-  - name: BFlameDMG
+  - name: TrailDMG
     gobj: {fileID: 100000, guid: e2ce195318a38844aa897f96496098c8, type: 3}
-  - name: BFlameDMG_Blue
+  - name: TrailDMG_Blue
     gobj: {fileID: 100000, guid: 561679754ef7963449b5f744b1d64097, type: 3}
-  - name: BFlame_Blue
+  - name: Trail_Blue
     gobj: {fileID: 100000, guid: 09bfca06e04f3034ea40cc0b27b5b489, type: 3}
-  - name: BFlameComet
+  - name: TrailComet
     gobj: {fileID: 100000, guid: 0f7e2bf3d8f33c5408bfbf96c2047b91, type: 3}
-  - name: BFlameLunar
+  - name: TrailLunar
     gobj: {fileID: 100000, guid: c9a649e528b32914aa6bb629e3597592, type: 3}
-  - name: BFlameSmall
+  - name: TrailSmall
     gobj: {fileID: 100000, guid: 747999461e9c60f48aea8f29b15de217, type: 3}
-  - name: BFlameRocket
+  - name: TrailRocket
     gobj: {fileID: 100000, guid: 1590ac5f4c2282a4fa80fd5f46f0431a, type: 3}
   - name: UpgradeVFX
     gobj: {fileID: 100000, guid: c2cf9899dba98ca4c969605b8668920c, type: 3}
@@ -468,3 +468,12 @@ MonoBehaviour:
     category: 3
     variantSelected: -1
     variants: []
+  trails:
+  - name: Flame
+    part: {fileID: 100000, guid: 081b45b1b47b4094f818a7a47a0c69b6, type: 3}
+    rarity: 0
+    category: 3
+  - name: Negative
+    part: {fileID: 100000, guid: b98728d174a74e2488ee2ecdc2aa2b3f, type: 3}
+    rarity: 2
+    category: 3

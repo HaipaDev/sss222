@@ -10,7 +10,9 @@ public class GameAssets : MonoBehaviour{
 	[AssetsOnly]public GObject[] objects;
 	[AssetsOnly]public GObject[] vfx;
 	[AssetsOnly]public GSprite[] sprites;
-	[AssetsOnly]public GSkin[] skins;
+	[Header("Customization")]
+	[AssetsOnly]public CstmzSkin[] skins;
+	[AssetsOnly]public CstmzTrail[] trails;
     
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
 
@@ -24,7 +26,7 @@ public class GameAssets : MonoBehaviour{
         GameObject objref = Instantiate(gobj,pos,Quaternion.identity);
         return objref;
 	}
-    public GameObject MakeSpread(string obj, Vector2 pos, int amnt, float rangeX=0.5f, float rangeY=0.5f){
+    public GameObject MakeSpread(string obj, Vector2 pos, int amnt=3, float rangeX=0.5f, float rangeY=0.5f){
 		GObject o = Array.Find(objects, item => item.name == obj);
 		if (o == null){
 			Debug.LogWarning("Object: " + name + " not found!");
@@ -32,7 +34,7 @@ public class GameAssets : MonoBehaviour{
 		}
 		GameObject gobj=o.gobj;
 		GameObject objref=Instantiate(gobj,pos,Quaternion.identity);
-		for(var i=1;i<amnt;i++){
+		for(var i=1;i<amnt-1;i++){
 		var rndmX=UnityEngine.Random.Range(-rangeX,rangeX);
 		var rndmY=UnityEngine.Random.Range(-rangeY,rangeY);
 		var poss=pos+new Vector2(rndmX,rndmY);
@@ -65,7 +67,7 @@ public class GameAssets : MonoBehaviour{
 	}public GameObject GetVFX(string obj){
 		GObject o = Array.Find(vfx, item => item.name == obj);
 		if (o == null){
-			Debug.LogWarning("Object: " + obj + " not found!");
+			Debug.LogWarning("VFX: " + obj + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
@@ -83,8 +85,8 @@ public class GameAssets : MonoBehaviour{
         return gs;
 	}
 	
-	public GSkin GetSkin(string str){
-		GSkin s = Array.Find(skins, item => item.name == str);
+	public CstmzSkin GetSkin(string str){
+		CstmzSkin s = Array.Find(skins, item => item.name == str);
         //Sprite gs=s.str;
 		//Sprite s=skins[i];
 		if (s == null){
@@ -93,8 +95,8 @@ public class GameAssets : MonoBehaviour{
 		}
         return s;
 	}
-	public GSkinVariant GetSkinVariant(string str,int id){
-		GSkinVariant s = Array.Find(skins, item => item.name == str).variants[id];
+	public CstmzSkinVariant GetSkinVariant(string str,int id){
+		CstmzSkinVariant s = Array.Find(skins, item => item.name == str).variants[id];
 		if (s == null){
 			Debug.LogWarning("SkinVariant by id: " + id + " not found!");
 			return null;
@@ -108,12 +110,22 @@ public class GameAssets : MonoBehaviour{
 			return 0;
 		}
         return i;
-	}public GSkin GetSkinByID(int i){
+	}public CstmzSkin GetSkinByID(int i){
 		if (skins[i] == null){
 			Debug.LogWarning("Skin by ID: " + i + " not found!");
 			return null;
 		}
         return skins[i];
+	}
+
+	
+	public CstmzTrail GetTrail(string str){
+		CstmzTrail s = Array.Find(trails, item => item.name == str);
+		if (s == null){
+			Debug.LogWarning("Trail: " + str + " not found!");
+			return null;
+		}
+        return s;
 	}
 }
 
@@ -127,20 +139,28 @@ public class GSprite{
 	public string name;
 	public Sprite spr;
 }
+public enum CstmzRarity{def,common,rare,epic,legend}
+public enum CstmzCategory{special,shop,reOne,twoPiece}
+public enum CstmzType{skin,trail,flare,deathFx,music,bg}
 [System.Serializable]
-public class GSkin{
+public class CstmzSkin{
 	public string name;
 	public Sprite spr;
 	public Sprite sprOverlay;
-	public SkinRarity rarity=SkinRarity.common;
-	public SkinCategory category;
+	public CstmzRarity rarity=CstmzRarity.common;
+	public CstmzCategory category;
 	public int variantSelected=-1;
-	public GSkinVariant[] variants;
+	public CstmzSkinVariant[] variants;
 }
 [System.Serializable]
-public class GSkinVariant{
+public class CstmzSkinVariant{
 	public Sprite spr;
 	public Sprite sprOverlay;
 }
-public enum SkinRarity{def,common,rare,epic,legend}
-public enum SkinCategory{special,shop,reOne,twoPiece}
+[System.Serializable]
+public class CstmzTrail{
+	public string name;
+	public GameObject part;
+	public CstmzRarity rarity=CstmzRarity.common;
+	public CstmzCategory category;
+}

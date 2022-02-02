@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 3617263865581978861}
   - component: {fileID: 398629252145694254}
   - component: {fileID: 879952983271955742}
-  - component: {fileID: 8764242355317768201}
-  - component: {fileID: 2972373951465921495}
   - component: {fileID: 2349578145357705901}
   - component: {fileID: 7799905236334044251}
-  - component: {fileID: -5823106282040684117}
   - component: {fileID: -4856174234144377300}
+  - component: {fileID: 3480051598863453360}
+  - component: {fileID: 8764242355317768201}
+  - component: {fileID: 2972373951465921495}
   m_Layer: 8
   m_Name: QRocket
   m_TagString: PlayerWeapons
@@ -156,6 +156,77 @@ MonoBehaviour:
   blockable: 0
   healing: 0
   opacity: 0.8
+--- !u!114 &2349578145357705901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101f6d01480354a42b7e084db3999f04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 0
+--- !u!114 &7799905236334044251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a8c4beb6393e8418ea04d76c86dccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  target: {fileID: 0}
+  targetTag: Enemy
+  targetObj: {fileID: 0}
+  dist: 0
+  distReq: 25
+  speedFollow: 3.8
+  vspeed: -2.7
+  hspeed: 0
+  rotateTowards: 1
+  speedRotate: 15
+  angleAdj: -90
+  followAfterOOR: 0
+  dirYYUp: 1
+  OOR_YY: 1.5
+  followClosestEnemy: 0
+--- !u!114 &-4856174234144377300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1
+--- !u!114 &3480051598863453360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039900905274326842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d790abe7d01ea94490a672728321956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: TrailRocket
+  offset: {x: 0, y: -0.2}
+  onTop: 0
+  trailObj: {fileID: 0}
 --- !u!114 &8764242355317768201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,74 +344,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2349578145357705901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101f6d01480354a42b7e084db3999f04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interval: 0
---- !u!114 &7799905236334044251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21a8c4beb6393e8418ea04d76c86dccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfPos: {x: 0, y: 0}
-  targetPos: {x: 0, y: 0}
-  target: {fileID: 0}
-  targetTag: Enemy
-  targetObj: {fileID: 0}
-  dist: 0
-  distReq: 25
-  speedFollow: 3.8
-  vspeed: -2.7
-  hspeed: 0
-  rotateTowards: 1
-  speedRotate: 15
-  angleAdj: -90
-  followAfterOOR: 0
-  dirYYUp: 1
-  OOR_YY: 1.5
-  followClosestEnemy: 0
---- !u!114 &-5823106282040684117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: BFlameRocket
-  offset: {x: 0, y: -0.2}
-  onTop: 1
-  BFlame: {fileID: 0}
---- !u!114 &-4856174234144377300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039900905274326842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 238eeaba6d3423d4ca44afe785c34ade, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 1

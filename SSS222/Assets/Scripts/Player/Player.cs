@@ -395,17 +395,17 @@ public class Player : MonoBehaviour{
         Die();
         CountTimeMovementPressed();
         if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
-            if(GetComponent<BackflameEffect>()!=null){
-                if(GetComponent<BackflameEffect>().enabled==false){GetComponent<BackflameEffect>().enabled=true;}
-                if(GetComponent<BackflameEffect>().BFlame!=null)if(GetComponent<BackflameEffect>().BFlame.activeSelf==false){GetComponent<BackflameEffect>().BFlame.SetActive(true);}
+            if(GetComponent<TrailVFX>()!=null){
+                if(GetComponent<TrailVFX>().enabled==false){GetComponent<TrailVFX>().enabled=true;}
+                if(GetComponent<TrailVFX>().trailObj!=null)if(GetComponent<TrailVFX>().trailObj.activeSelf==false){GetComponent<TrailVFX>().trailObj.SetActive(true);}
             }
             if(inputType!=InputType.mouse&&inputType!=InputType.drag){MovePlayer();}
             else if(inputType==InputType.drag){MoveWithDrag();}
             else{MoveWithMouse();}
         }else{
-            if(GetComponent<BackflameEffect>()!=null){
-                if(GetComponent<BackflameEffect>().BFlame!=null)if(GetComponent<BackflameEffect>().BFlame.activeSelf==true){GetComponent<BackflameEffect>().BFlame.SetActive(false);}
-                if(GetComponent<BackflameEffect>().enabled==true){GetComponent<BackflameEffect>().enabled=false;}
+            if(GetComponent<TrailVFX>()!=null){
+                if(GetComponent<TrailVFX>().trailObj!=null)if(GetComponent<TrailVFX>().trailObj.activeSelf==true){GetComponent<TrailVFX>().trailObj.SetActive(false);}
+                if(GetComponent<TrailVFX>().enabled==true){GetComponent<TrailVFX>().enabled=false;}
             }
         }
         if(shootTimer>0)shootTimer-=Time.deltaTime;
@@ -432,24 +432,6 @@ public class Player : MonoBehaviour{
         else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
 
         if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
-        
-        if(GameRules.instance.levelingOn&&UpgradeMenu.instance!=null&&GetComponent<BackflameEffect>()!=null){
-            //Blue Flame for Hardcore
-            if(GameSession.instance.CheckGamemodeSelected("Hardcore")){
-                if((UpgradeMenu.instance.total_UpgradesLvl<bflameDmgTillLvl||bflameDmgTillLvl<=0)&&!GetComponent<BackflameEffect>().BFlame.name.Contains("Blue")){
-                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part="BFlame_Blue";
-                }
-                //Reverse: dmg from Lvl
-                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&!GetComponent<BackflameEffect>().BFlame.name.Contains("Dmg")){
-                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part="BFlameDMG_Blue";
-                    fuelDrainAmnt*=2;
-                }
-            }else{//Revert to default flame when Level above
-                if((UpgradeMenu.instance.total_UpgradesLvl>=bflameDmgTillLvl&&bflameDmgTillLvl>0)&&GetComponent<BackflameEffect>().BFlame.name.Contains("Dmg")){
-                    GetComponent<BackflameEffect>().ClearBFlame();GetComponent<BackflameEffect>().part="BFlame";
-                }
-            }
-        }
 
         if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
     }
@@ -720,8 +702,7 @@ public class Player : MonoBehaviour{
 
         if(GameSession.instance.CheckGamemodeSelected("Adventure")){GameSession.instance.DieAdventure();}
 
-        GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);
-        AudioManager.instance.Play("Death");
+        DeathFX();
         GameOverCanvas.instance.OpenGameOverCanvas();
 
         foreach(Tag_DestroyPlayerDead go in FindObjectsOfType<Tag_DestroyPlayerDead>()){Destroy(go.gameObject);}
@@ -732,9 +713,13 @@ public class Player : MonoBehaviour{
     private void Hide(){
         GetComponent<SpriteRenderer>().enabled=false;
         GetComponent<Collider2D>().enabled=false;
-        if(GetComponent<BackflameEffect>()!=null)GetComponent<BackflameEffect>().enabled=false;
+        if(GetComponent<TrailVFX>()!=null)GetComponent<TrailVFX>().enabled=false;
         if(GetComponent<PlayerSkills>()!=null)GetComponent<PlayerSkills>().enabled=false;
         foreach(Transform c in transform){Destroy(c.gameObject);}
+    }
+    void DeathFX(){
+        GameAssets.instance.VFX("Explosion",transform.position,0.5f);
+        AudioManager.instance.Play("Death");
     }
 
 #region//Powerups
@@ -786,7 +771,7 @@ public class Player : MonoBehaviour{
                             if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalR;
                             if(bulletL.GetComponent<Tag_PlayerWeapon>()!=null&&w.costType==costType.energy){bulletL.GetComponent<Tag_PlayerWeapon>().energy=wc.cost/wp.bulletAmount;}
                         }}
-                        if(wp.flare){GameAssets.instance.VFX("FlareShoot",posL,wp.flareDur);}
+                        if(wp.flare){GameAssets.instance.VFX(ShipCustomizationManager.instance.GetFlareVFX(),posL,wp.flareDur);}
                     }
                     void RightSide(){for(var i=0;i<wp.bulletAmount;i++,
                     rR=new Vector3(rR.x-=wp.serialOffsetAngle.x,0,rR.z-=wp.serialOffsetAngle.y),soundIntervalR+=wp.serialOffsetSound){
@@ -805,13 +790,11 @@ public class Player : MonoBehaviour{
                             if(bulletR.GetComponent<IntervalSound>()!=null)bulletR.GetComponent<IntervalSound>().interval=soundIntervalR;
                             if(bulletR.GetComponent<Tag_PlayerWeapon>()!=null&&w.costType==costType.energy){bulletR.GetComponent<Tag_PlayerWeapon>().energy=wc.cost/wp.bulletAmount;}
                         }}
-                        if(wp.flare){GameAssets.instance.VFX("FlareShoot",posR,wp.flareDur);}
+                        if(wp.flare){GameAssets.instance.VFX(ShipCustomizationManager.instance.GetFlareVFX(),posR,wp.flareDur);}
                     }
                     if(wp.leftSide)LeftSide();
                     if(wp.rightSide)RightSide();
                     if(wp.randomSide){if(UnityEngine.Random.Range(0,100)<50){LeftSide();}else{RightSide();}}
-                    if(flareL!=null)Destroy(flareL.gameObject, wp.flareDur);
-                    if(flareR!=null)Destroy(flareR.gameObject, wp.flareDur);
                     if(w.costType==costType.energy){AddSubEnergy(wc.cost,false);}
                     if(w.costType==costType.ammo){if(ammo>=wc.cost)AddSubAmmo(wc.cost,false);else{AddSubAmmo(ammo-wc.cost,false);}}
                     if(w.costType==costType.crystalAmmo){if(ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
@@ -881,8 +864,8 @@ public class Player : MonoBehaviour{
         if(gcloverTimer<=0&&gcloverTimer>-4){AudioManager.instance.Play("GCloverOff");ResetStatus("gclover");}
 
         if(shadowTimer<=0&&shadowTimer>-4){AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();ResetStatus("shadow");}
-        if(shadow==true){Shadow();if(GetComponent<BackflameEffect>()!=null){if(GetComponent<BackflameEffect>().enabled==true)GetComponent<BackflameEffect>().enabled=false;}}
-        else{dashTime=-4;if(GetComponent<BackflameEffect>()!=null){if(GetComponent<BackflameEffect>().enabled==false)GetComponent<BackflameEffect>().enabled=true;}}
+        if(shadow==true){Shadow();if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==true)GetComponent<TrailVFX>().enabled=false;}}
+        else{dashTime=-4;if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==false)GetComponent<TrailVFX>().enabled=true;}}
         if(dashingEnabled){
             if(shadow==true&&dashTime<=0&&dashTime!=-4){rb.velocity=Vector2.zero; dashing=false; /*moveX=moveXwas;moveY=moveYwas;*/ dashTime=-4;}
             else{if(!GameSession.GlobalTimeIsPaused){dashTime-=Time.deltaTime;}

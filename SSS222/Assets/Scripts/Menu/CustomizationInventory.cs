@@ -26,7 +26,7 @@ public class CustomizationInventory : MonoBehaviour{
     public Color epicColor=Color.magenta;
     public Color legendColor=Color.yellow;
     [HeaderAttribute("Properties")]
-    [SerializeField] public SkinCategory categorySelected=SkinCategory.twoPiece;
+    [SerializeField] public CstmzCategory categorySelected=CstmzCategory.twoPiece;
     [SerializeField] public string skinName="Mk.22";
     public Color overlayColor=Color.red;
     public float[] overlayColorArr = new float[3]{0,1,1};
@@ -72,14 +72,14 @@ public class CustomizationInventory : MonoBehaviour{
             SaveSerial.instance.playerData.overlayColor[2]=overlayColorArr[2];
         }
 
-        ShipSkinManager.instance.skinName=skinName;
-        ShipSkinManager.instance.overlayColor=Color.HSVToRGB(overlayColorArr[0],overlayColorArr[1],overlayColorArr[2]);
+        ShipCustomizationManager.instance.skinName=skinName;
+        ShipCustomizationManager.instance.overlayColor=Color.HSVToRGB(overlayColorArr[0],overlayColorArr[1],overlayColorArr[2]);
     }
 
     void DeleteAllSkinElements(){foreach(Transform t in skinsListContent){Destroy(t.gameObject);}}
     void CreateAllSkinElements(){
         var currentCategorySkins=Array.FindAll(GameAssets.instance.skins,x=>x.category==categorySelected);
-        foreach(GSkin gs in currentCategorySkins){
+        foreach(CstmzSkin gs in currentCategorySkins){
             var go=Instantiate(skinElementPrefab,skinsListContent);
             go.name="SkinElement_"+gs.name;
             go.GetComponent<SkinElement>().skinName=gs.name;
@@ -96,12 +96,12 @@ public class CustomizationInventory : MonoBehaviour{
         else{t.GetChild(0).gameObject.SetActive(false);}
     }}
     
-    [HideInInspector]public string[] _SkinCategoryNames=new string[]{"Special","Shop","ReOne","TwoPiece"};
+    [HideInInspector]public string[] _CstmzCategoryNames=new string[]{"Special","Shop","ReOne","TwoPiece"};
     public void ChangeCategory(string str){
-        if(str.Contains(_SkinCategoryNames[0])){categorySelected=SkinCategory.special;}
-        else if(str.Contains(_SkinCategoryNames[1])){categorySelected=SkinCategory.shop;}
-        else if(str.Contains(_SkinCategoryNames[2])){categorySelected=SkinCategory.reOne;}
-        else if(str.Contains(_SkinCategoryNames[3])){categorySelected=SkinCategory.twoPiece;}
+        if(str.Contains(_CstmzCategoryNames[0])){categorySelected=CstmzCategory.special;}
+        else if(str.Contains(_CstmzCategoryNames[1])){categorySelected=CstmzCategory.shop;}
+        else if(str.Contains(_CstmzCategoryNames[2])){categorySelected=CstmzCategory.reOne;}
+        else if(str.Contains(_CstmzCategoryNames[3])){categorySelected=CstmzCategory.twoPiece;}
         DeleteAllSkinElements();CreateAllSkinElements();
         HighlightSelectedSkin();
     }
@@ -128,7 +128,7 @@ public class CustomizationInventory : MonoBehaviour{
         go1.transform.GetChild(1).GetComponent<Image>().sprite=GetSkinSprite(str);
         if(GetOverlaySprite(str)!=null)go1.transform.GetChild(2).GetComponent<Image>().sprite=GetOverlaySprite(str);
         //Create all others
-        GSkinVariant[] variants=GetSkin(str).variants;
+        CstmzSkinVariant[] variants=GetSkin(str).variants;
         for(int i=0;i<variants.Length;i++){
             var gs=variants[i];
             var go=Instantiate(skinElementPrefab,variantsListContent);
@@ -148,24 +148,24 @@ public class CustomizationInventory : MonoBehaviour{
         else{t.GetChild(0).gameObject.SetActive(false);}
     }}
 
-    public Color GetRarityColor(SkinRarity rarity){
+    public Color GetRarityColor(CstmzRarity rarity){
         var col=Color.white;
         switch(rarity){
-            case SkinRarity.def:col=defColor;break;
-            case SkinRarity.common:col=commonColor;break;
-            case SkinRarity.rare:col=rareColor;break;
-            case SkinRarity.epic:col=epicColor;break;
-            case SkinRarity.legend:col=legendColor;break;
+            case CstmzRarity.def:col=defColor;break;
+            case CstmzRarity.common:col=commonColor;break;
+            case CstmzRarity.rare:col=rareColor;break;
+            case CstmzRarity.epic:col=epicColor;break;
+            case CstmzRarity.legend:col=legendColor;break;
         }
         return col;
     }
     string GetSkinName(string str){string _str=str;if(skinName.Contains("_")){_str=skinName.Split('_')[0];}return _str;}
-    public GSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
-    GSkin GetSkinCurrent(){return GetSkin(skinName);}
+    public CstmzSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
+    CstmzSkin GetSkinCurrent(){return GetSkin(skinName);}
     int GetSkinID(string str){return GameAssets.instance.GetSkinID(str);}
-    GSkin GetSkinByID(int i){return GameAssets.instance.GetSkinByID(i);}
-    Sprite GetSkinSprite(string str){return ShipSkinManager.instance.GetSkinSprite(str);}
-    Sprite GetOverlaySprite(string str){return ShipSkinManager.instance.GetOverlaySprite(str);}
-    GSkinVariant GetSkinVariant(string str,int id){return GameAssets.instance.GetSkinVariant(str,id);}
+    CstmzSkin GetSkinByID(int i){return GameAssets.instance.GetSkinByID(i);}
+    Sprite GetSkinSprite(string str){return ShipCustomizationManager.instance.GetSkinSprite(str);}
+    Sprite GetOverlaySprite(string str){return ShipCustomizationManager.instance.GetOverlaySprite(str);}
+    CstmzSkinVariant GetSkinVariant(string str,int id){return GameAssets.instance.GetSkinVariant(str,id);}
     public void SetSkin(string str){skinName=str;if(variantsPanel.gameObject.activeSelf){variantsPanel.gameObject.SetActive(false);colorSliders.SetActive(false);}HighlightSelectedSkin();}
 }

@@ -96,7 +96,7 @@ public class Goblin : MonoBehaviour{
     void GoblinTransform(){
         bossForm=true;
         GetComponent<Follow>().enabled=false;
-        if(GetComponent<BackflameEffect>().BFlame!=null){Destroy(GetComponent<BackflameEffect>().BFlame);}GetComponent<BackflameEffect>().enabled=false;
+        if(GetComponent<TrailVFX>().trailObj!=null){Destroy(GetComponent<TrailVFX>().trailObj);}GetComponent<TrailVFX>().enabled=false;
         confused=false;Destroy(transform.GetChild(0).gameObject);
         Enemy en=GetComponent<Enemy>();
         en.spr=bossSprite;

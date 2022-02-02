@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
-public class ShipSkinManager : MonoBehaviour{
-    public static ShipSkinManager instance;
+public class ShipCustomizationManager : MonoBehaviour{
+    public static ShipCustomizationManager instance;
     [HeaderAttribute("Properties")]
     public string skinName="Mk.22";
     [SceneObjectsOnly][SerializeField] public GameObject overlayObj;
+    public string trailName="Flame";
+    //[SceneObjectsOnly][SerializeField] public GameObject trailObj;
+    //[SceneObjectsOnly][SerializeField] public GameObject flaresObjs;
     public Color overlayColor=Color.red;
     SpriteRenderer overlaySpr;
     Image overlayImg;
@@ -26,6 +29,7 @@ public class ShipSkinManager : MonoBehaviour{
             if(overlaySpr==null){overlayImg=overlayObj.GetComponent<Image>();}
             if(GameSession.maskMode!=0&&overlaySpr!=null){overlaySpr.maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;}
         }
+        //if(trailObj==null){if(GetComponent<TrailVFX>()!=null){trailObj=GetComponent<TrailVFX>().trailObj;}}
     }
     void Update(){
         SetSkin(skinName);
@@ -34,13 +38,14 @@ public class ShipSkinManager : MonoBehaviour{
             if(overlaySpr!=null)overlaySpr.color=Color.clear;
             if(overlayImg!=null)overlayImg.color=Color.clear;
         }
+        SetTrail(trailName);
     }
 
 
     //string GetSkinName(){string str=skinName;if(skinName.Contains(" _")){str=skinName.Split('_')[0];}return str;}
-    GSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
-    GSkin GetSkinCurrent(){string _str=skinName;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
-    GSkinVariant GetSkinVariant(string str,int id){return GameAssets.instance.GetSkinVariant(str,id);}
+    CstmzSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
+    CstmzSkin GetSkinCurrent(){string _str=skinName;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
+    CstmzSkinVariant GetSkinVariant(string str,int id){return GameAssets.instance.GetSkinVariant(str,id);}
     public Sprite GetSkinSprite(string str){Sprite spr=null;
         if(str.Contains("_")){spr=GameAssets.instance.GetSkin(str.Split('_')[0]).variants[int.Parse(str.Split('_')[1])].spr;}
         else{spr=GameAssets.instance.GetSkin(str).spr;}
@@ -49,16 +54,24 @@ public class ShipSkinManager : MonoBehaviour{
         if(str.Contains("_")){spr=GameAssets.instance.GetSkin(str.Split('_')[0]).variants[int.Parse(str.Split('_')[1])].sprOverlay;}
         else{spr=GameAssets.instance.GetSkin(str).sprOverlay;}
     return spr;}
-    void SetSkin(string str){if(spr!=null){spr.sprite=GetSkinSprite(str);}else if(img!=null){img.sprite=GetSkinSprite(str);}}
+    void SetSkin(string str){if(spr!=null){if(spr.sprite!=GetSkinSprite(str))spr.sprite=GetSkinSprite(str);}
+        else if(img!=null){if(img.sprite!=GetSkinSprite(str))img.sprite=GetSkinSprite(str);}}
     void SetOverlay(Sprite sprite, Color color){
         Color _color=Color.white;if(color!=Color.clear){_color=color;}
         if(overlaySpr!=null){
-            overlaySpr.sprite=sprite;
-            overlaySpr.color=_color;
+            if(overlaySpr.sprite!=sprite)overlaySpr.sprite=sprite;
+            if(overlaySpr.color!=_color)overlaySpr.color=_color;
         }else if(overlayImg!=null){
-            overlayImg.sprite=sprite;
-            overlayImg.color=_color;
+            if(overlayImg.sprite!=sprite)overlayImg.sprite=sprite;
+            if(overlayImg.color!=_color)overlayImg.color=_color;
         }
+    }
+    void SetTrail(string str){
+        if(GetComponent<TrailVFX>()!=null){if(GameAssets.instance.GetTrail(str)!=null)GetComponent<TrailVFX>().SetNewTrail(str,true);}
+    }
+
+    public string GetFlareVFX(){string str="FlareShoot";
+        return str;
     }
     void LoadValues(){
         skinName=SaveSerial.instance.playerData.skinName;

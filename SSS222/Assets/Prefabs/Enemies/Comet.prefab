@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 6361041040622666652}
   - component: {fileID: -4076050431880435700}
   - component: {fileID: 4548800055037187618}
-  - component: {fileID: 6543032046267015800}
   - component: {fileID: 1490166543656379823}
+  - component: {fileID: 7719346401654728415}
   - component: {fileID: 1306324344444208931}
   m_Layer: 9
   m_Name: Comet
@@ -88,6 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  off: 0
   waveConfig: {fileID: 0}
   waypointsL: []
   waypointIndex: 0
@@ -111,6 +112,8 @@ MonoBehaviour:
   spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
   health: 15
   healthMax: 15
+  defense: 0
+  defenseOnPhase: 1
   healthBySize: 0
   shooting: 0
   shootTime: {x: 1.75, y: 2.8}
@@ -145,23 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionTypes: 000000000100000004000000
---- !u!114 &6543032046267015800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147796775416149952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: BFlameComet
-  offset: {x: 0, y: 0.33}
-  onTop: 0
-  stayStill: 1
-  BFlame: {fileID: 0}
 --- !u!114 &1490166543656379823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,9 +184,25 @@ MonoBehaviour:
   spritesLunar:
   - {fileID: 21300000, guid: 8f5604571a603dc4ca74f76f5a8c070e, type: 3}
   - {fileID: 21300000, guid: 4ca5f58d98a9d514e98f96344392f882, type: 3}
-  lunarPart: BFlameLunar
+  lunarPart: TrailLunar
   healhitCount: 0
   isLunar: 0
+--- !u!114 &7719346401654728415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147796775416149952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d790abe7d01ea94490a672728321956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: TrailComet
+  offset: {x: 0, y: 0.33}
+  onTop: 0
+  trailObj: {fileID: 0}
 --- !u!82 &1306324344444208931
 AudioSource:
   m_ObjectHideFlags: 0
