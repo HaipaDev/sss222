@@ -9,10 +9,12 @@ public class ShipCustomizationManager : MonoBehaviour{
     [HeaderAttribute("Properties")]
     public string skinName="Mk.22";
     [SceneObjectsOnly][SerializeField] public GameObject overlayObj;
-    public string trailName="Flame";
-    //[SceneObjectsOnly][SerializeField] public GameObject trailObj;
-    //[SceneObjectsOnly][SerializeField] public GameObject flaresObjs;
     public Color overlayColor=Color.red;
+    public string trailName="Flame";
+    [SceneObjectsOnly][SerializeField] public GameObject trailObj;
+    Vector2 trailObjPos=Vector2.zero;
+    //[SceneObjectsOnly][SerializeField] public GameObject flaresObjs;
+
     SpriteRenderer overlaySpr;
     Image overlayImg;
     SpriteRenderer spr;
@@ -24,12 +26,11 @@ public class ShipCustomizationManager : MonoBehaviour{
         LoadValues();
         if(overlayObj!=null){
             overlayObj.transform.position=new Vector3(overlayObj.transform.position.x,overlayObj.transform.position.y,transform.root.position.z-0.01f);
-            overlayObj.transform.localScale=Vector2.one;
+            overlayObj.transform.localScale=Vector3.one;
             overlaySpr=overlayObj.GetComponent<SpriteRenderer>();
             if(overlaySpr==null){overlayImg=overlayObj.GetComponent<Image>();}
             if(GameSession.maskMode!=0&&overlaySpr!=null){overlaySpr.maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;}
         }
-        //if(trailObj==null){if(GetComponent<TrailVFX>()!=null){trailObj=GetComponent<TrailVFX>().trailObj;}}
     }
     void Update(){
         SetSkin(skinName);
@@ -68,6 +69,11 @@ public class ShipCustomizationManager : MonoBehaviour{
     }
     void SetTrail(string str){
         if(GetComponent<TrailVFX>()!=null){if(GameAssets.instance.GetTrail(str)!=null)GetComponent<TrailVFX>().SetNewTrail(str,true);}
+        else{if(trailObj!=null){if(trailObjPos==Vector2.zero){trailObjPos=trailObj.transform.localPosition;}
+        if(GameAssets.instance.GetTrail(str)!=null){if(!trailObj.name.Contains(GameAssets.instance.GetTrail(str).part.name)){
+            var _tempTrailObj=trailObj;trailObj=Instantiate(GameAssets.instance.GetTrail(str).part,transform);trailObj.transform.localPosition=trailObjPos;Destroy(_tempTrailObj);
+            GameAssets.instance.RegularParticleIntoUIParticle(trailObj);
+        }}}}
     }
 
     public string GetFlareVFX(){string str="FlareShoot";
@@ -76,5 +82,6 @@ public class ShipCustomizationManager : MonoBehaviour{
     void LoadValues(){
         skinName=SaveSerial.instance.playerData.skinName;
         overlayColor=Color.HSVToRGB(SaveSerial.instance.playerData.overlayColor[0], SaveSerial.instance.playerData.overlayColor[1], SaveSerial.instance.playerData.overlayColor[2]);
+        trailName=SaveSerial.instance.playerData.trailName;
     }
 }

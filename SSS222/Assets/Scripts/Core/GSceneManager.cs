@@ -32,6 +32,7 @@ public class GSceneManager : MonoBehaviour{
         if(GameSession.instance!=null)
         SceneManager.LoadScene("Menu");
         if(GameSession.instance!=null){GameSession.instance.ResetMusicPitch();if(SceneManager.GetActiveScene().name=="Menu")GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
+        Resources.UnloadUnusedAssets();
     }
     public void LoadStartMenuGame(){GSceneManager.instance.StartCoroutine(LoadStartMenuGameI());}
     IEnumerator LoadStartMenuGameI(){
@@ -50,6 +51,7 @@ public class GSceneManager : MonoBehaviour{
         yield return new WaitForSecondsRealtime(0.01f);
         GameSession.instance.speedChanged=false;GameSession.instance.defaultGameSpeed=1f;GameSession.instance.gameSpeed=1f;
         GameSession.instance.ResetAfterAdventure();
+        Resources.UnloadUnusedAssets();
         /*GameSession.instance.SetGamemodeSelected(0);*/
     }
     public void LoadGameScene(){

@@ -127,6 +127,19 @@ public class GameAssets : MonoBehaviour{
 		}
         return s;
 	}
+	public void RegularParticleIntoUIParticle(GameObject go,float sizeMult=1){
+		var ps=go.GetComponent<ParticleSystem>();var psMain=ps.main;
+		if(sizeMult==1){
+			if(ps.startSize<=1){sizeMult=100;}
+			if(ps.startSize<=10&&ps.startSize>1){sizeMult=10;}
+		}
+		psMain.startSize=new ParticleSystem.MinMaxCurve(psMain.startSize.constantMin*sizeMult, psMain.startSize.constantMax*sizeMult);
+		//if(ps.startSize<1&&go.transform.localScale.x<=1)go.transform.localScale*=100;
+		//if(ps.startSize<10&&ps.startSize>1&&go.transform.localScale.x<=1)go.transform.localScale*=10;
+		Material mat=new Material(Shader.Find("UI Extensions/Particles/Additive"));mat.SetTexture("_MainTex",ps.GetComponent<Renderer>().material.GetTexture("_MainTex"));
+		var psUI=go.AddComponent<UnityEngine.UI.Extensions.UIParticleSystem>();
+		psUI.material=mat;
+	}
 }
 
 [System.Serializable]

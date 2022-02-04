@@ -18,9 +18,9 @@ public class ShipUI : MonoBehaviour{
     RectTransform rt;
     void Start(){
         rt=GetComponent<RectTransform>();
-        var ps=GetComponentInChildren<ParticleSystem>();
+        /*var ps=GetComponentInChildren<ParticleSystem>();
         if(ps.startSize<10)ps.startSize*=10;
-        GetComponentInChildren<UnityEngine.UI.Extensions.UIParticleSystem>().material=ps.GetComponent<Renderer>().material;
+        GetComponentInChildren<UnityEngine.UI.Extensions.UIParticleSystem>().material=ps.GetComponent<Renderer>().material;*/
     }
     void Update(){
         var step=Time.unscaledDeltaTime;

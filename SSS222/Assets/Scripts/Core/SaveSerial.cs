@@ -72,6 +72,7 @@ public class SaveSerial : MonoBehaviour{
 		public int[] highscore=new int[0];
 		public string skinName="Mk.22";
 		public float[] overlayColor=new float[3]{0,1,1};
+		public string trailName="Flame";
 		public bool[] achievsCompleted=new bool[0];
 	}
 	public void Save(){

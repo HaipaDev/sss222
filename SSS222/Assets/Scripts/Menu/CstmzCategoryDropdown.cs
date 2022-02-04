@@ -7,7 +7,7 @@ using TMPro;
 using static TMPro.TMP_Dropdown;
 using System.Linq;
 
-public class SkinCategoryDropdown : MonoBehaviour{
+public class CstmzCategoryDropdown : MonoBehaviour{
     [SerializeField]List<string> skip=new List<string>(0);
     TMP_Dropdown dd;
     void Start(){

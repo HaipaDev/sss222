@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6980315426917080681}
   - component: {fileID: 345950652368717955}
   m_Layer: 5
-  m_Name: SkinOverlay
+  m_Name: Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1702008190132933378}
   - component: {fileID: 1708075260749453911}
   - component: {fileID: 6469284709145121504}
-  - component: {fileID: 2384484085770943858}
+  - component: {fileID: 1697876937553147031}
   m_Layer: 5
   m_Name: SkinElement_01
   m_TagString: Untagged
@@ -103,7 +103,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4677579573730461889}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2384484085770943858
+--- !u!114 &1697876937553147031
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,7 +232,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18bf04bf8220634eac1b5f50954c4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinName: Mk.22
+  selectedBg: {fileID: 6074421706665265506}
+  elementPv: {fileID: 4809585468655323462}
+  overlayImg: {fileID: 2872728862844883382}
+  elementType: 0
+  elementName: Mk.22
   rarity: 0
   variant: 0
   variantId: -1
@@ -248,7 +252,7 @@ GameObject:
   - component: {fileID: 4612869117148772586}
   - component: {fileID: 1510113580999128963}
   m_Layer: 5
-  m_Name: SkinImg
+  m_Name: PvImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -323,7 +327,7 @@ GameObject:
   - component: {fileID: 6114566353388646867}
   - component: {fileID: 9220070472848047709}
   m_Layer: 5
-  m_Name: SkinSelected
+  m_Name: SelectedBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -345,7 +349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.21600342, y: -0.6480026}
+  m_AnchoredPosition: {x: -0.21600342, y: -0.64801025}
   m_SizeDelta: {x: -10.056, y: -10.055}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6114566353388646867
