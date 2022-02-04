@@ -361,20 +361,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1194470432126890574, guid: 722f061f56b4e8645b992438eb1d6dd5,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: eeff6e2b8fa947948b1b592531c97815, type: 3}
     - target: {fileID: 5024049173945341391, guid: 722f061f56b4e8645b992438eb1d6dd5,
         type: 3}
       propertyPath: m_Name
-      value: MusicPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 5024049173945341391, guid: 722f061f56b4e8645b992438eb1d6dd5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: Jukebox
       objectReference: {fileID: 0}
     - target: {fileID: 8565809542268954524, guid: 722f061f56b4e8645b992438eb1d6dd5,
         type: 3}

@@ -73,6 +73,9 @@ public class SaveSerial : MonoBehaviour{
 		public string skinName="Mk.22";
 		public float[] overlayColor=new float[3]{0,1,1};
 		public string trailName="Flame";
+		public string flaresName="Flares";
+		public string deathFxName="Explosion";
+		public string musicName="Find You";
 		public bool[] achievsCompleted=new bool[0];
 	}
 	public void Save(){

@@ -26,12 +26,18 @@ public class CstmzElement : MonoBehaviour, IPointerClickHandler{
     }
     public void SetSkin(){CustomizationInventory.instance.SetSkin(elementName+_VariantID());}
     public void SetTrail(){CustomizationInventory.instance.SetTrail(elementName);}
+    public void SetFlares(){CustomizationInventory.instance.SetFlares(elementName);}
+    public void SetDeathFx(){CustomizationInventory.instance.SetDeathFx(elementName);}
+    public void SetMusic(){CustomizationInventory.instance.SetMusic(elementName);}
 
     public void OpenVariants(){CustomizationInventory.instance.OpenVariants(elementName);}
     public void OnPointerClick(PointerEventData eventData){
         if(eventData.button==PointerEventData.InputButton.Left){
             if(elementType==CstmzType.skin)SetSkin();
             else if(elementType==CstmzType.trail)SetTrail();
+            else if(elementType==CstmzType.flares)SetFlares();
+            else if(elementType==CstmzType.deathFx)SetDeathFx();
+            else if(elementType==CstmzType.music)SetMusic();
         }
         else if(eventData.button==PointerEventData.InputButton.Right&&!variant){
             OpenVariants();

@@ -24,6 +24,12 @@ public class CstmzTypeElement : MonoBehaviour, IPointerClickHandler{
         }//else{if(transform.childCount>1)Destroy(overlayImg.gameObject);}
         else if(elementType==CstmzType.trail){
             elementName=CustomizationInventory.instance.trailName;
+        }else if(elementType==CstmzType.flares){
+            elementName=CustomizationInventory.instance.flaresName;
+        }else if(elementType==CstmzType.deathFx){
+            elementName=CustomizationInventory.instance.deathFxName;
+        }else if(elementType==CstmzType.music){
+            elementName=CustomizationInventory.instance.musicName;
         }
     }
     public void SetType(){CustomizationInventory.instance.SetType(elementType);}

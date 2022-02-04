@@ -33,6 +33,9 @@ public class CustomizationInventory : MonoBehaviour{
     public Color overlayColor=Color.red;
     public float[] overlayColorArr = new float[3]{0,1,1};
     [SerializeField] public string trailName="Flame";
+    [SerializeField] public string flaresName="Flares";
+    [SerializeField] public string deathFxName="Explosion";
+    [SerializeField] public string musicName="Find You";
     bool loaded;
     void Awake(){instance=this;}
     void Start(){
@@ -55,6 +58,9 @@ public class CustomizationInventory : MonoBehaviour{
         VsliderIMG.color = Color.HSVToRGB(Hslider.value, 1, 1);
 
         trailName=SaveSerial.instance.playerData.trailName;
+        flaresName=SaveSerial.instance.playerData.flaresName;
+        deathFxName=SaveSerial.instance.playerData.deathFxName;
+        musicName=SaveSerial.instance.playerData.musicName;
 
         HighlightSelectedType();
         //RecreateAllElements();
@@ -77,11 +83,19 @@ public class CustomizationInventory : MonoBehaviour{
             SaveSerial.instance.playerData.overlayColor[1]=overlayColorArr[1];
             SaveSerial.instance.playerData.overlayColor[2]=overlayColorArr[2];
             SaveSerial.instance.playerData.trailName=trailName;
+            SaveSerial.instance.playerData.flaresName=flaresName;
+            SaveSerial.instance.playerData.deathFxName=deathFxName;
+            SaveSerial.instance.playerData.musicName=musicName;
         }
 
         ShipCustomizationManager.instance.skinName=skinName;
         ShipCustomizationManager.instance.overlayColor=Color.HSVToRGB(overlayColorArr[0],overlayColorArr[1],overlayColorArr[2]);
         ShipCustomizationManager.instance.trailName=trailName;
+        ShipCustomizationManager.instance.flaresName=flaresName;
+        ShipCustomizationManager.instance.deathFxName=deathFxName;
+        ShipCustomizationManager.instance.musicName=musicName;
+
+        RefreshParticles();
     }
 
     public void RecreateAllElements(){DeleteAllElements();CreateAllElements();HighlightSelectedElement();}
@@ -100,8 +114,8 @@ public class CustomizationInventory : MonoBehaviour{
                 ce.elementType=typeSelected;
                 ce.elementName=ge.name;
                 ce.rarity=ge.rarity;
-                go.transform.GetChild(1).GetComponent<Image>().sprite=ge.spr;
-                go.transform.GetChild(2).GetComponent<Image>().sprite=ge.sprOverlay;
+                ce.elementPv.GetComponent<Image>().sprite=ge.spr;
+                ce.overlayImg.GetComponent<Image>().sprite=ge.sprOverlay;
             }
         }else if(typeSelected==CstmzType.trail){
             var currentCategoryTrails=Array.FindAll(GameAssets.instance.trails,x=>x.category==categorySelected);
@@ -112,20 +126,71 @@ public class CustomizationInventory : MonoBehaviour{
                 ce.elementType=typeSelected;
                 ce.elementName=ge.name;
                 ce.rarity=ge.rarity;
-                Destroy(go.transform.GetChild(2).gameObject);
-                Destroy(go.transform.GetChild(1).gameObject);ce.elementPv=Instantiate(ge.part,go.transform);
-                GameAssets.instance.RegularParticleIntoUIParticle(ce.elementPv);
+                Destroy(ce.overlayImg);
+                Destroy(ce.elementPv);ce.elementPv=Instantiate(ge.part,go.transform);
+                GameAssets.instance.TransformIntoUIParticle(ce.elementPv);
+            }
+        }else if(typeSelected==CstmzType.flares){
+            var currentCategoryFlares=Array.FindAll(GameAssets.instance.flares,x=>x.category==categorySelected);
+            foreach(CstmzFlares ge in currentCategoryFlares){
+                var go=Instantiate(cstmzElementPrefab,elementsListContent);
+                go.name="FlaresElement_"+ge.name;
+                CstmzElement ce=go.GetComponent<CstmzElement>();
+                ce.elementType=typeSelected;
+                ce.elementName=ge.name;
+                ce.rarity=ge.rarity;
+                Destroy(ce.overlayImg);
+                Destroy(ce.elementPv.GetComponent<Image>());
+                for(var i=0;i<ce.elementPv.transform.childCount;i++){Destroy(ce.elementPv.transform.GetChild(i).gameObject);}
+                GameObject goPt=Instantiate(GetFlareVFX(ge.name),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
+                GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+                goPt=Instantiate(GetFlareVFX(ge.name),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
+                GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+            }
+        }else if(typeSelected==CstmzType.deathFx){
+            var currentCategoryDeathFxs=Array.FindAll(GameAssets.instance.deathFxs,x=>x.category==categorySelected);
+            foreach(CstmzDeathFx ge in currentCategoryDeathFxs){
+                var go=Instantiate(cstmzElementPrefab,elementsListContent);
+                go.name="DeathFxElement_"+ge.name;
+                CstmzElement ce=go.GetComponent<CstmzElement>();
+                ce.elementType=typeSelected;
+                ce.elementName=ge.name;
+                ce.rarity=ge.rarity;
+                Destroy(ce.overlayImg);
+                Destroy(ce.elementPv);
+                GameObject goPt=Instantiate(ge.obj,go.transform);
+                GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+            }
+        }else if(typeSelected==CstmzType.music){
+            var currentCategoryMusic=Array.FindAll(GameAssets.instance.musics,x=>x.category==categorySelected);
+            foreach(CstmzMusic ge in currentCategoryMusic){
+                var go=Instantiate(cstmzElementPrefab,elementsListContent);
+                go.name="MusicElement_"+ge.name;
+                CstmzElement ce=go.GetComponent<CstmzElement>();
+                ce.elementType=typeSelected;
+                ce.elementName=ge.name;
+                ce.rarity=ge.rarity;
+                ce.elementPv.GetComponent<Image>().sprite=ge.icon;
+                Destroy(ce.overlayImg);
             }
         }
     }
     void HighlightSelectedElement(){foreach(Transform t in elementsListContent){
         CstmzElement ce=t.GetComponent<CstmzElement>();
-        if(ce.elementType==CstmzType.skin&&t.GetComponent<CstmzElement>().elementName==GetSkinName(skinName)){
+        if(typeSelected==CstmzType.skin&&ce.elementName==GetSkinName(skinName)){
             ce.selectedBg.SetActive(true);
-            if(skinName.Contains("_"))t.GetChild(1).GetComponent<Image>().sprite=GetSkinSprite(skinName);
+            if(skinName.Contains("_"))ce.elementPv.GetComponent<Image>().sprite=GetSkinSprite(skinName);
         }else{ce.selectedBg.SetActive(false);}
-        
-        if(ce.elementType==CstmzType.trail&&t.GetComponent<CstmzElement>().elementName==trailName){
+        if(typeSelected==CstmzType.trail&&ce.elementName==trailName){
+            ce.selectedBg.SetActive(true);
+        }else{ce.selectedBg.SetActive(false);}
+        if(typeSelected==CstmzType.flares&&ce.elementName==flaresName){
+            ce.selectedBg.SetActive(true);
+        }else{ce.selectedBg.SetActive(false);}
+        if(typeSelected==CstmzType.deathFx&&ce.elementName==deathFxName){
+            ce.selectedBg.SetActive(true);
+        }else{ce.selectedBg.SetActive(false);}
+        if(typeSelected==CstmzType.music&&ce.elementName==musicName){
             ce.selectedBg.SetActive(true);
         }else{ce.selectedBg.SetActive(false);}
     }}
@@ -133,16 +198,30 @@ public class CustomizationInventory : MonoBehaviour{
         CstmzTypeElement ce=t.GetComponent<CstmzTypeElement>();
         if(ce.elementType==typeSelected){
             ce.selectedBg.SetActive(true);
-            //if(skinName.Contains("_"))t.GetChild(1).GetComponent<Image>().sprite=GetSkinSprite(skinName);
+            //if(skinName.Contains("_"))ce.elementPv.GetComponent<Image>().sprite=GetSkinSprite(skinName);
         }
         else{ce.selectedBg.SetActive(false);}
 
         if(ce.elementType==CstmzType.skin){
-            t.GetChild(1).GetComponent<Image>().sprite=GetSkinSprite(skinName);
+            ce.elementPv.GetComponent<Image>().sprite=GetSkinSprite(skinName);
         }else if(ce.elementType==CstmzType.trail){
             Destroy(ce.overlayImg);
             Destroy(ce.elementPv);ce.elementPv=Instantiate(GetTrail(trailName).part,t);
-            GameAssets.instance.RegularParticleIntoUIParticle(ce.elementPv);
+            GameAssets.instance.TransformIntoUIParticle(ce.elementPv);
+        }else if(ce.elementType==CstmzType.flares){
+            Destroy(ce.overlayImg);
+            for(var i=0;i<ce.elementPv.transform.childCount;i++){Destroy(ce.elementPv.transform.GetChild(i).gameObject);}
+            GameObject goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
+            GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+            goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
+            GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+        }else if(ce.elementType==CstmzType.deathFx){
+            Destroy(ce.overlayImg);
+            Destroy(ce.elementPv);
+            ce.elementPv=Instantiate(GetDeathFxObj(ce.elementName),ce.transform);
+            GameAssets.instance.TransformIntoUIParticle(ce.elementPv,1,-1);
+        }if(ce.elementType==CstmzType.music){
+            ce.elementPv.GetComponent<Image>().sprite=GetMusic(musicName).icon;
         }
     }}
     
@@ -187,9 +266,9 @@ public class CustomizationInventory : MonoBehaviour{
             ce.variantId=i;
             ce.elementName=GetSkin(str).name;
             ce.rarity=GetSkin(str).rarity;
-            go.transform.GetChild(1).GetComponent<Image>().sprite=gs.spr;
-            //if(GetSkinSprite(str)!=null){go.transform.GetChild(2).GetComponent<Image>().sprite=GetSkinSprite(str);}
-            if(gs.sprOverlay!=null){go.transform.GetChild(2).GetComponent<Image>().sprite=gs.sprOverlay;}
+            ce.elementPv.GetComponent<Image>().sprite=gs.spr;
+            //if(GetSkinSprite(str)!=null){ce.overlayImg.GetComponent<Image>().sprite=GetSkinSprite(str);}
+            if(gs.sprOverlay!=null){ce.overlayImg.GetComponent<Image>().sprite=gs.sprOverlay;}
         }
     }
     void HighlightSelectedVariant(){foreach(Transform t in variantsListContent){
@@ -198,6 +277,41 @@ public class CustomizationInventory : MonoBehaviour{
         (!skinName.Contains("_")&&GetSkinName(skinName)==ce.elementName&&ce.variantId==-1)){ce.selectedBg.SetActive(true);}
         else{ce.selectedBg.SetActive(false);}
     }}
+
+    void RefreshParticles(){
+        if(typeSelected==CstmzType.flares){
+            foreach(CstmzElement ce in elementsListContent.GetComponentsInChildren<CstmzElement>()){
+                if(ce.elementPv.transform.childCount==0){
+                    GameObject goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
+                    GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+                    goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
+                    GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+                }
+            }
+        }
+        CstmzTypeElement typeFlares=Array.Find(typesListConent.GetComponentsInChildren<CstmzTypeElement>(),x=>x.elementType==CstmzType.flares);
+        if(typeFlares.elementPv.transform.childCount==0){
+            GameObject goPt=Instantiate(GetFlareVFX(flaresName),typeFlares.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
+            GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+            goPt=Instantiate(GetFlareVFX(flaresName),typeFlares.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
+            GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+        }
+
+        if(typeSelected==CstmzType.deathFx){
+            foreach(CstmzElement ce in elementsListContent.GetComponentsInChildren<CstmzElement>()){
+                if(ce.elementPv==null){
+                    ce.elementPv=Instantiate(GetDeathFxObj(ce.elementName),ce.transform);
+                    GameAssets.instance.TransformIntoUIParticle(ce.elementPv,1,-1);
+                }
+            }
+        }
+        CstmzTypeElement typeDeathFx=Array.Find(typesListConent.GetComponentsInChildren<CstmzTypeElement>(),x=>x.elementType==CstmzType.deathFx);
+        if(typeDeathFx.elementPv==null){
+            typeDeathFx.elementPv=Instantiate(GetDeathFxObj(deathFxName),typeDeathFx.transform);
+            GameAssets.instance.TransformIntoUIParticle(typeDeathFx.elementPv,1,-1);
+        }
+    }
+
 
     public Color GetRarityColor(CstmzRarity rarity){
         var col=Color.white;
@@ -224,4 +338,19 @@ public class CustomizationInventory : MonoBehaviour{
 
     public CstmzTrail GetTrail(string str){return GameAssets.instance.GetTrail(str);}
     public void SetTrail(string str){trailName=str;HighlightSelectedElement();HighlightSelectedType();}
+
+    public GameObject GetFlareVFX(string str){GameObject go=null;
+        if(GameAssets.instance.GetFlares(str)!=null){go=GameAssets.instance.GetFlareRandom(str);}
+        return go;
+    }
+    public void SetFlares(string str){flaresName=str;HighlightSelectedElement();HighlightSelectedType();}
+
+    public CstmzDeathFx GetDeathFx(string str){return GameAssets.instance.GetDeathFx(str);}
+    public GameObject GetDeathFxObj(string str){GameObject go=null;
+        if(GameAssets.instance.GetDeathFx(str)!=null){go=GameAssets.instance.GetDeathFx(str).obj;}
+        return go;
+    }
+    public void SetDeathFx(string str){deathFxName=str;HighlightSelectedElement();HighlightSelectedType();}
+    public CstmzMusic GetMusic(string str){return GameAssets.instance.GetMusic(str);}
+    public void SetMusic(string str){musicName=str;HighlightSelectedElement();HighlightSelectedType();}
 }

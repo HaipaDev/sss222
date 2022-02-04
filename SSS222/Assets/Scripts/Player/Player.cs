@@ -718,8 +718,15 @@ public class Player : MonoBehaviour{
         foreach(Transform c in transform){Destroy(c.gameObject);}
     }
     void DeathFX(){
-        GameAssets.instance.VFX("Explosion",transform.position,0.5f);
-        AudioManager.instance.Play("Death");
+        if(ShipCustomizationManager.instance!=null){
+            var dfx=ShipCustomizationManager.instance.GetDeathFx();
+            Instantiate(dfx.obj,transform.position,Quaternion.identity);
+            AudioManager.instance.Play(dfx.sound);
+        }else{
+            GameAssets.instance.VFX("Explosion",transform.position,0.5f);
+            AudioManager.instance.Play("Death");
+        }
+        
     }
 
 #region//Powerups
@@ -771,7 +778,10 @@ public class Player : MonoBehaviour{
                             if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalR;
                             if(bulletL.GetComponent<Tag_PlayerWeapon>()!=null&&w.costType==costType.energy){bulletL.GetComponent<Tag_PlayerWeapon>().energy=wc.cost/wp.bulletAmount;}
                         }}
-                        if(wp.flare){GameAssets.instance.VFX(ShipCustomizationManager.instance.GetFlareVFX(),posL,wp.flareDur);}
+                        if(wp.flare){
+                            if(ShipCustomizationManager.instance!=null){flareL=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),posL,Quaternion.identity);Destroy(flareL,wp.flareDur);}
+                            else{flareL=GameAssets.instance.GetVFX("FlareShoot");}
+                        }
                     }
                     void RightSide(){for(var i=0;i<wp.bulletAmount;i++,
                     rR=new Vector3(rR.x-=wp.serialOffsetAngle.x,0,rR.z-=wp.serialOffsetAngle.y),soundIntervalR+=wp.serialOffsetSound){
@@ -790,7 +800,10 @@ public class Player : MonoBehaviour{
                             if(bulletR.GetComponent<IntervalSound>()!=null)bulletR.GetComponent<IntervalSound>().interval=soundIntervalR;
                             if(bulletR.GetComponent<Tag_PlayerWeapon>()!=null&&w.costType==costType.energy){bulletR.GetComponent<Tag_PlayerWeapon>().energy=wc.cost/wp.bulletAmount;}
                         }}
-                        if(wp.flare){GameAssets.instance.VFX(ShipCustomizationManager.instance.GetFlareVFX(),posR,wp.flareDur);}
+                        if(wp.flare){
+                            if(ShipCustomizationManager.instance!=null){flareR=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),posR,Quaternion.identity);Destroy(flareR,wp.flareDur);}
+                            else{flareR=GameAssets.instance.GetVFX("FlareShoot");}
+                        }
                     }
                     if(wp.leftSide)LeftSide();
                     if(wp.rightSide)RightSide();

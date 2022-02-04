@@ -13,6 +13,9 @@ public class GameAssets : MonoBehaviour{
 	[Header("Customization")]
 	[AssetsOnly]public CstmzSkin[] skins;
 	[AssetsOnly]public CstmzTrail[] trails;
+	[AssetsOnly]public CstmzFlares[] flares;
+	[AssetsOnly]public CstmzDeathFx[] deathFxs;
+	[AssetsOnly]public CstmzMusic[] musics;
     
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
 
@@ -118,7 +121,6 @@ public class GameAssets : MonoBehaviour{
         return skins[i];
 	}
 
-	
 	public CstmzTrail GetTrail(string str){
 		CstmzTrail s = Array.Find(trails, item => item.name == str);
 		if (s == null){
@@ -127,12 +129,69 @@ public class GameAssets : MonoBehaviour{
 		}
         return s;
 	}
-	public void RegularParticleIntoUIParticle(GameObject go,float sizeMult=1){
+	public CstmzFlares GetFlares(string str){
+		CstmzFlares s = Array.Find(flares, item => item.name == str);
+		if (s == null){
+			Debug.LogWarning("Flares: " + str + " not found!");
+			return null;
+		}
+        return s;
+	}
+	public GameObject GetFlareFirst(string str){
+		CstmzFlares s = Array.Find(flares, item => item.name == str);
+		if (s == null){
+			Debug.LogWarning("Flares: " + str + " not found!");
+			return null;
+		}
+        return s.parts[0];
+	}
+	public GameObject GetFlareRandom(string str){
+		CstmzFlares s = Array.Find(flares, item => item.name == str);
+		GameObject go=s.parts[UnityEngine.Random.Range(0,s.parts.Length)];
+		if (s == null){
+			Debug.LogWarning("Flares: " + str + " not found!");
+			return null;
+		}
+        return go;
+	}
+
+	
+	public CstmzDeathFx GetDeathFx(string str){
+		CstmzDeathFx s = Array.Find(deathFxs, item => item.name == str);
+		if (s == null){
+			Debug.LogWarning("DeathFx: " + str + " not found!");
+			return null;
+		}
+        return s;
+	}
+
+	public CstmzMusic GetMusic(string str){
+		CstmzMusic s = Array.Find(musics, item => item.name == str);
+		if (s == null){
+			Debug.LogWarning("Music: " + str + " not found!");
+			return null;
+		}
+        return s;
+	}
+	public CstmzMusic GetMusicRandom(string str){
+		CstmzMusic s = musics[UnityEngine.Random.Range(0,musics.Length)];
+		if (s == null){
+			Debug.LogWarning("Music: " + str + " not found!");
+			return null;
+		}
+        return s;
+	}
+
+
+	public void TransformIntoUIParticle(GameObject go,float sizeMult=1,float dur=-4){
 		var ps=go.GetComponent<ParticleSystem>();var psMain=ps.main;
 		if(sizeMult==1){
 			if(ps.startSize<=1){sizeMult=100;}
 			if(ps.startSize<=10&&ps.startSize>1){sizeMult=10;}
 		}
+		if(dur==0){Destroy(go,psMain.duration);}
+		if(dur==-1){Destroy(go,psMain.duration*2);}
+		if(dur>0){Destroy(go,dur);}
 		psMain.startSize=new ParticleSystem.MinMaxCurve(psMain.startSize.constantMin*sizeMult, psMain.startSize.constantMax*sizeMult);
 		//if(ps.startSize<1&&go.transform.localScale.x<=1)go.transform.localScale*=100;
 		//if(ps.startSize<10&&ps.startSize>1&&go.transform.localScale.x<=1)go.transform.localScale*=10;
@@ -140,6 +199,7 @@ public class GameAssets : MonoBehaviour{
 		var psUI=go.AddComponent<UnityEngine.UI.Extensions.UIParticleSystem>();
 		psUI.material=mat;
 	}
+	public void MakeParticleLooping(ParticleSystem pt){var ptMain=pt.main;ptMain.loop=true;ptMain.stopAction=ParticleSystemStopAction.None;}
 }
 
 [System.Serializable]
@@ -154,14 +214,14 @@ public class GSprite{
 }
 public enum CstmzRarity{def,common,rare,epic,legend}
 public enum CstmzCategory{special,shop,reOne,twoPiece}
-public enum CstmzType{skin,trail,flare,deathFx,music,bg}
+public enum CstmzType{skin,trail,flares,deathFx,music,bg}
 [System.Serializable]
 public class CstmzSkin{
 	public string name;
-	public Sprite spr;
-	public Sprite sprOverlay;
 	public CstmzRarity rarity=CstmzRarity.common;
 	public CstmzCategory category;
+	public Sprite spr;
+	public Sprite sprOverlay;
 	public int variantSelected=-1;
 	public CstmzSkinVariant[] variants;
 }
@@ -173,7 +233,30 @@ public class CstmzSkinVariant{
 [System.Serializable]
 public class CstmzTrail{
 	public string name;
-	public GameObject part;
 	public CstmzRarity rarity=CstmzRarity.common;
 	public CstmzCategory category;
+	[AssetsOnly]public GameObject part;
+}
+[System.Serializable]
+public class CstmzFlares{
+	public string name;
+	public CstmzRarity rarity=CstmzRarity.common;
+	public CstmzCategory category;
+	[AssetsOnly]public GameObject[] parts;
+}
+[System.Serializable]
+public class CstmzDeathFx{
+	public string name;
+	public CstmzRarity rarity=CstmzRarity.common;
+	public CstmzCategory category;
+	[AssetsOnly]public GameObject obj;
+	public string sound="Death";
+}
+[System.Serializable]
+public class CstmzMusic{
+	public string name;
+	public CstmzRarity rarity=CstmzRarity.common;
+	public CstmzCategory category;
+	public AudioClip track;
+	public Sprite icon;
 }

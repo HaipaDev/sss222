@@ -33,11 +33,11 @@ public class InverterFx : MonoBehaviour{
             foreach(AudioSource snd in FindObjectsOfType<AudioSource>()){if(snd!=null){
                 GameObject sndGo=snd.gameObject;
                 if(on){
-                    if(invertSounds&&sndGo!=MusicPlayer.instance){//If not MusicPlayer
+                    if(invertSounds&&sndGo!=Jukebox.instance){//If not Jukebox
                         if(snd.loop){loopedSounds.Add(snd);}
                         SetSoundReverse(snd,snd.loop);
-                    }else if(invertMusic&&sndGo==MusicPlayer.instance){
-                        if(MusicPlayer.instance.GetComponent<AudioSource>().pitch!=-1)MusicPlayer.instance.GetComponent<AudioSource>().pitch=-1;
+                    }else if(invertMusic&&sndGo==Jukebox.instance){
+                        if(Jukebox.instance.GetComponent<AudioSource>().pitch!=-1)Jukebox.instance.GetComponent<AudioSource>().pitch=-1;
                     }
                 }else{
                     if(!reverted){
@@ -49,7 +49,7 @@ public class InverterFx : MonoBehaviour{
                                 loopedSounds.Remove(loopedSounds[i]);
                             }}
                         }
-                        if(invertMusic)if(MusicPlayer.instance!=null){MusicPlayer.instance.GetComponent<AudioSource>().pitch=1;}//offTimer=1f;}
+                        if(invertMusic)if(Jukebox.instance!=null){Jukebox.instance.GetComponent<AudioSource>().pitch=1;}//offTimer=1f;}
                         reverted=true;
                     }
                 }

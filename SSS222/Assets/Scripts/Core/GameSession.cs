@@ -175,8 +175,8 @@ public class GameSession : MonoBehaviour{
             foreach(AudioSource sound in FindObjectsOfType<AudioSource>()){
                 if(sound!=null){
                     GameObject snd=sound.gameObject;
-                    //if(sound!=musicPlayer){
-                    if(snd.GetComponent<MusicPlayer>()==null){
+                    //if(sound!=Jukebox){
+                    if(snd.GetComponent<Jukebox>()==null){
                         //sound.pitch=1;
                         sound.Stop();
                     }
@@ -187,8 +187,8 @@ public class GameSession : MonoBehaviour{
             foreach(AudioSource sound in AudioManager.instance.GetComponents(typeof(AudioSource))){
                 if(sound!=null){
                     GameObject snd=sound.gameObject;
-                    //if(sound!=musicPlayer){
-                    if(snd.GetComponent<MusicPlayer>()==null){
+                    //if(sound!=Jukebox){
+                    if(snd.GetComponent<Jukebox>()==null){
                         if(sound.pitch==-1)sound.pitch=1;
                         if(sound.loop==true)sound.loop=false;
                     }
@@ -374,7 +374,7 @@ public class GameSession : MonoBehaviour{
         SaveSerial.instance.DeleteStats();
     }
     public void ResetMusicPitch(){
-        if(MusicPlayer.instance!=null)MusicPlayer.instance.GetComponent<AudioSource>().pitch=1;
+        if(Jukebox.instance!=null)Jukebox.instance.GetComponent<AudioSource>().pitch=1;
     }
     float settingsOpenTimer;
     public void CloseSettings(bool goToPause){

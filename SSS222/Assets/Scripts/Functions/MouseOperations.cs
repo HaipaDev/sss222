@@ -56,7 +56,7 @@ public class MouseOperations{
              0,
              0)
             ;
-        UnityEngine.Debug.Log("Event: "+value.ToString());
+        //UnityEngine.Debug.Log("Event: "+value.ToString());
     }
 
     [StructLayout(LayoutKind.Sequential)]

@@ -19,13 +19,13 @@ public class FixScrollRectWithButtons : MonoBehaviour{
         if((timerUp<=0&&timerHeld>=timeHeldNeeded)||(Input.GetAxis("Mouse ScrollWheel")!=0)){
             if(transform.GetComponentsInChildren<Button>()[0].enabled){foreach(Button b in transform.GetComponentsInChildren<Button>()){
                 b.enabled=false;b.GetComponent<Image>().raycastTarget=false;
-                Debug.Log("Disabled components");
+                //Debug.Log("Disabled components");
                 if(Input.GetAxis("Mouse ScrollWheel")==0){timerDelay=timeDelayNeeded;timerDelay2=timeDelayNeeded*2;}
             }}
         }else if((timerUp>=timeUpNeeded)){//||(fakeButton==MouseOperations.MouseEventFlags.None&&Input.GetAxis("Mouse ScrollWheel")==0)){
             if(!transform.GetComponentsInChildren<Button>()[0].enabled){foreach(Button b in transform.GetComponentsInChildren<Button>()){
                 b.enabled=true;b.GetComponent<Image>().raycastTarget=true;
-                Debug.Log("Enabled components");
+                //Debug.Log("Enabled components");
             }}
         }
         //if(timerHeld>=timeHeldNeeded&&Input.GetAxis("Mouse ScrollWheel")==0){
