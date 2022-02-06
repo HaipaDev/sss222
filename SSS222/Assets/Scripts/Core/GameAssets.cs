@@ -183,18 +183,19 @@ public class GameAssets : MonoBehaviour{
 	}
 
 
-	public void TransformIntoUIParticle(GameObject go,float sizeMult=1,float dur=-4){
+	public void TransformIntoUIParticle(GameObject go,float sizeMult=0,float dur=-4){
 		var ps=go.GetComponent<ParticleSystem>();var psMain=ps.main;
-		if(sizeMult==1){
+		if(sizeMult==0){
 			if(ps.startSize<=1){sizeMult=100;}
 			if(ps.startSize<=10&&ps.startSize>1){sizeMult=10;}
 		}
-		if(dur==0){Destroy(go,psMain.duration);}
-		if(dur==-1){Destroy(go,psMain.duration*2);}
 		if(dur>0){Destroy(go,dur);}
-		psMain.startSize=new ParticleSystem.MinMaxCurve(psMain.startSize.constantMin*sizeMult, psMain.startSize.constantMax*sizeMult);
-		//if(ps.startSize<1&&go.transform.localScale.x<=1)go.transform.localScale*=100;
-		//if(ps.startSize<10&&ps.startSize>1&&go.transform.localScale.x<=1)go.transform.localScale*=10;
+		else if(dur==0){Destroy(go,psMain.duration);}
+		else if(dur==-1){Destroy(go,psMain.duration*2);}
+		var min=psMain.startSize.constantMin;var max=psMain.startSize.constantMax;
+		if(min==0){min=max;}
+		psMain.startSize=new ParticleSystem.MinMaxCurve(min*sizeMult, max*sizeMult);
+		var psShape=ps.shape;psShape.radius*=sizeMult;
 		Material mat=new Material(Shader.Find("UI Extensions/Particles/Additive"));mat.SetTexture("_MainTex",ps.GetComponent<Renderer>().material.GetTexture("_MainTex"));
 		var psUI=go.AddComponent<UnityEngine.UI.Extensions.UIParticleSystem>();
 		psUI.material=mat;
@@ -222,7 +223,7 @@ public class CstmzSkin{
 	public CstmzCategory category;
 	public Sprite spr;
 	public Sprite sprOverlay;
-	public int variantSelected=-1;
+	//public int variantDefault=-1;
 	public CstmzSkinVariant[] variants;
 }
 [System.Serializable]

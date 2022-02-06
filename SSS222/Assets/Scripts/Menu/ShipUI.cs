@@ -15,12 +15,13 @@ public class ShipUI : MonoBehaviour{
     [ShowIf("followMouse")][SerializeField] float speedFollowMouse=500f;
     [ShowIf("followMouse")][SerializeField] float distanceFollowMouse=200f;
 
+    [SerializeField] bool flaresPreview=true;
+    [ShowIf("flaresPreview")][SerializeField] Transform flaresParent;
+
     RectTransform rt;
     void Start(){
         rt=GetComponent<RectTransform>();
-        /*var ps=GetComponentInChildren<ParticleSystem>();
-        if(ps.startSize<10)ps.startSize*=10;
-        GetComponentInChildren<UnityEngine.UI.Extensions.UIParticleSystem>().material=ps.GetComponent<Renderer>().material;*/
+        if(flaresPreview){StartCoroutine(FlaresPreviewI());}
     }
     void Update(){
         var step=Time.unscaledDeltaTime;
@@ -47,5 +48,17 @@ public class ShipUI : MonoBehaviour{
         if((Input.GetMouseButtonDown(0)&&(Input.mousePosition.x<transform.position.x+distanceFollowMouse&&Input.mousePosition.x>transform.position.x-distanceFollowMouse)&&
         (Input.mousePosition.y<transform.position.y+distanceFollowMouse&&Input.mousePosition.y>transform.position.y-distanceFollowMouse))||distanceFollowMouse==0){_mousePressedInBound=true;}
         if(!Input.GetMouseButton(0)){_mousePressedInBound=false;}
+    }
+
+    IEnumerator FlaresPreviewI(){
+        if(flaresParent.childCount==0&&ShipCustomizationManager.instance!=null){
+            var ps=ShipCustomizationManager.instance.GetFlareVFX().GetComponent<ParticleSystem>();var psMain=ps.main;var dur=psMain.duration;
+            var flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);
+                flareObj.transform.localPosition=new Vector2(-44f,6f);GameAssets.instance.TransformIntoUIParticle(flareObj,0,-1);
+            flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);
+                flareObj.transform.localPosition=new Vector2(44f,6f);GameAssets.instance.TransformIntoUIParticle(flareObj,0,-1);
+            yield return new WaitForSeconds(psMain.duration*2);
+            if(flaresPreview)StartCoroutine(FlaresPreviewI());
+        }else{yield return null;}
     }
 }

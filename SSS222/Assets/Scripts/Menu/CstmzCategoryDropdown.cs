@@ -17,13 +17,15 @@ public class CstmzCategoryDropdown : MonoBehaviour{
         for(var i=0;i<CustomizationInventory.instance._CstmzCategoryNames.Length;i++){
             if(skip.Count==0){
                 options.Add(new OptionData(CustomizationInventory.instance._CstmzCategoryNames[i],dd.itemImage.sprite));
-            }else{for(var j=0;j<skip.Count;j++){if(CustomizationInventory.instance._CstmzCategoryNames[i].Contains(skip[j])){
+            }else{for(var j=0;j<skip.Count;j++){if(!CustomizationInventory.instance._CstmzCategoryNames[i].Contains(skip[j])){
                     options.Add(new OptionData(CustomizationInventory.instance._CstmzCategoryNames[i],dd.itemImage.sprite));
             }}}
         }
         dd.ClearOptions();
         dd.AddOptions(options);
-        dd.value=dd.options.FindIndex(d=>d.text.Contains(CustomizationInventory.instance._CstmzCategoryNames[(int)CustomizationInventory.instance.categorySelected]));
+        SetValueFromSelected();
     }
     public void SetCategory(){CustomizationInventory.instance.ChangeCategory(dd.options[dd.value].text);}
+    public void SetValue(string str){dd.value=dd.options.FindIndex(d=>d.text.Contains(str));}
+    public void SetValueFromSelected(){dd.value=dd.options.FindIndex(d=>d.text.Contains(CustomizationInventory.instance._CstmzCategoryNames[(int)CustomizationInventory.instance.categorySelected]));}
 }

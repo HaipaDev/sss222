@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Sirenix.OdinInspector;
 
 public class CustomizationInventory : MonoBehaviour{
     public static CustomizationInventory instance;
     [HeaderAttribute("Objects")]
+    [SceneObjectsOnly][SerializeField] CstmzCategoryDropdown categoriesDropdown;
     [SceneObjectsOnly][SerializeField] RectTransform typesListConent;
     [AssetsOnly][SerializeField] GameObject cstmzElementPrefab;
     [SceneObjectsOnly][SerializeField] RectTransform elementsListContent;
@@ -40,7 +42,7 @@ public class CustomizationInventory : MonoBehaviour{
     void Awake(){instance=this;}
     void Start(){
         skinName=SaveSerial.instance.playerData.skinName;
-        categorySelected=Array.Find(GameAssets.instance.skins,x=>x.name.Contains(GetSkinName(SaveSerial.instance.playerData.skinName))).category;
+        SetCategory(Array.Find(GameAssets.instance.skins,x=>x.name.Contains(GetSkinName(SaveSerial.instance.playerData.skinName))).category);
 
         overlayColorArr[0] = SaveSerial.instance.playerData.overlayColor[0];
         overlayColorArr[1] = SaveSerial.instance.playerData.overlayColor[1];
@@ -93,7 +95,6 @@ public class CustomizationInventory : MonoBehaviour{
         ShipCustomizationManager.instance.trailName=trailName;
         ShipCustomizationManager.instance.flaresName=flaresName;
         ShipCustomizationManager.instance.deathFxName=deathFxName;
-        ShipCustomizationManager.instance.musicName=musicName;
 
         RefreshParticles();
     }
@@ -127,8 +128,9 @@ public class CustomizationInventory : MonoBehaviour{
                 ce.elementName=ge.name;
                 ce.rarity=ge.rarity;
                 Destroy(ce.overlayImg);
-                Destroy(ce.elementPv);ce.elementPv=Instantiate(ge.part,go.transform);
-                GameAssets.instance.TransformIntoUIParticle(ce.elementPv);
+                Destroy(ce.elementPv.GetComponent<Image>());
+                GameObject goPt=Instantiate(ge.part,ce.elementPv.transform);
+                GameAssets.instance.TransformIntoUIParticle(goPt);
             }
         }else if(typeSelected==CstmzType.flares){
             var currentCategoryFlares=Array.FindAll(GameAssets.instance.flares,x=>x.category==categorySelected);
@@ -143,9 +145,9 @@ public class CustomizationInventory : MonoBehaviour{
                 Destroy(ce.elementPv.GetComponent<Image>());
                 for(var i=0;i<ce.elementPv.transform.childCount;i++){Destroy(ce.elementPv.transform.GetChild(i).gameObject);}
                 GameObject goPt=Instantiate(GetFlareVFX(ge.name),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
-                GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+                GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
                 goPt=Instantiate(GetFlareVFX(ge.name),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
-                GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+                GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
             }
         }else if(typeSelected==CstmzType.deathFx){
             var currentCategoryDeathFxs=Array.FindAll(GameAssets.instance.deathFxs,x=>x.category==categorySelected);
@@ -157,9 +159,9 @@ public class CustomizationInventory : MonoBehaviour{
                 ce.elementName=ge.name;
                 ce.rarity=ge.rarity;
                 Destroy(ce.overlayImg);
-                Destroy(ce.elementPv);
+                Destroy(ce.elementPv.GetComponent<Image>());
                 GameObject goPt=Instantiate(ge.obj,go.transform);
-                GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+                GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
             }
         }else if(typeSelected==CstmzType.music){
             var currentCategoryMusic=Array.FindAll(GameAssets.instance.musics,x=>x.category==categorySelected);
@@ -177,22 +179,30 @@ public class CustomizationInventory : MonoBehaviour{
     }
     void HighlightSelectedElement(){foreach(Transform t in elementsListContent){
         CstmzElement ce=t.GetComponent<CstmzElement>();
-        if(typeSelected==CstmzType.skin&&ce.elementName==GetSkinName(skinName)){
-            ce.selectedBg.SetActive(true);
-            if(skinName.Contains("_"))ce.elementPv.GetComponent<Image>().sprite=GetSkinSprite(skinName);
-        }else{ce.selectedBg.SetActive(false);}
-        if(typeSelected==CstmzType.trail&&ce.elementName==trailName){
-            ce.selectedBg.SetActive(true);
-        }else{ce.selectedBg.SetActive(false);}
-        if(typeSelected==CstmzType.flares&&ce.elementName==flaresName){
-            ce.selectedBg.SetActive(true);
-        }else{ce.selectedBg.SetActive(false);}
-        if(typeSelected==CstmzType.deathFx&&ce.elementName==deathFxName){
-            ce.selectedBg.SetActive(true);
-        }else{ce.selectedBg.SetActive(false);}
-        if(typeSelected==CstmzType.music&&ce.elementName==musicName){
-            ce.selectedBg.SetActive(true);
-        }else{ce.selectedBg.SetActive(false);}
+        switch(typeSelected){
+            case CstmzType.skin:
+                if(ce.elementName==GetSkinName(skinName)){
+                    ce.selectedBg.SetActive(true);
+                    if(skinName.Contains("_"))ce.elementPv.GetComponent<Image>().sprite=GetSkinSprite(skinName);
+                }else{ce.selectedBg.SetActive(false);}
+                break;
+            case CstmzType.trail:
+                if(ce.elementName==trailName){ce.selectedBg.SetActive(true);}
+                else{ce.selectedBg.SetActive(false);}
+                break;
+            case CstmzType.flares:
+                if(ce.elementName==flaresName){ce.selectedBg.SetActive(true);}
+                else{ce.selectedBg.SetActive(false);}
+                break;
+            case CstmzType.deathFx:
+                if(ce.elementName==deathFxName){ce.selectedBg.SetActive(true);}
+                else{ce.selectedBg.SetActive(false);}
+                break;
+            case CstmzType.music:
+                if(ce.elementName==musicName){ce.selectedBg.SetActive(true);}
+                else{ce.selectedBg.SetActive(false);}
+                break;
+        }
     }}
     void HighlightSelectedType(){foreach(Transform t in typesListConent){
         CstmzTypeElement ce=t.GetComponent<CstmzTypeElement>();
@@ -206,20 +216,22 @@ public class CustomizationInventory : MonoBehaviour{
             ce.elementPv.GetComponent<Image>().sprite=GetSkinSprite(skinName);
         }else if(ce.elementType==CstmzType.trail){
             Destroy(ce.overlayImg);
-            Destroy(ce.elementPv);ce.elementPv=Instantiate(GetTrail(trailName).part,t);
-            GameAssets.instance.TransformIntoUIParticle(ce.elementPv);
+            Destroy(ce.elementPv.GetComponent<Image>());
+            for(var i=0;i<ce.elementPv.transform.childCount;i++){Destroy(ce.elementPv.transform.GetChild(i).gameObject);}
+            GameObject goPt=Instantiate(GetTrail(trailName).part,ce.elementPv.transform);
+            GameAssets.instance.TransformIntoUIParticle(goPt);
         }else if(ce.elementType==CstmzType.flares){
             Destroy(ce.overlayImg);
             for(var i=0;i<ce.elementPv.transform.childCount;i++){Destroy(ce.elementPv.transform.GetChild(i).gameObject);}
             GameObject goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
-            GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+            GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
             goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
-            GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+            GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
         }else if(ce.elementType==CstmzType.deathFx){
             Destroy(ce.overlayImg);
-            Destroy(ce.elementPv);
-            ce.elementPv=Instantiate(GetDeathFxObj(ce.elementName),ce.transform);
-            GameAssets.instance.TransformIntoUIParticle(ce.elementPv,1,-1);
+            Destroy(ce.elementPv.GetComponent<Image>());
+            GameObject goPt=Instantiate(GetDeathFxObj(ce.elementName),ce.elementPv.transform);
+            GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
         }if(ce.elementType==CstmzType.music){
             ce.elementPv.GetComponent<Image>().sprite=GetMusic(musicName).icon;
         }
@@ -231,6 +243,19 @@ public class CustomizationInventory : MonoBehaviour{
         else if(str.Contains(_CstmzCategoryNames[1])){categorySelected=CstmzCategory.shop;}
         else if(str.Contains(_CstmzCategoryNames[2])){categorySelected=CstmzCategory.reOne;}
         else if(str.Contains(_CstmzCategoryNames[3])){categorySelected=CstmzCategory.twoPiece;}
+        categoriesDropdown.SetValueFromSelected();
+        RecreateAllElements();
+    }public void SetCategory(CstmzCategory cat){
+        categorySelected=cat;
+        categoriesDropdown.SetValueFromSelected();
+        RecreateAllElements();
+    }public void SetCategoryFromTypeElement(){
+        if(typeSelected==CstmzType.skin){categorySelected=GetSkin(skinName).category;}
+        else if(typeSelected==CstmzType.trail){categorySelected=GetTrail(trailName).category;}
+        else if(typeSelected==CstmzType.flares){categorySelected=GetFlares(flaresName).category;}
+        else if(typeSelected==CstmzType.deathFx){categorySelected=GetDeathFx(deathFxName).category;}
+        else if(typeSelected==CstmzType.music){categorySelected=GetMusic(musicName).category;}
+        categoriesDropdown.SetValueFromSelected();
         RecreateAllElements();
     }
 
@@ -239,35 +264,33 @@ public class CustomizationInventory : MonoBehaviour{
         if(GetSkin(str).variants.Length>0||GetOverlaySprite(str)!=null){
             variantsPanel.gameObject.SetActive(true);
             if(GetOverlaySprite(str)!=null||Array.Find(GetSkin(str).variants,x=>x.sprOverlay!=null)!=null){colorSliders.SetActive(true);}
-            DeleteAllVariantElements();
-            CreateAllVariantElements(str);
-            HighlightSelectedVariant();
+            RecreateAllVariants(str);
         }
     }
+    public void RecreateAllVariants(string str){DeleteAllVariantElements();CreateAllVariantElements(str);HighlightSelectedVariant();}
     void DeleteAllVariantElements(){foreach(Transform t in variantsListContent){Destroy(t.gameObject);}}
     void CreateAllVariantElements(string str){
         //Create first default variant
         var go1=Instantiate(cstmzElementPrefab,variantsListContent);
         go1.name="SkinVariant_-1";
-        CstmzElement ce=go1.GetComponent<CstmzElement>();
-        ce.variant=true;
-        ce.variantId=-1;
-        ce.elementName=GetSkin(str).name;
-        ce.rarity=GetSkin(str).rarity;
-        ce.elementPv.GetComponent<Image>().sprite=GetSkinSprite(str);
-        if(GetOverlaySprite(str)!=null)ce.overlayImg.GetComponent<Image>().sprite=GetOverlaySprite(str);
+        CstmzElement ce1=go1.GetComponent<CstmzElement>();
+        ce1.variant=true;ce1.variantId=-1;
+        ce1.elementName=GetSkin(str).name;
+        ce1.rarity=GetSkin(str).rarity;
+        ce1.elementPv.GetComponent<Image>().sprite=GetSkinSprite(str);
+        if(GetOverlaySprite(str)!=null)ce1.overlayImg.GetComponent<Image>().sprite=GetOverlaySprite(str);
         //Create all others
         CstmzSkinVariant[] variants=GetSkin(str).variants;
         for(int i=0;i<variants.Length;i++){
             var gs=variants[i];
             var go=Instantiate(cstmzElementPrefab,variantsListContent);
             go.name="SkinVariant_"+i;
-            ce.variant=true;
-            ce.variantId=i;
+            var ce=go.GetComponent<CstmzElement>();
+            ce.variant=true;ce.variantId=i;
             ce.elementName=GetSkin(str).name;
             ce.rarity=GetSkin(str).rarity;
             ce.elementPv.GetComponent<Image>().sprite=gs.spr;
-            //if(GetSkinSprite(str)!=null){ce.overlayImg.GetComponent<Image>().sprite=GetSkinSprite(str);}
+            //ce.elementPv.GetComponent<Image>().sprite=GetSkinSprite(str);
             if(gs.sprOverlay!=null){ce.overlayImg.GetComponent<Image>().sprite=gs.sprOverlay;}
         }
     }
@@ -283,32 +306,32 @@ public class CustomizationInventory : MonoBehaviour{
             foreach(CstmzElement ce in elementsListContent.GetComponentsInChildren<CstmzElement>()){
                 if(ce.elementPv.transform.childCount==0){
                     GameObject goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
-                    GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+                    GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
                     goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
-                    GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+                    GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
                 }
             }
         }
         CstmzTypeElement typeFlares=Array.Find(typesListConent.GetComponentsInChildren<CstmzTypeElement>(),x=>x.elementType==CstmzType.flares);
         if(typeFlares.elementPv.transform.childCount==0){
             GameObject goPt=Instantiate(GetFlareVFX(flaresName),typeFlares.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
-            GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+            GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
             goPt=Instantiate(GetFlareVFX(flaresName),typeFlares.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
-            GameAssets.instance.TransformIntoUIParticle(goPt,1,-1);
+            GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
         }
 
         if(typeSelected==CstmzType.deathFx){
             foreach(CstmzElement ce in elementsListContent.GetComponentsInChildren<CstmzElement>()){
-                if(ce.elementPv==null){
-                    ce.elementPv=Instantiate(GetDeathFxObj(ce.elementName),ce.transform);
-                    GameAssets.instance.TransformIntoUIParticle(ce.elementPv,1,-1);
+                if(ce.elementPv.transform.childCount==0){
+                    GameObject goPt=Instantiate(GetDeathFxObj(ce.elementName),ce.elementPv.transform);
+                    GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
                 }
             }
         }
         CstmzTypeElement typeDeathFx=Array.Find(typesListConent.GetComponentsInChildren<CstmzTypeElement>(),x=>x.elementType==CstmzType.deathFx);
-        if(typeDeathFx.elementPv==null){
-            typeDeathFx.elementPv=Instantiate(GetDeathFxObj(deathFxName),typeDeathFx.transform);
-            GameAssets.instance.TransformIntoUIParticle(typeDeathFx.elementPv,1,-1);
+        if(typeDeathFx.elementPv.transform.childCount==0){
+            var pt=Instantiate(GetDeathFxObj(deathFxName),typeDeathFx.elementPv.transform);
+            GameAssets.instance.TransformIntoUIParticle(pt,0,-1);
         }
     }
 
@@ -324,7 +347,7 @@ public class CustomizationInventory : MonoBehaviour{
         }
         return col;
     }
-    public void SetType(CstmzType type){if(typeSelected!=type){typeSelected=type;HighlightSelectedType();RecreateAllElements();}}
+    public void SetType(CstmzType type){if(typeSelected!=type){typeSelected=type;HighlightSelectedType();SetCategoryFromTypeElement();RecreateAllElements();}}
 
     string GetSkinName(string str){string _str=str;if(skinName.Contains("_")){_str=skinName.Split('_')[0];}return _str;}
     public CstmzSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
@@ -334,11 +357,13 @@ public class CustomizationInventory : MonoBehaviour{
     Sprite GetSkinSprite(string str){return ShipCustomizationManager.instance.GetSkinSprite(str);}
     Sprite GetOverlaySprite(string str){return ShipCustomizationManager.instance.GetOverlaySprite(str);}
     CstmzSkinVariant GetSkinVariant(string str,int id){return GameAssets.instance.GetSkinVariant(str,id);}
+    public bool SkinHasVariants(string str){bool b=false;if(GetSkin(str).variants.Length>0){b=true;}return b;}
     public void SetSkin(string str){skinName=str;if(variantsPanel.gameObject.activeSelf){variantsPanel.gameObject.SetActive(false);colorSliders.SetActive(false);}HighlightSelectedElement();HighlightSelectedType();}
 
     public CstmzTrail GetTrail(string str){return GameAssets.instance.GetTrail(str);}
     public void SetTrail(string str){trailName=str;HighlightSelectedElement();HighlightSelectedType();}
 
+    public CstmzFlares GetFlares(string str){return GameAssets.instance.GetFlares(str);}
     public GameObject GetFlareVFX(string str){GameObject go=null;
         if(GameAssets.instance.GetFlares(str)!=null){go=GameAssets.instance.GetFlareRandom(str);}
         return go;

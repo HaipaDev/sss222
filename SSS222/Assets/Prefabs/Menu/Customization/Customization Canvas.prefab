@@ -2357,6 +2357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a065de78c235b64589e47b9cde63da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  categoriesDropdown: {fileID: 1342611360211321136}
   typesListConent: {fileID: 3644340781086673377}
   cstmzElementPrefab: {fileID: 4677579573730461889, guid: 35de842908340f64e99536c627cab0ce,
     type: 3}
@@ -2385,6 +2386,8 @@ MonoBehaviour:
   - 1
   trailName: Flame
   flaresName: Flares
+  deathFxName: Explosion
+  musicName: Find You
   _CstmzCategoryNames:
   - Special
   - Shop
@@ -5178,7 +5181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1da037bcf0e9c74caa26d6966de2580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skip: []
+  skip:
+  - Shop
 --- !u!1 &7131570950383816602
 GameObject:
   m_ObjectHideFlags: 0
@@ -7027,6 +7031,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3229481634824747823}
     m_Modifications:
+    - target: {fileID: 1449588022140331097, guid: ef0827cb3a620194996d9ab0eca22edf,
+        type: 3}
+      propertyPath: overlayObj
+      value: 
+      objectReference: {fileID: 6116665492091813181}
     - target: {fileID: 6886882836849846690, guid: ef0827cb3a620194996d9ab0eca22edf,
         type: 3}
       propertyPath: m_Name
@@ -7139,6 +7148,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef0827cb3a620194996d9ab0eca22edf, type: 3}
+--- !u!1 &6116665492091813181 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5375534348799680930, guid: ef0827cb3a620194996d9ab0eca22edf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2196488717505928351}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8468487310469192669 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7781484095966758722, guid: ef0827cb3a620194996d9ab0eca22edf,

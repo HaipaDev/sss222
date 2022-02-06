@@ -6182,6 +6182,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4274158129543489597}
     m_Modifications:
+    - target: {fileID: 4592694107940938764, guid: 33b13d5c324265444a994a7b4c39d52c,
+        type: 3}
+      propertyPath: overlayObj
+      value: 
+      objectReference: {fileID: 2937026654512202030}
     - target: {fileID: 4637613446949488407, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_Pivot.x
@@ -6322,6 +6327,12 @@ PrefabInstance:
 --- !u!224 &695441803194869710 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4637613446949488407, guid: 33b13d5c324265444a994a7b4c39d52c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5330758348597682393}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2937026654512202030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7005562899587473911, guid: 33b13d5c324265444a994a7b4c39d52c,
     type: 3}
   m_PrefabInstance: {fileID: 5330758348597682393}
   m_PrefabAsset: {fileID: 0}

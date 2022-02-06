@@ -14,22 +14,27 @@ public class CstmzTypeElement : MonoBehaviour, IPointerClickHandler{
     [Header("Properties")]
     [SerializeField] public CstmzType elementType=CstmzType.skin;
     [SerializeField] public string elementName="Mk.22";
-    //[SerializeField] public CstmzRarity rarity;
+    [SerializeField] public CstmzRarity rarity;
     void Update(){
-        //GetComponent<Image>().color=CustomizationInventory.instance.GetRarityColor(rarity);
+        GetComponent<Image>().color=CustomizationInventory.instance.GetRarityColor(rarity);
         if(elementType==CstmzType.skin){
             elementName=CustomizationInventory.instance.skinName;
             if(ShipCustomizationManager.instance.GetOverlaySprite(elementName)!=null){overlayImg.GetComponent<Image>().color=CustomizationInventory.instance.overlayColor;}
             else{overlayImg.GetComponent<Image>().color=Color.clear;}
-        }//else{if(transform.childCount>1)Destroy(overlayImg.gameObject);}
+            rarity=CustomizationInventory.instance.GetSkin(elementName).rarity;
+        }
         else if(elementType==CstmzType.trail){
             elementName=CustomizationInventory.instance.trailName;
+            rarity=CustomizationInventory.instance.GetTrail(elementName).rarity;
         }else if(elementType==CstmzType.flares){
             elementName=CustomizationInventory.instance.flaresName;
+            rarity=CustomizationInventory.instance.GetFlares(elementName).rarity;
         }else if(elementType==CstmzType.deathFx){
             elementName=CustomizationInventory.instance.deathFxName;
+            rarity=CustomizationInventory.instance.GetDeathFx(elementName).rarity;
         }else if(elementType==CstmzType.music){
             elementName=CustomizationInventory.instance.musicName;
+            rarity=CustomizationInventory.instance.GetMusic(elementName).rarity;
         }
     }
     public void SetType(){CustomizationInventory.instance.SetType(elementType);}

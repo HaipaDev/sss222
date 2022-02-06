@@ -374,93 +374,86 @@ MonoBehaviour:
     category: 3
     spr: {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: Chameleon
     rarity: 4
     category: 0
     spr: {fileID: 21300000, guid: 8c3dccef1eacea141a8d89d0bd965366, type: 3}
     sprOverlay: {fileID: 21300000, guid: 823400051cf2dd84495c524fba381fef, type: 3}
-    variantSelected: -1
     variants:
     - spr: {fileID: 21300000, guid: eb0e0377b922df040b69396d565f0312, type: 3}
       sprOverlay: {fileID: 21300000, guid: 823400051cf2dd84495c524fba381fef, type: 3}
+  - name: Gold Moyai
+    rarity: 4
+    category: 0
+    spr: {fileID: 21300000, guid: e5e675c81ffb1f642b0e76cd73e0750c, type: 3}
+    sprOverlay: {fileID: 0}
+    variants: []
   - name: StarGazer
     rarity: 3
     category: 0
     spr: {fileID: 21300000, guid: 2622341d4058cee4f845c8a35d8001cd, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: Mk.20
     rarity: 0
     category: 2
     spr: {fileID: 21300000, guid: 71f91007a33260f4492735ce017231d6, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: SpaceCamo
     rarity: 1
     category: 2
     spr: {fileID: 21300000, guid: 00e5e5eece5653945bb0579a85dea066, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: Hazard
     rarity: 1
     category: 2
     spr: {fileID: 21300000, guid: 9618fa103e8b93846b0fa325d3e12123, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: Graffiti
     rarity: 1
     category: 2
     spr: {fileID: 21300000, guid: 6e97be9dc00d6524097c924e2096f8fd, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: YinYang
     rarity: 1
     category: 2
     spr: {fileID: 21300000, guid: ced31ab4394905d498b84085ca7d500c, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: Waffle
     rarity: 2
     category: 2
     spr: {fileID: 21300000, guid: 012d5f373229fb249a41422cddb1af34, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: Motherboard
     rarity: 2
     category: 2
     spr: {fileID: 21300000, guid: 6f12ddcae3dd2894897f7d8768483444, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: Earth
     rarity: 3
     category: 2
     spr: {fileID: 21300000, guid: 5003b599f0946ca41b6accf8a74e1855, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: DevilsBlade
     rarity: 4
     category: 2
     spr: {fileID: 21300000, guid: 1634e4c28f30570469336489b1a8a6ef, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   - name: Moyai
     rarity: 2
     category: 3
     spr: {fileID: 21300000, guid: b89c81b70bc2c4e408f77040270c77d5, type: 3}
     sprOverlay: {fileID: 0}
-    variantSelected: -1
     variants: []
   trails:
   - name: Flame
@@ -498,7 +491,7 @@ MonoBehaviour:
     rarity: 2
     category: 3
     obj: {fileID: 100000, guid: 1ee2c03a099f4cb4b8f86c863bfedf81, type: 3}
-    sound: Teleport
+    sound: Portal
   musics:
   - name: Find You
     rarity: 0

@@ -11,6 +11,7 @@ public class CstmzElement : MonoBehaviour, IPointerClickHandler{
     [SceneObjectsOnly][SerializeField] public GameObject selectedBg;
     [SceneObjectsOnly][SerializeField] public GameObject elementPv;
     [SceneObjectsOnly][SerializeField] public GameObject overlayImg;
+    [SceneObjectsOnly][SerializeField] public GameObject editButton;
     [Header("Properties")]
     [SerializeField] public CstmzType elementType=CstmzType.skin;
     [SerializeField] public string elementName="Mk.22";
@@ -20,9 +21,11 @@ public class CstmzElement : MonoBehaviour, IPointerClickHandler{
     void Update(){
         GetComponent<Image>().color=CustomizationInventory.instance.GetRarityColor(rarity);
         if(elementType==CstmzType.skin){
+            if(!CustomizationInventory.instance.SkinHasVariants(elementName)||variant){if(editButton.activeSelf)editButton.SetActive(false);}
             if(ShipCustomizationManager.instance.GetOverlaySprite(elementName+_VariantID())!=null){overlayImg.GetComponent<Image>().color=CustomizationInventory.instance.overlayColor;}
             else{overlayImg.GetComponent<Image>().color=Color.clear;}
-        }else{if(transform.childCount>1)Destroy(overlayImg.gameObject);}
+        }else{if(overlayImg!=null){Destroy(overlayImg);}if(editButton.activeSelf)editButton.SetActive(false);}
+        //editButton.GetComponent<Button>().onClick.AddListener(OpenVariants);
     }
     public void SetSkin(){CustomizationInventory.instance.SetSkin(elementName+_VariantID());}
     public void SetTrail(){CustomizationInventory.instance.SetTrail(elementName);}

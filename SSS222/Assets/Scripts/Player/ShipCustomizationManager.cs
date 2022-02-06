@@ -15,7 +15,6 @@ public class ShipCustomizationManager : MonoBehaviour{
     Vector2 trailObjPos=Vector2.zero;
     public string flaresName="Flares";
     public string deathFxName="Explosion";
-    public string musicName="Find You";
 
     SpriteRenderer overlaySpr;
     Image overlayImg;
@@ -84,10 +83,9 @@ public class ShipCustomizationManager : MonoBehaviour{
 
     void LoadValues(){
         skinName=SaveSerial.instance.playerData.skinName;
-        overlayColor=Color.HSVToRGB(SaveSerial.instance.playerData.overlayColor[0], SaveSerial.instance.playerData.overlayColor[1], SaveSerial.instance.playerData.overlayColor[2]);
+        overlayColor=Color.HSVToRGB(SaveSerial.instance.playerData.overlayColor[0],SaveSerial.instance.playerData.overlayColor[1],SaveSerial.instance.playerData.overlayColor[2]);
         trailName=SaveSerial.instance.playerData.trailName;
         flaresName=SaveSerial.instance.playerData.flaresName;
         deathFxName=SaveSerial.instance.playerData.deathFxName;
-        musicName=SaveSerial.instance.playerData.musicName;
     }
 }
