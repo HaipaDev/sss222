@@ -149,8 +149,8 @@ public class PlayerSkills : MonoBehaviour{
         }
         if(timerOverhaul>0&&player.infEnergy){
             timerOverhaul-=Time.deltaTime;
-        }if((timerOverhaul<0&&timerOverhaul!=-4)&&player.infEnergy){player.Overhaul();timerOverhaul=timeOverhaul;}
-        if(!player.infEnergy&&AudioManager.instance!=null&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}
+        }if((timerOverhaul<0&&timerOverhaul!=-4)&&player.infEnergy){timerOverhaul=timeOverhaul;}
+        if(!player.infEnergy&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}
     }}
     #endregion
     public void ResetSkillCooldowns(){

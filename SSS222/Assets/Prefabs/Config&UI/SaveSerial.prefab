@@ -57,10 +57,14 @@ MonoBehaviour:
   playerData:
     highscore: 
     skinName: Mk.22
-    chameleonColor:
+    overlayColor:
     - 0
     - 1
     - 1
+    trailName: Flame
+    flaresName: Flares
+    deathFxName: Explosion
+    musicName: Find You
     achievsCompleted: 
   statsData:
     statsGamemodesList: []

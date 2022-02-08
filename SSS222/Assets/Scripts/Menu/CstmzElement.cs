@@ -22,7 +22,8 @@ public class CstmzElement : MonoBehaviour, IPointerClickHandler{
         GetComponent<Image>().color=CustomizationInventory.instance.GetRarityColor(rarity);
         if(elementType==CstmzType.skin){
             if(!CustomizationInventory.instance.SkinHasVariants(elementName)||variant){if(editButton.activeSelf)editButton.SetActive(false);}
-            if(ShipCustomizationManager.instance.GetOverlaySprite(elementName+_VariantID())!=null){overlayImg.GetComponent<Image>().color=CustomizationInventory.instance.overlayColor;}
+            if(CustomizationInventory.instance.GetSkinSprite(elementName+_VariantID())!=null){elementPv.GetComponent<Image>().sprite=CustomizationInventory.instance.GetSkinSprite(elementName+_VariantID());}
+            if(CustomizationInventory.instance.GetOverlaySprite(elementName+_VariantID())!=null){overlayImg.GetComponent<Image>().color=CustomizationInventory.instance.overlayColor;}
             else{overlayImg.GetComponent<Image>().color=Color.clear;}
         }else{if(overlayImg!=null){Destroy(overlayImg);}if(editButton.activeSelf)editButton.SetActive(false);}
         //editButton.GetComponent<Button>().onClick.AddListener(OpenVariants);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -201,6 +202,23 @@ public class GameAssets : MonoBehaviour{
 		psUI.material=mat;
 	}
 	public void MakeParticleLooping(ParticleSystem pt){var ptMain=pt.main;ptMain.loop=true;ptMain.stopAction=ParticleSystemStopAction.None;}
+
+	public class CoroutineWithData {
+		public Coroutine coroutine { get; private set; }
+		public object result;
+		private IEnumerator target;
+		public CoroutineWithData(MonoBehaviour owner, IEnumerator target) {
+			this.target = target;
+			this.coroutine = owner.StartCoroutine(Run());
+		}
+	
+		private IEnumerator Run() {
+			while(target.MoveNext()) {
+				result = target.Current;
+				yield return result;
+			}
+		}
+ }
 }
 
 [System.Serializable]
@@ -213,6 +231,12 @@ public class GSprite{
 	public string name;
 	public Sprite spr;
 }
+[System.Serializable]
+public class SimpleAnim{
+	public Sprite spr;
+	public float delay;
+}
+
 public enum CstmzRarity{def,common,rare,epic,legend}
 public enum CstmzCategory{special,shop,reOne,twoPiece}
 public enum CstmzType{skin,trail,flares,deathFx,music,bg}
@@ -221,7 +245,10 @@ public class CstmzSkin{
 	public string name;
 	public CstmzRarity rarity=CstmzRarity.common;
 	public CstmzCategory category;
-	public Sprite spr;
+	public bool animated=false;
+	[HideIf("animated")]public Sprite spr;
+	[ShowIf("animated")]public float animSpeed=0.05f;//Leave at 0 to make each frame speed controlable
+	[ShowIf("animated")]public SimpleAnim[] animVals;
 	public Sprite sprOverlay;
 	//public int variantDefault=-1;
 	public CstmzSkinVariant[] variants;

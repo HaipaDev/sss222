@@ -19,7 +19,8 @@ public class CstmzTypeElement : MonoBehaviour, IPointerClickHandler{
         GetComponent<Image>().color=CustomizationInventory.instance.GetRarityColor(rarity);
         if(elementType==CstmzType.skin){
             elementName=CustomizationInventory.instance.skinName;
-            if(ShipCustomizationManager.instance.GetOverlaySprite(elementName)!=null){overlayImg.GetComponent<Image>().color=CustomizationInventory.instance.overlayColor;}
+            if(CustomizationInventory.instance.GetSkinSprite(elementName)!=null){elementPv.GetComponent<Image>().sprite=CustomizationInventory.instance.GetSkinSprite(elementName);}
+            if(CustomizationInventory.instance.GetOverlaySprite(elementName)!=null){overlayImg.GetComponent<Image>().color=CustomizationInventory.instance.overlayColor;}
             else{overlayImg.GetComponent<Image>().color=Color.clear;}
             rarity=CustomizationInventory.instance.GetSkin(elementName).rarity;
         }

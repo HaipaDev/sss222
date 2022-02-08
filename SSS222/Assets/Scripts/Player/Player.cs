@@ -80,8 +80,8 @@ public class Player : MonoBehaviour{
     [SerializeField] public bool bulletResize;
     [SerializeField] public int bflameDmgTillLvl=1;
 #endregion
-#region//States
-    [Header("States")]
+#region//Statuses
+    [Header("Statuses")]
     public List<string> statuses;
     public string statusc="";
     [SerializeField] public bool flip=false;
@@ -389,7 +389,7 @@ public class Player : MonoBehaviour{
         if(!ammoOn)ammo=-4;
         DrawMeleeWeapons();
         if(GetComponent<PlayerSkills>()!=null){if(GetComponent<PlayerSkills>().timerTeleport==-4){Shoot();}}else{Shoot();}
-        States();
+        Statuses();
         CalculateDefenseSpeed();
         Regen();
         Die();
@@ -863,8 +863,8 @@ public class Player : MonoBehaviour{
     }
 #endregion
  
-#region//States
-    private void States(){
+#region//Statuses
+    void Statuses(){
         if(flip==true){moveDir=-1;}else{moveDir=1;}
         if(flipTimer<=0&&flipTimer>-4){ResetStatus("flip");AudioManager.instance.Play("PowerupOff");}
 
@@ -1035,8 +1035,6 @@ public class Player : MonoBehaviour{
         }
     }
     void Regen(){//Move to a universal modules script instead of PlayerSkills
-        //if(UpgradeMenu.instance.crMend_upgraded>0){hpRegenEnabled=true;}
-        //if(UpgradeMenu.instance.enDiss_upgraded>0){enRegenEnabled=true;}
         if(!GameSession.GlobalTimeIsPaused){
             hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax);
             enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax);
@@ -1044,35 +1042,15 @@ public class Player : MonoBehaviour{
             if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt<=0){if(GameSession.instance.xp>=energyDiss_refillCost){EnAbsorp(energyDissAbsorp);GameSession.instance.xp-=energyDiss_refillCost;}}
             if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax)Damage(hpRegenAmnt,dmgType.heal);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}
             if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax)AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}
-            //if(hpRegenEnabled==true&&timerHpRegen>=freqHpRegen){Damage(hpRegenAmnt,dmgType.heal);timerHpRegen=0;}
-            //if(energyOn)if(enRegenEnabled==true&&timerEnRegen>=freqEnRegen&&energy>energyForRegen){AddSubEnergy(enRegenAmnt,true);timerEnRegen=0;}
         }
     }
-    public void Recoil(float strength, float time){
-        //rb.velocity = Vector2.down*strength;
-        //Debug.Log(rb.velocity);
-        if(recoilOn)StartCoroutine(RecoilI(strength,time));
-    }
+    public void Recoil(float strength, float time){if(recoilOn)StartCoroutine(RecoilI(strength,time));}
     IEnumerator RecoilI(float strength,float time){
         Shake.instance.CamShake(0.1f,1/(time*4));
         if(SaveSerial.instance.settingsData.vibrations)Vibrator.Vibrate(2);
         rb.velocity = Vector2.down*strength;
         yield return new WaitForSeconds(time);
         rb.velocity=Vector2.zero;
-    }
-
-    public void Overhaul(){
-        /*List<GameObject> pwrups=new List<GameObject>();
-        foreach(GObject go in GameAssets.instance.objects){
-            if(go.name.Contains("Pwrup")){
-                pwrups.Add(
-                    go.gobj);
-        }}
-        int i=UnityEngine.Random.Range(0,pwrups.Count-1);
-        Instantiate(pwrups[i],transform.position,Quaternion.identity);*/
-        GameObject randomizer=null;
-        foreach(GObject go in GameAssets.instance.objects){if(go.name.Contains("RandomizerPwrup")){randomizer=go.gobj;}}
-        if(randomizer!=null)Instantiate(randomizer,transform.position,Quaternion.identity);
     }
     
     public void OnFire(float duration,float strength=1){

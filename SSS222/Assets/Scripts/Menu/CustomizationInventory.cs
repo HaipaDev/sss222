@@ -354,8 +354,8 @@ public class CustomizationInventory : MonoBehaviour{
     CstmzSkin GetSkinCurrent(){return GetSkin(skinName);}
     int GetSkinID(string str){return GameAssets.instance.GetSkinID(str);}
     CstmzSkin GetSkinByID(int i){return GameAssets.instance.GetSkinByID(i);}
-    Sprite GetSkinSprite(string str){return ShipCustomizationManager.instance.GetSkinSprite(str);}
-    Sprite GetOverlaySprite(string str){return ShipCustomizationManager.instance.GetOverlaySprite(str);}
+    public Sprite GetSkinSprite(string str){return ShipCustomizationManager.instance.GetSkinSprite(str);}
+    public Sprite GetOverlaySprite(string str){return ShipCustomizationManager.instance.GetOverlaySprite(str);}
     CstmzSkinVariant GetSkinVariant(string str,int id){return GameAssets.instance.GetSkinVariant(str,id);}
     public bool SkinHasVariants(string str){bool b=false;if(GetSkin(str).variants.Length>0){b=true;}return b;}
     public void SetSkin(string str){skinName=str;if(variantsPanel.gameObject.activeSelf){variantsPanel.gameObject.SetActive(false);colorSliders.SetActive(false);}HighlightSelectedElement();HighlightSelectedType();}

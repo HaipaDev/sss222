@@ -45,13 +45,33 @@ public class ShipCustomizationManager : MonoBehaviour{
 
 
     //string GetSkinName(){string str=skinName;if(skinName.Contains(" _")){str=skinName.Split('_')[0];}return str;}
-    CstmzSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
-    CstmzSkin GetSkinCurrent(){string _str=skinName;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
-    CstmzSkinVariant GetSkinVariant(string str,int id){return GameAssets.instance.GetSkinVariant(str,id);}
-    public Sprite GetSkinSprite(string str){Sprite spr=null;
-        if(str.Contains("_")){spr=GameAssets.instance.GetSkin(str.Split('_')[0]).variants[int.Parse(str.Split('_')[1])].spr;}
-        else{spr=GameAssets.instance.GetSkin(str).spr;}
-    return spr;}
+    public CstmzSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
+    //public CstmzSkin GetSkinCurrent(){string _str=skinName;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
+    public CstmzSkinVariant GetSkinVariant(string str,int id){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}
+        return GameAssets.instance.GetSkinVariant(_str,id);}
+    public CstmzSkinVariant GetSkinVariantAuto(string str){return GameAssets.instance.GetSkinVariant(str.Split('_')[0],int.Parse(str.Split('_')[1]));}
+    
+    Coroutine anim;int iAnim=0;Sprite animSpr;
+    public Sprite GetSkinSprite(string str){CstmzSkin skin=null;Sprite spr=null;
+        skin=GameAssets.instance.GetSkin(str);
+        if(str.Contains("_")){spr=GetSkinVariantAuto(str).spr;}
+        else{if(skin.spr!=null)spr=skin.spr;}
+        if(skin.animated){
+            if(anim==null){animSpr=skin.animVals[0].spr;anim=StartCoroutine(AnimateSkin(skin));}
+            spr=animSpr;
+        }
+        return spr;
+    }
+    IEnumerator AnimateSkin(CstmzSkin skin){Sprite spr;
+        if(skin.animSpeed>0){yield return new WaitForSeconds(skin.animSpeed);}
+        else{yield return new WaitForSeconds(skin.animVals[iAnim].delay);}
+        spr=skin.animVals[iAnim].spr;
+        if(iAnim==skin.animVals.Length-1)iAnim=0;
+        if(iAnim<skin.animVals.Length)iAnim++;
+        animSpr=spr;
+        if(skinName==skin.name)anim=StartCoroutine(AnimateSkin(skin));
+        else{if(anim!=null)StopCoroutine(anim);anim=null;iAnim=0;}
+    }
     public Sprite GetOverlaySprite(string str){Sprite spr=null;
         if(str.Contains("_")){spr=GameAssets.instance.GetSkin(str.Split('_')[0]).variants[int.Parse(str.Split('_')[1])].sprOverlay;}
         else{spr=GameAssets.instance.GetSkin(str).sprOverlay;}
