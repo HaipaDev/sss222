@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+//using UnityEngine.Events.UnityEventTools;
 using Sirenix.OdinInspector;
 
-public class CstmzElement : MonoBehaviour, IPointerClickHandler{
+public class CstmzElement : MonoBehaviour, IEventSystemHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler{
     [Header("Object References")]
     [SceneObjectsOnly][SerializeField] public GameObject selectedBg;
     [SceneObjectsOnly][SerializeField] public GameObject elementPv;
@@ -18,15 +19,21 @@ public class CstmzElement : MonoBehaviour, IPointerClickHandler{
     [SerializeField] public CstmzRarity rarity;
     [SerializeField] public bool variant;
     [EnableIf("@this.variant")][SerializeField] public int variantId=-1;
+    void Awake(){GetComponent<Button>().onClick.AddListener(SetElement);}
     void Update(){
         GetComponent<Image>().color=CustomizationInventory.instance.GetRarityColor(rarity);
         if(elementType==CstmzType.skin){
             if(!CustomizationInventory.instance.SkinHasVariants(elementName)||variant){if(editButton.activeSelf)editButton.SetActive(false);}
             if(CustomizationInventory.instance.GetSkinSprite(elementName+_VariantID())!=null){elementPv.GetComponent<Image>().sprite=CustomizationInventory.instance.GetSkinSprite(elementName+_VariantID());}
+            if(CustomizationInventory.instance.GetSkin(elementName).animated){elementPv.GetComponent<Image>().sprite=GetSkinSpriteAnim(elementName);}
             if(CustomizationInventory.instance.GetOverlaySprite(elementName+_VariantID())!=null){overlayImg.GetComponent<Image>().color=CustomizationInventory.instance.overlayColor;}
             else{overlayImg.GetComponent<Image>().color=Color.clear;}
         }else{if(overlayImg!=null){Destroy(overlayImg);}if(editButton.activeSelf)editButton.SetActive(false);}
-        //editButton.GetComponent<Button>().onClick.AddListener(OpenVariants);
+
+        if(UIInputSystem.instance.currentSelected==gameObject){if(Input.GetKeyDown(KeyCode.E))OpenVariants();}
+        /*if(UIInputSystem.instance.currentSelected==gameObject){
+            UnityEventTools.AddPersistentListener(GetComponent<Button>().onClick,SetElement());
+        }else{UnityEventTools.RemovePersistentListener(GetComponent<Button>().onClick,SetElement());}*/
     }
     public void SetSkin(){CustomizationInventory.instance.SetSkin(elementName+_VariantID());}
     public void SetTrail(){CustomizationInventory.instance.SetTrail(elementName);}
@@ -34,18 +41,46 @@ public class CstmzElement : MonoBehaviour, IPointerClickHandler{
     public void SetDeathFx(){CustomizationInventory.instance.SetDeathFx(elementName);}
     public void SetMusic(){CustomizationInventory.instance.SetMusic(elementName);}
 
-    public void OpenVariants(){CustomizationInventory.instance.OpenVariants(elementName);}
+    public void SetElement(){
+        switch(elementType){
+            case CstmzType.skin:SetSkin();break;
+            case CstmzType.trail:SetTrail();break;
+            case CstmzType.flares:SetFlares();break;
+            case CstmzType.deathFx:SetDeathFx();break;
+            case CstmzType.music:SetMusic();break;
+        }
+    }
+    public void OpenVariants(){if(!variant)CustomizationInventory.instance.OpenVariants(elementName);}
     public void OnPointerClick(PointerEventData eventData){
         if(eventData.button==PointerEventData.InputButton.Left){
-            if(elementType==CstmzType.skin)SetSkin();
-            else if(elementType==CstmzType.trail)SetTrail();
-            else if(elementType==CstmzType.flares)SetFlares();
-            else if(elementType==CstmzType.deathFx)SetDeathFx();
-            else if(elementType==CstmzType.music)SetMusic();
+            SetElement();
         }
-        else if(eventData.button==PointerEventData.InputButton.Right&&!variant){
+        else if(eventData.button==PointerEventData.InputButton.Right){
             OpenVariants();
         }
     }
-    string _VariantID(){string _str="";if(variantId>=0){_str="_"+variantId;}else{}return _str;}
+    public void OnPointerEnter(PointerEventData eventData){
+        if(FindObjectOfType<CstmzSelectedInfo>()!=null&&!variant){FindObjectOfType<CstmzSelectedInfo>().selectedElement=gameObject;}
+    }
+    public void OnPointerExit(PointerEventData eventData){if(FindObjectOfType<CstmzSelectedInfo>()!=null){if(!UIInputSystem.instance.inputSelecting)
+        if(FindObjectOfType<CstmzSelectedInfo>().selectedElement==gameObject){FindObjectOfType<CstmzSelectedInfo>().selectedElement=null;}}}
+
+    string _VariantID(){string _str="";if(variantId>=0){_str="_"+variantId.ToString();}else{}return _str;}
+    public Sprite GetSkinSpriteAnim(string str){CstmzSkin skin=null;Sprite spr=null;
+        skin=GameAssets.instance.GetSkin(str);
+        if(anim==null){animSpr=skin.animVals[0].spr;anim=StartCoroutine(AnimateSkin(skin));}
+        if(animSpr!=null)spr=animSpr;
+        return spr;
+    }
+    Coroutine anim;int iAnim=0;Sprite animSpr;
+    IEnumerator AnimateSkin(CstmzSkin skin){Sprite spr;
+        if(skin.animSpeed>0){yield return new WaitForSeconds(skin.animSpeed);}
+        else{yield return new WaitForSeconds(skin.animVals[iAnim].delay);}
+        spr=skin.animVals[iAnim].spr;
+        if(iAnim==skin.animVals.Length-1)iAnim=0;
+        if(iAnim<skin.animVals.Length)iAnim++;
+        animSpr=spr;
+        if(elementName==skin.name)anim=StartCoroutine(AnimateSkin(skin));
+        else{if(anim!=null)StopCoroutine(anim);anim=null;iAnim=0;}
+    }
 }

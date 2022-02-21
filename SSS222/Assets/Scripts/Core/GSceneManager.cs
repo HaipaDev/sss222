@@ -121,7 +121,7 @@ public class GSceneManager : MonoBehaviour{
     void CheckESC(){
     if(Input.GetKeyDown(KeyCode.Escape)){
             var scene=SceneManager.GetActiveScene().name;
-            if(scene=="ChooseGameMode"||scene=="Customization"||scene=="Credits"||scene=="Socials"){
+            if(scene=="ChooseGameMode"||scene=="Credits"||scene=="Socials"){//||scene=="Customization){
                 LoadStartMenu();
             }else if(scene=="Login"||scene=="Leaderboards"||scene=="Achievements"||scene=="StatsSocial"){
                 LoadSocialsScene();

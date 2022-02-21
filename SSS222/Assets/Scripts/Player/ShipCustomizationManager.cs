@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,14 +8,14 @@ using Sirenix.OdinInspector;
 public class ShipCustomizationManager : MonoBehaviour{
     public static ShipCustomizationManager instance;
     [HeaderAttribute("Properties")]
-    public string skinName="Mk.22";
+    public string skinName="def";
     [SceneObjectsOnly][SerializeField] public GameObject overlayObj;
     public Color overlayColor=Color.red;
-    public string trailName="Flame";
+    public string trailName="def";
     [SceneObjectsOnly][SerializeField] public GameObject trailObj;
     Vector2 trailObjPos=Vector2.zero;
-    public string flaresName="Flares";
-    public string deathFxName="Explosion";
+    public string flaresName="def";
+    public string deathFxName="def";
 
     SpriteRenderer overlaySpr;
     Image overlayImg;
@@ -22,6 +23,11 @@ public class ShipCustomizationManager : MonoBehaviour{
     Image img;
     void Awake(){instance=this;}
     void Start(){
+        if(String.IsNullOrEmpty(skinName)){skinName="def";}
+        if(String.IsNullOrEmpty(trailName)){trailName="def";}
+        if(String.IsNullOrEmpty(flaresName)){flaresName="def";}
+        if(String.IsNullOrEmpty(deathFxName)){deathFxName="def";}
+
         spr=GetComponent<SpriteRenderer>();
         if(spr==null)img=GetComponent<Image>();
         LoadValues();
@@ -51,17 +57,19 @@ public class ShipCustomizationManager : MonoBehaviour{
         return GameAssets.instance.GetSkinVariant(_str,id);}
     public CstmzSkinVariant GetSkinVariantAuto(string str){return GameAssets.instance.GetSkinVariant(str.Split('_')[0],int.Parse(str.Split('_')[1]));}
     
-    Coroutine anim;int iAnim=0;Sprite animSpr;
+    
     public Sprite GetSkinSprite(string str){CstmzSkin skin=null;Sprite spr=null;
-        skin=GameAssets.instance.GetSkin(str);
+        skin=GetSkin(str);
         if(str.Contains("_")){spr=GetSkinVariantAuto(str).spr;}
         else{if(skin.spr!=null)spr=skin.spr;}
+
         if(skin.animated){
             if(anim==null){animSpr=skin.animVals[0].spr;anim=StartCoroutine(AnimateSkin(skin));}
-            spr=animSpr;
+            if(animSpr!=null)spr=animSpr;
         }
         return spr;
     }
+    Coroutine anim;int iAnim=0;Sprite animSpr;
     IEnumerator AnimateSkin(CstmzSkin skin){Sprite spr;
         if(skin.animSpeed>0){yield return new WaitForSeconds(skin.animSpeed);}
         else{yield return new WaitForSeconds(skin.animVals[iAnim].delay);}

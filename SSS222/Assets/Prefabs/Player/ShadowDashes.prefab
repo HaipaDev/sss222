@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4546529352650547399}
   - component: {fileID: 4546529352650547392}
   - component: {fileID: 153409864}
-  - component: {fileID: 502397296}
   - component: {fileID: -9117117712606669741}
   m_Layer: 8
   m_Name: ShadowDashes
@@ -107,26 +106,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &502397296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4546529352650547393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: {fileID: 100000, guid: 096832bfc2651eb4b92bc8012922197b, type: 3}
-  xx: 0
-  yy: -0.6
-  time: 0.3
-  onTop: 1
-  stayStill: 1
-  angle: 0
-  BFlame: {fileID: 0}
 --- !u!114 &-9117117712606669741
 MonoBehaviour:
   m_ObjectHideFlags: 0

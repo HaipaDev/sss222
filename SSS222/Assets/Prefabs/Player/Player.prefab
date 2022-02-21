@@ -5353,11 +5353,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af19e2be1b7d9904d93dcf143a11004a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinName: Mk.22
+  skinName: def
   overlayObj: {fileID: 2786381190746779608}
   overlayColor: {r: 1, g: 0, b: 0, a: 1}
-  trailName: Flame
+  trailName: def
   trailObj: {fileID: 0}
+  flaresName: def
+  deathFxName: def
 --- !u!114 &4345285768065235595
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,6 +16,12 @@ public class SaveSerial : MonoBehaviour{
 		playerData.highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()];
 		playerData.achievsCompleted=new bool[StatsAchievsManager.GetAchievsListCount()];
 		statsData.statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()];
+		
+		if(String.IsNullOrEmpty(playerData.skinName)||GameAssets.instance.GetSkin(playerData.skinName)==null){playerData.skinName="def";}
+		if(String.IsNullOrEmpty(playerData.trailName)||GameAssets.instance.GetTrail(playerData.trailName)==null){playerData.trailName="def";}
+		if(String.IsNullOrEmpty(playerData.flaresName)||GameAssets.instance.GetFlares(playerData.flaresName)==null){playerData.flaresName="def";}
+		if(String.IsNullOrEmpty(playerData.deathFxName)||GameAssets.instance.GetDeathFx(playerData.deathFxName)==null){playerData.deathFxName="def";}
+		if(String.IsNullOrEmpty(playerData.musicName)||GameAssets.instance.GetMusic(playerData.musicName)==null){playerData.musicName=CstmzMusic._cstmzMusicDef;}
 	}
 	[SerializeField] string filenameLogin = "hyperGamerLogin";
 	bool loginEncode=false;
@@ -70,12 +76,12 @@ public class SaveSerial : MonoBehaviour{
 	public PlayerData playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()],achievsCompleted=new bool[StatsAchievsManager.GetAchievsListCount()]};
 	[System.Serializable]public class PlayerData{
 		public int[] highscore=new int[0];
-		public string skinName="Mk.22";
+		public string skinName="def";
 		public float[] overlayColor=new float[3]{0,1,1};
-		public string trailName="Flame";
-		public string flaresName="Flares";
-		public string deathFxName="Explosion";
-		public string musicName="Find You";
+		public string trailName="def";
+		public string flaresName="def";
+		public string deathFxName="def";
+		public string musicName=CstmzMusic._cstmzMusicDef;
 		public bool[] achievsCompleted=new bool[0];
 	}
 	public void Save(){

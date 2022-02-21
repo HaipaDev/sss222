@@ -369,7 +369,9 @@ MonoBehaviour:
   - name: upgradeFill_des
     spr: {fileID: 21300000, guid: a1e2036529aa2324ab1e0a53dcfae988, type: 3}
   skins:
-  - name: Mk.22
+  - artist: 
+    displayName: Mk.22
+    name: def
     rarity: 0
     category: 3
     animated: 0
@@ -378,7 +380,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Chameleon
+  - artist: 
+    displayName: Chameleon
+    name: chameleon
     rarity: 4
     category: 0
     animated: 0
@@ -389,7 +393,9 @@ MonoBehaviour:
     variants:
     - spr: {fileID: 21300000, guid: eb0e0377b922df040b69396d565f0312, type: 3}
       sprOverlay: {fileID: 21300000, guid: 823400051cf2dd84495c524fba381fef, type: 3}
-  - name: Golden Moyai
+  - artist: Shy
+    displayName: Golden Moyai
+    name: moyaiGold
     rarity: 4
     category: 0
     animated: 0
@@ -398,16 +404,20 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: StarGazer
+  - artist: 
+    displayName: Stargazer
+    name: stargazer
     rarity: 3
     category: 0
     animated: 0
-    spr: {fileID: 21300000, guid: 2622341d4058cee4f845c8a35d8001cd, type: 3}
+    spr: {fileID: 21300000, guid: db73e50e7a9e07c489e61295229fdc94, type: 3}
     animSpeed: 0.05
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Mk.20
+  - artist: 
+    displayName: Mk.20
+    name: mk20
     rarity: 0
     category: 2
     animated: 0
@@ -416,7 +426,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Space Camo
+  - artist: 
+    displayName: Space Camo
+    name: spaceCamo
     rarity: 1
     category: 2
     animated: 0
@@ -425,7 +437,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Hazard
+  - artist: 
+    displayName: Hazard
+    name: hazard
     rarity: 1
     category: 2
     animated: 0
@@ -434,7 +448,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Graffiti
+  - artist: 
+    displayName: Graffiti
+    name: graffiti
     rarity: 1
     category: 2
     animated: 0
@@ -443,7 +459,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: YinYang
+  - artist: 
+    displayName: YinYang
+    name: yinYang
     rarity: 1
     category: 2
     animated: 0
@@ -452,7 +470,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Waffle
+  - artist: 
+    displayName: Waffle
+    name: waffle
     rarity: 2
     category: 2
     animated: 0
@@ -461,7 +481,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Motherboard
+  - artist: 
+    displayName: Motherboard
+    name: motherboard
     rarity: 2
     category: 2
     animated: 0
@@ -470,7 +492,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Earth
+  - artist: 
+    displayName: Earth
+    name: earth
     rarity: 3
     category: 2
     animated: 0
@@ -479,7 +503,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: DevilsBlade
+  - artist: 
+    displayName: Devils Blade
+    name: devilsBlade
     rarity: 4
     category: 2
     animated: 0
@@ -488,7 +514,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Rainbow
+  - artist: Shy
+    displayName: Rainbow
+    name: rainbow
     rarity: 4
     category: 2
     animated: 1
@@ -527,7 +555,9 @@ MonoBehaviour:
       delay: 0
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Blackboard
+  - artist: 
+    displayName: Blackboard
+    name: blackboard
     rarity: 1
     category: 3
     animated: 0
@@ -536,7 +566,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Confetti
+  - artist: 
+    displayName: Confetti
+    name: confetti
     rarity: 1
     category: 3
     animated: 0
@@ -545,7 +577,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Novela
+  - artist: 
+    displayName: Novela
+    name: novela
     rarity: 1
     category: 3
     animated: 0
@@ -554,7 +588,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: M&K
+  - artist: 
+    displayName: M&K
+    name: mk
     rarity: 1
     category: 3
     animated: 0
@@ -563,7 +599,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Hipster
+  - artist: 
+    displayName: Hipster
+    name: hipster
     rarity: 1
     category: 3
     animated: 0
@@ -572,7 +610,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Bubblegum
+  - artist: 
+    displayName: Bubblegum
+    name: bbgum
     rarity: 2
     category: 3
     animated: 0
@@ -581,7 +621,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Racer
+  - artist: 
+    displayName: Racer
+    name: racer
     rarity: 2
     category: 3
     animated: 0
@@ -590,7 +632,20 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Moyai
+  - artist: 
+    displayName: Octane
+    name: octane
+    rarity: 2
+    category: 3
+    animated: 0
+    spr: {fileID: 21300000, guid: 26dfbb13e28b2d144bdf06a904d37b9d, type: 3}
+    animSpeed: 0.05
+    animVals: []
+    sprOverlay: {fileID: 0}
+    variants: []
+  - artist: 
+    displayName: Moyai
+    name: moyai
     rarity: 2
     category: 3
     animated: 0
@@ -599,7 +654,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Invert
+  - artist: 
+    displayName: Invert
+    name: invert
     rarity: 3
     category: 3
     animated: 0
@@ -608,7 +665,9 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
-  - name: Ribbon
+  - artist: 
+    displayName: Ribbon
+    name: ribbon
     rarity: 3
     category: 3
     animated: 0
@@ -618,60 +677,157 @@ MonoBehaviour:
     sprOverlay: {fileID: 0}
     variants: []
   trails:
-  - name: Flame
+  - displayName: Flame
+    name: def
     rarity: 0
     category: 3
     part: {fileID: 100000, guid: 081b45b1b47b4094f818a7a47a0c69b6, type: 3}
-  - name: Negative
+  - displayName: Octane
+    name: octane
     rarity: 2
     category: 3
+    part: {fileID: 100000, guid: 7b1e0deef82c92e4b9b21ccf71210a72, type: 3}
+  - displayName: Invert
+    name: invert
+    rarity: 3
+    category: 3
     part: {fileID: 100000, guid: b98728d174a74e2488ee2ecdc2aa2b3f, type: 3}
+  - displayName: Rainbow
+    name: rainbow
+    rarity: 4
+    category: 2
+    part: {fileID: 100000, guid: 31f2e3cb080cbb24b993da879e10c178, type: 3}
+  - displayName: Silverflame
+    name: silverflame
+    rarity: 2
+    category: 2
+    part: {fileID: 100000, guid: 83eea72fc297ad548a9f0ae07fad1a92, type: 3}
+  - displayName: Goldenflame
+    name: goldenflame
+    rarity: 4
+    category: 0
+    part: {fileID: 100000, guid: f7694e66ba7ee76428257d541adaff0e, type: 3}
+  - displayName: Purple Shadow
+    name: purple
+    rarity: 1
+    category: 3
+    part: {fileID: 100000, guid: da64923a9b5a3b34fbcce1040f7b3126, type: 3}
+  - displayName: Pinkflame
+    name: pinkflame
+    rarity: 3
+    category: 0
+    part: {fileID: 100000, guid: 0eb6d8be563b00d47a507fefe3eb89c4, type: 3}
+  - displayName: Greenflame
+    name: greenflame
+    rarity: 1
+    category: 3
+    part: {fileID: 100000, guid: 1c58864a1ebfb1348885b6480d217ef9, type: 3}
+  - displayName: Icyflame
+    name: icyflame
+    rarity: 2
+    category: 3
+    part: {fileID: 100000, guid: c33e32c74d5c2d74cb3fd5761cf53b82, type: 3}
+  - displayName: Shadow Ink
+    name: shadowInk
+    rarity: 3
+    category: 3
+    part: {fileID: 100000, guid: d4b2a11d5e81c5d4fa0ce919d7ff89d9, type: 3}
   flares:
-  - name: Flares
+  - displayName: Flares
+    name: def
     rarity: 0
     category: 3
     parts:
     - {fileID: 100000, guid: c151221cd78239d4ba56697f5a78532e, type: 3}
-  - name: Negative
-    rarity: 2
+  - displayName: Invert
+    name: invert
+    rarity: 3
     category: 3
     parts:
     - {fileID: 100000, guid: 9bd8305abbcce0a419c1d923b5d7392c, type: 3}
-  - name: Negative&Flares
+  - displayName: Police
+    name: police
+    rarity: 3
+    category: 2
+    parts:
+    - {fileID: 100000, guid: e41d97f39561ac748bc5980645b1d885, type: 3}
+    - {fileID: 100000, guid: 3754ce3b2b177ba4bb6127bd5b1e99cd, type: 3}
+  - displayName: Rainbow
+    name: rainbow
+    rarity: 4
+    category: 2
+    parts:
+    - {fileID: 100000, guid: 4173a980ade408149b1be734ac52c21c, type: 3}
+  - displayName: B&W
+    name: bw
+    rarity: 2
+    category: 2
+    parts:
+    - {fileID: 100000, guid: 840d8214466c97b4d991f8521f417efb, type: 3}
+    - {fileID: 100000, guid: ad511b5106fd1c147bbe1f9ba76e39e9, type: 3}
+  - displayName: Pink
+    name: pink
     rarity: 1
     category: 3
     parts:
-    - {fileID: 100000, guid: 9bd8305abbcce0a419c1d923b5d7392c, type: 3}
-    - {fileID: 100000, guid: c151221cd78239d4ba56697f5a78532e, type: 3}
+    - {fileID: 100000, guid: afc7453f21dce3046bf8f051ad805f8d, type: 3}
+  - displayName: Golden
+    name: golden
+    rarity: 4
+    category: 0
+    parts:
+    - {fileID: 100000, guid: 21cdfdf5061278748baca6cb0355a750, type: 3}
   deathFxs:
-  - name: Explosion
+  - displayName: Explosion
+    name: def
     rarity: 0
     category: 3
     obj: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
-    sound: Death
-  - name: Portal
+    sound: DeathExplosion
+  - displayName: Fade Out
+    name: fadeOut
+    rarity: 2
+    category: 2
+    obj: {fileID: 100000, guid: 9fc0be16172f102498bb0b7b4784d939, type: 3}
+    sound: DeathFadeOut
+  - displayName: Rainbow Fireworks
+    name: rainbow
+    rarity: 4
+    category: 2
+    obj: {fileID: 100000, guid: 379a96eb85852ba4298ab976c38892c6, type: 3}
+    sound: Fireworks
+  - displayName: Portal
+    name: portal
     rarity: 2
     category: 3
-    obj: {fileID: 100000, guid: 1ee2c03a099f4cb4b8f86c863bfedf81, type: 3}
-    sound: Portal
+    obj: {fileID: 100000, guid: 266d2e183318e3e4db3eddc7ef809409, type: 3}
+    sound: DeathPortal
   musics:
-  - name: Find You
+  - artist: SiriusBeat
+    displayName: Find You
+    name: findYou
     rarity: 0
     category: 3
     track: {fileID: 8300000, guid: eeff6e2b8fa947948b1b592531c97815, type: 3}
-    icon: {fileID: 21300000, guid: 69332f282c27df945a306a8379ee769d, type: 3}
-  - name: The World Within
+    icon: {fileID: 21300000, guid: 47827132ebf7be440aae6d706163480f, type: 3}
+  - artist: SiriusBeat
+    displayName: The World Within
+    name: tww
     rarity: 2
     category: 2
     track: {fileID: 8300000, guid: 519c80badd076e34391610bea877f2f4, type: 3}
-    icon: {fileID: 21300000, guid: 69332f282c27df945a306a8379ee769d, type: 3}
-  - name: My System
+    icon: {fileID: 21300000, guid: 1616346d6c7c2654bb14c1fd2690baa5, type: 3}
+  - artist: SiriusBeat
+    displayName: My System
+    name: mySystem
     rarity: 3
     category: 2
     track: {fileID: 8300000, guid: 1f52ccae3b1220b45b61ef0573b6c405, type: 3}
-    icon: {fileID: 21300000, guid: 69332f282c27df945a306a8379ee769d, type: 3}
-  - name: The One
+    icon: {fileID: 21300000, guid: 4fff3c530bb757a438e3412e65a3f0e7, type: 3}
+  - artist: SiriusBeat
+    displayName: The One
+    name: one
     rarity: 4
     category: 0
     track: {fileID: 8300000, guid: 87b1b0db09c604a4599558f9497b7287, type: 3}
-    icon: {fileID: 21300000, guid: 69332f282c27df945a306a8379ee769d, type: 3}
+    icon: {fileID: 21300000, guid: 378157a283e7b0e48b5278e7527ff8f0, type: 3}

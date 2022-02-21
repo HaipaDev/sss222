@@ -5,15 +5,17 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHandler, IPointerExitHandler{
+    public static UIInputSystem instance;
     [SerializeField]EventSystem es;
     [SerializeField]Button btn;
     [SerializeField]Button btnLast;
     [SerializeField]public GameObject currentSelected;
     [SerializeField]GameObject lastSelected;
-    [SerializeField]bool inputSelecting=true;
+    [SerializeField]public bool inputSelecting=true;
     //[SerializeField]Vector2 mousePosCanv;
     [SerializeField]Vector2 mousePosPrev;
     void Start(){
+        instance=this;
         es=FindObjectOfType<EventSystem>();
         if(es!=null)btn=es.firstSelectedGameObject.GetComponent<Button>();mousePosPrev=Input.mousePosition;
     }
@@ -48,10 +50,10 @@ public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHa
     }
     Vector3 MousePosToCanvas(){return CanvasPositioningExtensions.ScreenToCanvasPosition(FindObjectOfType<Canvas>(),Input.mousePosition);}
     public void OnPointerEnter(PointerEventData eventData){
-        //if(eventData.pointerCurrentRaycast.gameObject!=null){Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);if(eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>()!=null){btn=eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>();}}
+        if(eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>()==null){currentSelected=null;}
         foreach(GameObject go in eventData.hovered){Debug.Log(go.name);if(go.GetComponent<Button>()!=null){btn=go.GetComponent<Button>();}}
     }
-    public void OnPointerExit(PointerEventData eventData){}
+    public void OnPointerExit(PointerEventData eventData){currentSelected=null;}
     public static bool IsPointerOverUIObject(){
         PointerEventData eventDataCurrentPosition=new PointerEventData(EventSystem.current);
         eventDataCurrentPosition.position=(Vector2)Input.mousePosition;

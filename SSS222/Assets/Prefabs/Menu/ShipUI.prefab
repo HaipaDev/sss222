@@ -5004,7 +5004,7 @@ RectTransform:
   m_GameObject: {fileID: 8372861476689930743}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children:
   - {fileID: 7005562899587473904}
   - {fileID: 1490275301184905554}
@@ -5089,13 +5089,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af19e2be1b7d9904d93dcf143a11004a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinName: Mk.22
-  overlayObj: {fileID: 0}
+  skinName: def
+  overlayObj: {fileID: 7005562899587473911}
   overlayColor: {r: 1, g: 0, b: 0, a: 1}
-  trailName: Flame
+  trailName: def
   trailObj: {fileID: 422011336923861448}
-  flaresName: Flares
-  deathFxName: Explosion
+  flaresName: def
+  deathFxName: def
 --- !u!114 &5761278737977677134
 MonoBehaviour:
   m_ObjectHideFlags: 0
