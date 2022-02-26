@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CargoShip : MonoBehaviour{
+    [Header("Config")]
     dir cargoDirSpawn=dir.down;
     [SerializeField] float speed=2;
     [SerializeField] float healthStart=44;
     public float health;
+    float shieldDmgMult=0.75f;
     [SerializeField] public int[] repMinusHit=new int[2]{1,3};
     [SerializeField] public int repMinusKill=7;
+    [Header("Variables")]
     public bool visited;
     bool[] tagged=new bool[2];
     bool shieldOn=true;
@@ -23,23 +26,6 @@ public class CargoShip : MonoBehaviour{
     }
     void Start(){
         TurnShieldOn();
-    }
-    
-    void OnTriggerEnter2D(Collider2D other){
-        if(other.CompareTag("Player")&&visited==false){
-            Shop.shopOpen=true;
-            visited=true;
-            //GetComponentInChildren<TMPro.TextMeshProUGUI>().gameObject.SetActive(false);
-            transform.GetChild(0).gameObject.SetActive(true);
-        }
-        if(other.CompareTag("PlayerWeapons")&&!other.GetComponent<Tag_PlayerWeapon>().healing){
-            float dmg=UniCollider.TriggerCollision(other,transform,new List<colliTypes>(){colliTypes.playerWeapons});
-            if(shieldOn)dmg*=0.75f;
-            if(dmg!=0)health-=dmg;
-
-            UniCollider.DMG_VFX(-1,other,transform,dmg);
-        }else if(other.GetComponent<Tag_PlayerWeapon>().healing){Shop.instance.reputation+=1;}
-        if(other.GetComponent<Shredder>()!=null){Destroy(gameObject);}
     }
     void Update(){
         if(health>=healthStart/2&&health!=healthStart){if(tagged[0]==false){Shop.instance.RepChange(repMinusHit[0],false);tagged[0]=true;}}
@@ -75,6 +61,41 @@ public class CargoShip : MonoBehaviour{
             AudioManager.instance.Play("CargoHit");
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other){
+        if(other.CompareTag("Player")&&visited==false){
+            Shop.shopOpen=true;
+            visited=true;
+            //GetComponentInChildren<TMPro.TextMeshProUGUI>().gameObject.SetActive(false);
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
+        else if(other.CompareTag("PlayerWeapons")){
+            if(other.GetComponent<Tag_PlayerWeapon>()!=null){
+                if(!other.GetComponent<Tag_PlayerWeapon>().healing){
+                    Damage(other);
+                }else if(other.GetComponent<Tag_PlayerWeapon>().healing){Shop.instance.reputation+=1;}
+            }else{Damage(other);}
+        }
+        if(other.GetComponent<Shredder>()!=null){Destroy(gameObject);}
+    }
+    void OnTriggerStay2D(Collider2D other){
+        if(other.CompareTag("PlayerWeapons")){
+            if(other.GetComponent<Tag_PlayerWeapon>()!=null){
+                if(!other.GetComponent<Tag_PlayerWeapon>().healing){
+                    if(!shieldOn)Damage(other);
+                }else if(other.GetComponent<Tag_PlayerWeapon>().healing){Shop.instance.reputation+=1;}
+            }else{if(!shieldOn)Damage(other);}
+        }
+        if(other.GetComponent<Shredder>()!=null){Destroy(gameObject);}
+    }
+    void Damage(Collider2D other){
+        float dmg=UniCollider.TriggerCollision(other,transform,new List<colliTypes>(){colliTypes.playerWeapons});
+        if(shieldOn)dmg*=shieldDmgMult;
+        if(dmg!=0)health-=dmg;
+
+        UniCollider.DMG_VFX(-1,other,transform,dmg);
+    }
+
     public void SetCargoSpawnDir(dir dir){StartCoroutine(SetCargoSpawnDirI(dir));}
     IEnumerator SetCargoSpawnDirI(dir dir){
         cargoDirSpawn=dir;

@@ -3,20 +3,21 @@ using System.Collections;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class GameAssets : MonoBehaviour{
-    public static GameAssets instance;
+public class GameAssets : MonoBehaviour{	public static GameAssets instance;
+	[Header("Special game-related")]
     [AssetsOnly]public GameObject powerupSpawnerPrefab;
     [AssetsOnly]public GameObject waveSpawnerPrefab;
     [AssetsOnly]public GameObject disrupterSpawnerPrefab;
-	[AssetsOnly]public GObject[] objects;
-	[AssetsOnly]public GObject[] vfx;
-	[AssetsOnly]public GSprite[] sprites;
+	[Header("Main")]
+	[AssetsOnly,Searchable]public GObject[] objects;
+	[AssetsOnly,Searchable]public GObject[] vfx;
+	[AssetsOnly,Searchable]public GSprite[] sprites;
 	[Header("Customization")]
-	[AssetsOnly]public CstmzSkin[] skins;
-	[AssetsOnly]public CstmzTrail[] trails;
-	[AssetsOnly]public CstmzFlares[] flares;
-	[AssetsOnly]public CstmzDeathFx[] deathFxs;
-	[AssetsOnly]public CstmzMusic[] musics;
+	[AssetsOnly,Searchable]public CstmzSkin[] skins;
+	[AssetsOnly,Searchable]public CstmzTrail[] trails;
+	[AssetsOnly,Searchable]public CstmzFlares[] flares;
+	[AssetsOnly,Searchable]public CstmzDeathFx[] deathFxs;
+	[AssetsOnly,Searchable]public CstmzMusic[] musics;
     
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
 

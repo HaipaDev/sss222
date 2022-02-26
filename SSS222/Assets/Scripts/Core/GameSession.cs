@@ -13,8 +13,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Sirenix.OdinInspector;
 
-public class GameSession : MonoBehaviour{
-    public static GameSession instance;
+public class GameSession : MonoBehaviour{   public static GameSession instance;
     public static bool GlobalTimeIsPaused;
     public static bool GlobalTimeIsPausedNotSlowed;
     [Header("Current Player Values")]
@@ -207,11 +206,22 @@ public class GameSession : MonoBehaviour{
         if(presenceTimer<=0){
             string presenceDetails="";
             string presenceStatus="";
+            string _prefixDetails="",_suffixDetails="";
+            string _prefixStatus="",_suffixStatus="";
+            #if UNITY_EDITOR
+            _prefixStatus="DEVELOPING | ";
+            #endif
             string sceneName=SceneManager.GetActiveScene().name;
             string nickname="";if(SaveSerial.instance!=null){if(SaveSerial.instance.hyperGamerLoginData!=null){nickname=SaveSerial.instance.hyperGamerLoginData.username;}}
             string nickInfo="";if(!String.IsNullOrEmpty(nickname))nickInfo=" | "+nickname;
-            if(sceneName!="Game"){presenceStatus="In Menus"+nickInfo;presenceDetails="";}
-            else{presenceStatus=GameRules.instance.cfgName+nickInfo;presenceDetails="Score: "+score+" | "+"Game Time: "+GetGameSessionTimeFormat();}
+            if(sceneName!="Game"){
+                presenceStatus=_prefixStatus+"In Menus"+nickInfo+_suffixStatus;
+                presenceDetails=_prefixDetails+""+_suffixDetails;
+            }else{
+                presenceDetails=_prefixDetails+"Score: "+score+" | "+"Game Time: "+GetGameSessionTimeFormat()+_suffixDetails;
+                presenceStatus=_prefixStatus+GameRules.instance.cfgName+nickInfo+_suffixStatus;
+            }
+            
             if(presenceTimeSet==false){
                 DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                 int presenceTimeTotal = (int)(DateTime.UtcNow - epochStart).TotalSeconds;

@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Jukebox : MonoBehaviour{
-    public static Jukebox instance;
+public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     void Awake(){
         if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
     }

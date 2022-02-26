@@ -6,8 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using Sirenix.OdinInspector;
 
-public class CustomizationInventory : MonoBehaviour{
-    public static CustomizationInventory instance;
+public class CustomizationInventory : MonoBehaviour{    public static CustomizationInventory instance;
     [HeaderAttribute("Objects")]
     [SceneObjectsOnly][SerializeField] CstmzCategoryDropdown categoriesDropdown;
     [SceneObjectsOnly][SerializeField] RectTransform typesListContent;

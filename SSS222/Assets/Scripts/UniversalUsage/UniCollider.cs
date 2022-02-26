@@ -16,9 +16,11 @@ public class UniCollider : MonoBehaviour{
             if(dmgVal==null){dmgVal=GetDmgValAbs(other.gameObject.name.Split('_')[0]);}
             if(dmgVal!=null){if(collis.Contains(dmgVal.colliType)){
                 dmg=dmgVal.dmg;if(triggerStay){dmg=dmgVal.dmgPhase;}
-                if(dmgVal.dmgBySize&&!dmgVal.dmgBySpeed){dmg*=((other.gameObject.transform.localScale.x+other.gameObject.transform.localScale.y)/2);}
-                else if(!dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.magnitude);}
-                else if(dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=((other.gameObject.transform.localScale.x+other.gameObject.transform.localScale.y)/2)*Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.magnitude);}
+                float _dmgBySizeVal=0;if(dmgVal.dmgBySize){_dmgBySizeVal=((other.gameObject.transform.localScale.x+other.gameObject.transform.localScale.y)/2);}
+                float _dmgBySpeedVal=0;if(dmgVal.dmgBySpeed){if(other.GetComponent<Rigidbody2D>()!=null)_dmgBySpeedVal=Mathf.Abs(other.GetComponent<Rigidbody2D>().velocity.magnitude);}
+                if(dmgVal.dmgBySize&&!dmgVal.dmgBySpeed){dmg*=_dmgBySizeVal;}
+                else if(!dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=_dmgBySpeedVal;}
+                else if(dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=_dmgBySizeVal*_dmgBySpeedVal;}
                 
                 foreach(colliEvents co in dmgVal.colliEvents){
                     if(!String.IsNullOrEmpty(co.vfx)){if(GameAssets.instance.GetVFX(co.vfx)!=null)Instantiate(GameAssets.instance.GetVFX(co.vfx),(Vector2)transform.position+co.vfxPos,Quaternion.identity);}

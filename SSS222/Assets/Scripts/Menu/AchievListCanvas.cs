@@ -10,6 +10,7 @@ public class AchievListCanvas : MonoBehaviour{
     [AssetsOnly][SerializeField] GameObject elementPrefab;
     void Start(){var mngr=StatsAchievsManager.instance;
         if(mngr!=null){
+            Destroy(listObject.transform.GetChild(0).gameObject);
             foreach(Achievement a in mngr.achievsList){if(a.completed)CreateAchievElement(a);}
             foreach(Achievement a in mngr.achievsList){if(!a.completed)CreateAchievElement(a);}
         }
@@ -19,6 +20,7 @@ public class AchievListCanvas : MonoBehaviour{
         go.GetComponent<AchievListElement>().SetName(a.name);
         go.GetComponent<AchievListElement>().SetDesc(a.desc);
         go.GetComponent<AchievListElement>().SetIcon(a.icon);
+        go.GetComponent<AchievListElement>().SetEpic(a.epic);
         go.GetComponent<AchievListElement>().completed=a.completed;
         return go;
     }

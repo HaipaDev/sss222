@@ -43,15 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea897dafef2b43340801274683917c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSessionPrefab: {fileID: 2670168737584117729, guid: 2187d17e87e167843a47ecaa776cb1b9,
-    type: 3}
-  loaderPrefab: {fileID: 3389254574830597111, guid: 81dbb47d768940c48bc686e78eee47ad,
-    type: 3}
   saveSerialPrefab: {fileID: 8669642154265912527, guid: 1117848f46f64cc40821558b8f50dd54,
     type: 3}
-  gameAssetsPrefab: {fileID: 6877064455026536268, guid: 1d59b6eef7bf8454cb6d3bc6643a5db3,
+  gsceneManagerPrefab: {fileID: 7128682332300410602, guid: f0f9db98eefc6544cb033ccb81dab8ea,
     type: 3}
-  gSceneManagerPrefab: {fileID: 7128682332300410602, guid: f0f9db98eefc6544cb033ccb81dab8ea,
+  gameSessionPrefab: {fileID: 2670168737584117729, guid: 2187d17e87e167843a47ecaa776cb1b9,
+    type: 3}
+  gameAssetsPrefab: {fileID: 6877064455026536268, guid: 1d59b6eef7bf8454cb6d3bc6643a5db3,
     type: 3}
   audioManagerPrefab: {fileID: 2010752312624517974, guid: 0c9cb9ae722d0a244a77d03aa7b1265e,
     type: 3}

@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
-public class ShipCustomizationManager : MonoBehaviour{
-    public static ShipCustomizationManager instance;
+public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustomizationManager instance;
     [HeaderAttribute("Properties")]
     public string skinName="def";
     [SceneObjectsOnly][SerializeField] public GameObject overlayObj;

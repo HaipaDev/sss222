@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GSceneManager : MonoBehaviour{
-    public static GSceneManager instance;
+public class GSceneManager : MonoBehaviour{ public static GSceneManager instance;
     /*ParticleSystem transition;
     Animator transitioner;
     float transitionTime=0.35f;*/
     //float prevGameSpeed;
-    void Awake(){SetUpSingleton();GameSession.instance.gameSpeed=1f;}
-    void SetUpSingleton(){if(GSceneManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
+    void OnDisable(){Debug.LogWarning("GSceneManager disabled?");}
+    void Awake(){if(GSceneManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
     void Start(){
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
         //prevGameSpeed = GameSession.instance.gameSpeed;

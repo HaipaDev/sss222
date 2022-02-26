@@ -33,7 +33,7 @@ public class PlayerCollider : MonoBehaviour{
                         if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
                         else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
                         GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,transform.position.y+0.5f),0.3f);
-                        if(!UniCollider.GetDmgVal(other.gameObject.name).phase)if(en!=null){en.Kill(false);}
+                        if(dmgVal!=null){if(!dmgVal.phase)if(en!=null)en.Kill(false);}
                     }
                     else if(player.shadow==true&&player.dashing==true){
                         if(en!=null){if(en.killOnDash){en.Kill();}else{float dmgS=UniCollider.GetDmgValAbs("Shadowdash").dmg;en.health-=dmgS;UniCollider.DMG_VFX(0,other,other.transform,dmgS);}}

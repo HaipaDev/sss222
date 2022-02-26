@@ -103,7 +103,7 @@ public class Waves : MonoBehaviour{
                 if(go.GetComponent<EnemyPathing>()!=null){
                     go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
                     go.GetComponent<EnemyPathing>().enemyIndex=enCount;
-                }else{Debug.LogError("No EnemyPathing for "+go.name);}
+                }else{Debug.LogWarning("No EnemyPathing for "+go.name);}
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             break;
@@ -134,7 +134,7 @@ public class Waves : MonoBehaviour{
                 if(go.GetComponent<EnemyPathing>()!=null){
                     go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
                     go.GetComponent<EnemyPathing>().enemyIndex=RpathIndex;
-                }else{Debug.LogError("No EnemyPathing for "+go.name);}
+                }else{Debug.LogWarning("No EnemyPathing for "+go.name);}
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             break;
@@ -155,7 +155,7 @@ public class Waves : MonoBehaviour{
                     go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
                     go.GetComponent<EnemyPathing>().waypointIndex=Random.Range(0,waypoints.Count);
                     //go.GetComponent<EnemyPathing>().waypointIndex=enCount;
-                }else{Debug.LogError("No EnemyPathing for "+go.name);}
+                }else{Debug.LogWarning("No EnemyPathing for "+go.name);}
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             break;
@@ -169,7 +169,7 @@ public class Waves : MonoBehaviour{
                     Quaternion.identity);
                     if(go.GetComponent<EnemyPathing>()!=null){if(!go.GetComponent<EnemyPathing>().off){
                         go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                    }}else{Debug.LogError("No EnemyPathing for "+go.name);}
+                    }}else{Debug.LogWarning("No EnemyPathing for "+go.name);}
                     yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
                 }
             }
@@ -183,7 +183,7 @@ public class Waves : MonoBehaviour{
                 if(go.GetComponent<EnemyPathing>()!=null){
                     go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
                     go.GetComponent<EnemyPathing>().enemyIndex=enCount;
-                }else{Debug.LogError("No EnemyPathing for "+go.name);}
+                }else{Debug.LogWarning("No EnemyPathing for "+go.name);}
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
             break;

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class StatsAchievsManager : MonoBehaviour{
-    public static StatsAchievsManager instance;
+public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsManager instance;
     [Header("Achievements")]
     public List<Achievement> achievsList;
     public int _achievsListCount;
     public bool achievsLoaded;
+    public Color uncompletedColor=Color.gray;
+    public Color completedColor=new Color(55/255, 255/255, 55/255);//basically green
+    public Color epicUncompletedColor=new Color(79/255, 61/255, 97/255);//dark purple
+    public Color epicCompletedColor=new Color(160/255, 70/255, 255/255);//light violet
     [Header("Stats")]
     public List<StatsGamemode> statsGamemodesList;
     public StatsTotal statsTotal;
@@ -118,10 +121,13 @@ public class StatsAchievsManager : MonoBehaviour{
 }
 [System.Serializable]
 public class Achievement{
+    [Header("Properties")]
     public int id;
     public string name;
     public string desc;
     public Sprite icon;
+    public bool epic;
+    [Header("Values")]
     public bool completed;
 }
 

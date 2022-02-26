@@ -482,7 +482,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -0.000030517578, y: -1393.6349}
+  m_SizeDelta: {x: -0.000030517578, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1335082141329238095
 MonoBehaviour:
@@ -917,6 +917,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AchievElement
+      objectReference: {fileID: 0}
+    - target: {fileID: 7512120004181082786, guid: a0cdf7d6e3076f34e811472456f5c88c,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 7512120004181082786, guid: a0cdf7d6e3076f34e811472456f5c88c,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 7512120004181082786, guid: a0cdf7d6e3076f34e811472456f5c88c,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.5019608
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0cdf7d6e3076f34e811472456f5c88c, type: 3}

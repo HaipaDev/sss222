@@ -8,8 +8,7 @@ using BayatGames.SaveGameFree;
 using BayatGames.SaveGameFree.Encoders;
 using BayatGames.SaveGameFree.Serializers;
 
-public class SaveSerial : MonoBehaviour{
-	public static SaveSerial instance;
+public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	void Awake(){if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
 	IEnumerator Start(){
 		yield return new WaitForSecondsRealtime(0.01f);
