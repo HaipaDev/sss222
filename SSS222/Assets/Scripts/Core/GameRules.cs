@@ -46,8 +46,11 @@ public static GameRules instance;
     public bool fuelOn=false;
     public float fuelDrainAmnt=0.1f;
     public float fuelDrainFreq=0.5f;
-    public string powerupStarting="laser";
-    public string powerupDefault="laser";
+    public Powerup[] powerupsStarting;//={new Powerup(name:"laser")};
+    public int powerupsCapacity=5;
+    /*public int powerupsCapacityStarting=2;
+    public int powerupsCapacityMax=5;*/
+    public Powerup powerupDefault;//={new Powerup(name:"laser")};
     public bool weaponsLimited;
     public bool losePwrupOutOfEn;
     public bool losePwrupOutOfAmmo;

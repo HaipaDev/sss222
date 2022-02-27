@@ -74,8 +74,15 @@ MonoBehaviour:
   fuelOn: 0
   fuelDrainAmnt: 0.1
   fuelDrainFreq: 0.5
-  powerupStarting: laser
-  powerupDefault: laser
+  powerupsStarting:
+  - name: laser
+    ammo: -5
+    timer: -4
+  powerupsCapacity: 5
+  powerupDefault:
+    name: laser
+    ammo: -5
+    timer: -4
   weaponsLimited: 0
   losePwrupOutOfEn: 1
   losePwrupOutOfAmmo: 1

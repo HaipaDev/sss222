@@ -28,7 +28,7 @@ public class PowerupDisplay : MonoBehaviour{
         //}
         //color=img.color;
         if(bg!=null)color2=bg.color;
-        if(GameRules.instance!=null){pwrup=GameRules.instance.powerupStarting;img.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");}
+        if(GameRules.instance!=null){pwrup=GameRules.instance.powerupsStarting[0].name;img.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");}
     }
     void Update(){
         //img.color=color;
@@ -36,7 +36,7 @@ public class PowerupDisplay : MonoBehaviour{
 
         if(powerups==true){
             if(Player.instance!=null){
-                pwrup=Player.instance.powerup;
+                pwrup=Player.instance._curPwrupName();
                 if(TMP!=null){
                     float timer=Player.instance.powerupTimer;
                     if(timer<10f&&timer>=0f){value=(float)System.Math.Round((float)timer, 1);TMP.characterSpacing=-25f;}
@@ -49,7 +49,7 @@ public class PowerupDisplay : MonoBehaviour{
                     else {TMP.text=value.ToString();}
                 }
             }else{
-                pwrup=GameRules.instance.powerupStarting;
+                pwrup=GameRules.instance.powerupsStarting[0].name;
                 img.color=Color.white;
             }
             string name=null;

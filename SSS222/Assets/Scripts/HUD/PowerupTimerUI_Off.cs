@@ -12,7 +12,7 @@ public class PowerupTimerUI_Off : MonoBehaviour{
     }*/
     private void Update(){
         if(Player.instance!=null){
-            if(Player.instance.powerup==Player.instance.powerupDefault||!Player.instance.weaponsLimited||Player.instance.powerupTimer==-4){
+            if(Player.instance.ComparePowerupsCur(Player.instance.powerupDefault)||!Player.instance.weaponsLimited||Player.instance.powerupTimer==-4){
                 foreach(Transform c in transform){if(c.gameObject.activeSelf==true)c.gameObject.SetActive(false);}
             }else{foreach(Transform c in transform){if(c.gameObject.activeSelf!=true)c.gameObject.SetActive(true);}}
         }

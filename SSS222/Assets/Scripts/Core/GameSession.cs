@@ -467,11 +467,11 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 player=Player.instance;
                 if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){}//var ps=Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupsSpawner.spawnReqsType==spawnReqsType.time);foreach(var p in ps){p.powerupsSpawner.timer=0.01f;}}
                 if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){}//var ps=Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupsSpawner.spawnReqsType==spawnReqsType.kills);foreach(var p in ps){p.powerupsSpawner.enemiesCount=9999999;}}
-                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.powerup="laser3";}
-                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.powerup="mlaser";}
-                if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){player.powerup="lsaber";}
-                if(Input.GetKeyDown(KeyCode.Y) || nkey=="Y"){player.powerup="cstream";}
-                if(Input.GetKeyDown(KeyCode.U) || nkey=="U"){player.powerup="plaser";}
+                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.SetPowerupStr("laser3");}
+                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.SetPowerupStr("mlaser");}
+                if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){player.SetPowerupStr("lsaber");}
+                if(Input.GetKeyDown(KeyCode.Y) || nkey=="Y"){player.SetPowerupStr("cstream");}
+                if(Input.GetKeyDown(KeyCode.U) || nkey=="U"){player.SetPowerupStr("plaser");}
             }
         }
     }

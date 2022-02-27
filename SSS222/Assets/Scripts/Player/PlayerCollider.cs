@@ -199,10 +199,10 @@ public class PlayerCollider : MonoBehaviour{
         if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
         var w=player.GetWeaponProperty(name);
         if(w!=null){
-            if(w.costType==costType.energy){player.ammo=-4;if(player.powerup==name){EnergyAddDupl();}}
-            else if(w.costType==costType.ammo){if(player.powerup==name){AmmoAddDupl(w);}else{player.ammo=0;AmmoAdd(w);}}
+            if(w.costType==costType.energy){player.ammo=-4;if(player.ComparePowerupStrCur(name)){EnergyAddDupl();}}
+            else if(w.costType==costType.ammo){if(player.ComparePowerupStrCur(name)){AmmoAddDupl(w);}else{player.ammo=0;AmmoAdd(w);}}
        }else{Debug.LogWarning("WeaponProperty by name "+name+" does not exist");}
-        player.SetPowerup(name);
+        player.SetPowerupStr(name);
     }
     void EnergyAdd(){player.AddSubEnergy(player.pwrupEnergyGet,true);}
     void EnergyAddDupl(){player.AddSubEnergy(player.enPwrupDuplicate,true);}

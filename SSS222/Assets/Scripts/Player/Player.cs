@@ -34,8 +34,9 @@ public class Player : MonoBehaviour{
     [SerializeField] public float energyMax = 120f;
     [SerializeField] public bool ammoOn=true;
     [SerializeField] public int ammo = -4;
-    [SerializeField] public string powerup = "null";
-    [SerializeField] public string powerupDefault = "laser";
+    [SerializeField] public Powerup[] powerups;//={new Powerup(name:"null")};
+    [SerializeField] public int powerupCurID=0;
+    [SerializeField] public Powerup powerupDefault;//={new Powerup(name:"laser")};
     [SerializeField] public bool weaponsLimited=false;
     [DisableInEditorMode]public float powerupTimer=-4;
     [SerializeField] public bool losePwrupOutOfEn;
@@ -305,7 +306,9 @@ public class Player : MonoBehaviour{
         fuelOn=i.fuelOn;
         fuelDrainAmnt=i.fuelDrainAmnt;
         fuelDrainFreq=i.fuelDrainFreq;
-        powerup=i.powerupStarting;powerupDefault=i.powerupDefault;
+        powerups=new Powerup[i.powerupsCapacity];
+        for(var p=0;p<i.powerupsCapacity&&p<i.powerupsStarting.Length;p++){powerups[p]=i.powerupsStarting[p];}
+        powerupDefault=i.powerupDefault;
         weaponsLimited=i.weaponsLimited;
         losePwrupOutOfEn=i.losePwrupOutOfEn;losePwrupOutOfAmmo=i.losePwrupOutOfAmmo;
         //armorMultiInit=i.armorMultiPlayer;
@@ -385,6 +388,7 @@ public class Player : MonoBehaviour{
         health=Mathf.Clamp(health,0,healthMax);
         energy=Mathf.Clamp(energy,0,energyMax);
         ammo=Mathf.Clamp(ammo,-4,999);
+        SelectPowerup();
         LosePowerup();
         if(!ammoOn)ammo=-4;
         DrawMeleeWeapons();
@@ -431,7 +435,7 @@ public class Player : MonoBehaviour{
         if(Application.platform==RuntimePlatform.Android){mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);}
         else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
 
-        if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){powerup=powerupDefault;powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
+        if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){ResetPowerupDef();powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
 
         if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
     }
@@ -607,11 +611,11 @@ public class Player : MonoBehaviour{
                     if(Input.GetButtonDown("Fire1")){
                         if(!SaveSerial.instance.settingsData.dtapMouseShoot){
                             if(shootCoroutine!=null){return;}
-                            else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                            else if(shootCoroutine==null&&shootTimer<=0f&&!ComparePowerupStrCur("null")){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                         }else{
                             float timeSinceLastClick=Time.time-lastClickShootTime;
                             if(shootCoroutine!=null){return;}
-                            else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                            else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f&&!ComparePowerupStrCur("null")){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                             else{lastClickShootTime=Time.time;}
                         }
                         
@@ -622,7 +626,7 @@ public class Player : MonoBehaviour{
                     }
                 }else{
                     if(shootCoroutine!=null){return;}
-                    else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                    else if(shootCoroutine==null&&shootTimer<=0f&&!ComparePowerupStrCur("null")){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     //shootCoroutine=null;
                     if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
@@ -631,7 +635,7 @@ public class Player : MonoBehaviour{
                     if(Input.GetButtonDown("Fire1")){
                         float timeSinceLastClick=Time.time-lastClickShootTime;
                         if(shootCoroutine!=null){return;}
-                        else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                        else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f&&!ComparePowerupStrCur("null")){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                         else{lastClickShootTime=Time.time;}
                     }if(!Input.GetButton("Fire1")||shootTimer<-1f){
                         if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
@@ -642,7 +646,7 @@ public class Player : MonoBehaviour{
             }else{//Regular shooting on Touch in ShootButton()
                 if(autoShoot){//Autoshoot on Touch
                     if(shootCoroutine!=null){return;}
-                    else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                    else if(shootCoroutine==null&&shootTimer<=0f&&!ComparePowerupStrCur("null")){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
             }
@@ -653,7 +657,7 @@ public class Player : MonoBehaviour{
         if(!autoShoot){
             if(pressed){
                 if(shootCoroutine!=null){return;}
-                else if(shootCoroutine==null&&shootTimer<=0f&&powerup!="null"){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                else if(shootCoroutine==null&&shootTimer<=0f&&!ComparePowerupStrCur("null")){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
             }else if(pressed==false||shootTimer<-1f){
                 if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                 shootCoroutine=null;
@@ -732,7 +736,7 @@ public class Player : MonoBehaviour{
 #region//Powerups
     public IEnumerator ShootContinuously(){if(!GameSession.GlobalTimeIsPaused){while(true){
         WeaponProperties w=null;
-        if(GetWeaponProperty(powerup)!=null){w=GetWeaponProperty(powerup);}else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}else Debug.LogWarning(powerup+" not added to WeaponProperties List");
+        if(GetWeaponProperty(_curPwrupName())!=null){w=GetWeaponProperty(_curPwrupName());}else if(GetWeaponPropertyActive(_curPwrupName())!=null){w=GetWeaponPropertyActive(_curPwrupName());}else Debug.LogWarning(powerups[powerupCurID]+" not added to WeaponProperties List");
         if(w!=null){
         costTypeProperties wc=null;
         costTypeCrystalAmmo wcCA=null;
@@ -822,36 +826,50 @@ public class Player : MonoBehaviour{
         }else{yield break;}
         }else{yield break;}
     }}}
-    private void DrawMeleeWeapons(){
+    void SelectPowerup(){
+        if(Input.GetKeyDown(KeyCode.Alpha1)){powerupCurID=0;}
+        else if(Input.GetKeyDown(KeyCode.Alpha2)){if(powerups.Length>1){powerupCurID=1;}}
+        else if(Input.GetKeyDown(KeyCode.Alpha3)){if(powerups.Length>2){powerupCurID=2;}}
+        else if(Input.GetKeyDown(KeyCode.Alpha4)){if(powerups.Length>3){powerupCurID=3;}}
+        else if(Input.GetKeyDown(KeyCode.Alpha5)){if(powerups.Length>4){powerupCurID=4;}}
+        else if(Input.GetKeyDown(KeyCode.Alpha6)){if(powerups.Length>5){powerupCurID=5;}}
+        else if(Input.GetKeyDown(KeyCode.Alpha7)){if(powerups.Length>6){powerupCurID=6;}}
+        else if(Input.GetKeyDown(KeyCode.Alpha8)){if(powerups.Length>7){powerupCurID=7;}}
+        else if(Input.GetKeyDown(KeyCode.Alpha9)){if(powerups.Length>8){powerupCurID=8;}}
+        //else if(Input.GetKeyDown(KeyCode.Alpha0)){}//idk throw away the powerup or some other functionality later on
+        else if(Input.GetKeyDown(KeyCode.Minus)){if(powerupCurID>0){powerupCurID--;}}
+        else if(Input.GetKeyDown(KeyCode.Equals)){if(powerupCurID<powerups.Length){powerupCurID++;}}
+    }
+    void DrawMeleeWeapons(){
         //var cargoDist=2.8f;
         GameObject go=null;
         WeaponProperties w=null;
-        if(GetWeaponProperty(powerup)!=null)w=GetWeaponProperty(powerup);else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}else Debug.LogWarning(powerup+" not added to WeaponProperties List");
+        if(GetWeaponProperty(_curPwrupName())!=null)w=GetWeaponProperty(_curPwrupName());else if(GetWeaponPropertyActive(_curPwrupName())!=null){w=GetWeaponPropertyActive(_curPwrupName());}else Debug.LogWarning(_curPwrupName()+" not added to WeaponProperties List");
         if(w!=null&&w.weaponType==weaponType.melee){
             weaponTypeMelee wp=null;
             if(w.weaponType==weaponType.melee){wp=(weaponTypeMelee)w.weaponTypeProperties;}
             costTypeProperties wc=null;
             if(w.costType==costType.energy){wc=(costTypeEnergy)w.costTypeProperties;}
-            if(powerup!=wp.nameActive&&(w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){
+            if(_curPwrupName()!=wp.nameActive&&(w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){
                 GameObject asset=GameAssets.instance.Get(w.assetName);
                 foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
                 //if(go!=null){go.transform.position=go.transform.position+new Vector3(wp.offset.x,wp.offset.y,go.transform.position.z);}
                 if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+new Vector3(wp.offset.x,wp.offset.y,0.01f);}
                 //if(go!=null){if(go.GetComponent<Lightsaber>()!=null){go.GetComponent<Lightsaber>().SetStartPos(go.transform.position);}}
                 weaponEnTimer=wp.costPeriod;
-                powerup=wp.nameActive;
+                SetPowerupStr(wp.nameActive);
             }else{
-                if(powerup==wp.nameActive){
+                if(ComparePowerupStrCur(wp.nameActive)){
                     if(weaponEnTimer>0){weaponEnTimer-=Time.deltaTime;}
                     if(weaponEnTimer<=0){weaponEnTimer=wp.costPeriod;AddSubEnergy((float)System.Math.Round(wc.cost*shipScale,2),false);}
                     GameObject asset=GameAssets.instance.Get(w.assetName);
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
-                    if(powerup==wp.nameActive&&go==null)powerup=w.name;
+                    if(ComparePowerupStrCur(wp.nameActive)&&go==null)SetPowerupStr(w.name);
                 }
                 else{
                 if(go!=null){Destroy(go);}
                 if(!speed&&!slow&&!shadow)moveSpeedCurrent=moveSpeed;
-                if(losePwrupOutOfEn)powerup=powerupDefault;
+                if(losePwrupOutOfEn)ResetPowerupDef();
                 }
             }
             //Dissapear when near Cargo
@@ -1178,12 +1196,49 @@ public class Player : MonoBehaviour{
         ResortStatuses();
     }
 
-    public void SetPowerup(string name){
-        powerup=name;
-        WeaponProperties w=null;if(GetWeaponProperty(powerup)!=null){w=GetWeaponProperty(powerup);}else if(GetWeaponPropertyActive(powerup)!=null){w=GetWeaponPropertyActive(powerup);}
-        if(w!=null&&w.duration>0){powerupTimer=w.duration;}else if(w==null){Debug.LogWarning("WeaponProperty for "+name+" not defined");}
-        //var i=this.GetType().GetField(name+"Duration").GetValue(this);
+
+    public Powerup _curPwrup(){Powerup pwrup=new Powerup();if(powerups.Length>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
+    public string _curPwrupName(){string str="";if(powerups.Length>powerupCurID){str=powerups[powerupCurID].name;}return str;}
+    public void SetPowerup(Powerup val){
+        powerups[powerupCurID]=val;
+        WeaponProperties w=null;if(GetWeaponProperty(val.name)!=null){w=GetWeaponProperty(val.name);}
+            else if(GetWeaponPropertyActive(val.name)!=null){w=GetWeaponPropertyActive(val.name);}
+        if(w!=null&&w.duration>0){powerupTimer=w.duration;}
+            else if(w==null){Debug.LogWarning("WeaponProperty for "+val.name+" not defined");}
+        //var i=this.GetType().GetField(val+"Duration").GetValue(this);
         //this.GetType().GetField("powerupTimer").SetValue(this,i);
+    }
+    public void SetPowerupStr(string val){
+        powerups[powerupCurID].name=val;
+        WeaponProperties w=null;if(GetWeaponProperty(val)!=null){w=GetWeaponProperty(val);}
+            else if(GetWeaponPropertyActive(val)!=null){w=GetWeaponPropertyActive(val);}
+        if(w!=null&&w.duration>0){powerupTimer=w.duration;}
+            else if(w==null){Debug.LogWarning("WeaponProperty for "+val+" not defined");}
+        //var i=this.GetType().GetField(val+"Duration").GetValue(this);
+        //this.GetType().GetField("powerupTimer").SetValue(this,i);
+    }
+    public void ResetPowerupDef(){powerups[powerupCurID]=powerupDefault;}
+    public void SetPowerupDefaultStr(string val){
+        powerupDefault.name=val;
+        WeaponProperties w=null;if(GetWeaponProperty(val)!=null){w=GetWeaponProperty(val);}
+            else if(GetWeaponPropertyActive(val)!=null){w=GetWeaponPropertyActive(val);}
+        if(w==null){Debug.LogWarning("WeaponProperty for "+val+" not defined");}
+    }
+    public bool ComparePowerups(Powerup one,Powerup comp){bool b=false;
+        if(one.name==comp.name){b=true;}
+        return b;
+    }
+    public bool ComparePowerupsCur(Powerup comp){bool b=false;
+        if(_curPwrupName()==comp.name){b=true;}
+        return b;
+    }
+    public bool ComparePowerupStr(Powerup one,string comp){bool b=false;
+        if(one.name==comp){b=true;}
+        return b;
+    }
+    public bool ComparePowerupStrCur(string comp){bool b=false;
+        if(_curPwrupName()==comp){b=true;}
+        return b;
     }
 
     public void Damage(float dmg, dmgType type, bool ignore=true, float electrTime=4f){//Later add on possible Inverter options?
@@ -1303,7 +1358,7 @@ public class Player : MonoBehaviour{
         foreach(WeaponProperties ws in weaponProperties){
             if(ws.weaponType==weaponType.melee){
                 var wpt=(weaponTypeMelee)ws.weaponTypeProperties;
-                if(powerup!=ws.name&&powerup!=wpt.nameActive){
+                if(!ComparePowerupStrCur(ws.name)&&!ComparePowerupStrCur(wpt.nameActive)){
                     GameObject asset=GameAssets.instance.Get(ws.assetName);
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(ws.assetName)){Destroy(t.gameObject);}}
                 }
@@ -1311,8 +1366,8 @@ public class Player : MonoBehaviour{
         }
     }
     void LosePowerup(){
-        if(losePwrupOutOfEn&&energy<=0&&powerup!=powerupDefault){SetPowerup(powerupDefault);}
-        if(ammoOn&&((GetWeaponProperty(powerup)!=null&&GetWeaponProperty(powerup).costType==costType.ammo)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){SetPowerup(powerup=powerupDefault);ammo=-4;}
+        if(losePwrupOutOfEn&&energy<=0&&!ComparePowerupsCur(powerupDefault)){ResetPowerupDef();}
+        if(ammoOn&&((GetWeaponProperty(_curPwrupName())!=null&&GetWeaponProperty(_curPwrupName()).costType==costType.ammo)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){ResetPowerupDef();ammo=-4;}
     }
 
     public void SetSpeedPrev(){
@@ -1346,4 +1401,11 @@ void XPPopUpHUD(float amnt){GameCanvas.instance.XpPopupSwitch(amnt);}
 void ScorePopUpHUD(float amnt){GameCanvas.instance.ScorePopupSwitch(amnt);}
 void AmmoPopUpHUD(float amnt){GameCanvas.instance.AmmoPopupSwitch(amnt);}
 #endregion
+}
+
+[System.Serializable]
+public class Powerup{
+    public string name;
+    public int ammo=-5;
+    public float timer=-4;
 }
