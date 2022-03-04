@@ -278,6 +278,8 @@ MonoBehaviour:
   - name: GCloverTrail
     gobj: {fileID: 100000, guid: fd3813f35d961b340bc6f97d38400a8c, type: 3}
   sprites:
+  - name: nullPwrup
+    spr: {fileID: 21300000, guid: 03862ac5e476ec14abf1da303946fd8b, type: 3}
   - name: armorPwrup
     spr: {fileID: 21300000, guid: 0aec6e8aedd36884fb81df377f1676ba, type: 3}
   - name: armorUPwrup
@@ -292,8 +294,6 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 92d040ff37251e64e963f974d1420951, type: 3}
   - name: lsaberPwrup
     spr: {fileID: 21300000, guid: da036a76f43bd554db4bb1703744cf00, type: 3}
-  - name: lclawsPwrup
-    spr: {fileID: 21300000, guid: d085fee23f98a5d418173c6592b41386, type: 3}
   - name: hrocketPwrup
     spr: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
   - name: qrocketPwrup

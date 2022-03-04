@@ -1197,8 +1197,15 @@ public class Player : MonoBehaviour{
     }
 
 
-    public Powerup _curPwrup(){Powerup pwrup=new Powerup();if(powerups.Length>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
-    public string _curPwrupName(){string str="";if(powerups.Length>powerupCurID){str=powerups[powerupCurID].name;}return str;}
+    public Powerup GetPowerup(int id){Powerup pwrup=null;if(id<powerups.Length){
+        pwrup=powerups[id];}return pwrup;}
+    public Powerup _curPwrup(){Powerup pwrup=null;if(powerups.Length>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
+    public string _curPwrupName(){string str="";
+        if(powerups.Length>powerupCurID){
+        if(_curPwrup()!=null)str=TrimPwrupA(_curPwrup().name);}
+        return str;
+    }
+    public static string TrimPwrupA(string str){string _str=str;if(str.Contains("A")){_str=_str.Trim('A');}return _str;}
     public void SetPowerup(Powerup val){
         powerups[powerupCurID]=val;
         WeaponProperties w=null;if(GetWeaponProperty(val.name)!=null){w=GetWeaponProperty(val.name);}
@@ -1209,6 +1216,7 @@ public class Player : MonoBehaviour{
         //this.GetType().GetField("powerupTimer").SetValue(this,i);
     }
     public void SetPowerupStr(string val){
+        powerups[powerupCurID]=new Powerup();
         powerups[powerupCurID].name=val;
         WeaponProperties w=null;if(GetWeaponProperty(val)!=null){w=GetWeaponProperty(val);}
             else if(GetWeaponPropertyActive(val)!=null){w=GetWeaponPropertyActive(val);}
@@ -1406,6 +1414,6 @@ void AmmoPopUpHUD(float amnt){GameCanvas.instance.AmmoPopupSwitch(amnt);}
 [System.Serializable]
 public class Powerup{
     public string name;
-    public int ammo=-5;
+    public int ammo=-5;//-5 is infinite, -6 protects it from being replaced
     public float timer=-4;
 }

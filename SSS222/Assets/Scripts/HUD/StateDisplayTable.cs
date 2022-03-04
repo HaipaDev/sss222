@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StateDisplayTable : MonoBehaviour{
-    [SerializeField]GameObject element;
+    [Sirenix.OdinInspector.AssetsOnly][SerializeField]GameObject elementPrefab;
     GameObject table;
     void Start(){
         table=transform.GetChild(0).gameObject;
@@ -14,16 +14,16 @@ public class StateDisplayTable : MonoBehaviour{
         if(Player.instance!=null){
         for(var i=0;i<Player.instance.statuses.Count;i++){
             if(table.transform.childCount==0){
-                GameObject go=Instantiate(element,table.transform);
+                GameObject go=Instantiate(elementPrefab,table.transform);
                 go.name="StateDisplay"+0;
-                go.GetComponent<PowerupDisplay>().number=0;
+                go.GetComponent<StatusDisplay>().number=0;
             }
             if(i>0&&table.transform.childCount<=i){
                 //if(table.transform.childCount==i){}
                 //else{
-                GameObject go=Instantiate(element,table.transform);
+                GameObject go=Instantiate(elementPrefab,table.transform);
                 go.name="StateDisplay"+i;
-                go.GetComponent<PowerupDisplay>().number=i;
+                go.GetComponent<StatusDisplay>().number=i;
                 //}
             }
         }
