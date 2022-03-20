@@ -13,8 +13,9 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
     [AssetsOnly][SerializeField] GameObject gameSessionPrefab;
     
     [Header("Assets managers")]
-    [AssetsOnly][SerializeField] public GameObject gameAssetsPrefab;
+    [AssetsOnly][SerializeField] GameObject gameAssetsPrefab;
     [AssetsOnly][SerializeField] GameObject audioManagerPrefab;
+    
     [Header("Networking, Advancements etc")]
     [AssetsOnly][SerializeField] GameObject dbaccessPrefab;
     [AssetsOnly][SerializeField] GameObject discordPresencePrefab;

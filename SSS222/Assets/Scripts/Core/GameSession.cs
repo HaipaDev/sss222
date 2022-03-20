@@ -374,7 +374,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}
     public void ResetSettings(){
         SaveSerial.instance.ResetSettings();
-        GSceneManager.instance.RestartScene();
+        GSceneManager.instance.ReloadScene();
         SaveSerial.instance.SaveSettings();
     }
     public void DeleteStatsAchievs(){
@@ -518,6 +518,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public int GetHighscoreCurrent(){int i=0;if(SaveSerial.instance.playerData.highscore.Length>GetGamemodeIDCurrentM1()){i=SaveSerial.instance.playerData.highscore[GetGamemodeIDCurrentM1()];}return i;}
     public void SetCheatmode(){if(!cheatmode){cheatmode=true;return;}else{cheatmode=false;return;}}
 }
+
 public enum dir{up,down,left,right}
 public enum hAlign{left,right}
 public enum vAlign{up,down}
+
+public enum InputType{mouse,touch,keyboard,drag}
+public enum PlaneDir{vert,horiz}

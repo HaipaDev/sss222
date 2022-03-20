@@ -54,7 +54,6 @@ public enum costType{energy,ammo,crystalAmmo,blackEnergy}
     public float flareDur=0.3f;
 }
 [System.Serializable]public class weaponTypeMelee:weaponTypeProperties{
-    public string nameActive;
     public Vector2 offset=new Vector2(0,1);
     public float costPeriod=0.15f;
 }

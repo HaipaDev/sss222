@@ -51,9 +51,7 @@ public class PowerupDisplay : MonoBehaviour{
             img.color=Color.white;
         }
         string name="null";
-        if(!String.IsNullOrEmpty(pwrup)){name=pwrup;
-            name=Player.TrimPwrupA(pwrup);
-        }
+        if(!String.IsNullOrEmpty(pwrup)){name=pwrup;}
         img.sprite=GameAssets.instance.Spr(name+"Pwrup");
         //if(pwrup=="null")color.a=0;
         //else color.a=1;

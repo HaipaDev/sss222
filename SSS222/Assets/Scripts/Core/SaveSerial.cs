@@ -262,5 +262,3 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 #endregion
 }
-public enum InputType{mouse,touch,keyboard,drag}
-public enum PlaneDir{vert,horiz}

@@ -101,7 +101,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameSession.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }
-    public void RestartScene(){
+    public void ReloadScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameSession.instance.speedChanged=false;
         GameSession.instance.gameSpeed=1f;
@@ -112,7 +112,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
     /*void OnApplicationQuit(){
         GameSession.
     }*/
-    public void Restart(){
+    public void RestartApp(){
         SceneManager.LoadScene("Loading");
         GameSession.instance.speedChanged=false;
         GameSession.instance.gameSpeed=1f;
