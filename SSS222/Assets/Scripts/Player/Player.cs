@@ -828,20 +828,7 @@ public class Player : MonoBehaviour{
         }else{yield break;}
         }else{yield break;}
     }}}
-    void SelectPowerup(){
-        if(Input.GetKeyDown(KeyCode.Alpha1)){powerupCurID=0;}
-        else if(Input.GetKeyDown(KeyCode.Alpha2)){if(powerups.Length>1){powerupCurID=1;}}
-        else if(Input.GetKeyDown(KeyCode.Alpha3)){if(powerups.Length>2){powerupCurID=2;}}
-        else if(Input.GetKeyDown(KeyCode.Alpha4)){if(powerups.Length>3){powerupCurID=3;}}
-        else if(Input.GetKeyDown(KeyCode.Alpha5)){if(powerups.Length>4){powerupCurID=4;}}
-        else if(Input.GetKeyDown(KeyCode.Alpha6)){if(powerups.Length>5){powerupCurID=5;}}
-        else if(Input.GetKeyDown(KeyCode.Alpha7)){if(powerups.Length>6){powerupCurID=6;}}
-        else if(Input.GetKeyDown(KeyCode.Alpha8)){if(powerups.Length>7){powerupCurID=7;}}
-        else if(Input.GetKeyDown(KeyCode.Alpha9)){if(powerups.Length>8){powerupCurID=8;}}
-        //else if(Input.GetKeyDown(KeyCode.Alpha0)){}//idk throw away the powerup or some other functionality later on
-        else if(Input.GetKeyDown(KeyCode.Minus)){if(powerupCurID>0){powerupCurID--;}}
-        else if(Input.GetKeyDown(KeyCode.Equals)){if(powerupCurID<powerups.Length){powerupCurID++;}}
-    }
+
     void DrawMeleeWeapons(){
         //var cargoDist=2.8f;
         GameObject go=null;
@@ -867,7 +854,6 @@ public class Player : MonoBehaviour{
             }*/
         }
     }
-    
     void HideMeleeWeapons(){
         foreach(WeaponProperties ws in weaponProperties){
             if(ws.weaponType==weaponType.melee){
@@ -879,6 +865,24 @@ public class Player : MonoBehaviour{
             }
         }
     }
+
+    
+    void SelectPowerup(){   if(!GameSession.GlobalTimeIsPaused){
+            if(Input.GetAxis("Mouse ScrollWheel")>0f){if(powerupCurID<powerups.Length-1){powerupCurID++;}else{powerupCurID=0;}}
+            else if(Input.GetAxis("Mouse ScrollWheel")<0f){if(powerupCurID>0){powerupCurID--;}else{powerupCurID=powerups.Length-1;}}
+            if(Input.GetKeyDown(KeyCode.Alpha1)){powerupCurID=0;}
+            else if(Input.GetKeyDown(KeyCode.Alpha2)){if(powerups.Length>1){powerupCurID=1;}}
+            else if(Input.GetKeyDown(KeyCode.Alpha3)){if(powerups.Length>2){powerupCurID=2;}}
+            else if(Input.GetKeyDown(KeyCode.Alpha4)){if(powerups.Length>3){powerupCurID=3;}}
+            else if(Input.GetKeyDown(KeyCode.Alpha5)){if(powerups.Length>4){powerupCurID=4;}}
+            else if(Input.GetKeyDown(KeyCode.Alpha6)){if(powerups.Length>5){powerupCurID=5;}}
+            else if(Input.GetKeyDown(KeyCode.Alpha7)){if(powerups.Length>6){powerupCurID=6;}}
+            else if(Input.GetKeyDown(KeyCode.Alpha8)){if(powerups.Length>7){powerupCurID=7;}}
+            else if(Input.GetKeyDown(KeyCode.Alpha9)){if(powerups.Length>8){powerupCurID=8;}}
+            //else if(Input.GetKeyDown(KeyCode.Alpha0)){}//idk throw away the powerup or some other functionality later on
+            else if(Input.GetKeyDown(KeyCode.Minus)){if(powerupCurID>0){powerupCurID--;}}
+            else if(Input.GetKeyDown(KeyCode.Equals)){if(powerupCurID<powerups.Length){powerupCurID++;}}
+    }}
 #endregion
  
 #region//Statuses
@@ -1210,11 +1214,11 @@ public class Player : MonoBehaviour{
     }
     public bool ContainsPowerup(string str){bool b=false;if(Array.Exists(powerups,x=>x.name==str)){b=true;}return b;}
     public void SetPowerup(Powerup val){if(!ContainsPowerup(val.name)){
-        if(true){int emptyCount=0;
+        if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
             for(var i=0;i<powerups.Length;i++){
                 if(_isPowerupEmpty(powerups[i])){emptyCount++;
                     powerups[i]=val;
-                    if(true){powerupCurID=i;}
+                    if(SaveSerial.instance.settingsData.autoselectNewItem){powerupCurID=i;}
                     break;
                 }
             }if(emptyCount==0){powerups[powerupCurID]=new Powerup();powerups[powerupCurID]=val;}
@@ -1226,12 +1230,12 @@ public class Player : MonoBehaviour{
         //this.GetType().GetField("powerupTimer").SetValue(this,i);
     }}
     public void SetPowerupStr(string val){if(!ContainsPowerup(val)){
-        if(true){int emptyCount=0;
+        if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
             for(var i=0;i<powerups.Length;i++){
                 if(_isPowerupEmpty(powerups[i])){emptyCount++;
                     powerups[i]=new Powerup();
                     powerups[i].name=val;
-                    if(true){powerupCurID=i;}
+                    if(SaveSerial.instance.settingsData.autoselectNewItem){powerupCurID=i;}
                     break;
                 }
             }

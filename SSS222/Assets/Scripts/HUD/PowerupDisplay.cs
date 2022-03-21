@@ -9,6 +9,7 @@ public class PowerupDisplay : MonoBehaviour{
     [Header("Config")]
     [SerializeField] Image bg;
     [SerializeField] TextMeshProUGUI txt;
+    [SerializeField] Image highlightIMG;
     [Header("Values")]
     public int number=0;
     public string pwrup;
@@ -55,5 +56,8 @@ public class PowerupDisplay : MonoBehaviour{
         img.sprite=GameAssets.instance.Spr(name+"Pwrup");
         //if(pwrup=="null")color.a=0;
         //else color.a=1;
+        if(number>=0&&Player.instance!=null&&Player.instance.powerupCurID==number){highlightIMG.enabled=true;}
+        else{highlightIMG.enabled=false;}
     }
+    public void SetPlayerPowerup(){if(Player.instance!=null)if(number>=0)Player.instance.powerupCurID=number;}
 }

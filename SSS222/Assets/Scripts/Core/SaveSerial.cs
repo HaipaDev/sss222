@@ -199,8 +199,10 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool lefthand;
 		public bool dtapMouseShoot;
 		public bool scbuttons;
-		public bool vibrations;
+		public bool vibrations=true;
 		public bool discordRPC=true;
+		public bool autoselectNewItem=true;
+		public bool alwaysReplaceCurrentSlot;
 		
 		public float masterVolume=0;
 		public float soundVolume=0;

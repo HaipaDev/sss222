@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class OnScreenButtons : MonoBehaviour{
     [Sirenix.OdinInspector.HideInPlayMode]public bool lvldUp;
     void Update(){
-        if(SaveSerial.instance.settingsData.scbuttons==false&&transform.GetChild(0).GetComponent<Animator>()!=null&&!transform.GetChild(0).GetComponent<Animator>().GetBool("on")){
+        if(SaveSerial.instance.settingsData.scbuttons==false&&
+        (GetComponent<Animator>()==null||(GetComponent<Animator>()!=null&&!GetComponent<Animator>().GetBool("on")))
+        ){
             foreach(Button bt in GetComponentsInChildren<Button>()){if(bt.enabled){
                 bt.enabled=false;
                 bt.GetComponent<Image>().enabled=false;
@@ -31,9 +33,6 @@ public class OnScreenButtons : MonoBehaviour{
         }else{UpgradeMenu.instance.Resume();}
     }
 
-    public void UseSkillQ(){
-        if(FindObjectOfType<PlayerSkills>()!=null)FindObjectOfType<PlayerSkills>().UseSkills(1);
-    }public void UseSkillE(){
-        if(FindObjectOfType<PlayerSkills>()!=null)FindObjectOfType<PlayerSkills>().UseSkills(2);
-    }
+    public void UseSkillQ(){if(FindObjectOfType<PlayerSkills>()!=null)FindObjectOfType<PlayerSkills>().UseSkills(1);}
+    public void UseSkillE(){if(FindObjectOfType<PlayerSkills>()!=null)FindObjectOfType<PlayerSkills>().UseSkills(2);}
 }

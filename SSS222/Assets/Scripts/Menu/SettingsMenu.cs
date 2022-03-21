@@ -19,6 +19,8 @@ public class SettingsMenu : MonoBehaviour{
     [SceneObjectsOnly][SerializeField]GameObject lefthandToggle;
     [SceneObjectsOnly][SerializeField]GameObject scbuttonsToggle;
     [SceneObjectsOnly][SerializeField]GameObject discordRPCToggle;
+    [SceneObjectsOnly][SerializeField]GameObject autoselectNewItemToggle;
+    [SceneObjectsOnly][SerializeField]GameObject alwaysReplaceCurrentSlotToggle;
     [SceneObjectsOnly][SerializeField]GameObject cheatToggle;
     [Header("Sound")]
     public AudioMixer audioMixer;
@@ -45,7 +47,7 @@ public class SettingsMenu : MonoBehaviour{
 
     [AssetsOnly][SerializeField]GameObject pprocessingPrefab;
     [SceneObjectsOnly]public PostProcessVolume postProcessVolume;
-    private void Start(){
+    void Start(){
         if(SaveSerial.instance!=null){
             var s=SaveSerial.instance.settingsData;
             scbuttonsToggle.GetComponent<Toggle>().isOn=s.scbuttons;
@@ -53,6 +55,8 @@ public class SettingsMenu : MonoBehaviour{
             lefthandToggle.GetComponent<Toggle>().isOn=s.lefthand;
             vibrationsToggle.GetComponent<Toggle>().isOn=s.vibrations;
             discordRPCToggle.GetComponent<Toggle>().isOn=s.discordRPC;
+            autoselectNewItemToggle.GetComponent<Toggle>().isOn=s.autoselectNewItem;
+            alwaysReplaceCurrentSlotToggle.GetComponent<Toggle>().isOn=s.alwaysReplaceCurrentSlot;
             cheatToggle.GetComponent<Toggle>().isOn=GameSession.instance.cheatmode;
             bool h=false;if(s.playfieldRot==PlaneDir.horiz){h=true;}horizPlayfieldToggle.GetComponent<Toggle>().isOn=h;
 
@@ -104,6 +108,12 @@ public class SettingsMenu : MonoBehaviour{
     public void SetOnScreenButtons(bool isOn){if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.scbuttons=isOn;}
     public void SetVibrations(bool isOn){if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.vibrations=isOn;}
     public void SetDiscordRPC(bool isOn){if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.discordRPC=isOn;}
+    public void SetAutoselectNewItem(bool isOn){if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.autoselectNewItem=isOn;
+        if(isOn&&SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot=false;
+            alwaysReplaceCurrentSlotToggle.GetComponent<Toggle>().isOn=false;}}
+    public void SetAlwaysReplaceCurrentSlot(bool isOn){if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot=isOn;
+        if(isOn&&SaveSerial.instance.settingsData.autoselectNewItem){SaveSerial.instance.settingsData.autoselectNewItem=false;
+            autoselectNewItemToggle.GetComponent<Toggle>().isOn=false;}}
     public void SetPlayfieldRot(bool horiz){
         PlaneDir h=PlaneDir.vert;if(horiz==true){h=PlaneDir.horiz;}if(SaveSerial.instance!=null)SaveSerial.instance.settingsData.playfieldRot=h;
         if(SceneManager.GetActiveScene().name=="Game"&&Application.isPlaying){
