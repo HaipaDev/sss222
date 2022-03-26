@@ -15,7 +15,8 @@ public class WeaponProperties:ScriptableObject{
     [ContextMenu("Validate")]void Vaildate(){
         if(weaponType==weaponType.bullet){weaponTypeProperties=new weaponTypeBullet();}
         if(weaponType==weaponType.melee){weaponTypeProperties=new weaponTypeMelee();}
-    }[ContextMenu("ValidateCost")]void VaildateCost(){
+    }
+    [ContextMenu("ValidateCost")]void VaildateCost(){
         if(costType==costType.energy){costTypeProperties=new costTypeEnergy();}
         if(costType==costType.ammo){costTypeProperties=new costTypeAmmo();}
         if(costType==costType.crystalAmmo){costTypeProperties=new costTypeCrystalAmmo();}
@@ -28,7 +29,7 @@ public enum costType{energy,ammo,crystalAmmo,blackEnergy}
 [System.Serializable]public class costTypeAmmo:costTypeProperties{public int ammoSize=20;}
 [System.Serializable]public class costTypeCrystalAmmo:costTypeProperties{public float regularEnergyCost=0;public int crystalCost=1;public int crystalAmmoCrafted=20;}
 [System.Serializable]public class costTypeBlackEnergy:costTypeProperties{public float regularEnergyCost=0;}
-[System.Serializable]public enum weaponType{bullet,melee,hybrid}
+[System.Serializable]public enum weaponType{bullet,melee}
 [System.Serializable]public class weaponTypeProperties{}
 [System.Serializable]public class weaponTypeBullet:weaponTypeProperties{
     public bool leftSide=true;

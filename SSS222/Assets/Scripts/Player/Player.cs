@@ -33,12 +33,11 @@ public class Player : MonoBehaviour{
     [DisableInEditorMode]public float energy = 120f;
     [SerializeField] public float energyMax = 120f;
     [SerializeField] public bool ammoOn=true;
-    [SerializeField] public int ammo = -4;
+    //[SerializeField] public int ammo = -4;
     [SerializeField] public Powerup[] powerups;
     [SerializeField] public int powerupCurID=0;
     [SerializeField] public Powerup powerupDefault;//={new Powerup(name:"laser")};
     [SerializeField] public bool weaponsLimited=false;
-    [DisableInEditorMode]public float powerupTimer=-4;
     [SerializeField] public bool losePwrupOutOfEn;
     [SerializeField] public bool losePwrupOutOfAmmo;
     [SerializeField] public bool fuelOn=false;
@@ -388,12 +387,13 @@ public class Player : MonoBehaviour{
         HandleInput(false);
         health=Mathf.Clamp(health,0,healthMax);
         energy=Mathf.Clamp(energy,0,energyMax);
-        ammo=Mathf.Clamp(ammo,-4,999);
+        //ammo=Mathf.Clamp(ammo,-4,999);
         SelectPowerup();
         LosePowerup();
-        if(!ammoOn)ammo=-4;
+        //if(!ammoOn)ammo=-4;
         DrawMeleeWeapons();
         HideMeleeWeapons();
+        UpdateItems();
         if(GetComponent<PlayerSkills>()!=null){if(GetComponent<PlayerSkills>().timerTeleport==-4){Shoot();}}else{Shoot();}
         Statuses();
         CalculateDefenseSpeed();
@@ -437,7 +437,8 @@ public class Player : MonoBehaviour{
         if(Application.platform==RuntimePlatform.Android){mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);}
         else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
 
-        if(weaponsLimited){if(powerupTimer>0){powerupTimer-=Time.deltaTime;}if(powerupTimer<=0&&powerupTimer!=-4){ResetPowerupDef();powerupTimer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
+        if(weaponsLimited){if(_curPwrup().timer>0){_curPwrup().timer-=Time.deltaTime;}
+        if(_curPwrup().timer<=0&&_curPwrup().timer!=-4){ClearCurrentPowerup();_curPwrup().timer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
 
         if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
     }
@@ -611,6 +612,7 @@ public class Player : MonoBehaviour{
             if(inputType!=InputType.touch&&inputType!=InputType.drag){
                 if(!autoShoot){
                     if(Input.GetButtonDown("Fire1")){
+                        UseItem();
                         if(!SaveSerial.instance.settingsData.dtapMouseShoot){
                             if(shootCoroutine!=null){return;}
                             else if(shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur()){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
@@ -748,6 +750,7 @@ public class Player : MonoBehaviour{
         if(w.costType==costType.crystalAmmo){wc=(costTypeCrystalAmmo)w.costTypeProperties;wcCA=(costTypeCrystalAmmo)wc;}
         if(w.costType==costType.blackEnergy){wc=(costTypeBlackEnergy)w.costTypeProperties;wcBE=(costTypeBlackEnergy)wc;}
         if(w.weaponType==weaponType.bullet){
+            var ammo=_curPwrup().ammo;
             if((w.costType==costType.energy&&((energyOn&&energy>0)||(!energyOn)))
             ||((w.costType==costType.ammo&&ammo>0))
             ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(ammo>0||GameSession.instance.coins>0))
@@ -815,8 +818,8 @@ public class Player : MonoBehaviour{
                     if(wp.rightSide)RightSide();
                     if(wp.randomSide){if(UnityEngine.Random.Range(0,100)<50){LeftSide();}else{RightSide();}}
                     if(w.costType==costType.energy){AddSubEnergy(wc.cost,false);}
-                    if(w.costType==costType.ammo){if(ammo>=wc.cost)AddSubAmmo(wc.cost,false);else{AddSubAmmo(ammo-wc.cost,false);}}
-                    if(w.costType==costType.crystalAmmo){if(ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
+                    if(w.costType==costType.ammo){if(ammo>=wc.cost)AddSubAmmo(wc.cost,_curPwrupName(),false);else{AddSubAmmo(ammo-wc.cost,_curPwrupName(),false);}}
+                    if(w.costType==costType.crystalAmmo){if(ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,_curPwrupName(),false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,_curPwrupName(),true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
                     if(w.costType==costType.blackEnergy){if(GameSession.instance.xp>=wc.cost){AddSubXP(wc.cost,false);}if(w.costType==costType.blackEnergy){AddSubEnergy(wcBE.regularEnergyCost);}}
                     if(w.ovheat!=0)Overheat(w.ovheat);
                     if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
@@ -864,6 +867,39 @@ public class Player : MonoBehaviour{
                 }
             }
         }
+    }
+
+    public string _itemSuffix="_item";
+    public void AddItem(string name){if(GetPowerupStr(name+_itemSuffix)!=null){GetPowerupStr(name+_itemSuffix).ammo++;}else{SetPowerupStr(name+_itemSuffix);GetPowerupStr(name+_itemSuffix).ammo=1;}}
+    void UpdateItems(){
+        foreach(Powerup pwrup in powerups){
+            if(pwrup!=null){
+                if(!String.IsNullOrEmpty(pwrup.name)){
+                    if(pwrup.name.Contains(_itemSuffix))
+                    pwrup.timer=-4;
+                }
+            }
+        }
+    }
+    public void UseItem(){
+        if(!String.IsNullOrEmpty(_curPwrupName())){
+            if(_curPwrupName().Contains(_itemSuffix)){
+                if(_curPwrup().ammo>0){
+                    if(_curPwrupName()=="medkit"+_itemSuffix){MedkitUse();}
+                    _curPwrup().ammo--;
+                    if(_curPwrup().ammo==0){ClearCurrentPowerup();}
+                }else{ClearCurrentPowerup();}
+            }
+        }
+    }
+
+    public void MedkitUse(){
+        if(health>=healthMax){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(medkitHpAmnt));}
+        else if(health!=healthMax&&health>(healthMax-medkitHpAmnt)){
+            int val=Mathf.RoundToInt(medkitHpAmnt-(healthMax-health));
+            if(val>0)GameSession.instance.AddToScoreNoEV(val);}
+        HPAdd(medkitHpAmnt);
+        AddSubEnergy(medkitEnergyGet,true);
     }
 
     
@@ -1224,10 +1260,8 @@ public class Player : MonoBehaviour{
             }if(emptyCount==0){powerups[powerupCurID]=new Powerup();powerups[powerupCurID]=val;}
         }else{powerups[powerupCurID]=val;}
         WeaponProperties w=null;if(GetWeaponProperty(val.name)!=null){w=GetWeaponProperty(val.name);}
-        if(w!=null&&w.duration>0){powerupTimer=w.duration;}
+        if(w!=null&&w.duration>0&&weaponsLimited){powerups[powerupCurID].timer=w.duration;}
             else if(w==null){Debug.LogWarning("WeaponProperty for "+val.name+" not defined");}
-        //var i=this.GetType().GetField(val+"Duration").GetValue(this);
-        //this.GetType().GetField("powerupTimer").SetValue(this,i);
     }}
     public void SetPowerupStr(string val){if(!ContainsPowerup(val)){
         if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
@@ -1245,14 +1279,13 @@ public class Player : MonoBehaviour{
             powerups[powerupCurID].name=val;
         }
         WeaponProperties w=null;if(GetWeaponProperty(val)!=null){w=GetWeaponProperty(val);}
-        if(w!=null&&w.duration>0){powerupTimer=w.duration;}
+        if(w!=null&&w.duration>0&&weaponsLimited){powerups[powerupCurID].timer=w.duration;}
             else if(w==null){Debug.LogWarning("WeaponProperty for "+val+" not defined");}
-        //var i=this.GetType().GetField(val+"Duration").GetValue(this);
-        //this.GetType().GetField("powerupTimer").SetValue(this,i);
     }}
 
     public void ReplacePowerupName(string str, string rep){if(GetPowerupStr(str)!=null){GetPowerupStr(str).name=rep;Debug.Log("Powerup "+str+" replaced with "+rep);}else{Debug.Log("Powerup "+str+" is null!");}}
 
+    public void ClearCurrentPowerup(){powerups[powerupCurID]=new Powerup();}
     public void ResetPowerupDef(){powerups[powerupCurID]=powerupDefault;}
     public void SetPowerupDefaultStr(string val){
         powerupDefault.name=val;
@@ -1276,7 +1309,8 @@ public class Player : MonoBehaviour{
         return b;
     }
 
-    public void Damage(float dmg, dmgType type, bool ignore=true, float electrTime=4f){//Later add on possible Inverter options?
+    public void HPAdd(float hp){Damage(hp,dmgType.heal);}
+    public void Damage(float dmg, dmgType type,bool ignoreInvert=true, float electrTime=4f){//Later add on possible Inverter options?
         if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HpPopUpHUD(-dmgTot);}
         else if(gclover){AudioManager.instance.Play("GCloverHit");}
 
@@ -1289,45 +1323,51 @@ public class Player : MonoBehaviour{
         if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;HpPopUpHUD(dmg);UniCollider.DMG_VFX(2,GetComponent<Collider2D>(),transform,-dmg);}}
         if(type==dmgType.healSilent){if(dmg!=0){health+=dmg;HpPopUpHUD(dmg);}}
     }
-    public void AddSubEnergy(float value,bool add=false, bool ignore=false){
-    if(energyOn&&!infEnergy){
-        if(inverter!=true||ignore){
-            if(add){energy+=value;EnPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
-            else{energy-=value;EnPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
-        }else{
-            if(add){energy-=value;EnPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
-            else{energy+=value;EnPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
-        }
-    }}
-    public void AddSubAmmo(float value,bool add=false, bool ignore=false){
-        var v=(int)value;
-        if(ammo<0)ammo=0;
-        if(inverter!=true||ignore){
-            if(add){ammo+=v;AmmoPopUpHUD(v);}
-            else{if(ammo>=v)ammo-=v;AmmoPopUpHUD(-v);}
-        }else{
-            if(add){if(ammo>=v)ammo-=v;AmmoPopUpHUD(-v);}
-            else{ammo+=v;AmmoPopUpHUD(v);}
+    public void AddSubEnergy(float value, bool add=false,bool ignoreInvert=false){
+        if(energyOn&&!infEnergy){
+            if(inverter!=true||ignoreInvert){
+                if(add){energy+=value;EnPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
+                else{energy-=value;EnPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
+            }else{
+                if(add){energy-=value;EnPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
+                else{energy+=value;EnPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
+            }
         }
     }
-    public void AddSubCoins(int value,bool add=true, bool ignore=false){
-        if(inverter!=true||ignore){
+    public void AddSubAmmo(float value,string name, bool add=false,bool ignoreInvert=false){
+        var v=(int)value;
+        var pwrup=Array.Find(powerups,x=>x.name==name);
+        if(pwrup!=null){
+            if(pwrup.ammo<0)pwrup.ammo=0;
+            if(inverter!=true||ignoreInvert){
+                if(add){pwrup.ammo+=v;AmmoPopUpHUD(v);}
+                else{if(pwrup.ammo>=v)pwrup.ammo-=v;AmmoPopUpHUD(-v);}
+            }else{
+                if(add){if(pwrup.ammo>=v)pwrup.ammo-=v;AmmoPopUpHUD(-v);}
+                else{pwrup.ammo+=v;AmmoPopUpHUD(v);}
+            }
+        }
+    }
+    public void AddSubCoins(int value, bool add=true,bool ignoreInvert=false){
+        if(inverter!=true||ignoreInvert){
             if(add){GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
             else{GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
         }else{
             if(add){GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
             else{GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
         }
-    }public void AddSubXP(float value,bool add=true, bool ignore=false){
-        if(inverter!=true||ignore){
+    }
+    public void AddSubXP(float value, bool add=true,bool ignoreInvert=false){
+        if(inverter!=true||ignoreInvert){
             if(add){GameSession.instance.AddXP(value);}
             else{GameSession.instance.AddXP(-value);}
         }else{
             if(add){GameSession.instance.AddXP(-value);}
             else{GameSession.instance.AddXP(value);}
         }
-    }public void AddSubCores(int value,bool add=true, bool ignore=false){
-        if(inverter!=true||ignore){
+    }
+    public void AddSubCores(int value, bool add=true,bool ignoreInvert=false){
+        if(inverter!=true||ignoreInvert){
             if(add){GameSession.instance.cores+=value;CoresPopUpHUD(value);}
             else{GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
         }else{
@@ -1335,8 +1375,8 @@ public class Player : MonoBehaviour{
             else{GameSession.instance.cores+=value;CoresPopUpHUD(value);}
         }
     }
-    public void HPAbsorp(float value, bool add=true, bool ignore=true){
-        if(inverter!=true||ignore){
+    public void HPAbsorp(float value, bool add=true,bool ignoreInvert=true){
+        if(inverter!=true||ignoreInvert){
             if(add){hpAbsorpAmnt+=value;HpAbsorpPopUpHUD(value);}
             else{hpAbsorpAmnt-=value;HpAbsorpPopUpHUD(-value);}
         }else{
@@ -1344,8 +1384,8 @@ public class Player : MonoBehaviour{
             else{hpAbsorpAmnt+=value;HpAbsorpPopUpHUD(value);}
         }
     }
-    public void EnAbsorp(float value, bool add=true, bool ignore=true){
-        if(inverter!=true||ignore){
+    public void EnAbsorp(float value, bool add=true,bool ignoreInvert=true){
+        if(inverter!=true||ignoreInvert){
             if(add){enAbsorpAmnt+=value;EnAbsorpPopUpHUD(value);}
             else{enAbsorpAmnt-=value;EnAbsorpPopUpHUD(-value);}
         }else{
@@ -1354,11 +1394,11 @@ public class Player : MonoBehaviour{
         }
     }
 
-    public void Overheat(float value,bool add=true, bool ignore=false){
+    public void Overheat(float value, bool add=true,bool ignoreInvert=false){
         if(overheatOn){
         if(overheatTimerMax!=-4){
         if(overheated!=true){
-            if(inverter!=true||ignore){
+            if(inverter!=true||ignoreInvert){
                 if(add){if(overheatTimer==-4){overheatTimer=0;}overheatTimer+=value;overheatCdTimer=overheatCooldown;}
                 else{overheatTimer-=value;}
             }else{
@@ -1381,7 +1421,7 @@ public class Player : MonoBehaviour{
     }
     void LosePowerup(){
         if(losePwrupOutOfEn&&energy<=0&&!ComparePowerupsCur(powerupDefault)){ResetPowerupDef();}
-        if(ammoOn&&((GetWeaponProperty(_curPwrupName())!=null&&GetWeaponProperty(_curPwrupName()).costType==costType.ammo)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){ResetPowerupDef();ammo=-4;}
+        //if(ammoOn&&((GetWeaponProperty(_curPwrupName())!=null&&GetWeaponProperty(_curPwrupName()).costType==costType.ammo)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){ResetPowerupDef();ammo=-4;}
     }
 
     public void SetSpeedPrev(){
@@ -1421,5 +1461,5 @@ void AmmoPopUpHUD(float amnt){GameCanvas.instance.AmmoPopupSwitch(amnt);}
 public class Powerup{
     public string name;
     public int ammo=-5;//-5 is infinite, -6 protects it from being replaced
-    public float timer=-4;
+    public float timer=-4;//-4 is basically off, -5 is infinite
 }

@@ -3938,7 +3938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.74509805}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5867,6 +5867,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -37.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863433209365513069, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+        type: 3}
+      propertyPath: highlightTimerColor.a
+      value: 0.23529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863433209365513069, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+        type: 3}
+      propertyPath: highlightTimerColor.b
+      value: 0.98039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863433209365513069, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+        type: 3}
+      propertyPath: highlightTimerColor.g
+      value: 0.84313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863433209365513069, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+        type: 3}
+      propertyPath: highlightTimerColor.r
+      value: 0.15686275
       objectReference: {fileID: 0}
     - target: {fileID: 8931547197537451287, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
         type: 3}

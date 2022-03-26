@@ -66,12 +66,8 @@ public class PlayerCollider : MonoBehaviour{
                 }
 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("MedkitPwrup").name)){
-                    if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(player.medkitHpAmnt));}
-                    else if(player.health!=player.healthMax&&player.health>(player.healthMax-player.medkitHpAmnt)){
-                        int val=Mathf.RoundToInt(player.medkitHpAmnt-(player.healthMax-player.health));
-                        if(val>0)GameSession.instance.AddToScoreNoEV(val);}
-                    HPAdd(player.medkitHpAmnt);
-                    player.AddSubEnergy(player.medkitEnergyGet,true);
+                    if(!SaveSerial.instance.settingsData.autoUseMedkits){player.AddItem("medkit");}
+                    else if(SaveSerial.instance.settingsData.autoUseMedkits/*&&player.health<(player.healthMax-player.medkitHpAmnt)*/)player.MedkitUse();
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("MedkitCPwrup").name)){
                     if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(25);}
@@ -174,8 +170,8 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("SlowPwrup").name)){player.Slow(10);}
 
 
-                void HPAdd(float hp){player.Damage(hp,dmgType.heal);UniCollider.DMG_VFX(2,other,transform,-hp);}
-                void HPAbsorp(float hp){player.HPAbsorp(hp);UniCollider.DMG_VFX(4,other,transform,hp);}
+                void HPAdd(float hp){player.HPAdd(hp);UniCollider.DMG_VFX(2,other,transform,-hp);}
+                void HPAbsorp(float hp){player.HPAbsorp(hp);UniCollider.DMG_VFX(4,other,player.transform,hp);}
                 
 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){AudioManager.instance.Play("EnergyBall");}
@@ -196,18 +192,17 @@ public class PlayerCollider : MonoBehaviour{
     }
     }
     public void PowerupCollect(string name){
+        player.SetPowerupStr(name);
         if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
         var w=player.GetWeaponProperty(name);
         if(w!=null){
-            if(w.costType==costType.energy){player.ammo=-4;if(player.ContainsPowerup(name)){EnergyAddDupl();}}
-            else if(w.costType==costType.ammo){if(player.ContainsPowerup(name)){AmmoAddDupl(w);}else{player.ammo=0;AmmoAdd(w);}}
+            if(w.costType==costType.energy){if(player.ContainsPowerup(name)){EnergyAddDupl();}}
+            else if(w.costType==costType.ammo){AmmoAdd(w);}
        }else{Debug.LogWarning("WeaponProperty by name "+name+" does not exist");}
-        player.SetPowerupStr(name);
     }
     void EnergyAdd(){player.AddSubEnergy(player.pwrupEnergyGet,true);}
     void EnergyAddDupl(){player.AddSubEnergy(player.enPwrupDuplicate,true);}
-    void AmmoAdd(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
-    void AmmoAddDupl(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,true);}
+    void AmmoAdd(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,w.name,true);}
 
 
     void OnTriggerStay2D(Collider2D other){
