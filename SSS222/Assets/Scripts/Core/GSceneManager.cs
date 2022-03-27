@@ -118,7 +118,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameSession.instance.gameSpeed=1f;
     }
     void CheckESC(){
-    if(Input.GetKeyDown(KeyCode.Escape)){
+    if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Joystick1Button1)){
             var scene=SceneManager.GetActiveScene().name;
             if(scene=="ChooseGameMode"||scene=="Credits"||scene=="Socials"){//||scene=="Customization){
                 LoadStartMenu();

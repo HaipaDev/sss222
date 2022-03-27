@@ -12,7 +12,7 @@ public class PowerupDisplay : MonoBehaviour{
     [SerializeField] Image bg;
     [SerializeField] TextMeshProUGUI txt;
     [SerializeField] Image highlightIMG;
-    [SerializeField] Color highlightTimerColor;
+    [SerializeField] Color highlightTimerColor=new Color(40/255,25/255,250/255,60/255);
     [Header("Values")]
     public int number=0;
     public string pwrup;
@@ -21,24 +21,17 @@ public class PowerupDisplay : MonoBehaviour{
     public bool displayTimerTxt=false;
 
     Image img;
-    Color color;
+    Color bgcolor;
     void Start(){
-        //if(Player.instance!=null)pwrup = Player.instance.powerup;
         img=GetComponent<Image>();
-        //if(powerups!=true){
-        //if(powerups!=true||(Player.instance!=null&&Player.instance.weaponsLimited)){
-        if(transform.GetComponentInChildren<Image>()!=null){bg=transform.GetComponentInChildren<Image>();}
-        //}
-        if(bg!=null)color=bg.color;
-        if(GameRules.instance!=null){pwrup="null";img.sprite=GameAssets.instance.Spr(pwrup+"Pwrup");}
+        if(bg!=null)bgcolor=bg.color;
+        if(GameRules.instance!=null){pwrup="";img.sprite=GameAssets.instance.Spr("nullPwrup");}
     }
     void Update(){
-        if(bg!=null)bg.color=color;
-
         if(Player.instance!=null){
             if(number>=0){
                 if(Player.instance.GetPowerup(number)!=null){pwrup=Player.instance.GetPowerup(number).name;}
-            }else{pwrup=Player.instance._curPwrupName();}
+            }else{pwrup=Player.instance._curPwrupName();if(!GameRules.instance.displayCurrentPowerup){Destroy(gameObject);}}
 
             ammo=0;
             if(number>=0){ammo=Player.instance.GetPowerup(number).ammo;}
@@ -55,19 +48,23 @@ public class PowerupDisplay : MonoBehaviour{
                 else{highlightIMG.enabled=false;}
 
                 if(timer>0){highlightIMG.fillAmount=(timer/timerMax);highlightIMG.color=highlightTimerColor;}
-                else{highlightIMG.fillAmount=1;highlightIMG.color=new Color(1,1,1,0.6f);}
+                else{highlightIMG.fillAmount=1;highlightIMG.color=new Color(1,1,1,35f/255f);}
+                if(txt!=null)txt.characterSpacing=0f;
             }else{
                 if(timer<10f&&timer>=0f){timer=(float)System.Math.Round((float)timer,1);if(txt!=null)txt.characterSpacing=-25f;}
                 else if(timer>10f){timer=(float)Mathf.RoundToInt(timer);if(txt!=null)txt.characterSpacing=0f;}
 
-                if(number>=0&&Player.instance!=null&&Player.instance.powerupCurID==number){highlightIMG.enabled=true;highlightIMG.fillAmount=1;highlightIMG.color=new Color(1,1,1,0.6f);}
+                if(number>=0&&Player.instance!=null&&Player.instance.powerupCurID==number){highlightIMG.enabled=true;highlightIMG.fillAmount=1;highlightIMG.color=new Color(1,1,1,35f/255f);}
                 else{highlightIMG.enabled=false;}
             }
             if(txt!=null){
-                if((ammo<=0&&ammo>-5)||(displayTimerTxt&&timer<=0&&timer>-5)){txt.text="?";}
-                if((ammo==-5)||(displayTimerTxt&&timer>-5)){txt.text="∞";}
-                else{if(!displayTimerTxt){txt.text=ammo.ToString();}else{txt.text=timer.ToString();}}
-            }
+                if(!String.IsNullOrEmpty(pwrup)){
+                    if(bg!=null)bg.color=bgcolor;
+                    if((ammo<=0&&ammo>-5)||(displayTimerTxt&&timer<=0&&timer>-5)){txt.text="?";}
+                    if((ammo==-5)||(displayTimerTxt&&timer>-5)){txt.text="∞";}
+                    else{if(!displayTimerTxt){txt.text=ammo.ToString();}else{txt.text=timer.ToString();}}
+                }else{txt.text="";if(bg!=null)bg.color=Color.clear;}
+            }else{Debug.LogWarning("No txt obj assigned!");}
             string name=pwrup;
             if(!String.IsNullOrEmpty(name)){
                 if(name.Contains(Player.instance._itemSuffix)){name=name.Split('_')[0];}name=name+"Pwrup";

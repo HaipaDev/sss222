@@ -36,7 +36,7 @@ public class Player : MonoBehaviour{
     //[SerializeField] public int ammo = -4;
     [SerializeField] public Powerup[] powerups;
     [SerializeField] public int powerupCurID=0;
-    [SerializeField] public Powerup powerupDefault;//={new Powerup(name:"laser")};
+    [SerializeField] public string powerupDefault="laser";
     [SerializeField] public bool weaponsLimited=false;
     [SerializeField] public bool losePwrupOutOfEn;
     [SerializeField] public bool losePwrupOutOfAmmo;
@@ -388,7 +388,7 @@ public class Player : MonoBehaviour{
         health=Mathf.Clamp(health,0,healthMax);
         energy=Mathf.Clamp(energy,0,energyMax);
         //ammo=Mathf.Clamp(ammo,-4,999);
-        SelectPowerup();
+        SelectItemSlot();
         LosePowerup();
         //if(!ammoOn)ammo=-4;
         DrawMeleeWeapons();
@@ -438,7 +438,10 @@ public class Player : MonoBehaviour{
         else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
 
         if(weaponsLimited){if(_curPwrup().timer>0){_curPwrup().timer-=Time.deltaTime;}
-        if(_curPwrup().timer<=0&&_curPwrup().timer!=-4){ClearCurrentPowerup();_curPwrup().timer=-4;if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}}
+        if(_curPwrup().timer<=0&&_curPwrup().timer!=-4){_curPwrup().timer=-4;
+            if(powerups.Length>1){ClearCurrentPowerup();SelectAnyNotEmptyPowerup();}else{ResetPowerupDef();}
+            if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}
+        }
 
         if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
     }
@@ -612,14 +615,14 @@ public class Player : MonoBehaviour{
             if(inputType!=InputType.touch&&inputType!=InputType.drag){
                 if(!autoShoot){
                     if(Input.GetButtonDown("Fire1")){
-                        UseItem();
                         if(!SaveSerial.instance.settingsData.dtapMouseShoot){
+                            UseItemCurrent();
                             if(shootCoroutine!=null){return;}
                             else if(shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur()){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                         }else{
                             float timeSinceLastClick=Time.time-lastClickShootTime;
                             if(shootCoroutine!=null){return;}
-                            else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur()){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                            else if(timeSinceLastClick<=DCLICK_TIME){UseItemCurrent();if(shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur())shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                             else{lastClickShootTime=Time.time;}
                         }
                         
@@ -637,6 +640,7 @@ public class Player : MonoBehaviour{
             }else if(inputType==InputType.drag){
                 if(!autoShoot){
                     if(Input.GetButtonDown("Fire1")){
+                        UseItemCurrent();
                         float timeSinceLastClick=Time.time-lastClickShootTime;
                         if(shootCoroutine!=null){return;}
                         else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur()){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
@@ -654,10 +658,10 @@ public class Player : MonoBehaviour{
                     if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
             }
-        }else{if(shootCoroutine!=null)StopCoroutine(shootCoroutine);shootCoroutine=null;}
+        }else{if(shootCoroutine!=null)StopCoroutine(shootCoroutine);shootCoroutine=null;shootTimer=0;}
     }
 
-    public void ShootButton(bool pressed){
+    public void ShootButton(bool pressed){      if(!GameSession.GlobalTimeIsPaused){
         if(!autoShoot){
             if(pressed){
                 if(shootCoroutine!=null){return;}
@@ -668,7 +672,7 @@ public class Player : MonoBehaviour{
                 if(moving==true)timerEnRegen+=Time.deltaTime;
             }
         }else{return;}//Autoshoot in Shoot()
-    }
+    }}
     public void ShadowButton(Vector2 pos){
         if(moveX&&moveY)tpPos=pos;
         if(moveX&&!moveY)tpPos=new Vector2(pos.x,transform.position.y);
@@ -737,10 +741,10 @@ public class Player : MonoBehaviour{
         
     }
 
-#region//Powerups
-    public IEnumerator ShootContinuously(){if(!GameSession.GlobalTimeIsPaused){while(true){
+#region//Powerups & Slotted items
+    public IEnumerator ShootContinuously(){     while(!GameSession.GlobalTimeIsPaused){
         WeaponProperties w=null;
-        if(GetWeaponProperty(_curPwrupName())!=null){w=GetWeaponProperty(_curPwrupName());}else Debug.LogWarning(powerups[powerupCurID]+" not added to WeaponProperties List");
+        if(!_isPowerupEmptyCur()){if(GetWeaponProperty(_curPwrupName())!=null){w=GetWeaponProperty(_curPwrupName());}else{Debug.LogWarning(powerups[powerupCurID]+" not added to WeaponProperties List");}}
         if(w!=null){
         costTypeProperties wc=null;
         costTypeCrystalAmmo wcCA=null;
@@ -830,13 +834,13 @@ public class Player : MonoBehaviour{
                 }else{if(!autoShoot){AudioManager.instance.Play("NoEnergy");} shootTimer=0f; shootCoroutine=null; yield break;}
         }else{yield break;}
         }else{yield break;}
-    }}}
+    }}
 
     void DrawMeleeWeapons(){
         //var cargoDist=2.8f;
         GameObject go=null;
         WeaponProperties w=null;
-        if(GetWeaponProperty(_curPwrupName())!=null){w=GetWeaponProperty(_curPwrupName());}else Debug.LogWarning(_curPwrupName()+" not added to WeaponProperties List");
+        if(!_isPowerupEmptyCur()){if(GetWeaponProperty(_curPwrupName())!=null){w=GetWeaponProperty(_curPwrupName());}else{Debug.LogWarning(_curPwrupName()+" not added to WeaponProperties List");}}
         if(w!=null&&w.weaponType==weaponType.melee){
             weaponTypeMelee wp=null;
             if(w.weaponType==weaponType.melee){wp=(weaponTypeMelee)w.weaponTypeProperties;}
@@ -869,8 +873,15 @@ public class Player : MonoBehaviour{
         }
     }
 
+
     public string _itemSuffix="_item";
-    public void AddItem(string name){if(GetPowerupStr(name+_itemSuffix)!=null){GetPowerupStr(name+_itemSuffix).ammo++;}else{SetPowerupStr(name+_itemSuffix);GetPowerupStr(name+_itemSuffix).ammo=1;}}
+    PowerupItemSettings GetItemSettings(string name){return GameRules.instance.GetItemSettings(name);}
+    public void AddItem(string name){
+        if(GameRules.instance.slottablePowerupItems){
+            if(GetPowerupStr(name+_itemSuffix)!=null){if(GetPowerupStr(name+_itemSuffix).ammo<GetItemSettings(name).max){GetPowerupStr(name+_itemSuffix).ammo++;}}
+            else{SetPowerupStr(name+_itemSuffix);GetPowerupStr(name+_itemSuffix).ammo=1;}
+        }else{UseItem(name);}
+    }
     void UpdateItems(){
         foreach(Powerup pwrup in powerups){
             if(pwrup!=null){
@@ -881,13 +892,14 @@ public class Player : MonoBehaviour{
             }
         }
     }
-    public void UseItem(){
-        if(!String.IsNullOrEmpty(_curPwrupName())){
-            if(_curPwrupName().Contains(_itemSuffix)){
-                if(_curPwrup().ammo>0){
-                    if(_curPwrupName()=="medkit"+_itemSuffix){MedkitUse();}
-                    _curPwrup().ammo--;
-                    if(_curPwrup().ammo==0){ClearCurrentPowerup();}
+    void UseItemCurrent(){UseItem(_curPwrupName());}
+    public void UseItem(string name){
+        if(!String.IsNullOrEmpty(name)){
+            if(name.Contains(_itemSuffix)){
+                if(GetPowerupStr(name).ammo>0){
+                    if(name=="medkit"+_itemSuffix){MedkitUse();}
+                    GetPowerupStr(name).ammo--;
+                    if(GetPowerupStr(name).ammo==0){ClearCurrentPowerup();}
                 }else{ClearCurrentPowerup();}
             }
         }
@@ -903,9 +915,9 @@ public class Player : MonoBehaviour{
     }
 
     
-    void SelectPowerup(){   if(!GameSession.GlobalTimeIsPaused){
-            if(Input.GetAxis("Mouse ScrollWheel")>0f){if(powerupCurID<powerups.Length-1){powerupCurID++;}else{powerupCurID=0;}}
-            else if(Input.GetAxis("Mouse ScrollWheel")<0f){if(powerupCurID>0){powerupCurID--;}else{powerupCurID=powerups.Length-1;}}
+    void SelectItemSlot(){   if(!GameSession.GlobalTimeIsPaused){
+            if(Input.GetAxis("Mouse ScrollWheel")>0f||Input.GetKeyDown(KeyCode.JoystickButton5)){if(powerupCurID<powerups.Length-1){powerupCurID++;}else{powerupCurID=0;}}
+            else if(Input.GetAxis("Mouse ScrollWheel")<0f||Input.GetKeyDown(KeyCode.JoystickButton4)){if(powerupCurID>0){powerupCurID--;}else{powerupCurID=powerups.Length-1;}}
             if(Input.GetKeyDown(KeyCode.Alpha1)){powerupCurID=0;}
             else if(Input.GetKeyDown(KeyCode.Alpha2)){if(powerups.Length>1){powerupCurID=1;}}
             else if(Input.GetKeyDown(KeyCode.Alpha3)){if(powerups.Length>2){powerupCurID=2;}}
@@ -915,7 +927,8 @@ public class Player : MonoBehaviour{
             else if(Input.GetKeyDown(KeyCode.Alpha7)){if(powerups.Length>6){powerupCurID=6;}}
             else if(Input.GetKeyDown(KeyCode.Alpha8)){if(powerups.Length>7){powerupCurID=7;}}
             else if(Input.GetKeyDown(KeyCode.Alpha9)){if(powerups.Length>8){powerupCurID=8;}}
-            //else if(Input.GetKeyDown(KeyCode.Alpha0)){}//idk throw away the powerup or some other functionality later on
+            else if(Input.GetKeyDown(KeyCode.Alpha0)){if(powerups.Length>9){powerupCurID=9;}}
+            else if(Input.GetKeyDown(KeyCode.Backslash)){if(powerups.Length>1/*||(powerups.Length==1&&powerups[0].name==powerupDefault)*/)ClearCurrentPowerup();}
             else if(Input.GetKeyDown(KeyCode.Minus)){if(powerupCurID>0){powerupCurID--;}}
             else if(Input.GetKeyDown(KeyCode.Equals)){if(powerupCurID<powerups.Length){powerupCurID++;}}
     }}
@@ -1237,17 +1250,14 @@ public class Player : MonoBehaviour{
     }
 
     public bool _isPowerupEmpty(Powerup powerup){bool b=false;if(powerup==null||String.IsNullOrEmpty(powerup.name)){b=true;}return b;}
+    public bool _isPowerupEmptyID(int id){bool b=false;if(powerups[id]==null||String.IsNullOrEmpty(powerups[id].name)){b=true;}return b;}
     public bool _isPowerupEmptyCur(){bool b=false;if(powerups[powerupCurID]==null||String.IsNullOrEmpty(powerups[powerupCurID].name)){b=true;}return b;}
     public Powerup GetPowerup(int id){Powerup pwrup=null;if(id<powerups.Length){
         pwrup=powerups[id];}return pwrup;}
     public Powerup GetPowerupStr(string str){Powerup pwrup=null;
         pwrup=Array.Find(powerups,x=>x.name==str);return pwrup;}
     public Powerup _curPwrup(){Powerup pwrup=null;if(powerups.Length>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
-    public string _curPwrupName(){string str="";
-        if(powerups.Length>powerupCurID){
-        if(_curPwrup()!=null)str=_curPwrup().name;}
-        return str;
-    }
+    public string _curPwrupName(){string str="";if(powerups.Length>powerupCurID){if(_curPwrup()!=null)str=_curPwrup().name;}return str;}
     public bool ContainsPowerup(string str){bool b=false;if(Array.Exists(powerups,x=>x.name==str)){b=true;}return b;}
     public void SetPowerup(Powerup val){if(!ContainsPowerup(val.name)){
         if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
@@ -1285,10 +1295,18 @@ public class Player : MonoBehaviour{
 
     public void ReplacePowerupName(string str, string rep){if(GetPowerupStr(str)!=null){GetPowerupStr(str).name=rep;Debug.Log("Powerup "+str+" replaced with "+rep);}else{Debug.Log("Powerup "+str+" is null!");}}
 
+    public void ClearPowerup(string name){powerups[Array.FindIndex(powerups,x=>x.name==name)]=new Powerup();}
     public void ClearCurrentPowerup(){powerups[powerupCurID]=new Powerup();}
-    public void ResetPowerupDef(){powerups[powerupCurID]=powerupDefault;}
+    public void ResetPowerupDef(){powerups[powerupCurID]=new Powerup();powerups[powerupCurID].name=powerupDefault;}
+    public void SelectAnyNotEmptyPowerup(){
+        int i=-1;
+        i=Array.FindIndex(powerups,x=>x.name==powerupDefault);//prefer the default
+        if(i==-1){Array.FindIndex(powerups,x=>!String.IsNullOrEmpty(x.name));}
+        if(i==-1){i=0;}
+        powerupCurID=i;
+    }
     public void SetPowerupDefaultStr(string val){
-        powerupDefault.name=val;
+        powerupDefault=val;
         WeaponProperties w=null;if(GetWeaponProperty(val)!=null){w=GetWeaponProperty(val);}
         if(w==null){Debug.LogWarning("WeaponProperty for "+val+" not defined");}
     }
@@ -1420,8 +1438,8 @@ public class Player : MonoBehaviour{
         }return null;
     }
     void LosePowerup(){
-        if(losePwrupOutOfEn&&energy<=0&&!ComparePowerupsCur(powerupDefault)){ResetPowerupDef();}
-        //if(ammoOn&&((GetWeaponProperty(_curPwrupName())!=null&&GetWeaponProperty(_curPwrupName()).costType==costType.ammo)))if(losePwrupOutOfAmmo&&ammo<=0&&ammo!=-4){ResetPowerupDef();ammo=-4;}
+        if(losePwrupOutOfEn&&energy<=0&&!ComparePowerupStrCur(powerupDefault)){ResetPowerupDef();}
+        if(!_isPowerupEmptyCur()){if(ammoOn&&((GetWeaponProperty(_curPwrupName())!=null&&GetWeaponProperty(_curPwrupName()).costType==costType.ammo))){if(losePwrupOutOfAmmo&&_curPwrup().ammo<=0)ResetPowerupDef();}}
     }
 
     public void SetSpeedPrev(){
@@ -1455,11 +1473,4 @@ void XPPopUpHUD(float amnt){GameCanvas.instance.XpPopupSwitch(amnt);}
 void ScorePopUpHUD(float amnt){GameCanvas.instance.ScorePopupSwitch(amnt);}
 void AmmoPopUpHUD(float amnt){GameCanvas.instance.AmmoPopupSwitch(amnt);}
 #endregion
-}
-
-[System.Serializable]
-public class Powerup{
-    public string name;
-    public int ammo=-5;//-5 is infinite, -6 protects it from being replaced
-    public float timer=-4;//-4 is basically off, -5 is infinite
 }

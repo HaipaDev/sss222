@@ -79,13 +79,14 @@ MonoBehaviour:
     ammo: -5
     timer: -4
   powerupsCapacity: 5
-  powerupDefault:
-    name: laser
-    ammo: -5
-    timer: -4
+  powerupDefault: 
   weaponsLimited: 0
-  losePwrupOutOfEn: 1
+  losePwrupOutOfEn: 0
   losePwrupOutOfAmmo: 1
+  slottablePowerupItems: 1
+  powerupItemSettings:
+  - name: medkit
+    max: 5
   dmgMultiPlayer: 1
   shootMultiPlayer: 1
   shipScaleDefault: 0.95

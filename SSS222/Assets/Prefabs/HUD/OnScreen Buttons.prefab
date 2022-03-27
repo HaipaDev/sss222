@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6968036211844660821}
   - component: {fileID: 8218445807864167673}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 1319061777030877871}
   - component: {fileID: 3197859635629512911}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -412,7 +412,6 @@ GameObject:
   - component: {fileID: 5165595822375948003}
   - component: {fileID: 5765015325137086167}
   - component: {fileID: 4944902255318528683}
-  - component: {fileID: 2118477709678699854}
   m_Layer: 5
   m_Name: PauseButton
   m_TagString: Untagged
@@ -454,7 +453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -535,18 +534,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2118477709678699854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378281979581477348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a6e35754186afe449fb15e70ce05bff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1415110052075935626
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -939,7 +926,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 13.095367}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5612231427229212495
 MonoBehaviour:
@@ -1232,6 +1219,7 @@ GameObject:
   - component: {fileID: 823627260974767397}
   - component: {fileID: 158700857836936080}
   - component: {fileID: 267646819766118548}
+  - component: {fileID: 7200416156383966819}
   m_Layer: 5
   m_Name: OnScreen Buttons
   m_TagString: Untagged
@@ -1342,6 +1330,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad64ab9f2e024d04498cb64144c3737d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lvldUp: 0
+--- !u!95 &7200416156383966819
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4272552451145820605}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d65faa4e057ae2844bfd978ee9fc8997, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4549946749258650467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,7 +1362,7 @@ GameObject:
   - component: {fileID: 9046675514121719168}
   - component: {fileID: 6912067968673961140}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1924,7 +1932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -2405,7 +2413,6 @@ GameObject:
   - component: {fileID: 5471456275497303629}
   - component: {fileID: 2468907107601428466}
   - component: {fileID: 7788406061441558270}
-  - component: {fileID: 5021427903122310017}
   - component: {fileID: 5923140306033776316}
   m_Layer: 5
   m_Name: UpgradeMenuButton
@@ -2448,7 +2455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -2529,25 +2536,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &5021427903122310017
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8854775068149379942}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d65faa4e057ae2844bfd978ee9fc8997, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &5923140306033776316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2573,7 +2561,7 @@ GameObject:
   - component: {fileID: 7357729267923246503}
   - component: {fileID: 4596207941500934388}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

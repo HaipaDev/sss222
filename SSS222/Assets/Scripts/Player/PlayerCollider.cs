@@ -66,8 +66,8 @@ public class PlayerCollider : MonoBehaviour{
                 }
 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("MedkitPwrup").name)){
-                    if(!SaveSerial.instance.settingsData.autoUseMedkits){player.AddItem("medkit");}
-                    else if(SaveSerial.instance.settingsData.autoUseMedkits/*&&player.health<(player.healthMax-player.medkitHpAmnt)*/)player.MedkitUse();
+                    if(!SaveSerial.instance.settingsData.autoUseMedkitsIfLow){player.AddItem("medkit");}
+                    else if(SaveSerial.instance.settingsData.autoUseMedkitsIfLow&&player.health<(player.healthMax-player.medkitHpAmnt))player.MedkitUse();
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("MedkitCPwrup").name)){
                     if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(25);}

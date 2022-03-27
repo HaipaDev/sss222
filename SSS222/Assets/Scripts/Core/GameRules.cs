@@ -47,13 +47,16 @@ public static GameRules instance;
     public float fuelDrainAmnt=0.1f;
     public float fuelDrainFreq=0.5f;
     public Powerup[] powerupsStarting;//={new Powerup(name:"laser")};
-    public int powerupsCapacity=5;
+    [Range(1,10)]public int powerupsCapacity=5;
     /*public int powerupsCapacityStarting=2;
     public int powerupsCapacityMax=5;*/
-    public Powerup powerupDefault;//={new Powerup(name:"laser")};
+    public string powerupDefault;
+    public bool displayCurrentPowerup=true;
     public bool weaponsLimited;
     public bool losePwrupOutOfEn;
     public bool losePwrupOutOfAmmo;
+    public bool slottablePowerupItems=true;
+    public PowerupItemSettings[] powerupItemSettings;//={new Powerup(name:"medkit",max="5")};
     //public float armorMultiPlayer=1f;
     public float dmgMultiPlayer=1f;
     public float shootMultiPlayer=1f;
@@ -311,9 +314,11 @@ public static GameRules instance;
     public void MLaserBulletAmnt(int amnt){if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=amnt;}}
     public void ChangeMaxXP(int amnt){GameSession.instance.xpMax=amnt;}
     #endregion
-}
 #endregion
-
+#region//Return functions
+    public PowerupItemSettings GetItemSettings(string name){PowerupItemSettings p=null;p=Array.Find(powerupItemSettings,x=>x.name==name);return p;}
+#endregion
+}
 #region//Custom classes
 [System.Serializable]
 public class PowerupsSpawnerGR{
@@ -401,6 +406,18 @@ public class dmgFxReqs_angle:dmgFxReqs{
     public float angleP;
 }*/
 
+
+[System.Serializable]
+public class Powerup{
+    public string name;
+    public int ammo=-5;//-5 is infinite, -6 protects it from being replaced
+    public float timer=-4;//-4 is basically off, -5 is infinite
+}
+[System.Serializable]
+public class PowerupItemSettings{
+    public string name;
+    public int max=5;
+}
 
 
 [System.Serializable]

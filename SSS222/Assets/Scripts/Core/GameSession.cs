@@ -233,6 +233,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             presenceTimer=1f;
         }
 
+        //Check if using any GamePad
+        if(Input.GetKeyDown(KeyCode.JoystickButton0)){if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.inputType!=InputType.keyboard){SaveSerial.instance.settingsData.inputType=InputType.keyboard;}}
+
         if(UpgradeMenu.instance!=null)CalculateLuck();
         CheckCodes(".",".");
     }

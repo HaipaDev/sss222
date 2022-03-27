@@ -55,8 +55,7 @@ public class PlayerSkills : MonoBehaviour{
         System.Array.Resize(ref cooldowns, skills.Length);
     }
 
-    public void UseSkills(int key){
-    if(!GameSession.GlobalTimeIsPaused){
+    public void UseSkills(int key){ if(!GameSession.GlobalTimeIsPaused){
         for(var i=0;i<cooldowns.Length;i++){
             if(cooldowns[i]>0)cooldowns[i]-=Time.deltaTime;
 
@@ -64,7 +63,7 @@ public class PlayerSkills : MonoBehaviour{
             else if(skillsBinds[i]==skillKeyBind.E){cooldownE=cooldowns[i];}
         }
         if(player.hacked!=true){
-            if(Input.GetKeyDown(KeyCode.Q) || key==1){
+            if(Input.GetKeyDown(KeyCode.Q)||Input.GetKeyDown(KeyCode.JoystickButton2) || key==1){
                 foreach(Skill skill in skills){
                     var i=skill.ID;
                     if(skillsBinds[i]==skillKeyBind.Q){
@@ -73,7 +72,7 @@ public class PlayerSkills : MonoBehaviour{
                         }else{AudioManager.instance.Play("Deny");}
                     }
                 }
-            }if(Input.GetKeyDown(KeyCode.E) || key==2){
+            }if(Input.GetKeyDown(KeyCode.E)||Input.GetKeyDown(KeyCode.JoystickButton1) || key==2){
                 foreach(Skill skill in skills){
                     var i=skill.ID;
                     if(skillsBinds[i]==skillKeyBind.E){

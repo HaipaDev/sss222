@@ -203,7 +203,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool discordRPC=true;
 		public bool autoselectNewItem=true;
 		public bool alwaysReplaceCurrentSlot;
-		public bool autoUseMedkits=false;
+		public bool autoUseMedkitsIfLow=false;
 		
 		public float masterVolume=0;
 		public float soundVolume=0;

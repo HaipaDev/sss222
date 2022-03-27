@@ -229,6 +229,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: powerupsCapacity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: refillEnergyAmnt
       value: 60
       objectReference: {fileID: 0}
@@ -452,6 +457,11 @@ PrefabInstance:
         type: 3}
       propertyPath: waveList.Array.data[7].dropChance
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupItemSettings.Array.data[0].max
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

@@ -4587,7 +4587,7 @@ GameObject:
   - component: {fileID: 4223724847769383760}
   - component: {fileID: 7626507570778476841}
   m_Layer: 5
-  m_Name: AutouseMedkitsToggle
+  m_Name: AutouseMedkitsIfLowToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11430,7 +11430,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Autouse medkits
+  m_text: 'Autouse medkits
+
+    If low'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6e897014a7348ee479ca75190b434e70, type: 2}
   m_sharedMaterial: {fileID: -4472182291292323351, guid: 6e897014a7348ee479ca75190b434e70,
@@ -17876,7 +17878,7 @@ MonoBehaviour:
   discordRPCToggle: {fileID: 5614830540574157306}
   autoselectNewItemToggle: {fileID: 290596291909788333}
   alwaysReplaceCurrentSlotToggle: {fileID: 5910911615983385832}
-  autoUseMedkitsToggle: {fileID: 1067750425713719883}
+  autoUseMedkitsIfLowToggle: {fileID: 1067750425713719883}
   cheatToggle: {fileID: 6679137846810371439}
   audioMixer: {fileID: 24100000, guid: cdf423136b4935c44a751cae8c8b0d94, type: 2}
   masterSlider: {fileID: 6377388302127446871}

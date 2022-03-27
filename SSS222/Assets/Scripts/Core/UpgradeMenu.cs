@@ -128,12 +128,14 @@ public class UpgradeMenu : MonoBehaviour{
         Resume();
     }
     void Update(){
-        if(Input.GetKeyDown(KeyCode.F)){
+        if(Input.GetKeyDown(KeyCode.F)||Input.GetKeyDown(KeyCode.JoystickButton3)){
             if(UpgradeMenuIsOpen){Resume();
             }else{if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && Player.instance!=null)Open();}
         }
-        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Backspace)){if(upgradeMenu2UI.activeSelf || lvltreeUI.activeSelf){Back();Open();return;}
-        else if(!(upgradeMenu2UI.activeSelf && lvltreeUI.activeSelf) && upgradeMenuUI.activeSelf){Resume();return;}}
+        if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){
+            if(upgradeMenu2UI.activeSelf||lvltreeUI.activeSelf){Back();Open();return;}
+            else if(!(upgradeMenu2UI.activeSelf && lvltreeUI.activeSelf)&&upgradeMenuUI.activeSelf){Resume();return;}
+        }
         LevelEverything();
     }
 
@@ -300,7 +302,7 @@ public class UpgradeMenu : MonoBehaviour{
     public void AddLuck(){UpgradeFloat(ref GameSession.instance.luckMulti,luck_UpgradeAmnt,luck_UpgradeCost, false, ref GameSession.instance.luckMulti,ref luck_UpgradesCount, ref luck_UpgradesLvl,false);}
 
     public void DefaultPowerupChange(string prevPowerup,string powerup,int cost,bool add,ref float value,float amnt,bool permament,int upgradeXPamnt){
-        if(GameSession.instance.cores>=cost && player.ComparePowerupStr(player.powerupDefault,prevPowerup)){player.SetPowerupDefaultStr(powerup);if(permament!=true){player.SetPowerupStr(powerup);}GameSession.instance.cores-=cost;if(add==true){value+=amnt;}defaultPowerup_upgradeCount++;/*total_UpgradesCount+=upgradeXPamnt;*/if(permament==true){player.losePwrupOutOfEn=false;}GetComponent<AudioSource>().Play();}
+        if(GameSession.instance.cores>=cost && player.powerupDefault==prevPowerup){player.SetPowerupDefaultStr(powerup);if(permament!=true){player.SetPowerupStr(powerup);}GameSession.instance.cores-=cost;if(add==true){value+=amnt;}defaultPowerup_upgradeCount++;/*total_UpgradesCount+=upgradeXPamnt;*/if(permament==true){player.losePwrupOutOfEn=false;}GetComponent<AudioSource>().Play();}
         else{AudioManager.instance.Play("Deny");}
     }
     //public void DefaultPowerupL2(){if(GameSession.instance.cores>powerupDefaultL2_UpgradeCost){player.powerupDefault="laser2";GameSession.instance.cores-=powerupDefaultL2_UpgradeCost;total_UpgradesCount++;}else{GetComponent<AudioSource>().Play();}}

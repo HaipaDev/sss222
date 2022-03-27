@@ -18,7 +18,7 @@ public class PauseMenu : MonoBehaviour{
         //shop=FindObjectOfType<Shop>();
     }
     void Update(){
-        if(Input.GetKeyDown(KeyCode.Escape)){
+        if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.JoystickButton7)){
             if(GameIsPaused){
                 if(pauseMenuUI.activeSelf)Resume();
                 if(optionsUI.transform.GetChild(0).gameObject.activeSelf){GameSession.instance.SaveSettings();GameSession.instance.CloseSettings(true);pauseMenuUI.SetActive(true);}
