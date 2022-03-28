@@ -25,13 +25,13 @@ public class AchievPopups : MonoBehaviour{  public static AchievPopups instance;
     void Update(){
         if(!playing&&queue.Count>0){playing=true;PopupAchiev();}
         if(finished){RemoveDoneFromQueue();GetComponent<Animator>().ResetTrigger("Play");if(transform.GetChild(0).gameObject.activeSelf)transform.GetChild(0).gameObject.SetActive(false);}
-        else{if(queue.Count>0)firstInQueueName=queue[0].name;}
+        else{if(queue.Count>0)firstInQueueName=queue[0].displayName;}
     }
     void PopupAchiev(){
         finished=false;
         if(!transform.GetChild(0).gameObject.activeSelf)transform.GetChild(0).gameObject.SetActive(true);
         GetComponent<Animator>().SetTrigger("Play");
-        name.text=queue[0].name;
+        name.text=queue[0].displayName;
         desc.text=queue[0].desc;
         icon.sprite=queue[0].icon;
         epic=queue[0].epic;
@@ -46,6 +46,6 @@ public class AchievPopups : MonoBehaviour{  public static AchievPopups instance;
         if(!queue.Contains(a))queue.Add(a);
     }
     public void RemoveDoneFromQueue(){
-        if(queue.Count>0){if(queue[0].name==firstInQueueName)queue.RemoveAt(0);}finished=false;return;
+        if(queue.Count>0){if(queue[0].displayName==firstInQueueName)queue.RemoveAt(0);}finished=false;return;
     }
 }

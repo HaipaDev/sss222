@@ -396,19 +396,32 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     }
 
     public void SetAnalytics(){
-        if(analyticsOn==true){
-        AnalyticsResult analyticsResult=Analytics.CustomEvent("Death",
-        new Dictionary<string,object>{
-            { "Mode: ", GameRules.instance.cfgName },
-            { "Score: ", score },
-            { "Time: ", GetGameSessionTime() },
-            { "Source: ", Player.instance.GetComponent<PlayerCollider>().lastHitObj },
-            { "Damage: ", Player.instance.GetComponent<PlayerCollider>().lastHitDmg },
-            { "Full Report: ", GameRules.instance.cfgName+", "+score+", "+instance.GetGameSessionTimeFormat()+", "+Player.instance.GetComponent<PlayerCollider>().lastHitObj+", "+Player.instance.GetComponent<PlayerCollider>().lastHitDmg }
-        });
-        Debug.Log("analyticsResult: "+analyticsResult);
-        Debug.Log("Full Report: "+GameRules.instance.cfgName+", "+score+", "+instance.GetGameSessionTimeFormat()+", "+Player.instance.GetComponent<PlayerCollider>().lastHitObj+", "+Player.instance.GetComponent<PlayerCollider>().lastHitDmg);
+        string _phasing="";string _sent="";
+        if(Player.instance.GetComponent<PlayerCollider>()._LastHitPhasing()){_phasing=" (Phase)";}
+        string FullReport(){
+            return GameRules.instance.cfgName+", "+score+", "+instance.GetGameSessionTimeFormat()+", "
+            +Player.instance.GetComponent<PlayerCollider>()._LastHitName()+_phasing+", "
+            +Player.instance.GetComponent<PlayerCollider>()._LastHitDmg()+", "
+            +Player.instance.GetComponent<PlayerCollider>()._LastHp();
         }
+        #if UNITY_EDITOR
+            analyticsOn=false;
+        #endif
+        if(analyticsOn){
+            _sent=" (Sent)";
+            AnalyticsResult analyticsResult=Analytics.CustomEvent("Death",
+            new Dictionary<string,object>{
+                { "Mode: ", GameRules.instance.cfgName },
+                { "Score: ", score },
+                { "Time: ", GetGameSessionTime() },
+                { "Source: ", Player.instance.GetComponent<PlayerCollider>()._LastHitName()+_phasing },
+                { "Damage: ", Player.instance.GetComponent<PlayerCollider>()._LastHitDmg() },
+                { "LastHP: ", Player.instance.GetComponent<PlayerCollider>()._LastHp() },
+                { "Full Report: ", FullReport() }
+            });
+            Debug.Log("analyticsResult: "+analyticsResult);
+        }
+        Debug.Log("Full Report"+_sent+": "+FullReport());
     }
 
     public void DieAdventure(){

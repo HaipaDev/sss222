@@ -25,7 +25,9 @@ public class StatsSocialText : MonoBehaviour{
             +"<color=grey>Shots Total: </color>"+GetStatTot("shotsTotal")+"\n";
         }else{
             txt.text=
-            "<color=grey>Score Total: </color>"+GetStatGM("scoreTotal")+"\n"
+            "<color=grey>Highscore: </color>"+GameSession.instance.GetHighscoreByName(ddvalue)+"\n"
+            +"<color=grey>Score Total: </color>"+GetStatGM("scoreTotal")+"\n"
+            +"<color=grey>Longest Session: </color>"+GameSession.instance.FormatTimeWithHours(int.Parse(GetStatGM("longestSession")))+"\n"
             +"<color=grey>Playtime: </color>"+GameSession.instance.FormatTimeWithHours(int.Parse(GetStatGM("playtime")))+"\n"
             +"<color=grey>Deaths: </color>"+GetStatGM("deaths")+"\n"
             +"<color=grey>Powerups: </color>"+GetStatGM("powerups")+"\n"

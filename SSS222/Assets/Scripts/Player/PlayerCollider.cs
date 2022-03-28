@@ -6,13 +6,16 @@ using Sirenix.OdinInspector;
 public class PlayerCollider : MonoBehaviour{
     [Header("Other")]
     public float dmgTimer;
-    public string lastHitObj;
-    public float lastHitDmg;
     public List<colliTypes> colliTypes=UniCollider.colliTypesForPl;
+    
+    string lastHitName;
+    float lastHp;
+    float lastHitDmg;
+    bool lastHitPhasing;
 
     Player player;
     void Start(){player=Player.instance;}
-    void OnTriggerEnter2D(Collider2D other){
+    void OnTriggerEnter2D(Collider2D other){    lastHp=player.health;
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
             float dmg=0;int armorPenetr=0;
             if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
@@ -187,7 +190,10 @@ public class PlayerCollider : MonoBehaviour{
                 Destroy(other.gameObject, 0.05f);
             }
             #endregion
-            if((dmg!=0||other.gameObject.name.Contains(GameAssets.instance.Get("InverterPwrup").name))&&!player.gclover){var name=other.gameObject.name.Split('(')[0];lastHitObj=name;lastHitDmg=dmg;}
+            string hitName="";
+            if((dmg!=0||other.gameObject.name.Contains(GameAssets.instance.Get("InverterPwrup").name)||other.gameObject.name.Contains("Zone_"))&&!player.gclover){hitName=other.gameObject.name;
+                if(hitName.Contains(" (Clone)"))hitName=hitName.Replace(" (Clone)","");lastHitName=hitName;lastHitDmg=dmg;lastHitPhasing=false;}
+            if(hitName.Contains("Zone_")){hitName=hitName.Split('_')[0];lastHitName=hitName;}
             UniCollider.DMG_VFX(2,other,transform,dmg);
     }
     }
@@ -205,7 +211,7 @@ public class PlayerCollider : MonoBehaviour{
     void AmmoAdd(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,w.name,true);}
 
 
-    void OnTriggerStay2D(Collider2D other){
+    void OnTriggerStay2D(Collider2D other){     lastHp=player.health;
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq.phaseTimer<=0){
             if(dmgPhaseFreq.phaseTimer!=-4&&(dmgPhaseFreq.phaseCount<=dmgPhaseFreq.phaseCountLimit||dmgPhaseFreq.phaseCountLimit==0)){
@@ -221,14 +227,17 @@ public class PlayerCollider : MonoBehaviour{
                 if(dmg>0){dmg=CalculateDmg(dmg,armorPenetr,true);player.Damage(dmg,dmgType.silent);}
                 else if(dmg<0){player.Damage(dmg,dmgType.heal);}//?
                 UniCollider.DMG_VFX(3,other,transform,dmg);
+
+                string hitName="";
+                if((dmg!=0||other.gameObject.name.Contains("Zone_"))&&!player.gclover){hitName=other.gameObject.name;
+                    if(hitName.Contains("(Clone)"))hitName=hitName.Replace("(Clone)","");lastHitName=hitName;lastHitDmg=dmg;lastHitPhasing=true;}
+                if(hitName.Contains("Zone_")){hitName=hitName.Split('_')[0];lastHitName=hitName;}
             }
             dmgPhaseFreq.SetTimer();
         }}
     }}
 
-    private void OnTriggerExit2D(Collider2D other){
-        if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){other.GetComponent<Tag_DmgPhaseFreq>().ResetTimer();}
-    }
+    void OnTriggerExit2D(Collider2D other){if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){other.GetComponent<Tag_DmgPhaseFreq>().ResetTimer();}}
     float CalculateDmg(float dmgVal,int armorPenetrVal,bool phase=false){
         float dmg=dmgVal;
         int def=player.defense;int armorPenetr=armorPenetrVal;float defMulti=0.5f;
@@ -243,8 +252,7 @@ public class PlayerCollider : MonoBehaviour{
         return (float)System.Math.Round(dmg,2);
     }
    void PlayerEffects(string goName,bool phase=false){
-        DamageValues dmgVal=UniCollider.GetDmgVal(goName);
-        if(dmgVal!=null){
+        DamageValues dmgVal=UniCollider.GetDmgVal(goName);  if(dmgVal!=null){
             if(colliTypes.Contains(dmgVal.colliType)){
                 if(dmgVal.dmgFx){
                     foreach(DmgFxValues fx in dmgVal.dmgFxValues){
@@ -268,4 +276,8 @@ public class PlayerCollider : MonoBehaviour{
             }
         }
    }
+   public string _LastHitName(){return lastHitName;}
+   public float _LastHp(){return lastHp;}
+   public float _LastHitDmg(){return lastHitDmg;}
+   public bool _LastHitPhasing(){return lastHitPhasing;}
 }

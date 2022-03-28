@@ -704,6 +704,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GRDef
       objectReference: {fileID: 0}
+    - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: m_RootOrder
@@ -1403,7 +1408,7 @@ PrefabInstance:
     - target: {fileID: 2891871714886297027, guid: ff9793f039b72f14994587665385df16,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 49.309814
+      value: 49.20343
       objectReference: {fileID: 0}
     - target: {fileID: 2891871714886297027, guid: ff9793f039b72f14994587665385df16,
         type: 3}

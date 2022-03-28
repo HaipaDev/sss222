@@ -13,7 +13,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	IEnumerator Start(){
 		yield return new WaitForSecondsRealtime(0.01f);
 		playerData.highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()];
-		playerData.achievsCompleted=new bool[StatsAchievsManager.GetAchievsListCount()];
+		//playerData.achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()];
 		statsData.statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()];
 		
 		if(String.IsNullOrEmpty(playerData.skinName)||GameAssets.instance.GetSkin(playerData.skinName)==null){playerData.skinName="def";}
@@ -72,7 +72,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 #endregion
 #region//Player Data
-	public PlayerData playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()],achievsCompleted=new bool[StatsAchievsManager.GetAchievsListCount()]};
+	public PlayerData playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
 	[System.Serializable]public class PlayerData{
 		public int[] highscore=new int[0];
 		public string skinName="def";
@@ -81,7 +81,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public string flaresName="def";
 		public string deathFxName="def";
 		public string musicName=CstmzMusic._cstmzMusicDef;
-		public bool[] achievsCompleted=new bool[0];
+		public AchievData[] achievsCompleted=new AchievData[0];
 	}
 	public void Save(){
 		SaveGame.Encode = dataEncode;
@@ -100,7 +100,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
 	}
 	public void Delete(){
-		playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()],achievsCompleted=new bool[StatsAchievsManager.GetAchievsListCount()]};
+		playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
 		GC.Collect();
 		if (File.Exists(Application.persistentDataPath + "/"+filename)){
 			File.Delete(Application.persistentDataPath + "/"+filename);

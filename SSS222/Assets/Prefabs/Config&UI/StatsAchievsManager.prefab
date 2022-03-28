@@ -45,48 +45,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievsList:
-  - id: 0
-    name: Small steps
+  - name: arcade100
+    displayName: Small steps
     desc: Get 100 points in Arcade
     icon: {fileID: 21300000, guid: b258df9be38c13144afc0317e9d7602d, type: 3}
     epic: 0
-    completed: 0
-  - id: 1
-    name: Bigger steps
+    achievData:
+      name: 
+      completed: 0
+  - name: arcade1k
+    displayName: Bigger steps
     desc: Get 1k points in Arcade
     icon: {fileID: 21300000, guid: 77fdc71bd5cd27f43905e251bfe4794d, type: 3}
     epic: 0
-    completed: 0
-  - id: 2
-    name: Space Master
+    achievData:
+      name: 
+      completed: 0
+  - name: arcade10k
+    displayName: Space Master
     desc: Get 10k points in Arcade
     icon: {fileID: 21300000, guid: ce120e20f26ca4345a78a799f3c7bdf0, type: 3}
     epic: 1
-    completed: 0
-  - id: 3
-    name: Reapers Buddy
+    achievData:
+      name: 
+      completed: 0
+  - name: die100
+    displayName: Reapers Buddy
     desc: Die a 100 times
     icon: {fileID: 21300000, guid: 521746cb3c8742d469a5b09b01b42543, type: 3}
     epic: 0
-    completed: 0
-  - id: 4
-    name: Comet Crusher
+    achievData:
+      name: 
+      completed: 0
+  - name: comets1k
+    displayName: Comet Crusher
     desc: Destroy 1k comets
     icon: {fileID: 21300000, guid: 82e9175ec3d22a34f9362edab32ce785, type: 3}
     epic: 0
-    completed: 0
-  - id: 5
-    name: Mecha Destroyer
+    achievData:
+      name: 
+      completed: 0
+  - name: mechas500
+    displayName: Mecha Destroyer
     desc: Destroy 500 mechanical enemies
     icon: {fileID: 21300000, guid: bc4f18be8785b114597c63af6b7ad907, type: 3}
     epic: 0
-    completed: 0
-  - id: 6
-    name: I wont let you
+    achievData:
+      name: 
+      completed: 0
+  - name: saberBlock
+    displayName: I wont let you
     desc: Block a projectile with Saber
     icon: {fileID: 21300000, guid: 4cf5741bd33303a42842aee57938a833, type: 3}
     epic: 0
-    completed: 0
+    achievData:
+      name: 
+      completed: 0
   _achievsListCount: 7
   achievsLoaded: 0
   uncompletedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

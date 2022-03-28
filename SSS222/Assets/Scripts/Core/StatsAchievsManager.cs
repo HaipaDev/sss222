@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,8 +20,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public bool statsLoaded;
     public bool statsTotalSummed;
     void Awake(){if(StatsAchievsManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
-    void Start(){foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){statsGamemodesList.Add(new StatsGamemode(){gmName=gr.cfgName});}
-    }
+    void Start(){foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){statsGamemodesList.Add(new StatsGamemode(){gmName=gr.cfgName});}}
     void Update(){
         if(!achievsLoaded)LoadAchievs();
         if(!statsLoaded)LoadStats();
@@ -32,25 +32,25 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     #region//Achievs
     void CheckAllAchievs(){
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=100)
-        ||GameSession.instance.GetHighscoreByName("Arcade")>=100){CompleteAchiev("Get 100 points in Arcade");}
+        ||GameSession.instance.GetHighscoreByName("Arcade")>=100){CompleteAchiev("arcade100");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=1000)
-        ||GameSession.instance.GetHighscoreByName("Arcade")>=1000){CompleteAchiev("Get 1k points in Arcade");}
+        ||GameSession.instance.GetHighscoreByName("Arcade")>=1000){CompleteAchiev("arcade1k");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=10000)
-        ||GameSession.instance.GetHighscoreByName("Arcade")>=10000){CompleteAchiev("Get 10k points in Arcade");}
-        if(statsTotal.deaths>=100){CompleteAchiev("Die a 100 times");}
-        if(statsTotal.killsComets>=1000){CompleteAchiev("Destroy 1k comets");}
-        if(statsTotal.killsMecha>=500){CompleteAchiev("Destroy 500 mechanical enemies");}
+        ||GameSession.instance.GetHighscoreByName("Arcade")>=10000){CompleteAchiev("arcade10k");}
+        if(statsTotal.deaths>=100){CompleteAchiev("die100");}
+        if(statsTotal.killsComets>=1000){CompleteAchiev("comets1k");}
+        if(statsTotal.killsMecha>=500){CompleteAchiev("mechas500");}
     }
     
     public void CompleteAchiev(string str){
         Achievement a;
-        a=GetAchievByName(str,true);if(a==null)a=GetAchievByDesc(str,true);
-        if(a!=null){if(!a.completed){a.completed=true;AchievPopups.instance.AddToQueue(a);SaveAchievs();}}else{Debug.LogWarning("No achiev by name neither desc of: "+str);}
+        a=GetAchievByName(str,true);//if(a==null)a=GetAchievByDesc(str,true);
+        if(a!=null){if(!a._isCompleted()){a.achievData.completed=true;a.achievData.dateAchieved=DateTime.Now;AchievPopups.instance.AddToQueue(a);SaveAchievs();}}//else{Debug.LogWarning("No achiev by name neither desc of: "+str);}
     }
     public Achievement GetAchievByName(string str,bool ignoreWarning=false){var i=achievsList.Find(x=>x.name==str);if(i!=null){return i;}else{if(!ignoreWarning){Debug.LogWarning("No achiev by name: "+str);}return null;}}
-    public Achievement GetAchievByDesc(string str,bool ignoreWarning=false){var i=achievsList.Find(x=>x.desc==str);if(i!=null){return i;}else{if(!ignoreWarning){Debug.LogWarning("No achiev by desc: "+str);}return null;}}
+    //public Achievement GetAchievByDesc(string str,bool ignoreWarning=false){var i=achievsList.Find(x=>x.desc==str);if(i!=null){return i;}else{if(!ignoreWarning){Debug.LogWarning("No achiev by desc: "+str);}return null;}}
 
-    public void SaberBlocked(){CompleteAchiev("Block a projectile with Saber");}
+    public void SaberBlocked(){CompleteAchiev("saberBlock");}
     #endregion
 
     #region//Stats
@@ -77,7 +77,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public StatsGamemode GetStatsForGamemode(string str){return statsGamemodesList.Find(x=>x.gmName.Contains(str));}
 
     public void AddScoreTotal(int i){var s=GetStatsForCurrentGamemode();if(s!=null)s.scoreTotal+=i;ClearStatsTotal();}
-    public void AddPlaytime(int i){var s=GetStatsForCurrentGamemode();if(s!=null)s.playtime+=i;ClearStatsTotal();}
+    public void AddPlaytime(int i){var s=GetStatsForCurrentGamemode();if(s!=null)s.playtime+=i;ClearStatsTotal();if(i>s.longestSession){s.longestSession=i;}}
     public void AddDeaths(){var s=GetStatsForCurrentGamemode();if(s!=null)s.deaths++;ClearStatsTotal();}
     public void AddPowerups(){var s=GetStatsForCurrentGamemode();if(s!=null)s.powerups++;ClearStatsTotal();}
     public void AddKills(string name,enemyType type){
@@ -94,17 +94,33 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     #endregion
 
 
-    public void SaveAchievs(){if(SaveSerial.instance!=null)if(SaveSerial.instance.playerData!=null){
-        if(SaveSerial.instance.playerData.achievsCompleted.Length<achievsList.Count){SaveSerial.instance.playerData.achievsCompleted=new bool[achievsList.Count];}
+    public void SaveAchievs(){      if(SaveSerial.instance!=null)if(SaveSerial.instance.playerData!=null){
+        if(SaveSerial.instance.playerData.achievsCompleted.Length!=achievsList.Count){SaveSerial.instance.playerData.achievsCompleted=new AchievData[achievsList.Count];}
+        if(SaveSerial.instance.playerData.achievsCompleted[0]==null){
+            for(var i=0;i<SaveSerial.instance.playerData.achievsCompleted.Length;i++){
+                SaveSerial.instance.playerData.achievsCompleted[i]=new AchievData();}}
         for(var i=0;i<SaveSerial.instance.playerData.achievsCompleted.Length;i++){
-            SaveSerial.instance.playerData.achievsCompleted[i]=achievsList.Find(x=>x.id==i).completed;}
+            SaveSerial.instance.playerData.achievsCompleted[i].name=achievsList[i].name;}
+        foreach(AchievData ad in SaveSerial.instance.playerData.achievsCompleted){var a=achievsList.Find(x=>x.name==ad.name);
+            ad.completed=a.achievData.completed;
+            ad.dateAchieved=a.achievData.dateAchieved;
+        }
+        Debug.Log("Saving achievs");
+        //for(var i=0;i<SaveSerial.instance.playerData.achievsCompleted.Length;i++){
+            //SaveSerial.instance.playerData.achievsCompleted[i]=achievsList.Find(x=>x.id==i).completed;}
     }}
-    public void LoadAchievs(){if(SaveSerial.instance!=null)if(SaveSerial.instance.playerData!=null){
-        for(var i=0;i<achievsList.Count&&i<SaveSerial.instance.playerData.achievsCompleted.Length;i++){
-            achievsList.Find(x=>x.id==i).completed=SaveSerial.instance.playerData.achievsCompleted[i];}}
+    public void LoadAchievs(){      if(SaveSerial.instance!=null)if(SaveSerial.instance.playerData!=null){
+        foreach(AchievData ad in SaveSerial.instance.playerData.achievsCompleted){var a=achievsList.Find(x=>x.name==ad.name);
+            a.achievData.completed=ad.completed;
+            a.achievData.dateAchieved=ad.dateAchieved;
+        }
+        //for(var i=0;i<achievsList.Count&&i<SaveSerial.instance.playerData.achievsCompleted.Length;i++){
+            //achievsList.Find(x=>x.id==i).completed=SaveSerial.instance.playerData.achievsCompleted[i];}
+        }
         achievsLoaded=true;
+        Debug.Log("Loading achievs");
     }
-    public static int GetAchievsListCount(){return StatsAchievsManager.instance._achievsListCount;}
+    public static int _AchievsListCount(){return StatsAchievsManager.instance._achievsListCount;}
 
 
     public void SaveStats(){if(SaveSerial.instance!=null)if(SaveSerial.instance.statsData!=null){
@@ -122,19 +138,28 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
 [System.Serializable]
 public class Achievement{
     [Header("Properties")]
-    public int id;
     public string name;
+    public string displayName;
     public string desc;
     public Sprite icon;
     public bool epic;
     [Header("Values")]
+    public AchievData achievData;
+    public bool _isCompleted(){bool b=false;b=achievData.completed;return b;}
+    public DateTime _dateAchieved(){DateTime dt=DateTime.Now;dt=achievData.dateAchieved;return dt;}
+}
+[System.Serializable]
+public class AchievData{
+    /*[HideInInspector]*/public string name;
     public bool completed;
+    public DateTime dateAchieved;
 }
 
 
 [System.Serializable]
 public class StatsGamemode{ public string gmName;
     public int scoreTotal;
+    public int longestSession;
     public int playtime;
     public int deaths;
     public int powerups;
