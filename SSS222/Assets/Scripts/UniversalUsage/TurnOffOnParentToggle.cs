@@ -7,7 +7,7 @@ public class TurnOffOnParentToggle : MonoBehaviour{
     void Start(){StartCoroutine(StartI());}
     IEnumerator StartI(){
         yield return new WaitForSecondsRealtime(0.3f);
-        gameObject.SetActive(transform.parent.GetComponent<Toggle>().isOn);
+        gameObject.SetActive(GetComponentInParent<Toggle>().isOn);
         Destroy(this);
     }
 }

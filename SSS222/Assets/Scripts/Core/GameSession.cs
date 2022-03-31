@@ -83,7 +83,8 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     void SetUpSingleton(){if(GameSession.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
     void Start(){
         Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);
-        if(SceneManager.GetActiveScene().name=="Game"&&GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}
+        if(SceneManager.GetActiveScene().name=="Game"){AddSpawnReqsMono();}
+        else if(SceneManager.GetActiveScene().name!="Game"){RemoveSpawnReqsMono();}
 
         presenceTimeSet=false;
     }
@@ -103,7 +104,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     }}
     
     public void EnterGameScene(){
-        if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}
+        AddSpawnReqsMono();
         StartCoroutine(SetGameRulesValues());
         RandomizeWaveScoreMax();
         RandomizeShopScoreMax();
@@ -167,7 +168,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         else if(PauseMenu.GameIsPaused==true&&Input.GetKeyDown(KeyCode.Space)){FindObjectOfType<PauseMenu>().Resume();}
         if(restartTimer>0)restartTimer-=Time.unscaledDeltaTime;
         if(restartTimer<=0&&restartTimer!=-4){if(Input.GetKeyDown(KeyCode.R)||(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Space))){GSceneManager.instance.RestartGame();restartTimer=-4;}}
-        if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Escape)){GSceneManager.instance.LoadStartMenu();}
+        if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Escape)){GSceneManager.instance.LoadStartMenuGame();}
         }
 
         if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(Player.instance!=null&&Player.instance.inverter==true)){
@@ -215,7 +216,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             string nickname="";if(SaveSerial.instance!=null){if(SaveSerial.instance.hyperGamerLoginData!=null){nickname=SaveSerial.instance.hyperGamerLoginData.username;}}
             string nickInfo="";if(!String.IsNullOrEmpty(nickname))nickInfo=" | "+nickname;
             if(sceneName!="Game"){
-                presenceStatus=_prefixStatus+"In Menus"+nickInfo+_suffixStatus;
+                if(sceneName=="SandboxMode"){presenceStatus=_prefixStatus+"Creating a gamemode"+nickInfo+_suffixStatus;}
+                else if(sceneName=="Customization"){presenceStatus=_prefixStatus+"Customizing"+nickInfo+_suffixStatus;}
+                else{presenceStatus=_prefixStatus+"In Menus"+nickInfo+_suffixStatus;}
                 presenceDetails=_prefixDetails+""+_suffixDetails;
             }else{
                 presenceDetails=_prefixDetails+"Score: "+score+" | "+"Game Time: "+GetGameSessionTimeFormat()+_suffixDetails;
@@ -278,7 +281,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         rarePwrupMulti=1;
         legendPwrupMulti=1;
         currentPlaytime=0;
-        if(GetComponent<spawnReqsMono>()!=null)Destroy(GetComponent<spawnReqsMono>());
+        RemoveSpawnReqsMono();
     }
     public void ResetAfterAdventure(){
         coins=0;
@@ -513,15 +516,14 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public bool CheckGamemodeSelected(string name){bool selected=false;if(gamemodeSelected>0&&gamemodeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))+1){selected=true;}
         else if(gamemodeSelected<0&&Mathf.Abs(gamemodeSelected)+1==Array.FindIndex(GameCreator.instance.adventureZonesPrefabs,e=>e.cfgName.Contains(name))){selected=true;}return selected;}
     public int GetGamemodeID(string name){return Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
-    public int GetGamemodeIDM1(string name){return Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))-1;}
-    public int GetGamemodeIDCurrentM1(){return gamemodeSelected-1;}
+    public GameRules GetGameRules(string name){return Array.Find(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
     /*public int GetGamemodeID(string name){int i=0;i=Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));
         if(i==0){i=Array.FindIndex(GameCreator.instance.adventureZonesPrefabs,e=>e.cfgName.Contains(name))+1;}return i;}
     public string GetGamemodeName(int id){string n="";if(id>0&&gamemodeSelected<GameCreator.instance.gamerulesetsPrefabs.Length+1){n=GameCreator.instance.gamerulesetsPrefabs[id].cfgName;}
         else if(gamemodeSelected<0&&Mathf.Abs(gamemodeSelected)<GameCreator.instance.adventureZonesPrefabs.Length){n=GameCreator.instance.adventureZonesPrefabs[Mathf.Abs(id)].cfgName;}return n;}*/
     public GameRules GetGameRulesCurrent(){
         GameRules gr=null;
-        if(gamemodeSelected>0){gr=GameCreator.instance.gamerulesetsPrefabs[GetGamemodeIDCurrentM1()];}
+        if(gamemodeSelected>0){gr=GameCreator.instance.gamerulesetsPrefabs[gamemodeSelected-1];}
         else if(gamemodeSelected<0){gr=GameCreator.instance.adventureZonesPrefabs[Mathf.Abs(gamemodeSelected)-1];}
         return gr;
     }
@@ -531,13 +533,15 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         
     //public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
     public int GetHighscoreByName(string str){int i=0;if(SaveSerial.instance.playerData.highscore.Length>GetGamemodeID(str)){i=SaveSerial.instance.playerData.highscore[GetGamemodeID(str)];}return i;}
-    public int GetHighscoreCurrent(){int i=0;if(SaveSerial.instance.playerData.highscore.Length>GetGamemodeIDCurrentM1()){i=SaveSerial.instance.playerData.highscore[GetGamemodeIDCurrentM1()];}return i;}
+    public int GetHighscoreCurrent(){int i=0;if(gamemodeSelected>0){if(SaveSerial.instance.playerData.highscore.Length>gamemodeSelected-1){i=SaveSerial.instance.playerData.highscore[gamemodeSelected-1];}}return i;}
     public void SetCheatmode(){if(!cheatmode){cheatmode=true;return;}else{cheatmode=false;return;}}
+    public void AddSpawnReqsMono(){if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}}
+    public void RemoveSpawnReqsMono(){if(GetComponent<spawnReqsMono>()!=null){Destroy(GetComponent<spawnReqsMono>());}}
 }
 
 public enum dir{up,down,left,right}
 public enum hAlign{left,right}
 public enum vAlign{up,down}
 
-public enum InputType{mouse,touch,keyboard,drag}
+public enum InputType{mouse,keyboard,touch,drag}
 public enum PlaneDir{vert,horiz}

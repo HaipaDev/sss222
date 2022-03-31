@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHandler, IPointerExitHandler{
-    public static UIInputSystem instance;
+public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHandler, IPointerExitHandler{     public static UIInputSystem instance;
     [SerializeField]EventSystem es;
     [SerializeField]Button btn;
     [SerializeField]Button btnLast;

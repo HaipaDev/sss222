@@ -7,9 +7,8 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Sirenix.OdinInspector;
 
-public class GameRules : MonoBehaviour{
+public class GameRules : MonoBehaviour{     public static GameRules instance;
 #region//Values
-public static GameRules instance;
 #region//Global values
 [Header("Global")]
     public string cfgName;
@@ -219,12 +218,9 @@ public static GameRules instance;
 #endregion
 #endregion
 #region//Voids
-    void Awake(){SetupSingleton();}
-    void SetupSingleton(){
-        if(GameRules.instance!=null||!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode"||SceneManager.GetActiveScene().name=="AdventureZones")){Destroy(gameObject);}
-        else{DontDestroyOnLoad(gameObject);instance=this;}
-    }
+    void Awake(){if(GameRules.instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
     IEnumerator Start(){
+        if(gameObject.name.Contains("(Clone)")){gameObject.name.Replace("(Clone)","");}
         //Set gameModeSelected if artificially turned on gamemode etc
         yield return new WaitForSecondsRealtime(0.05f);
         if(!GameSession.instance.CheckGamemodeSelected(cfgName)){
@@ -280,10 +276,11 @@ public static GameRules instance;
     Player p;
     void Update(){
         if(Player.instance!=null&&p!=Player.instance){p=Player.instance;}
-        if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode"||SceneManager.GetActiveScene().name=="AdventureZones")){Destroy(gameObject);}
+        if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode"||SceneManager.GetActiveScene().name=="AdventureZones"||SceneManager.GetActiveScene().name=="SandboxMode")){
+            Destroy(gameObject);}
+        CapToMaxValues();
     }
     void OnValidate(){
-        if(!shopOn)shopCargoOn=false;
         foreach(ListEvents le in lvlEvents){le.name="Levels: "+le.lvls.x+"-"+le.lvls.y;}
         foreach(EnemyClass e in enemies){
             //e.drops=new List<LootTableEntryDrops>();//Restart list if bugged
@@ -303,6 +300,17 @@ public static GameRules instance;
                 if(co.colliEventsType==colliEventsType.playerDmg){co.colliEvents=new colliEvent_PlayerDmg();}
             }
         }*/
+        CapToMaxValues();
+    }
+    void CapToMaxValues(){
+        healthPlayer=Mathf.Clamp(healthPlayer,0,healthMaxPlayer);
+        //if(healthMaxPlayer<=0){healthMaxPlayer=0.1f;}
+        energyPlayer=Mathf.Clamp(energyPlayer,0,energyMaxPlayer);
+        if(!energyOnPlayer){energyPlayer=0;energyMaxPlayer=0;}
+       // if(energyMaxPlayer<=0){energyMaxPlayer=0.1f;}
+
+        if(!shopOn)shopCargoOn=false;
+        if(!xpOn)levelingOn=false;
     }
     #region//Custom Events
     public void MultiplyhealthMax(float amnt){p.healthMax*=amnt;}

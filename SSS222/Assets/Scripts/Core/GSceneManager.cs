@@ -46,7 +46,8 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         StatsAchievsManager.instance.SaveStats();
         SaveSerial.instance.SaveStats();
         GameSession.instance.ResetMusicPitch();
-        SceneManager.LoadScene("Menu");
+        if(GameSession.instance.gamemodeSelected>0)SceneManager.LoadScene("Menu");
+        else{if(GameRules.instance!=null){if(GameRules.instance.cfgName.Contains("Sandbox")){SceneManager.LoadScene("SandboxMode");}}}
         yield return new WaitForSecondsRealtime(0.01f);
         GameSession.instance.speedChanged=false;GameSession.instance.defaultGameSpeed=1f;GameSession.instance.gameSpeed=1f;
         GameSession.instance.ResetAfterAdventure();
@@ -69,6 +70,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
     }
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");/*GameSession.instance.SetGamemodeSelected(0);*/}
     public void LoadAdventureZonesScene(){SceneManager.LoadScene("AdventureZones");GameSession.instance.LoadAdventurePre();}
+    public void LoadSandboxModeScene(){SceneManager.LoadScene("SandboxMode");GameSession.instance.SetGamemodeSelected(0);}
     public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}
     public void LoadGameModeInfoSceneSet(int i){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGamemodeSelected(i);}
     public void LoadGameModeInfoSceneSetStr(string str){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGamemodeSelectedStr(str);}
@@ -88,8 +90,9 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameSession.instance.SaveHighscore();
         //if(GameSession.instance.CheckGamemodeSelected("Adventure"))GameSession.instance.SaveAdventure();//not sure if Restart should save or not
         yield return new WaitForSecondsRealtime(0.01f);
-        spawnReqsMono.RestartAllValues();
-        spawnReqsMono.ResetSpawnReqsList();
+        //spawnReqsMono.RestartAllValues();
+        //spawnReqsMono.ResetSpawnReqsList();
+        GameSession.instance.RemoveSpawnReqsMono();
         GameSession.instance.ResetScore();
         GameSession.instance.ResetMusicPitch();
         yield return new WaitForSecondsRealtime(0.05f);

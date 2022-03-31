@@ -25,5 +25,9 @@ public class GameModeDropdown : MonoBehaviour{
         dd.AddOptions(options);
         dd.value=dd.options.FindIndex(d=>d.text.Contains(GameSession.instance.GetCurrentGamemodeName()));//GameSession.instance.GetGamemodeID(dd.options[dd.value].text);
     }
-    public void SetGamemode(){GameSession.instance.SetGamemodeSelectedStr(dd.options[dd.value].text);if(FindObjectOfType<DisplayLeaderboard>()!=null)FindObjectOfType<DisplayLeaderboard>().DisplayCurrentUserHighscore();}
+    public void SetGamemode(){
+        GameSession.instance.SetGamemodeSelectedStr(dd.options[dd.value].text);
+        if(FindObjectOfType<DisplayLeaderboard>()!=null){FindObjectOfType<DisplayLeaderboard>().DisplayCurrentUserHighscore();}
+    }
+    public void SetSandboxPreset(){if(FindObjectOfType<SandboxCanvas>()!=null)FindObjectOfType<SandboxCanvas>().SetPreset(dd.options[dd.value].text);}
 }

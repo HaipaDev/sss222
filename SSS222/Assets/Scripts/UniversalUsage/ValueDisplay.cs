@@ -3,113 +3,133 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ValueDisplay : MonoBehaviour{
-    TMPro.TextMeshProUGUI txt;
-    PlayerSkills pskills;
     [SerializeField] public string value="score";
     //[SerializeField] float valueLimitD=-1;
-    [SerializeField] bool changeOnValidate;
-
+    //[SerializeField] bool changeOnValidate;
+    TextMeshProUGUI txt;
+    TMP_InputField tmpInput;
     void Start(){
-        txt=GetComponent<TMPro.TextMeshProUGUI>();
-        pskills=FindObjectOfType<PlayerSkills>();
+        if(GetComponent<TextMeshProUGUI>()!=null)txt=GetComponent<TextMeshProUGUI>();
+        if(GetComponent<TMP_InputField>()!=null)tmpInput=GetComponent<TMP_InputField>();
     }
     void Update(){ChangeText();}
 
-    void ChangeText(){
-    if(GameSession.instance!=null&&GameSession.instance!=null){
-        if(value=="score") txt.text=GameSession.instance.score.ToString();
-        //else if(value=="evscore") txt.text=GameSession.instance.EVscore.ToString();
-        else if(value=="coins") txt.text=GameSession.instance.coins.ToString();
-        else if(value=="cores") txt.text=GameSession.instance.cores.ToString();
-        else if(value.Contains("highscore")) txt.text=GameSession.instance.GetHighscoreCurrent().ToString();
-        else if(value=="gameVersion") txt.text="v"+GameSession.instance.gameVersion;
-        else if(value=="timePlayed") txt.text=GameSession.instance.GetGameSessionTimeFormat();
-    }
-    if(Player.instance!=null){
-        if(value=="hpOffMax"){
-            if(GameSession.instance.CheckGamemodeSelected("Classic")||Player.instance.health<=5){
-                txt.text=System.Math.Round(Player.instance.health,1).ToString()+"/"+Player.instance.healthMax.ToString();}//Round to .1
-            else txt.text=Mathf.RoundToInt(Player.instance.health).ToString()+"/"+Player.instance.healthMax.ToString();
-    }
-        else if(value=="energyOffMax") txt.text=Mathf.RoundToInt(Player.instance.energy).ToString()+"/"+Player.instance.energyMax.ToString();
-        else if(value=="max_hp") txt.text=Player.instance.healthMax.ToString();
-        else if(value=="max_energy") txt.text=Player.instance.energyMax.ToString();
-        else if(value=="speed") txt.text=(Player.instance.moveSpeed).ToString();
-        else if(value=="hpRegen") if(Player.instance.hpRegenEnabled==true){txt.text=Player.instance.hpRegenAmnt.ToString();}else{txt.text="0";}
-        else if(value=="enRegen") if(Player.instance.enRegenEnabled==true){txt.text=Player.instance.enRegenAmnt.ToString();}else{txt.text="0";}
+    void ChangeText(){      string _txt="";
+    #region//GameSession
+        if(GameSession.instance!=null){
+            if(value=="score") _txt=GameSession.instance.score.ToString();
+            //else if(value=="evscore") _txt=GameSession.instance.EVscore.ToString();
+            else if(value=="coins") _txt=GameSession.instance.coins.ToString();
+            else if(value=="cores") _txt=GameSession.instance.cores.ToString();
+            else if(value.Contains("highscore")) _txt=GameSession.instance.GetHighscoreCurrent().ToString();
+            else if(value=="gameVersion") _txt="v"+GameSession.instance.gameVersion;
+            else if(value=="timePlayed") _txt=GameSession.instance.GetGameSessionTimeFormat();
+            else if(value=="scoreMulti") _txt=GameSession.instance.scoreMulti.ToString();
+            else if(value=="luck") _txt=GameSession.instance.luckMulti.ToString();
         }
-    if(pskills!=null){
-        if(value=="cooldownQ") txt.text=System.Math.Round(pskills.cooldownQ,0).ToString();
-        else if(value=="cooldownE") txt.text=System.Math.Round(pskills.cooldownE,0).ToString();
-        else if(value=="timerTeleport"){
-            if(FindObjectOfType<PlayerSkills>()!=null){txt.text=System.Math.Round(pskills.timerTeleport,1).ToString();}else{Destroy(transform.parent.gameObject);}
-            if(txt.text=="-4"){var tempColor=txt.color;tempColor.a=0;txt.color=tempColor;}
+    #endregion
+    #region//Player
+        if(Player.instance!=null){
+            if(value=="hpOffMax"){
+                if(GameSession.instance.CheckGamemodeSelected("Classic")||Player.instance.health<=5){
+                    _txt=System.Math.Round(Player.instance.health,1).ToString()+"/"+Player.instance.healthMax.ToString();}//Round to .1
+                else _txt=Mathf.RoundToInt(Player.instance.health).ToString()+"/"+Player.instance.healthMax.ToString();
+            }
+            else if(value=="energyOffMax") _txt=Mathf.RoundToInt(Player.instance.energy).ToString()+"/"+Player.instance.energyMax.ToString();
+            else if(value=="max_hp") _txt=Player.instance.healthMax.ToString();
+            else if(value=="max_energy") _txt=Player.instance.energyMax.ToString();
+            else if(value=="speed") _txt=(Player.instance.moveSpeed).ToString();
+            else if(value=="hpRegen") if(Player.instance.hpRegenEnabled==true){_txt=Player.instance.hpRegenAmnt.ToString();}else{_txt="0";}
+            else if(value=="enRegen") if(Player.instance.enRegenEnabled==true){_txt=Player.instance.enRegenAmnt.ToString();}else{_txt="0";}
+
+
+            PlayerSkills pskills=Player.instance.GetComponent<PlayerSkills>();
+            if(pskills!=null){
+                if(value=="cooldownQ") _txt=System.Math.Round(pskills.cooldownQ,0).ToString();
+                else if(value=="cooldownE") _txt=System.Math.Round(pskills.cooldownE,0).ToString();
+                else if(value=="timerTeleport"){
+                    if(FindObjectOfType<PlayerSkills>()!=null){_txt=System.Math.Round(pskills.timerTeleport,1).ToString();}else{Destroy(transform.parent.gameObject);}
+                    if(_txt=="-4"){var tempColor=txt.color;tempColor.a=0;txt.color=tempColor;}
+                }
+            }
         }
-    }
-    if(GameSession.instance!=null){
-        if(value=="scoreMulti") txt.text=GameSession.instance.scoreMulti.ToString();
-        else if(value=="luck") txt.text=GameSession.instance.luckMulti.ToString();
-    }
-    if(Shop.instance!=null){
-        if(value=="purchases") txt.text="Reputation: "+Shop.instance.purchases.ToString();
-        else if(value=="reputation") txt.text="Reputation: "+Shop.instance.reputation.ToString();
-    }
-    if(UpgradeMenu.instance!=null){
-        if(value=="lvl_ship") txt.text="Ship Level: "+UpgradeMenu.instance.total_UpgradesLvl.ToString();
-        else if(value=="lvlPopup") txt.text="Lvl up! ("+UpgradeMenu.instance.total_UpgradesLvl.ToString()+")";
+    #endregion
+    #region//Shop
+        if(Shop.instance!=null){
+            if(value=="purchases") _txt="Reputation: "+Shop.instance.purchases.ToString();
+            else if(value=="reputation") _txt="Reputation: "+Shop.instance.reputation.ToString();
+        }
+        if(UpgradeMenu.instance!=null){
+            if(value=="lvl_ship") _txt="Ship Level: "+UpgradeMenu.instance.total_UpgradesLvl.ToString();
+            else if(value=="lvlPopup") _txt="Lvl up! ("+UpgradeMenu.instance.total_UpgradesLvl.ToString()+")";
 
-        else if(value=="lvl_hp") txt.text="Lvl. "+UpgradeMenu.instance.healthMax_UpgradesLvl.ToString();
-        else if(value=="lvl_energy") txt.text="Lvl. "+UpgradeMenu.instance.energyMax_UpgradesLvl.ToString();
-        else if(value=="lvl_speed") txt.text="Lvl. "+UpgradeMenu.instance.speed_UpgradesLvl.ToString();
-        else if(value=="lvl_luck") txt.text="Lvl. "+UpgradeMenu.instance.luck_UpgradesLvl.ToString();
+            else if(value=="lvl_hp") _txt="Lvl. "+UpgradeMenu.instance.healthMax_UpgradesLvl.ToString();
+            else if(value=="lvl_energy") _txt="Lvl. "+UpgradeMenu.instance.energyMax_UpgradesLvl.ToString();
+            else if(value=="lvl_speed") _txt="Lvl. "+UpgradeMenu.instance.speed_UpgradesLvl.ToString();
+            else if(value=="lvl_luck") _txt="Lvl. "+UpgradeMenu.instance.luck_UpgradesLvl.ToString();
 
-        else if(value=="healthMax_upgradeCost") txt.text=UpgradeMenu.instance.healthMax_UpgradeCost.ToString();
-        else if(value=="energyMax_upgradeCost") txt.text=UpgradeMenu.instance.energyMax_UpgradeCost.ToString();
-        else if(value=="speed_upgradeCost") txt.text=UpgradeMenu.instance.speed_UpgradeCost.ToString();
-        else if(value=="luck_upgradeCost") txt.text=UpgradeMenu.instance.luck_UpgradeCost.ToString();
-        else if(value=="defaultPowerup_upgradeCost1") txt.text=UpgradeMenu.instance.defaultPowerup_upgradeCost1.ToString();
-        else if(value=="defaultPowerup_upgradeCost2") txt.text=UpgradeMenu.instance.defaultPowerup_upgradeCost2.ToString();
-        else if(value=="defaultPowerup_upgradeCost3") txt.text=UpgradeMenu.instance.defaultPowerup_upgradeCost3.ToString();
-        //else if(value=="energyRefill_upgradeCost") txt.text=UpgradeMenu.instance.energyRefill_upgradeCost.ToString();
-        else if(value=="mPulse_upgradeCost") txt.text=UpgradeMenu.instance.mPulse_upgradeCost.ToString();
-        else if(value=="postMortem_upgradeCost") txt.text=UpgradeMenu.instance.postMortem_upgradeCost.ToString();
-        else if(value=="teleport_upgradeCost") txt.text=UpgradeMenu.instance.teleport_upgradeCost.ToString();
-        else if(value=="overhaul_upgradeCost") txt.text=UpgradeMenu.instance.overhaul_upgradeCost.ToString();
-        else if(value=="crMend_upgradeCost") txt.text=UpgradeMenu.instance.crMend_upgradeCost.ToString();
-        else if(value=="enDiss_upgradeCost") txt.text=UpgradeMenu.instance.enDiss_upgradeCost.ToString();
-    }
-    if(GameRules.instance!=null){
-        if(value=="cfgName")if(GameRules.instance!=null){txt.text=GameRules.instance.cfgName;}else{Debug.LogError("GameRules Not Present");}
-        else if(value=="cfgNameCurrent")txt.text=GameSession.instance.GetGameRulesCurrent().cfgName;
-        else if(value=="speedPlayerGR") txt.text=GameRules.instance.moveSpeedPlayer.ToString();
-        else if(value=="healthPlayerGR") txt.text=GameRules.instance.healthPlayer.ToString();
-        else if(value=="energyPlayerGR") txt.text=GameRules.instance.energyPlayer.ToString();
-        else if(value=="waveScoreRangeGR") if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;var ss=sr.scoreMaxSetRange;
-                                            if(ss.x!=ss.y){txt.text=ss.x.ToString()+"-"+ss.y.ToString();}
-                                            else txt.text=ss.x.ToString();}else txt.text="?";
-        else if(value=="shopScoreRangeGR") if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;var ss=sr.scoreMaxSetRange;
-                                            if(ss.x!=ss.y){txt.text=ss.x.ToString()+"-"+ss.y.ToString();}
-                                            else txt.text=ss.x.ToString();}else txt.text="?";
-    }
-    if(SaveSerial.instance!=null){
-        if(value=="inputType"){txt.text=SaveSerial.instance.settingsData.inputType.ToString();}
-        else if(value=="joystickType"){txt.text=SaveSerial.instance.settingsData.joystickType.ToString();}
-        else if(value=="joystickSize"){txt.text=System.Math.Round(SaveSerial.instance.settingsData.joystickSize,2).ToString();}
-        else if(value=="loginUsername"){txt.text=SaveSerial.instance.hyperGamerLoginData.username.ToString();}
-    }
-    if(DBAccess.instance!=null){
-        if(value=="loginMessage"){txt.text=DBAccess.instance.loginMessage;}
-        else if(value=="submitMessage"){txt.text=DBAccess.instance.submitMessage;}
-    }
+            else if(value=="healthMax_upgradeCost") _txt=UpgradeMenu.instance.healthMax_UpgradeCost.ToString();
+            else if(value=="energyMax_upgradeCost") _txt=UpgradeMenu.instance.energyMax_UpgradeCost.ToString();
+            else if(value=="speed_upgradeCost") _txt=UpgradeMenu.instance.speed_UpgradeCost.ToString();
+            else if(value=="luck_upgradeCost") _txt=UpgradeMenu.instance.luck_UpgradeCost.ToString();
+            else if(value=="defaultPowerup_upgradeCost1") _txt=UpgradeMenu.instance.defaultPowerup_upgradeCost1.ToString();
+            else if(value=="defaultPowerup_upgradeCost2") _txt=UpgradeMenu.instance.defaultPowerup_upgradeCost2.ToString();
+            else if(value=="defaultPowerup_upgradeCost3") _txt=UpgradeMenu.instance.defaultPowerup_upgradeCost3.ToString();
+            //else if(value=="energyRefill_upgradeCost") _txt=UpgradeMenu.instance.energyRefill_upgradeCost.ToString();
+            else if(value=="mPulse_upgradeCost") _txt=UpgradeMenu.instance.mPulse_upgradeCost.ToString();
+            else if(value=="postMortem_upgradeCost") _txt=UpgradeMenu.instance.postMortem_upgradeCost.ToString();
+            else if(value=="teleport_upgradeCost") _txt=UpgradeMenu.instance.teleport_upgradeCost.ToString();
+            else if(value=="overhaul_upgradeCost") _txt=UpgradeMenu.instance.overhaul_upgradeCost.ToString();
+            else if(value=="crMend_upgradeCost") _txt=UpgradeMenu.instance.crMend_upgradeCost.ToString();
+            else if(value=="enDiss_upgradeCost") _txt=UpgradeMenu.instance.enDiss_upgradeCost.ToString();
+        }
+    #endregion
+    #region//SaveSerial
+        if(SaveSerial.instance!=null){
+            if(value=="inputType"){_txt=SaveSerial.instance.settingsData.inputType.ToString();}
+            else if(value=="joystickType"){_txt=SaveSerial.instance.settingsData.joystickType.ToString();}
+            else if(value=="joystickSize"){_txt=System.Math.Round(SaveSerial.instance.settingsData.joystickSize,2).ToString();}
+            else if(value=="loginUsername"){_txt=SaveSerial.instance.hyperGamerLoginData.username.ToString();}
+        }
+    #endregion
+    #region//DBAccess
+        if(DBAccess.instance!=null){
+            if(value=="loginMessage"){_txt=DBAccess.instance.loginMessage;}
+            else if(value=="submitMessage"){_txt=DBAccess.instance.submitMessage;}
+        }
+    #endregion
+    #region//GameRules
+        if(GameRules.instance!=null){
+            if(value=="cfgName")if(GameRules.instance!=null){_txt=GameRules.instance.cfgName;}else{Debug.LogError("GameRules Not Present");}
+            else if(value=="cfgNameCurrent")_txt=GameSession.instance.GetGameRulesCurrent().cfgName;
+            else if(value=="speedPlayerGR") _txt=GameRules.instance.moveSpeedPlayer.ToString();
+            else if(value=="healthStartingPlayerGR") _txt=GameRules.instance.healthPlayer.ToString();
+            else if(value=="healthMaxPlayerGR") _txt=GameRules.instance.healthMaxPlayer.ToString();
+            else if(value=="energyPlayerGR") _txt=GameRules.instance.energyPlayer.ToString()+"/"+GameRules.instance.energyMaxPlayer.ToString();
+            else if(value=="energyStartingPlayerGR") _txt=GameRules.instance.energyPlayer.ToString();
+            else if(value=="energyMaxPlayerGR") _txt=GameRules.instance.energyMaxPlayer.ToString();
+            else if(value=="waveScoreRangeGR"){if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;var ss=sr.scoreMaxSetRange;
+                                                if(ss.x!=ss.y){_txt=ss.x.ToString()+"-"+ss.y.ToString();}
+                                                else _txt=ss.x.ToString();}else _txt="?";
+            }
+            else if(value=="waveScoreRangeStartGR") if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;var ss=sr.scoreMaxSetRange;_txt=ss.x.ToString();}else _txt="?";
+            else if(value=="waveScoreRangeEndGR") if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;var ss=sr.scoreMaxSetRange;_txt=ss.y.ToString();}else _txt="?";
+            else if(value=="shopScoreRangeGR"){if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;var ss=sr.scoreMaxSetRange;
+                                                if(ss.x!=ss.y){_txt=ss.x.ToString()+"-"+ss.y.ToString();}
+                                                else _txt=ss.x.ToString();}else _txt="?";
+            }
+            else if(value=="shopScoreRangeStartGR") if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;var ss=sr.scoreMaxSetRange;_txt=ss.x.ToString();}else _txt="?";
+            else if(value=="shopScoreRangeEndGR") if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;var ss=sr.scoreMaxSetRange;_txt=ss.y.ToString();}else _txt="?";
+
+            else if(value=="powerupsCapacity") _txt=GameRules.instance.powerupsCapacity.ToString();
+        }
+    #endregion
         
-        /*else if(value=="state"){
-            var value=System.Math.Round(Player.instance.GetGCloverTimer(),1);
-
-            if(value <= valueLimitD){ value=0; }
-            else { txt.text=value.ToString(); }
-        }*/
+        if(txt!=null)txt.text=_txt;
+        else{if(tmpInput!=null){if(UIInputSystem.instance!=null)if(UIInputSystem.instance.currentSelected!=tmpInput.gameObject){tmpInput.text=_txt;}
+        foreach(TextMeshProUGUI t in GetComponentsInChildren<TextMeshProUGUI>()){t.text=_txt;}}}
     }
-    //void OnValidate(){if(value=="gameVersion")txt.text="v"+GameSession.instance.gameVersion;}
 }

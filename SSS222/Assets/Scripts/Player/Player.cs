@@ -1249,9 +1249,9 @@ public class Player : MonoBehaviour{
         ResortStatuses();
     }
 
-    public bool _isPowerupEmpty(Powerup powerup){bool b=false;if(powerup==null||String.IsNullOrEmpty(powerup.name)){b=true;}return b;}
-    public bool _isPowerupEmptyID(int id){bool b=false;if(powerups[id]==null||String.IsNullOrEmpty(powerups[id].name)){b=true;}return b;}
-    public bool _isPowerupEmptyCur(){bool b=false;if(powerups[powerupCurID]==null||String.IsNullOrEmpty(powerups[powerupCurID].name)){b=true;}return b;}
+    public bool _isPowerupEmpty(Powerup powerup){bool b=false;if(powerup==null){b=true;}else if(powerup!=null&&String.IsNullOrEmpty(powerup.name)){b=true;}return b;}
+    public bool _isPowerupEmptyID(int id){bool b=false;if(powerups[id]==null){b=true;}else if(powerups[id]!=null&&String.IsNullOrEmpty(powerups[id].name)){b=true;}return b;}
+    public bool _isPowerupEmptyCur(){bool b=false;if(powerups[powerupCurID]==null){b=true;}else if(powerups[powerupCurID]!=null&&String.IsNullOrEmpty(powerups[powerupCurID].name)){b=true;}return b;}
     public Powerup GetPowerup(int id){Powerup pwrup=null;if(id<powerups.Length){
         pwrup=powerups[id];}return pwrup;}
     public Powerup GetPowerupStr(string str){Powerup pwrup=null;

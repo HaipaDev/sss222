@@ -7,7 +7,7 @@ using TMPro;
 public class AchievPopups : MonoBehaviour{  public static AchievPopups instance;
     public List<Achievement> queue;
     [Header("Current achievement")]
-    [SerializeField] TextMeshProUGUI name;
+    [SerializeField] new TextMeshProUGUI name;
     [SerializeField] TextMeshProUGUI desc;
     [SerializeField] Image icon;
     [SerializeField] bool epic;

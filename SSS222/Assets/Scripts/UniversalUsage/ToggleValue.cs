@@ -4,42 +4,41 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ToggleValue : MonoBehaviour{
+    [SerializeField] public string value="shopOn";
+    //[SerializeField] bool changeOnValidate;
+
     Toggle toggle;
     Image img;
-    GameSession gameSession;
-    SaveSerial saveSerial;
-    PlayerSkills pskills;
-    UpgradeMenu upgradeMenu;
-    Shop shopMenu;
-    [SerializeField] public string value="shopOn";
-    [SerializeField] bool changeOnValidate;
-
     void Start(){
         toggle=GetComponent<Toggle>();
         img=GetComponent<Image>();
-        gameSession=FindObjectOfType<GameSession>();
-        saveSerial=FindObjectOfType<SaveSerial>();
-        pskills=FindObjectOfType<PlayerSkills>();
-        upgradeMenu=FindObjectOfType<UpgradeMenu>();
-        shopMenu=FindObjectOfType<Shop>();
     }
 
     void Update(){ChangeText();}
 
     void ChangeText(){
-        var i=GameRules.instance;
-        if(value=="crystalsOn")toggle.isOn=i.crystalsOn;
-        if(value=="coresOn")toggle.isOn=i.coresOn;
-        if(value=="xpOn")toggle.isOn=i.xpOn;
-        if(value=="shopOn")toggle.isOn=i.shopOn;
-        if(value=="shopCargoOn")toggle.isOn=i.shopCargoOn;
-        if(value=="iteminvOn")toggle.isOn=i.iteminvOn;
-        if(value=="statUpgOn")toggle.isOn=i.statUpgOn;
-        if(value=="modulesOn")toggle.isOn=i.modulesOn;
-        if(value=="levelingOn")toggle.isOn=i.levelingOn;
-        if(value=="barrierOn")toggle.isOn=i.barrierOn;
-        if(value=="moveX")toggle.isOn=i.moveX;
-        if(value=="moveY")toggle.isOn=i.moveY;
-        if(value=="moveAxis"){if(i.moveX&&i.moveY){img.sprite=GetComponent<SpritesLib>().sprites[0];}else if(i.moveX&&!i.moveY){img.sprite=GetComponent<SpritesLib>().sprites[1];}else if(!i.moveX&&i.moveY){img.sprite=GetComponent<SpritesLib>().sprites[2];}}
+        var gr=GameRules.instance;
+        var s=SaveSerial.instance;
+        var ss=SaveSerial.instance.settingsData;
+        SettingsMenu sm=null;if(SettingsMenu.instance!=null)sm=SettingsMenu.instance;
+        int _id=0;
+        if(gr!=null){switch(value){
+            case("crystalsOn"):toggle.isOn=gr.crystalsOn;break;
+            case("coresOn"):toggle.isOn=gr.coresOn;break;
+            case("xpOn"):toggle.isOn=gr.xpOn;break;
+            case("shopOn"):toggle.isOn=gr.shopOn;break;
+            case("shopCargoOn"):toggle.isOn=gr.shopCargoOn;break;
+            case("iteminvOn"):toggle.isOn=gr.iteminvOn;break;
+            case("statUpgOn"):toggle.isOn=gr.statUpgOn;break;
+            case("modulesOn"):toggle.isOn=gr.modulesOn;break;
+            case("levelingOn"):toggle.isOn=gr.levelingOn;break;
+            case("barrierOn"):toggle.isOn=gr.barrierOn;break;
+            case("moveX"):toggle.isOn=gr.moveX;break;
+            case("moveY"):toggle.isOn=gr.moveY;break;
+            case("moveAxis"):_id=0;if(gr.moveX&&!gr.moveY){_id=1;}else if(!gr.moveX&&gr.moveY){_id=2;}img.sprite=GetComponent<SpritesLib>().sprites[_id];break;
+        }}
+        if(sm!=null){switch(value){
+            case("steering"):_id=0;if(ss.inputType==InputType.keyboard){_id=1;}else if(ss.inputType==InputType.touch){_id=2;}else if(ss.inputType==InputType.drag){_id=3;}img.sprite=GetComponent<SpritesLib>().sprites[_id];break;
+        }}
     }
 }

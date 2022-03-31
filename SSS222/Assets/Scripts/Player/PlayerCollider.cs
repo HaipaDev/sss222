@@ -192,7 +192,7 @@ public class PlayerCollider : MonoBehaviour{
             #endregion
             string hitName="";
             if((dmg!=0||other.gameObject.name.Contains(GameAssets.instance.Get("InverterPwrup").name)||other.gameObject.name.Contains("Zone_"))&&!player.gclover){hitName=other.gameObject.name;
-                if(hitName.Contains(" (Clone)"))hitName=hitName.Replace(" (Clone)","");lastHitName=hitName;lastHitDmg=dmg;lastHitPhasing=false;}
+                if(hitName.Contains("(Clone)"))hitName=hitName.Replace("(Clone)","");lastHitName=hitName;lastHitDmg=dmg;lastHitPhasing=false;}
             if(hitName.Contains("Zone_")){hitName=hitName.Split('_')[0];lastHitName=hitName;}
             UniCollider.DMG_VFX(2,other,transform,dmg);
     }

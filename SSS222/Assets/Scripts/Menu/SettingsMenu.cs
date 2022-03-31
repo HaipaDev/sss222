@@ -8,7 +8,7 @@ using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
 
-public class SettingsMenu : MonoBehaviour{
+public class SettingsMenu : MonoBehaviour{      public static SettingsMenu instance;
     [SerializeField] int panelActive=0;
     [SerializeField] GameObject[] panels;
     [Header("Game")]
@@ -49,6 +49,7 @@ public class SettingsMenu : MonoBehaviour{
     [AssetsOnly][SerializeField]GameObject pprocessingPrefab;
     [SceneObjectsOnly]public PostProcessVolume postProcessVolume;
     void Start(){
+        instance=this;
         if(SaveSerial.instance!=null){
             var s=SaveSerial.instance.settingsData;
             scbuttonsToggle.GetComponent<Toggle>().isOn=s.scbuttons;
@@ -125,8 +126,7 @@ public class SettingsMenu : MonoBehaviour{
             else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=GameSession.instance.vertCameraSize;}
         }
     }
-    public void SetSteering(){
-        if(SaveSerial.instance!=null){
+    public void SetSteering(){  if(SaveSerial.instance!=null){
         var s=SaveSerial.instance.settingsData;
         switch(s.inputType){
             case (InputType)0:
@@ -143,10 +143,7 @@ public class SettingsMenu : MonoBehaviour{
                 s.inputType=(InputType)0;
                 break;
         }
-        foreach(Transform t in steeringToggle.transform.GetChild(0)){t.gameObject.SetActive(false);}
-        steeringToggle.transform.GetChild(0).GetChild((int)s.inputType).gameObject.SetActive(true);
-        }
-    }
+    }}
     public void SetJoystick(){
         if(SaveSerial.instance!=null){
         var s=SaveSerial.instance.settingsData;

@@ -6,7 +6,7 @@ using TMPro;
 using Sirenix.OdinInspector;
 
 public class AchievListElement : MonoBehaviour{
-    [SerializeField] TextMeshProUGUI name;
+    [SerializeField] new TextMeshProUGUI name;
     [SerializeField] TextMeshProUGUI desc;
     [SerializeField] Image icon;
     [SerializeField] bool epic;

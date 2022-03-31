@@ -76,12 +76,12 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public StatsGamemode GetStatsForCurrentGamemode(){StatsGamemode r=null;if(GameSession.instance.gamemodeSelected>=0){r=GetStatsForGamemode(GameSession.instance.GetCurrentGamemodeName());}return r;}
     public StatsGamemode GetStatsForGamemode(string str){return statsGamemodesList.Find(x=>x.gmName.Contains(str));}
 
-    public void AddScoreTotal(int i){var s=GetStatsForCurrentGamemode();if(s!=null)s.scoreTotal+=i;ClearStatsTotal();}
-    public void AddPlaytime(int i){var s=GetStatsForCurrentGamemode();if(s!=null)s.playtime+=i;ClearStatsTotal();if(i>s.longestSession){s.longestSession=i;}}
-    public void AddDeaths(){var s=GetStatsForCurrentGamemode();if(s!=null)s.deaths++;ClearStatsTotal();}
-    public void AddPowerups(){var s=GetStatsForCurrentGamemode();if(s!=null)s.powerups++;ClearStatsTotal();}
+    public void AddScoreTotal(int i){var s=GetStatsForCurrentGamemode();if(s!=null){s.scoreTotal+=i;ClearStatsTotal();}}
+    public void AddPlaytime(int i){var s=GetStatsForCurrentGamemode();if(s!=null){s.playtime+=i;ClearStatsTotal();if(i>s.longestSession){s.longestSession=i;}}}
+    public void AddDeaths(){var s=GetStatsForCurrentGamemode();if(s!=null){s.deaths++;ClearStatsTotal();}}
+    public void AddPowerups(){var s=GetStatsForCurrentGamemode();if(s!=null){s.powerups++;ClearStatsTotal();}}
     public void AddKills(string name,enemyType type){
-        var s=GetStatsForCurrentGamemode();if(s!=null)s.killsTotal++;ClearStatsTotal();
+        var s=GetStatsForCurrentGamemode();if(s!=null){s.killsTotal++;ClearStatsTotal();}
         if(type==enemyType.living){AddKillsLiving();}
         if(type==enemyType.mecha){AddKillsMecha();}
         if(name.Contains("Comet")){AddKillsComets();}

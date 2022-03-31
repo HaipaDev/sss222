@@ -527,7 +527,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'v0.6t4
+  m_text: 'v0.6t5
 
 '
   m_isRightToLeft: 0
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 127.75
+  m_fontSize: 124.1
   m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -668,7 +668,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: gameVersion
-  changeOnValidate: 0
 --- !u!1 &1766808194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1533,7 +1532,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: highscore
-  changeOnValidate: 0
 --- !u!1 &1398547269943698529
 GameObject:
   m_ObjectHideFlags: 0
@@ -2653,7 +2651,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: gameVersion
-  changeOnValidate: 0
 --- !u!1 &2668513885567524255
 GameObject:
   m_ObjectHideFlags: 0

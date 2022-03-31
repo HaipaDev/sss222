@@ -13,8 +13,8 @@ public class ButtonScript : EventTrigger{
     public override void OnSelect(BaseEventData data){AudioManager.instance.Play("ButtonSelect");foreach(ButtonScript b in FindObjectsOfType<ButtonScript>()){b.selected=false;}selected=true;}
     public override void OnSubmit(BaseEventData data){AudioManager.instance.Play("ButtonPress");}
     public override void OnPointerClick(PointerEventData data){AudioManager.instance.Play("ButtonPress");}
-    //public void OnUpdateSelected(BaseEventData data){if(isPressed)Shoot();}
-    public void OnPointerDown(PointerEventData data){StartCoroutine(Pressed());}
-    //public void OnPointerUp(PointerEventData data){isPressed=false;}
+    //public override void OnUpdateSelected(BaseEventData data){if(isPressed)Shoot();}
+    public override void OnPointerDown(PointerEventData data){StartCoroutine(Pressed());}
+    //public override void OnPointerUp(PointerEventData data){isPressed=false;}
     IEnumerator Pressed(){pressed=true;yield return new WaitForSeconds(0.05f);pressed=false;}
 }
