@@ -6,12 +6,15 @@ public enum rarityPowerup{
     Common, 
     Rare, 
     Legendary
-    };
+}
+public enum powerupType{weapon,status}
 [CreateAssetMenu(menuName = "Powerup Item")]
 public class PowerupItem : ScriptableObject{
     [HeaderAttribute("Properties")]
     [SerializeField] new public string name;
-    [SerializeField] public GameObject item;
+    [SerializeField] public string assetName;
+    [SerializeField] public powerupType powerupType;
+    [SerializeField] public bool slottable;
     [SerializeField] public float dropChance=1;
     [SerializeField] public rarityPowerup rarity;
     [SerializeField] public int levelReq=0;

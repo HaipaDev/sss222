@@ -22,7 +22,7 @@ public class spawnReqsMono:MonoBehaviour{
     public static void AddWaves(int val=1){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnWavesTotal){var ss=(spawnWavesTotal)sr;if(ss.waves!=-5)ss.waves+=val;}}}
     public static void AddWaveCounts(WaveConfig waveConfig){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnWaveCounts){var ss=(spawnWaveCounts)sr;if(waveConfig==ss.wave)if(ss.counts!=-5)ss.counts+=1;}}}
     public static void AddPwrups(string name,int val=1){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnPowerupsTotal){var ss=(spawnPowerupsTotal)sr;if(ss.pwrups!=-5)ss.pwrups+=val;}}
-        if(!String.IsNullOrEmpty(name))foreach(spawnReqs sr2 in spawnReqsMono.instance.spawnReqsList){if(sr2 is spawnPowerupCounts){var ss2=(spawnPowerupCounts)sr2;if(name.Contains(ss2.powerupItem.item.name)&&ss2.counts!=-5)ss2.counts+=val;}}
+        if(!String.IsNullOrEmpty(name))foreach(spawnReqs sr2 in spawnReqsMono.instance.spawnReqsList){if(sr2 is spawnPowerupCounts){var ss2=(spawnPowerupCounts)sr2;if(name.Contains(GameAssets.instance.Get(ss2.powerupItem.assetName).name)&&ss2.counts!=-5)ss2.counts+=val;}}
     }
     
     public static void AddPowerupCounts(PowerupItem powerupItem){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnPowerupCounts){var ss=(spawnPowerupCounts)sr;if(powerupItem==ss.powerupItem)if(ss.counts!=-5)ss.counts+=1;}}}

@@ -45,7 +45,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool fuelOn=false;
     public float fuelDrainAmnt=0.1f;
     public float fuelDrainFreq=0.5f;
-    public Powerup[] powerupsStarting;//={new Powerup(name:"laser")};
+    public List<Powerup> powerupsStarting;//={new Powerup(name:"laser")};
     [Range(1,10)]public int powerupsCapacity=5;
     /*public int powerupsCapacityStarting=2;
     public int powerupsCapacityMax=5;*/

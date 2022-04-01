@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
   m_Name: MLaserPowerup
   m_EditorClassIdentifier: 
-  name: MLaser
-  item: {fileID: 4548736405339070879, guid: d44872e141aa7484a8ce2adfdcd8fb86, type: 3}
+  name: mlaser
+  assetName: mlaserPwrup
+  powerupType: 0
+  slottable: 1
   dropChance: 2
   rarity: 1
   levelReq: 2

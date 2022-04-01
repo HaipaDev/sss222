@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
   m_Name: QRocketsPowerup
   m_EditorClassIdentifier: 
-  name: QRockets
-  item: {fileID: 4548736405339070879, guid: 344da1b4b981f0442828a9bcd1b5c7a3, type: 3}
+  name: qrocket
+  assetName: qrocketPwrup
+  powerupType: 0
+  slottable: 1
   dropChance: 3
   rarity: 0
   levelReq: 2

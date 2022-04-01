@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
   m_Name: GCloverPowerup
   m_EditorClassIdentifier: 
-  name: GCLover
-  item: {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268, type: 3}
+  name: gclover
+  assetName: gcloverPwrup
+  powerupType: 1
+  slottable: 0
   dropChance: 0.3
   rarity: 2
   levelReq: 1

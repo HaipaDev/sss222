@@ -30,13 +30,13 @@ public class PowerupsSpawner : MonoBehaviour{
         if(lootTable!=null){
             lootItem=lootTable.GetItem();
             if(lootItem!=null){
-                if(lootItem.item!=null){
+                if(!System.String.IsNullOrEmpty(lootItem.assetName)||GameAssets.instance.Get(lootTable.GetItem().assetName)==null){
                     newPowerup=Instantiate(
-                        lootTable.GetItem().item,
+                        GameAssets.instance.Get(lootTable.GetItem().assetName),
                         powerupsPos,
                         Quaternion.identity);
                     //Debug.Log("Powerup spawned: "+newPowerup.name);
-                }else Debug.LogWarning("Powerup prefab not assigned to "+lootItem+" !");
+                }else Debug.LogWarning("Asset name not set or wrong in "+lootItem+" !");
             }else Debug.LogWarning("Loottable randomized a null item!");
         }else{Debug.LogError("Loottable not assigned!");lootTable=GetComponent<LootTablePowerups>();
             if(lootTable!=null){Debug.LogWarning("Fine I assigned it myself");yield return StartCoroutine(SpawnPowerup());}

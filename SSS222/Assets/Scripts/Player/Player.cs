@@ -307,7 +307,7 @@ public class Player : MonoBehaviour{
         fuelDrainFreq=i.fuelDrainFreq;
         powerups=new Powerup[i.powerupsCapacity];
         for(var p=0;p<i.powerupsCapacity;p++){powerups[p]=new Powerup();}
-        for(var p=0;p<i.powerupsCapacity&&p<i.powerupsStarting.Length;p++){powerups[p]=i.powerupsStarting[p];}
+        for(var p=0;p<i.powerupsCapacity&&p<i.powerupsStarting.Count;p++){powerups[p]=i.powerupsStarting[p];}
         powerupDefault=i.powerupDefault;
         weaponsLimited=i.weaponsLimited;
         losePwrupOutOfEn=i.losePwrupOutOfEn;losePwrupOutOfAmmo=i.losePwrupOutOfAmmo;

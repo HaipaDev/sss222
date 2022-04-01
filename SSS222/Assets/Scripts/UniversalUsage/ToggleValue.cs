@@ -36,6 +36,7 @@ public class ToggleValue : MonoBehaviour{
             case("moveX"):toggle.isOn=gr.moveX;break;
             case("moveY"):toggle.isOn=gr.moveY;break;
             case("moveAxis"):_id=0;if(gr.moveX&&!gr.moveY){_id=1;}else if(!gr.moveX&&gr.moveY){_id=2;}img.sprite=GetComponent<SpritesLib>().sprites[_id];break;
+            case("autoshoot"):toggle.isOn=gr.autoShootPlayer;break;
         }}
         if(sm!=null){switch(value){
             case("steering"):_id=0;if(ss.inputType==InputType.keyboard){_id=1;}else if(ss.inputType==InputType.touch){_id=2;}else if(ss.inputType==InputType.drag){_id=3;}img.sprite=GetComponent<SpritesLib>().sprites[_id];break;

@@ -46,7 +46,7 @@ public class LvlTreePowerups : MonoBehaviour{
                     GameObject go2=Instantiate(gridElement,go.transform.GetChild(1));
                     go2.name=powerup.name;
                     go2.transform.GetComponentInChildren<LvlTree_ElementDroprate>().drop=powerup.dropChance;
-                    go2.GetComponent<Image>().sprite=powerup.lootItem.item.GetComponent<SpriteRenderer>().sprite;
+                    go2.GetComponent<Image>().sprite=GameAssets.instance.Get(powerup.lootItem.assetName).GetComponent<SpriteRenderer>().sprite;
                     go.GetComponent<LvlTree_ListElement>().elements.Add(go2);
                 }
             }

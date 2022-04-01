@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
   m_Name: GloomyScythesPowerup
   m_EditorClassIdentifier: 
-  name: Gloomy Scythes
-  item: {fileID: 4548736405339070879, guid: 83970e65e1504b74e92f4da36b330187, type: 3}
+  name: gloomyScythes
+  assetName: gloomyScythesPwrup
+  slottable: 1
   dropChance: 0.05
   rarity: 2
   levelReq: 1

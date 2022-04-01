@@ -1,16 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
 public class SandboxCanvas : MonoBehaviour{
+    [Header("Panels")]
     [SceneObjectsOnly][SerializeField]GameObject defaultPanel;
     [SceneObjectsOnly][SerializeField]GameObject presetsPanel;
     [SceneObjectsOnly][SerializeField]GameObject globalPanel;
     [SceneObjectsOnly][SerializeField]GameObject playerPanel;
-    void Start(){OpenDefaultPanel();}
-    void Update(){CheckESC();}
-    void CheckESC(){if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Joystick1Button1))Back();}
+    [Header("Other Objects")]
+    [SceneObjectsOnly][SerializeField]GameObject powerupInventory;
+    [DisableInEditorMode][SceneObjectsOnly][SerializeField]int powerupToSet;
+    [SceneObjectsOnly][SerializeField]GameObject powerupChoices;
+    void Start(){
+        OpenDefaultPanel();
+        SetPowerupChoices();
+    }
+    void Update(){
+        CheckESC();
+        SetPowerups();
+    }
     public void Back(){
         if(_anyFirstLevelPanelsActive()){OpenDefaultPanel();}
         else{GSceneManager.instance.LoadGameModeChooseScene();}
@@ -30,6 +41,8 @@ public class SandboxCanvas : MonoBehaviour{
         presetsPanel.SetActive(false);
         globalPanel.SetActive(false);
         playerPanel.SetActive(false);
+
+        powerupChoices.SetActive(false);
     }
 
     public void SetPreset(string str){StartCoroutine(SetPresetI(str));}
@@ -77,5 +90,50 @@ public class SandboxCanvas : MonoBehaviour{
     }
     public void SetSpeed(string v){GameRules.instance.moveSpeedPlayer=float.Parse(v);}
     public void SetPowerupsCapacity(float v){GameRules.instance.powerupsCapacity=(int)v;}
+    public void SetAutoshoot(bool v){GameRules.instance.autoShootPlayer=v;}
+    public void OpenPowerupChoices(int id){powerupChoices.SetActive(true);powerupChoices.transform.position=new Vector2(Input.mousePosition.x,Input.mousePosition.y+50f);powerupToSet=id;}
+    public void SetPowerupStarting(string v){
+        if(GameRules.instance.powerupsStarting.Count<=powerupToSet){for(var i=GameRules.instance.powerupsStarting.Count;i<=powerupToSet;i++){
+            GameRules.instance.powerupsStarting.Add(new Powerup());}}
+        if(GameRules.instance.powerupsStarting[powerupToSet]==null){GameRules.instance.powerupsStarting[powerupToSet]=new Powerup();}
+        else{GameRules.instance.powerupsStarting[powerupToSet].name=v;}
+        powerupChoices.SetActive(false);
+    }
+#endregion
+
+#region//Start & Update functions
+    void SetPowerupChoices(){
+        GameObject prefab=powerupChoices.transform.GetChild(0).GetChild(0).gameObject;
+            prefab.name="null";
+            prefab.GetComponent<Image>().sprite=GameAssets.instance.Spr("nullPwrup");
+            prefab.GetComponent<Button>().onClick.AddListener(()=>SetPowerupStarting(""));
+        foreach(PowerupItem p in GameAssets.instance.powerupItems){if(p.powerupType==powerupType.weapon){
+            GameObject go=Instantiate(prefab,powerupChoices.transform.GetChild(0));
+            go.name=p.name;
+            go.GetComponent<Image>().sprite=GameAssets.instance.Get(p.assetName).GetComponent<SpriteRenderer>().sprite;
+            go.GetComponent<Button>().onClick.AddListener(()=>SetPowerupStarting(p.name));
+        }}
+        //Destroy(powerupChoices.transform.GetChild(0).GetChild(0).gameObject);
+        powerupChoices.SetActive(false);
+    }
+
+    void CheckESC(){if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Joystick1Button1))Back();}
+    void SetPowerups(){
+        if(powerupInventory!=null){
+            for(var i=0;i<GameRules.instance.powerupsCapacity;i++){
+                Sprite _spr;
+                if(GameRules.instance.powerupsStarting.Count>i&&!System.String.IsNullOrEmpty(GameRules.instance.powerupsStarting[i].name)){
+                    _spr=GameAssets.instance.Get(GameAssets.instance.GetPowerupItem(GameRules.instance.powerupsStarting[i].name).assetName).GetComponent<SpriteRenderer>().sprite;
+                }else{_spr=GameAssets.instance.Spr("nullPwrup");}
+                powerupInventory.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite=_spr;
+            }
+            for(var i=9;i>=GameRules.instance.powerupsCapacity;i--){
+                if(powerupInventory.transform.GetChild(0).GetChild(i).gameObject.activeSelf)powerupInventory.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+            }
+            for(var i=0;i<GameRules.instance.powerupsCapacity;i++){
+                if(!powerupInventory.transform.GetChild(0).GetChild(i).gameObject.activeSelf)powerupInventory.transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+            }
+        }else{Debug.LogError("PowerupInventory not assigned!");}
+    }
 #endregion
 }

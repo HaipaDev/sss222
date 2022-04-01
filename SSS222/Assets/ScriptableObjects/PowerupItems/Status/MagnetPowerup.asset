@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
   m_Name: MagnetPowerup
   m_EditorClassIdentifier: 
-  name: Magnet
-  item: {fileID: 5649215481239408911, guid: 783ed3a20f22d5c408b2c7c789cd06e9, type: 3}
+  name: magnet
+  assetName: magnetPwrup
+  powerupType: 1
+  slottable: 0
   dropChance: 5
   rarity: 1
   levelReq: 0

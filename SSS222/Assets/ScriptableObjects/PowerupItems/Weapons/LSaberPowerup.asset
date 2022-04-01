@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
   m_Name: LSaberPowerup
   m_EditorClassIdentifier: 
-  name: LSaber
-  item: {fileID: 4548736405339070879, guid: da69c5e66b1dd2941ba313f4c96bc246, type: 3}
+  name: lsaber
+  assetName: lsaberPwrup
+  powerupType: 0
+  slottable: 1
   dropChance: 5
   rarity: 0
   levelReq: 0

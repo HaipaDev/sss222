@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
-  m_Name: LClawsPowerup
+  m_Name: Laser1Powerup
   m_EditorClassIdentifier: 
-  name: LClaws
-  item: {fileID: 4548736405339070879, guid: 5a016be1fe8ea64479b960ba66d5e80e, type: 3}
-  dropChance: 1.5
-  rarity: 1
-  levelReq: 2
+  name: laser
+  assetName: laserPwrup
+  powerupType: 0
+  slottable: 1
+  dropChance: 0
+  rarity: 0
+  levelReq: 0

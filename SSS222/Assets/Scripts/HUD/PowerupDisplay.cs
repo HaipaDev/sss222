@@ -68,7 +68,7 @@ public class PowerupDisplay : MonoBehaviour{
             string name=pwrup;
             if(!String.IsNullOrEmpty(name)){
                 if(name.Contains(Player.instance._itemSuffix)){name=name.Split('_')[0];}name=name+"Pwrup";
-                img.sprite=GameAssets.instance.Spr(name);
+                img.sprite=GameAssets.instance.Get(name).GetComponent<SpriteRenderer>().sprite;
             }else{img.sprite=GameAssets.instance.Spr("nullPwrup");}
         }}else{img.sprite=GameAssets.instance.Spr("nullPwrup");}
     }

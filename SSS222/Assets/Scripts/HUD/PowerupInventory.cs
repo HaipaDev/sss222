@@ -5,7 +5,8 @@ using Sirenix.OdinInspector;
 
 public class PowerupInventory : MonoBehaviour{
     [AssetsOnly][SerializeField]GameObject elementPrefab;
-    void Start(){
+    void Start(){SetCapacity();}
+    public void SetCapacity(){
         if(GameRules.instance.powerupsCapacity==1){Destroy(gameObject);}
         var _iMax=transform.GetChild(0).childCount;
         for(var i=0;i<_iMax;i++){Destroy(transform.GetChild(0).GetChild(i).gameObject);}

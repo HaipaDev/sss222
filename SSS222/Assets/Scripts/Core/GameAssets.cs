@@ -12,6 +12,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	[AssetsOnly,Searchable]public GObject[] objects;
 	[AssetsOnly,Searchable]public GObject[] vfx;
 	[AssetsOnly,Searchable]public GSprite[] sprites;
+	[AssetsOnly,Searchable]public PowerupItem[] powerupItems;
 	[Header("Customization")]
 	[AssetsOnly,Searchable]public CstmzSkin[] skins;
 	[AssetsOnly,Searchable]public CstmzTrail[] trails;
@@ -21,6 +22,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
     
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
 
+#region//Main
     public GameObject Make(string obj, Vector2 pos){
 		GObject o=Array.Find(objects, item => item.name == obj);
 		if(o==null){
@@ -69,7 +71,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
 		GameObject gobj=o.gobj;
         return gobj;
-	}public GameObject GetVFX(string obj){
+	}
+	public GameObject GetVFX(string obj){
 		GObject o=Array.Find(vfx, item => item.name == obj);
 		if(o==null){
 			Debug.LogWarning("VFX: " + obj + " not found!");
@@ -79,7 +82,6 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		return gobj;
         //if(SaveSerial.instance.settingsData.particles)return gobj; else return null;
 	}
-
     public Sprite Spr(string spr){
 		GSprite s=Array.Find(sprites, item => item.name == spr);
 		if(s==null){
@@ -89,7 +91,25 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		Sprite gs=s.spr;
         return gs;
 	}
-	
+	public PowerupItem GetPowerupItem(string obj){
+		PowerupItem o=Array.Find(powerupItems, item => item.name == obj);
+		if(o==null){
+			Debug.LogWarning("Powerup by name: " + obj + " not found!");
+			return null;
+		}
+        return o;
+	}
+	public PowerupItem GetPowerupItemByAsset(string obj){
+		PowerupItem o=Array.Find(powerupItems, item => item.assetName == obj);
+		if(o==null){
+			Debug.LogWarning("Powerup by assetName: " + obj + " not found!");
+			return null;
+		}
+        return o;
+	}
+#endregion
+
+#region//Customizables
 	public CstmzSkin GetSkin(string str){
 		CstmzSkin s=Array.Find(skins, item => item.name == str);
         //Sprite gs=s.str;
@@ -131,6 +151,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
         return s;
 	}
+
 	public CstmzFlares GetFlares(string str){
 		CstmzFlares s=Array.Find(flares, item => item.name == str);
 		if(s==null){
@@ -157,7 +178,6 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return go;
 	}
 
-	
 	public CstmzDeathFx GetDeathFx(string str){
 		CstmzDeathFx s=Array.Find(deathFxs, item => item.name == str);
 		if(s==null){
@@ -183,7 +203,6 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
         return s;
 	}
-
 	
 	public string GetDisplayName(string str,CstmzType cstmzType){
 		string ss=null;
@@ -224,8 +243,9 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
         return ss;
 	}
+#endregion
 
-
+#region//Public functions
 	public void TransformIntoUIParticle(GameObject go,float mult=0,float dur=-4,bool multShape=false){
 		var ps=go.GetComponent<ParticleSystem>();var psMain=ps.main;
 		if(mult==0){
@@ -265,7 +285,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		mat.SetTexture("_MainTex",_tex);
 		psUI.material=mat;
 	}
-	public bool _isColorDark(Color color){bool b=false;float H,S,V;Color.RGBToHSV(color,out H,out S,out V);if(V<=0.3f){b=true;}return b;}
+	public static bool _isColorDark(Color color){bool b=false;float H,S,V;Color.RGBToHSV(color,out H,out S,out V);if(V<=0.3f){b=true;}return b;}
 	public void MakeParticleLooping(ParticleSystem ps){var psMain=ps.main;psMain.loop=true;psMain.stopAction=ParticleSystemStopAction.None;}
 
 	public class CoroutineWithData {
@@ -283,7 +303,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 				yield return result;
 			}
 		}
- }
+ 	}
+#endregion
 }
 
 [System.Serializable]

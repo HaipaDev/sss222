@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
   m_Name: ScalerPowerup
   m_EditorClassIdentifier: 
-  name: Scaler
-  item: {fileID: 4548736405339070879, guid: fef9a70d1e2661246b686c5f3f207fff, type: 3}
+  name: scaler
+  assetName: scalerPwrup
+  powerupType: 1
+  slottable: 0
   dropChance: 5
   rarity: 0
   levelReq: 0

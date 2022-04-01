@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
   m_Name: RandomizerPowerup
   m_EditorClassIdentifier: 
-  name: Randomizer
-  item: {fileID: 5649215481239408911, guid: 404504c142e7a4a40805ec056d2a842f, type: 3}
+  name: randomizer
+  assetName: randomizerPwrup
+  powerupType: 1
+  slottable: 0
   dropChance: 6
   rarity: 0
   levelReq: 0

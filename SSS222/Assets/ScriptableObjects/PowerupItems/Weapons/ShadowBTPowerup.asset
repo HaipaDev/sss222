@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e30192cb137f439428c4064fd2698, type: 3}
   m_Name: ShadowBTPowerup
   m_EditorClassIdentifier: 
-  name: ShadowBT
-  item: {fileID: 4548736405339070879, guid: 09e222a729e8d7a46b1ed32960cf9e6e, type: 3}
+  name: shadowbt
+  assetName: shadowBtPwrup
+  powerupType: 0
+  slottable: 1
   dropChance: 0.05
   rarity: 2
   levelReq: 1
