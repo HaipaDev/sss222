@@ -4,31 +4,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Sirenix.OdinInspector;
 
 public class ValueDisplay : MonoBehaviour{
     [SerializeField] public string value="score";
-    //[SerializeField] float valueLimitD=-1;
-    //[SerializeField] bool changeOnValidate;
+    [DisableInPlayMode][SerializeField] bool onlyOnEnable=false;
     TextMeshProUGUI txt;
     TMP_InputField tmpInput;
     void Start(){
         if(GetComponent<TextMeshProUGUI>()!=null)txt=GetComponent<TextMeshProUGUI>();
         if(GetComponent<TMP_InputField>()!=null)tmpInput=GetComponent<TMP_InputField>();
+        if(onlyOnEnable)ChangeText();
     }
-    void Update(){ChangeText();}
+    void OnEnable(){if(onlyOnEnable)ChangeText();}
+    void Update(){if(!onlyOnEnable)ChangeText();}
 
     void ChangeText(){      string _txt="";
     #region//GameSession
         if(GameSession.instance!=null){
             if(value=="score") _txt=GameSession.instance.score.ToString();
-            //else if(value=="evscore") _txt=GameSession.instance.EVscore.ToString();
             else if(value=="coins") _txt=GameSession.instance.coins.ToString();
             else if(value=="cores") _txt=GameSession.instance.cores.ToString();
             else if(value.Contains("highscore")) _txt=GameSession.instance.GetHighscoreCurrent().ToString();
-            else if(value=="gameVersion") _txt="v"+GameSession.instance.gameVersion;
+            else if(value=="gameSpeed") _txt="v"+GameSession.instance.gameSpeed;
+            else if(value=="gameVersion") _txt=GameSession.instance.gameVersion;
             else if(value=="timePlayed") _txt=GameSession.instance.GetGameSessionTimeFormat();
             else if(value=="scoreMulti") _txt=GameSession.instance.scoreMulti.ToString();
             else if(value=="luck") _txt=GameSession.instance.luckMulti.ToString();
+
+            else if(value=="cfgNameCurrent")_txt=GameSession.instance.GetGameRulesCurrent().cfgName;
         }
     #endregion
     #region//Player
@@ -103,14 +107,12 @@ public class ValueDisplay : MonoBehaviour{
     #endregion
     #region//GameRules
         if(GameRules.instance!=null){
-            if(value=="cfgName")if(GameRules.instance!=null){_txt=GameRules.instance.cfgName;}else{Debug.LogError("GameRules Not Present");}
-            else if(value=="cfgNameCurrent")_txt=GameSession.instance.GetGameRulesCurrent().cfgName;
-            else if(value=="speedPlayerGR") _txt=GameRules.instance.moveSpeedPlayer.ToString();
-            else if(value=="healthStartingPlayerGR") _txt=GameRules.instance.healthPlayer.ToString();
-            else if(value=="healthMaxPlayerGR") _txt=GameRules.instance.healthMaxPlayer.ToString();
-            else if(value=="energyPlayerGR") _txt=GameRules.instance.energyPlayer.ToString()+"/"+GameRules.instance.energyMaxPlayer.ToString();
-            else if(value=="energyStartingPlayerGR") _txt=GameRules.instance.energyPlayer.ToString();
-            else if(value=="energyMaxPlayerGR") _txt=GameRules.instance.energyMaxPlayer.ToString();
+            EnemyClass _en=null;if(value.Contains("EnemySB")&&SandboxCanvas.instance!=null){if(!String.IsNullOrEmpty(SandboxCanvas.instance.enemyToModify))_en=Array.Find(GameRules.instance.enemies,x=>x.name==SandboxCanvas.instance.enemyToModify);}
+            if(value=="cfgName") _txt=GameRules.instance.cfgName;
+            else if(value=="gameSpeedGR") _txt=GameRules.instance.defaultGameSpeed.ToString();
+            else if(value=="presetName"&&SandboxCanvas.instance!=null) _txt="PRESET FROM: "+SandboxCanvas.instance.presetGameruleset.cfgName;
+
+
             else if(value=="waveScoreRangeGR"){if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;var ss=sr.scoreMaxSetRange;
                                                 if(ss.x!=ss.y){_txt=ss.x.ToString()+"-"+ss.y.ToString();}
                                                 else _txt=ss.x.ToString();}else _txt="?";
@@ -124,7 +126,21 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="shopScoreRangeStartGR") if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;var ss=sr.scoreMaxSetRange;_txt=ss.x.ToString();}else _txt="?";
             else if(value=="shopScoreRangeEndGR") if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;var ss=sr.scoreMaxSetRange;_txt=ss.y.ToString();}else _txt="?";
 
+            else if(value=="healthStartingPlayerGR") _txt=GameRules.instance.healthPlayer.ToString();
+            else if(value=="healthMaxPlayerGR") _txt=GameRules.instance.healthMaxPlayer.ToString();
+            else if(value=="energyPlayerGR") _txt=GameRules.instance.energyPlayer.ToString()+"/"+GameRules.instance.energyMaxPlayer.ToString();
+            else if(value=="energyStartingPlayerGR") _txt=GameRules.instance.energyPlayer.ToString();
+            else if(value=="energyMaxPlayerGR") _txt=GameRules.instance.energyMaxPlayer.ToString();
+            else if(value=="speedPlayerGR") _txt=GameRules.instance.moveSpeedPlayer.ToString();
+
             else if(value=="powerupsCapacity") _txt=GameRules.instance.powerupsCapacity.ToString();
+
+
+            else if(value=="nameEnemySB") _txt=_en.name.ToString();
+            else if(value=="healthEnemySB") _txt=_en.healthStart.ToString();
+            else if(value=="healthMaxEnemySB") _txt=_en.healthMax.ToString();
+            else if(value=="scoreStartEnemySB") _txt=_en.scoreValue.x.ToString();
+            else if(value=="scoreEndEnemySB") _txt=_en.scoreValue.y.ToString();
         }
     #endregion
         

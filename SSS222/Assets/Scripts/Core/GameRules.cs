@@ -307,7 +307,11 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         //if(healthMaxPlayer<=0){healthMaxPlayer=0.1f;}
         energyPlayer=Mathf.Clamp(energyPlayer,0,energyMaxPlayer);
         if(!energyOnPlayer){energyPlayer=0;energyMaxPlayer=0;}
-       // if(energyMaxPlayer<=0){energyMaxPlayer=0.1f;}
+        //if(energyMaxPlayer<=0){energyMaxPlayer=0.1f;}
+
+        foreach(EnemyClass en in enemies){
+            en.healthStart=Mathf.Clamp(en.healthStart,0,en.healthMax);
+        }
 
         if(!shopOn)shopCargoOn=false;
         if(!xpOn)levelingOn=false;

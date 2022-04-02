@@ -3,24 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
 public class BarValue : MonoBehaviour{
-    [SerializeField] barType barType=barType.HorizontalR;
+    [SerializeField] barType barType=barType.Fill;
     [SerializeField] string valueName;
     [SerializeField] float value;
-    //[SerializeField] string maxValueName;
     [SerializeField] float maxValue;
-    void Start(){
-        
-    }
+    [DisableInPlayMode][SerializeField] bool onlyOnEnable=false;
+    void Start(){ChangeBar();}
+    void OnEnable(){ChangeBar();}
+    void Update(){ChangeBar();}
+    void ChangeBar(){
+        if(valueName=="health"){if(Player.instance!=null){value=Player.instance.health;maxValue=Player.instance.healthMax;}else{if(GameRules.instance!=null){value=GameRules.instance.healthPlayer;maxValue=GameRules.instance.healthMaxPlayer;}}}
+        if(valueName=="energy"){if(Player.instance!=null){value=Player.instance.energy;maxValue=Player.instance.energyMax;}else{if(GameRules.instance!=null){value=GameRules.instance.energyPlayer;maxValue=GameRules.instance.energyMaxPlayer;}}}
+        if(valueName=="hpAbsorp"){if(Player.instance!=null){value=Player.instance.hpAbsorpAmnt;maxValue=Player.instance.healthMax/4;}}
+        if(valueName=="enAbsorp"){if(Player.instance!=null){value=Player.instance.enAbsorpAmnt;maxValue=Player.instance.healthMax/4;}}
+        if(valueName=="xp"){if(GameSession.instance!=null){value=GameSession.instance.xp;maxValue=GameSession.instance.xpMax;}}
+        if(valueName=="shopTimer"){if(Shop.instance!=null){value=Shop.instance.shopTimer;maxValue=Shop.instance.shopTimeMax;}}
 
-    void Update(){
-        if(valueName.Contains("health")){if(Player.instance!=null){value=Player.instance.health;maxValue=Player.instance.healthMax;}else{if(GameRules.instance!=null){value=GameRules.instance.healthPlayer;maxValue=GameRules.instance.healthMaxPlayer;}}}
-        if(valueName.Contains("energy")){if(Player.instance!=null){value=Player.instance.energy;maxValue=Player.instance.energyMax;}else{if(GameRules.instance!=null){value=GameRules.instance.energyPlayer;maxValue=GameRules.instance.energyMaxPlayer;}}}
-        if(valueName.Contains("xp")){if(GameSession.instance!=null){value=GameSession.instance.xp;maxValue=GameSession.instance.xpMax;}}
-        if(valueName.Contains("shopTimer")){if(Shop.instance!=null){value=Shop.instance.shopTimer;maxValue=Shop.instance.shopTimeMax;}}
-        if(valueName.Contains("hpAbsorp")){if(Player.instance!=null){value=Player.instance.hpAbsorpAmnt;maxValue=Player.instance.healthMax/4;}}
-        if(valueName.Contains("enAbsorp")){if(Player.instance!=null){value=Player.instance.enAbsorpAmnt;maxValue=Player.instance.healthMax/4;}}
+        if(GameRules.instance!=null){
+            EnemyClass _en=null;
+            if(valueName.Contains("EnemySB")){if(SandboxCanvas.instance!=null){
+                if(!String.IsNullOrEmpty(SandboxCanvas.instance.enemyToModify))_en=Array.Find(GameRules.instance.enemies,x=>x.name==SandboxCanvas.instance.enemyToModify);}}
+            if(_en!=null){
+                if(valueName=="healthEnemySB"){value=_en.healthStart;maxValue=_en.healthMax;}
+            }
+        }
 
         if(barType==barType.HorizontalR){transform.localScale=new Vector2(value/maxValue,transform.localScale.y);}
         if(barType==barType.HorizontalL){transform.localScale=new Vector2(value/maxValue,transform.localScale.y);/*new Vector2(-(value/maxValue),transform.localScale.y);*/}

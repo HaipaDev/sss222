@@ -2,38 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Sirenix.OdinInspector;
 
-public class SandboxCanvas : MonoBehaviour{
+public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas instance;
     [Header("Panels")]
     [SceneObjectsOnly][SerializeField]GameObject defaultPanel;
     [SceneObjectsOnly][SerializeField]GameObject presetsPanel;
     [SceneObjectsOnly][SerializeField]GameObject globalPanel;
     [SceneObjectsOnly][SerializeField]GameObject playerPanel;
-    [Header("Other Objects")]
+    [SceneObjectsOnly][SerializeField]GameObject enemiesPanel;
+    [SceneObjectsOnly][SerializeField]GameObject enemyPanel;
+    [Header("Variables")]
+    [DisableInEditorMode][SerializeField] public GameRules presetGameruleset;
     [SceneObjectsOnly][SerializeField]GameObject powerupInventory;
-    [DisableInEditorMode][SceneObjectsOnly][SerializeField]int powerupToSet;
+    [DisableInEditorMode][SerializeField]int powerupToSet;
     [SceneObjectsOnly][SerializeField]GameObject powerupChoices;
+    [DisableInEditorMode][SerializeField]public string enemyToModify;
     void Start(){
+        instance=this;
+        presetGameruleset=GameCreator.instance.gamerulesetsPrefabs[0];
         OpenDefaultPanel();
         SetPowerupChoices();
+        SetEnemyChoices();
     }
     void Update(){
         CheckESC();
         SetPowerups();
+        if(enemyPanel.activeSelf)SetEnemySprite();
     }
     public void Back(){
         if(_anyFirstLevelPanelsActive()){OpenDefaultPanel();}
+        else if(enemyPanel.activeSelf){OpenEnemiesPanel();}
         else{GSceneManager.instance.LoadGameModeChooseScene();}
     }
     public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}
     public void OpenPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);}
     public void OpenGlobalPanel(){CloseAllPanels();globalPanel.SetActive(true);}
     public void OpenPlayerPanel(){CloseAllPanels();playerPanel.SetActive(true);}
+    public void OpenEnemiesPanel(){CloseAllPanels();enemiesPanel.SetActive(true);}
+    public void OpenEnemyPanel(string str){CloseAllPanels();enemyPanel.SetActive(true);enemyToModify=str;}
     bool _anyFirstLevelPanelsActive(){bool b=false;
         if(presetsPanel.activeSelf
         ||globalPanel.activeSelf
         ||playerPanel.activeSelf
+        ||enemiesPanel.activeSelf
         ){b=true;}
         return b;}
     void CloseAllPanels(){
@@ -41,21 +54,25 @@ public class SandboxCanvas : MonoBehaviour{
         presetsPanel.SetActive(false);
         globalPanel.SetActive(false);
         playerPanel.SetActive(false);
+        enemiesPanel.SetActive(false);
+        enemyPanel.SetActive(false);
 
         powerupChoices.SetActive(false);
     }
 
     public void SetPreset(string str){StartCoroutine(SetPresetI(str));}
     public IEnumerator SetPresetI(string str){
-        OpenDefaultPanel();
         if(GameRules.instance!=null)Destroy(GameRules.instance.gameObject);
         yield return new WaitForSecondsRealtime(0.02f);
-        var go=Instantiate(GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.GetGamemodeID(str)]);
+        presetGameruleset=GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.GetGamemodeID(str)];
+        var go=Instantiate(presetGameruleset);
         go.name="GRSandbox";
         go.GetComponent<GameRules>().cfgName="Sandbox Mode";
+        OpenDefaultPanel();
     }
 
 #region//Global
+    public void SetGameSpeed(float v){GameRules.instance.defaultGameSpeed=(float)System.Math.Round(v,2);}
     public void SetCrystalsOn(bool v){GameRules.instance.crystalsOn=v;}
     public void SetXpOn(bool v){GameRules.instance.xpOn=v;}
     public void SetCoresOn(bool v){GameRules.instance.coresOn=v;}
@@ -101,6 +118,27 @@ public class SandboxCanvas : MonoBehaviour{
     }
 #endregion
 
+#region//Enemies
+    EnemyClass _en(string str){EnemyClass _en=null;if(!System.String.IsNullOrEmpty(str)){_en=System.Array.Find(GameRules.instance.enemies,x=>x.name==str);}return _en;}
+    EnemyClass _enMod(){return _en(enemyToModify);}
+    Sprite _enSpr(string str){Sprite _spr=null;
+        if(_en(str)!=null){
+            if(_en(str).spr!=null){_spr=_en(str).spr;}
+            else{
+                if(str.Contains("Comet")){_spr=GameRules.instance.cometSettings.sprites[0];}
+            }
+            if(_spr!=null)return _spr;
+            else{Debug.LogWarning("No spr for: "+str);return null;}
+        }else{Debug.LogWarning("No enemy by name: "+str);return null;}
+    }
+    Sprite _enModSpr(){return _enSpr(enemyToModify);}
+
+    public void SetEnemyHealth(string v){_enMod().healthStart=float.Parse(v);}
+    public void SetEnemyHealthMax(string v){_enMod().healthMax=float.Parse(v);}
+    public void SetEnemyScoreStart(string v){_enMod().scoreValue=new Vector2(float.Parse(v),_enMod().scoreValue.y);}
+    public void SetEnemyScoreEnd(string v){_enMod().scoreValue=new Vector2(_enMod().scoreValue.x,float.Parse(v));}
+#endregion
+
 #region//Start & Update functions
     void SetPowerupChoices(){
         GameObject prefab=powerupChoices.transform.GetChild(0).GetChild(0).gameObject;
@@ -113,8 +151,19 @@ public class SandboxCanvas : MonoBehaviour{
             go.GetComponent<Image>().sprite=GameAssets.instance.Get(p.assetName).GetComponent<SpriteRenderer>().sprite;
             go.GetComponent<Button>().onClick.AddListener(()=>SetPowerupStarting(p.name));
         }}
-        //Destroy(powerupChoices.transform.GetChild(0).GetChild(0).gameObject);
         powerupChoices.SetActive(false);
+    }
+    void SetEnemyChoices(){
+        GameObject prefab=enemiesPanel.transform.GetChild(1).GetChild(0).GetChild(0).gameObject;
+        foreach(EnemyClass e in GameRules.instance.enemies){
+            GameObject go=Instantiate(prefab,enemiesPanel.transform.GetChild(1).GetChild(0));
+            go.name=e.name;
+            go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=e.name;
+            Sprite _spr=_enSpr(e.name);
+            if(_spr!=null)go.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite=_spr;
+            go.GetComponent<Button>().onClick.AddListener(()=>OpenEnemyPanel(e.name));
+        }
+        Destroy(prefab);
     }
 
     void CheckESC(){if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Joystick1Button1))Back();}
@@ -135,5 +184,6 @@ public class SandboxCanvas : MonoBehaviour{
             }
         }else{Debug.LogError("PowerupInventory not assigned!");}
     }
+    void SetEnemySprite(){if(_enModSpr()!=null)enemyPanel.transform.GetChild(1).GetComponent<Image>().sprite=_enModSpr();}
 #endregion
 }
