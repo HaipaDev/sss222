@@ -316,6 +316,7 @@ public class GObject{
 public class GSprite{
 	public string name;
 	public Sprite spr;
+	public Material mat;
 }
 [System.Serializable]
 public class SimpleAnim{

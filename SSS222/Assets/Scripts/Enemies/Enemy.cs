@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour{
     public bool healthBySize=false;
     [SerializeField] public bool shooting=false;
     [SerializeField] public Vector2 shootTime=new Vector2(1.75f,2.8f);
-    public float shotCounter;
+    public float shootTimer;
     [SerializeField] public GameObject bullet;
     [SerializeField] float bulletSpeed=8f;
     [SerializeField] bool DBullets=false;
@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour{
         rb=GetComponent<Rigidbody2D>();
         if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
 
-        if(shooting)shotCounter=Random.Range(shootTime.x,shootTime.y);
+        if(shooting)shootTimer=Random.Range(shootTime.x,shootTime.y);
         if(healthBySize){healthMax=Mathf.RoundToInt(healthMax*sizeAvg);health=Mathf.RoundToInt(health*sizeAvg);}
     }
     void Update(){
@@ -122,10 +122,9 @@ public class Enemy : MonoBehaviour{
         if(sprRender.sprite!=spr&&GetComponent<VortexWheel>()==null)sprRender.sprite=spr;
     }
     
-    private void Shoot(){
-    if(!GameSession.GlobalTimeIsPaused){
-        shotCounter-=Time.deltaTime;
-        if(shotCounter<=0f){
+    void Shoot(){   if(!GameSession.GlobalTimeIsPaused){
+        shootTimer-=Time.deltaTime;
+        if(shootTimer<=0f){
         if(GetComponent<LaunchRadialBullets>()==null&&GetComponent<LaunchSwarmBullets>()==null&&GetComponent<HealingDrone>()==null){
             if(bullet!=null){
                 if(DBullets!=true){
@@ -145,11 +144,10 @@ public class Enemy : MonoBehaviour{
             }else{Debug.LogWarning("Bullet not asigned");}
         }else if(GetComponent<LaunchRadialBullets>()!=null){GetComponent<LaunchRadialBullets>().Shoot();}
         else if(GetComponent<LaunchSwarmBullets>()!=null){GetComponent<LaunchSwarmBullets>().Shoot();}
-        shotCounter=Random.Range(shootTime.x, shootTime.y);
+        shootTimer=Random.Range(shootTime.x, shootTime.y);
         }
-    }
-    }
-    private void FlyOff(){
+    }}
+    void FlyOff(){
         if(Player.instance==null){
             shooting=false;
             rb.velocity=new Vector2(0,3f);
@@ -201,12 +199,12 @@ public class Enemy : MonoBehaviour{
         GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject,0.01f);//}
         Shake.instance.CamShake(2,1);
     }}
-    private void OnDestroy(){
+    void OnDestroy(){
         if(GetComponent<Goblin>()!=null)GetComponent<Goblin>().DropPowerup(false);
         if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
         if(randomizeWaveDeath==true){spawnReqsMono.AddScore(-5,-1);;}
     }
-    private void DestroyOutside(){
+    void DestroyOutside(){
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){giveScore=true;health=-1;Die();}else{Destroy(gameObject,0.001f);if(GetComponent<Goblin>()!=null){foreach(GameObject obj in GetComponent<Goblin>().powerups)Destroy(obj);}}}
     }
     public void Kill(bool giveScore=true){

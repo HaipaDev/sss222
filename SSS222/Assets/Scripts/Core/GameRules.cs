@@ -10,9 +10,10 @@ using Sirenix.OdinInspector;
 public class GameRules : MonoBehaviour{     public static GameRules instance;
 #region//Values
 #region//Global values
-[Header("Global")]
+[Title("Global", titleAlignment: TitleAlignments.Centered)]
     public string cfgName;
     public float defaultGameSpeed=1f;
+    public Material bgMaterial;
     public bool crystalsOn=true;
     public bool xpOn=true;
     public bool coresOn=true;
@@ -27,7 +28,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public float luckMulti=1;
 #endregion
 #region//Player
-[Header("Player")]
+[Title("Player", titleAlignment: TitleAlignments.Centered)]
     public Vector2 startingPosPlayer=new Vector2(0.36f,-6.24f);
     public bool autoShootPlayer=false;
     public bool moveX=true;
@@ -93,7 +94,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public float onfireDmg = 1f;
     public float decayTickrate = 0.5f;
     public float decayDmg = 0.5f;
-[Header("Energy Gains")]//Collectibles
+[Header("Collectibles")]//Collectibles
     public float energyBallGet=6f;
     public float energyBatteryGet=11f;
     public float medkitEnergyGet=26f;
@@ -109,7 +110,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public float timeOverhaul=10;
 #endregion
 #region//Waves & Powerups
-[Header("Powerup Spawns")]
+[Title("Waves & Powerups", titleAlignment: TitleAlignments.Centered)]
     public List<PowerupsSpawnerGR> powerupSpawners;
 [Header("Waves & Disrupters")]
     [SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
@@ -122,7 +123,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool startingWaveRandom=false;
     public bool uniqueWaves=true;
     public List<DisrupterConfig> disrupterList;
-[Header("Enemies")]
+[Title("Enemies", titleAlignment: TitleAlignments.Centered)]
     public bool enemyDefenseHit=true;
     public bool enemyDefensePhase=true;
     public EnemyClass[] enemies;
@@ -138,11 +139,11 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public HLaserSettings hlaserSettings;
 #endregion
 #region//Damage Values
-[Header("Damage Values")]
+[Title("DMG Values", titleAlignment: TitleAlignments.Centered)]
     public List<DamageValues> dmgValues;
 #endregion
 #region//Shop
-[Header("Shop")]
+[Title("Shop", titleAlignment: TitleAlignments.Centered)]
     public spawnReqsType shopSpawnReqsType=spawnReqsType.score;
     [Button("VaildateShopSpawnReqs")][ContextMenu("VaildateShopSpawnReqs")]void VaildateShopSpawnReqs(){spawnReqsMono.Validate(ref shopSpawnReqs, ref shopSpawnReqsType);}
     [SerializeReference]public spawnReqs shopSpawnReqs=new spawnScore();
@@ -158,7 +159,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public float shopTimeLimit=10;
 #endregion
 #region//Leveling
-[Header("Leveling")]
+[Title("Leveling", titleAlignment: TitleAlignments.Centered)]
     public float xpMax=100f;
     public float xp_wave=20f;
     public float xp_shop=3f;
@@ -171,7 +172,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public List<ListEvents> lvlEvents;
 #endregion
 #region//Upgrades
-[Header("Upgrades")]
+[Title("Upgrades", titleAlignment: TitleAlignments.Centered)]
     [ShowIf("@this.cfgName.Contains(\"Adventure\")")]public int saveBarsFromLvl=5;
     public int total_UpgradesCountMax=5;
     public int other_UpgradesCountMax=10;

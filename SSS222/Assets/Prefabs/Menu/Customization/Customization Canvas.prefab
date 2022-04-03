@@ -1255,7 +1255,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!1 &1537243988606940308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,7 +1804,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!1 &2196051807565741613
 GameObject:
   m_ObjectHideFlags: 0
@@ -3147,7 +3147,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!1 &3931574694351313518
 GameObject:
   m_ObjectHideFlags: 0
@@ -4413,7 +4413,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5386444580151253561}
   m_HandleRect: {fileID: 3097217383425078076}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5397,9 +5397,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameTxt: {fileID: 2783226214896488256}
   artistTxt: {fileID: 2144152435353609220}
-  txtAlign: 513
   posXRight: -550
   xFlipRight: 36
+  txtAlign: 513
   selectedElement: {fileID: 0}
 --- !u!1 &6362254574360510372
 GameObject:

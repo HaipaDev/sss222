@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: coresOn
+  onlyOnEnable: 0
 --- !u!1 &1604866504584742777
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,6 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: xpOn
+  onlyOnEnable: 0
 --- !u!1 &1624990180594885364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1704,6 +1706,7 @@ MonoBehaviour:
   valueName: energy
   value: 0
   maxValue: 0
+  onlyOnEnable: 0
 --- !u!1 &3922210797717986092
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,6 +2152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: levelingOn
+  onlyOnEnable: 0
 --- !u!1 &3922210797913100142
 GameObject:
   m_ObjectHideFlags: 0
@@ -2766,6 +2770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: cfgName
+  onlyOnEnable: 0
 --- !u!1 &3922210798113064155
 GameObject:
   m_ObjectHideFlags: 0
@@ -2869,6 +2874,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: shopOn
+  onlyOnEnable: 0
 --- !u!1 &3922210798115533942
 GameObject:
   m_ObjectHideFlags: 0
@@ -3017,6 +3023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: energyPlayerGR
+  onlyOnEnable: 0
 --- !u!1 &3922210798163369877
 GameObject:
   m_ObjectHideFlags: 0
@@ -3166,6 +3173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: speedPlayerGR
+  onlyOnEnable: 0
 --- !u!1 &3922210798250269988
 GameObject:
   m_ObjectHideFlags: 0
@@ -3418,6 +3426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: barrierOn
+  onlyOnEnable: 0
 --- !u!1 &3922210798297869110
 GameObject:
   m_ObjectHideFlags: 0
@@ -3569,6 +3578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: shopScoreRangeGR
+  onlyOnEnable: 0
 --- !u!114 &3922210798297869115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3757,6 +3767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: shopCargoOn
+  onlyOnEnable: 0
 --- !u!1 &3922210798374295937
 GameObject:
   m_ObjectHideFlags: 0
@@ -3943,7 +3954,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -114, y: 4.4}
-  m_SizeDelta: {x: 73.45343, y: 125.57837}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3922210798384587933
 CanvasRenderer:
@@ -3973,7 +3984,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b296ec8c0b3d7504c859a64f4f71eb1d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7e8077b60dccb2c44bf13343e4935d31, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4549,6 +4560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: modulesOn
+  onlyOnEnable: 0
 --- !u!1 &3922210798665905120
 GameObject:
   m_ObjectHideFlags: 0
@@ -5220,6 +5232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: healthPlayerGR
+  onlyOnEnable: 0
 --- !u!1 &3922210798788270474
 GameObject:
   m_ObjectHideFlags: 0
@@ -5696,6 +5709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: waveScoreRangeGR
+  onlyOnEnable: 0
 --- !u!1 &3922210798915912116
 GameObject:
   m_ObjectHideFlags: 0
@@ -6404,6 +6418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: moveAxis
+  onlyOnEnable: 0
 --- !u!114 &3922210799165304233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6568,6 +6583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: highscore
+  onlyOnEnable: 0
 --- !u!1 &3922210799231838352
 GameObject:
   m_ObjectHideFlags: 0
@@ -7405,6 +7421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: crystalsOn
+  onlyOnEnable: 0
 --- !u!1 &6427040452721212804
 GameObject:
   m_ObjectHideFlags: 0
