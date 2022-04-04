@@ -9,6 +9,7 @@ using Sirenix.OdinInspector;
 public class ValueDisplay : MonoBehaviour{
     [SerializeField] public string value="score";
     [DisableInPlayMode][SerializeField] bool onlyOnEnable=false;
+    [HideInPlayMode][SerializeField] bool onValidate=false;
     TextMeshProUGUI txt;
     TMP_InputField tmpInput;
     void Start(){
@@ -17,6 +18,7 @@ public class ValueDisplay : MonoBehaviour{
         if(onlyOnEnable)ChangeText();
     }
     void OnEnable(){if(onlyOnEnable)ChangeText();}
+    void OnValidate(){if(onValidate)ChangeText();}
     void Update(){if(!onlyOnEnable)ChangeText();}
 
     void ChangeText(){      string _txt="";
@@ -142,12 +144,12 @@ public class ValueDisplay : MonoBehaviour{
 
                 EnemyClass _en=null;
                 if(value.Contains("EnemySB")){if(!String.IsNullOrEmpty(sb.enemyToModify))_en=Array.Find(gr.enemies,x=>x.name==sb.enemyToModify);}
-                if(value=="nameEnemySB") _txt=_en.name.ToString();
-                else if(value=="healthEnemySB") _txt=_en.healthStart.ToString();
-                else if(value=="healthMaxEnemySB") _txt=_en.healthMax.ToString();
-                else if(value=="defenseEnemySB") _txt=_en.defense.ToString();
-                else if(value=="scoreStartEnemySB") _txt=_en.scoreValue.x.ToString();
-                else if(value=="scoreEndEnemySB") _txt=_en.scoreValue.y.ToString();
+                if(value=="name_EnemySB") _txt=_en.name.ToString();
+                else if(value=="health_EnemySB") _txt=_en.healthStart.ToString();
+                else if(value=="healthMax_EnemySB") _txt=_en.healthMax.ToString();
+                else if(value=="defense_EnemySB") _txt=_en.defense.ToString();
+                else if(value=="scoreStart_EnemySB") _txt=_en.scoreValue.x.ToString();
+                else if(value=="scoreEnd_EnemySB") _txt=_en.scoreValue.y.ToString();
             }
         }
     #endregion

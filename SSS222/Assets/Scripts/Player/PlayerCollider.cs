@@ -234,11 +234,8 @@ public class PlayerCollider : MonoBehaviour{
         if(phase){defMulti=0.2f;}
         float totalDef=Mathf.Clamp((Mathf.Clamp((def-armorPenetr)*defMulti,0,999)),0,99999f);
         dmg=Mathf.Clamp(dmg-=totalDef,0f,999999f);
-        if(def==-1){dmg/=2;}
-        if(def==-2){dmg/=4;}
-        if(def==-3){dmg/=8;}
-        if(def==-4){dmg/=16;}
-        if(def==-99){dmg=0;}
+        if(def==-1){dmg=0;}
+        if(def<-1){dmg/=Mathf.Abs(def);}
         return (float)System.Math.Round(dmg,2);
     }
    void PlayerEffects(string goName,bool phase=false){

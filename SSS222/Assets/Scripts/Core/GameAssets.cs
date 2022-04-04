@@ -12,6 +12,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	[AssetsOnly,Searchable]public GObject[] objects;
 	[AssetsOnly,Searchable]public GObject[] vfx;
 	[AssetsOnly,Searchable]public GSprite[] sprites;
+	[AssetsOnly,Searchable]public GMaterial[] materials;
 	[AssetsOnly,Searchable]public PowerupItem[] powerupItems;
 	[Header("Customization")]
 	[AssetsOnly,Searchable]public CstmzSkin[] skins;
@@ -72,6 +73,17 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		GameObject gobj=o.gobj;
         return gobj;
 	}
+	public Sprite GetObjSpr(string obj){
+		GObject o=Array.Find(objects, item => item.name == obj);
+		if(o==null){
+			Debug.LogWarning("Object: " + obj + " not found!");
+			return null;
+		}
+		Sprite spr=null;
+		if(o.gobj.GetComponent<SpriteRenderer>()!=null)spr=o.gobj.GetComponent<SpriteRenderer>().sprite;
+		if(o.gobj.GetComponent<UnityEngine.UI.Image>()!=null)spr=o.gobj.GetComponent<UnityEngine.UI.Image>().sprite;
+        return spr;
+	}
 	public GameObject GetVFX(string obj){
 		GObject o=Array.Find(vfx, item => item.name == obj);
 		if(o==null){
@@ -90,6 +102,15 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
 		Sprite gs=s.spr;
         return gs;
+	}
+	public Material Mat(string mat){
+		GMaterial m=Array.Find(materials, item => item.name == mat);
+		if(m==null){
+			Debug.LogWarning("Material: " + mat + " not found!");
+			return null;
+		}
+		Material gm=m.mat;
+        return gm;
 	}
 	public PowerupItem GetPowerupItem(string obj){
 		PowerupItem o=Array.Find(powerupItems, item => item.name == obj);
@@ -316,6 +337,10 @@ public class GObject{
 public class GSprite{
 	public string name;
 	public Sprite spr;
+}
+[System.Serializable]
+public class GMaterial{
+	public string name;
 	public Material mat;
 }
 [System.Serializable]

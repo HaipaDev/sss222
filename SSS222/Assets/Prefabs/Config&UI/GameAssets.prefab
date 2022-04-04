@@ -290,6 +290,11 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: e655e164933729843b0dd9fa44a0860f, type: 3}
   - name: upgradeFill_des
     spr: {fileID: 21300000, guid: a1e2036529aa2324ab1e0a53dcfae988, type: 3}
+  materials:
+  - name: HueShiftBG
+    mat: {fileID: 2100000, guid: 942b1e3fb8240e54c95ef08645b57400, type: 2}
+  - name: HueShift
+    mat: {fileID: 2100000, guid: 12e6380a1e344b74380787878d005775, type: 2}
   powerupItems:
   - {fileID: 11400000, guid: d1939f2a5efe96042842032862cdf62e, type: 2}
   - {fileID: 11400000, guid: 2650301666c6e9d4b8719cd07986fecb, type: 2}

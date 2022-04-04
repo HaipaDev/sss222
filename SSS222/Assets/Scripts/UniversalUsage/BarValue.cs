@@ -11,9 +11,11 @@ public class BarValue : MonoBehaviour{
     [SerializeField] float value;
     [SerializeField] float maxValue;
     [DisableInPlayMode][SerializeField] bool onlyOnEnable=false;
-    void Start(){ChangeBar();}
-    void OnEnable(){ChangeBar();}
-    void Update(){ChangeBar();}
+    [HideInPlayMode][SerializeField] bool onValidate=false;
+    void Start(){if(onlyOnEnable)ChangeBar();}
+    void OnEnable(){if(onlyOnEnable)ChangeBar();}
+    void OnValidate(){if(onValidate)ChangeBar();}
+    void Update(){if(!onlyOnEnable)ChangeBar();}
     void ChangeBar(){
         if(valueName=="health"){if(Player.instance!=null){value=Player.instance.health;maxValue=Player.instance.healthMax;}else{if(GameRules.instance!=null){value=GameRules.instance.healthPlayer;maxValue=GameRules.instance.healthMaxPlayer;}}}
         if(valueName=="energy"){if(Player.instance!=null){value=Player.instance.energy;maxValue=Player.instance.energyMax;}else{if(GameRules.instance!=null){value=GameRules.instance.energyPlayer;maxValue=GameRules.instance.energyMaxPlayer;}}}

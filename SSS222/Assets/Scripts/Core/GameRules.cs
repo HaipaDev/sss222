@@ -439,6 +439,7 @@ public class EnemyClass{
     public enemyType type;
     public Vector2 size = Vector2.one;
     public Sprite spr;
+    public Material sprMat;
     public float healthStart=25;
     public float healthMax=25;
     public int defense=0;

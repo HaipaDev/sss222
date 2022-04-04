@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour{
     [SerializeField] public Vector2 size=Vector2.one;
     [DisableInEditorMode] public float sizeAvg=1;
     [SerializeField] public Sprite spr;
+    [SerializeField] public Material sprMat;
     public float health=100f;
     public float healthMax=100f;
     public int defense=0;
@@ -65,11 +66,10 @@ public class Enemy : MonoBehaviour{
         if(e!=null){
             type=e.type;
             size=e.size;
-            spr=e.spr;
-            health=e.healthStart;
-            healthMax=e.healthMax;
-            defense=e.defense;
+            spr=e.spr;sprMat=e.sprMat;
+            health=e.healthStart;healthMax=e.healthMax;
             healthBySize=e.healthBySize;
+            defense=e.defense;
             shooting=e.shooting;
             shootTime=e.shootTime;
             bullet=e.bullet;
@@ -120,6 +120,7 @@ public class Enemy : MonoBehaviour{
         if((Vector2)transform.localScale!=size)transform.localScale=size;
         if(sizeAvg!=(size.x+size.y)/2)sizeAvg=(size.x+size.y)/2;
         if(sprRender.sprite!=spr&&GetComponent<VortexWheel>()==null)sprRender.sprite=spr;
+        if(sprMat!=null)sprRender.material=sprMat;
     }
     
     void Shoot(){   if(!GameSession.GlobalTimeIsPaused){

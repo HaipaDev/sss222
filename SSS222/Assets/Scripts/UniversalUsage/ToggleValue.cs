@@ -7,8 +7,10 @@ using Sirenix.OdinInspector;
 public class ToggleValue : MonoBehaviour{
     [SerializeField] public string value="shopOn";
     [DisableInPlayMode][SerializeField] bool onlyOnEnable=false;
+    [HideInPlayMode][SerializeField] bool onValidate=false;
     void Start(){if(onlyOnEnable)ChangeToggle();}
     void OnEnable(){if(onlyOnEnable)ChangeToggle();}
+    void OnValidate(){if(onValidate)ChangeToggle();}
     void Update(){if(!onlyOnEnable)ChangeToggle();}
 
     void ChangeToggle(){

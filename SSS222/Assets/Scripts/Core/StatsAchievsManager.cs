@@ -44,12 +44,12 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     
     public void CompleteAchiev(string str){
         Achievement a;
-        a=GetAchievByName(str,true);//if(a==null)a=GetAchievByDesc(str,true);
-        if(a!=null){if(!a._isCompleted()){a.achievData.completed=true;a.achievData.dateAchieved=DateTime.Now;AchievPopups.instance.AddToQueue(a);SaveAchievs();}}//else{Debug.LogWarning("No achiev by name neither desc of: "+str);}
+        if(!GameSession.instance.GetCurrentGamemodeName().Contains("Sandbox")){
+            a=GetAchievByName(str,true);//if(a==null)a=GetAchievByDesc(str,true);
+            if(a!=null){if(!a._isCompleted()){a.achievData.completed=true;a.achievData.dateAchieved=DateTime.Now;AchievPopups.instance.AddToQueue(a);SaveAchievs();}}
+        }
     }
     public Achievement GetAchievByName(string str,bool ignoreWarning=false){var i=achievsList.Find(x=>x.name==str);if(i!=null){return i;}else{if(!ignoreWarning){Debug.LogWarning("No achiev by name: "+str);}return null;}}
-    //public Achievement GetAchievByDesc(string str,bool ignoreWarning=false){var i=achievsList.Find(x=>x.desc==str);if(i!=null){return i;}else{if(!ignoreWarning){Debug.LogWarning("No achiev by desc: "+str);}return null;}}
-
     public void SaberBlocked(){CompleteAchiev("saberBlock");}
     #endregion
 
