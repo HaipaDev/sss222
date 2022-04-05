@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Sirenix.OdinInspector;
 
 [System.Serializable]
 public class LootTableEntryShop{
@@ -17,11 +18,11 @@ public class LootTableShop : MonoBehaviour{
     [SerializeField]
     public List<LootTableEntryShop> itemList;
     Dictionary<ShopQueue, float> itemTable;
-    [SerializeField] ItemPercentageShop[] itemsPercentage;
-    public float sum;
-    public ShopQueue currentQueue;
+    [ReadOnly][SerializeField] ItemPercentageShop[] itemsPercentage;
+    [ReadOnly]public float sum;
+    [ReadOnly]public ShopQueue currentQueue;
     
-    private void Awake(){SumUp();}
+    void Awake(){SumUp();}
     void OnValidate(){SumUp();}
     public ShopQueue GetQueue(){
         float randomWeight = 0;

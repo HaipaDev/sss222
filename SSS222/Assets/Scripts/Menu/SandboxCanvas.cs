@@ -15,6 +15,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [SceneObjectsOnly][SerializeField]GameObject playerPanel;
     [SceneObjectsOnly][SerializeField]GameObject enemiesPanel;
     [SceneObjectsOnly][SerializeField]GameObject enemyPanel;
+    [SceneObjectsOnly][SerializeField]GameObject wavesPanel;
     [Header("Enemy Subpanels")]
     [SceneObjectsOnly][SerializeField]GameObject enemyMainPanel;
     [SceneObjectsOnly][SerializeField]GameObject enemySpritePanel;
@@ -29,6 +30,12 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [DisableInEditorMode][SerializeField][Range(0,360)]public int bgHue;
     [DisableInEditorMode][SerializeField][Range(0,2)]public float bgSatur=1;
     [DisableInEditorMode][SerializeField][Range(0,2)]public float bgValue=1;
+    [SceneObjectsOnly][SerializeField]TMP_Dropdown wavesSpawnTypeDropdown;
+    [SerializeField]string[] wavesSpawnReqsTypes;
+    [SceneObjectsOnly][SerializeField]GameObject wavesScoreInput;
+    [SceneObjectsOnly][SerializeField]GameObject wavesTimeInput;
+    [SceneObjectsOnly][SerializeField]GameObject wavesKillsInput;
+    [SceneObjectsOnly][SerializeField]TextMeshProUGUI wavesWeightsSumTotal;
     void Start(){
         instance=this;
         presetGameruleset=GameCreator.instance.gamerulesetsPrefabs[0];
@@ -36,6 +43,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         SetPowerupChoices();
         SetEnemyChoices();
         SetEnemySpritesLibrary();
+        SetWaveSpawnReqsInputs();
+        SetWaveChoices();
     }
     void Update(){
         CheckESC();
@@ -58,11 +67,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void OpenEnemyPanel(string str){CloseAllPanels();enemyPanel.SetActive(true);enemyMainPanel.SetActive(true);enemyToModify=str;SetEnemyPreviewsSprite();}
     public void OpenEnemySpritePanel(){if(_canModifySpriteEn()){CloseAllPanels();enemyPanel.SetActive(true);enemySpritePanel.SetActive(true);SetEnemyPreviewsSprite();}}
     public void OpenEnemySpritesLibPanel(){CloseAllPanels();enemyPanel.SetActive(true);enemySpritesLibPanel.SetActive(true);}
+    public void OpenWavesPanel(){CloseAllPanels();wavesPanel.SetActive(true);OpenWavesSpawnReqsInputs();}
     bool _anyFirstLevelPanelsActive(){bool b=false;
         if(presetsPanel.activeSelf
         ||globalPanel.activeSelf
         ||playerPanel.activeSelf
         ||enemiesPanel.activeSelf
+        ||wavesPanel.activeSelf
         ){b=true;}
         return b;}
     void CloseAllPanels(){
@@ -72,6 +83,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         playerPanel.SetActive(false);
         enemiesPanel.SetActive(false);
         enemyPanel.SetActive(false);
+        wavesPanel.SetActive(false);
 
         enemyMainPanel.SetActive(false);
         enemySpritePanel.SetActive(false);
@@ -79,6 +91,21 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
         powerupChoices.SetActive(false);
     }
+    void OpenWavesSpawnReqsInputs(){
+        CloseAllWaveSpawnInputs();
+        switch(GameRules.instance.waveSpawnReqsType){
+            case spawnReqsType.score:wavesScoreInput.SetActive(true);break;
+            case spawnReqsType.kills:wavesKillsInput.SetActive(true);break;
+            default:wavesTimeInput.SetActive(true);break;
+        }
+
+        void CloseAllWaveSpawnInputs(){
+            wavesTimeInput.SetActive(false);
+            wavesScoreInput.SetActive(false);
+            wavesKillsInput.SetActive(false);
+        }
+    }
+    
 
     public void SetPreset(string str){StartCoroutine(SetPresetI(str));}
     public IEnumerator SetPresetI(string str){
@@ -93,6 +120,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
 #region//Global
     public void SetGameSpeed(float v){GameRules.instance.defaultGameSpeed=(float)System.Math.Round(v,2);}
+    public void SetScoreDisplay(){scoreDisplay s=GameRules.instance.scoreDisplay;
+        switch(s){
+            case scoreDisplay.sessionTime: s=scoreDisplay.score;break;
+            case scoreDisplay.score: s=scoreDisplay.sessionTime;break;
+        }
+        GameRules.instance.scoreDisplay=s;
+    }
     public void SetCrystalsOn(bool v){GameRules.instance.crystalsOn=v;}
     public void SetXpOn(bool v){GameRules.instance.xpOn=v;}
     public void SetCoresOn(bool v){GameRules.instance.coresOn=v;}
@@ -101,15 +135,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetShopCargoOn(bool v){GameRules.instance.shopCargoOn=v;}
     public void SetModulesOn(bool v){GameRules.instance.modulesOn=v;}
     public void SetBarrierOn(bool v){GameRules.instance.barrierOn=v;}
-    public void SetWaveScoreRangeStart(string v){if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}
-        else{Debug.LogWarning("Wave spawns are not set by score!");GameRules.instance.waveSpawnReqsType=spawnReqsType.score;GameRules.instance.waveSpawnReqs=new spawnScore();var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}}
-    public void SetWaveScoreRangeEnd(string v){if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.y=int.Parse(v);}
-        else{Debug.LogWarning("Wave spawns are not set by score!");GameRules.instance.waveSpawnReqsType=spawnReqsType.score;GameRules.instance.waveSpawnReqs=new spawnScore();var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.y=int.Parse(v);}}
     public void SetShopScoreRangeStart(string v){if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}
         else{Debug.LogWarning("Shop spawns are not set by score!");GameRules.instance.shopSpawnReqsType=spawnReqsType.score;GameRules.instance.waveSpawnReqs=new spawnScore();var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}}
     public void SetShopScoreRangeEnd(string v){if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;sr.scoreMaxSetRange.y=int.Parse(v);}
         else{Debug.LogWarning("Shop spawns are not set by score!");GameRules.instance.shopSpawnReqsType=spawnReqsType.score;GameRules.instance.waveSpawnReqs=new spawnScore();var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.y=int.Parse(v);}}
-
     public void SetBackgroundHue(float v){bgHue=(int)v;UpdateBgMaterial();}
     public void SetBackgroundSatur(float v){bgSatur=v;UpdateBgMaterial();}
     public void SetBackgroundValue(float v){bgValue=v;UpdateBgMaterial();}
@@ -165,6 +194,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
 #endregion
 #region//Enemies
+    #region///returns
     bool _canModifySpriteEn(){bool b=true;string s=enemyToModify;
         if(s=="Vortex Wheel"
         ||s=="Comet"
@@ -199,6 +229,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         return _mat;
     }
     public Material _enModSprMat(){return _enSprMat(enemyToModify);}
+    #endregion///returns
 
     //Enemy Main Settings
     public void SetEnemyHealth(string v){_enMod().healthStart=float.Parse(v);}
@@ -212,6 +243,31 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetEnemySprMatHue(float v){_enModSprMat().SetInt("_HsvShift",(int)v);}
     public void SetEnemySprMatSatur(float v){_enModSprMat().SetFloat("_HsvSaturation",v);}
     public void SetEnemySprMatValue(float v){_enModSprMat().SetFloat("_HsvBright",v);}
+#endregion
+#region//Waves
+    public void SetWaveSpawnReqsType(int v){    spawnReqsType srt=0;string t=wavesSpawnReqsTypes[v];
+        switch(t){
+            case "Score":srt=spawnReqsType.score;break;
+            case "Kills":srt=spawnReqsType.kills;break;
+            default:srt=spawnReqsType.time;break;
+        }
+        GameRules.instance.waveSpawnReqsType=srt;
+        spawnReqsMono.Validate(ref GameRules.instance.waveSpawnReqs, ref srt);
+        OpenWavesSpawnReqsInputs();
+    }
+    public void SetWaveScoreRangeStart(string v){if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}
+        else{Debug.LogWarning("Wave spawns are not set by score!");GameRules.instance.waveSpawnReqsType=spawnReqsType.score;GameRules.instance.waveSpawnReqs=new spawnScore();var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}}
+    public void SetWaveScoreRangeEnd(string v){if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.y=int.Parse(v);}
+        else{Debug.LogWarning("Wave spawns are not set by score!");GameRules.instance.waveSpawnReqsType=spawnReqsType.score;GameRules.instance.waveSpawnReqs=new spawnScore();var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.y=int.Parse(v);}}
+    public void SetWaveTimeRangeStart(string v){if(GameRules.instance.waveSpawnReqs is spawnReqs&&!GameRules.instance.waveSpawnReqs.GetType().IsSubclassOf(typeof(spawnReqs))){var sr=GameRules.instance.waveSpawnReqs;sr.time.x=(float)System.Math.Round(float.Parse(v),3);}
+        else{Debug.LogWarning("Wave spawns are not set by time!");GameRules.instance.waveSpawnReqsType=spawnReqsType.time;GameRules.instance.waveSpawnReqs=new spawnReqs();var sr=GameRules.instance.waveSpawnReqs;sr.time.x=(float)System.Math.Round(float.Parse(v),3);}}
+    public void SetWaveTimeRangeEnd(string v){if(GameRules.instance.waveSpawnReqs is spawnReqs&&!GameRules.instance.waveSpawnReqs.GetType().IsSubclassOf(typeof(spawnReqs))){var sr=GameRules.instance.waveSpawnReqs;sr.time.y=(float)System.Math.Round(float.Parse(v),3);}
+        else{Debug.LogWarning("Wave spawns are not set by time!");GameRules.instance.waveSpawnReqsType=spawnReqsType.time;GameRules.instance.waveSpawnReqs=new spawnReqs();var sr=GameRules.instance.waveSpawnReqs;sr.time.y=(float)System.Math.Round(float.Parse(v),3);}}
+    public void SetWaveKillsNeeded(string v){if(GameRules.instance.waveSpawnReqs is spawnKills){var sr=(spawnKills)GameRules.instance.waveSpawnReqs;sr.killsNeeded=int.Parse(v);}
+        else{Debug.LogWarning("Wave spawns are not set by kills!");GameRules.instance.waveSpawnReqsType=spawnReqsType.kills;GameRules.instance.waveSpawnReqs=new spawnKills();var sr=(spawnKills)GameRules.instance.waveSpawnReqs;sr.killsNeeded=int.Parse(v);}}
+#endregion
+#region//Collectibles
+    ///PowerupSpawns
 #endregion
 
 #region//Start & Update functions
@@ -276,6 +332,33 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }
         Destroy(prefab);
     }
+    void SetWaveSpawnReqsInputs(){
+        List<TMPro.TMP_Dropdown.OptionData> options=new List<TMPro.TMP_Dropdown.OptionData>();
+        if(wavesSpawnTypeDropdown.options.Count==1){
+            for(var i=0;i<wavesSpawnReqsTypes.Length;i++){
+                options.Add(new TMPro.TMP_Dropdown.OptionData(wavesSpawnReqsTypes[i],wavesSpawnTypeDropdown.itemImage.sprite));
+            }
+            wavesSpawnTypeDropdown.ClearOptions();
+            wavesSpawnTypeDropdown.AddOptions(options);
+        }
+    }
+    void SetWaveChoices(){
+        GameObject prefab=wavesPanel.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
+        wavesWeightsSumTotal.text=GameRules.instance.wavesWeightsSumTotal.ToString();
+        foreach(LootTableEntryWaves e in GameRules.instance.waveList){
+            GameObject go=Instantiate(prefab,wavesPanel.transform.GetChild(2).GetChild(0));
+            go.name=e.lootItem.name;
+            go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=e.lootItem.waveName;
+            Sprite _spr=e.lootItem.thumbnail;
+            if(_spr!=null)go.transform.GetChild(0).GetComponent<Image>().sprite=_spr;
+            go.transform.GetChild(4).GetComponent<DisplayPercentageFrom2Txt>().enabled=false;
+            go.transform.GetChild(3).GetComponent<TMP_InputField>().text=e.dropChance.ToString();
+            go.transform.GetChild(4).GetComponent<DisplayPercentageFrom2Txt>().enabled=true;
+            //go.transform.GetChild(3).GetComponent<TMP_InputField>().interactable=true;
+        }
+        Destroy(prefab);
+    }
+
 
     void CheckESC(){if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Joystick1Button1))Back();}
     void SetPowerups(){

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 [System.Serializable]
 public class LootTableEntryPowerup{
@@ -17,12 +18,14 @@ public class ItemPercentagePowerup{
 }
 public class LootTablePowerups : MonoBehaviour{
     [SerializeField]public List<LootTableEntryPowerup> itemList;
-    public int currentLvl;
+    [DisableInPlayMode][SerializeField]public int currentLvl;
 
-    public List<float> dropList;
+    [ReadOnly]public List<float> dropList;
     private Dictionary<PowerupItem, float> itemTable;
-    [SerializeField] ItemPercentagePowerup[] itemsPercentage;
-    public float sum;
+    [ReadOnly][SerializeField] ItemPercentagePowerup[] itemsPercentage;
+    [ReadOnly]public float sum;
+
+
     void OnValidate(){
         SumUp();
         //SumUpAfter();

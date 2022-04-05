@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 [System.Serializable]
 public class LootTableEntryWaves{
@@ -18,9 +19,9 @@ public class LootTableWaves : MonoBehaviour{
     [SerializeField]public List<LootTableEntryWaves> itemList;
     private Dictionary<WaveConfig, float> itemTable;
     [SerializeField] int currentLvl;
-    [SerializeField] List<float> dropList;
-    [SerializeField] ItemPercentageWaves[] itemsPercentage;
-    public float sum;
+    [ReadOnly][SerializeField] List<float> dropList;
+    [ReadOnly][SerializeField] ItemPercentageWaves[] itemsPercentage;
+    [ReadOnly]public float sum;
     
     void OnValidate(){SumUp();}
     private void Update() {

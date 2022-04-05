@@ -284,7 +284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: highscore
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!1 &1041459368854556128
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,7 +991,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1847
 --- !u!1 &1041459370097998130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,7 +1493,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: cfgNameCurrent
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!1 &4906420209040628439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,7 +1644,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: submitMessage
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!1001 &7148071220335746827
 PrefabInstance:
   m_ObjectHideFlags: 0

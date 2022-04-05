@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 6935460512349009715}
   - component: {fileID: 630992838597292278}
   - component: {fileID: 1294228318681128728}
+  - component: {fileID: 1107446703630596117}
   m_Layer: 5
-  m_Name: HighscoreTxt
+  m_Name: HighscoreVal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +149,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: highscore
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
+--- !u!114 &1107446703630596117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262018830716301538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6fdfd702052f94e9434cc97eebcd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverse: 0
+  gamemodeName: Sandbox
 --- !u!1 &432586327671956205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,10 +1110,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25f400863162f1428a56afca7f456af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreTxt: {fileID: 3808819049946900144}
   scoreDescTxt: {fileID: 6608614100819003030}
-  highscoreTxt: {fileID: 630992838597292278}
+  scoreTxt: {fileID: 3808819049946900144}
   highscoreDescTxt: {fileID: 6608614101296596296}
+  highscoreTxt: {fileID: 630992838597292278}
   gameOver: 0
 --- !u!1 &4400987036337240177
 GameObject:
@@ -1163,7 +1179,7 @@ GameObject:
   - component: {fileID: 3808819049946900144}
   - component: {fileID: 5266867964010096503}
   m_Layer: 5
-  m_Name: ScoreTxt
+  m_Name: ScoreVal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1298,7 +1314,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: score
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!1 &5824807549917103746
 GameObject:
   m_ObjectHideFlags: 0
@@ -1311,7 +1328,7 @@ GameObject:
   - component: {fileID: 3695357087133712723}
   - component: {fileID: 6608614100819003030}
   m_Layer: 5
-  m_Name: ScoreTxtDesc
+  m_Name: scoreTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1445,8 +1462,9 @@ GameObject:
   - component: {fileID: 531152136537704038}
   - component: {fileID: 3695357087611372173}
   - component: {fileID: 6608614101296596296}
+  - component: {fileID: 4354411053480120817}
   m_Layer: 5
-  m_Name: HighscoreTxtDesc
+  m_Name: highscoreTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1569,6 +1587,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4354411053480120817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5824807550361339228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6fdfd702052f94e9434cc97eebcd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverse: 0
+  gamemodeName: Sandbox
 --- !u!1 &5848042067856816882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,7 +1613,7 @@ GameObject:
   - component: {fileID: 3653896409647955235}
   - component: {fileID: 6506354967945919206}
   m_Layer: 5
-  m_Name: TimeTxtDesc
+  m_Name: PlaytimeTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1717,7 +1749,7 @@ GameObject:
   - component: {fileID: 7152065424032868012}
   - component: {fileID: 8824386705944496450}
   m_Layer: 5
-  m_Name: TimeTxt
+  m_Name: PlaytimeVal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1852,7 +1884,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: timePlayed
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!1 &7605019875179854833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,10 +1922,10 @@ RectTransform:
   m_Father: {fileID: 2044199700624404127}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8947248401092364782
 GameObject:

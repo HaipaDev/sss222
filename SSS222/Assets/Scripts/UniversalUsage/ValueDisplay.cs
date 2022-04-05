@@ -110,20 +110,32 @@ public class ValueDisplay : MonoBehaviour{
     #region//GameRules
         if(GameRules.instance!=null){   var gr=GameRules.instance;
             if(value=="cfgName") _txt=gr.cfgName;
+            else if(value=="scoreDisplay"){if(GameSession.instance!=null){
+                    if(gr.scoreDisplay==scoreDisplay.score)_txt=GameSession.instance.score.ToString();
+                    else if(gr.scoreDisplay==scoreDisplay.sessionTime)_txt=GameSession.instance.GetGameSessionTimeFormat().ToString();
+                }
+            }
             else if(value=="gameSpeedGR") _txt=gr.defaultGameSpeed.ToString();
 
-            else if(value=="waveScoreRangeGR"){if(gr.waveSpawnReqs is spawnScore){var sr=(spawnScore)gr.waveSpawnReqs;var ss=sr.scoreMaxSetRange;
-                                                if(ss.x!=ss.y){_txt=ss.x.ToString()+"-"+ss.y.ToString();}
-                                                else _txt=ss.x.ToString();}else _txt="?";
-            }
-            else if(value=="waveScoreRangeStartGR") if(gr.waveSpawnReqs is spawnScore){var sr=(spawnScore)gr.waveSpawnReqs;var ss=sr.scoreMaxSetRange;_txt=ss.x.ToString();}else _txt="?";
-            else if(value=="waveScoreRangeEndGR") if(gr.waveSpawnReqs is spawnScore){var sr=(spawnScore)gr.waveSpawnReqs;var ss=sr.scoreMaxSetRange;_txt=ss.y.ToString();}else _txt="?";
             else if(value=="shopScoreRangeGR"){if(gr.shopSpawnReqs is spawnScore){var sr=(spawnScore)gr.shopSpawnReqs;var ss=sr.scoreMaxSetRange;
                                                 if(ss.x!=ss.y){_txt=ss.x.ToString()+"-"+ss.y.ToString();}
                                                 else _txt=ss.x.ToString();}else _txt="?";
             }
             else if(value=="shopScoreRangeStartGR") if(gr.shopSpawnReqs is spawnScore){var sr=(spawnScore)gr.shopSpawnReqs;var ss=sr.scoreMaxSetRange;_txt=ss.x.ToString();}else _txt="?";
             else if(value=="shopScoreRangeEndGR") if(gr.shopSpawnReqs is spawnScore){var sr=(spawnScore)gr.shopSpawnReqs;var ss=sr.scoreMaxSetRange;_txt=ss.y.ToString();}else _txt="?";
+
+            else if(value=="waveScoreRangeGR"){if(gr.waveSpawnReqs is spawnScore){var sr=(spawnScore)gr.waveSpawnReqs;var ss=sr.scoreMaxSetRange;
+                                                if(ss.x!=ss.y){_txt=ss.x.ToString()+"-"+ss.y.ToString();}
+                                                else _txt=ss.x.ToString();}else _txt="?";
+            }
+            else if(value=="waveScoreRangeStartGR") if(gr.waveSpawnReqs is spawnScore){var sr=(spawnScore)gr.waveSpawnReqs;_txt=sr.scoreMaxSetRange.x.ToString();}else _txt="?";
+            else if(value=="waveScoreRangeEndGR") if(gr.waveSpawnReqs is spawnScore){var sr=(spawnScore)gr.waveSpawnReqs;_txt=sr.scoreMaxSetRange.y.ToString();}else _txt="?";
+            else if(value=="waveTimeRangeStartGR") if(gr.waveSpawnReqs is spawnReqs&&!gr.waveSpawnReqs.GetType().IsSubclassOf(typeof(spawnReqs))){var sr=gr.waveSpawnReqs;_txt=sr.time.x.ToString();}else _txt="?";
+            else if(value=="waveTimeRangeEndGR") if(gr.waveSpawnReqs is spawnReqs&&!gr.waveSpawnReqs.GetType().IsSubclassOf(typeof(spawnReqs))){var sr=gr.waveSpawnReqs;_txt=sr.time.y.ToString();}else _txt="?";
+            else if(value=="waveKillsNeededGR") if(gr.waveSpawnReqs is spawnKills){var sr=(spawnKills)gr.waveSpawnReqs;_txt=sr.killsNeeded.ToString();}else _txt="?";
+
+            else if(value=="waveWeightsTotalSumGR") _txt=GameRules.instance.wavesWeightsSumTotal.ToString();
+
 
             else if(value=="healthStartingPlayerGR") _txt=gr.healthPlayer.ToString();
             else if(value=="healthMaxPlayerGR") _txt=gr.healthMaxPlayer.ToString();

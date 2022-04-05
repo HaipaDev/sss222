@@ -13,6 +13,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 [Title("Global", titleAlignment: TitleAlignments.Centered)]
     public string cfgName;
     public float defaultGameSpeed=1f;
+    public scoreDisplay scoreDisplay=scoreDisplay.score;
     public Material bgMaterial;
     public bool crystalsOn=true;
     public bool xpOn=true;
@@ -109,20 +110,23 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public Skill[] skillsPlayer;
     public float timeOverhaul=10;
 #endregion
-#region//Waves & Powerups
-[Title("Waves & Powerups", titleAlignment: TitleAlignments.Centered)]
-    public List<PowerupsSpawnerGR> powerupSpawners;
-[Header("Waves & Disrupters")]
+#region//Spawns - Waves, Disrupters, Powerups
+[Title("Spawns - Waves, Disrupters, Powerups", titleAlignment: TitleAlignments.Centered)]
+[Header("Waves")]
     [SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
     #region//VaildateWaveSpawn
     [Button("VaildateWaveSpawnReqs")][ContextMenu("VaildateWaveSpawnReqs")]void VaildateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
     #endregion
     [SerializeReference]public spawnReqs waveSpawnReqs=new spawnScore();
     public List<LootTableEntryWaves> waveList;
+    [ReadOnly]public float wavesWeightsSumTotal;
     public int startingWave=0;
     public bool startingWaveRandom=false;
     public bool uniqueWaves=true;
+[Header("Disrupters")]
     public List<DisrupterConfig> disrupterList;
+[Header("Powerups")]
+    public List<PowerupsSpawnerGR> powerupSpawners;
 [Title("Enemies", titleAlignment: TitleAlignments.Centered)]
     public bool enemyDefenseHit=true;
     public bool enemyDefensePhase=true;
@@ -228,11 +232,14 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             GameSession.instance.SetGamemodeSelectedStr(cfgName);}
         yield return new WaitForSecondsRealtime(0.02f);    
         if(SceneManager.GetActiveScene().name=="Game")EnterGameScene();
+
+        SumUpWavesWeights();
     }
     public void EnterGameScene(){StartCoroutine(EnterGameSceneI());}
     IEnumerator EnterGameSceneI(){
         yield return new WaitForSecondsRealtime(0.02f);
         StartCoroutine(CreateSpawners());
+        SumUpWavesWeights();
     }
     IEnumerator CreateSpawners(){
         //Set/Create WaveSpawner
@@ -302,6 +309,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             }
         }*/
         CapToMaxValues();
+        SumUpWavesWeights();
     }
     void CapToMaxValues(){
         healthPlayer=Mathf.Clamp(healthPlayer,0,healthMaxPlayer);
@@ -316,6 +324,10 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 
         if(!shopOn)shopCargoOn=false;
         if(!xpOn)levelingOn=false;
+    }
+    void SumUpWavesWeights(){
+        wavesWeightsSumTotal=0;
+        foreach(LootTableEntryWaves w in waveList){wavesWeightsSumTotal+=w.dropChance;}
     }
     #region//Custom Events
     public void MultiplyhealthMax(float amnt){p.healthMax*=amnt;}
@@ -547,3 +559,5 @@ public class HLaserSettings{
 
 
 #endregion
+
+public enum scoreDisplay{score,sessionTime}

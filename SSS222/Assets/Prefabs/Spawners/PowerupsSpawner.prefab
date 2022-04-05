@@ -58,8 +58,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2dcdd07bf355f4bbfb092c01cafa4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList: []
+  itemList:
+  - name: 
+    lootItem: {fileID: 0}
+    rarity: 0
+    dropChance: 2
+    levelReq: 1
   currentLvl: 99
-  dropList: []
-  itemsPercentage: []
+  dropList:
+  - 0
+  itemsPercentage:
+  - name: 
   sum: 0

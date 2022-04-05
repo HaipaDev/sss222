@@ -1009,7 +1009,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: lvlPopup
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!1 &754865076193538099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,7 +1347,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: energyOffMax
-  changeOnValidate: 1
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &9069062583499244427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2057,7 +2059,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: cores
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &3014525795709322815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2236,7 +2239,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: hpOffMax
-  changeOnValidate: 1
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &7824376300298021762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2522,6 +2526,8 @@ MonoBehaviour:
   valueName: enAbsorp
   value: 0
   maxValue: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &9212742084239897997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2686,7 +2692,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: evscore
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!1 &3188765470237850405
 GameObject:
   m_ObjectHideFlags: 0
@@ -2780,6 +2787,8 @@ MonoBehaviour:
   valueName: xp
   value: 0
   maxValue: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &6350948343914041811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3236,6 +3245,8 @@ MonoBehaviour:
   valueName: energy
   value: 0
   maxValue: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &8311915482055995216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3952,6 +3963,8 @@ MonoBehaviour:
   valueName: hpAbsorp
   value: 0
   maxValue: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &1722948945493340417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4447,8 +4460,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b49163d5326f942bba584de186f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: score
-  changeOnValidate: 0
+  value: scoreDisplay
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &7641223027102124766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5151,7 +5165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: coins
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &4833640774576842606
 MonoBehaviour:
   m_ObjectHideFlags: 0
