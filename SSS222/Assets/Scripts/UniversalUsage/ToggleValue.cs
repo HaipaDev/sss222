@@ -32,13 +32,21 @@ public class ToggleValue : MonoBehaviour{
             case("barrierOn"):_b=gr.barrierOn;break;
             case("moveX"):_b=gr.moveX;break;
             case("moveY"):_b=gr.moveY;break;
-            case("moveAxis"):_id=0;if(gr.moveX&&!gr.moveY){_id=1;}else if(!gr.moveX&&gr.moveY){_id=2;}_spr=GetComponent<SpritesLib>().sprites[_id];break;
+            case("moveAxis"):_id=0;if(gr.moveX&&!gr.moveY){_id=1;}else if(!gr.moveX&&gr.moveY){_id=2;}_spr=GetComponent<SpritesLib>().GetSprite(_id);break;
             case("autoshoot"):_b=gr.autoShootPlayer;break;
-        }}
+            case("waveStartingRandom"):_b=gr.startingWaveRandom;break;
+            }
+            if(value.Contains("waveStarting_")){_b=GameRules.instance.CheckWaveStarting(value.Split('_')[1]);
+                if(_b==true&&!GameRules.instance.startingWaveRandom){GetComponent<Image>().enabled=true;}
+                else{GetComponent<Image>().enabled=false;}return;
+            }
+        }
         if(sm!=null){switch(value){
-            case("steering"):_id=0;if(ss.inputType==InputType.keyboard){_id=1;}else if(ss.inputType==InputType.touch){_id=2;}else if(ss.inputType==InputType.drag){_id=3;}_spr=GetComponent<SpritesLib>().sprites[_id];break;
+            case("steering"):_id=0;if(ss.inputType==InputType.keyboard){_id=1;}else if(ss.inputType==InputType.touch){_id=2;}else if(ss.inputType==InputType.drag){_id=3;}_spr=GetComponent<SpritesLib>().GetSprite(_id);break;
         }}
-        if(_spr!=null)GetComponent<Image>().sprite=_spr;
-        if(_b.HasValue)GetComponent<Toggle>().isOn=(bool)_b;
+        if(!value.Contains("waveStarting_")){
+            if(_spr!=null)GetComponent<Image>().sprite=_spr;
+            if(_b.HasValue)if(GetComponent<Toggle>()!=null)GetComponent<Toggle>().isOn=(bool)_b;
+        }
     }
 }

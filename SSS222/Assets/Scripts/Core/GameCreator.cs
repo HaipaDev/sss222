@@ -23,7 +23,7 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
     [Header("Game Rulesets")]
     //[SerializeField] int gamerulesetsID;
     [AssetsOnly][SerializeField] public GameRules[] gamerulesetsPrefabs;
-    [AssetsOnly][SerializeField] public int _gamerulesetsPrefabsLength;
+    [ReadOnly][SerializeField] public int _gamerulesetsPrefabsLength;
     [AssetsOnly][SerializeField] public GameRules[] adventureZonesPrefabs;
     private void Awake(){
         instance=this;

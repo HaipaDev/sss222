@@ -10,11 +10,11 @@ public class FixScrollRectWithButtons : MonoBehaviour{
     float timeHeldNeeded=0.08f;
     float timeUpNeeded=0.1f;
     float timeDelayNeeded=0.01f;
-    [DisableInEditorMode][SerializeField]float timerHeld=-4;
-    [DisableInEditorMode][SerializeField]float timerUp;
-    [DisableInEditorMode][SerializeField]float timerDelay=-4;
-    [DisableInEditorMode][SerializeField]float timerDelay2=-4;
-    [DisableInEditorMode][SerializeField]MouseOperations.MouseEventFlags fakeButton;
+    [ReadOnly][SerializeField]float timerHeld=-4;
+    [ReadOnly][SerializeField]float timerUp;
+    [ReadOnly][SerializeField]float timerDelay=-4;
+    [ReadOnly][SerializeField]float timerDelay2=-4;
+    [ReadOnly][SerializeField]MouseOperations.MouseEventFlags fakeButton;
     void Update(){  if(transform.GetComponentsInChildren<Button>().Length>0){
         if((timerUp<=0&&timerHeld>=timeHeldNeeded)||(Input.GetAxis("Mouse ScrollWheel")!=0)){
             if(transform.GetComponentsInChildren<Button>()[0].enabled){foreach(Button b in transform.GetComponentsInChildren<Button>()){

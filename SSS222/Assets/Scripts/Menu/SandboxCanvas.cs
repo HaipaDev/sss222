@@ -16,40 +16,53 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [SceneObjectsOnly][SerializeField]GameObject enemiesPanel;
     [SceneObjectsOnly][SerializeField]GameObject enemyPanel;
     [SceneObjectsOnly][SerializeField]GameObject wavesPanel;
+    [SceneObjectsOnly][SerializeField]GameObject collectiblesPanel;
     [Header("Enemy Subpanels")]
     [SceneObjectsOnly][SerializeField]GameObject enemyMainPanel;
     [SceneObjectsOnly][SerializeField]GameObject enemySpritePanel;
     [SceneObjectsOnly][SerializeField]GameObject enemySpritesLibPanel;
+    [Header("Collectibles Subpanels")]
+    [SceneObjectsOnly][SerializeField]GameObject collectiblesMainPanel;
+    [SceneObjectsOnly][SerializeField]GameObject basicCollectiblesPanel;
+    [SceneObjectsOnly][SerializeField]GameObject powerupsPanel;
     [Title("Variables & Other obj", titleAlignment: TitleAlignments.Centered)]
     [DisableInEditorMode][SerializeField] public GameRules presetGameruleset;
-    [SceneObjectsOnly][SerializeField]GameObject powerupInventory;
-    [DisableInEditorMode][SerializeField]int powerupToSet;
-    [SceneObjectsOnly][SerializeField]GameObject powerupChoices;
-    [DisableInEditorMode][SerializeField]public string enemyToModify;
-    [DisableInEditorMode][SerializeField]public List<GSprite> enemySprites;
     [DisableInEditorMode][SerializeField][Range(0,360)]public int bgHue;
     [DisableInEditorMode][SerializeField][Range(0,2)]public float bgSatur=1;
     [DisableInEditorMode][SerializeField][Range(0,2)]public float bgValue=1;
+    [Header("")]
+    [SceneObjectsOnly][SerializeField]GameObject powerupInventory;
+    [DisableInEditorMode][SerializeField]int powerupToSet;
+    [SceneObjectsOnly][SerializeField]GameObject startingPowerupChoices;
+    [Header("")]
+    [DisableInEditorMode][SerializeField]public string enemyToModify;
+    [DisableInEditorMode][SerializeField]List<GSprite> enemySprites;
+    [Header("")]
     [SceneObjectsOnly][SerializeField]TMP_Dropdown wavesSpawnTypeDropdown;
     [SerializeField]string[] wavesSpawnReqsTypes;
     [SceneObjectsOnly][SerializeField]GameObject wavesScoreInput;
     [SceneObjectsOnly][SerializeField]GameObject wavesTimeInput;
     [SceneObjectsOnly][SerializeField]GameObject wavesKillsInput;
     [SceneObjectsOnly][SerializeField]TextMeshProUGUI wavesWeightsSumTotal;
+    [Header("")]
+    [DisableInEditorMode][SerializeField]public string powerupSpawnerToModify;
+    [SceneObjectsOnly][SerializeField]TMP_Dropdown pwrupsSpawnTypeDropdown;
+    [SerializeField]string[] pwrupsSpawnReqsTypes;
+    [SceneObjectsOnly][SerializeField]GameObject pwrupsScoreInput;
+    [SceneObjectsOnly][SerializeField]GameObject pwrupsTimeInput;
+    [SceneObjectsOnly][SerializeField]GameObject pwrupsKillsInput;
+    [SceneObjectsOnly][SerializeField]TextMeshProUGUI powerupsWeightsSumTotal;
     void Start(){
         instance=this;
         presetGameruleset=GameCreator.instance.gamerulesetsPrefabs[0];
         OpenDefaultPanel();
-        SetPowerupChoices();
-        SetEnemyChoices();
-        SetEnemySpritesLibrary();
+        SetupEverything();
         SetWaveSpawnReqsInputs();
-        SetWaveChoices();
+        SetStartingPowerupChoices();
     }
     void Update(){
         CheckESC();
         SetPowerups();
-        //SetEnemyPreviewsSprite();
         GameSession.instance.gameSpeed=GameRules.instance.defaultGameSpeed;
     }
     public void Back(){
@@ -57,17 +70,29 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             else if(enemyMainPanel.activeSelf){OpenEnemiesPanel();}
                 else if(enemySpritePanel.activeSelf){OpenEnemyPanel(enemyToModify);}
                     else if(enemySpritesLibPanel.activeSelf){OpenEnemySpritePanel();}
+            else if(collectiblesMainPanel.activeSelf){OpenDefaultPanel();}
+                else if(basicCollectiblesPanel.activeSelf||powerupsPanel.activeSelf){OpenCollectiblesPanel();}
         else{GSceneManager.instance.LoadGameModeChooseScene();}
     }
     public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}
     public void OpenPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);}
     public void OpenGlobalPanel(){CloseAllPanels();globalPanel.SetActive(true);}
     public void OpenPlayerPanel(){CloseAllPanels();playerPanel.SetActive(true);}
+
     public void OpenEnemiesPanel(){CloseAllPanels();enemiesPanel.SetActive(true);SetEnemyPreviewsSprite();}
-    public void OpenEnemyPanel(string str){CloseAllPanels();enemyPanel.SetActive(true);enemyMainPanel.SetActive(true);enemyToModify=str;SetEnemyPreviewsSprite();}
+    public void OpenEnemyPanel(string str){CloseAllPanels();enemyPanel.SetActive(true);enemyMainPanel.SetActive(true);enemyToModify=str;SetEnemyPreviewsSprite();
+        enemySpritePanel.SetActive(false);enemySpritesLibPanel.SetActive(false);}
     public void OpenEnemySpritePanel(){if(_canModifySpriteEn()){CloseAllPanels();enemyPanel.SetActive(true);enemySpritePanel.SetActive(true);SetEnemyPreviewsSprite();}}
     public void OpenEnemySpritesLibPanel(){CloseAllPanels();enemyPanel.SetActive(true);enemySpritesLibPanel.SetActive(true);}
+
     public void OpenWavesPanel(){CloseAllPanels();wavesPanel.SetActive(true);OpenWavesSpawnReqsInputs();}
+
+    public void OpenCollectiblesPanel(){CloseAllPanels();collectiblesPanel.SetActive(true);collectiblesMainPanel.SetActive(true);
+        basicCollectiblesPanel.SetActive(false);powerupsPanel.SetActive(false);}
+    public void OpenBasicCollectiblesPanel(){CloseAllPanels();collectiblesPanel.SetActive(true);basicCollectiblesPanel.SetActive(true);}
+    public void OpenPowerupsSpawnPanel(string str){CloseAllPanels();collectiblesPanel.SetActive(true);powerupsPanel.SetActive(true);powerupSpawnerToModify=str;
+        SetPowerupsSpawnsChoices();SetPowerupSpawnerReqsInputs();OpenPowerupSpawnReqsInputs();}
+    
     bool _anyFirstLevelPanelsActive(){bool b=false;
         if(presetsPanel.activeSelf
         ||globalPanel.activeSelf
@@ -84,12 +109,17 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         enemiesPanel.SetActive(false);
         enemyPanel.SetActive(false);
         wavesPanel.SetActive(false);
+        collectiblesPanel.SetActive(false);
 
         enemyMainPanel.SetActive(false);
         enemySpritePanel.SetActive(false);
         enemySpritesLibPanel.SetActive(false);
 
-        powerupChoices.SetActive(false);
+        startingPowerupChoices.SetActive(false);
+
+        collectiblesMainPanel.SetActive(false);
+        basicCollectiblesPanel.SetActive(false);
+        powerupsPanel.SetActive(false);
     }
     void OpenWavesSpawnReqsInputs(){
         CloseAllWaveSpawnInputs();
@@ -105,7 +135,20 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             wavesKillsInput.SetActive(false);
         }
     }
-    
+    void OpenPowerupSpawnReqsInputs(){
+        CloseAllPowerupSpawnInputs();
+        switch(_pwrSpawnMod().spawnReqsType){
+            case spawnReqsType.score:pwrupsScoreInput.SetActive(true);break;
+            case spawnReqsType.kills:pwrupsKillsInput.SetActive(true);break;
+            default:pwrupsTimeInput.SetActive(true);break;
+        }
+
+        void CloseAllPowerupSpawnInputs(){
+            pwrupsTimeInput.SetActive(false);
+            pwrupsScoreInput.SetActive(false);
+            pwrupsKillsInput.SetActive(false);
+        }
+    }
 
     public void SetPreset(string str){StartCoroutine(SetPresetI(str));}
     public IEnumerator SetPresetI(string str){
@@ -116,6 +159,15 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         go.name="GRSandbox";
         go.GetComponent<GameRules>().cfgName="Sandbox Mode";
         OpenDefaultPanel();
+        SetupEverything();
+    }
+
+    void SetupEverything(){
+        SetEnemyChoices();
+        SetEnemySpritesLibrary();
+        SetWaveChoices();
+        SetPowerupSpawnersChoices();
+        SetPowerupsSpawnsChoices();
     }
 
 #region//Global
@@ -184,13 +236,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetSpeed(string v){GameRules.instance.moveSpeedPlayer=float.Parse(v);}
     public void SetPowerupsCapacity(float v){GameRules.instance.powerupsCapacity=(int)v;}
     public void SetAutoshoot(bool v){GameRules.instance.autoShootPlayer=v;}
-    public void OpenPowerupChoices(int id){powerupChoices.SetActive(true);powerupChoices.transform.position=new Vector2(Input.mousePosition.x,Input.mousePosition.y+50f);powerupToSet=id;}
+    public void OpenstartingPowerupChoices(int id){startingPowerupChoices.SetActive(true);startingPowerupChoices.transform.position=new Vector2(Input.mousePosition.x,Input.mousePosition.y+50f);powerupToSet=id;}
     public void SetPowerupStarting(string v){
         if(GameRules.instance.powerupsStarting.Count<=powerupToSet){for(var i=GameRules.instance.powerupsStarting.Count;i<=powerupToSet;i++){
             GameRules.instance.powerupsStarting.Add(new Powerup());}}
         if(GameRules.instance.powerupsStarting[powerupToSet]==null){GameRules.instance.powerupsStarting[powerupToSet]=new Powerup();}
         else{GameRules.instance.powerupsStarting[powerupToSet].name=v;}
-        powerupChoices.SetActive(false);
+        startingPowerupChoices.SetActive(false);
     }
 #endregion
 #region//Enemies
@@ -220,7 +272,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         Material _mat=null;
         if(_en(str)!=null){
             if(_en(str).sprMat!=null)_mat=_en(str).sprMat;
-            if(_mat==null||(_mat!=null&&!_mat.shader.name.Contains("AllIn1SpriteShader"))){Debug.LogWarning(".");
+            if(_mat==null||(_mat!=null&&!_mat.shader.name.Contains("AllIn1SpriteShader"))){Debug.LogWarning("New sprite material! for: "+str);
                 if(GameAssets.instance.Mat("HueShift")!=null){_mat=Instantiate(GameAssets.instance.Mat("HueShift"));}
                 _mat.SetInt("_HsvShift",0);
                 _en(str).sprMat=_mat;
@@ -240,16 +292,16 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
     //Enemy Sprite
     public void SetEnemySprite(string v){_enMod().spr=enemySprites.Find(x=>x.name==v).spr;OpenEnemySpritePanel();}
-    public void SetEnemySprMatHue(float v){_enModSprMat().SetInt("_HsvShift",(int)v);}
-    public void SetEnemySprMatSatur(float v){_enModSprMat().SetFloat("_HsvSaturation",v);}
-    public void SetEnemySprMatValue(float v){_enModSprMat().SetFloat("_HsvBright",v);}
+    public void SetEnemySprMatHue(float v){if(_enModSprMat()!=null)_enModSprMat().SetInt("_HsvShift",(int)v);}
+    public void SetEnemySprMatSatur(float v){if(_enModSprMat()!=null)_enModSprMat().SetFloat("_HsvSaturation",v);}
+    public void SetEnemySprMatValue(float v){if(_enModSprMat()!=null)_enModSprMat().SetFloat("_HsvBright",v);}
 #endregion
 #region//Waves
     public void SetWaveSpawnReqsType(int v){    spawnReqsType srt=0;string t=wavesSpawnReqsTypes[v];
         switch(t){
-            case "Score":srt=spawnReqsType.score;break;
+            case "Time":srt=spawnReqsType.time;break;
             case "Kills":srt=spawnReqsType.kills;break;
-            default:srt=spawnReqsType.time;break;
+            default:srt=spawnReqsType.score;break;
         }
         GameRules.instance.waveSpawnReqsType=srt;
         spawnReqsMono.Validate(ref GameRules.instance.waveSpawnReqs, ref srt);
@@ -265,30 +317,95 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         else{Debug.LogWarning("Wave spawns are not set by time!");GameRules.instance.waveSpawnReqsType=spawnReqsType.time;GameRules.instance.waveSpawnReqs=new spawnReqs();var sr=GameRules.instance.waveSpawnReqs;sr.time.y=(float)System.Math.Round(float.Parse(v),3);}}
     public void SetWaveKillsNeeded(string v){if(GameRules.instance.waveSpawnReqs is spawnKills){var sr=(spawnKills)GameRules.instance.waveSpawnReqs;sr.killsNeeded=int.Parse(v);}
         else{Debug.LogWarning("Wave spawns are not set by kills!");GameRules.instance.waveSpawnReqsType=spawnReqsType.kills;GameRules.instance.waveSpawnReqs=new spawnKills();var sr=(spawnKills)GameRules.instance.waveSpawnReqs;sr.killsNeeded=int.Parse(v);}}
+
+    public void SetWaveWeight(string n, string v){
+        LootTableEntryWaves e=GameRules.instance.waveList.Find(x=>x.lootItem.name==n);
+        e.dropChance=(float)System.Math.Round(float.Parse(v),2);
+        GameRules.instance.SumUpWavesWeightsTotal();
+    }
+    public void SetWaveLvlReq(string n, string v){
+        LootTableEntryWaves e=GameRules.instance.waveList.Find(x=>x.lootItem.name==n);
+        e.levelReq=int.Parse(v);
+    }
+    public void SetWaveStarting(string n){
+        GameRules.instance.startingWave=GameRules.instance.waveList.FindIndex(x=>x.lootItem.name==n);
+        GameRules.instance.startingWaveRandom=false;
+    }
+    public void SetWaveStartingRandom(bool v){ GameRules.instance.startingWaveRandom=v;}
 #endregion
 #region//Collectibles
     ///PowerupSpawns
+    #region//returns
+    public PowerupsSpawnerGR _pwrSpawnGR(string str, GameRules gr){PowerupsSpawnerGR _pwSp=null;if(!String.IsNullOrEmpty(str)){_pwSp=gr.powerupSpawners.Find(x=>x.name==str);}return _pwSp;}
+    public PowerupsSpawnerGR _pwrSpawn(string str){return _pwrSpawnGR(str,GameRules.instance);}
+    public PowerupsSpawnerGR _pwrSpawnMod(){return _pwrSpawn(powerupSpawnerToModify);}
+    #endregion//returns
+    public void SetPowerupSpawnerReqsType(int v){    spawnReqsType srt=0;string t=pwrupsSpawnReqsTypes[v];
+        switch(t){
+            case "Time":srt=spawnReqsType.time;break;
+            case "Kills":srt=spawnReqsType.kills;break;
+            default:srt=spawnReqsType.score;break;
+        }
+        _pwrSpawnMod().spawnReqsType=srt;
+        spawnReqsMono.Validate(ref _pwrSpawnMod().spawnReqs, ref srt);
+        OpenPowerupSpawnReqsInputs();
+    }
+    public void SetPowerupSpawnerName(string v){
+        Transform powerupsSpawnerListTransform=collectiblesMainPanel.transform.GetChild(1).GetChild(0);
+        var go=powerupsSpawnerListTransform.Find(powerupSpawnerToModify);
+
+        _pwrSpawnMod().name=v;
+        powerupSpawnerToModify=v;
+        
+        if(go!=null){go.name=v;
+        go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=v;}
+    }
+    public void SetPowerupSpawnerScoreRangeStart(string v){if(_pwrSpawnMod().spawnReqs is spawnScore){var sr=(spawnScore)_pwrSpawnMod().spawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}
+        else{Debug.LogWarning("Powerup spawns are not set by score!");_pwrSpawnMod().spawnReqsType=spawnReqsType.score;_pwrSpawnMod().spawnReqs=new spawnScore();var sr=(spawnScore)_pwrSpawnMod().spawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}}
+    public void SetPowerupSpawnerScoreRangeEnd(string v){if(_pwrSpawnMod().spawnReqs is spawnScore){var sr=(spawnScore)_pwrSpawnMod().spawnReqs;sr.scoreMaxSetRange.y=int.Parse(v);}
+        else{Debug.LogWarning("Powerup spawns are not set by score!");_pwrSpawnMod().spawnReqsType=spawnReqsType.score;_pwrSpawnMod().spawnReqs=new spawnScore();var sr=(spawnScore)_pwrSpawnMod().spawnReqs;sr.scoreMaxSetRange.y=int.Parse(v);}}
+    public void SetPowerupSpawnerTimeRangeStart(string v){if(_pwrSpawnMod().spawnReqs is spawnReqs&&!_pwrSpawnMod().spawnReqs.GetType().IsSubclassOf(typeof(spawnReqs))){var sr=_pwrSpawnMod().spawnReqs;sr.time.x=(float)System.Math.Round(float.Parse(v),3);}
+        else{Debug.LogWarning("Powerup spawns are not set by time!");_pwrSpawnMod().spawnReqsType=spawnReqsType.time;_pwrSpawnMod().spawnReqs=new spawnReqs();var sr=_pwrSpawnMod().spawnReqs;sr.time.x=(float)System.Math.Round(float.Parse(v),3);}}
+    public void SetPowerupSpawnerTimeRangeEnd(string v){if(_pwrSpawnMod().spawnReqs is spawnReqs&&!_pwrSpawnMod().spawnReqs.GetType().IsSubclassOf(typeof(spawnReqs))){var sr=_pwrSpawnMod().spawnReqs;sr.time.y=(float)System.Math.Round(float.Parse(v),3);}
+        else{Debug.LogWarning("Powerup spawns are not set by time!");_pwrSpawnMod().spawnReqsType=spawnReqsType.time;_pwrSpawnMod().spawnReqs=new spawnReqs();var sr=_pwrSpawnMod().spawnReqs;sr.time.y=(float)System.Math.Round(float.Parse(v),3);}}
+    public void SetPowerupSpawnerKillsNeeded(string v){if(_pwrSpawnMod().spawnReqs is spawnKills){var sr=(spawnKills)_pwrSpawnMod().spawnReqs;sr.killsNeeded=int.Parse(v);}
+        else{Debug.LogWarning("Powerup spawns are not set by kills!");_pwrSpawnMod().spawnReqsType=spawnReqsType.kills;_pwrSpawnMod().spawnReqs=new spawnKills();var sr=(spawnKills)_pwrSpawnMod().spawnReqs;sr.killsNeeded=int.Parse(v);}}
+
+    public void SetPwrupWeight(string n, string v){
+        LootTableEntryPowerup e=_pwrSpawnMod().powerupList.Find(x=>x.lootItem.name==n);
+        e.dropChance=(float)System.Math.Round(float.Parse(v),2);
+        _pwrSpawnMod().SumUpPowerupsWeightsTotal();
+    }
+    public void SetPwrupLvlReq(string n, string v){
+        LootTableEntryPowerup e=_pwrSpawnMod().powerupList.Find(x=>x.lootItem.name==n);
+        e.levelReq=int.Parse(v);
+    }
 #endregion
 
 #region//Start & Update functions
-    void SetPowerupChoices(){
-        GameObject prefab=powerupChoices.transform.GetChild(0).GetChild(0).gameObject;
+    void SetStartingPowerupChoices(){
+        Transform startingPowerupChoicesListTransform=startingPowerupChoices.transform.GetChild(0);
+        GameObject prefab=startingPowerupChoicesListTransform.GetChild(0).gameObject;
+        //for(var d=startingPowerupChoicesListTransform.childCount-1;d>=1;d--){Destroy(startingPowerupChoicesListTransform.GetChild(d).gameObject);}
             prefab.name="null";
             prefab.GetComponent<Image>().sprite=GameAssets.instance.Spr("nullPwrup");
             prefab.GetComponent<Button>().onClick.AddListener(()=>SetPowerupStarting(""));
         foreach(PowerupItem p in GameAssets.instance.powerupItems){if(p.powerupType==powerupType.weapon){
-            GameObject go=Instantiate(prefab,powerupChoices.transform.GetChild(0));
+            GameObject go=Instantiate(prefab,startingPowerupChoicesListTransform);
             go.name=p.name;
             go.GetComponent<Image>().sprite=GameAssets.instance.GetObjSpr(p.assetName);
             go.GetComponent<Button>().onClick.AddListener(()=>SetPowerupStarting(p.name));
         }}
-        powerupChoices.SetActive(false);
+        startingPowerupChoices.SetActive(false);
     }
+
     void SetEnemyChoices(){
-        GameObject prefab=enemiesPanel.transform.GetChild(1).GetChild(0).GetChild(0).gameObject;
-        enemySprites=new List<GSprite>();
+        Transform enemiesListTransform=enemiesPanel.transform.GetChild(1).GetChild(0);
+        GameObject prefab=enemiesListTransform.GetChild(0).gameObject;
+        for(var d=enemiesListTransform.childCount-1;d>=1;d--){Destroy(enemiesListTransform.GetChild(d).gameObject);}
+
         foreach(EnemyClass e in GameRules.instance.enemies){
-            GameObject go=Instantiate(prefab,enemiesPanel.transform.GetChild(1).GetChild(0));
+            GameObject go=Instantiate(prefab,enemiesListTransform);
             go.name=e.name;
             go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=e.name;
             Sprite _spr=_enSpr(e.name);
@@ -302,29 +419,27 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){
             foreach(EnemyClass e in gr.enemies){
                 Sprite _spr=_enSprGR(e.name,gr);
-                //if(!enemySprites.Exists(x=>x.spr==_spr)){
-                    string _n=_spr.name;
-                    
-                    if(e.name=="Comet"){
-                        //var _ci=0;
-                        foreach(Sprite _cspr in gr.cometSettings.sprites.Concat(gr.cometSettings.spritesLunar).ToArray()){
-                            _n=_cspr.name;
-                            //_ci++;  _n=e.name+_ci;
-                            //if(_cspr.name.Contains("Lunar")){_n=e.name+"Lunar"+_ci;}
-                            //if(enemySprites.Exists(x=>x.name.Contains(_n))){_n+="_";}
-                            if(!enemySprites.Exists(x=>x.spr==_cspr))enemySprites.Add(new GSprite{name=_n,spr=_cspr});
-                        }
-                    }else{      if(enemySprites.Exists(x=>x.name.Contains(_n))){_n+="_";}
-                        if(!enemySprites.Exists(x=>x.spr==_spr)){enemySprites.Add(new GSprite{name=_n,spr=_spr});}
+                string _n=_spr.name;
+                
+                if(e.name=="Comet"){
+                    foreach(Sprite _cspr in gr.cometSettings.sprites.Concat(gr.cometSettings.spritesLunar).ToArray()){
+                        _n=_cspr.name;
+                        if(!enemySprites.Exists(x=>x.spr==_cspr))enemySprites.Add(new GSprite{name=_n,spr=_cspr});
                     }
-                //}
+                }else{      if(enemySprites.Exists(x=>x.name.Contains(_n))){_n+="_";}
+                    if(!enemySprites.Exists(x=>x.spr==_spr)){enemySprites.Add(new GSprite{name=_n,spr=_spr});}
+                }
             }
         }
         enemySprites=enemySprites.OrderBy(x=>x.name).ToList();
         
-        GameObject prefab=enemySpritesLibPanel.transform.GetChild(1).GetChild(0).GetChild(0).gameObject;
+
+        Transform enemySprLibTransform=enemySpritesLibPanel.transform.GetChild(1).GetChild(0);
+        GameObject prefab=enemySprLibTransform.GetChild(0).gameObject;
+        for(var d=enemySprLibTransform.childCount-1;d>=1;d--){Destroy(enemySprLibTransform.GetChild(d).gameObject);}
+
         foreach(GSprite s in enemySprites){
-            GameObject go=Instantiate(prefab,enemySpritesLibPanel.transform.GetChild(1).GetChild(0));
+            GameObject go=Instantiate(prefab,enemySprLibTransform);
             go.name=s.name;
             Sprite _spr=s.spr;
             if(_spr!=null)go.transform.GetChild(0).GetComponent<Image>().sprite=_spr;
@@ -332,6 +447,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }
         Destroy(prefab);
     }
+
     void SetWaveSpawnReqsInputs(){
         List<TMPro.TMP_Dropdown.OptionData> options=new List<TMPro.TMP_Dropdown.OptionData>();
         if(wavesSpawnTypeDropdown.options.Count==1){
@@ -341,20 +457,95 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             wavesSpawnTypeDropdown.ClearOptions();
             wavesSpawnTypeDropdown.AddOptions(options);
         }
+        int o;
+        switch(GameRules.instance.waveSpawnReqsType){
+            case spawnReqsType.time:o=1;break;
+            case spawnReqsType.kills:o=2;break;
+            default:o=0;break;
+        }
+        wavesSpawnTypeDropdown.SetValueWithoutNotify(o);
+        wavesSpawnTypeDropdown.RefreshShownValue();
     }
     void SetWaveChoices(){
-        GameObject prefab=wavesPanel.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
+        Transform wavesListTransform=wavesPanel.transform.GetChild(2).GetChild(0);
+        GameObject prefab=wavesListTransform.GetChild(0).gameObject;
+        for(var d=wavesListTransform.childCount-1;d>=1;d--){Destroy(wavesListTransform.GetChild(d).gameObject);}
+
         wavesWeightsSumTotal.text=GameRules.instance.wavesWeightsSumTotal.ToString();
-        foreach(LootTableEntryWaves e in GameRules.instance.waveList){
-            GameObject go=Instantiate(prefab,wavesPanel.transform.GetChild(2).GetChild(0));
+        List<LootTableEntryWaves> sortedWaveList=GameRules.instance.waveList.OrderBy(x=>x.lootItem.name).ToList();
+        foreach(LootTableEntryWaves e in sortedWaveList){
+            GameObject go=Instantiate(prefab,wavesListTransform);
             go.name=e.lootItem.name;
-            go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=e.lootItem.waveName;
+            go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=e.lootItem.name;
             Sprite _spr=e.lootItem.thumbnail;
             if(_spr!=null)go.transform.GetChild(0).GetComponent<Image>().sprite=_spr;
-            go.transform.GetChild(4).GetComponent<DisplayPercentageFrom2Txt>().enabled=false;
-            go.transform.GetChild(3).GetComponent<TMP_InputField>().text=e.dropChance.ToString();
-            go.transform.GetChild(4).GetComponent<DisplayPercentageFrom2Txt>().enabled=true;
-            //go.transform.GetChild(3).GetComponent<TMP_InputField>().interactable=true;
+            var dropChanceInput=go.transform.GetChild(3).GetComponent<TMP_InputField>();
+                dropChanceInput.text=e.dropChance.ToString();
+                dropChanceInput.onEndEdit.AddListener((string s)=>SetWaveWeight(e.lootItem.name,s));
+            var lvlReqInput=go.transform.GetChild(6).GetComponent<TMP_InputField>();
+                lvlReqInput.text=e.levelReq.ToString();
+                lvlReqInput.onEndEdit.AddListener((string s)=>SetWaveLvlReq(e.lootItem.name,s));
+            var waveStartingT=go.transform.GetChild(8);
+                waveStartingT.GetComponent<Button>().onClick.AddListener(()=>SetWaveStarting(e.lootItem.name));
+                waveStartingT.GetChild(0).GetComponent<ToggleValue>().value="waveStarting_"+e.lootItem.name;
+        }
+        Destroy(prefab);
+    }
+
+    void SetPowerupSpawnerReqsInputs(){
+        List<TMPro.TMP_Dropdown.OptionData> options=new List<TMPro.TMP_Dropdown.OptionData>();
+        if(pwrupsSpawnTypeDropdown.options.Count==1){
+            for(var i=0;i<pwrupsSpawnReqsTypes.Length;i++){
+                options.Add(new TMPro.TMP_Dropdown.OptionData(pwrupsSpawnReqsTypes[i],pwrupsSpawnTypeDropdown.itemImage.sprite));
+            }
+            pwrupsSpawnTypeDropdown.ClearOptions();
+            pwrupsSpawnTypeDropdown.AddOptions(options);
+        }
+        int o;
+        switch(_pwrSpawnMod().spawnReqsType){
+            case spawnReqsType.time:o=1;break;
+            case spawnReqsType.kills:o=2;break;
+            default:o=0;break;
+        }
+        pwrupsSpawnTypeDropdown.SetValueWithoutNotify(o);
+        pwrupsSpawnTypeDropdown.RefreshShownValue();
+    }
+    void SetPowerupSpawnersChoices(){
+        Transform powerupsSpawnerListTransform=collectiblesMainPanel.transform.GetChild(1).GetChild(0);
+        GameObject prefab=powerupsSpawnerListTransform.GetChild(1).gameObject;
+        for(var d=powerupsSpawnerListTransform.childCount-1;d>=2;d--){Destroy(powerupsSpawnerListTransform.GetChild(d).gameObject);}
+
+        List<PowerupsSpawnerGR> sortedPowerupSpawnerList=GameRules.instance.powerupSpawners.OrderBy(x=>x.name).ToList();
+        foreach(PowerupsSpawnerGR e in sortedPowerupSpawnerList){
+            GameObject go=Instantiate(prefab,powerupsSpawnerListTransform);
+            go.name=e.name;
+            go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=e.name;
+            Sprite _spr=GameAssets.instance.Get(e.sprAssetName).GetComponent<SpriteRenderer>().sprite;
+            if(GameAssets.instance.Spr(e.sprAssetName)!=null)GameAssets.instance.Spr(e.sprAssetName);
+            if(_spr!=null)go.transform.GetChild(0).GetComponent<Image>().sprite=_spr;
+            go.GetComponent<Button>().onClick.AddListener(()=>OpenPowerupsSpawnPanel(e.name));
+        }
+        Destroy(prefab);
+    }
+    void SetPowerupsSpawnsChoices(){
+        Transform powerupsListTransform=powerupsPanel.transform.GetChild(2).GetChild(0);
+        GameObject prefab=powerupsListTransform.GetChild(0).gameObject;
+        for(var d=powerupsListTransform.childCount-1;d>=1;d--){Destroy(powerupsListTransform.GetChild(d).gameObject);}
+
+        powerupsWeightsSumTotal.text=_pwrSpawnMod().sum.ToString();
+        List<LootTableEntryPowerup> sortedPowerupsList=_pwrSpawnMod().powerupList.OrderBy(x=>x.lootItem.name).ToList();
+        foreach(LootTableEntryPowerup e in sortedPowerupsList){
+            GameObject go=Instantiate(prefab,powerupsListTransform);
+            go.name=e.lootItem.name;
+            go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=e.name;
+            Sprite _spr=GameAssets.instance.Get(e.lootItem.assetName).GetComponent<SpriteRenderer>().sprite;
+            if(_spr!=null)go.transform.GetChild(0).GetComponent<Image>().sprite=_spr;
+            var dropChanceInput=go.transform.GetChild(3).GetComponent<TMP_InputField>();
+                dropChanceInput.text=e.dropChance.ToString();
+                dropChanceInput.onEndEdit.AddListener((string s)=>SetPwrupWeight(e.lootItem.name,s));
+            var lvlReqInput=go.transform.GetChild(6).GetComponent<TMP_InputField>();
+                lvlReqInput.text=e.levelReq.ToString();
+                lvlReqInput.onEndEdit.AddListener((string s)=>SetPwrupLvlReq(e.lootItem.name,s));
         }
         Destroy(prefab);
     }
@@ -375,6 +566,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             }
             for(var i=0;i<GameRules.instance.powerupsCapacity;i++){
                 if(!powerupInventory.transform.GetChild(0).GetChild(i).gameObject.activeSelf)powerupInventory.transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+            }
+
+            if(UIInputSystem.instance!=null){
+                if(!Array.Exists(powerupInventory.GetComponentsInChildren<Transform>(),x=>x.gameObject==UIInputSystem.instance.currentSelected
+                    &&x.GetComponent<Button>()==UIInputSystem.instance.btn))startingPowerupChoices.SetActive(false);
             }
         }else{Debug.LogError("PowerupInventory not assigned!");}
     }

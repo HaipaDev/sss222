@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 [CreateAssetMenu(menuName="Wave Config")]
 public class WaveConfig:ScriptableObject{
     [HeaderAttribute("Properties")]
-    [SerializeField] public string waveName="";
+    [SerializeField] public string name="";
     [SerializeField] public Sprite thumbnail;
     //[SerializeField] public float spawnRate=10f;
     [SerializeField] List<GameObject> enemies;

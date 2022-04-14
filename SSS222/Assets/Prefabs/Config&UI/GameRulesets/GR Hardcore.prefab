@@ -279,6 +279,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: wavesWeightsSumTotal
+      value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: laserSpeedChangePerLv
       value: 0
       objectReference: {fileID: 0}
@@ -447,6 +452,16 @@ PrefabInstance:
         type: 3}
       propertyPath: glareDevilSettings.timerBlindMax
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: waveSpawnReqs.scoreMaxSetRange.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: waveSpawnReqs.scoreMaxSetRange.y
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

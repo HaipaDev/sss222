@@ -6,10 +6,10 @@ using UnityEngine.EventSystems;
 
 public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHandler, IPointerExitHandler{     public static UIInputSystem instance;
     [SerializeField]EventSystem es;
-    [SerializeField]Button btn;
-    [SerializeField]Button btnLast;
     [SerializeField]public GameObject currentSelected;
     [SerializeField]GameObject lastSelected;
+    [SerializeField]public Button btn;
+    [SerializeField]Button btnLast;
     [SerializeField]public bool inputSelecting=true;
     //[SerializeField]Vector2 mousePosCanv;
     [SerializeField]Vector2 mousePosPrev;

@@ -4,21 +4,21 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 public class PowerupsSpawner : MonoBehaviour{
-    [SerializeField] public PowerupsSpawnerConfig powerupsSpawner;
+    [SerializeField] public spawnReqsType spawnReqsType;
+    [SerializeReference] public spawnReqs spawnReqs;
     [SerializeField] public Vector2 powerupSpawnPosRange=new Vector2(-3f,3f);
     LootTablePowerups lootTable;
     IEnumerator Start(){
         yield return new WaitForSeconds(0.05f);
         lootTable=GetComponent<LootTablePowerups>();
     }
-    void CheckSpawnReqs(){if(powerupsSpawner!=null){
-        if(!powerupsSpawner.name.Contains("(Clone)")){gameObject.name=powerupsSpawner.name;this.powerupsSpawner=Instantiate(powerupsSpawner);}
-        else if(powerupsSpawner.name.Contains("(Clone)")){
-            spawnReqs x=powerupsSpawner.spawnReqs;
-            spawnReqsType xt=powerupsSpawner.spawnReqsType;
-            spawnReqsMono.instance.CheckSpawns(x,xt,this,"SpawnPowerup");
-        }
-    }}
+    void CheckSpawnReqs(){
+        //if(spawnReqs!=GameRules.instance.waveSpawnReqs)spawnReqs=GameRules.instance.spawnReqs;
+        //if(spawnReqsType!=GameRules.instance.waveSpawnReqsType)spawnReqsType=GameRules.instance.waveSpawnReqsType;
+        spawnReqs x=spawnReqs;
+        spawnReqsType xt=spawnReqsType;
+        if(x!=null)spawnReqsMono.instance.CheckSpawns(x,xt,this,"SpawnPowerup");
+    }
     void Update(){
         if(!GameSession.GlobalTimeIsPaused)CheckSpawnReqs();
     }

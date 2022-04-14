@@ -19,8 +19,10 @@ public class DisplayPercentageFrom2Txt : MonoBehaviour{
         if(go1.GetComponent<TMP_InputField>()!=null){val1=float.Parse(go1.GetComponent<TMP_InputField>().text);}
         if(go2.GetComponent<TextMeshProUGUI>()!=null){val2=float.Parse(go2.GetComponent<TextMeshProUGUI>().text);}
         if(go2.GetComponent<TMP_InputField>()!=null){val2=float.Parse(go2.GetComponent<TMP_InputField>().text);}
-        percent=(float)System.Math.Round((val1/val2*100),2);
-        if(!percentSymbol){GetComponent<TextMeshProUGUI>().text=percent.ToString();}
-        else{GetComponent<TextMeshProUGUI>().text=percent.ToString()+"%";}
+        if(val2!=0){
+            percent=(float)System.Math.Round((val1/val2*100),2);
+            if(!percentSymbol){GetComponent<TextMeshProUGUI>().text=percent.ToString();}
+            else{GetComponent<TextMeshProUGUI>().text=percent.ToString()+"%";}
+        }else{GetComponent<TextMeshProUGUI>().text="?";}
     }
 }

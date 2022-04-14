@@ -136,7 +136,6 @@ public class ValueDisplay : MonoBehaviour{
 
             else if(value=="waveWeightsTotalSumGR") _txt=GameRules.instance.wavesWeightsSumTotal.ToString();
 
-
             else if(value=="healthStartingPlayerGR") _txt=gr.healthPlayer.ToString();
             else if(value=="healthMaxPlayerGR") _txt=gr.healthMaxPlayer.ToString();
             else if(value=="defensePlayerGR") _txt=gr.defensePlayer.ToString();
@@ -155,13 +154,27 @@ public class ValueDisplay : MonoBehaviour{
                 else if(value=="bgValueSB") _txt=sb.bgValue.ToString();
 
                 EnemyClass _en=null;
-                if(value.Contains("EnemySB")){if(!String.IsNullOrEmpty(sb.enemyToModify))_en=Array.Find(gr.enemies,x=>x.name==sb.enemyToModify);}
-                if(value=="name_EnemySB") _txt=_en.name.ToString();
-                else if(value=="health_EnemySB") _txt=_en.healthStart.ToString();
-                else if(value=="healthMax_EnemySB") _txt=_en.healthMax.ToString();
-                else if(value=="defense_EnemySB") _txt=_en.defense.ToString();
-                else if(value=="scoreStart_EnemySB") _txt=_en.scoreValue.x.ToString();
-                else if(value=="scoreEnd_EnemySB") _txt=_en.scoreValue.y.ToString();
+                if(value.Contains("_EnemySB")){if(_en==null){if(!String.IsNullOrEmpty(sb.enemyToModify))_en=Array.Find(gr.enemies,x=>x.name==sb.enemyToModify);}}
+                if(_en!=null){
+                    if(value=="name_EnemySB") _txt=_en.name;
+                    else if(value=="health_EnemySB") _txt=_en.healthStart.ToString();
+                    else if(value=="healthMax_EnemySB") _txt=_en.healthMax.ToString();
+                    else if(value=="defense_EnemySB") _txt=_en.defense.ToString();
+                    else if(value=="scoreStart_EnemySB") _txt=_en.scoreValue.x.ToString();
+                    else if(value=="scoreEnd_EnemySB") _txt=_en.scoreValue.y.ToString();
+                }
+
+                PowerupsSpawnerGR _pwSp=null;
+                if(value.Contains("_PwrupSpawnerSB")){if(_pwSp==null){if(!String.IsNullOrEmpty(sb.powerupSpawnerToModify))_pwSp=gr.powerupSpawners.Find(x=>x.name==sb.powerupSpawnerToModify);}}
+                if(_pwSp!=null){
+                    if(value=="name_PwrupSpawnerSB") _txt=_pwSp.name;
+                    if(value=="scoreRangeStart_PwrupSpawnerSB") if(_pwSp.spawnReqs is spawnScore){var sr=(spawnScore)_pwSp.spawnReqs;_txt=sr.scoreMaxSetRange.x.ToString();}else _txt="?";
+                    if(value=="scoreRangeEnd_PwrupSpawnerSB") if(_pwSp.spawnReqs is spawnScore){var sr=(spawnScore)_pwSp.spawnReqs;_txt=sr.scoreMaxSetRange.y.ToString();}else _txt="?";
+                    if(value=="timeRangeStart_PwrupSpawnerSB") if(_pwSp.spawnReqs is spawnReqs&&!_pwSp.spawnReqs.GetType().IsSubclassOf(typeof(spawnReqs))){var sr=_pwSp.spawnReqs;_txt=sr.time.x.ToString();}else _txt="?";
+                    if(value=="timeRangeEnd_PwrupSpawnerSB") if(_pwSp.spawnReqs is spawnReqs&&!_pwSp.spawnReqs.GetType().IsSubclassOf(typeof(spawnReqs))){var sr=_pwSp.spawnReqs;_txt=sr.time.y.ToString();}else _txt="?";
+                    if(value=="killsNeeded_PwrupSpawnerSB") if(_pwSp.spawnReqs is spawnKills){var sr=(spawnKills)_pwSp.spawnReqs;_txt=sr.killsNeeded.ToString();}else _txt="?";
+                    else if(value=="weightsTotalSum_PwrupSpawnerSB") _txt=_pwSp.sum.ToString();
+                }
             }
         }
     #endregion

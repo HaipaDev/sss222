@@ -23,10 +23,10 @@ public class Waves : MonoBehaviour{
     WaveDisplay waveDisplay;
     LootTableWaves lootTable;
 
-    void Start(){
-        //yield return new WaitForSeconds(0.05f);
+    IEnumerator Start(){
         waveDisplay=FindObjectOfType<WaveDisplay>();
         lootTable=GetComponent<LootTableWaves>();
+        yield return new WaitForSeconds(0.05f);
         if(startingWaveRandom){currentWave=GetRandomWave();startingWave=waveIndex;}
     }
     /*public IEnumerator CallRandomizeWave(){
@@ -75,7 +75,7 @@ public class Waves : MonoBehaviour{
             else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){StartCoroutine(SpawnAllEnemiesInWave(currentWave));timeSpawns=currentWave.timeSpawnWave;}
             
 
-            //Check if no Enemies for 3s, force a wave spawn
+            //Check if no Enemies for some time, force a wave spawn
             if(FindObjectsOfType<Enemy>().Length==0){
                 if(checkSpawnsTimer==-4)checkSpawnsTimer=checkSpawns;
                 if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
@@ -190,7 +190,7 @@ public class Waves : MonoBehaviour{
         default: yield return new WaitForSeconds(waveConfig.GetTimeSpawn());break;
     }}
     #endregion
-    public string GetWaveName(){return currentWave.waveName;}
+    public string GetWaveName(){return currentWave.name;}
 
     [ContextMenu("ValidateWaveSpawnReqs")]void ValidateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
 }

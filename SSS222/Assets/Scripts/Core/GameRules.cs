@@ -127,6 +127,10 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public List<DisrupterConfig> disrupterList;
 [Header("Powerups")]
     public List<PowerupsSpawnerGR> powerupSpawners;
+    #region//VaildatePowerupsSpawn
+    [Button("VaildatePowerupsSpawnReqs")][ContextMenu("VaildatePowerupsSpawnReqs")]void VaildatePowerupsSpawnReqs(){foreach(PowerupsSpawnerGR p in powerupSpawners){
+        spawnReqsMono.Validate(ref p.spawnReqs, ref p.spawnReqsType);}}
+    #endregion
 [Title("Enemies", titleAlignment: TitleAlignments.Centered)]
     public bool enemyDefenseHit=true;
     public bool enemyDefensePhase=true;
@@ -233,13 +237,15 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         yield return new WaitForSecondsRealtime(0.02f);    
         if(SceneManager.GetActiveScene().name=="Game")EnterGameScene();
 
-        SumUpWavesWeights();
+        SumUpWavesWeightsTotal();
+        SumUpAllPowerupSpawnersWeightsTotal();
     }
     public void EnterGameScene(){StartCoroutine(EnterGameSceneI());}
     IEnumerator EnterGameSceneI(){
         yield return new WaitForSecondsRealtime(0.02f);
         StartCoroutine(CreateSpawners());
-        SumUpWavesWeights();
+        SumUpWavesWeightsTotal();
+        SumUpAllPowerupSpawnersWeightsTotal();
     }
     IEnumerator CreateSpawners(){
         //Set/Create WaveSpawner
@@ -274,9 +280,10 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
                 foreach(PowerupsSpawner ps1 in FindObjectsOfType<PowerupsSpawner>()){ps.Add(ps1);}
             }for(int i=FindObjectsOfType<PowerupsSpawner>().Length;i<powerupSpawners.Count;i++)ps.Add(Instantiate(GameAssets.instance.powerupSpawnerPrefab).GetComponent<PowerupsSpawner>());
             yield return new WaitForSecondsRealtime(0.005f);
-            for(int i=0;i<powerupSpawners.Count;i++){if(powerupSpawners[i].powerupList.Count>0){
+            for(int i=0;i<powerupSpawners.Count;i++){   if(powerupSpawners[i].powerupList.Count>0){
                 ps[i].GetComponent<LootTablePowerups>().itemList=powerupSpawners[i].powerupList;
-                ps[i].powerupsSpawner=powerupSpawners[i].psConfig;
+                ps[i].spawnReqsType=powerupSpawners[i].spawnReqsType;
+                ps[i].spawnReqs=powerupSpawners[i].spawnReqs;
                 ps[i].powerupSpawnPosRange=powerupSpawners[i].powerupSpawnPosRange;
             }}
         }
@@ -309,7 +316,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             }
         }*/
         CapToMaxValues();
-        SumUpWavesWeights();
+        SumUpWavesWeightsTotal();
+        SumUpAllPowerupSpawnersWeightsTotal();
     }
     void CapToMaxValues(){
         healthPlayer=Mathf.Clamp(healthPlayer,0,healthMaxPlayer);
@@ -325,9 +333,12 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         if(!shopOn)shopCargoOn=false;
         if(!xpOn)levelingOn=false;
     }
-    void SumUpWavesWeights(){
+    public void SumUpWavesWeightsTotal(){
         wavesWeightsSumTotal=0;
         foreach(LootTableEntryWaves w in waveList){wavesWeightsSumTotal+=w.dropChance;}
+    }
+    public void SumUpAllPowerupSpawnersWeightsTotal(){
+        foreach(PowerupsSpawnerGR ps in powerupSpawners){ps.SumUpPowerupsWeightsTotal();}
     }
     #region//Custom Events
     public void MultiplyhealthMax(float amnt){p.healthMax*=amnt;}
@@ -342,13 +353,22 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #endregion
 #region//Return functions
     public PowerupItemSettings GetItemSettings(string name){PowerupItemSettings p=null;p=Array.Find(powerupItemSettings,x=>x.name==name);return p;}
+    public bool CheckWaveStarting(string name){bool b=false;if(waveList.Find(x=>x.lootItem.name==name)!=null){if(startingWave==waveList.FindIndex(x=>x.lootItem.name==name)){b=true;}}return b;}
 #endregion
 }
 #region//Custom classes
 [System.Serializable]
 public class PowerupsSpawnerGR{
+    public string name;
+    public string sprAssetName;
     public List<LootTableEntryPowerup> powerupList;
-    public PowerupsSpawnerConfig psConfig;
+    [ReadOnly]public float sum;
+    public void SumUpPowerupsWeightsTotal(){
+        sum=0;
+        foreach(LootTableEntryPowerup w in powerupList){sum+=w.dropChance;}
+    }
+    public spawnReqsType spawnReqsType;
+    [SerializeReference] public spawnReqs spawnReqs;
     public Vector2 powerupSpawnPosRange=new Vector2(-3f,3f);
 }
 

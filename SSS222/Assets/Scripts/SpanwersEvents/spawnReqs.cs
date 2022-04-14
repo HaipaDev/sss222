@@ -40,7 +40,7 @@ public class spawnReqsMono:MonoBehaviour{
     }
     public static spawnReqsMono instance;
     void Awake(){if(spawnReqsMono.instance!=null){Destroy(this);}else{instance=this;}}
-    public void CheckSpawns(spawnReqs x, spawnReqsType xt, MonoBehaviour mb, string cor, object corInfo=null){  if(!GameSession.GlobalTimeIsPaused){
+    public void CheckSpawns(spawnReqs x, spawnReqsType xt, MonoBehaviour mb, string cor, object corInfo=null){  if(!GameSession.GlobalTimeIsPaused){if(x!=null){
         if(!spawnReqsMono.instance.spawnReqsList.Contains(x)){spawnReqsMono.instance.spawnReqsList.Add(x);}
         if(x.timeEnabled){
             if(x.timer==-4&&!x.startTimeAfterSecond){RestartTimer(x);}
@@ -91,7 +91,7 @@ public class spawnReqsMono:MonoBehaviour{
             }
             IEnumerator RepSpawns(){for(xs.repI=1;xs.repI<=xs.repeat;xs.repI++){yield return new WaitForSeconds(xs.repeatInterval);mb.StartCoroutine(cor,corInfo);}yield break;}
         }
-    }}
+    }else{Debug.LogError("Youre trying to CheckSpawns for a null spawnReqs");}}}
     
     public void RestartTimer(spawnReqs x){if(x.timeEnabled){SetTimer(x,UnityEngine.Random.Range(x.time.x,x.time.y));}}
     public void SetTimer(spawnReqs x, float time){x.timer=time;}

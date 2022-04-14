@@ -479,6 +479,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: wavesWeightsSumTotal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: cometSettings.sizeMax
       value: 1.65
       objectReference: {fileID: 0}
@@ -961,6 +966,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: powerupSpawners.Array.data[0].name
+      value: Flip
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: pwrupStatusList.Array.data[0].name
       value: Flip
       objectReference: {fileID: 0}
@@ -1312,6 +1322,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: powerupSpawners.Array.data[0].sprAssetName
+      value: flipPwrup
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: cometSettings.drops.Array.data[0].ammount.x
       value: 1
       objectReference: {fileID: 0}
@@ -1344,6 +1359,16 @@ PrefabInstance:
         type: 3}
       propertyPath: cometSettings.scoreSizes.Array.data[1].score
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[0].spawnReqs.time.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[0].spawnReqs.time.y
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

@@ -45,6 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cfgName: Arcade Mode
   defaultGameSpeed: 1
+  scoreDisplay: 0
+  bgMaterial: {fileID: 0}
   crystalsOn: 1
   xpOn: 1
   coresOn: 1
@@ -80,6 +82,7 @@ MonoBehaviour:
     timer: -4
   powerupsCapacity: 5
   powerupDefault: 
+  displayCurrentPowerup: 1
   weaponsLimited: 0
   losePwrupOutOfEn: 0
   losePwrupOutOfAmmo: 1
@@ -167,8 +170,58 @@ MonoBehaviour:
     enCost: 0
     cooldown: 90
   timeOverhaul: 10
+  waveSpawnReqsType: 1
+  waveSpawnReqs:
+    id: 0
+  waveList:
+  - name: CometsFlyby
+    lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
+    dropChance: 8.5
+    levelReq: 0
+  - name: CometStorm
+    lootItem: {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf, type: 2}
+    dropChance: 7
+    levelReq: 0
+  - name: BatsFlyby
+    lootItem: {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc, type: 2}
+    dropChance: 9
+    levelReq: 0
+  - name: BatV
+    lootItem: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
+    dropChance: 8
+    levelReq: 0
+  - name: EnemyShip
+    lootItem: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
+    dropChance: 6.5
+    levelReq: 0
+  - name: EnemyCombatant
+    lootItem: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d, type: 2}
+    dropChance: 1.5
+    levelReq: 3
+  - name: BatsCluster
+    lootItem: {fileID: 11400000, guid: 2145a8982afb67c4bbfa60857b9f71f9, type: 2}
+    dropChance: 2
+    levelReq: 1
+  - name: StingerFlingers
+    lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
+    dropChance: 2
+    levelReq: 2
+  wavesWeightsSumTotal: 44.5
+  startingWave: 0
+  startingWaveRandom: 0
+  uniqueWaves: 1
+  disrupterList:
+  - {fileID: 11400000, guid: d8cbfd252c72e9847ada870cb8473d68, type: 2}
+  - {fileID: 11400000, guid: 133689dcd684fa44daef7e473024c5e0, type: 2}
+  - {fileID: 11400000, guid: 6db7c70ec3192fd46977ac51bb337b0c, type: 2}
+  - {fileID: 11400000, guid: 9dfa2d8ad71e65644915a3c3e7ff9649, type: 2}
+  - {fileID: 11400000, guid: 794b89b153a6d9c4493292ea975209f5, type: 2}
+  - {fileID: 11400000, guid: 6c71f72b3df0c8241a69f571269f4e96, type: 2}
+  - {fileID: 11400000, guid: 469591656e933a1479b0a101085ab211, type: 2}
   powerupSpawners:
-  - powerupList:
+  - name: Status
+    sprAssetName: accelPwrup
+    powerupList:
     - name: 
       lootItem: {fileID: 11400000, guid: d1939f2a5efe96042842032862cdf62e, type: 2}
       rarity: 0
@@ -214,9 +267,14 @@ MonoBehaviour:
       rarity: 0
       dropChance: 3
       levelReq: 2
-    psConfig: {fileID: 11400000, guid: 2af57d09ed839a1419493c09a774c0c5, type: 2}
+    sum: 0
+    spawnReqsType: 0
+    spawnReqs:
+      id: 1
     powerupSpawnPosRange: {x: -3, y: 3}
-  - powerupList:
+  - name: Weapons
+    sprAssetName: laser3Pwrup
+    powerupList:
     - name: 
       lootItem: {fileID: 11400000, guid: 1368b36bec2ccca4e97ab92bed99ea99, type: 2}
       rarity: 0
@@ -262,55 +320,11 @@ MonoBehaviour:
       rarity: 2
       dropChance: 0
       levelReq: 2
-    psConfig: {fileID: 11400000, guid: 7dd641c366f11184b9c4c84f9c30d17a, type: 2}
+    sum: 0
+    spawnReqsType: 5
+    spawnReqs:
+      id: 2
     powerupSpawnPosRange: {x: -3, y: 3}
-  waveSpawnReqsType: 1
-  waveSpawnReqs:
-    id: 0
-  waveList:
-  - name: CometsFlyby
-    lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
-    dropChance: 8.5
-    levelReq: 0
-  - name: CometStorm
-    lootItem: {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf, type: 2}
-    dropChance: 7
-    levelReq: 0
-  - name: BatsFlyby
-    lootItem: {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc, type: 2}
-    dropChance: 9
-    levelReq: 0
-  - name: BatV
-    lootItem: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
-    dropChance: 8
-    levelReq: 0
-  - name: EnemyShip
-    lootItem: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
-    dropChance: 6.5
-    levelReq: 0
-  - name: EnemyCombatant
-    lootItem: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d, type: 2}
-    dropChance: 1.5
-    levelReq: 3
-  - name: BatsCluster
-    lootItem: {fileID: 11400000, guid: 2145a8982afb67c4bbfa60857b9f71f9, type: 2}
-    dropChance: 2
-    levelReq: 1
-  - name: StingerFlingers
-    lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
-    dropChance: 2
-    levelReq: 2
-  startingWave: 0
-  startingWaveRandom: 0
-  uniqueWaves: 1
-  disrupterList:
-  - {fileID: 11400000, guid: d8cbfd252c72e9847ada870cb8473d68, type: 2}
-  - {fileID: 11400000, guid: 133689dcd684fa44daef7e473024c5e0, type: 2}
-  - {fileID: 11400000, guid: 6db7c70ec3192fd46977ac51bb337b0c, type: 2}
-  - {fileID: 11400000, guid: 9dfa2d8ad71e65644915a3c3e7ff9649, type: 2}
-  - {fileID: 11400000, guid: 794b89b153a6d9c4493292ea975209f5, type: 2}
-  - {fileID: 11400000, guid: 6c71f72b3df0c8241a69f571269f4e96, type: 2}
-  - {fileID: 11400000, guid: 469591656e933a1479b0a101085ab211, type: 2}
   enemyDefenseHit: 1
   enemyDefensePhase: 1
   enemies:
@@ -318,6 +332,7 @@ MonoBehaviour:
     type: 0
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
+    sprMat: {fileID: 0}
     healthStart: 40
     healthMax: 40
     defense: 0
@@ -350,6 +365,7 @@ MonoBehaviour:
     type: 2
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
+    sprMat: {fileID: 0}
     healthStart: 15
     healthMax: 15
     defense: 0
@@ -381,6 +397,7 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
+    sprMat: {fileID: 0}
     healthStart: 60
     healthMax: 60
     defense: 4
@@ -412,6 +429,7 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
+    sprMat: {fileID: 0}
     healthStart: 60
     healthMax: 60
     defense: 4
@@ -447,6 +465,7 @@ MonoBehaviour:
     type: 0
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
+    sprMat: {fileID: 0}
     healthStart: 33
     healthMax: 33
     defense: 0
@@ -478,6 +497,7 @@ MonoBehaviour:
     type: 0
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
+    sprMat: {fileID: 0}
     healthStart: 16
     healthMax: 16
     defense: 0
@@ -510,6 +530,7 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
+    sprMat: {fileID: 0}
     healthStart: 77
     healthMax: 77
     defense: 3
@@ -544,6 +565,7 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
+    sprMat: {fileID: 0}
     healthStart: 26
     healthMax: 26
     defense: 2
@@ -575,6 +597,7 @@ MonoBehaviour:
     type: 0
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
+    sprMat: {fileID: 0}
     healthStart: 17
     healthMax: 17
     defense: 1
@@ -606,6 +629,7 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
+    sprMat: {fileID: 0}
     healthStart: 66
     healthMax: 66
     defense: 5
@@ -1323,7 +1347,7 @@ MonoBehaviour:
     colliEvents: []
   shopSpawnReqsType: 1
   shopSpawnReqs:
-    id: 1
+    id: 3
   shopList:
   - name: 
     lootItem: {fileID: 11400000, guid: b082a4e514cd17e45aadeb523cbde903, type: 2}
@@ -1446,11 +1470,35 @@ MonoBehaviour:
         repI: 1
         bothNeeded: 0
         startTimeAfterSecond: 0
-        scoreMaxSetRange: {x: 15, y: 30}
+        scoreMaxSetRange: {x: 18, y: 36}
         scoreNeeded: 1
         score: 0
         specialId: -1
     00000001:
+      type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 1
+        time: {x: 9, y: 16}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        repI: 1
+        bothNeeded: 1
+        startTimeAfterSecond: 0
+    00000002:
+      type: {class: spawnKills, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 0
+        time: {x: 10, y: 20}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        repI: 1
+        bothNeeded: 1
+        startTimeAfterSecond: 0
+        killsNeeded: 20
+        kills: 0
+    00000003:
       type: {class: spawnScore, ns: , asm: Assembly-CSharp}
       data:
         timeEnabled: 0
