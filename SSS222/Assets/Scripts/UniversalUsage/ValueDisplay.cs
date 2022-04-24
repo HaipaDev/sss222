@@ -146,6 +146,18 @@ public class ValueDisplay : MonoBehaviour{
 
             else if(value=="powerupsCapacity") _txt=gr.powerupsCapacity.ToString();
 
+            else if(value=="energyGain_EnergyBallGR") _txt=gr.energyBall_energyGain.ToString();
+            else if(value=="energyGain_BatteryGR") _txt=gr.battery_energyGain.ToString();
+            else if(value=="benergyGain_BlackBallGR") _txt=gr.benergyBallGain.ToString();
+            else if(value=="benergyGain_BlackVialGR") _txt=gr.benergyVialGain.ToString();
+            else if(value=="crystalGainGR") _txt=gr.crystalGain.ToString();
+            else if(value=="crystalBigGainGR") _txt=gr.crystalBigGain.ToString();
+            else if(value=="hpGain_MedkitGR") _txt=gr.medkit_hpGain.ToString();
+            else if(value=="energyGain_MedkitGR") _txt=gr.medkit_energyGain.ToString();
+            else if(value=="absorpGain_LunarGelGR") _txt=gr.lunarGel_hpGain.ToString();
+            else if(value=="energyGain_PowerupGR") _txt=gr.powerups_energyGain.ToString();
+            else if(value=="energyNeeded_PowerupGR") _txt=gr.powerups_energyNeeded.ToString();
+
             //Sandbox Speciffic
             if(SandboxCanvas.instance!=null){   var sb=SandboxCanvas.instance;
                 if(value=="presetNameSB") _txt="PRESET FROM: "+sb.presetGameruleset.cfgName;

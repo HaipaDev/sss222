@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a14c5dde1fe9e4aaf080d5453ad783, type: 3}
   m_Name: HLaser
   m_EditorClassIdentifier: 
-  waveName: Horizontal Laser
-  thumbnail: {fileID: 6109632109803371566, guid: be46af614d2b85f42b1e758660fb37ee,
-    type: 3}
+  name: Horizontal Laser
+  thumbnail: {fileID: 21300000, guid: 3416dcfa5a2a18a4b8a9396a45ab6dec, type: 3}
   enemies:
   - {fileID: 2323431598858436006, guid: 40f1f2c220a30d04b9b38a617f834928, type: 3}
   timeSpawn: 0

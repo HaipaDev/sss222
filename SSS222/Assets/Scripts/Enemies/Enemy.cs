@@ -189,8 +189,8 @@ public class Enemy : MonoBehaviour{
                     if(amnt==1)GameAssets.instance.Make(st,transform.position);
                     else{GameAssets.instance.MakeSpread(st,transform.position,amnt);}
                 }else{//Drop Lunar Crystals
-                    if(amnt/GameRules.instance.crystalBGet>=1){for(var c=0;c<(int)(amnt/GameRules.instance.crystalBGet);c++){GameAssets.instance.MakeSpread("CoinB",transform.position,1);}}
-                    GameAssets.instance.MakeSpread("Coin",transform.position,(amnt%GameRules.instance.crystalBGet)/GameRules.instance.crystalGet);//CrystalB=6, CrystalS=2
+                    if(amnt/GameRules.instance.crystalBigGain>=1){for(var c=0;c<(int)(amnt/GameRules.instance.crystalBigGain);c++){GameAssets.instance.MakeSpread("CoinB",transform.position,1);}}
+                    GameAssets.instance.MakeSpread("Coin",transform.position,(amnt%GameRules.instance.crystalBigGain)/GameRules.instance.crystalGain);//CrystalB=6, CrystalS=2
                 }
             }}}
         }

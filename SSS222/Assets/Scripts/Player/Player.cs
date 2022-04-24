@@ -10,8 +10,7 @@ using UnityEngine.EventSystems;
 //using UnityEditor;
 using Sirenix.OdinInspector;
 
-public class Player : MonoBehaviour{
-    public static Player instance;
+public class Player : MonoBehaviour{    public static Player instance;
 #region Vars
 #region//Basic Player Values
     [Header("Player")]
@@ -175,23 +174,9 @@ public class Player : MonoBehaviour{
     [SerializeField] public float decayDmg=0.5f;
 #endregion
 
-#region//Energy/Weapon Durations
-    [Header("Energy Costs")]
+#region//Weapon Properties / Energy Costs etc
+    [Header("Weapon Properties / Energy Costs etc")]
     [SerializeField] public List<WeaponProperties> weaponProperties;
-    [SerializeField] public float shadowCost=5f;
-    [Header("Energy Gains")]//Collectibles
-    [SerializeField] public float energyBallGet=6f;
-    [SerializeField] public float energyBatteryGet=11f;
-    [SerializeField] public float medkitEnergyGet=40f;
-    [SerializeField] public float medkitHpAmnt=25f;
-    [SerializeField] public float microMedkitHpAmnt=10f;
-    [SerializeField] public float pwrupEnergyGet=36f;
-    [SerializeField] public float enForPwrupRefill=25f;
-    [SerializeField] public float enPwrupDuplicate=42f;
-    [SerializeField] public int crystalMend_refillCost=2;
-    [SerializeField] public float energyDiss_refillCost=3.3f;
-    [SerializeField] public int crystalGet=2;
-    [SerializeField] public int crystalBGet=6;
 #endregion
 #region //Other
     [Header("Others")]
@@ -327,7 +312,6 @@ public class Player : MonoBehaviour{
         shadowTime=i.shadowTime;
         shadowLength=i.shadowLength;
         shadowtracesSpeed=i.shadowtracesSpeed;
-        shadowCost=i.shadowCost;
         dashSpeed=i.dashSpeed;
         startDashTime=i.startDashTime;
         inverterTime=i.inverterTime;
@@ -357,18 +341,6 @@ public class Player : MonoBehaviour{
             var wc=Instantiate(wp);
             weaponProperties[w]=wc;
         }
-        ///Energy gains
-        energyBallGet=i.energyBallGet;
-        energyBatteryGet=i.energyBatteryGet;
-        medkitEnergyGet=i.medkitEnergyGet;
-        medkitHpAmnt=i.medkitHpAmnt;
-        microMedkitHpAmnt=i.microMedkitHpAmnt;
-        pwrupEnergyGet=i.pwrupEnergyGet;
-        enForPwrupRefill=i.enForPwrupRefill;
-        enPwrupDuplicate=i.enPwrupDuplicate;
-
-        crystalGet=i.crystalGet;
-        crystalBGet=i.crystalBGet;
     }
 
         yield return new WaitForSecondsRealtime(0.06f);
@@ -695,7 +667,7 @@ public class Player : MonoBehaviour{
             }else if(inputType==InputType.touch){
                 dashed=true;
             }
-            AddSubEnergy(shadowCost,false);
+            AddSubEnergy(GameRules.instance.shadowCost,false);
             dashing=true;
             shadowed=true;
             AudioManager.instance.Play("Shadowdash");
@@ -906,12 +878,11 @@ public class Player : MonoBehaviour{
     }
 
     public void MedkitUse(){
-        if(health>=healthMax){GameSession.instance.AddToScoreNoEV(Mathf.RoundToInt(medkitHpAmnt));}
-        else if(health!=healthMax&&health>(healthMax-medkitHpAmnt)){
-            int val=Mathf.RoundToInt(medkitHpAmnt-(healthMax-health));
+        if(health<healthMax&&health>(healthMax-GameRules.instance.medkit_hpGain)){
+            int val=Mathf.RoundToInt(GameRules.instance.medkit_hpGain-(healthMax-health));
             if(val>0)GameSession.instance.AddToScoreNoEV(val);}
-        HPAdd(medkitHpAmnt);
-        AddSubEnergy(medkitEnergyGet,true);
+        else{HPAdd(GameRules.instance.medkit_hpGain);}
+        AddSubEnergy(GameRules.instance.medkit_energyGain,true);
     }
 
     
@@ -1109,8 +1080,8 @@ public class Player : MonoBehaviour{
         if(!GameSession.GlobalTimeIsPaused){
             hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax);
             enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax);
-            if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt<=0){if(GameSession.instance.coins>=crystalMend_refillCost){HPAbsorp(crystalMendAbsorp);GameSession.instance.coins-=crystalMend_refillCost;}}
-            if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt<=0){if(GameSession.instance.xp>=energyDiss_refillCost){EnAbsorp(energyDissAbsorp);GameSession.instance.xp-=energyDiss_refillCost;}}
+            if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt<=0){if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){HPAbsorp(crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}}
+            if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt<=0){if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){EnAbsorp(energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}}
             if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax)Damage(hpRegenAmnt,dmgType.heal);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}
             if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax)AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}
         }

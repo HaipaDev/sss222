@@ -58,8 +58,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.9716981, g: 0.55460125, b: 0.80235535, a: 1}
+  m_Material: {fileID: 2100000, guid: 8c06f25692fbe1849bc838664f0deb28, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -657,7 +657,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: coins
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &815433293862363652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1166,7 +1167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: cores
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!114 &815433293963515870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1736,7 +1738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shaderTypes: 2
+  shaderTypes: 0
   normalStrenght: 5
   normalSmoothing: 1
   computingNormal: 0
@@ -1798,7 +1800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 7ef34f26b8117334c8ecd9c27a45e2c6, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -2661,7 +2663,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3162714873017676587
 RectTransform:
   m_ObjectHideFlags: 0

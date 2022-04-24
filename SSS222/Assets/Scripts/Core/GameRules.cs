@@ -96,19 +96,25 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public float decayTickrate = 0.5f;
     public float decayDmg = 0.5f;
 [Header("Collectibles")]//Collectibles
-    public float energyBallGet=6f;
-    public float energyBatteryGet=11f;
-    public float medkitEnergyGet=26f;
-    public float medkitHpAmnt=25f;
-    public float microMedkitHpAmnt=10f;
-    public float pwrupEnergyGet=36f;
-    public float enForPwrupRefill=25f;
-    public float enPwrupDuplicate=42f;
-    public int crystalGet=2;
-    public int crystalBGet=6;
+    public float energyBall_energyGain=6f;
+    public float battery_energyGain=11f;
+    public float benergyBallGain=1;
+    public float benergyVialGain=5;
+    public int crystalGain=2;
+    public int crystalBigGain=6;
+    public float medkit_energyGain=26f;
+    public float medkit_hpGain=25f;
+    public float lunarGel_hpGain=10f;
+    public bool lunarGel_absorp=true;
+    public float powerups_energyGain=36f;
+    public float powerups_energyNeeded=25f;
+    public float powerups_energyDupl=42f;
+    public int coresCollectGain=1;
 [Header("Skills")]
     public Skill[] skillsPlayer;
     public float timeOverhaul=10;
+    public int crystalMend_refillCost=2;
+    public float energyDiss_refillCost=3.3f;
 #endregion
 #region//Spawns - Waves, Disrupters, Powerups
 [Title("Spawns - Waves, Disrupters, Powerups", titleAlignment: TitleAlignments.Centered)]

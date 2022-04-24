@@ -14,7 +14,8 @@ public class PlayerCollider : MonoBehaviour{
     bool lastHitPhasing;
 
     Player player;
-    void Start(){player=Player.instance;}
+    GameRules gr;
+    void Start(){player=Player.instance;gr=GameRules.instance;}
     void OnTriggerEnter2D(Collider2D other){    lastHp=player.health;
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
             float dmg=0;int armorPenetr=0;
@@ -49,19 +50,19 @@ public class PlayerCollider : MonoBehaviour{
             #endregion
             #region//Powerups
             else if(other.gameObject.CompareTag("Powerups")){
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){player.AddSubEnergy(player.energyBallGet,true);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){player.AddSubCoins(player.crystalGet,true);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("CoinB").name)){player.AddSubCoins(player.crystalBGet,true);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(1);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestBall").name)){player.AddSubXP(1);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestVial").name)){player.AddSubXP(5);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("Battery").name)){player.AddSubEnergy(player.energyBatteryGet,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){player.AddSubEnergy(gr.energyBall_energyGain,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("Battery").name)){player.AddSubEnergy(gr.battery_energyGain,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){player.AddSubCoins(gr.crystalGain,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("CoinB").name)){player.AddSubCoins(gr.crystalBigGain,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(gr.coresCollectGain);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestBall").name)){player.AddSubXP(gr.benergyBallGain);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestVial").name)){player.AddSubXP(gr.benergyVialGain);}
                 if(other.GetComponent<Tag_Collectible>().isPowerup){//if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
                     spawnReqsMono.AddPwrups(other.gameObject.name);
                     StatsAchievsManager.instance.AddPowerups();
-                    GameSession.instance.AddXP(GameRules.instance.xp_powerup);//XP For powerups
+                    GameSession.instance.AddXP(gr.xp_powerup);//XP For powerups
                 }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("LunarGel").name)){HPAbsorp(player.microMedkitHpAmnt);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("LunarGel").name)){if(gr.lunarGel_absorp){HPAbsorp(GameRules.instance.lunarGel_hpGain);}else{HPAdd(GameRules.instance.lunarGel_hpGain);}}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("HealBeam").name)){
                     HealBeam hb=other.GetComponent<HealBeam>();
                     if(hb.absorp)HPAbsorp(hb.value);
@@ -70,16 +71,16 @@ public class PlayerCollider : MonoBehaviour{
 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("medkitPwrup").name)){
                     if(!SaveSerial.instance.settingsData.autoUseMedkitsIfLow){player.AddItem("medkit");}
-                    else if(SaveSerial.instance.settingsData.autoUseMedkitsIfLow&&player.health<(player.healthMax-player.medkitHpAmnt))player.MedkitUse();
+                    else if(SaveSerial.instance.settingsData.autoUseMedkitsIfLow&&player.health<=(player.healthMax-GameRules.instance.medkit_hpGain))player.MedkitUse();
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("medkitCPwrup").name)){
                     if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(25);}
-                    else{HPAdd(player.medkitHpAmnt);}
+                    else{HPAdd(GameRules.instance.medkit_hpGain);}
                 }
                 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("flipPwrup").name)) {
-                    if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
-                    if(player.flip==true){EnergyAddDupl();}
+                    PwrupEnergyAdd();
+                    if(player.flip==true){PwrupEnergyAddDupl();}
                     player.SetStatus("flip"); 
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("inverterPwrup").name)){
@@ -91,13 +92,13 @@ public class PlayerCollider : MonoBehaviour{
                     player.SetStatus("inverter"); player.inverterTimer=0;
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("magnetPwrup").name)){
-                    if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
-                    if(player.magnet==true){EnergyAddDupl();}
+                    PwrupEnergyAdd();
+                    if(player.magnet==true){PwrupEnergyAddDupl();}
                     player.SetStatus("magnet");
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("scalerPwrup").name)){
-                    if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
-                    if(player.scaler==true){EnergyAddDupl();}
+                    PwrupEnergyAdd();
+                    if(player.scaler==true){PwrupEnergyAddDupl();}
                     player.SetStatus("scaler");
                     player.shipScale=player.shipScaleDefault*player.scalerSizes[UnityEngine.Random.Range(0,player.scalerSizes.Length-1)];
                 }
@@ -111,24 +112,24 @@ public class PlayerCollider : MonoBehaviour{
                     if(other.gameObject.name.Contains(GameAssets.instance.Get("shadowtracesPwrup").name)){
                         if(!player.shadow){player.SetSpeedPrev();player.moveSpeedCurrent*=player.shadowtracesSpeed;}
                     }
-                    if(player.energy<=player.enForPwrupRefill){player.AddSubEnergy(player.pwrupEnergyGet,true);}
-                    if(player.shadow==true){EnergyAddDupl();}
+                    PwrupEnergyAdd();
+                    if(player.shadow==true){PwrupEnergyAddDupl();}
                     player.SetStatus("shadow");
                     player.shadowed=true;
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("assassinPwrup").name)){
-                    if(player.energy<=player.enForPwrupRefill){player.AddSubEnergy(player.pwrupEnergyGet,true);}
+                    PwrupEnergyAdd();
                     player.Speed(13,1.4f);
                     player.Power(13,1.2f);
                     player.Fragile(13,1.2f);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("tankPwrup").name)){
-                    if(player.energy<=player.enForPwrupRefill){player.AddSubEnergy(player.pwrupEnergyGet,true);}
+                    PwrupEnergyAdd();
                     player.Slow(13,1.4f);
                     player.Armor(13,1.2f);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("overwritePwrup").name)){
-                    if(player.energy<=player.enForPwrupRefill){player.AddSubEnergy(player.pwrupEnergyGet,true);}
+                    PwrupEnergyAdd();
                     player.Hack(13);
                     player.InfEnergy(13);
                     player.GetComponent<PlayerSkills>().ResetSkillCooldowns();
@@ -189,15 +190,15 @@ public class PlayerCollider : MonoBehaviour{
     }
     public void PowerupCollect(string name){
         player.SetPowerupStr(name);
-        if(player.energy<=player.enForPwrupRefill){EnergyAdd();}
+        PwrupEnergyAdd();
         var w=player.GetWeaponProperty(name);
         if(w!=null){
-            if(w.costType==costType.energy){if(player.ContainsPowerup(name)){EnergyAddDupl();}}
+            if(w.costType==costType.energy){if(player.ContainsPowerup(name)){PwrupEnergyAddDupl();}}
             else if(w.costType==costType.ammo){AmmoAdd(w);}
        }else{Debug.LogWarning("WeaponProperty by name "+name+" does not exist");}
     }
-    void EnergyAdd(){player.AddSubEnergy(player.pwrupEnergyGet,true);}
-    void EnergyAddDupl(){player.AddSubEnergy(player.enPwrupDuplicate,true);}
+    void PwrupEnergyAdd(){if(player.energy<=GameRules.instance.powerups_energyNeeded)player.AddSubEnergy(GameRules.instance.powerups_energyGain,true);}
+    void PwrupEnergyAddDupl(){player.AddSubEnergy(GameRules.instance.powerups_energyDupl,true);}
     void AmmoAdd(WeaponProperties w){costTypeAmmo wc=(costTypeAmmo)w.costTypeProperties;player.AddSubAmmo(wc.ammoSize,w.name,true);}
 
 

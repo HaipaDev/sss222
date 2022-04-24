@@ -91,6 +91,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
             foreach(Transform t in steeringToggle.transform.GetChild(0)){t.gameObject.SetActive(false);}
             steeringToggle.transform.GetChild(0).GetChild((int)SaveSerial.instance.settingsData.inputType).gameObject.SetActive(true);
         }
+        SetPanelActive(0);
     }
     void Update(){postProcessVolume=FindObjectOfType<PostProcessVolume>();if(SaveSerial.instance!=null){
         var s=SaveSerial.instance.settingsData;

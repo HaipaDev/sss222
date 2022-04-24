@@ -273,10 +273,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   es: {fileID: 1750130228}
-  btn: {fileID: 0}
-  btnLast: {fileID: 0}
   currentSelected: {fileID: 0}
   lastSelected: {fileID: 0}
+  btn: {fileID: 0}
+  btnLast: {fileID: 0}
   inputSelecting: 1
   mousePosPrev: {x: 0, y: 0}
 --- !u!1001 &1980758375
@@ -469,6 +469,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BlockingMask.m_Bits
       value: 1847
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420641697527899176, guid: 6338ca31a4d167b4eb7e37806c091982,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292143340
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6338ca31a4d167b4eb7e37806c091982, type: 3}

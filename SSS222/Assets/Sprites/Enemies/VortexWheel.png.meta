@@ -4,28 +4,28 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: 8582659201468183405
-    second: VortexWheel-16x_0
+    second: VortexWheel_0
   - first:
       213: -6883058283167342220
-    second: VortexWheel-16x_1
+    second: VortexWheel_1
   - first:
       213: -7717982829245805489
-    second: VortexWheel-16x_2
+    second: VortexWheel_2
   - first:
       213: -117905801817030094
-    second: VortexWheel-16x_3
+    second: VortexWheel_3
   - first:
       213: -5835353942689980171
-    second: VortexWheel-16x_4
+    second: VortexWheel_4
   - first:
       213: -4664237303355470495
-    second: VortexWheel-16x_5
+    second: VortexWheel_5
   - first:
       213: 8177744278797253353
-    second: VortexWheel-16x_6
+    second: VortexWheel_6
   - first:
       213: 2384622420488753761
-    second: VortexWheel-16x_7
+    second: VortexWheel_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -127,7 +127,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: VortexWheel-16x_0
+      name: VortexWheel_0
       rect:
         serializedVersion: 2
         x: 0
@@ -135,7 +135,7 @@ TextureImporter:
         width: 15
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -148,7 +148,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VortexWheel-16x_1
+      name: VortexWheel_1
       rect:
         serializedVersion: 2
         x: 15
@@ -156,7 +156,7 @@ TextureImporter:
         width: 17
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -169,7 +169,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VortexWheel-16x_2
+      name: VortexWheel_2
       rect:
         serializedVersion: 2
         x: 32
@@ -177,7 +177,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -190,7 +190,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VortexWheel-16x_3
+      name: VortexWheel_3
       rect:
         serializedVersion: 2
         x: 48
@@ -198,7 +198,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -211,7 +211,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VortexWheel-16x_4
+      name: VortexWheel_4
       rect:
         serializedVersion: 2
         x: 64
@@ -219,7 +219,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -232,7 +232,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VortexWheel-16x_5
+      name: VortexWheel_5
       rect:
         serializedVersion: 2
         x: 80
@@ -240,7 +240,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -253,7 +253,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VortexWheel-16x_6
+      name: VortexWheel_6
       rect:
         serializedVersion: 2
         x: 96
@@ -261,7 +261,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -274,7 +274,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VortexWheel-16x_7
+      name: VortexWheel_7
       rect:
         serializedVersion: 2
         x: 112
@@ -282,7 +282,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
