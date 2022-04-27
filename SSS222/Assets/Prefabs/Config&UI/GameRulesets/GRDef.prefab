@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cfgName: Arcade Mode
+  cfgDesc: Fast-paced quick matches for the best highscore
+  cfgIconAssetName: 
+  cfgIconsGo: {fileID: 4397622923898560575, guid: 0f34633e901e35f4cbdd5ac661e33652,
+    type: 3}
   defaultGameSpeed: 1
   scoreDisplay: 0
   bgMaterial: {fileID: 0}
@@ -63,8 +67,7 @@ MonoBehaviour:
   autoShootPlayer: 0
   moveX: 1
   moveY: 1
-  paddingX: -0.125
-  paddingY: 0.45
+  playfieldPadding: {x: -0.125, y: 0.45}
   moveSpeedPlayer: 7.5
   healthPlayer: 150
   healthMaxPlayer: 150
@@ -143,16 +146,20 @@ MonoBehaviour:
   onfireDmg: 1
   decayTickrate: 0.5
   decayDmg: 0.5
-  energyBallGet: 1.5
-  energyBatteryGet: 11
-  medkitEnergyGet: 40
-  medkitHpAmnt: 25
-  microMedkitHpAmnt: 10
-  pwrupEnergyGet: 36
-  enForPwrupRefill: 25
-  enPwrupDuplicate: 42
-  crystalGet: 2
-  crystalBGet: 6
+  energyBall_energyGain: 6
+  battery_energyGain: 11
+  benergyBallGain: 1
+  benergyVialGain: 5
+  crystalGain: 2
+  crystalBigGain: 6
+  medkit_energyGain: 26
+  medkit_hpGain: 25
+  lunarGel_hpGain: 10
+  lunarGel_absorp: 1
+  powerups_energyGain: 36
+  powerups_energyNeeded: 25
+  powerups_energyDupl: 42
+  coresCollectGain: 1
   skillsPlayer:
   - name: Magnetic Pulse
     ID: 0
@@ -170,6 +177,8 @@ MonoBehaviour:
     enCost: 0
     cooldown: 90
   timeOverhaul: 10
+  crystalMend_refillCost: 2
+  energyDiss_refillCost: 3.3
   waveSpawnReqsType: 1
   waveSpawnReqs:
     id: 0
@@ -267,7 +276,7 @@ MonoBehaviour:
       rarity: 0
       dropChance: 3
       levelReq: 2
-    sum: 0
+    sum: 34.25
     spawnReqsType: 0
     spawnReqs:
       id: 1
@@ -320,7 +329,7 @@ MonoBehaviour:
       rarity: 2
       dropChance: 0
       levelReq: 2
-    sum: 0
+    sum: 24.9
     spawnReqsType: 5
     spawnReqs:
       id: 2

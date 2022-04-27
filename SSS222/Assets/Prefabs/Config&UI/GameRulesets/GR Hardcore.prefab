@@ -19,6 +19,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: cfgDesc
+      value: SPICED UP ARCADE GAMEPLAY WITH MORE DIFFICULTY
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: cfgName
       value: Hardcore Mode
       objectReference: {fileID: 0}
@@ -62,6 +67,12 @@ PrefabInstance:
       propertyPath: bgMaterial
       value: 
       objectReference: {fileID: 2100000, guid: af11553d843608b44910d7fa622a1475, type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cfgIconsGo
+      value: 
+      objectReference: {fileID: 6079340835967256291, guid: 3548ee9ecaa1c3c47a811fabea9fce6e,
+        type: 3}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: laserSpeed
@@ -465,6 +476,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: powerupSpawners.Array.data[1].sum
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: waveList.Array.data[5].dropChance
       value: 2
       objectReference: {fileID: 0}
@@ -487,14 +503,12 @@ PrefabInstance:
         type: 3}
       propertyPath: powerupSpawners.Array.data[0].psConfig
       value: 
-      objectReference: {fileID: 11400000, guid: 2af57d09ed839a1419493c09a774c0c5,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: powerupSpawners.Array.data[1].psConfig
       value: 
-      objectReference: {fileID: 11400000, guid: 7dd641c366f11184b9c4c84f9c30d17a,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: powerupSpawners.Array.data[2].psConfig

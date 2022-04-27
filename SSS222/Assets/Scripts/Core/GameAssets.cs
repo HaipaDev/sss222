@@ -67,7 +67,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
     public GameObject Get(string obj){
 		GObject o=Array.Find(objects, item => item.name == obj);
 		if(o==null){
-			Debug.LogWarning("Object: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
@@ -76,7 +76,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	public Sprite GetObjSpr(string obj){
 		GObject o=Array.Find(objects, item => item.name == obj);
 		if(o==null){
-			Debug.LogWarning("Object: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
 		}
 		Sprite spr=null;
@@ -87,7 +87,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	public GameObject GetVFX(string obj){
 		GObject o=Array.Find(vfx, item => item.name == obj);
 		if(o==null){
-			Debug.LogWarning("VFX: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("VFX: " + obj + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
@@ -97,7 +97,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
     public Sprite Spr(string spr){
 		GSprite s=Array.Find(sprites, item => item.name == spr);
 		if(s==null){
-			Debug.LogWarning("Sprite: " + spr + " not found!");
+			if(!String.IsNullOrEmpty(spr))Debug.LogWarning("Sprite: " + spr + " not found!");
 			return null;
 		}
 		Sprite gs=s.spr;
@@ -106,7 +106,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	public Material Mat(string mat){
 		GMaterial m=Array.Find(materials, item => item.name == mat);
 		if(m==null){
-			Debug.LogWarning("Material: " + mat + " not found!");
+			if(!String.IsNullOrEmpty(mat))Debug.LogWarning("Material: " + mat + " not found!");
 			return null;
 		}
 		Material gm=m.mat;
@@ -115,7 +115,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	public PowerupItem GetPowerupItem(string obj){
 		PowerupItem o=Array.Find(powerupItems, item => item.name == obj);
 		if(o==null){
-			Debug.LogWarning("Powerup by name: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Powerup by name: " + obj + " not found!");
 			return null;
 		}
         return o;
@@ -123,7 +123,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	public PowerupItem GetPowerupItemByAsset(string obj){
 		PowerupItem o=Array.Find(powerupItems, item => item.assetName == obj);
 		if(o==null){
-			Debug.LogWarning("Powerup by assetName: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Powerup by assetName: " + obj + " not found!");
 			return null;
 		}
         return o;

@@ -8,7 +8,7 @@ using TMPro;
 using Sirenix.OdinInspector;
 
 public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas instance;
-    [Title("Panels", titleAlignment: TitleAlignments.Centered)]
+    [Title("Main Panels", titleAlignment: TitleAlignments.Centered)]
     [SceneObjectsOnly][SerializeField]GameObject defaultPanel;
     [SceneObjectsOnly][SerializeField]GameObject presetsPanel;
     [SceneObjectsOnly][SerializeField]GameObject globalPanel;
@@ -18,6 +18,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [SceneObjectsOnly][SerializeField]GameObject enemyPanel;
     [SceneObjectsOnly][SerializeField]GameObject spawnsPanel;
     [SceneObjectsOnly][SerializeField]GameObject collectiblesPanel;
+    [Header("Presets Subpanels")]
+    [SceneObjectsOnly][SerializeField]GameObject builtInPresetsPanel;
+    [SceneObjectsOnly][SerializeField]GameObject yoursPresetsPanel;
+    [SceneObjectsOnly][SerializeField]GameObject onlinePresetsPanel;
     [Header("Spawns Subpanels")]
     [SceneObjectsOnly][SerializeField]GameObject spawnsMainPanel;
     [SceneObjectsOnly][SerializeField]GameObject wavesPanel;
@@ -30,8 +34,14 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [SceneObjectsOnly][SerializeField]GameObject collectiblesMainPanel;
     [SceneObjectsOnly][SerializeField]GameObject basicCollectiblesPanel;
     [SceneObjectsOnly][SerializeField]GameObject powerupsPanel;
+
     [Title("Variables & Other obj", titleAlignment: TitleAlignments.Centered)]
-    [DisableInEditorMode][SerializeField] public GameRules presetGameruleset;
+    [AssetsOnly][SerializeField] GameObject sandboxIconsGo;
+    [AssetsOnly][SerializeField] GameObject gameModeListElementPrefab;
+    [DisableInEditorMode][SerializeField] public string saveSelected="Sandbox Mode";
+    [DisableInEditorMode][SerializeField] public string _cachedSandboxName;
+    [SceneObjectsOnly][SerializeField] public GameObject savePopup;
+    [DisableInEditorMode][SerializeField] public GameRules defPresetGameruleset;
     [DisableInEditorMode][SerializeField][Range(0,360)]public int bgHue;
     [DisableInEditorMode][SerializeField][Range(0,2)]public float bgSatur=1;
     [DisableInEditorMode][SerializeField][Range(0,2)]public float bgValue=1;
@@ -59,11 +69,12 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [SceneObjectsOnly][SerializeField]TextMeshProUGUI powerupsWeightsSumTotal;
     void Start(){
         instance=this;
-        presetGameruleset=GameCreator.instance.gamerulesetsPrefabs[0];
+        defPresetGameruleset=GameCreator.instance.gamerulesetsPrefabs[0];
         OpenDefaultPanel();
         SetupEverything();
         SetWaveSpawnReqsInputs();
         SetStartingPowerupChoices();
+        SetBuiltInPresetsButtons();
     }
     void Update(){
         CheckESC();
@@ -81,7 +92,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         else{GSceneManager.instance.LoadGameModeChooseScene();}
     }
     public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}
-    public void OpenPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);}
+    public void OpenPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);}
+    public void OpenBuiltInPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);}
+    public void OpenYoursPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);yoursPresetsPanel.SetActive(true);SetYoursPresetsButtons();}
+    public void OpenOnlinePresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);onlinePresetsPanel.SetActive(true);}
+
     public void OpenGlobalPanel(){CloseAllPanels();globalPanel.SetActive(true);}
     public void OpenDamagePanel(){CloseAllPanels();damagePanel.SetActive(true);}
     
@@ -114,6 +129,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     );}
     void CloseAllPanels(){
         defaultPanel.SetActive(false);
+        if(presetsPanel.activeSelf){if(!String.IsNullOrEmpty(_cachedSandboxName)){saveSelected=_cachedSandboxName;_cachedSandboxName="";}}
         presetsPanel.SetActive(false);
 
         globalPanel.SetActive(false);
@@ -123,6 +139,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         enemyPanel.SetActive(false);
         spawnsPanel.SetActive(false);
         collectiblesPanel.SetActive(false);
+
+        builtInPresetsPanel.SetActive(false);
+        yoursPresetsPanel.SetActive(false);
+        onlinePresetsPanel.SetActive(false);
 
         startingPowerupChoices.SetActive(false);
 
@@ -167,26 +187,81 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }
     }
 
-    public void SetPreset(string str){StartCoroutine(SetPresetI(str));}
-    public IEnumerator SetPresetI(string str){
-        if(GameRules.instance!=null)Destroy(GameRules.instance.gameObject);
-        yield return new WaitForSecondsRealtime(0.02f);
-        presetGameruleset=GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.GetGamemodeID(str)];
-        var go=Instantiate(presetGameruleset);
-        go.name="GRSandbox";
-        go.GetComponent<GameRules>().cfgName="Sandbox Mode";
-        OpenDefaultPanel();
-        SetupEverything();
-    }
-
     void SetupEverything(){
         SetEnemyChoices();
         SetEnemySpritesLibrary();
         SetWaveChoices();
         SetPowerupSpawnersChoices();
     }
+    
+    
+    public void SetPreset(string str){StartCoroutine(SetPresetI(str));}
+    public IEnumerator SetPresetI(string str){
+        if(GameRules.instance!=null)Destroy(GameRules.instance.gameObject);
+        yield return new WaitForSecondsRealtime(0.02f);
+        defPresetGameruleset=GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.GetGamemodeID(str)];
+        Debug.Log(defPresetGameruleset);
+        var gr=Instantiate(defPresetGameruleset);
+        gr.gameObject.name="GRSandbox";
+        gr.cfgName="Sandbox Mode";
+        gr.cfgDesc="New Sandbox Mode Savefile!";
+        gr.cfgIconsGo=sandboxIconsGo;
+        OpenDefaultPanel();
+        SetupEverything();
+    }
+    public void SelectPreset(string str){if(String.IsNullOrEmpty(_cachedSandboxName)){_cachedSandboxName=saveSelected;}saveSelected=str;}
+    public string _sandboxSavesDir(){return Application.persistentDataPath+"/SandboxSaves";}
+    public string _currentSandboxFilePath(){return _sandboxSavesDir()+"/"+saveSelected+".json";}
+    public void SaveSandbox(){
+        if(!ES3.FileExists(_currentSandboxFilePath())){
+            SetYoursPresetsButtons();
+            SavePopup("\u0022"+saveSelected+"\u0022 CREATED");
+        }else{
+            if(_cachedSandboxName!=""){SavePopup("\u0022"+saveSelected+"\u0022 OVERRITEN WITH "+_cachedSandboxName);_cachedSandboxName="";}
+            else{SavePopup("\u0022"+saveSelected+"\u0022 SAVED");}
+        }
+        var settings=new ES3Settings(_currentSandboxFilePath());
+        settings.referenceMode=ES3.ReferenceMode.ByValue;
+        ES3.Save("sandboxData",GameRules.instance,settings);
+    }
+    public void LoadSandbox(){
+        /*if(GameRules.instance!=null)Destroy(GameRules.instance.gameObject);
+        GameRules gr=GameCreator.instance.gamerulesetsPrefabs[0];
+        gr.gameObject.name="GRSandbox";
+        gr.cfgName="Sandbox Mode";sandboxName=gr.cfgName;
+        gr.cfgDesc="New Sandbox Mode Savefile!";
+        gr.cfgIconsGo=sandboxIconsGo;
+        if(ES3.KeyExists("sandboxData",_currentSandboxFilePath()))gr=ES3.Load("sandboxData",_currentSandboxFilePath(),GameCreator.instance.gamerulesetsPrefabs[0]);
+        Instantiate(gr);*/
+        if(ES3.FileExists(_currentSandboxFilePath())){
+            if(ES3.KeyExists("sandboxData",_currentSandboxFilePath())){
+                ES3.LoadInto("sandboxData",_currentSandboxFilePath(),GameRules.instance);
+                SavePopup("\u0022"+saveSelected+"\u0022 LOADED");
+                _cachedSandboxName="";
+            }
+            else{
+                Debug.LogWarning("No key by "+"sandboxData"+"for: "+_currentSandboxFilePath());
+                SavePopup("<color=orange> No key by "+"\u0022sandboxData\u0022"+"for: "+saveSelected+"</color>");
+            }
+        }else{
+            Debug.LogWarning("No file at: "+_currentSandboxFilePath());
+            SavePopup("<color='orange'> No file by name: "+saveSelected+"</color>");
+        }
+    }
+    public void DeleteSandbox(){
+        if(ES3.FileExists(_currentSandboxFilePath())){
+            SavePopup("\u0022"+saveSelected+"\u0022 DELETED");
+            ES3.DeleteFile(_currentSandboxFilePath());
+            saveSelected=_cachedSandboxName;
+            SetYoursPresetsButtons();
+        }else{
+            SavePopup("File by name: \u0022"+saveSelected+"\u0022 doesn't exist");
+        }
+    }
+    public void BrowseSandboxSaves(){Application.OpenURL("file:///"+_sandboxSavesDir());}
 
 #region//Global
+    public void SetSandboxName(string v){saveSelected=v;}//GameRules.instance.cfgName=v;}//sandboxName=v;}
     public void SetGameSpeed(float v){GameRules.instance.defaultGameSpeed=(float)System.Math.Round(v,2);}
     public void SetScoreDisplay(){scoreDisplay s=GameRules.instance.scoreDisplay;
         switch(s){
@@ -577,6 +652,50 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         Destroy(prefab);
     }
 
+    void SetBuiltInPresetsButtons(){
+        foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){
+            string name=gr.cfgName;     if(name.Contains(" Mode"))name=name.Replace(" Mode","");
+            Transform builtInModesListTransform=builtInPresetsPanel.transform.GetChild(0).GetChild(0);
+            GameObject go=Instantiate(gameModeListElementPrefab,builtInModesListTransform);
+            builtInModesListTransform.GetComponent<ContentSizeFitter>().enabled=true;builtInModesListTransform.localPosition=new Vector2(0,-999);
+            go.name=name+"-PresetButton";
+            go.GetComponent<Button>().onClick.AddListener(()=>SetPreset(gr.cfgName));
+            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=name;
+            go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr.cfgDesc;
+            if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
+            if(gr.cfgIconsGo!=null){Instantiate(gr.cfgIconsGo,go.transform.GetChild(1));}
+            else{go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.Spr(gr.cfgIconAssetName);}
+        }
+    }
+    void SetYoursPresetsButtons(){
+        Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
+        for(var d=yoursModesListTransform.childCount-1;d>=0;d--){Destroy(yoursModesListTransform.GetChild(d).gameObject);}
+
+        string[] files=new String[0];
+        if(ES3.DirectoryExists(_sandboxSavesDir())){files=ES3.GetFiles(_sandboxSavesDir());}
+        foreach(string f in files){//GameRules gr=(GameRules)(new GameRules() as GameRules); Debug.Log("gr: "+gr);Debug.Log("GameRulesInstance:"+GameRules.instance);//defPresetGameruleset.ShallowCopy();
+        var fpath=_sandboxSavesDir()+"/"+f;
+        if(ES3.FileExists(fpath)){if(ES3.KeyExists("sandboxData",fpath)){var data=ES3.Load("sandboxData",fpath);GameRules gr=ES3.Load<GameRules>("sandboxData",fpath);//GameRules gr=(GameRules)grpre;
+            string name=f;if(name.Contains(".json")){name=name.Replace(".json","");}
+            GameObject go=Instantiate(gameModeListElementPrefab,yoursModesListTransform);
+            yoursModesListTransform.GetComponent<ContentSizeFitter>().enabled=true;yoursModesListTransform.localPosition=new Vector2(0,-999);
+            go.name=name+"-PresetButton";
+            go.GetComponent<Button>().onClick.AddListener(()=>SelectPreset(name));
+            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=name;
+            go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr.cfgDesc;//data.value;
+            if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
+            if(gr.cfgIconsGo!=null){Instantiate(gr.cfgIconsGo,go.transform.GetChild(1));}
+            else{
+                if(!String.IsNullOrEmpty(gr.cfgIconAssetName)){go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.Spr(gr.cfgIconAssetName);}
+                else{Instantiate(sandboxIconsGo,go.transform.GetChild(1));}
+            }
+        }}//else{gr=null;}}else{gr=null;}
+        //if(gr!=null){
+            
+        //}
+        }
+    }
+
 
     void CheckESC(){if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Joystick1Button1))Back();}
     void SetPowerups(){
@@ -621,6 +740,14 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 enemySpritePanel.transform.GetChild(1).GetComponent<Image>().material=_enModSprMat();
             }
         }
+    }
+
+    void SavePopup(string str){StartCoroutine(SavePopupI(str));}
+    IEnumerator SavePopupI(string str){
+        savePopup.gameObject.SetActive(true);
+        savePopup.GetComponentInChildren<TextMeshProUGUI>().text=str;
+        yield return new WaitForSecondsRealtime(1f);
+        savePopup.gameObject.SetActive(false);
     }
 #endregion
 }

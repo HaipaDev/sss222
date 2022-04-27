@@ -9,6 +9,7 @@ using Sirenix.OdinInspector;
 public class GameCreator : MonoBehaviour{   public static GameCreator instance;
     [Header("Main managers")]
     [AssetsOnly][SerializeField] GameObject saveSerialPrefab;
+    [AssetsOnly][SerializeField] GameObject easySavePrefab;
     [AssetsOnly][SerializeField] GameObject gsceneManagerPrefab;
     [AssetsOnly][SerializeField] GameObject gameSessionPrefab;
     
@@ -32,6 +33,7 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
     }
     void LoadPre(){
         if(FindObjectOfType<SaveSerial>()==null){Instantiate(saveSerialPrefab);}
+        if(FindObjectOfType<ES3ReferenceMgr>()==null){Instantiate(easySavePrefab);}
         if(FindObjectOfType<GSceneManager>()==null){var go=Instantiate(gsceneManagerPrefab);go.GetComponent<GSceneManager>().enabled=true;}
             /*Idk it disables itself so I guess Ill turn it on manually*/
     }
@@ -49,7 +51,7 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
         if(FindObjectOfType<GameRules>()==null&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){
             Instantiate(GameSession.instance.GetGameRulesCurrent());}
         if(FindObjectOfType<GameRules>()==null&&SceneManager.GetActiveScene().name=="SandboxMode"){
-            var go=Instantiate(gamerulesetsPrefabs[0]);go.name="GRSandbox";go.GetComponent<GameRules>().cfgName="Sandbox Mode";}
+            GameRules gr=Instantiate(gamerulesetsPrefabs[0]);gr.gameObject.name="GRSandbox";gr.cfgName="Sandbox Mode";gr.cfgDesc="New Sandbox Mode Savefile!";}
 
         if(FindObjectOfType<PostProcessVolume>()!=null&& FindObjectOfType<SaveSerial>().settingsData.pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
         if(FindObjectOfType<EventSystem>()!=null){if(FindObjectOfType<EventSystem>().GetComponent<UIInputSystem>()==null)FindObjectOfType<EventSystem>().gameObject.AddComponent<UIInputSystem>();}

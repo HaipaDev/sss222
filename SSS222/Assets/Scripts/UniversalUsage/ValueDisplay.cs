@@ -160,7 +160,8 @@ public class ValueDisplay : MonoBehaviour{
 
             //Sandbox Speciffic
             if(SandboxCanvas.instance!=null){   var sb=SandboxCanvas.instance;
-                if(value=="presetNameSB") _txt="PRESET FROM: "+sb.presetGameruleset.cfgName;
+                if(value=="saveSelected") _txt=sb.saveSelected.Replace(".json","");
+                if(value=="presetNameSB") _txt="PRESET FROM: "+sb.defPresetGameruleset.cfgName;
                 else if(value=="bgHueSB") _txt=sb.bgHue.ToString();
                 else if(value=="bgSaturSB") _txt=sb.bgSatur.ToString();
                 else if(value=="bgValueSB") _txt=sb.bgValue.ToString();

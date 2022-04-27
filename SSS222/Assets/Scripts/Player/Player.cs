@@ -18,8 +18,6 @@ public class Player : MonoBehaviour{    public static Player instance;
     [SerializeField] public bool moveY = true;
     [SerializeField] InputType inputType = InputType.mouse;
     [SerializeField] public bool autoShoot = false;
-    [SerializeField] float paddingX = -0.125f;
-    [SerializeField] float paddingY = 0.45f;
     [SerializeField] public float moveSpeedInit = 5f;
     [DisableInEditorMode]public float moveSpeed = 5f;//A variable for later modifications like Upgrades
     [DisableInEditorMode]public float moveSpeedCurrent;
@@ -277,7 +275,6 @@ public class Player : MonoBehaviour{    public static Player instance;
         ///Basic value
         transform.position=i.startingPosPlayer;
         moveX=i.moveX;moveY=i.moveY;
-        paddingX=i.paddingX;paddingY=i.paddingY;
         moveSpeedInit=i.moveSpeedPlayer;
         autoShoot=i.autoShootPlayer;
         health=i.healthPlayer;
@@ -576,8 +573,8 @@ public class Player : MonoBehaviour{    public static Player instance;
     #endregion
 
     void SetUpMoveBoundaries(){
-        xRange=new Vector2(Playfield.xRange.x+paddingX,Playfield.xRange.y-paddingX);
-        yRange=new Vector2(Playfield.yRange.x+paddingY,Playfield.yRange.y-paddingY);
+        xRange=new Vector2(Playfield.xRange.x+GameRules.instance.playfieldPadding.x,Playfield.xRange.y-GameRules.instance.playfieldPadding.x);
+        yRange=new Vector2(Playfield.yRange.x+GameRules.instance.playfieldPadding.y,Playfield.yRange.y-GameRules.instance.playfieldPadding.y);
     }
 
     //const float DCLICK_SHOOT_TIME=0.2f;

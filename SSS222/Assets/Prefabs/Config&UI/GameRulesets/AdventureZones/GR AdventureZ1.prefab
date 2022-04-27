@@ -14,6 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: cfgDesc
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: cfgName
       value: Adventure Mode - Zone 1
       objectReference: {fileID: 0}
@@ -21,6 +26,11 @@ PrefabInstance:
         type: 3}
       propertyPath: EVscoreMax
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cfgIconsGo
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -251,6 +261,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 282b02d64fc493b40905744ad32dcccd,
         type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[0].sum
+      value: 35.25
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: pwrupStatusList.Array.data[7].name
@@ -921,7 +936,7 @@ PrefabInstance:
     - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: m_Name
-      value: GR Adventure
+      value: GR AdventureZ1
       objectReference: {fileID: 0}
     - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

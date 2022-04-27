@@ -11,7 +11,10 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #region//Values
 #region//Global values
 [Title("Global", titleAlignment: TitleAlignments.Centered)]
-    public string cfgName;
+    [ES3NonSerializable]public string cfgName;
+    [MultiLineProperty]public string cfgDesc;
+    public string cfgIconAssetName;
+    [InfoBox("Place a special GameObject with multiple icons here:")][AssetsOnly]public GameObject cfgIconsGo;
     public float defaultGameSpeed=1f;
     public scoreDisplay scoreDisplay=scoreDisplay.score;
     public Material bgMaterial;
@@ -34,8 +37,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool autoShootPlayer=false;
     public bool moveX=true;
     public bool moveY=true;
-    public float paddingX=-0.125f;
-    public float paddingY=0.45f;
+    public Vector2 playfieldPadding=new Vector2(-0.125f,0.45f);
     public float moveSpeedPlayer=5f;
     public float healthPlayer=150;
     public float healthMaxPlayer=150;
@@ -233,7 +235,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #endregion
 #endregion
 #region//Voids
-    void Awake(){if(GameRules.instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
+    void Awake(){if(GameRules.instance!=null&&this!=GameRules.instance){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
     IEnumerator Start(){
         if(gameObject.name.Contains("(Clone)")){gameObject.name.Replace("(Clone)","");}
         //Set gameModeSelected if artificially turned on gamemode etc
@@ -358,6 +360,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     #endregion
 #endregion
 #region//Return functions
+    public GameRules ShallowCopy(){return (GameRules)this.MemberwiseClone();}
     public PowerupItemSettings GetItemSettings(string name){PowerupItemSettings p=null;p=Array.Find(powerupItemSettings,x=>x.name==name);return p;}
     public bool CheckWaveStarting(string name){bool b=false;if(waveList.Find(x=>x.lootItem.name==name)!=null){if(startingWave==waveList.FindIndex(x=>x.lootItem.name==name)){b=true;}}return b;}
 #endregion

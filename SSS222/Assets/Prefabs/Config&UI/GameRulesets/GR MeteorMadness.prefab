@@ -44,6 +44,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: cfgDesc
+      value: 'METEOR STORM INBOUND!
+
+        YOU''RE ONLY LEFT WITH YOUR LIGHTSABER'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: cfgName
       value: Meteor Madness
       objectReference: {fileID: 0}
@@ -137,6 +144,12 @@ PrefabInstance:
       propertyPath: bgMaterial
       value: 
       objectReference: {fileID: 2100000, guid: a6f1cdfa3003b4b4f9edf13dc224f5bf, type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cfgIconsGo
+      value: 
+      objectReference: {fileID: 8934357145252012273, guid: 95780f70a9b11174190535c0d354ea68,
+        type: 3}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: crystalsOn
@@ -934,6 +947,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 530782707432221319, guid: 79e3a62b1e44c5c42afcffa470e5736a,
         type: 3}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[0].sum
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: waveList.Array.data[0].dropChance

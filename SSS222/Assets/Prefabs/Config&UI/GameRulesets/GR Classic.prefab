@@ -44,6 +44,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: cfgDesc
+      value: 'CLASSIC GAMEPLAY FROM THE PREQUEL: SSS77
+
+        MORE SUITED FOR MOBILE'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: cfgName
       value: Classic Mode
       objectReference: {fileID: 0}
@@ -137,6 +144,12 @@ PrefabInstance:
       propertyPath: bgMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 808f5e398db12e24197993d82ff5852c, type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: cfgIconsGo
+      value: 
+      objectReference: {fileID: 5373079663508667775, guid: 453a443dbe47ba14d8e93a606d9f6dcb,
+        type: 3}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: crystalsOn
@@ -1051,6 +1064,11 @@ PrefabInstance:
         type: 3}
       propertyPath: enemies.Array.data[9].healthStart
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupSpawners.Array.data[0].sum
+      value: 23.8
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
