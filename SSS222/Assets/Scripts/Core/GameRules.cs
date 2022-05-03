@@ -15,7 +15,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [MultiLineProperty]public string cfgDesc;
     public string cfgIconAssetName;
     [InfoBox("Place a special GameObject with multiple icons here:")][AssetsOnly]public GameObject cfgIconsGo;
-    public float defaultGameSpeed=1f;
+    [Range(0.1f,10f)]public float defaultGameSpeed=1f;
     public scoreDisplay scoreDisplay=scoreDisplay.score;
     public Material bgMaterial;
     public bool crystalsOn=true;
@@ -296,7 +296,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             }}
         }
     }
-    Player p;
+    [NonSerialized][ES3NonSerializable]Player p;
     void Update(){
         if(Player.instance!=null&&p!=Player.instance){p=Player.instance;}
         if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode"||SceneManager.GetActiveScene().name=="AdventureZones"||SceneManager.GetActiveScene().name=="SandboxMode")){

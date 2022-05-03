@@ -94,7 +94,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}
     public void OpenPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);}
     public void OpenBuiltInPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);}
-    public void OpenYoursPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);yoursPresetsPanel.SetActive(true);SetYoursPresetsButtons();}
+    public void OpenYoursPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);yoursPresetsPanel.SetActive(true);SetYoursPresetsButtons();HighlightSelectedPreset();}
     public void OpenOnlinePresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);onlinePresetsPanel.SetActive(true);}
 
     public void OpenGlobalPanel(){CloseAllPanels();globalPanel.SetActive(true);}
@@ -209,53 +209,75 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         OpenDefaultPanel();
         SetupEverything();
     }
-    public void SelectPreset(string str){if(String.IsNullOrEmpty(_cachedSandboxName)){_cachedSandboxName=saveSelected;}saveSelected=str;}
+    public void SelectPreset(string str){
+        if(!String.IsNullOrEmpty(str)){
+            if(String.IsNullOrEmpty(_cachedSandboxName)){if(saveSelected!=_cachedSandboxName){_cachedSandboxName=saveSelected;}else{_cachedSandboxName="";}}saveSelected=str;
+            HighlightSelectedPreset();
+        }
+    }
+    void HighlightSelectedPreset(){
+        Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
+        foreach(Transform tt in yoursModesListTransform){tt.gameObject.GetComponent<Image>().color=Color.white;}
+        Transform t=yoursModesListTransform.Find(saveSelected+"-PresetButton");if(t!=null){GameObject goF=t.gameObject;goF.GetComponent<Image>().color=Color.blue;}
+    }
     public string _sandboxSavesDir(){return Application.persistentDataPath+"/SandboxSaves";}
     public string _currentSandboxFilePath(){return _sandboxSavesDir()+"/"+saveSelected+".json";}
     public void SaveSandbox(){
-        if(!ES3.FileExists(_currentSandboxFilePath())){
-            SetYoursPresetsButtons();
-            SavePopup("\u0022"+saveSelected+"\u0022 CREATED");
+        if(!String.IsNullOrEmpty(saveSelected)){
+            if(GameRules.instance!=null){
+                if(!ES3.FileExists(_currentSandboxFilePath())){
+                    AddNewYoursPresetButton(saveSelected+".json",GameRules.instance);
+                    HighlightSelectedPreset();
+                    SavePopup("\u0022"+saveSelected+"\u0022 <color=green> CREATED </color>");
+                }else{
+                    if(_cachedSandboxName!=""){SavePopup("\u0022"+saveSelected+"\u0022 <color=yellow> OVERRITEN WITH </color> "+_cachedSandboxName);_cachedSandboxName="";}
+                    else{SavePopup("\u0022"+saveSelected+"\u0022 <color=green> SAVED </color>");HighlightSelectedPreset();}
+                }
+                var settings=new ES3Settings(_currentSandboxFilePath());
+                settings.referenceMode=ES3.ReferenceMode.ByValue;
+                ES3.Save("sandboxData",GameRules.instance,settings);
+            }else{
+                SavePopup("<color=red> GameRules.instance is null! </color>");
+            }
         }else{
-            if(_cachedSandboxName!=""){SavePopup("\u0022"+saveSelected+"\u0022 OVERRITEN WITH "+_cachedSandboxName);_cachedSandboxName="";}
-            else{SavePopup("\u0022"+saveSelected+"\u0022 SAVED");}
+            SavePopup("<color=orange> File name is empty </color>");
         }
-        var settings=new ES3Settings(_currentSandboxFilePath());
-        settings.referenceMode=ES3.ReferenceMode.ByValue;
-        ES3.Save("sandboxData",GameRules.instance,settings);
     }
     public void LoadSandbox(){
-        /*if(GameRules.instance!=null)Destroy(GameRules.instance.gameObject);
-        GameRules gr=GameCreator.instance.gamerulesetsPrefabs[0];
-        gr.gameObject.name="GRSandbox";
-        gr.cfgName="Sandbox Mode";sandboxName=gr.cfgName;
-        gr.cfgDesc="New Sandbox Mode Savefile!";
-        gr.cfgIconsGo=sandboxIconsGo;
-        if(ES3.KeyExists("sandboxData",_currentSandboxFilePath()))gr=ES3.Load("sandboxData",_currentSandboxFilePath(),GameCreator.instance.gamerulesetsPrefabs[0]);
-        Instantiate(gr);*/
-        if(ES3.FileExists(_currentSandboxFilePath())){
-            if(ES3.KeyExists("sandboxData",_currentSandboxFilePath())){
-                ES3.LoadInto("sandboxData",_currentSandboxFilePath(),GameRules.instance);
-                SavePopup("\u0022"+saveSelected+"\u0022 LOADED");
-                _cachedSandboxName="";
-            }
-            else{
-                Debug.LogWarning("No key by "+"sandboxData"+"for: "+_currentSandboxFilePath());
-                SavePopup("<color=orange> No key by "+"\u0022sandboxData\u0022"+"for: "+saveSelected+"</color>");
+        if(!String.IsNullOrEmpty(saveSelected)){
+            if(ES3.FileExists(_currentSandboxFilePath())){
+                if(ES3.KeyExists("sandboxData",_currentSandboxFilePath())){
+                    Debug.Log("GameRules.instance PRE-LOAD: "+GameRules.instance);
+                    ES3.LoadInto<GameRules>("sandboxData",_currentSandboxFilePath(),GameRules.instance);
+                    Debug.Log("GameRules.instance POST-LOAD: "+GameRules.instance);
+                    Debug.Log("----");
+                    SavePopup("\u0022"+saveSelected+"\u0022 <color=blue> LOADED </color>");
+                    _cachedSandboxName="";
+                }
+                else{
+                    Debug.LogWarning("No key by "+"sandboxData"+"for: "+_currentSandboxFilePath());
+                    SavePopup("<color=orange> No key by "+"\u0022sandboxData\u0022"+" for: \u0022"+saveSelected+"\u0022</color>");
+                }
+            }else{
+                Debug.LogWarning("No file at: "+_currentSandboxFilePath());
+                SavePopup("<color=orange> No file by name: "+saveSelected+"</color>");
             }
         }else{
-            Debug.LogWarning("No file at: "+_currentSandboxFilePath());
-            SavePopup("<color='orange'> No file by name: "+saveSelected+"</color>");
+            SavePopup("<color=orange> File name is empty </color>");
         }
     }
     public void DeleteSandbox(){
-        if(ES3.FileExists(_currentSandboxFilePath())){
-            SavePopup("\u0022"+saveSelected+"\u0022 DELETED");
-            ES3.DeleteFile(_currentSandboxFilePath());
-            saveSelected=_cachedSandboxName;
-            SetYoursPresetsButtons();
+        if(!String.IsNullOrEmpty(saveSelected)){
+            if(ES3.FileExists(_currentSandboxFilePath())){
+                SavePopup("\u0022"+saveSelected+"\u0022 <color=orange> DELETED </color>");
+                ES3.DeleteFile(_currentSandboxFilePath());
+                if(!String.IsNullOrEmpty(_cachedSandboxName))saveSelected=_cachedSandboxName;
+                SetYoursPresetsButtons();
+            }else{
+                SavePopup("File by name: \u0022"+saveSelected+"\u0022 doesn't exist");
+            }
         }else{
-            SavePopup("File by name: \u0022"+saveSelected+"\u0022 doesn't exist");
+            SavePopup("<color=orange> File name is empty </color>");
         }
     }
     public void BrowseSandboxSaves(){Application.OpenURL("file:///"+_sandboxSavesDir());}
@@ -454,7 +476,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
     public void SetPowerupSpawnerName(string v){
         Transform powerupsSpawnerListTransform=collectiblesMainPanel.transform.GetChild(1).GetChild(0);powerupsSpawnerListTransform.GetComponent<ContentSizeFitter>().enabled=true;
-        var go=powerupsSpawnerListTransform.Find(powerupSpawnerToModify);
+        Transform t=powerupsSpawnerListTransform.Find(powerupSpawnerToModify);GameObject go=t.gameObject;
 
         _pwrSpawnMod().name=v;
         powerupSpawnerToModify=v;
@@ -671,29 +693,55 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
         for(var d=yoursModesListTransform.childCount-1;d>=0;d--){Destroy(yoursModesListTransform.GetChild(d).gameObject);}
 
-        string[] files=new String[0];
-        if(ES3.DirectoryExists(_sandboxSavesDir())){files=ES3.GetFiles(_sandboxSavesDir());}
-        foreach(string f in files){//GameRules gr=(GameRules)(new GameRules() as GameRules); Debug.Log("gr: "+gr);Debug.Log("GameRulesInstance:"+GameRules.instance);//defPresetGameruleset.ShallowCopy();
+        if(ES3.DirectoryExists(_sandboxSavesDir())){foreach(string f in ES3.GetFiles(_sandboxSavesDir())){AddNewYoursPresetButton(f);}}
+    }
+    GameRules _tempCurrentGr=null;
+    void AddNewYoursPresetButton(string f,GameRules _grCur=null){
+        Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
+        
         var fpath=_sandboxSavesDir()+"/"+f;
-        if(ES3.FileExists(fpath)){if(ES3.KeyExists("sandboxData",fpath)){var data=ES3.Load("sandboxData",fpath);GameRules gr=ES3.Load<GameRules>("sandboxData",fpath);//GameRules gr=(GameRules)grpre;
-            string name=f;if(name.Contains(".json")){name=name.Replace(".json","");}
-            GameObject go=Instantiate(gameModeListElementPrefab,yoursModesListTransform);
-            yoursModesListTransform.GetComponent<ContentSizeFitter>().enabled=true;yoursModesListTransform.localPosition=new Vector2(0,-999);
-            go.name=name+"-PresetButton";
-            go.GetComponent<Button>().onClick.AddListener(()=>SelectPreset(name));
-            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=name;
-            go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr.cfgDesc;//data.value;
-            if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
-            if(gr.cfgIconsGo!=null){Instantiate(gr.cfgIconsGo,go.transform.GetChild(1));}
-            else{
-                if(!String.IsNullOrEmpty(gr.cfgIconAssetName)){go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.Spr(gr.cfgIconAssetName);}
-                else{Instantiate(sandboxIconsGo,go.transform.GetChild(1));}
-            }
-        }}//else{gr=null;}}else{gr=null;}
-        //if(gr!=null){
-            
-        //}
-        }
+        if(ES3.FileExists(fpath)||_grCur!=null){if(ES3.KeyExists("sandboxData",fpath)||_grCur!=null){//var data=ES3.Load("sandboxData",fpath);
+            //GameRules gr=(GameRules)(new GameRules() as GameRules); Debug.Log("gr: "+gr);Debug.Log("GameRulesInstance:"+GameRules.instance);//defPresetGameruleset.ShallowCopy();
+            Debug.Log("GameRules.instance PRE-ASSIGN: "+GameRules.instance);
+            Debug.Log("GameRules.instance GameSpeed PRE-ASSIGN: "+GameRules.instance.defaultGameSpeed);
+            Debug.Log("_tempCurrentGr PRE-ASSIGN: "+_tempCurrentGr);
+            if(_tempCurrentGr!=null)Debug.Log("_tempCurrentGr GameSpeed PRE-ASSIGN: "+_tempCurrentGr.defaultGameSpeed);
+            _tempCurrentGr=GameRules.instance;
+            Debug.Log("_tempCurrentGr POST-ASSIGN: "+_tempCurrentGr);
+            Debug.Log("_tempCurrentGr GameSpeed POST-ASSIGN: "+_tempCurrentGr.defaultGameSpeed);
+            List<GameRules> gr=new List<GameRules>();if(_grCur==null){gr.Add(ES3.Load<GameRules>("sandboxData",fpath));}else{gr.Add(_grCur);}//GameRules gr=(GameRules)grpre;
+
+            if(gr.Count>0&&gr[0]!=null){
+                Debug.Log("loaded gr: "+gr[0]);
+                Debug.Log("loaded gr GameSpeed: "+gr[0].defaultGameSpeed);
+                string name=f;if(name.Contains(".json")){name=name.Replace(".json","");}
+                GameObject go=Instantiate(gameModeListElementPrefab,yoursModesListTransform);
+                yoursModesListTransform.GetComponent<ContentSizeFitter>().enabled=true;yoursModesListTransform.localPosition=new Vector2(0,-999);
+                go.name=name+"-PresetButton";
+                go.GetComponent<Button>().onClick.AddListener(()=>SelectPreset(name));
+                go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=name;
+                go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr[0].cfgDesc;//data.value;
+                if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
+                if(gr[0].cfgIconsGo!=null){
+                    Instantiate(gr[0].cfgIconsGo,go.transform.GetChild(1));
+                }else{
+                    if(!String.IsNullOrEmpty(gr[0].cfgIconAssetName)){go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.Spr(gr[0].cfgIconAssetName);}
+                    else{Instantiate(sandboxIconsGo,go.transform.GetChild(1));}
+                }
+                //Destroy(gr);
+                if(gr[0]==_tempCurrentGr)Debug.Log("BRO WTF gr[0] is the same as THE SAME AS _tempCurrentGr");
+                if(gr[0]==GameRules.instance)Debug.Log("BRO WTF gr[0] IS THE SAME AS GameRules.instance");
+                if(_tempCurrentGr==GameRules.instance)Debug.Log("BRO WTF _tempCurrentGr IS THE SAME AS GameRules.instance");
+                if(gr.Count>0)gr.RemoveAt(0);
+                Debug.Log("gr POST-REMOVE: "+gr);
+                Debug.Log("_tempCurrentGr: "+_tempCurrentGr);
+                Debug.Log("_tempCurrentGr GameSpeed: "+_tempCurrentGr.defaultGameSpeed);
+                GameRules.instance=_tempCurrentGr;
+                Debug.Log("GameRules.instance POST-ASSIGN: "+GameRules.instance);
+                Debug.Log("GameRules.instance GameSpeed POST-ASSIGN: "+GameRules.instance.defaultGameSpeed);
+            }else{Debug.Log("!!NO GR!!");}
+            Debug.Log("----");
+        }}
     }
 
 
