@@ -11,6 +11,6 @@ public class AdventureZoneData : MonoBehaviour{
         GetComponentInChildren<TextMeshProUGUI>().text=Mathf.Abs(id).ToString();
     }
     void LoadZone(){
-        GSceneManager.instance.LoadAdventureZone(-id);
+        GSceneManager.instance.LoadAdventureZone(id);
     }
 }

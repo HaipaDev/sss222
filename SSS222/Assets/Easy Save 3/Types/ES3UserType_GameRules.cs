@@ -21,7 +21,7 @@ namespace ES3Types
 			writer.WriteProperty("cfgIconsGo", instance.cfgIconsGo);
 			writer.WriteProperty("defaultGameSpeed", instance.defaultGameSpeed, ES3Type_float.Instance);
 			writer.WriteProperty("scoreDisplay", instance.scoreDisplay, ES3Type_enum.Instance);//ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<Powerup>)));
-			writer.WriteProperty("bgMaterial", instance.bgMaterial);
+			writer.WriteProperty("bgMaterial", instance.bgMaterial, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(ShaderMatProps)));
 			writer.WriteProperty("crystalsOn", instance.crystalsOn, ES3Type_bool.Instance);
 			writer.WriteProperty("xpOn", instance.xpOn, ES3Type_bool.Instance);
 			writer.WriteProperty("coresOn", instance.coresOn, ES3Type_bool.Instance);
@@ -39,6 +39,7 @@ namespace ES3Types
 			writer.WriteProperty("moveX", instance.moveX, ES3Type_bool.Instance);
 			writer.WriteProperty("moveY", instance.moveY, ES3Type_bool.Instance);
 			writer.WriteProperty("playfieldPadding", instance.playfieldPadding, ES3Type_Vector2.Instance);
+			writer.WriteProperty("playerShaderMatProps", instance.playerShaderMatProps, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(ShaderMatProps)));
 			writer.WriteProperty("moveSpeedPlayer", instance.moveSpeedPlayer, ES3Type_float.Instance);
 			writer.WriteProperty("healthPlayer", instance.healthPlayer, ES3Type_float.Instance);
 			writer.WriteProperty("healthMaxPlayer", instance.healthMaxPlayer, ES3Type_float.Instance);
@@ -218,7 +219,7 @@ namespace ES3Types
 						instance.scoreDisplay = (scoreDisplay)reader.Read<System.Int32>(ES3Type_int.Instance);//reader.Read<scoreDisplay>();
 						break;
 					case "bgMaterial":
-						instance.bgMaterial = reader.Read<UnityEngine.Material>(ES3Type_Material.Instance);
+						instance.bgMaterial = reader.Read<ShaderMatProps>();
 						break;
 					case "crystalsOn":
 						instance.crystalsOn = reader.Read<System.Boolean>(ES3Type_bool.Instance);
@@ -270,6 +271,9 @@ namespace ES3Types
 						break;
 					case "playfieldPadding":
 						instance.playfieldPadding = reader.Read<UnityEngine.Vector2>(ES3Type_Vector2.Instance);
+						break;
+					case "playerShaderMatProps":
+						instance.playerShaderMatProps = reader.Read<ShaderMatProps>();
 						break;
 					case "moveSpeedPlayer":
 						instance.moveSpeedPlayer = reader.Read<System.Single>(ES3Type_float.Instance);

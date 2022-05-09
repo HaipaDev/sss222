@@ -110,6 +110,7 @@ public class ValueDisplay : MonoBehaviour{
     #region//GameRules
         if(GameRules.instance!=null){   var gr=GameRules.instance;
             if(value=="cfgName") _txt=gr.cfgName;
+            else if(value=="cfgDesc") _txt=gr.cfgDesc;
             else if(value=="scoreDisplay"){if(GameSession.instance!=null){
                     if(gr.scoreDisplay==scoreDisplay.score)_txt=GameSession.instance.score.ToString();
                     else if(gr.scoreDisplay==scoreDisplay.sessionTime)_txt=GameSession.instance.GetGameSessionTimeFormat().ToString();
@@ -161,20 +162,29 @@ public class ValueDisplay : MonoBehaviour{
             //Sandbox Speciffic
             if(SandboxCanvas.instance!=null){   var sb=SandboxCanvas.instance;
                 if(value=="saveSelected") _txt=sb.saveSelected.Replace(".json","");
-                if(value=="presetNameSB") _txt="PRESET FROM: "+sb.defPresetGameruleset.cfgName;
-                else if(value=="bgHueSB") _txt=sb.bgHue.ToString();
-                else if(value=="bgSaturSB") _txt=sb.bgSatur.ToString();
-                else if(value=="bgValueSB") _txt=sb.bgValue.ToString();
+                else if(value=="buildVersionSB") _txt="Build "+sb.buildVersion;
+                else if(value=="presetNameSB") _txt="PRESET FROM: "+sb.defPresetGameruleset.cfgName;
+                else if(value=="bgHueGR") _txt=gr.bgMaterial.hue.ToString();
+                else if(value=="bgSaturGR") _txt=gr.bgMaterial.saturation.ToString();
+                else if(value=="bgValueGR") _txt=gr.bgMaterial.value.ToString();
+                else if(value=="bgNegativeGR") _txt=gr.bgMaterial.negative.ToString();
+                else if(value=="bgPixelateGR") _txt=gr.bgMaterial.pixelate.ToString();
+                else if(value=="bgBlueGR") _txt=gr.bgMaterial.blur.ToString();
 
-                EnemyClass _en=null;
-                if(value.Contains("_EnemySB")){if(_en==null){if(!String.IsNullOrEmpty(sb.enemyToModify))_en=Array.Find(gr.enemies,x=>x.name==sb.enemyToModify);}}
-                if(_en!=null){
-                    if(value=="name_EnemySB") _txt=_en.name;
-                    else if(value=="health_EnemySB") _txt=_en.healthStart.ToString();
-                    else if(value=="healthMax_EnemySB") _txt=_en.healthMax.ToString();
-                    else if(value=="defense_EnemySB") _txt=_en.defense.ToString();
-                    else if(value=="scoreStart_EnemySB") _txt=_en.scoreValue.x.ToString();
-                    else if(value=="scoreEnd_EnemySB") _txt=_en.scoreValue.y.ToString();
+                if(sb._enMod()!=null){
+                    if(value=="name_EnemySB") _txt=sb._enMod().name;
+                    else if(value=="health_EnemySB") _txt=sb._enMod().healthStart.ToString();
+                    else if(value=="healthMax_EnemySB") _txt=sb._enMod().healthMax.ToString();
+                    else if(value=="defense_EnemySB") _txt=sb._enMod().defense.ToString();
+                    else if(value=="scoreStart_EnemySB") _txt=sb._enMod().scoreValue.x.ToString();
+                    else if(value=="scoreEnd_EnemySB") _txt=sb._enMod().scoreValue.y.ToString();
+                    
+                    else if(value=="sprMatHue_EnemySB") _txt=sb._enModSprMat().hue.ToString();
+                    else if(value=="sprMatSatur_EnemySB") _txt=sb._enModSprMat().saturation.ToString();
+                    else if(value=="sprMatValue_EnemySB") _txt=sb._enModSprMat().value.ToString();
+                    else if(value=="sprMatNegative_EnemySB") _txt=sb._enModSprMat().negative.ToString();
+                    else if(value=="sprMatPixelate_EnemySB") _txt=sb._enModSprMat().pixelate.ToString();
+                    else if(value=="sprMatBlur_EnemySB") _txt=sb._enModSprMat().blur.ToString();
                 }
 
                 PowerupsSpawnerGR _pwSp=null;

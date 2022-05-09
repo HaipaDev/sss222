@@ -78739,9 +78739,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ff5c748f9f0aa428f6ced86535ff4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defMat: {fileID: 2100000, guid: 5e68ced1ed8ef71418cceb35d70847b1, type: 2}
-  curMat: {fileID: 2100000, guid: 5e68ced1ed8ef71418cceb35d70847b1, type: 2}
+  shaderMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 1
+    value: 1
+    negative: 0
+  material: {fileID: 0}
   text: {fileID: 2800000, guid: 83efc85fb5b3ba64c969f6438953fa41, type: 3}
+  setOnValidate: 0
 --- !u!1 &5332070754958074681
 GameObject:
   m_ObjectHideFlags: 0

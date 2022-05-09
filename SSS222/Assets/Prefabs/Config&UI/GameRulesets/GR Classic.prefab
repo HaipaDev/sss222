@@ -287,6 +287,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: bgMaterial.hue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: dashingEnabled
       value: 0
       objectReference: {fileID: 0}
@@ -359,6 +364,11 @@ PrefabInstance:
         type: 3}
       propertyPath: bflameDmgTillLvl
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: bgMaterial.value
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -449,6 +459,11 @@ PrefabInstance:
         type: 3}
       propertyPath: wavesWeightsSumTotal
       value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: bgMaterial.saturation
+      value: 0.87
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

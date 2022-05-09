@@ -51,7 +51,7 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
         if(FindObjectOfType<GameRules>()==null&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){
             Instantiate(GameSession.instance.GetGameRulesCurrent());}
         if(FindObjectOfType<GameRules>()==null&&SceneManager.GetActiveScene().name=="SandboxMode"){
-            GameRules gr=Instantiate(gamerulesetsPrefabs[0]);gr.gameObject.name="GRSandbox";gr.cfgName="Sandbox Mode";gr.cfgDesc="New Sandbox Mode Savefile!";}
+            GameRules gr=Instantiate(gamerulesetsPrefabs[0]);gr.gameObject.name="GRSandbox";gr.cfgName="Sandbox Mode";gr.cfgDesc="New Sandbox Mode Savefile!";gr.cfgIconsGo=null;gr.cfgIconAssetName="questionMark";}
 
         if(FindObjectOfType<PostProcessVolume>()!=null&& FindObjectOfType<SaveSerial>().settingsData.pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
         if(FindObjectOfType<EventSystem>()!=null){if(FindObjectOfType<EventSystem>().GetComponent<UIInputSystem>()==null)FindObjectOfType<EventSystem>().gameObject.AddComponent<UIInputSystem>();}

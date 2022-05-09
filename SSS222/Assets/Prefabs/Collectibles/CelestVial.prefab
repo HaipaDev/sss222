@@ -16,8 +16,7 @@ GameObject:
   - component: {fileID: -2526951079648213008}
   - component: {fileID: -8348096473155390100}
   - component: {fileID: 1529301144}
-  - component: {fileID: -3365304752130786154}
-  - component: {fileID: -58683458582889640}
+  - component: {fileID: -5680710525910754224}
   m_Layer: 0
   m_Name: CelestVial
   m_TagString: Powerups
@@ -202,11 +201,12 @@ MonoBehaviour:
   assetName: GlowAuto
   materialClone: 1
   color: {r: 0.21960786, g: 0.08627451, b: 0.4156863, a: 1}
-  size: 0
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
   maxParticles: 0
   offset: {x: 0, y: 0}
---- !u!114 &-3365304752130786154
+  alignToDirection: 0
+--- !u!114 &-5680710525910754224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,20 +218,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04326831ef30704a84404316f25314d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-58683458582889640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056705403108089519}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: {fileID: 100000, guid: c4c1d093c2811664aa894979eab321ce, type: 3}
-  offset: {x: 0, y: 0.33}
-  onTop: 1
-  stayStill: 1
-  BFlame: {fileID: 0}

@@ -28,10 +28,10 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             StatsAchievsManager.instance.SaveStats();
             SaveSerial.instance.SaveStats();
         }
-        if(GameSession.instance!=null)
         SceneManager.LoadScene("Menu");
-        if(GameSession.instance!=null){GameSession.instance.ResetMusicPitch();if(SceneManager.GetActiveScene().name=="Menu")GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;}
+        GameSession.instance.ResetMusicPitch();if(SceneManager.GetActiveScene().name=="Menu")GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;
         Resources.UnloadUnusedAssets();
+        GameSession.instance.ResetTempSandboxSaveName();
     }
     public void LoadStartMenuGame(){GSceneManager.instance.StartCoroutine(LoadStartMenuGameI());}
     IEnumerator LoadStartMenuGameI(){
@@ -46,7 +46,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         StatsAchievsManager.instance.SaveStats();
         SaveSerial.instance.SaveStats();
         GameSession.instance.ResetMusicPitch();
-        if(GameSession.instance.gamemodeSelected>0)SceneManager.LoadScene("Menu");
+        if(GameSession.instance.gamemodeSelected!=0)SceneManager.LoadScene("Menu");//temporarily also for Adventure
         else{if(GameRules.instance!=null){if(GameRules.instance.cfgName.Contains("Sandbox")){SceneManager.LoadScene("SandboxMode");}}}
         yield return new WaitForSecondsRealtime(0.01f);
         GameSession.instance.speedChanged=false;GameSession.instance.defaultGameSpeed=1f;GameSession.instance.gameSpeed=1f;
@@ -61,14 +61,14 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameRules.instance.EnterGameScene();
     }
     public void LoadAdventureZone(int i){
-        GameSession.instance.SetGamemodeSelected(i);
+        GameSession.instance.SetGamemodeSelected(-i);
         SceneManager.LoadScene("Game");
         GameSession.instance.gameSpeed=1f;
         GameSession.instance.LoadAdventurePost();
         GameSession.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }
-    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");/*GameSession.instance.SetGamemodeSelected(0);*/}
+    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");GameSession.instance.ResetTempSandboxSaveName();/*GameSession.instance.SetGamemodeSelected(0);*/}
     public void LoadAdventureZonesScene(){SceneManager.LoadScene("AdventureZones");GameSession.instance.LoadAdventurePre();}
     public void LoadSandboxModeScene(){SceneManager.LoadScene("SandboxMode");GameSession.instance.SetGamemodeSelected(0);}
     public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}

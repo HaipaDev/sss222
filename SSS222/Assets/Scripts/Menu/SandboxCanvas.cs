@@ -8,8 +8,10 @@ using TMPro;
 using Sirenix.OdinInspector;
 
 public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas instance;
+#region//Variables
     [Title("Main Panels", titleAlignment: TitleAlignments.Centered)]
     [SceneObjectsOnly][SerializeField]GameObject defaultPanel;
+    [SceneObjectsOnly][SerializeField]GameObject presetAppearancePanel;
     [SceneObjectsOnly][SerializeField]GameObject presetsPanel;
     [SceneObjectsOnly][SerializeField]GameObject globalPanel;
     [SceneObjectsOnly][SerializeField]GameObject damagePanel;
@@ -19,17 +21,24 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [SceneObjectsOnly][SerializeField]GameObject spawnsPanel;
     [SceneObjectsOnly][SerializeField]GameObject collectiblesPanel;
     [Header("Presets Subpanels")]
+    [SceneObjectsOnly][SerializeField]GameObject presetAppearanceMainPanel;
+    [SceneObjectsOnly][SerializeField]GameObject presetAppearanceIconSprLibPanel;
+    [Header("")]
     [SceneObjectsOnly][SerializeField]GameObject builtInPresetsPanel;
     [SceneObjectsOnly][SerializeField]GameObject yoursPresetsPanel;
     [SceneObjectsOnly][SerializeField]GameObject onlinePresetsPanel;
-    [Header("Spawns Subpanels")]
-    [SceneObjectsOnly][SerializeField]GameObject spawnsMainPanel;
-    [SceneObjectsOnly][SerializeField]GameObject wavesPanel;
-    [SceneObjectsOnly][SerializeField]GameObject disruptersPanel;
+    [Header("Player Subpanels")]
+    [SceneObjectsOnly][SerializeField]GameObject playerMainPanel;
+    [SceneObjectsOnly][SerializeField]GameObject playerSpritePanel;
+    [SceneObjectsOnly][SerializeField]GameObject playerSpritesLibPanel;
     [Header("Enemy Subpanels")]
     [SceneObjectsOnly][SerializeField]GameObject enemyMainPanel;
     [SceneObjectsOnly][SerializeField]GameObject enemySpritePanel;
     [SceneObjectsOnly][SerializeField]GameObject enemySpritesLibPanel;
+    [Header("Spawns Subpanels")]
+    [SceneObjectsOnly][SerializeField]GameObject spawnsMainPanel;
+    [SceneObjectsOnly][SerializeField]GameObject wavesPanel;
+    [SceneObjectsOnly][SerializeField]GameObject disruptersPanel;
     [Header("Collectibles Subpanels")]
     [SceneObjectsOnly][SerializeField]GameObject collectiblesMainPanel;
     [SceneObjectsOnly][SerializeField]GameObject basicCollectiblesPanel;
@@ -40,12 +49,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [AssetsOnly][SerializeField] GameObject gameModeListElementPrefab;
     [DisableInEditorMode][SerializeField] public string saveSelected="Sandbox Mode";
     [DisableInEditorMode][SerializeField] public string _cachedSandboxName;
+    [DisableInEditorMode][SerializeField] public int buildVersion=1;
+    //[DisableInEditorMode][SerializeField] public string presetedGameruleset="Sandbox Mode";
     [SceneObjectsOnly][SerializeField] public GameObject savePopup;
     [DisableInEditorMode][SerializeField] public GameRules defPresetGameruleset;
-    [DisableInEditorMode][SerializeField][Range(0,360)]public int bgHue;
-    [DisableInEditorMode][SerializeField][Range(0,2)]public float bgSatur=1;
-    [DisableInEditorMode][SerializeField][Range(0,2)]public float bgValue=1;
     [Header("")]
+    [DisableInEditorMode][SerializeField]List<GSprite> presetIconSprites;
+    [DisableInEditorMode][SerializeField]List<GSprite> playerSprites;
     [SceneObjectsOnly][SerializeField]GameObject powerupInventory;
     [DisableInEditorMode][SerializeField]int powerupToSet;
     [SceneObjectsOnly][SerializeField]GameObject startingPowerupChoices;
@@ -67,8 +77,15 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [SceneObjectsOnly][SerializeField]GameObject pwrupsTimeInput;
     [SceneObjectsOnly][SerializeField]GameObject pwrupsKillsInput;
     [SceneObjectsOnly][SerializeField]TextMeshProUGUI powerupsWeightsSumTotal;
+#endregion
+#region//Base
     void Start(){
         instance=this;
+        if(!String.IsNullOrEmpty(GameSession.instance.GetTempSandboxSaveName())){
+            SelectPreset(GameSession.instance.GetTempSandboxSaveName());
+            if(ES3.FileExists(_currentSandboxFilePath()))if(ES3.KeyExists("buildVersion",_currentSandboxFilePath()))buildVersion=ES3.Load<int>("buildVersion",_currentSandboxFilePath());
+        }
+        
         defPresetGameruleset=GameCreator.instance.gamerulesetsPrefabs[0];
         OpenDefaultPanel();
         SetupEverything();
@@ -79,19 +96,27 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     void Update(){
         CheckESC();
         SetPowerups();
-        GameSession.instance.gameSpeed=GameRules.instance.defaultGameSpeed;
+        GameSession.instance.defaultGameSpeed=GameRules.instance.defaultGameSpeed;
     }
     public void Back(){
         if(_anyFirstLevelPanelsActive()){OpenDefaultPanel();}
+            else if(presetAppearanceIconSprLibPanel.activeSelf){OpenPresetAppearancePanel();}
+            else if(playerSpritePanel.activeSelf){OpenPlayerPanel();}
+                else if(playerSpritesLibPanel.activeSelf){OpenPlayerSpritePanel();}
             else if(wavesPanel.activeSelf||disruptersPanel.activeSelf){OpenSpawnsPanel();}
             else if(enemyMainPanel.activeSelf){OpenEnemiesPanel();}
                 else if(enemySpritePanel.activeSelf){OpenEnemyPanel(enemyToModify);}
                     else if(enemySpritesLibPanel.activeSelf){OpenEnemySpritePanel();}
             else if(collectiblesMainPanel.activeSelf){OpenDefaultPanel();}
                 else if(basicCollectiblesPanel.activeSelf||powerupsPanel.activeSelf){OpenCollectiblesPanel();}
-        else{GSceneManager.instance.LoadGameModeChooseScene();}
+        else{GSceneManager.instance.LoadGameModeChooseScene();GameSession.instance.defaultGameSpeed=1;}
     }
     public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}
+    public void OpenPresetAppearancePanel(){CloseAllPanels();presetAppearancePanel.SetActive(true);presetAppearanceMainPanel.SetActive(true);SetPresetIconPreviewsSprite();
+        presetAppearanceIconSprLibPanel.SetActive(false);}
+    public void OpenPresetAppearanceIconSprLibPanel(){CloseAllPanels();presetAppearancePanel.SetActive(true);presetAppearanceIconSprLibPanel.SetActive(true);
+        presetAppearanceMainPanel.SetActive(false);}
+
     public void OpenPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);}
     public void OpenBuiltInPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);}
     public void OpenYoursPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);yoursPresetsPanel.SetActive(true);SetYoursPresetsButtons();HighlightSelectedPreset();}
@@ -100,13 +125,16 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void OpenGlobalPanel(){CloseAllPanels();globalPanel.SetActive(true);}
     public void OpenDamagePanel(){CloseAllPanels();damagePanel.SetActive(true);}
     
-    public void OpenPlayerPanel(){CloseAllPanels();playerPanel.SetActive(true);}
+    public void OpenPlayerPanel(){CloseAllPanels();playerPanel.SetActive(true);playerMainPanel.SetActive(true);SetPlayerPreviewsSprite();
+        playerSpritePanel.SetActive(false);playerSpritesLibPanel.SetActive(false);}
+    public void OpenPlayerSpritePanel(){if(_canModifySpriteEn()){CloseAllPanels();playerPanel.SetActive(true);playerSpritePanel.SetActive(true);SetPlayerPreviewsSprite();}}
+    public void OpenPlayerSpritesLibPanel(){CloseAllPanels();playerPanel.SetActive(true);playerSpritesLibPanel.SetActive(true);}
 
     public void OpenEnemiesPanel(){CloseAllPanels();enemiesPanel.SetActive(true);SetEnemyPreviewsSprite();}
     public void OpenEnemyPanel(string str){CloseAllPanels();enemyPanel.SetActive(true);enemyMainPanel.SetActive(true);enemyToModify=str;SetEnemyPreviewsSprite();
         enemySpritePanel.SetActive(false);enemySpritesLibPanel.SetActive(false);}
     public void OpenEnemySpritePanel(){if(_canModifySpriteEn()){CloseAllPanels();enemyPanel.SetActive(true);enemySpritePanel.SetActive(true);SetEnemyPreviewsSprite();}}
-    public void OpenEnemySpritesLibPanel(){CloseAllPanels();enemyPanel.SetActive(true);enemySpritesLibPanel.SetActive(true);}
+    public void OpenEnemySpritesLibPanel(){if(_canChangeSpriteEn()){CloseAllPanels();enemyPanel.SetActive(true);enemySpritesLibPanel.SetActive(true);}}
 
     public void OpenSpawnsPanel(){CloseAllPanels();spawnsPanel.SetActive(true);spawnsMainPanel.SetActive(true);
         wavesPanel.SetActive(false);disruptersPanel.SetActive(false);}
@@ -121,14 +149,16 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     
     bool _anyFirstLevelPanelsActive(){  return(
         presetsPanel.activeSelf
+        ||presetAppearanceMainPanel.activeSelf
         ||globalPanel.activeSelf
         //||damagePanel.activeSelf
-        ||playerPanel.activeSelf
+        ||playerMainPanel.activeSelf
         ||enemiesPanel.activeSelf
         ||spawnsPanel.activeSelf
     );}
     void CloseAllPanels(){
         defaultPanel.SetActive(false);
+        presetAppearancePanel.SetActive(false);
         if(presetsPanel.activeSelf){if(!String.IsNullOrEmpty(_cachedSandboxName)){saveSelected=_cachedSandboxName;_cachedSandboxName="";}}
         presetsPanel.SetActive(false);
 
@@ -140,19 +170,24 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         spawnsPanel.SetActive(false);
         collectiblesPanel.SetActive(false);
 
+        presetAppearanceMainPanel.SetActive(false);
+        presetAppearanceIconSprLibPanel.SetActive(false);
         builtInPresetsPanel.SetActive(false);
         yoursPresetsPanel.SetActive(false);
         onlinePresetsPanel.SetActive(false);
 
+        playerMainPanel.SetActive(false);
+        playerSpritePanel.SetActive(false);
+        playerSpritesLibPanel.SetActive(false);
         startingPowerupChoices.SetActive(false);
-
-        spawnsMainPanel.SetActive(false);
-        wavesPanel.SetActive(false);
-        disruptersPanel.SetActive(false);
 
         enemyMainPanel.SetActive(false);
         enemySpritePanel.SetActive(false);
         enemySpritesLibPanel.SetActive(false);
+
+        spawnsMainPanel.SetActive(false);
+        wavesPanel.SetActive(false);
+        disruptersPanel.SetActive(false);
 
         collectiblesMainPanel.SetActive(false);
         basicCollectiblesPanel.SetActive(false);
@@ -190,12 +225,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     void SetupEverything(){
         SetEnemyChoices();
         SetEnemySpritesLibrary();
+        SetPresetIconSpritesLibrary();
         SetWaveChoices();
         SetPowerupSpawnersChoices();
     }
-    
-    
-    public void SetPreset(string str){StartCoroutine(SetPresetI(str));}
+#endregion
+#region//Setting Preset, Loading and Saving
+    public void SetPreset(string str){StartCoroutine(SetPresetI(str));SetPresetIconPreviewsSprite();}
     public IEnumerator SetPresetI(string str){
         if(GameRules.instance!=null)Destroy(GameRules.instance.gameObject);
         yield return new WaitForSecondsRealtime(0.02f);
@@ -205,10 +241,12 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         gr.gameObject.name="GRSandbox";
         gr.cfgName="Sandbox Mode";
         gr.cfgDesc="New Sandbox Mode Savefile!";
-        gr.cfgIconsGo=sandboxIconsGo;
+        //gr.cfgIconsGo=sandboxIconsGo;
+        gr.cfgIconAssetName="questionMark";
         OpenDefaultPanel();
         SetupEverything();
     }
+    public void SetPresetIcon(string v){GameRules.instance.cfgIconAssetName=v;}
     public void SelectPreset(string str){
         if(!String.IsNullOrEmpty(str)){
             if(String.IsNullOrEmpty(_cachedSandboxName)){if(saveSelected!=_cachedSandboxName){_cachedSandboxName=saveSelected;}else{_cachedSandboxName="";}}saveSelected=str;
@@ -220,7 +258,9 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         foreach(Transform tt in yoursModesListTransform){tt.gameObject.GetComponent<Image>().color=Color.white;}
         Transform t=yoursModesListTransform.Find(saveSelected+"-PresetButton");if(t!=null){GameObject goF=t.gameObject;goF.GetComponent<Image>().color=Color.blue;}
     }
-    public string _sandboxSavesDir(){return Application.persistentDataPath+"/SandboxSaves";}
+    public string _sandboxDataDir(){return Application.persistentDataPath+"/SandboxData";}
+    public string _sandboxSavesDir(){return _sandboxDataDir()+"/SandboxSaves";}
+    public string _sandboxShipSkinsDir(){return _sandboxDataDir()+"/ShipSkins";}
     public string _currentSandboxFilePath(){return _sandboxSavesDir()+"/"+saveSelected+".json";}
     public void SaveSandbox(){
         if(!String.IsNullOrEmpty(saveSelected)){
@@ -233,9 +273,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                     if(_cachedSandboxName!=""){SavePopup("\u0022"+saveSelected+"\u0022 <color=yellow> OVERRITEN WITH </color> "+_cachedSandboxName);_cachedSandboxName="";}
                     else{SavePopup("\u0022"+saveSelected+"\u0022 <color=green> SAVED </color>");HighlightSelectedPreset();}
                 }
-                var settings=new ES3Settings(_currentSandboxFilePath());
-                settings.referenceMode=ES3.ReferenceMode.ByValue;
-                ES3.Save("sandboxData",GameRules.instance,settings);
+                //var settings=new ES3Settings(_currentSandboxFilePath());
+                //settings.referenceMode=ES3.ReferenceMode.ByValue;
+                var settings=new ES3Settings(_currentSandboxFilePath(),ES3.Location.Cache);
+                if(ES3.KeyExists("buildVersion",_currentSandboxFilePath()))buildVersion++;
+                ES3.Save("buildVersion",buildVersion,settings);
+                ES3.Save("gamerulesData",GameRules.instance,settings);
+                ES3.StoreCachedFile(_currentSandboxFilePath());
             }else{
                 SavePopup("<color=red> GameRules.instance is null! </color>");
             }
@@ -246,16 +290,18 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void LoadSandbox(){
         if(!String.IsNullOrEmpty(saveSelected)){
             if(ES3.FileExists(_currentSandboxFilePath())){
-                if(ES3.KeyExists("sandboxData",_currentSandboxFilePath())){
-                    Debug.Log("GameRules.instance PRE-LOAD: "+GameRules.instance);
-                    ES3.LoadInto<GameRules>("sandboxData",_currentSandboxFilePath(),GameRules.instance);
-                    Debug.Log("GameRules.instance POST-LOAD: "+GameRules.instance);
-                    Debug.Log("----");
+                if(ES3.KeyExists("gamerulesData",_currentSandboxFilePath())){
+                    //Debug.Log("GameRules.instance PRE-LOAD: "+GameRules.instance);
+                    ES3.LoadInto<GameRules>("gamerulesData",_currentSandboxFilePath(),GameRules.instance);
+                    if(ES3.KeyExists("buildVersion",_currentSandboxFilePath()))buildVersion=ES3.Load<int>("buildVersion",_currentSandboxFilePath());
+                    else buildVersion=1;
+                    //Debug.Log("GameRules.instance POST-LOAD: "+GameRules.instance);
+                    //Debug.Log("----");
                     SavePopup("\u0022"+saveSelected+"\u0022 <color=blue> LOADED </color>");
                     _cachedSandboxName="";
                 }
                 else{
-                    Debug.LogWarning("No key by "+"sandboxData"+"for: "+_currentSandboxFilePath());
+                    Debug.LogWarning("No key by "+"gamerulesData"+"for: "+_currentSandboxFilePath());
                     SavePopup("<color=orange> No key by "+"\u0022sandboxData\u0022"+" for: \u0022"+saveSelected+"\u0022</color>");
                 }
             }else{
@@ -281,9 +327,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }
     }
     public void BrowseSandboxSaves(){Application.OpenURL("file:///"+_sandboxSavesDir());}
+#endregion
 
 #region//Global
     public void SetSandboxName(string v){saveSelected=v;}//GameRules.instance.cfgName=v;}//sandboxName=v;}
+    public void SetSandboxDesc(string v){GameRules.instance.cfgDesc=v;}//GameRules.instance.cfgName=v;}//sandboxName=v;}
     public void SetGameSpeed(float v){GameRules.instance.defaultGameSpeed=(float)System.Math.Round(v,2);}
     public void SetScoreDisplay(){scoreDisplay s=GameRules.instance.scoreDisplay;
         switch(s){
@@ -304,33 +352,26 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         else{Debug.LogWarning("Shop spawns are not set by score!");GameRules.instance.shopSpawnReqsType=spawnReqsType.score;GameRules.instance.waveSpawnReqs=new spawnScore();var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}}
     public void SetShopScoreRangeEnd(string v){if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;sr.scoreMaxSetRange.y=int.Parse(v);}
         else{Debug.LogWarning("Shop spawns are not set by score!");GameRules.instance.shopSpawnReqsType=spawnReqsType.score;GameRules.instance.waveSpawnReqs=new spawnScore();var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.y=int.Parse(v);}}
-    public void SetBackgroundHue(float v){bgHue=(int)v;UpdateBgMaterial();}
-    public void SetBackgroundSatur(float v){bgSatur=v;UpdateBgMaterial();}
-    public void SetBackgroundValue(float v){bgValue=v;UpdateBgMaterial();}
-    Material GetBgMat(){
-        Material _mat=null;
-        if(GameRules.instance.bgMaterial!=null)_mat=GameRules.instance.bgMaterial;
-        if(_mat==null||(_mat!=null&&!_mat.shader.name.Contains("AllIn1SpriteShader"))){
-            if(GameAssets.instance.Mat("HueShiftBG")!=null)_mat=Instantiate(GameAssets.instance.Mat("HueShiftBG"));
-            else{
-                _mat=new Material(Resources.Load("AllIn1SpriteShader", typeof(Shader)) as Shader);
-                _mat.SetTexture("_MainTex",FindObjectOfType<BGManager>().GetBgTexture());
-                _mat.EnableKeyword("HSV_ON");
-                bgHue=_mat.GetInt("_HsvShift");
-                bgSatur=_mat.GetFloat("_HsvSaturation");
-                bgValue=_mat.GetFloat("_HsvBright");
-            }
-        }
-        return _mat;
-    }
-    void UpdateBgMaterial(){    Material _mat=GetBgMat();
-        _mat.SetInt("_HsvShift",bgHue);
-        _mat.SetFloat("_HsvSaturation",bgSatur);
-        _mat.SetFloat("_HsvBright",bgValue);
-        GameRules.instance.bgMaterial=_mat;
+    public void SetBackgroundHue(float v){GameRules.instance.bgMaterial.hue=(float)Math.Round(v,2);UpdateBgMaterial();}
+    public void SetBackgroundSatur(float v){GameRules.instance.bgMaterial.saturation=(float)Math.Round(v,2);UpdateBgMaterial();}
+    public void SetBackgroundValue(float v){GameRules.instance.bgMaterial.value=(float)Math.Round(v,2);UpdateBgMaterial();}
+    public void SetBackgroundNegative(float v){GameRules.instance.bgMaterial.negative=(float)Math.Round(v,2);UpdateBgMaterial();}
+    void UpdateBgMaterial(){
+        GameRules.instance.bgMaterial.text=FindObjectOfType<BGManager>().GetBgTexture();
+        //Material _mat=new Material(Resources.Load("AllIn1SpriteShader", typeof(Shader)) as Shader);
+        //_mat=GameAssets.instance.UpdateShaderMatProps(FindObjectOfType<BGManager>().GetBgMat(),GameRules.instance.bgMaterial);
     }
 #endregion
 #region//Player
+    //Player Sprite
+    public void SetPlayerSprite(string v){}//GameRules.instance.playerSprite=playerSprites.Find(x=>x.name==v).spr;OpenPlayerSpritePanel();}
+    public void SetPlayerSprMatHue(float v){GameRules.instance.playerShaderMatProps.hue=(float)Math.Round(v,2);UpdatePlayerSprMat();}
+    public void SetPlayerSprMatSatur(float v){GameRules.instance.playerShaderMatProps.saturation=(float)Math.Round(v,2);UpdatePlayerSprMat();}
+    public void SetPlayerSprMatValue(float v){GameRules.instance.playerShaderMatProps.value=(float)Math.Round(v,2);UpdatePlayerSprMat();}
+    public void SetPlayerSprMatNegative(float v){GameRules.instance.playerShaderMatProps.negative=(float)Math.Round(v,2);UpdatePlayerSprMat();}
+    public void SetPlayerSprMatPixelate(float v){GameRules.instance.playerShaderMatProps.pixelate=Mathf.Clamp((float)Math.Round(v,2),(4/512),1);UpdatePlayerSprMat();}
+    public void SetPlayerSprMatBlur(float v){GameRules.instance.playerShaderMatProps.blur=(float)Math.Round(v,2);UpdatePlayerSprMat();}
+    void UpdatePlayerSprMat(){SetPlayerPreviewsSprite();}
     public void SetHealth(string v){GameRules.instance.healthPlayer=float.Parse(v);
         if(GameRules.instance.healthPlayer>GameRules.instance.healthMaxPlayer){GameRules.instance.healthMaxPlayer=GameRules.instance.healthPlayer;}}
     public void SetHealthMax(string v){GameRules.instance.healthMaxPlayer=float.Parse(v);}
@@ -361,6 +402,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 #region//Enemies
     #region///returns
     bool _canModifySpriteEn(){bool b=true;string s=enemyToModify;
+        if(false
+        ){
+            b=false;}
+    return b;}
+    bool _canChangeSpriteEn(){bool b=true;string s=enemyToModify;
         if(s=="Vortex Wheel"
         ||s=="Comet"
         ){
@@ -381,19 +427,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
     public Sprite _enSpr(string str){return _enSprGR(str,GameRules.instance);}
     public Sprite _enModSpr(){return _enSpr(enemyToModify);}
-    public Material _enSprMat(string str){
-        Material _mat=null;
-        if(_en(str)!=null){
-            if(_en(str).sprMat!=null)_mat=_en(str).sprMat;
-            if(_mat==null||(_mat!=null&&!_mat.shader.name.Contains("AllIn1SpriteShader"))){Debug.LogWarning("New sprite material! for: "+str);
-                if(GameAssets.instance.Mat("HueShift_UIMask")!=null){_mat=Instantiate(GameAssets.instance.Mat("HueShift_UIMask"));}
-                _mat.SetInt("_HsvShift",0);
-                _en(str).sprMat=_mat;
-            }
-        }
-        return _mat;
+    public ShaderMatProps _enSprMat(string str){
+        if(_en(str)!=null){return _en(str).sprMatProps;}
+        else return null;
     }
-    public Material _enModSprMat(){return _enSprMat(enemyToModify);}
+    public ShaderMatProps _enModSprMat(){return _enSprMat(enemyToModify);}
     #endregion///returns
 
     //Enemy Main Settings
@@ -405,9 +443,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
     //Enemy Sprite
     public void SetEnemySprite(string v){_enMod().spr=enemySprites.Find(x=>x.name==v).spr;OpenEnemySpritePanel();}
-    public void SetEnemySprMatHue(float v){if(_enModSprMat()!=null)_enModSprMat().SetInt("_HsvShift",(int)v);}
-    public void SetEnemySprMatSatur(float v){if(_enModSprMat()!=null)_enModSprMat().SetFloat("_HsvSaturation",v);}
-    public void SetEnemySprMatValue(float v){if(_enModSprMat()!=null)_enModSprMat().SetFloat("_HsvBright",v);}
+    public void SetEnemySprMatHue(float v){if(_enModSprMat()!=null)_enModSprMat().hue=(float)Math.Round(v,2);UpdateEnModSprMat();}
+    public void SetEnemySprMatSatur(float v){if(_enModSprMat()!=null)_enModSprMat().saturation=(float)Math.Round(v,2);UpdateEnModSprMat();}
+    public void SetEnemySprMatValue(float v){if(_enModSprMat()!=null)_enModSprMat().value=(float)Math.Round(v,2);UpdateEnModSprMat();}
+    public void SetEnemySprMatNegative(float v){if(_enModSprMat()!=null)_enModSprMat().negative=(float)Math.Round(v,2);UpdateEnModSprMat();}
+    public void SetEnemySprMatPixelate(float v){if(_enModSprMat()!=null)_enModSprMat().pixelate=Mathf.Clamp((float)Math.Round(v,2),(4/512),1);UpdateEnModSprMat();}
+    public void SetEnemySprMatBlur(float v){if(_enModSprMat()!=null)_enModSprMat().blur=(float)Math.Round(v,2);UpdateEnModSprMat();}
+    void UpdateEnModSprMat(){SetEnemyPreviewsSprite();}
 #endregion
 #region//Waves
     public void SetWaveSpawnReqsType(int v){    spawnReqsType srt=0;string t=wavesSpawnReqsTypes[v];
@@ -507,6 +549,45 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 #endregion
 
 #region//Start & Update functions
+    void SetPresetIconSpritesLibrary(){
+        presetIconSprites=new List<GSprite>();
+        presetIconSprites.AddRange(enemySprites);
+        foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){}
+        presetIconSprites=presetIconSprites.OrderBy(x=>x.name).ToList();
+        
+
+        Transform presetAppearanceIconSprLibTransform=presetAppearanceIconSprLibPanel.transform.GetChild(1).GetChild(0);presetAppearanceIconSprLibTransform.GetComponent<ContentSizeFitter>().enabled=true;presetAppearanceIconSprLibTransform.localPosition=new Vector2(0,-999);
+        GameObject prefab=presetAppearanceIconSprLibTransform.GetChild(0).gameObject;
+        for(var d=presetAppearanceIconSprLibTransform.childCount-1;d>=1;d--){Destroy(presetAppearanceIconSprLibTransform.GetChild(d).gameObject);}
+
+        foreach(GSprite s in presetIconSprites){
+            GameObject go=Instantiate(prefab,presetAppearanceIconSprLibTransform);
+            go.name=s.name;
+            Sprite _spr=s.spr;
+            if(_spr!=null)go.transform.GetChild(0).GetComponent<Image>().sprite=_spr;
+            go.GetComponent<Button>().onClick.AddListener(()=>SetPresetIcon(s.name));
+        }
+        prefab.GetComponent<Button>().onClick.AddListener(()=>SetPresetIcon("questionMark"));
+        //Destroy(prefab);
+    }
+    /*void SetPlayerSpritesLibrary(){
+        playerSprites=new List<GSprite>();
+        if(ES3.DirectoryExists(_sandboxShipSkinsDir())){foreach(string f in ES3.GetFiles(_sandboxShipSkinsDir())){if(f.Contains(".png")){var spr=new GSprite();spr.name=f;spr.spr=Sprite.Create(ES3.LoadImage(f));playerSprites.Add(spr);}else{Debug.LogWarning(f+" is not a PNG file");}}}
+        playerSprites=playerSprites.OrderBy(x=>x.name).ToList();
+
+        Transform playerSprLibTransform=playerSpritesLibPanel.transform.GetChild(1).GetChild(0);playerSprLibTransform.GetComponent<ContentSizeFitter>().enabled=true;playerSprLibTransform.localPosition=new Vector2(0,-999);
+        GameObject prefab=playerSprLibTransform.GetChild(0).gameObject;
+        for(var d=playerSprLibTransform.childCount-1;d>=1;d--){Destroy(playerSprLibTransform.GetChild(d).gameObject);}
+
+        foreach(GSprite s in playerSprites){
+            GameObject go=Instantiate(prefab,playerSprLibTransform);
+            go.name=s.name;
+            Sprite _spr=s.spr;
+            if(_spr!=null)go.transform.GetChild(0).GetComponent<Image>().sprite=_spr;
+            go.GetComponent<Button>().onClick.AddListener(()=>SetPlayerSprite(s.name));
+        }
+        Destroy(prefab);
+    }*/
     void SetStartingPowerupChoices(){
         Transform startingPowerupChoicesListTransform=startingPowerupChoices.transform.GetChild(0);//startingPowerupChoicesListTransform.GetComponent<ContentSizeFitter>().enabled=true;startingPowerupChoicesListTransform.localPosition=new Vector2(0,-999);
         GameObject prefab=startingPowerupChoicesListTransform.GetChild(0).gameObject;
@@ -686,34 +767,35 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr.cfgDesc;
             if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
             if(gr.cfgIconsGo!=null){Instantiate(gr.cfgIconsGo,go.transform.GetChild(1));}
-            else{go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.Spr(gr.cfgIconAssetName);}
+            else{go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.SprAny(gr.cfgIconAssetName);}
         }
     }
     void SetYoursPresetsButtons(){
         Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
         for(var d=yoursModesListTransform.childCount-1;d>=0;d--){Destroy(yoursModesListTransform.GetChild(d).gameObject);}
 
-        if(ES3.DirectoryExists(_sandboxSavesDir())){foreach(string f in ES3.GetFiles(_sandboxSavesDir())){AddNewYoursPresetButton(f);}}
+        if(ES3.DirectoryExists(_sandboxSavesDir())){foreach(string f in ES3.GetFiles(_sandboxSavesDir())){if(f.Contains(".json")){AddNewYoursPresetButton(f);}else{Debug.LogWarning(f+" is not a JSON file");}}}
     }
     GameRules _tempCurrentGr=null;
+    bool _debug=true;
     void AddNewYoursPresetButton(string f,GameRules _grCur=null){
         Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
         
         var fpath=_sandboxSavesDir()+"/"+f;
-        if(ES3.FileExists(fpath)||_grCur!=null){if(ES3.KeyExists("sandboxData",fpath)||_grCur!=null){//var data=ES3.Load("sandboxData",fpath);
+        if(ES3.FileExists(fpath)||_grCur!=null){if(ES3.KeyExists("gamerulesData",fpath)||_grCur!=null){//var data=ES3.Load("gamerulesData",fpath);
             //GameRules gr=(GameRules)(new GameRules() as GameRules); Debug.Log("gr: "+gr);Debug.Log("GameRulesInstance:"+GameRules.instance);//defPresetGameruleset.ShallowCopy();
-            Debug.Log("GameRules.instance PRE-ASSIGN: "+GameRules.instance);
+            if(_debug){Debug.Log("GameRules.instance PRE-ASSIGN: "+GameRules.instance);
             Debug.Log("GameRules.instance GameSpeed PRE-ASSIGN: "+GameRules.instance.defaultGameSpeed);
             Debug.Log("_tempCurrentGr PRE-ASSIGN: "+_tempCurrentGr);
-            if(_tempCurrentGr!=null)Debug.Log("_tempCurrentGr GameSpeed PRE-ASSIGN: "+_tempCurrentGr.defaultGameSpeed);
+            if(_tempCurrentGr!=null)Debug.Log("_tempCurrentGr GameSpeed PRE-ASSIGN: "+_tempCurrentGr.defaultGameSpeed);}
             _tempCurrentGr=GameRules.instance;
-            Debug.Log("_tempCurrentGr POST-ASSIGN: "+_tempCurrentGr);
-            Debug.Log("_tempCurrentGr GameSpeed POST-ASSIGN: "+_tempCurrentGr.defaultGameSpeed);
-            List<GameRules> gr=new List<GameRules>();if(_grCur==null){gr.Add(ES3.Load<GameRules>("sandboxData",fpath));}else{gr.Add(_grCur);}//GameRules gr=(GameRules)grpre;
+            if(_debug){Debug.Log("_tempCurrentGr POST-ASSIGN: "+_tempCurrentGr);
+            Debug.Log("_tempCurrentGr GameSpeed POST-ASSIGN: "+_tempCurrentGr.defaultGameSpeed);}
+            List<GameRules> gr=new List<GameRules>();if(_grCur==null){gr.Add(ES3.Load<GameRules>("gamerulesData",fpath));}else{gr.Add(_grCur);}//GameRules gr=(GameRules)grpre;
 
             if(gr.Count>0&&gr[0]!=null){
-                Debug.Log("loaded gr: "+gr[0]);
-                Debug.Log("loaded gr GameSpeed: "+gr[0].defaultGameSpeed);
+                if(_debug){Debug.Log("loaded gr: "+gr[0]);
+                Debug.Log("loaded gr GameSpeed: "+gr[0].defaultGameSpeed);}
                 string name=f;if(name.Contains(".json")){name=name.Replace(".json","");}
                 GameObject go=Instantiate(gameModeListElementPrefab,yoursModesListTransform);
                 yoursModesListTransform.GetComponent<ContentSizeFitter>().enabled=true;yoursModesListTransform.localPosition=new Vector2(0,-999);
@@ -725,22 +807,22 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 if(gr[0].cfgIconsGo!=null){
                     Instantiate(gr[0].cfgIconsGo,go.transform.GetChild(1));
                 }else{
-                    if(!String.IsNullOrEmpty(gr[0].cfgIconAssetName)){go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.Spr(gr[0].cfgIconAssetName);}
+                    if(!String.IsNullOrEmpty(gr[0].cfgIconAssetName)){go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.SprAny(gr[0].cfgIconAssetName);}
                     else{Instantiate(sandboxIconsGo,go.transform.GetChild(1));}
                 }
                 //Destroy(gr);
-                if(gr[0]==_tempCurrentGr)Debug.Log("BRO WTF gr[0] is the same as THE SAME AS _tempCurrentGr");
+                if(_debug){if(gr[0]==_tempCurrentGr)Debug.Log("BRO WTF gr[0] is the same as THE SAME AS _tempCurrentGr");
                 if(gr[0]==GameRules.instance)Debug.Log("BRO WTF gr[0] IS THE SAME AS GameRules.instance");
-                if(_tempCurrentGr==GameRules.instance)Debug.Log("BRO WTF _tempCurrentGr IS THE SAME AS GameRules.instance");
+                if(_tempCurrentGr==GameRules.instance)Debug.Log("BRO WTF _tempCurrentGr IS THE SAME AS GameRules.instance");}
                 if(gr.Count>0)gr.RemoveAt(0);
-                Debug.Log("gr POST-REMOVE: "+gr);
+                if(_debug){Debug.Log("gr POST-REMOVE: "+gr);
                 Debug.Log("_tempCurrentGr: "+_tempCurrentGr);
-                Debug.Log("_tempCurrentGr GameSpeed: "+_tempCurrentGr.defaultGameSpeed);
+                Debug.Log("_tempCurrentGr GameSpeed: "+_tempCurrentGr.defaultGameSpeed);}
                 GameRules.instance=_tempCurrentGr;
-                Debug.Log("GameRules.instance POST-ASSIGN: "+GameRules.instance);
-                Debug.Log("GameRules.instance GameSpeed POST-ASSIGN: "+GameRules.instance.defaultGameSpeed);
-            }else{Debug.Log("!!NO GR!!");}
-            Debug.Log("----");
+                if(_debug){Debug.Log("GameRules.instance POST-ASSIGN: "+GameRules.instance);
+                Debug.Log("GameRules.instance GameSpeed POST-ASSIGN: "+GameRules.instance.defaultGameSpeed);}
+            }else{Debug.Log("!!NO GR FOR: "+f);}
+            if(_debug)Debug.Log("----");
         }}
     }
 
@@ -773,10 +855,17 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             }
         }else{Debug.LogError("PowerupInventory not assigned!");}
     }
+    void SetPresetIconPreviewsSprite(){
+        presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().sprite=GameAssets.instance.SprAny(GameRules.instance.cfgIconAssetName);
+    }
+    void SetPlayerPreviewsSprite(){
+        playerMainPanel.transform.GetChild(0).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(playerMainPanel.transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.playerShaderMatProps,true);
+        playerSpritePanel.transform.GetChild(0).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(playerSpritePanel.transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.playerShaderMatProps,true);
+    }
     void SetEnemyPreviewsSprite(){
         if(true){foreach(Transform t in enemiesPanel.transform.GetChild(1).GetChild(0)){if(_en(t.gameObject.name)!=null){
             t.GetChild(0).GetComponent<Image>().sprite=_enSpr(t.gameObject.name);
-            t.GetChild(0).GetComponent<Image>().material=_enSprMat(t.gameObject.name);
+            t.GetChild(0).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(t.GetChild(0).GetComponent<Image>().material,_enSprMat(t.gameObject.name),true);
         }}}
         if(_enMod()!=null){
             if(_enModSpr()!=null){
@@ -784,8 +873,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 enemySpritePanel.transform.GetChild(1).GetComponent<Image>().sprite=_enModSpr();
             }
             if(_enModSprMat()!=null){
-                enemyMainPanel.transform.GetChild(1).GetComponent<Image>().material=_enModSprMat();
-                enemySpritePanel.transform.GetChild(1).GetComponent<Image>().material=_enModSprMat();
+                enemyMainPanel.transform.GetChild(1).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(enemyMainPanel.transform.GetChild(1).GetComponent<Image>().material,_enModSprMat(),true);
+                enemySpritePanel.transform.GetChild(1).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(enemySpritePanel.transform.GetChild(1).GetComponent<Image>().material,_enModSprMat(),true);
             }
         }
     }

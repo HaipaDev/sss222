@@ -53,7 +53,8 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public float vertCameraSize=7f;
     public float horizCameraSize=3.92f;
     [Header("Other")]
-    public string gameVersion="0.5t3";
+    public string gameVersion;
+    [SerializeField][ReadOnly] string _tempSandboxSaveName;
     public bool cheatmode;
     public bool dmgPopups=true;
     public bool analyticsOn=true;
@@ -69,7 +70,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public bool presenceTimeSet=false;
     //[SerializeField] InputMaster inputMaster;
     [Range(0,2)]public static int maskMode=1;
-    //public string gameVersion;
 
     void Awake(){
         SetUpSingleton();
@@ -83,7 +83,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     void SetUpSingleton(){if(GameSession.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
     void Start(){
         Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);
-        if(SceneManager.GetActiveScene().name=="Game"){AddSpawnReqsMono();}
+        if(SceneManager.GetActiveScene().name=="Game"){ReAddSpawnReqsMono();}
         else if(SceneManager.GetActiveScene().name!="Game"){RemoveSpawnReqsMono();}
 
         presenceTimeSet=false;
@@ -104,7 +104,8 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     }}
     
     public void EnterGameScene(){
-        AddSpawnReqsMono();
+        ReAddSpawnReqsMono();
+        if(GameRules.instance.cfgName.Contains("Sandbox Mode"))SetTempSandboxSaveName();
         StartCoroutine(SetGameRulesValues());
         RandomizeWaveScoreMax();
         RandomizeShopScoreMax();
@@ -112,6 +113,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(SaveSerial.instance.settingsData.playfieldRot==PlaneDir.horiz){FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,90);FindObjectOfType<Camera>().orthographicSize=horizCameraSize;}
         else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=vertCameraSize;}
     }
+    public void SetTempSandboxSaveName(){if(SandboxCanvas.instance!=null)_tempSandboxSaveName=SandboxCanvas.instance.saveSelected;else Debug.LogWarning("No SandboxCanvas instance!");}
+    public void ResetTempSandboxSaveName(){_tempSandboxSaveName="";}
+    public string GetTempSandboxSaveName(){return _tempSandboxSaveName;}
     public void RandomizeWaveScoreMax(){
         if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;if(sr!=null){if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-1);}}
     }
@@ -267,10 +271,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
 
     public void ResetScore(){
         score=0;
-        if(!CheckGamemodeSelected("Adventure")){
-        coins=0;
-        cores=0;
-        }
+        if(!CheckGamemodeSelected("Adventure")){ResetAfterAdventure();}
         xp=0;
         xpTotal=0;
         stayingTimeXP=0;
@@ -289,9 +290,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     }
     public void SaveHighscore(){
         if(CheckGamemodeSelected("Adventure")){SaveAdventure();}
-        if(gamemodeSelected>=0&&gamemodeSelected<SaveSerial.instance.playerData.highscore.Length){
+        if(gamemodeSelected>0&&gamemodeSelected<SaveSerial.instance.playerData.highscore.Length){
             if(score>GetHighscoreCurrent()){SaveSerial.instance.playerData.highscore[GameSession.instance.gamemodeSelected-1]=score;}
-        }else if(gamemodeSelected>=SaveSerial.instance.playerData.highscore.Length){Debug.LogWarning("Score not submittable for this gamemode");}
+        }else if(gamemodeSelected>=SaveSerial.instance.playerData.highscore.Length||gamemodeSelected<=0){Debug.LogWarning("Score not submittable for this gamemode");}
         StatsAchievsManager.instance.AddScoreTotal(score);
         StatsAchievsManager.instance.AddPlaytime(GetGameSessionTime());
     }
@@ -511,10 +512,20 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public int GetGameSessionTime(){return Mathf.RoundToInt(currentPlaytime);}
 
     public void SetGamemodeSelected(int i){gamemodeSelected=i;}
-    public void SetGamemodeSelectedStr(string name){int i=0;i=Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))+1;
-        if(i==0){i=Array.FindIndex(GameCreator.instance.adventureZonesPrefabs,e=>e.cfgName.Contains(name));}gamemodeSelected=i;}
-    public bool CheckGamemodeSelected(string name){bool selected=false;if(gamemodeSelected>0&&gamemodeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))+1){selected=true;}
-        else if(gamemodeSelected<0&&Mathf.Abs(gamemodeSelected)+1==Array.FindIndex(GameCreator.instance.adventureZonesPrefabs,e=>e.cfgName.Contains(name))){selected=true;}return selected;}
+    public void SetGamemodeSelectedStr(string name){int i=0;
+        if(!name.Contains("Sandbox Mode")){
+            i=Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))+1;
+            if(i==0){i=Array.FindIndex(GameCreator.instance.adventureZonesPrefabs,e=>e.cfgName.Contains(name));}
+            if(i!=0){gamemodeSelected=i;}
+            else{Debug.LogWarning("Cant find GameMode by name: "+name);}
+        }else{gamemodeSelected=0;}
+    }
+    public bool CheckGamemodeSelected(string name){
+        return (
+            (gamemodeSelected>0&&gamemodeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))+1)
+            ||(gamemodeSelected<0&&Mathf.Abs(gamemodeSelected)+1==Array.FindIndex(GameCreator.instance.adventureZonesPrefabs,e=>e.cfgName.Contains(name)))
+            ||(gamemodeSelected==0&&GameRules.instance.cfgName.Contains(name))
+        );}
     public int GetGamemodeID(string name){return Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
     public GameRules GetGameRules(string name){return Array.Find(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
     /*public int GetGamemodeID(string name){int i=0;i=Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));
@@ -534,7 +545,8 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     //public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
     public int GetHighscoreByName(string str){int i=0;if(SaveSerial.instance.playerData.highscore.Length>GetGamemodeID(str)){i=SaveSerial.instance.playerData.highscore[GetGamemodeID(str)];}return i;}
     public int GetHighscoreCurrent(){int i=0;if(gamemodeSelected>0){if(SaveSerial.instance.playerData.highscore.Length>gamemodeSelected-1){i=SaveSerial.instance.playerData.highscore[gamemodeSelected-1];}}return i;}
-    public void SetCheatmode(){if(!cheatmode){cheatmode=true;return;}else{cheatmode=false;return;}}
+    public void SetCheatmode(){cheatmode=!cheatmode;return;}
+    public void ReAddSpawnReqsMono(){RemoveSpawnReqsMono();AddSpawnReqsMono();}
     public void AddSpawnReqsMono(){if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}}
     public void RemoveSpawnReqsMono(){if(GetComponent<spawnReqsMono>()!=null){Destroy(GetComponent<spawnReqsMono>());}}
 }

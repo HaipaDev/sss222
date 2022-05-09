@@ -48,9 +48,17 @@ MonoBehaviour:
   cfgIconAssetName: 
   cfgIconsGo: {fileID: 4397622923898560575, guid: 0f34633e901e35f4cbdd5ac661e33652,
     type: 3}
+  bgMaterial:
+    text: {fileID: 2800000, guid: 83efc85fb5b3ba64c969f6438953fa41, type: 3}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 0
+    blur: 0
+    lowResBlur: 1
   defaultGameSpeed: 1
   scoreDisplay: 0
-  bgMaterial: {fileID: 0}
   crystalsOn: 1
   xpOn: 1
   coresOn: 1
@@ -69,6 +77,15 @@ MonoBehaviour:
   moveY: 1
   playfieldPadding: {x: -0.125, y: 0.45}
   moveSpeedPlayer: 7.5
+  playerShaderMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   healthPlayer: 150
   healthMaxPlayer: 150
   defensePlayer: 0
@@ -341,7 +358,15 @@ MonoBehaviour:
     type: 0
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
-    sprMat: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
     healthStart: 40
     healthMax: 40
     defense: 0
@@ -374,7 +399,15 @@ MonoBehaviour:
     type: 2
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
-    sprMat: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
     healthStart: 15
     healthMax: 15
     defense: 0
@@ -406,7 +439,15 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
-    sprMat: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
     healthStart: 60
     healthMax: 60
     defense: 4
@@ -438,7 +479,15 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
-    sprMat: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
     healthStart: 60
     healthMax: 60
     defense: 4
@@ -474,7 +523,15 @@ MonoBehaviour:
     type: 0
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
-    sprMat: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
     healthStart: 33
     healthMax: 33
     defense: 0
@@ -506,7 +563,15 @@ MonoBehaviour:
     type: 0
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
-    sprMat: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
     healthStart: 16
     healthMax: 16
     defense: 0
@@ -539,7 +604,15 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
-    sprMat: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
     healthStart: 77
     healthMax: 77
     defense: 3
@@ -574,7 +647,15 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
-    sprMat: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
     healthStart: 26
     healthMax: 26
     defense: 2
@@ -606,7 +687,15 @@ MonoBehaviour:
     type: 0
     size: {x: 1, y: 1}
     spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
-    sprMat: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
     healthStart: 17
     healthMax: 17
     defense: 1
@@ -638,7 +727,15 @@ MonoBehaviour:
     type: 1
     size: {x: 1, y: 1}
     spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
-    sprMat: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
     healthStart: 66
     healthMax: 66
     defense: 5

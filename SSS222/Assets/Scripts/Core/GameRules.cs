@@ -10,14 +10,16 @@ using Sirenix.OdinInspector;
 public class GameRules : MonoBehaviour{     public static GameRules instance;
 #region//Values
 #region//Global values
-[Title("Global", titleAlignment: TitleAlignments.Centered)]
+[Title("Preset Settings", titleAlignment: TitleAlignments.Centered)]
     [ES3NonSerializable]public string cfgName;
     [MultiLineProperty]public string cfgDesc;
     public string cfgIconAssetName;
     [InfoBox("Place a special GameObject with multiple icons here:")][AssetsOnly]public GameObject cfgIconsGo;
+    //public Material bgMaterial;
+    public ShaderMatProps bgMaterial;
+[Title("Global", titleAlignment: TitleAlignments.Centered)]
     [Range(0.1f,10f)]public float defaultGameSpeed=1f;
     public scoreDisplay scoreDisplay=scoreDisplay.score;
-    public Material bgMaterial;
     public bool crystalsOn=true;
     public bool xpOn=true;
     public bool coresOn=true;
@@ -39,6 +41,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool moveY=true;
     public Vector2 playfieldPadding=new Vector2(-0.125f,0.45f);
     public float moveSpeedPlayer=5f;
+    public ShaderMatProps playerShaderMatProps;
     public float healthPlayer=150;
     public float healthMaxPlayer=150;
     public int defensePlayer=0;
@@ -480,7 +483,7 @@ public class EnemyClass{
     public enemyType type;
     public Vector2 size = Vector2.one;
     public Sprite spr;
-    public Material sprMat;
+    public ShaderMatProps sprMatProps;
     public float healthStart=25;
     public float healthMax=25;
     public int defense=0;

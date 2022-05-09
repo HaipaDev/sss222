@@ -21,6 +21,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     [SerializeField] public float moveSpeedInit = 5f;
     [DisableInEditorMode]public float moveSpeed = 5f;//A variable for later modifications like Upgrades
     [DisableInEditorMode]public float moveSpeedCurrent;
+    [SerializeField]public ShaderMatProps shaderMatProps;
     [SerializeField]public float health = 100f;
     [SerializeField] public float healthMax = 100f;
     [SerializeField] public int defenseInit = 0;
@@ -277,6 +278,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         moveX=i.moveX;moveY=i.moveY;
         moveSpeedInit=i.moveSpeedPlayer;
         autoShoot=i.autoShootPlayer;
+        shaderMatProps=i.playerShaderMatProps;
         health=i.healthPlayer;
         healthMax=i.healthMaxPlayer;
         defenseInit=i.defensePlayer;
@@ -351,71 +353,72 @@ public class Player : MonoBehaviour{    public static Player instance;
         dmgMulti=dmgMultiInit;
     }
 
-    void Update(){  if(!GameSession.GlobalTimeIsPaused){
-        SetInputType(SaveSerial.instance.settingsData.inputType);
-        HandleInput(false);
-        health=Mathf.Clamp(health,0,healthMax);
-        energy=Mathf.Clamp(energy,0,energyMax);
-        //ammo=Mathf.Clamp(ammo,-4,999);
-        SelectItemSlot();
-        LosePowerup();
-        //if(!ammoOn)ammo=-4;
-        DrawMeleeWeapons();
-        HideMeleeWeapons();
-        UpdateItems();
-        if(GetComponent<PlayerSkills>()!=null){if(GetComponent<PlayerSkills>().timerTeleport==-4){Shoot();}}else{Shoot();}
-        Statuses();
-        CalculateDefenseSpeed();
-        Regen();
-        Die();
-        CountTimeMovementPressed();
-        if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
-            if(GetComponent<TrailVFX>()!=null){
-                if(GetComponent<TrailVFX>().enabled==false){GetComponent<TrailVFX>().enabled=true;}
-                if(GetComponent<TrailVFX>().trailObj!=null)if(GetComponent<TrailVFX>().trailObj.activeSelf==false){GetComponent<TrailVFX>().trailObj.SetActive(true);}
-            }
-            if(inputType!=InputType.mouse&&inputType!=InputType.drag){MovePlayer();}
-            else if(inputType==InputType.drag){MoveWithDrag();}
-            else{MoveWithMouse();}
-        }else{
-            if(GetComponent<TrailVFX>()!=null){
-                if(GetComponent<TrailVFX>().trailObj!=null)if(GetComponent<TrailVFX>().trailObj.activeSelf==true){GetComponent<TrailVFX>().trailObj.SetActive(false);}
-                if(GetComponent<TrailVFX>().enabled==true){GetComponent<TrailVFX>().enabled=false;}
-            }
-        }
-        if(shootTimer>0)shootTimer-=Time.deltaTime;
-        if(instantiateTimer>0)instantiateTimer-=Time.deltaTime;
-        velocity=rb.velocity;
-        if(moving==false){spawnReqsMono.AddStayingTime(Time.deltaTime);GameSession.instance.stayingTimeXP+=Time.deltaTime;/*stayingTimerTotal+=Time.deltaTime;*/timerHpRegen+=Time.deltaTime;}
-        if(moving==true){spawnReqsMono.AddMovingTime(Time.deltaTime);GameSession.instance.movingTimeXP+=Time.deltaTime;//timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;
-            if(fuelOn){if(fuelDrainTimer<=0){if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt,false);}fuelDrainTimer=fuelDrainFreq;}else{fuelDrainTimer-=Time.deltaTime;}}
-        }
-
-        
-        if(overheatOn){
-            if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
-            if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
-            if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);
-            overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
-            if(overheated==true&&overheatedTimer>0&&!GameSession.GlobalTimeIsPaused){overheatedTimer-=Time.deltaTime;
-                GameAssets.instance.VFX("Flare",new Vector2((transform.position.x+0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
-                GameAssets.instance.VFX("Flare",new Vector2((transform.position.x-0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
+    void Update(){ 
+        if(!GameSession.GlobalTimeIsPaused){
+            SetInputType(SaveSerial.instance.settingsData.inputType);
+            HandleInput(false);
+            health=Mathf.Clamp(health,0,healthMax);
+            energy=Mathf.Clamp(energy,0,energyMax);
+            //ammo=Mathf.Clamp(ammo,-4,999);
+            SelectItemSlot();
+            LosePowerup();
+            //if(!ammoOn)ammo=-4;
+            DrawMeleeWeapons();
+            HideMeleeWeapons();
+            UpdateItems();
+            if(GetComponent<PlayerSkills>()!=null){if(GetComponent<PlayerSkills>().timerTeleport==-4){Shoot();}}else{Shoot();}
+            Statuses();
+            CalculateDefenseSpeed();
+            Regen();
+            Die();
+            CountTimeMovementPressed();
+            if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
+                if(GetComponent<TrailVFX>()!=null){
+                    if(GetComponent<TrailVFX>().enabled==false){GetComponent<TrailVFX>().enabled=true;}
+                    if(GetComponent<TrailVFX>().trailObj!=null)if(GetComponent<TrailVFX>().trailObj.activeSelf==false){GetComponent<TrailVFX>().trailObj.SetActive(true);}
                 }
-            if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
-        }
-        if(Application.platform==RuntimePlatform.Android){mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);}
-        else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
+                if(inputType!=InputType.mouse&&inputType!=InputType.drag){MovePlayer();}
+                else if(inputType==InputType.drag){MoveWithDrag();}
+                else{MoveWithMouse();}
+            }else{
+                if(GetComponent<TrailVFX>()!=null){
+                    if(GetComponent<TrailVFX>().trailObj!=null)if(GetComponent<TrailVFX>().trailObj.activeSelf==true){GetComponent<TrailVFX>().trailObj.SetActive(false);}
+                    if(GetComponent<TrailVFX>().enabled==true){GetComponent<TrailVFX>().enabled=false;}
+                }
+            }
+            if(shootTimer>0)shootTimer-=Time.deltaTime;
+            if(instantiateTimer>0)instantiateTimer-=Time.deltaTime;
+            velocity=rb.velocity;
+            if(moving==false){spawnReqsMono.AddStayingTime(Time.deltaTime);GameSession.instance.stayingTimeXP+=Time.deltaTime;/*stayingTimerTotal+=Time.deltaTime;*/timerHpRegen+=Time.deltaTime;}
+            if(moving==true){spawnReqsMono.AddMovingTime(Time.deltaTime);GameSession.instance.movingTimeXP+=Time.deltaTime;//timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;
+                if(fuelOn){if(fuelDrainTimer<=0){if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt,false);}fuelDrainTimer=fuelDrainFreq;}else{fuelDrainTimer-=Time.deltaTime;}}
+            }
 
-        if(weaponsLimited){if(_curPwrup().timer>0){_curPwrup().timer-=Time.deltaTime;}
-        if(_curPwrup().timer<=0&&_curPwrup().timer!=-4){_curPwrup().timer=-4;
-            if(powerups.Length>1){ClearCurrentPowerup();SelectAnyNotEmptyPowerup();}else{ResetPowerupDef();}
-            if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}
-        }
+            if(overheatOn){
+                if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
+                if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
+                if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);
+                overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
+                if(overheated==true&&overheatedTimer>0&&!GameSession.GlobalTimeIsPaused){overheatedTimer-=Time.deltaTime;
+                    GameAssets.instance.VFX("Flare",new Vector2((transform.position.x+0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
+                    GameAssets.instance.VFX("Flare",new Vector2((transform.position.x-0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
+                    }
+                if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
+            }
+            if(Application.platform==RuntimePlatform.Android){mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);}
+            else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
 
-        if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
-    }
-    Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
-    Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
+            if(weaponsLimited){if(_curPwrup().timer>0){_curPwrup().timer-=Time.deltaTime;}
+            if(_curPwrup().timer<=0&&_curPwrup().timer!=-4){_curPwrup().timer=-4;
+                if(powerups.Length>1){ClearCurrentPowerup();SelectAnyNotEmptyPowerup();}else{ResetPowerupDef();}
+                if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}
+            }
+
+            if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
+        }
+        Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
+        Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
+        if(shaderMatProps!=null){GetComponent<SpriteRenderer>().material=GameAssets.instance.UpdateShaderMatProps(GetComponent<SpriteRenderer>().material,shaderMatProps);}
     }
     public void SetInputType(InputType type){inputType=type;}
     void FixedUpdate(){

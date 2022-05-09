@@ -17,21 +17,31 @@ public class SliderValue : MonoBehaviour{
         float _val=0f;
         var s=SaveSerial.instance;  var ss=SaveSerial.instance.settingsData;
         SettingsMenu sm=null;if(SettingsMenu.instance!=null)sm=SettingsMenu.instance;
-        var gr=GameRules.instance;var sb=SandboxCanvas.instance;    EnemyClass _en=null;
+        var gr=GameRules.instance;var sb=SandboxCanvas.instance;
         if(gr!=null){
             switch(value){
                 case "powerupsCapacity":_val=gr.powerupsCapacity;break;
                 case "gameSpeed":_val=gr.defaultGameSpeed;break;
+                case "bgHueGR":_val=gr.bgMaterial.hue;break;
+                case "bgSaturGR":_val=gr.bgMaterial.saturation;break;
+                case "bgValueGR":_val=gr.bgMaterial.value;break;
+                case "bgNegativeGR":_val=gr.bgMaterial.negative;break;
+
+                case "sprMatHue_Player":_val=gr.playerShaderMatProps.hue;break;
+                case "sprMatSatur_Player":_val=gr.playerShaderMatProps.saturation;break;
+                case "sprMatValue_Player":_val=gr.playerShaderMatProps.value;break;
+                case "sprMatNegative_Player":_val=gr.playerShaderMatProps.negative;break;
+                case "sprMatPixelate_Player":_val=gr.playerShaderMatProps.pixelate;break;
+                case "sprMatBlur_Player":_val=gr.playerShaderMatProps.blur;break;
             }
             if(sb!=null){
-                if(value.Contains("_EnemySB")){if(!System.String.IsNullOrEmpty(sb.enemyToModify))_en=System.Array.Find(gr.enemies,x=>x.name==sb.enemyToModify);}
                 switch(value){
-                    case "bgHueSB":_val=sb.bgHue;break;
-                    case "bgSaturSB":_val=sb.bgSatur;break;
-                    case "bgValueSB":_val=sb.bgValue;break;
-                    case "sprMatHue_EnemySB":_val=sb._enModSprMat().GetInt("_HsvShift");break;
-                    case "sprMatSatur_EnemySB":_val=sb._enModSprMat().GetFloat("_HsvSaturation");break;
-                    case "sprMatValue_EnemySB":_val=sb._enModSprMat().GetFloat("_HsvBright");break;
+                    case "sprMatHue_EnemySB":_val=sb._enModSprMat().hue;break;
+                    case "sprMatSatur_EnemySB":_val=sb._enModSprMat().saturation;break;
+                    case "sprMatValue_EnemySB":_val=sb._enModSprMat().value;break;
+                    case "sprMatNegative_EnemySB":_val=sb._enModSprMat().negative;break;
+                    case "sprMatPixelate_EnemySB":_val=sb._enModSprMat().pixelate;break;
+                    case "sprMatBlur_EnemySB":_val=sb._enModSprMat().blur;break;
                 }
             }
         }

@@ -5,6 +5,9 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 public class spawnReqsMono:MonoBehaviour{
+    public static spawnReqsMono instance;
+    void Awake(){if(spawnReqsMono.instance!=null){Destroy(this);}else{instance=this;}}
+
     public List<spawnReqs> spawnReqsList=new List<spawnReqs>();
     public static void AddScore(int val,int id=0){
         if(id==-1||id==-2){
@@ -30,16 +33,16 @@ public class spawnReqsMono:MonoBehaviour{
     public static void AddMovingTime(float val){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnMovingTime){var ss=(spawnMovingTime)sr;if(ss.timer2!=-5)ss.timer2+=val;}}}
 
     public static void RandomizeScoreMax(int id=0){
-        if(id==-1||id==-2){
-            List<spawnReqs> list=spawnReqsMono.instance.spawnReqsList.FindAll(x=>x is spawnScore);
-            List<spawnScore> list2=new List<spawnScore>();foreach(spawnReqs ssl in list){list2.Add((spawnScore)ssl);}
-            spawnScore ss=list2.Find(x=>x.specialId==id);if(ss!=null)ss.scoreNeeded=UnityEngine.Random.Range(ss.scoreMaxSetRange.x,ss.scoreMaxSetRange.y);else{Debug.LogError("No spawnReqs with specialId = "+id);}
-        }else if(id>=0){
-            foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnScore){var ss=(spawnScore)sr;ss.scoreNeeded=UnityEngine.Random.Range(ss.scoreMaxSetRange.x,ss.scoreMaxSetRange.y);}}
-        }
+        if(spawnReqsMono.instance!=null){if(spawnReqsMono.instance.spawnReqsList.Count>0){
+            if(id==-1||id==-2){
+                List<spawnReqs> list=spawnReqsMono.instance.spawnReqsList.FindAll(x=>x is spawnScore);
+                List<spawnScore> list2=new List<spawnScore>();foreach(spawnReqs ssl in list){list2.Add((spawnScore)ssl);}
+                spawnScore ss=list2.Find(x=>x.specialId==id);if(ss!=null)ss.scoreNeeded=UnityEngine.Random.Range(ss.scoreMaxSetRange.x,ss.scoreMaxSetRange.y);else{Debug.LogError("No spawnReqs with specialId = "+id);}
+            }else if(id>=0){
+                foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){if(sr is spawnScore){var ss=(spawnScore)sr;ss.scoreNeeded=UnityEngine.Random.Range(ss.scoreMaxSetRange.x,ss.scoreMaxSetRange.y);}}
+            }
+        }}
     }
-    public static spawnReqsMono instance;
-    void Awake(){if(spawnReqsMono.instance!=null){Destroy(this);}else{instance=this;}}
     public void CheckSpawns(spawnReqs x, spawnReqsType xt, MonoBehaviour mb, string cor, object corInfo=null){  if(!GameSession.GlobalTimeIsPaused){if(x!=null){
         if(!spawnReqsMono.instance.spawnReqsList.Contains(x)){spawnReqsMono.instance.spawnReqsList.Add(x);}
         if(x.timeEnabled){

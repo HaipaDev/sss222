@@ -64,19 +64,19 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 			return objref;
 		}else return null;
 	}
-    public GameObject Get(string obj){
+    public GameObject Get(string obj,bool ignoreWarning=false){
 		GObject o=Array.Find(objects, item => item.name == obj);
 		if(o==null){
-			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Object: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(obj)&&!ignoreWarning)Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
         return gobj;
 	}
-	public Sprite GetObjSpr(string obj){
+	public Sprite GetObjSpr(string obj,bool ignoreWarning=false){
 		GObject o=Array.Find(objects, item => item.name == obj);
 		if(o==null){
-			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Object: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(obj)&&!ignoreWarning)Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
 		}
 		Sprite spr=null;
@@ -94,14 +94,20 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		return gobj;
         //if(SaveSerial.instance.settingsData.particles)return gobj; else return null;
 	}
-    public Sprite Spr(string spr){
-		GSprite s=Array.Find(sprites, item => item.name == spr);
-		if(s==null){
-			if(!String.IsNullOrEmpty(spr))Debug.LogWarning("Sprite: " + spr + " not found!");
+    public Sprite Spr(string spr,bool ignoreWarning=false){
+		GSprite gs=Array.Find(sprites, item => item.name == spr);
+		if(gs==null){
+			if(!String.IsNullOrEmpty(spr)&&!ignoreWarning)Debug.LogWarning("Sprite: " + spr + " not found!");
 			return null;
 		}
-		Sprite gs=s.spr;
-        return gs;
+		Sprite s=gs.spr;
+        return s;
+	}
+    public Sprite SprAny(string spr){Sprite _spr;
+		_spr=Spr(spr,true);
+		if(_spr==null)_spr=GetObjSpr(spr,true);
+		if(_spr==null)Debug.LogWarning("Sprite not found in the library of sprites nor for the object by name: "+spr);
+        return _spr;
 	}
 	public Material Mat(string mat){
 		GMaterial m=Array.Find(materials, item => item.name == mat);
@@ -111,6 +117,21 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
 		Material gm=m.mat;
         return gm;
+	}
+	public Material UpdateShaderMatProps(Material mat,ShaderMatProps shaderMatProps,bool isUI=false){	Material _mat=mat;
+		if(_mat!=null&&!_mat.shader.name.Contains("AllIn1SpriteShader")){
+        	if(!isUI){if(GameAssets.instance.Mat("AIOShaderMat")!=null)_mat=Instantiate(GameAssets.instance.Mat("AIOShaderMat"));}
+			else{if(GameAssets.instance.Mat("AIOShaderMat_UI")!=null)_mat=Instantiate(GameAssets.instance.Mat("AIOShaderMat_UI"));}
+		}
+		_mat.SetTexture("_MainTex",shaderMatProps.text);
+		_mat.SetFloat("_HsvShift",shaderMatProps.hue*360);
+        _mat.SetFloat("_HsvSaturation",shaderMatProps.saturation*2);
+        _mat.SetFloat("_HsvBright",shaderMatProps.value*2);
+        _mat.SetFloat("_NegativeAmount",shaderMatProps.negative);
+        _mat.SetFloat("_PixelateSize",Mathf.Clamp(shaderMatProps.pixelate*512,4,512));
+        _mat.SetFloat("_BlurIntensity",shaderMatProps.blur*100);
+        _mat.SetFloat("_BlurHD",Convert.ToSingle(shaderMatProps.lowResBlur));
+		return _mat;
 	}
 	public PowerupItem GetPowerupItem(string obj){
 		PowerupItem o=Array.Find(powerupItems, item => item.name == obj);
@@ -339,9 +360,28 @@ public class GSprite{
 	public Sprite spr;
 }
 [System.Serializable]
+public class GTextSprite{
+	public string name;
+	public Texture2D text;
+	public Rect rect;
+	public Vector2 pivot;
+}
+[System.Serializable]
 public class GMaterial{
 	public string name;
 	public Material mat;
+}
+[System.Serializable]
+public class ShaderMatProps{
+	//public string name;
+	public Texture2D text;
+    [Range(0,1)]public float hue=0;
+    [Range(0,1)]public float saturation=0.5f;
+    [Range(0,1)]public float value=0.5f;
+    [Range(0,1)]public float negative=0;
+    [Range((4/512),1)]public float pixelate=1;
+    [Range(0,1)]public float blur=0;
+    public bool lowResBlur=true;
 }
 [System.Serializable]
 public class SimpleAnim{
