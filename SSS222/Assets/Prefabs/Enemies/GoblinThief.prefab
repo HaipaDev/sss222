@@ -174,15 +174,24 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   sizeAvg: 1
   spr: {fileID: 21300000, guid: 40f2dc524d630924491ca3d1aa85e6d1, type: 3}
+  sprMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   health: 16
   healthMax: 16
   defense: 0
   defenseOnPhase: 1
   healthBySize: 0
   shooting: 0
+  bulletAssetName: GoblinBT
   shootTime: {x: 1.8, y: 2.2}
-  shotCounter: 0
-  bullet: {fileID: 5313808222654050488, guid: 31832a8c249783e449d9e8aad6457ca7, type: 3}
+  shootTimer: 0
   bulletSpeed: 4
   DBullets: 1
   bulletDist: 0.1
@@ -199,6 +208,7 @@ MonoBehaviour:
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  bullet: {fileID: 0}
 --- !u!114 &412262165777825872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +302,7 @@ MonoBehaviour:
   part: TrailSmall
   offset: {x: -0.15, y: -0.3}
   onTop: 0
+  cstmzTrail: 0
   trailObj: {fileID: 0}
 --- !u!1 &9006734399501090835
 GameObject:

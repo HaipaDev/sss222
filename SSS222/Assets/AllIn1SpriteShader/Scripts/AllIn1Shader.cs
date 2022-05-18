@@ -401,7 +401,7 @@ public class AllIn1Shader : MonoBehaviour
         if (!Application.isPlaying) EditorSceneManager.MarkAllScenesDirty();
 
         //If you get an error here please delete the 2 lines below
-        var prefabStage = UnityEditor.Experimental.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+        var prefabStage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
         if (prefabStage != null) EditorSceneManager.MarkSceneDirty(prefabStage.scene);
         #endif
     }

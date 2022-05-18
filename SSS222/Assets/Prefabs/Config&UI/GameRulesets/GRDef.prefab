@@ -373,8 +373,7 @@ MonoBehaviour:
     healthBySize: 0
     shooting: 1
     shootTime: {x: 1.75, y: 2.8}
-    bullet: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b,
-      type: 3}
+    bulletAssetName: Soundwave
     bulletSpeed: 5
     DBullets: 0
     bulletDist: 0
@@ -414,7 +413,7 @@ MonoBehaviour:
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    bullet: {fileID: 0}
+    bulletAssetName: 
     bulletSpeed: 0
     DBullets: 0
     bulletDist: 0
@@ -454,7 +453,7 @@ MonoBehaviour:
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    bullet: {fileID: 0}
+    bulletAssetName: 
     bulletSpeed: 0
     DBullets: 0
     bulletDist: 0
@@ -494,8 +493,7 @@ MonoBehaviour:
     healthBySize: 0
     shooting: 1
     shootTime: {x: 0.64, y: 0.94}
-    bullet: {fileID: 5313808222654050488, guid: 7ee89741fb82f0a45a71870919d506a7,
-      type: 3}
+    bulletAssetName: EnemyLaser
     bulletSpeed: 8
     DBullets: 1
     bulletDist: 0.35
@@ -538,7 +536,7 @@ MonoBehaviour:
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    bullet: {fileID: 0}
+    bulletAssetName: 
     bulletSpeed: 0
     DBullets: 0
     bulletDist: 0
@@ -576,10 +574,9 @@ MonoBehaviour:
     healthMax: 16
     defense: 0
     healthBySize: 0
-    shooting: 0
+    shooting: 1
     shootTime: {x: 1.8, y: 2.2}
-    bullet: {fileID: 5313808222654050488, guid: 31832a8c249783e449d9e8aad6457ca7,
-      type: 3}
+    bulletAssetName: GoblinBT
     bulletSpeed: 4
     DBullets: 1
     bulletDist: 0.1
@@ -619,7 +616,7 @@ MonoBehaviour:
     healthBySize: 0
     shooting: 1
     shootTime: {x: 0.2, y: 0.2}
-    bullet: {fileID: 0}
+    bulletAssetName: 
     bulletSpeed: 0
     DBullets: 0
     bulletDist: 0
@@ -662,7 +659,7 @@ MonoBehaviour:
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    bullet: {fileID: 0}
+    bulletAssetName: 
     bulletSpeed: 0
     DBullets: 0
     bulletDist: 0
@@ -702,7 +699,7 @@ MonoBehaviour:
     healthBySize: 0
     shooting: 0
     shootTime: {x: 1.75, y: 2.8}
-    bullet: {fileID: 0}
+    bulletAssetName: 
     bulletSpeed: 0
     DBullets: 0
     bulletDist: 0
@@ -740,10 +737,9 @@ MonoBehaviour:
     healthMax: 66
     defense: 5
     healthBySize: 0
-    shooting: 0
+    shooting: 1
     shootTime: {x: 1.75, y: 2.8}
-    bullet: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2,
-      type: 3}
+    bulletAssetName: StickBomb
     bulletSpeed: 8
     DBullets: 0
     bulletDist: 0
@@ -806,8 +802,7 @@ MonoBehaviour:
     count_max: 3
     fallSpeed: 6
   healingDroneSettings:
-    healBallPrefab: {fileID: 6041420664094412071, guid: 67fb16cc03140834290bb647770ee0e9,
-      type: 3}
+    healPelletAssetName: 
     shootFrequency: 0.2
     speedBullet: 4
     distMin: 1.6

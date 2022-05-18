@@ -68,7 +68,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameSession.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }
-    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");GameSession.instance.ResetTempSandboxSaveName();/*GameSession.instance.SetGamemodeSelected(0);*/}
+    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");GameSession.instance.ResetTempSandboxSaveName();GameSession.instance.defaultGameSpeed=1;/*GameSession.instance.SetGamemodeSelected(0);*/}
     public void LoadAdventureZonesScene(){SceneManager.LoadScene("AdventureZones");GameSession.instance.LoadAdventurePre();}
     public void LoadSandboxModeScene(){SceneManager.LoadScene("SandboxMode");GameSession.instance.SetGamemodeSelected(0);}
     public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}

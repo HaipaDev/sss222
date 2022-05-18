@@ -22,6 +22,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [SceneObjectsOnly][SerializeField]GameObject collectiblesPanel;
     [Header("Presets Subpanels")]
     [SceneObjectsOnly][SerializeField]GameObject presetAppearanceMainPanel;
+    [SceneObjectsOnly][SerializeField]GameObject presetAppearanceIconPanel;
     [SceneObjectsOnly][SerializeField]GameObject presetAppearanceIconSprLibPanel;
     [Header("")]
     [SceneObjectsOnly][SerializeField]GameObject builtInPresetsPanel;
@@ -100,7 +101,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
     public void Back(){
         if(_anyFirstLevelPanelsActive()){OpenDefaultPanel();}
-            else if(presetAppearanceIconSprLibPanel.activeSelf){OpenPresetAppearancePanel();}
+            else if(presetAppearanceIconPanel.activeSelf){OpenPresetAppearancePanel();}
+                else if(presetAppearanceIconSprLibPanel.activeSelf){OpenPresetAppearanceIconPanel();}
             else if(playerSpritePanel.activeSelf){OpenPlayerPanel();}
                 else if(playerSpritesLibPanel.activeSelf){OpenPlayerSpritePanel();}
             else if(wavesPanel.activeSelf||disruptersPanel.activeSelf){OpenSpawnsPanel();}
@@ -113,9 +115,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
     public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}
     public void OpenPresetAppearancePanel(){CloseAllPanels();presetAppearancePanel.SetActive(true);presetAppearanceMainPanel.SetActive(true);SetPresetIconPreviewsSprite();
-        presetAppearanceIconSprLibPanel.SetActive(false);}
+        presetAppearanceIconPanel.SetActive(false);presetAppearanceIconSprLibPanel.SetActive(false);}
+    public void OpenPresetAppearanceIconPanel(){CloseAllPanels();presetAppearancePanel.SetActive(true);presetAppearanceIconPanel.SetActive(true);SetPresetIconPreviewsSprite();
+        presetAppearanceMainPanel.SetActive(false);presetAppearanceIconSprLibPanel.SetActive(false);}
     public void OpenPresetAppearanceIconSprLibPanel(){CloseAllPanels();presetAppearancePanel.SetActive(true);presetAppearanceIconSprLibPanel.SetActive(true);
-        presetAppearanceMainPanel.SetActive(false);}
+        presetAppearanceMainPanel.SetActive(false);presetAppearanceIconPanel.SetActive(false);}
 
     public void OpenPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);}
     public void OpenBuiltInPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);}
@@ -171,6 +175,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         collectiblesPanel.SetActive(false);
 
         presetAppearanceMainPanel.SetActive(false);
+        presetAppearanceIconPanel.SetActive(false);
         presetAppearanceIconSprLibPanel.SetActive(false);
         builtInPresetsPanel.SetActive(false);
         yoursPresetsPanel.SetActive(false);
@@ -246,7 +251,14 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         OpenDefaultPanel();
         SetupEverything();
     }
-    public void SetPresetIcon(string v){GameRules.instance.cfgIconAssetName=v;}
+    public void SetPresetIcon(string v){GameRules.instance.cfgIconAssetName=v;OpenPresetAppearanceIconPanel();}
+    public void SetPresetIconSprMatHue(float v){GameRules.instance.cfgIconShaderMatProps.hue=(float)Math.Round(v,2);UpdateIconSprMat();}
+    public void SetPresetIconSprMatSatur(float v){GameRules.instance.cfgIconShaderMatProps.saturation=(float)Math.Round(v,2);UpdateIconSprMat();}
+    public void SetPresetIconSprMatValue(float v){GameRules.instance.cfgIconShaderMatProps.value=(float)Math.Round(v,2);UpdateIconSprMat();}
+    public void SetPresetIconSprMatNegative(float v){GameRules.instance.cfgIconShaderMatProps.negative=(float)Math.Round(v,2);UpdateIconSprMat();}
+    public void SetPresetIconSprMatPixelate(float v){GameRules.instance.cfgIconShaderMatProps.pixelate=Mathf.Clamp((float)Math.Round(v,2),(4/512),1);UpdateIconSprMat();}
+    public void SetPresetIconSprMatBlur(float v){GameRules.instance.cfgIconShaderMatProps.blur=(float)Math.Round(v,2);UpdateIconSprMat();}
+    void UpdateIconSprMat(){SetPresetIconPreviewsSprite();}
     public void SelectPreset(string str){
         if(!String.IsNullOrEmpty(str)){
             if(String.IsNullOrEmpty(_cachedSandboxName)){if(saveSelected!=_cachedSandboxName){_cachedSandboxName=saveSelected;}else{_cachedSandboxName="";}}saveSelected=str;
@@ -552,9 +564,9 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     void SetPresetIconSpritesLibrary(){
         presetIconSprites=new List<GSprite>();
         presetIconSprites.AddRange(enemySprites);
-        foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){}
+        if(!GameAssets.instance.sprites.Contains(enemySprites[0]))GameAssets.instance.sprites.AddRange(enemySprites);
+        //foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){}
         presetIconSprites=presetIconSprites.OrderBy(x=>x.name).ToList();
-        
 
         Transform presetAppearanceIconSprLibTransform=presetAppearanceIconSprLibPanel.transform.GetChild(1).GetChild(0);presetAppearanceIconSprLibTransform.GetComponent<ContentSizeFitter>().enabled=true;presetAppearanceIconSprLibTransform.localPosition=new Vector2(0,-999);
         GameObject prefab=presetAppearanceIconSprLibTransform.GetChild(0).gameObject;
@@ -807,8 +819,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 if(gr[0].cfgIconsGo!=null){
                     Instantiate(gr[0].cfgIconsGo,go.transform.GetChild(1));
                 }else{
-                    if(!String.IsNullOrEmpty(gr[0].cfgIconAssetName)){go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.SprAny(gr[0].cfgIconAssetName);}
-                    else{Instantiate(sandboxIconsGo,go.transform.GetChild(1));}
+                    if(!String.IsNullOrEmpty(gr[0].cfgIconAssetName)){
+                        go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.SprAny(gr[0].cfgIconAssetName);
+                        go.transform.GetChild(1).gameObject.GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(go.transform.GetChild(1).gameObject.GetComponent<Image>().material,gr[0].cfgIconShaderMatProps,true);
+                    }//else{Instantiate(sandboxIconsGo,go.transform.GetChild(1));}
                 }
                 //Destroy(gr);
                 if(_debug){if(gr[0]==_tempCurrentGr)Debug.Log("BRO WTF gr[0] is the same as THE SAME AS _tempCurrentGr");
@@ -857,6 +871,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
     void SetPresetIconPreviewsSprite(){
         presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().sprite=GameAssets.instance.SprAny(GameRules.instance.cfgIconAssetName);
+        presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().sprite=GameAssets.instance.SprAny(GameRules.instance.cfgIconAssetName);
+
+        presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.cfgIconShaderMatProps,true);
+        presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().material,GameRules.instance.cfgIconShaderMatProps,true);
     }
     void SetPlayerPreviewsSprite(){
         playerMainPanel.transform.GetChild(0).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(playerMainPanel.transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.playerShaderMatProps,true);

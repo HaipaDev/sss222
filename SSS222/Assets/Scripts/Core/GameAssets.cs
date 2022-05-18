@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -11,9 +12,10 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	[Header("Main")]
 	[AssetsOnly,Searchable]public GObject[] objects;
 	[AssetsOnly,Searchable]public GObject[] vfx;
-	[AssetsOnly,Searchable]public GSprite[] sprites;
+	[AssetsOnly,Searchable]public List<GSprite> sprites;
 	[AssetsOnly,Searchable]public GMaterial[] materials;
-	[AssetsOnly,Searchable]public PowerupItem[] powerupItems;
+	[AssetsOnly,Searchable]public List<PowerupItem> powerupItems;
+	[AssetsOnly,Searchable]public List<GObject> enemyBullets;
 	[Header("Customization")]
 	[AssetsOnly,Searchable]public CstmzSkin[] skins;
 	[AssetsOnly,Searchable]public CstmzTrail[] trails;
@@ -95,7 +97,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         //if(SaveSerial.instance.settingsData.particles)return gobj; else return null;
 	}
     public Sprite Spr(string spr,bool ignoreWarning=false){
-		GSprite gs=Array.Find(sprites, item => item.name == spr);
+		GSprite gs=sprites.Find(item => item.name == spr);
 		if(gs==null){
 			if(!String.IsNullOrEmpty(spr)&&!ignoreWarning)Debug.LogWarning("Sprite: " + spr + " not found!");
 			return null;
@@ -109,6 +111,16 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		if(_spr==null)Debug.LogWarning("Sprite not found in the library of sprites nor for the object by name: "+spr);
         return _spr;
 	}
+    public GameObject GetEnemyBullet(string obj){
+		GObject o=enemyBullets.Find(item => item.name == obj);
+		GameObject gobj=null;if(o!=null)gobj=o.gobj;
+		if(o==null){
+			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Enemy Bullet by name: " + obj + " not found! Trying to look for other objects");
+			gobj=Get(obj);
+		}
+        return gobj;
+	}
+
 	public Material Mat(string mat){
 		GMaterial m=Array.Find(materials, item => item.name == mat);
 		if(m==null){
@@ -134,7 +146,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		return _mat;
 	}
 	public PowerupItem GetPowerupItem(string obj){
-		PowerupItem o=Array.Find(powerupItems, item => item.name == obj);
+		PowerupItem o=powerupItems.Find(item => item.name == obj);
 		if(o==null){
 			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Powerup by name: " + obj + " not found!");
 			return null;
@@ -142,7 +154,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return o;
 	}
 	public PowerupItem GetPowerupItemByAsset(string obj){
-		PowerupItem o=Array.Find(powerupItems, item => item.assetName == obj);
+		PowerupItem o=powerupItems.Find(item => item.assetName == obj);
 		if(o==null){
 			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Powerup by assetName: " + obj + " not found!");
 			return null;

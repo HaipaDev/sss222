@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  off: 0
   waveConfig: {fileID: 0}
   waypointsL: []
   waypointIndex: 0
@@ -170,13 +171,24 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   sizeAvg: 1
   spr: {fileID: 0}
+  sprMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   health: 17
   healthMax: 17
+  defense: 0
+  defenseOnPhase: 1
   healthBySize: 0
   shooting: 0
+  bulletAssetName: 
   shootTime: {x: 1.75, y: 2.8}
-  shotCounter: 0
-  bullet: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2, type: 3}
+  shootTimer: 0
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
@@ -193,6 +205,7 @@ MonoBehaviour:
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  bullet: {fileID: 0}
 --- !u!114 &9170640989436669197
 MonoBehaviour:
   m_ObjectHideFlags: 0

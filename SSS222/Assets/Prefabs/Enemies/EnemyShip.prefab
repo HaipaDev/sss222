@@ -170,15 +170,24 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   sizeAvg: 1
   spr: {fileID: 0}
+  sprMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   health: 120
   healthMax: 120
   defense: 0
   defenseOnPhase: 1
   healthBySize: 0
   shooting: 1
+  bulletAssetName: EnemyLaser
   shootTime: {x: 0.64, y: 0.94}
-  shotCounter: 0
-  bullet: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1, type: 3}
+  shootTimer: 0
   bulletSpeed: 8
   DBullets: 1
   bulletDist: 0.35
@@ -195,6 +204,7 @@ MonoBehaviour:
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  bullet: {fileID: 0}
 --- !u!114 &5004634516315193596
 MonoBehaviour:
   m_ObjectHideFlags: 0

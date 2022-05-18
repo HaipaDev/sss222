@@ -14,8 +14,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [ES3NonSerializable]public string cfgName;
     [MultiLineProperty]public string cfgDesc;
     public string cfgIconAssetName;
-    [InfoBox("Place a special GameObject with multiple icons here:")][AssetsOnly]public GameObject cfgIconsGo;
-    //public Material bgMaterial;
+    [InfoBox("Place a special GameObject with multiple icons here:")][AssetsOnly,ES3NonSerializable]public GameObject cfgIconsGo;
+    public ShaderMatProps cfgIconShaderMatProps;
     public ShaderMatProps bgMaterial;
 [Title("Global", titleAlignment: TitleAlignments.Centered)]
     [Range(0.1f,10f)]public float defaultGameSpeed=1f;
@@ -30,6 +30,13 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool statUpgOn=false;
     public bool iteminvOn=true;
     public bool barrierOn=false;
+
+    public bool instaPause=true;
+    public bool musicSlowdownOnPause=true;
+    public bool musicSlowdownOnPaceChange=true;
+    //public bool upgradeMenuPause=true;
+    //[HideIf("@this.upgradeMenuPause==true")][Range(0,1f)]public float upgradeMenuSlowdownSpeed=0.2f;
+
     public float scoreMulti=1;
     public float luckMulti=1;
 #endregion
@@ -489,14 +496,14 @@ public class EnemyClass{
     public int defense=0;
     public bool healthBySize=false;
     public bool shooting = false;
-    public Vector2 shootTime=new Vector2(1.75f,2.8f);
-    [AssetsOnly]public GameObject bullet;
-    public float bulletSpeed = 8f;
-    public bool DBullets = false;
-    public float bulletDist=0.35f;
+    [HideIf("@this.shooting==false")]public Vector2 shootTime=new Vector2(1.75f,2.8f);
+    [HideIf("@this.shooting==false")]public string bulletAssetName;
+    [HideIf("@this.shooting==false")]public float bulletSpeed = 8f;
+    [HideIf("@this.shooting==false")]public bool DBullets = false;
+    [HideIf("@this.shooting==false")]public float bulletDist=0.35f;
     public bool randomizeWaveDeath = false;
     public bool flyOff = false;
-    public bool killOnDash=true;
+    public bool killOnDash = true;
 [Header("Drops & Points")]
     public bool giveScore = true;
     public Vector2 scoreValue=new Vector2(1,10);
@@ -546,7 +553,7 @@ public class MechaLeechSettings{
 }
 [System.Serializable]
 public class HealingDroneSettings{
-    [AssetsOnly]public GameObject healBallPrefab;
+    public string healPelletAssetName;
     public float shootFrequency=0.2f;
     public float speedBullet=4f;
 [Header("Dodge")]

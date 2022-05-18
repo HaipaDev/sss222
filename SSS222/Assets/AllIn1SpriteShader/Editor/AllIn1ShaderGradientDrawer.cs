@@ -91,7 +91,7 @@ public class AllIn1ShaderGradientDrawer : MaterialPropertyDrawer
 	{
 		textureAsset = GetTextureAsset(path, name);
 		if (textureAsset == null) CreateTexture(path, name);
-		if (textureAsset.width != resolution) textureAsset.Resize(resolution, 1);
+		if (textureAsset.width != resolution) textureAsset.Reinitialize(resolution, 1);
 		return textureAsset;
 	}
 

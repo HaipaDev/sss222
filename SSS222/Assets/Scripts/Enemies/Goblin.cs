@@ -8,8 +8,8 @@ public class Goblin : MonoBehaviour{
     [SerializeField] Sprite bossSprite;
     [SerializeField] float bossHealth;
     [SerializeField] public List<LootTableEntryDrops> bossDrops;
-    public List<float> dropValues;
-    public List<GameObject> powerups;
+    [ReadOnly]public List<float> dropValues;
+    [ReadOnly]public List<GameObject> powerups;
     public bool bossForm=false;
     public bool confused=false;
     float yMax=6.6f;
@@ -28,6 +28,7 @@ public class Goblin : MonoBehaviour{
             bossHealth=e.goblinbossHealth;
             bossDrops=e.goblinBossDrops;
         }
+        GetComponent<Enemy>().shooting=false;
 
         for(var d=0;d<bossDrops.Count;d++){dropValues.Add(bossDrops[d].dropChance);}
         for(var d=0;d<dropValues.Count;d++){if(Random.Range(0, 100)<=dropValues[d]){dropValues[d]=101;}}

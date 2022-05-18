@@ -20,9 +20,9 @@ public class Enemy : MonoBehaviour{
     public bool defenseOnPhase=true;
     public bool healthBySize=false;
     [SerializeField] public bool shooting=false;
+    [SerializeField] public string bulletAssetName;
     [SerializeField] public Vector2 shootTime=new Vector2(1.75f,2.8f);
-    public float shootTimer;
-    [SerializeField] public GameObject bullet;
+    [ReadOnly] public float shootTimer;
     [SerializeField] float bulletSpeed=8f;
     [SerializeField] bool DBullets=false;
     [SerializeField] float bulletDist=0.35f;
@@ -44,6 +44,7 @@ public class Enemy : MonoBehaviour{
     public float dmgCount;
     GameObject dmgCountPopup;
 
+    public GameObject bullet;
     Rigidbody2D rb;
     SpriteRenderer sprRender;
 
@@ -72,7 +73,7 @@ public class Enemy : MonoBehaviour{
             defense=e.defense;
             shooting=e.shooting;
             shootTime=e.shootTime;
-            bullet=e.bullet;
+            bulletAssetName=e.bulletAssetName;
             bulletSpeed=e.bulletSpeed;
             DBullets=e.DBullets;
             bulletDist=e.bulletDist;
@@ -100,6 +101,8 @@ public class Enemy : MonoBehaviour{
             if(!GameRules.instance.crystalsOn)dropValues[1]=0;
             if(!GameRules.instance.coresOn)dropValues[2]=0;
         }
+
+        bullet=GameAssets.instance.GetEnemyBullet(bulletAssetName);
     }
     void Start(){
         rb=GetComponent<Rigidbody2D>();

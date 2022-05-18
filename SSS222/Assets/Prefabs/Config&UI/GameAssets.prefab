@@ -324,6 +324,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
   - {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
   - {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
+  enemyBullets:
+  - name: Soundwave
+    gobj: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b, type: 3}
+  - name: Soundwave-Classic
+    gobj: {fileID: 5313808222654050488, guid: d97f098552bac2e429e3463929028901, type: 3}
+  - name: EnemyLaser
+    gobj: {fileID: 5313808222654050488, guid: 7ee89741fb82f0a45a71870919d506a7, type: 3}
+  - name: EnemyLaser-Classic
+    gobj: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1, type: 3}
+  - name: GoblinBT
+    gobj: {fileID: 5313808222654050488, guid: 31832a8c249783e449d9e8aad6457ca7, type: 3}
+  - name: GoblinBT-Classic
+    gobj: {fileID: 5313808222654050488, guid: a5c2d58a3cf741949bd20513219dfcd0, type: 3}
+  - name: StickBomb
+    gobj: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2, type: 3}
+  - name: HealPellet
+    gobj: {fileID: 6041420664094412071, guid: 67fb16cc03140834290bb647770ee0e9, type: 3}
   skins:
   - artist: 
     displayName: Mk.22

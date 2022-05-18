@@ -43,7 +43,7 @@ public class PauseMenu : MonoBehaviour{
     public void PauseEmpty(){
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         GameIsPaused = true;
-        if(GameSession.instance.slowingPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
+        if(!GameRules.instance.instaPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
         else{GameSession.instance.gameSpeed=0;}
         //Debug.Log("Pausing");
     }

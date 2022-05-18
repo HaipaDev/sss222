@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  off: 0
   waveConfig: {fileID: 0}
   waypointsL: []
   waypointIndex: 0
@@ -169,21 +170,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
   Name: Bat
+  type: 0
   size: {x: 1, y: 1}
+  sizeAvg: 1
   spr: {fileID: 0}
+  sprMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   health: 40
   healthMax: 40
+  defense: 0
+  defenseOnPhase: 1
+  healthBySize: 0
   shooting: 1
+  bulletAssetName: Soundwave
   shootTime: {x: 1.75, y: 2.8}
-  shotCounter: 0
-  bullet: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b, type: 3}
+  shootTimer: 0
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
   randomizeWaveDeath: 0
   flyOff: 0
+  killOnDash: 1
   giveScore: 1
   scoreValue: {x: 1, y: 10}
   xpAmnt: 0
@@ -194,6 +209,7 @@ MonoBehaviour:
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  bullet: {fileID: 0}
 --- !u!114 &5591061404143185748
 MonoBehaviour:
   m_ObjectHideFlags: 0

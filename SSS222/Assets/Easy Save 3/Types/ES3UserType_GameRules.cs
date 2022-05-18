@@ -18,9 +18,9 @@ namespace ES3Types
 			
 			writer.WriteProperty("cfgDesc", instance.cfgDesc, ES3Type_string.Instance);
 			writer.WriteProperty("cfgIconAssetName", instance.cfgIconAssetName, ES3Type_string.Instance);
-			writer.WriteProperty("cfgIconsGo", instance.cfgIconsGo);
+			writer.WriteProperty("cfgIconShaderMatProps", instance.cfgIconShaderMatProps, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(ShaderMatProps)));
 			writer.WriteProperty("defaultGameSpeed", instance.defaultGameSpeed, ES3Type_float.Instance);
-			writer.WriteProperty("scoreDisplay", instance.scoreDisplay, ES3Type_enum.Instance);//ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<Powerup>)));
+			writer.WriteProperty("scoreDisplay", instance.scoreDisplay, ES3Type_enum.Instance);//ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(scoreDisplay)));
 			writer.WriteProperty("bgMaterial", instance.bgMaterial, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(ShaderMatProps)));
 			writer.WriteProperty("crystalsOn", instance.crystalsOn, ES3Type_bool.Instance);
 			writer.WriteProperty("xpOn", instance.xpOn, ES3Type_bool.Instance);
@@ -209,8 +209,8 @@ namespace ES3Types
 					case "cfgIconAssetName":
 						instance.cfgIconAssetName = reader.Read<System.String>(ES3Type_string.Instance);
 						break;
-					case "cfgIconsGo":
-						instance.cfgIconsGo = reader.Read<UnityEngine.GameObject>(ES3Type_GameObject.Instance);
+					case "cfgIconShaderMatProps":
+						instance.cfgIconShaderMatProps = reader.Read<ShaderMatProps>();
 						break;
 					case "defaultGameSpeed":
 						instance.defaultGameSpeed = reader.Read<System.Single>(ES3Type_float.Instance);

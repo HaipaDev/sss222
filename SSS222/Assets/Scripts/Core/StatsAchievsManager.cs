@@ -20,7 +20,8 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public bool statsLoaded;
     public bool statsTotalSummed;
     void Awake(){if(StatsAchievsManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
-    void Start(){foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){statsGamemodesList.Add(new StatsGamemode(){gmName=gr.cfgName});}}
+    void Start(){SetStatsList();}
+    void SetStatsList(){foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){statsGamemodesList.Add(new StatsGamemode(){gmName=gr.cfgName});}}
     void Update(){
         if(!achievsLoaded)LoadAchievs();
         if(!statsLoaded)LoadStats();
@@ -133,6 +134,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
             statsGamemodesList[i]=SaveSerial.instance.statsData.statsGamemodesList[i];}}
         statsLoaded=true;
     }
+    public void ResetStatsAchievs(){foreach(Achievement a in achievsList){a.achievData=new AchievData();}SetStatsList();statsTotal=new StatsTotal();}
     public static int GetStatsGMListCount(){return StatsAchievsManager.instance._statsGamemodesListCount;}
 }
 [System.Serializable]
@@ -145,7 +147,7 @@ public class Achievement{
     public bool epic;
     [Header("Values")]
     public AchievData achievData;
-    public bool _isCompleted(){bool b=false;b=achievData.completed;return b;}
+    public bool _isCompleted(){return achievData.completed;}
     public DateTime _dateAchieved(){DateTime dt=DateTime.Now;dt=achievData.dateAchieved;return dt;}
 }
 [System.Serializable]

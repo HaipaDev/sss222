@@ -49,7 +49,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     [Range(0.0f, 10.0f)] public float gameSpeed=1f;
     public float defaultGameSpeed=1f;
     public bool speedChanged;
-    public bool slowingPause;
+    //public bool slowingPause;
     public float vertCameraSize=7f;
     public float horizCameraSize=3.92f;
     [Header("Other")]
@@ -62,7 +62,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public const int gameModeMaxID=4;
     [SerializeField]float restartTimer=-4;
     
-    Player player;
     PostProcessVolume postProcessVolume;
     bool setValues;
     public float currentPlaytime=0;
@@ -79,6 +78,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         #else
         cheatmode=false;
         #endif
+        gameObject.AddComponent<gitignoreScript>();
     }
     void SetUpSingleton(){if(GameSession.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
     void Start(){
@@ -377,7 +377,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         SaveSerial.instance.playerData.overlayColor[1]=CustomizationInventory.instance.overlayColorArr[1];
         SaveSerial.instance.playerData.overlayColor[2]=CustomizationInventory.instance.overlayColorArr[2];
     }
-    public void DeleteAll(){SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure();DeleteStatsAchievs();ResetSettings();GSceneManager.instance.LoadStartMenu();}
+    public void DeleteAll(){DeleteStatsAchievs();ResetSettings();SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure();GSceneManager.instance.LoadStartMenu();}
     public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}
     public void ResetSettings(){
         SaveSerial.instance.ResetSettings();
@@ -385,9 +385,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         SaveSerial.instance.SaveSettings();
     }
     public void DeleteStatsAchievs(){
-        GameObject sa=FindObjectOfType<StatsAchievsManager>().gameObject;
-        Destroy(sa.GetComponent<StatsAchievsManager>());
-        sa.AddComponent<StatsAchievsManager>();
+        StatsAchievsManager.instance.ResetStatsAchievs();
         SaveSerial.instance.DeleteStats();
     }
     public void ResetMusicPitch(){
@@ -453,48 +451,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             legendPwrupMulti=Mathf.Clamp(1+(legendMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+legendMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
         }
     }
-    public void CheckCodes(string fkey, string nkey){
-        //if(fkey=="0"&&nkey=="0"){}
-        if(Input.GetKey(KeyCode.Delete) || fkey=="Del"){
-            if(Input.GetKeyDown(KeyCode.Alpha0) || nkey=="0"){
-                cheatmode=true;
-                AudioManager.instance.Play("LvlUp");
-            }if(Input.GetKeyDown(KeyCode.Alpha9) || nkey=="9"){
-                cheatmode=false;
-                AudioManager.instance.Play("Death");
-            }
-        }
-        if(cheatmode==true){
-            if(Input.GetKey(KeyCode.Alpha1) || fkey=="1"){
-                player=Player.instance;
-                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){player.health=player.healthMax;}
-                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){player.energy=player.energyMax;}
-                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.gclover=true;player.gcloverTimer=player.gcloverTime;}
-                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.health=0;}
-            }
-            if(Input.GetKey(KeyCode.Alpha2) || fkey=="2"){
-                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){AddToScoreNoEV(100);}
-                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){AddToScoreNoEV(1000);}
-                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){FindObjectOfType<Waves>().StartCoroutine(FindObjectOfType<Waves>().RandomizeWave());}//spawnReqsMono.AddScore(-5,-1);}
-                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){
-                    spawnReqsMono.AddScore(-5,-2);
-                }
-                if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){AddXP(100);}
-                if(Input.GetKeyDown(KeyCode.Y) || nkey=="Y"){coins+=100;cores+=100;}
-                if(Input.GetKeyDown(KeyCode.U) || nkey=="U"){FindObjectOfType<UpgradeMenu>().total_UpgradesLvl+=10;}
-            }
-            if(Input.GetKey(KeyCode.Alpha3) || fkey==""){
-                player=Player.instance;
-                if(Input.GetKeyDown(KeyCode.Q) || nkey=="Q"){}//var ps=Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupsSpawner.spawnReqsType==spawnReqsType.time);foreach(var p in ps){p.powerupsSpawner.timer=0.01f;}}
-                if(Input.GetKeyDown(KeyCode.W) || nkey=="W"){}//var ps=Array.FindAll(FindObjectsOfType<PowerupsSpawner>(),x=>x.powerupsSpawner.spawnReqsType==spawnReqsType.kills);foreach(var p in ps){p.powerupsSpawner.enemiesCount=9999999;}}
-                if(Input.GetKeyDown(KeyCode.E) || nkey=="E"){player.SetPowerupStr("laser3");}
-                if(Input.GetKeyDown(KeyCode.R) || nkey=="R"){player.SetPowerupStr("mlaser");}
-                if(Input.GetKeyDown(KeyCode.T) || nkey=="T"){player.SetPowerupStr("lsaber");}
-                if(Input.GetKeyDown(KeyCode.Y) || nkey=="Y"){player.SetPowerupStr("cstream");}
-                if(Input.GetKeyDown(KeyCode.U) || nkey=="U"){player.SetPowerupStr("plaser");}
-            }
-        }
-    }
+    public void CheckCodes(string fkey, string nkey){gitignoreScript.instance.CheckCodes(fkey, nkey);}
     public string FormatTime(float time){
         int minutes=(int) time / 60;
         int seconds=(int) time - (60*minutes);

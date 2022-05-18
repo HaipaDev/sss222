@@ -144,7 +144,7 @@ public class PlayerCollider : MonoBehaviour{
                 }
 
                 //Weapons
-                PowerupItem w=null;w=System.Array.Find(GameAssets.instance.powerupItems,x=>other.gameObject.name.Contains(GameAssets.instance.Get(x.assetName).name)&&x.powerupType==powerupType.weapon);
+                PowerupItem w=null;w=GameAssets.instance.powerupItems.Find(x=>other.gameObject.name.Contains(GameAssets.instance.Get(x.assetName).name)&&x.powerupType==powerupType.weapon);
                 if(w!=null){PowerupCollect(w.name);}
                 
                 //Other statuses

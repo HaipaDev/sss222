@@ -25,6 +25,7 @@ public class VortexWheel : MonoBehaviour{
             chargeMultip=e.chargeMultip;
             chargeMultipS=e.chargeMultipS;
         }
+        GetComponent<Enemy>().shooting=false;
     }
     void Start(){
         spr=GetComponent<SpriteRenderer>().sprite;

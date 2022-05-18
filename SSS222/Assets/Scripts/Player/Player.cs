@@ -916,9 +916,9 @@ public class Player : MonoBehaviour{    public static Player instance;
         }else{
             FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover=false;
         }
-        if(gcloverTimer<=0&&gcloverTimer>-4){AudioManager.instance.Play("GCloverOff");ResetStatus("gclover");}
+        if(gcloverTimer<=0&&gcloverTimer>-4||gcloverTimer<-5){AudioManager.instance.Play("GCloverOff");ResetStatus("gclover");}
 
-        if(shadowTimer<=0&&shadowTimer>-4){AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();ResetStatus("shadow");}
+        if(shadowTimer<=0&&shadowTimer>-4||shadowTimer<-5){AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();ResetStatus("shadow");}
         if(shadow==true){Shadow();if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==true)GetComponent<TrailVFX>().enabled=false;}}
         else{dashTime=-4;if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==false)GetComponent<TrailVFX>().enabled=true;}}
         if(dashingEnabled){
@@ -930,7 +930,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
 
         if(blind==true){if(BlindnessUI.instance!=null){if(!BlindnessUI.instance.on)BlindnessUI.instance.on=true;}}
-        if(blindTimer<=0&&blindTimer>-4){if(BlindnessUI.instance!=null){BlindnessUI.instance.on=false;}}
+        if(blindTimer<=0&&blindTimer>-4||blindTimer<-5){if(BlindnessUI.instance!=null){BlindnessUI.instance.on=false;}}
 
         if(inverter==true){if(InverterFx.instance!=null){if(!InverterFx.instance.on)InverterFx.instance.on=true;}}
         //else{if(InverterFx.instance.on){InverterFx.instance.on=false;}if(InverterFx.instance.revertMusic==false){InverterFx.instance.revertMusic=true;}
@@ -953,17 +953,17 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }
             }
         }
-        if(magnetTimer<=0&&magnetTimer>-4){ResetStatus("magnet");}
+        if(magnetTimer<=0&&magnetTimer>-4||magnetTimer<-5){ResetStatus("magnet");}
         
         if(scaler==true){
             //Scaler function in PlayerCollider
         }else{
             shipScale=shipScaleDefault;
         }
-        if(scalerTimer <=0 && scalerTimer>-4){ResetStatus("scaler");}
+        if(scalerTimer<=0&&scalerTimer>-4||scalerTimer<-5){ResetStatus("scaler");}
         transform.localScale=new Vector3(shipScale,shipScale,1);
         
-        if(pmultiTimer <=0 && pmultiTimer>-4){GameSession.instance.scoreMulti=GameSession.instance.defaultGameSpeed; ResetStatus("pmulti");}
+        if(pmultiTimer<=0&&pmultiTimer>-4||pmultiTimer<-5){GameSession.instance.scoreMulti=GameSession.instance.defaultGameSpeed;ResetStatus("pmulti");}
 
         if(!GameSession.GlobalTimeIsPausedNotSlowed){
             if(matrix==true&&accel==false){

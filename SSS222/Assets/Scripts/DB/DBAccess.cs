@@ -7,11 +7,10 @@ using MongoDB.Bson;
 using System.Threading.Tasks;
 
 
-public class DBAccess : MonoBehaviour{
-    public static DBAccess instance;
-    const string MONGO_URI = "mongodb+srv://sss222db:ElBpPfSw8tHOEYi2@cluster0.9rrjl.mongodb.net/Cluster0";
-    const string DATABASE_NAME_SSS222 = "sss222";
+public class DBAccess : MonoBehaviour{      public static DBAccess instance;
+    /*const*/ string MONGO_URI = gitignoreScript.mongoDBString;//= "";
     MongoClient client_SSS222;
+    const string DATABASE_NAME_SSS222 = "sss222";
     IMongoDatabase db_SSS222;
     const string DATABASE_NAME_hyperGamers = "hyperGamerLogin";
     MongoClient client_hyperGamers;
@@ -25,8 +24,13 @@ public class DBAccess : MonoBehaviour{
     public string registerMessage;
     public string loginMessage;
     public string submitMessage;
-    void Awake(){instance=this;SetUpSingleton();}
-    void SetUpSingleton(){int numberOfObj=FindObjectsOfType<GameSession>().Length;if(numberOfObj>1){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);}}
+
+    public string hyperLastLoginAppDisplay="SSS222";
+
+    void Awake(){
+        if(DBAccess.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
+        MONGO_URI=gitignoreScript.mongoDBString;
+    }
     void Start(){
         client_SSS222=new MongoClient(MONGO_URI);
         db_SSS222=client_SSS222.GetDatabase(DATABASE_NAME_SSS222);
@@ -114,6 +118,7 @@ public class DBAccess : MonoBehaviour{
                 loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
                 SaveSerial.instance.SetLogin(username,password);SaveSerial.instance.SaveLogin();
                 await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.dateLastLogin,System.DateTime.Now));
+                await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.appLastLogin,hyperLastLoginAppDisplay));
             }
         }else{SetLoginMessage("Login not found");}
     }
@@ -145,6 +150,7 @@ public class HyperGamer {
 
     public string username {  set; get; }
     public string password { set; get; }
+    public string appLastLogin { set; get; }
     public System.DateTime dateLastLogin { set; get; }
     public System.DateTime dateRegister { set; get; }
 }

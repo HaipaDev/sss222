@@ -27,6 +27,13 @@ public class SliderValue : MonoBehaviour{
                 case "bgValueGR":_val=gr.bgMaterial.value;break;
                 case "bgNegativeGR":_val=gr.bgMaterial.negative;break;
 
+                case "sprMatHue_Icon":_val=gr.cfgIconShaderMatProps.hue;break;
+                case "sprMatSatur_Icon":_val=gr.cfgIconShaderMatProps.saturation;break;
+                case "sprMatValue_Icon":_val=gr.cfgIconShaderMatProps.value;break;
+                case "sprMatNegative_Icon":_val=gr.cfgIconShaderMatProps.negative;break;
+                case "sprMatPixelate_Icon":_val=gr.cfgIconShaderMatProps.pixelate;break;
+                case "sprMatBlur_Icon":_val=gr.cfgIconShaderMatProps.blur;break;
+
                 case "sprMatHue_Player":_val=gr.playerShaderMatProps.hue;break;
                 case "sprMatSatur_Player":_val=gr.playerShaderMatProps.saturation;break;
                 case "sprMatValue_Player":_val=gr.playerShaderMatProps.value;break;

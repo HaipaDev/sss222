@@ -1,23 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class HealingDrone : MonoBehaviour{
     [Header("Properties")]
-    [SerializeField] GameObject healBallPrefab;
+    [SerializeField] string healPelletAssetName;
     [SerializeField] float shootFrequency=0.2f;
     [SerializeField] float speedBullet=4f;
     [Header("Values")]
-    public Enemy closestEnemy;
+    [ReadOnly]public Enemy closestEnemy;
+    [ReadOnly]public GameObject healPellet;
     bool shoot=true;
     void Awake(){
         var i=GameRules.instance;
         if(i!=null){
             var e=i.healingDroneSettings;
-            healBallPrefab=e.healBallPrefab;
+            healPelletAssetName=e.healPelletAssetName;
             shootFrequency=e.shootFrequency;
             speedBullet=e.speedBullet;
         }
+        healPellet=GameAssets.instance.GetEnemyBullet(healPelletAssetName);
     }
     void Update(){
         closestEnemy=FindClosestHealableEnemy();
@@ -28,7 +31,7 @@ public class HealingDrone : MonoBehaviour{
 
     IEnumerator ShootHealBullets(){
         yield return new WaitForSeconds(shootFrequency);
-        GameObject healBall=Instantiate(healBallPrefab,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+        GameObject healBall=Instantiate(healPellet,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
         float step=speedBullet*Time.deltaTime;
         if(closestEnemy!=null){
             healBall.GetComponent<FollowOneObject>().targetObj=closestEnemy.gameObject;

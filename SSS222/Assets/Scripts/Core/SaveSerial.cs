@@ -62,7 +62,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		Debug.Log("Login saved");
 	}
 	public void LoadLogin(){
-		if(File.Exists(Application.persistentDataPath + "/"+filenameLogin)){
+		if(File.Exists(Application.persistentDataPath+"/"+filenameLogin)){
 			SaveGame.Encode = loginEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
 			hyperGamerLoginData = SaveGame.Load<HyperGamerLoginData>(filenameLogin);
@@ -90,7 +90,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		Debug.Log("Game Data saved");
 	}
 	public void Load(){
-		if (File.Exists(Application.persistentDataPath + "/"+filename)){
+		if (File.Exists(Application.persistentDataPath+"/"+filename)){
 			SaveGame.Encode = dataEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
 			playerData = SaveGame.Load<PlayerData>(filename);
@@ -102,8 +102,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public void Delete(){
 		playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
 		GC.Collect();
-		if (File.Exists(Application.persistentDataPath + "/"+filename)){
-			File.Delete(Application.persistentDataPath + "/"+filename);
+		if (File.Exists(Application.persistentDataPath+"/"+filename)){
+			File.Delete(Application.persistentDataPath+"/"+filename);
 			Debug.Log("Game Data deleted");
 		}else Debug.Log("Game Data file not found in "+Application.persistentDataPath+"/"+filename);
 	}
@@ -120,7 +120,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		Debug.Log("Stats Data saved");
 	}
 	public void LoadStats(){
-		if (File.Exists(Application.persistentDataPath + "/"+statsFilename)){
+		if (File.Exists(Application.persistentDataPath+"/"+statsFilename)){
 			SaveGame.Encode = statsEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
 			statsData = SaveGame.Load<StatsData>(statsFilename);
@@ -131,8 +131,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public void DeleteStats(){
 		statsData=new StatsData(){statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()]};
 		GC.Collect();
-		if (File.Exists(Application.persistentDataPath + "/"+statsFilename)){
-			File.Delete(Application.persistentDataPath + "/"+statsFilename);
+		if (File.Exists(Application.persistentDataPath+"/"+statsFilename)){
+			File.Delete(Application.persistentDataPath+"/"+statsFilename);
 			Debug.Log("Stats Data deleted");
 		}else Debug.Log("Stats Data file not found in "+Application.persistentDataPath+"/"+statsFilename);
 	}
@@ -169,7 +169,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		Debug.Log("Adventure Data saved");
 	}
 	public void LoadAdventure(){
-		if (File.Exists(Application.persistentDataPath + "/"+filenameAdventure)){
+		if (File.Exists(Application.persistentDataPath+"/"+filenameAdventure)){
 			SaveGame.Encode = adventureEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
 			advD = SaveGame.Load<AdventureData>(filenameAdventure);
@@ -184,8 +184,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 	public void DeleteAdventure(){
 		ResetAdventure();
-		if(File.Exists(Application.persistentDataPath + "/"+filenameAdventure)){
-			File.Delete(Application.persistentDataPath + "/"+filenameAdventure);
+		if(File.Exists(Application.persistentDataPath+"/"+filenameAdventure)){
+			File.Delete(Application.persistentDataPath+"/"+filenameAdventure);
 			Debug.Log("Adventure Data deleted");
 		}else Debug.Log("Adventure Data file not found in "+Application.persistentDataPath+"/"+filenameAdventure);
 	}
@@ -246,20 +246,20 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		Debug.Log("Settings saved");
 	}
 	public void LoadSettings(){
-		if (File.Exists(Application.persistentDataPath + "/"+filenameSettings)){
+		if (File.Exists(Application.persistentDataPath+"/"+filenameSettings)){
 			SettingsData data = new SettingsData();
 			SaveGame.Encode = settingsEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
 			settingsData = SaveGame.Load<SettingsData>(filenameSettings);
 			Debug.Log("Settings loaded");
 		}
-		else Debug.Log("Settings file not found in " + Application.persistentDataPath + "/" + filenameSettings);
+		else Debug.Log("Settings file not found in " + Application.persistentDataPath+"/" + filenameSettings);
 	}
 	public void ResetSettings(){
 		settingsData=new SettingsData();
 		GC.Collect();
-		if (File.Exists(Application.persistentDataPath + "/"+filenameSettings)){
-			File.Delete(Application.persistentDataPath + "/"+filenameSettings);
+		if (File.Exists(Application.persistentDataPath+"/"+filenameSettings)){
+			File.Delete(Application.persistentDataPath+"/"+filenameSettings);
 			Debug.Log("Settings Data deleted");
 		}else Debug.Log("Settings file not found in "+Application.persistentDataPath+"/"+filenameSettings);
 	}

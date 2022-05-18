@@ -151,7 +151,8 @@ public class UpgradeMenu : MonoBehaviour{
         prevGameSpeed=GameSession.instance.gameSpeed;
         upgradeMenuUI.SetActive(true);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
-        GameSession.instance.gameSpeed=0f;
+        /*if(GameRules.instance.upgradeMenuPause)*/GameSession.instance.gameSpeed=0f;
+        //else{GameSession.instance.gameSpeed=GameRules.instance.upgradeMenuSlowdownSpeed;}
         UpgradeMenuIsOpen=true;
         StartCoroutine(ForceLayoutUpdate());
         //ParticleSystem.Stop();

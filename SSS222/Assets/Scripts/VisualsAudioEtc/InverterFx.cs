@@ -37,7 +37,7 @@ public class InverterFx : MonoBehaviour{
                         if(snd.loop){loopedSounds.Add(snd);}
                         SetSoundReverse(snd,snd.loop);
                     }else if(invertMusic&&sndGo==Jukebox.instance){
-                        if(Jukebox.instance.GetComponent<AudioSource>().pitch!=-1)Jukebox.instance.GetComponent<AudioSource>().pitch=-1;
+                        if(!Jukebox.instance.inverted)Jukebox.instance.inverted=true;
                     }
                 }else{
                     if(!reverted){

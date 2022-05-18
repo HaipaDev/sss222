@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -7718021567847333411}
   - component: {fileID: -5056443344385841921}
   m_Layer: 9
-  m_Name: Healing Drone
+  m_Name: HealingDrone
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  off: 0
   waveConfig: {fileID: 0}
   waypointsL: []
   waypointIndex: 0
@@ -165,21 +166,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b62d6b8e04de64c901e05aa354fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
   Name: Healing Drone
+  type: 1
   size: {x: 1, y: 1}
+  sizeAvg: 1
   spr: {fileID: 0}
+  sprMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   health: 115
   healthMax: 115
+  defense: 0
+  defenseOnPhase: 1
+  healthBySize: 0
   shooting: 1
+  bulletAssetName: 
   shootTime: {x: 0.2, y: 0.2}
-  shotCounter: 0
-  bullet: {fileID: 0}
+  shootTimer: 0
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
   randomizeWaveDeath: 0
   flyOff: 0
+  killOnDash: 1
   giveScore: 1
   scoreValue: {x: 1, y: 10}
   xpAmnt: 2.5
@@ -190,6 +205,7 @@ MonoBehaviour:
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  bullet: {fileID: 0}
 --- !u!114 &-4406441689819815482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,11 +231,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8629e71bfd72e44e87f82ac22b9ce50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healBallPrefab: {fileID: 6041420664094412071, guid: 67fb16cc03140834290bb647770ee0e9,
-    type: 3}
+  healPelletAssetName: HealPellet
   shootFrequency: 0.2
   speedBullet: 4
   closestEnemy: {fileID: 0}
+  healPellet: {fileID: 0}
 --- !u!114 &-5056443344385841921
 MonoBehaviour:
   m_ObjectHideFlags: 0
