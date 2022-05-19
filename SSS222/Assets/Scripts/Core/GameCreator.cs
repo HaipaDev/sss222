@@ -18,6 +18,7 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
     [AssetsOnly][SerializeField] GameObject audioManagerPrefab;
     
     [Header("Networking, Advancements etc")]
+    [AssetsOnly][SerializeField] GameObject steamManagerPrefab;
     [AssetsOnly][SerializeField] GameObject dbaccessPrefab;
     [AssetsOnly][SerializeField] GameObject discordPresencePrefab;
     [AssetsOnly][SerializeField] GameObject statsAchievsManagerPrefab;
@@ -36,6 +37,7 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
         if(FindObjectOfType<ES3ReferenceMgr>()==null){Instantiate(easySavePrefab);}
         if(FindObjectOfType<GSceneManager>()==null){var go=Instantiate(gsceneManagerPrefab);go.GetComponent<GSceneManager>().enabled=true;}
             /*Idk it disables itself so I guess Ill turn it on manually*/
+        if(FindObjectOfType<SteamManager>()==null){Instantiate(steamManagerPrefab);}
     }
     void Load(){
         LoadPre();

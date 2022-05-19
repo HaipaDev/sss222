@@ -74,6 +74,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 #region//Player Data
 	public PlayerData playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
 	[System.Serializable]public class PlayerData{
+		public int buildVersion=1;
 		public int[] highscore=new int[0];
 		public string skinName="def";
 		public float[] overlayColor=new float[3]{0,1,1};

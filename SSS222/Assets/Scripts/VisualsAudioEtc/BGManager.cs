@@ -21,6 +21,7 @@ public class BGManager : MonoBehaviour{
                 else{SetMatProps(_shaderMatPropsDef);}
             }else{SetMatProps(_shaderMatPropsDef);}
         }
+        setOnValidate=true;//?
     }
     void OnValidate(){if(setOnValidate){
         SetStartingProperties();
@@ -36,7 +37,7 @@ public class BGManager : MonoBehaviour{
         if(SceneManager.GetActiveScene().name=="SandboxMode"){if(GameRules.instance.bgMaterial!=null){SetMatProps(GameRules.instance.bgMaterial);}}
     }
     public void SetMatProps(ShaderMatProps mat){shaderMatProps=mat;if(material!=null){material=GameAssets.instance.UpdateShaderMatProps(material,shaderMatProps);}UpdateMaterials();}
-    public void UpdateMaterials(){foreach(Tag_BGColor t in transform.GetComponentsInChildren<Tag_BGColor>()){if(material!=null)t.GetComponent<Renderer>().sharedMaterial=material;}}
+    [Button]public void UpdateMaterials(){foreach(Tag_BGColor t in transform.GetComponentsInChildren<Tag_BGColor>()){if(material!=null)t.GetComponent<Renderer>().sharedMaterial=material;}}
     public Texture2D GetBgTexture(){return text;}
     public Material GetBgMat(){return transform.GetComponentInChildren<Tag_BGColor>().GetComponent<Renderer>().sharedMaterial;}
 }

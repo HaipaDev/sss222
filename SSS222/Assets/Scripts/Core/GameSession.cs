@@ -290,11 +290,13 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     }
     public void SaveHighscore(){
         if(CheckGamemodeSelected("Adventure")){SaveAdventure();}
-        if(gamemodeSelected>0&&gamemodeSelected<SaveSerial.instance.playerData.highscore.Length){
-            if(score>GetHighscoreCurrent()){SaveSerial.instance.playerData.highscore[GameSession.instance.gamemodeSelected-1]=score;}
-        }else if(gamemodeSelected>=SaveSerial.instance.playerData.highscore.Length||gamemodeSelected<=0){Debug.LogWarning("Score not submittable for this gamemode");}
+        if(gamemodeSelected>0&&(gamemodeSelected-1)<SaveSerial.instance.playerData.highscore.Length){
+            if(score>GetHighscoreCurrent()){SaveSerial.instance.playerData.highscore[GameSession.instance.gamemodeSelected-1]=score;Debug.Log("Highscore set for: "+GetCurrentGamemodeName());}
+        }else if((gamemodeSelected-1)>=SaveSerial.instance.playerData.highscore.Length||gamemodeSelected<=0){Debug.LogWarning("Score not submittable for this gamemode");}
         StatsAchievsManager.instance.AddScoreTotal(score);
         StatsAchievsManager.instance.AddPlaytime(GetGameSessionTime());
+        StatsAchievsManager.instance.SumStatsTotal();
+        StatsAchievsManager.instance.SetSteamStats();
     }
     public void SaveAdventure(){StartCoroutine(SaveAdventureI());}
     IEnumerator SaveAdventureI(){

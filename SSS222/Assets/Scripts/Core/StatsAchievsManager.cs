@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Steamworks;
 
 public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsManager instance;
     [Header("Achievements")]
@@ -16,7 +17,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     [Header("Stats")]
     public List<StatsGamemode> statsGamemodesList;
     public StatsTotal statsTotal;
-    public int _statsGamemodesListCount;
+    [DisableInEditorMode]public int _statsGamemodesListCount;
     public bool statsLoaded;
     public bool statsTotalSummed;
     void Awake(){if(StatsAchievsManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
@@ -33,29 +34,53 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     #region//Achievs
     void CheckAllAchievs(){
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=100)
-        ||GameSession.instance.GetHighscoreByName("Arcade")>=100){CompleteAchiev("arcade100");}
+        ||GameSession.instance.GetHighscoreByName("Arcade")>=100){CompleteAchiev("arcade_score-1");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=1000)
-        ||GameSession.instance.GetHighscoreByName("Arcade")>=1000){CompleteAchiev("arcade1k");}
+        ||GameSession.instance.GetHighscoreByName("Arcade")>=1000){CompleteAchiev("arcade_score-2");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=10000)
-        ||GameSession.instance.GetHighscoreByName("Arcade")>=10000){CompleteAchiev("arcade10k");}
-        if(statsTotal.deaths>=100){CompleteAchiev("die100");}
-        if(statsTotal.killsComets>=1000){CompleteAchiev("comets1k");}
-        if(statsTotal.killsMecha>=500){CompleteAchiev("mechas500");}
+        ||GameSession.instance.GetHighscoreByName("Arcade")>=10000){CompleteAchiev("arcade_score-3");}
+        if((GameSession.instance.GetCurrentGamemodeName().Contains("Hardcore")&&GameSession.instance.score>=666)
+        ||GameSession.instance.GetHighscoreByName("Hardcore")>=666){CompleteAchiev("hardcore_score-1");}
+        if((GameSession.instance.GetCurrentGamemodeName().Contains("Classic")&&GameSession.instance.score>=2077)
+        ||GameSession.instance.GetHighscoreByName("Classic")>=2077){CompleteAchiev("classic_score-1");}
+        if((GameSession.instance.GetCurrentGamemodeName().Contains("Meteor")&&GameSession.instance.score>=150)
+        ||GameSession.instance.GetHighscoreByName("Meteor")>=150){CompleteAchiev("meteor_score-1");}
+
+        if(statsTotal.deaths>=100){CompleteAchiev("die-1");}
+        if(statsTotal.killsComets>=1000){CompleteAchiev("comets_kills-1");}
+        if(statsTotal.killsMecha>=500){CompleteAchiev("mechas_kills-1");}
     }
     
     public void CompleteAchiev(string str){
         Achievement a;
         if(!GameSession.instance.GetCurrentGamemodeName().Contains("Sandbox")){
             a=GetAchievByName(str,true);//if(a==null)a=GetAchievByDesc(str,true);
-            if(a!=null){if(!a._isCompleted()){a.achievData.completed=true;a.achievData.dateAchieved=DateTime.Now;AchievPopups.instance.AddToQueue(a);SaveAchievs();}}
+            if(a!=null){if(!a._isCompleted()){
+                a.achievData.completed=true;a.achievData.dateAchieved=DateTime.Now;AchievPopups.instance.AddToQueue(a);SaveAchievs();
+
+                //if(!a.steamStats){
+                    var sa=new Steamworks.Data.Achievement(str);
+                    if(!sa.State)sa.Trigger();
+                //}else{
+                    if(str.Contains("arcade_score")){Steamworks.SteamUserStats.SetStat("arcadeScore",GameSession.instance.score);}
+                    if(str.Contains("hardcore_score")){Steamworks.SteamUserStats.SetStat("hardcoreScore",GameSession.instance.score);}
+                    if(str.Contains("classic_score")){Steamworks.SteamUserStats.SetStat("classicScore",GameSession.instance.score);}
+                    if(str.Contains("meteor_score")){Steamworks.SteamUserStats.SetStat("meteorScore",GameSession.instance.score);}
+                    if(str.Contains("comets_kills")){Steamworks.SteamUserStats.SetStat("cometsDestroyed",statsTotal.killsComets);}
+                    if(str.Contains("mechas_kills")){Steamworks.SteamUserStats.SetStat("mechasDestroyed",statsTotal.killsMecha);}
+                //}
+                    SteamUserStats.StoreStats();
+            }}
         }
     }
     public Achievement GetAchievByName(string str,bool ignoreWarning=false){var i=achievsList.Find(x=>x.name==str);if(i!=null){return i;}else{if(!ignoreWarning){Debug.LogWarning("No achiev by name: "+str);}return null;}}
     public void SaberBlocked(){CompleteAchiev("saberBlock");}
+
+    [Button]public void ClearSteamAchievs(){foreach(Steamworks.Data.Achievement sa in Steamworks.SteamUserStats.Achievements){sa.Clear();}}
     #endregion
 
     #region//Stats
-    void SumStatsTotal(){
+    public void SumStatsTotal(){
         if(!statsTotalSummed){
             var i=0;
             for(;i<statsGamemodesList.Count;i++){
@@ -73,7 +98,24 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
             if(i==statsGamemodesList.Count){statsTotalSummed=true;}
         }
     }
+    public void SetSteamStats(){
+        //SteamUserStats.RequestCurrentStats();
+        //Steamworks.SteamUserStats.AddStat("deaths",1);
+        var arcadeHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Arcade")];
+        /*if(Steamworks.SteamUserStats.GetStatInt("arcadeScore")<arcadeHighscore)*/SteamUserStats.SetStat("arcadeScore",arcadeHighscore);
+        var hardcoreHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Hardcore")];
+        SteamUserStats.SetStat("hardcoreScore",hardcoreHighscore);
+        var meteorHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Meteor")];
+        SteamUserStats.SetStat("meteorScore",meteorHighscore);
+        var cometsDestroyed=statsTotal.killsComets;
+        /*if(Steamworks.SteamUserStats.GetStatInt("cometsDestroyed")<cometsDestroyed)*/SteamUserStats.SetStat("cometsDestroyed",cometsDestroyed);
+        var mechasDestroyed=statsTotal.killsMecha;
+        /*if(Steamworks.SteamUserStats.GetStatInt("mechasDestroyed")<mechasDestroyed)*/SteamUserStats.SetStat("mechasDestroyed",mechasDestroyed);
+        SteamUserStats.StoreStats();
+    }
     public void ClearStatsTotal(){statsTotalSummed=false;statsTotal=new StatsTotal();}
+    [Button]public void ClearSteamStats(){SteamUserStats.ResetAll(false);SteamUserStats.StoreStats();SteamUserStats.RequestCurrentStats();}
+    [Button]public void ClearSteamAllStatsAndAchievs(){SteamUserStats.ResetAll(true);SteamUserStats.StoreStats();SteamUserStats.RequestCurrentStats();}
     public StatsGamemode GetStatsForCurrentGamemode(){StatsGamemode r=null;if(GameSession.instance.gamemodeSelected>=0){r=GetStatsForGamemode(GameSession.instance.GetCurrentGamemodeName());}return r;}
     public StatsGamemode GetStatsForGamemode(string str){return statsGamemodesList.Find(x=>x.gmName.Contains(str));}
 
@@ -134,7 +176,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
             statsGamemodesList[i]=SaveSerial.instance.statsData.statsGamemodesList[i];}}
         statsLoaded=true;
     }
-    public void ResetStatsAchievs(){foreach(Achievement a in achievsList){a.achievData=new AchievData();}SetStatsList();statsTotal=new StatsTotal();}
+    [Button]public void ResetStatsAchievs(){statsGamemodesList=new List<StatsGamemode>();SetStatsList();statsTotal=new StatsTotal();foreach(Achievement a in achievsList){a.achievData=new AchievData();}}
     public static int GetStatsGMListCount(){return StatsAchievsManager.instance._statsGamemodesListCount;}
 }
 [System.Serializable]
@@ -144,9 +186,11 @@ public class Achievement{
     public string displayName;
     public string desc;
     public Sprite icon;
+    public Sprite iconInc;
     public bool epic;
+    //public bool steamStats;
     [Header("Values")]
-    public AchievData achievData;
+    [DisableInEditorMode]public AchievData achievData;
     public bool _isCompleted(){return achievData.completed;}
     public DateTime _dateAchieved(){DateTime dt=DateTime.Now;dt=achievData.dateAchieved;return dt;}
 }

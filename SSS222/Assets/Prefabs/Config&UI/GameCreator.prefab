@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -54,6 +55,8 @@ MonoBehaviour:
   gameAssetsPrefab: {fileID: 6877064455026536268, guid: 1d59b6eef7bf8454cb6d3bc6643a5db3,
     type: 3}
   audioManagerPrefab: {fileID: 2010752312624517974, guid: 0c9cb9ae722d0a244a77d03aa7b1265e,
+    type: 3}
+  steamManagerPrefab: {fileID: 842307546877681212, guid: e5c6d792354abb04da0e29a7277de7e9,
     type: 3}
   dbaccessPrefab: {fileID: 2775582550042001946, guid: ca4542256346b924c890e7f816fa79a2,
     type: 3}

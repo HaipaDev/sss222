@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4511902569283812095}
   m_Father: {fileID: 0}
@@ -45,58 +46,92 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievsList:
-  - name: arcade100
+  - name: arcade_score-1
     displayName: Small steps
     desc: Get 100 points in Arcade
     icon: {fileID: 21300000, guid: b258df9be38c13144afc0317e9d7602d, type: 3}
+    iconInc: {fileID: 21300000, guid: f053e1383e87f2f42ae2034e301c525d, type: 3}
     epic: 0
     achievData:
       name: 
       completed: 0
-  - name: arcade1k
-    displayName: Bigger steps
+  - name: arcade_score-2
+    displayName: Getting There
     desc: Get 1k points in Arcade
     icon: {fileID: 21300000, guid: 77fdc71bd5cd27f43905e251bfe4794d, type: 3}
+    iconInc: {fileID: 21300000, guid: 6770f3d817647ff4cb8aba5b29c6b795, type: 3}
     epic: 0
     achievData:
       name: 
       completed: 0
-  - name: arcade10k
+  - name: arcade_score-3
     displayName: Space Master
     desc: Get 10k points in Arcade
     icon: {fileID: 21300000, guid: ce120e20f26ca4345a78a799f3c7bdf0, type: 3}
+    iconInc: {fileID: 21300000, guid: 2a51cb9ea39294248a6a1e07f8609cc9, type: 3}
     epic: 1
     achievData:
       name: 
       completed: 0
-  - name: die100
+  - name: hardcore_score-1
+    displayName: Thats rough buddy..
+    desc: Get 666 points in Hardcore
+    icon: {fileID: 21300000, guid: 6350607bc73a1cf4a8b08c02b5073641, type: 3}
+    iconInc: {fileID: 21300000, guid: 9d44b1c3808d6204bb9dc0eecd977748, type: 3}
+    epic: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: classic_score-1
+    displayName: Back in the 70s
+    desc: Get 2077 points in Classic Mode
+    icon: {fileID: 21300000, guid: 4c5d8b0ff2b5e9749a941523b4bcb511, type: 3}
+    iconInc: {fileID: 21300000, guid: 9bbd1819cb4c89f42928a373665a6b84, type: 3}
+    epic: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: meteor_score-1
+    displayName: Astronomically
+    desc: Get 150 points in Meteor Madness
+    icon: {fileID: 21300000, guid: 87c5af9af871cb84fbcb7eb92df0deed, type: 3}
+    iconInc: {fileID: 21300000, guid: 585b129f8d664fa48af5252782784644, type: 3}
+    epic: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: die-1
     displayName: Reapers Buddy
     desc: Die a 100 times
     icon: {fileID: 21300000, guid: 521746cb3c8742d469a5b09b01b42543, type: 3}
+    iconInc: {fileID: 21300000, guid: 64d73009432824442b468cfef143241e, type: 3}
     epic: 0
     achievData:
       name: 
       completed: 0
-  - name: comets1k
+  - name: comets_kills-1
     displayName: Comet Crusher
     desc: Destroy 1k comets
     icon: {fileID: 21300000, guid: 82e9175ec3d22a34f9362edab32ce785, type: 3}
+    iconInc: {fileID: 21300000, guid: f063c3c89b8a0db46b7e8345de60cc84, type: 3}
     epic: 0
     achievData:
       name: 
       completed: 0
-  - name: mechas500
+  - name: mechas_kills-1
     displayName: Mecha Destroyer
     desc: Destroy 500 mechanical enemies
     icon: {fileID: 21300000, guid: bc4f18be8785b114597c63af6b7ad907, type: 3}
+    iconInc: {fileID: 21300000, guid: 573e4058a70f03449ae98f5f00040b18, type: 3}
     epic: 0
     achievData:
       name: 
       completed: 0
   - name: saberBlock
     displayName: I wont let you
-    desc: Block a projectile with Saber
+    desc: Block a projectile with a Saber
     icon: {fileID: 21300000, guid: 4cf5741bd33303a42842aee57938a833, type: 3}
+    iconInc: {fileID: 21300000, guid: a63c0a46c2bc2074d8631a97559f72c3, type: 3}
     epic: 0
     achievData:
       name: 

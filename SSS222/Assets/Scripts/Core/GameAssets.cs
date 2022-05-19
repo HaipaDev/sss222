@@ -29,7 +29,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
     public GameObject Make(string obj, Vector2 pos){
 		GObject o=Array.Find(objects, item => item.name == obj);
 		if(o==null){
-			Debug.LogWarning("Object: " + name + " not found!");
+			Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
@@ -39,7 +39,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
     public GameObject MakeSpread(string obj, Vector2 pos, int amnt=3, float rangeX=0.5f, float rangeY=0.5f){
 		GObject o=Array.Find(objects, item => item.name == obj);
 		if(o==null){
-			Debug.LogWarning("Object: " + name + " not found!");
+			Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;

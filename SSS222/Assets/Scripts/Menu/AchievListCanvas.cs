@@ -19,7 +19,8 @@ public class AchievListCanvas : MonoBehaviour{
         GameObject go=Instantiate(elementPrefab,listObject.transform);
         go.GetComponent<AchievListElement>().SetName(a.displayName);
         go.GetComponent<AchievListElement>().SetDesc(a.desc);
-        go.GetComponent<AchievListElement>().SetIcon(a.icon);
+        go.GetComponent<AchievListElement>().SetIcon(a.iconInc);
+        if(a._isCompleted())go.GetComponent<AchievListElement>().SetIcon(a.icon);
         go.GetComponent<AchievListElement>().SetEpic(a.epic);
         go.GetComponent<AchievListElement>().completed=a._isCompleted();
         return go;

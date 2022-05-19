@@ -32,7 +32,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [SerializeField] public CstmzType typeSelected=CstmzType.skin;
     [SerializeField] public string skinName="def";
     public Color overlayColor=Color.red;
-    public float[] overlayColorArr = new float[3]{0,1,1};
+    public float[] overlayColorArr=new float[3]{0,1,1};
     [SerializeField] public string trailName="def";
     [SerializeField] public string flaresName="def";
     [SerializeField] public string deathFxName="def";
@@ -41,10 +41,10 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     void Awake(){instance=this;}
     IEnumerator Start(){
         if(String.IsNullOrEmpty(skinName)||GetSkin(skinName)==null){skinName="def";}
-        if(String.IsNullOrEmpty(trailName)||GetSkin(trailName)==null){trailName="def";}
-        if(String.IsNullOrEmpty(flaresName)||GetSkin(flaresName)==null){flaresName="def";}
-        if(String.IsNullOrEmpty(deathFxName)||GetSkin(deathFxName)==null){deathFxName="def";}
-        if(String.IsNullOrEmpty(musicName)||GetSkin(musicName)==null){musicName=CstmzMusic._cstmzMusicDef;}
+        if(String.IsNullOrEmpty(trailName)||GetTrail(trailName)==null){trailName="def";}
+        if(String.IsNullOrEmpty(flaresName)||GetFlares(flaresName)==null){flaresName="def";}
+        if(String.IsNullOrEmpty(deathFxName)||GetDeathFx(deathFxName)==null){deathFxName="def";}
+        if(String.IsNullOrEmpty(musicName)||GetMusic(musicName)==null){musicName=CstmzMusic._cstmzMusicDef;}
         skinName=SaveSerial.instance.playerData.skinName;
         SetCategory(Array.Find(GameAssets.instance.skins,x=>x.name.Contains(GetSkinName(SaveSerial.instance.playerData.skinName))).category);
 
@@ -272,11 +272,12 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     }
 
 
-    public void OpenVariants(string str){
-        if(GetSkin(str).variants.Length>0||GetOverlaySprite(str)!=null){
+    public void OpenVariants(string str){   string _str=str;
+        if(!String.IsNullOrEmpty(_str)){_str=skinName;}
+        if(GetSkin(_str).variants.Length>0||GetOverlaySprite(_str)!=null){
             variantsPanel.SetActive(true);
-            if(GetOverlaySprite(str)!=null||Array.Find(GetSkin(str).variants,x=>x.sprOverlay!=null)!=null){colorSliders.SetActive(true);}
-            RecreateAllVariants(str);
+            if(GetOverlaySprite(_str)!=null||Array.Find(GetSkin(_str).variants,x=>x.sprOverlay!=null)!=null){colorSliders.SetActive(true);}
+            RecreateAllVariants(_str);
         }
     }
     public void CloseVariants(){variantsPanel.SetActive(false);}
