@@ -335,6 +335,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: dmgValues.Array.data[3].dmg
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: shopList.Array.data[7].item
       value: 
       objectReference: {fileID: 0}
@@ -476,6 +481,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: dmgValues.Array.data[3].dmgPhase
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: glareDevilSettings.timerBlindMax
       value: 1.5
       objectReference: {fileID: 0}
@@ -508,6 +518,11 @@ PrefabInstance:
         type: 3}
       propertyPath: waveList.Array.data[7].dropChance
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: dmgValues.Array.data[3].armorPenetr
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -583,6 +598,16 @@ PrefabInstance:
         type: 3}
       propertyPath: pwrupWeaponList.Array.data[8].levelReq
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: managedReferences[0].scoreMaxSetRange.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: managedReferences[0].scoreMaxSetRange.y
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

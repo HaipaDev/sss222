@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -48,6 +49,15 @@ MonoBehaviour:
   cfgIconAssetName: 
   cfgIconsGo: {fileID: 4397622923898560575, guid: 0f34633e901e35f4cbdd5ac661e33652,
     type: 3}
+  cfgIconShaderMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   bgMaterial:
     text: {fileID: 2800000, guid: 83efc85fb5b3ba64c969f6438953fa41, type: 3}
     hue: 0
@@ -69,6 +79,9 @@ MonoBehaviour:
   statUpgOn: 0
   iteminvOn: 1
   barrierOn: 0
+  instaPause: 1
+  musicSlowdownOnPause: 1
+  musicSlowdownOnPaceChange: 1
   scoreMulti: 1
   luckMulti: 1
   startingPosPlayer: {x: 0, y: -6.24}
@@ -198,7 +211,7 @@ MonoBehaviour:
   energyDiss_refillCost: 3.3
   waveSpawnReqsType: 1
   waveSpawnReqs:
-    id: 0
+    rid: 0
   waveList:
   - name: CometsFlyby
     lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
@@ -296,7 +309,7 @@ MonoBehaviour:
     sum: 34.25
     spawnReqsType: 0
     spawnReqs:
-      id: 1
+      rid: 1
     powerupSpawnPosRange: {x: -3, y: 3}
   - name: Weapons
     sprAssetName: laser3Pwrup
@@ -349,7 +362,7 @@ MonoBehaviour:
     sum: 24.9
     spawnReqsType: 5
     spawnReqs:
-      id: 2
+      rid: 2
     powerupSpawnPosRange: {x: -3, y: 3}
   enemyDefenseHit: 1
   enemyDefensePhase: 1
@@ -906,9 +919,9 @@ MonoBehaviour:
     dmg: 7.77
     dmgBySize: 0
     dmgBySpeed: 0
-    armorPenetr: 2
+    armorPenetr: 3
     phase: 1
-    dmgPhase: 1.33
+    dmgPhase: 2.33
     phaseFreqFirst: 0
     phaseFreq: 0.02
     phaseCountLimit: 0
@@ -1448,7 +1461,7 @@ MonoBehaviour:
     colliEvents: []
   shopSpawnReqsType: 1
   shopSpawnReqs:
-    id: 3
+    rid: 3
   shopList:
   - name: 
     lootItem: {fileID: 11400000, guid: b082a4e514cd17e45aadeb523cbde903, type: 2}
@@ -1559,8 +1572,9 @@ MonoBehaviour:
   enDiss_upgradeCost: 4
   enDiss_lvlReq: 4
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: spawnScore, ns: , asm: Assembly-CSharp}
       data:
         timeEnabled: 0
@@ -1575,7 +1589,7 @@ MonoBehaviour:
         scoreNeeded: 1
         score: 0
         specialId: -1
-    00000001:
+    - rid: 1
       type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
       data:
         timeEnabled: 1
@@ -1586,7 +1600,7 @@ MonoBehaviour:
         repI: 1
         bothNeeded: 1
         startTimeAfterSecond: 0
-    00000002:
+    - rid: 2
       type: {class: spawnKills, ns: , asm: Assembly-CSharp}
       data:
         timeEnabled: 0
@@ -1599,7 +1613,7 @@ MonoBehaviour:
         startTimeAfterSecond: 0
         killsNeeded: 20
         kills: 0
-    00000003:
+    - rid: 3
       type: {class: spawnScore, ns: , asm: Assembly-CSharp}
       data:
         timeEnabled: 0

@@ -16,21 +16,21 @@ MonoBehaviour:
   assetName: LSaber
   weaponType: 1
   weaponTypeProperties:
-    id: 0
+    rid: 0
   costType: 0
   costTypeProperties:
-    id: 1
+    rid: 1
   ovheat: 0
   duration: 10
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: weaponTypeMelee, ns: , asm: Assembly-CSharp}
       data:
-        nameActive: lsaberA
-        offset: {x: 0, y: 1}
-        costPeriod: 0.15
-    00000001:
+        offset: {x: 0, y: 1.15}
+        costPeriod: 0.4
+    - rid: 1
       type: {class: costTypeEnergy, ns: , asm: Assembly-CSharp}
       data:
-        cost: 0.3
+        cost: 0.15

@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.55, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4546529352650547399}
   m_RootOrder: 1
@@ -4833,6 +4834,7 @@ ParticleSystemRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_RenderMode: 0
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0.0001
   m_MaxParticleSize: 999999
@@ -4856,6 +4858,10 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!1 &2786381190746779608
 GameObject:
@@ -4884,6 +4890,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4546529352650547399}
   m_RootOrder: 0
@@ -4976,6 +4983,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.36, y: -6.24, z: 0}
   m_LocalScale: {x: 0.89, y: 0.89, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2399239282061912033}
   - {fileID: 2898697715885684817}
@@ -5087,11 +5095,18 @@ MonoBehaviour:
   moveY: 1
   inputType: 0
   autoShoot: 0
-  paddingX: 0.15
-  paddingY: 0.45
   moveSpeedInit: 5
   moveSpeed: 5
   moveSpeedCurrent: 0
+  shaderMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   health: 150
   healthMax: 150
   defenseInit: 0
@@ -5101,11 +5116,10 @@ MonoBehaviour:
   energy: 180
   energyMax: 120
   ammoOn: 1
-  ammo: -4
-  powerup: laser
+  powerups: []
+  powerupCurID: 0
   powerupDefault: laser
   weaponsLimited: 0
-  powerupTimer: -4
   losePwrupOutOfEn: 1
   losePwrupOutOfAmmo: 1
   fuelOn: 0
@@ -5239,19 +5253,6 @@ MonoBehaviour:
   decayTickrate: 0.5
   decayDmg: 0.5
   weaponProperties: []
-  shadowCost: 5
-  energyBallGet: 9
-  energyBatteryGet: 11
-  medkitEnergyGet: 40
-  medkitHpAmnt: 25
-  microMedkitHpAmnt: 10
-  pwrupEnergyGet: 36
-  enForPwrupRefill: 25
-  enPwrupDuplicate: 42
-  crystalMend_refillCost: 2
-  energyDiss_refillCost: 3.3
-  crystalGet: 2
-  crystalBGet: 6
   damaged: 0
   healed: 0
   shadowed: 0
@@ -5261,6 +5262,7 @@ MonoBehaviour:
   shootTimer: 0
   instantiateTime: 0.025
   instantiateTimer: 0
+  meleeCostTimer: 0
   mousePos: {x: 0, y: 0}
   mouseDir: {x: 0, y: 0}
   dist: 0
@@ -5273,6 +5275,7 @@ MonoBehaviour:
   collidedId: 0
   collidedIdChangeTime: 0
   dragStartPos: {x: 0, y: 0}
+  _itemSuffix: _item
 --- !u!114 &1949430517914965929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5286,8 +5289,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmgTimer: 0
-  lastHitObj: 
-  lastHitDmg: 0
   colliTypes: 02000000030000000400000005000000
 --- !u!114 &3388790463455218104
 MonoBehaviour:
@@ -5384,19 +5385,19 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4546529352650547393}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
+  OutputAudioMixerGroup: {fileID: -1617731388599221720, guid: cdf423136b4935c44a751cae8c8b0d94,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 9702fbb395c910b449526048800ee86e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.07
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 256
+  Priority: 20
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

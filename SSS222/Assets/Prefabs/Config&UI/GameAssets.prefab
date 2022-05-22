@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -50,8 +51,6 @@ MonoBehaviour:
   disrupterSpawnerPrefab: {fileID: 471278204608894438, guid: 92f24eb5dc9e6364d8a7c051cc6f759d,
     type: 3}
   objects:
-  - name: Player
-    gobj: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
   - name: PlayerShadow
     gobj: {fileID: 4546529352650547393, guid: 76a661901874b5048aee128214328699, type: 3}
   - name: PlayerShadowColli

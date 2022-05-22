@@ -152,7 +152,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 [Title("Enemies", titleAlignment: TitleAlignments.Centered)]
     public bool enemyDefenseHit=true;
     public bool enemyDefensePhase=true;
-    public EnemyClass[] enemies;
+    [Searchable]public EnemyClass[] enemies;
     public CometSettings cometSettings;
     public EnCombatantSettings enCombatantSettings;
     public EnShipSettings enShipSettings;
@@ -166,7 +166,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #endregion
 #region//Damage Values
 [Title("DMG Values", titleAlignment: TitleAlignments.Centered)]
-    public List<DamageValues> dmgValues;
+    [Searchable]public List<DamageValues> dmgValues;
 #endregion
 #region//Shop
 [Title("Shop", titleAlignment: TitleAlignments.Centered)]

@@ -10,12 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00fa711582b79bd4aa70a140072cde6d, type: 3}
-  m_Name: 17MLaser
+  m_Name: Medkit
   m_EditorClassIdentifier: 
-  ID: 17
-  name: Mini Lasers
-  desc: Cry some more!
-  img: {fileID: 21300000, guid: 85c5aff371e073c47b08b82ad1fcd93e, type: 3}
-  price: 0
-  priceS: 5
-  priceE: 15
+  name: Medkit
+  desc: "\u30D2\u30EA\u30F3\u30B0"
+  img: {fileID: 21300000, guid: 5be7a6153213a854daafc61bf3be8881, type: 3}
+  assetName: medkitPwrup

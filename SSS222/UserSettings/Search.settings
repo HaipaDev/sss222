@@ -13,6 +13,9 @@ scopes = {
 	"last_search.83F126EB" = "easy"
 	"InspectorPreview.83F126EB" = "0"
 	"currentGroup.83F126EB" = "asset"
+	"last_search.7BEC51F9" = "omet"
+	"OpenInspectorPreview.7BEC51F9" = "0"
+	"currentGroup.7BEC51F9" = "asset"
 }
 providers = {
 	asset = {
@@ -50,6 +53,16 @@ providers = {
 		priority = 100
 		defaultAction = null
 	}
+	adb = {
+		active = false
+		priority = 2500
+		defaultAction = null
+	}
+	performance = {
+		active = false
+		priority = 100
+		defaultAction = null
+	}
 }
 recentSearches = [
 	"easy"
@@ -61,3 +74,9 @@ searchItemFavorites = [
 ]
 savedSearchesSortOrder = 0
 showSavedSearchPanel = false
+expandedQueries = [
+]
+queryBuilder = false
+ignoredProperties = "id;name;classname;imagecontentshash"
+helperWidgetCurrentArea = "all"
+disabledIndexers = ""

@@ -25,7 +25,7 @@ public class PauseMenu : MonoBehaviour{
                 if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();PauseEmpty();}
             }else{
                 if(((Shop.instance!=null&&Shop.shopOpened!=true)||(Shop.instance==null))&&
-                ((UpgradeMenu.instance!=null&&UpgradeMenu.UpgradeMenuIsOpen!=true)||(UpgradeMenu.instance==null)))Pause();
+                ((UpgradeMenu.instance!=null&&UpgradeMenu.UpgradeMenuIsOpen!=true)||(UpgradeMenu.instance==null))&&!GameOverCanvas.instance.gameOver)Pause();
             }
         }//if(Input.GetKeyDown(KeyCode.R)){//in GameSession}
     }

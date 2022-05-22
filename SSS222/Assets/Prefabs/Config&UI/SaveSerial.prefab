@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -55,6 +56,7 @@ MonoBehaviour:
     username: 
     password: 
   playerData:
+    buildVersion: 2
     highscore: 
     skinName: def
     overlayColor:
@@ -65,7 +67,7 @@ MonoBehaviour:
     flaresName: def
     deathFxName: def
     musicName: findYou
-    achievsCompleted: 
+    achievsCompleted: []
   statsData:
     statsGamemodesList: []
   advD:
@@ -99,9 +101,14 @@ MonoBehaviour:
     discordRPC: 1
     autoselectNewItem: 1
     alwaysReplaceCurrentSlot: 0
+    autoUseMedkitsIfLow: 0
+    allowSelectingEmptySlots: 1
+    allowScrollingEmptySlots: 0
     masterVolume: 0
-    soundVolume: 0
+    soundVolume: -5
+    ambienceVolume: -20
     musicVolume: -25
+    windDownMusic: 1
     playfieldRot: 0
     quality: 4
     fullscreen: 1

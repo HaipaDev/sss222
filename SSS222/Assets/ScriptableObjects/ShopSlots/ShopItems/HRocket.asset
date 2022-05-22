@@ -10,12 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00fa711582b79bd4aa70a140072cde6d, type: 3}
-  m_Name: 11Inverter
+  m_Name: HRocket
   m_EditorClassIdentifier: 
-  ID: 11
-  name: Inverter
-  desc: Everything seems so wrong
-  img: {fileID: 21300000, guid: ed66cb09e656ff247a82fdb938609f5c, type: 3}
-  price: 0
-  priceS: 5
-  priceE: 15
+  name: Homing Rockets
+  desc: I will find you..
+  img: {fileID: 21300000, guid: 2c3752f36be7cdf47b1b8c06ff89740b, type: 3}
+  assetName: hrocketPwrup

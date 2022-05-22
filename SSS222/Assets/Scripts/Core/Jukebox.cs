@@ -19,7 +19,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
         var currentMusic=GameAssets.instance.GetMusic(SaveSerial.instance.playerData.musicName);
         if(GetComponent<AudioSource>().clip!=currentMusic.track){GetComponent<AudioSource>().clip=currentMusic.track;GetComponent<AudioSource>().Play();}
 
-        if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"){
+        if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"&&SaveSerial.instance.settingsData.windDownMusic){
             float _curMusicSpeed=GetComponent<AudioSource>().pitch;
             float _musicSpeed=1f;
             if(GameRules.instance.musicSlowdownOnPause&&GameSession.GlobalTimeIsPausedNotSlowed){_musicSpeed=pauseSpeed;}

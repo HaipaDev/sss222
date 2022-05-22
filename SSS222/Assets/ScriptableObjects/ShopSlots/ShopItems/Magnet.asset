@@ -10,12 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00fa711582b79bd4aa70a140072cde6d, type: 3}
-  m_Name: 7Magnet
+  m_Name: Magnet
   m_EditorClassIdentifier: 
-  ID: 7
   name: Magnet
   desc: Irresistable
   img: {fileID: 21300000, guid: e8f4be55fc1a9b24ab5c29d18aa10df3, type: 3}
-  price: 0
-  priceS: 5
-  priceE: 15
+  assetName: magnetPwrup

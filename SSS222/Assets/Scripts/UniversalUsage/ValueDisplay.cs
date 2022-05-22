@@ -94,11 +94,15 @@ public class ValueDisplay : MonoBehaviour{
         }
     #endregion
     #region//SaveSerial
-        if(SaveSerial.instance!=null){      var s=SaveSerial.instance;//var ss=s.settingsData;
-            if(value=="inputType"){_txt=s.settingsData.inputType.ToString();}
-            else if(value=="joystickType"){_txt=s.settingsData.joystickType.ToString();}
-            else if(value=="joystickSize"){_txt=System.Math.Round(s.settingsData.joystickSize,2).ToString();}
-            else if(value=="loginUsername"){_txt=s.hyperGamerLoginData.username.ToString();}
+        if(SaveSerial.instance!=null){      var s=SaveSerial.instance;var ss=s.settingsData;var sh=s.hyperGamerLoginData;
+            if(value=="inputType"){_txt=ss.inputType.ToString();}
+            else if(value=="joystickType"){_txt=ss.joystickType.ToString();}
+            else if(value=="joystickSize"){_txt=System.Math.Round(ss.joystickSize,2).ToString();}
+            else if(value=="loginUsername"){_txt=sh.username.ToString();}
+            else if(value=="masterVolume"){var _vol=Mathf.Clamp((float)Math.Round(GameAssets.Normalize(ss.masterVolume,-50,0),2),0,2);_txt=_vol.ToString();}
+            else if(value=="soundVolume"){var _vol=Mathf.Clamp((float)Math.Round(GameAssets.Normalize(ss.soundVolume,-50,0),2),0,2);_txt=_vol.ToString();}
+            else if(value=="ambienceVolume"){var _vol=Mathf.Clamp((float)Math.Round(GameAssets.Normalize(ss.ambienceVolume,-50,0),2),0,2);_txt=_vol.ToString();}
+            else if(value=="musicVolume"){var _vol=Mathf.Clamp((float)Math.Round(GameAssets.Normalize(ss.musicVolume,-50,0),2),0,2);_txt=_vol.ToString();}
         }
     #endregion
     #region//DBAccess

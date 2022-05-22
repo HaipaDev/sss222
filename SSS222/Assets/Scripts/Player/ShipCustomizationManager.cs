@@ -96,12 +96,12 @@ public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustom
         }
     }
     void SetTrail(string str){
-        if(GetComponent<TrailVFX>()!=null){if(GameAssets.instance.GetTrail(str)!=null)GetComponent<TrailVFX>().SetNewTrail(str,true);}
-        else{if(trailObj!=null){if(trailObjPos==Vector2.zero){trailObjPos=trailObj.transform.localPosition;}
+        if(GetComponent<TrailVFX>()!=null){GetComponent<TrailVFX>().SetNewTrail(str,true);}
+        /*else{if(trailObj!=null){if(trailObjPos==Vector2.zero){trailObjPos=trailObj.transform.localPosition;}
         if(GameAssets.instance.GetTrail(str)!=null){if(!trailObj.name.Contains(GameAssets.instance.GetTrail(str).part.name)){
             var _tempTrailObj=trailObj;trailObj=Instantiate(GameAssets.instance.GetTrail(str).part,transform);trailObj.transform.localPosition=trailObjPos;Destroy(_tempTrailObj);
             GameAssets.instance.TransformIntoUIParticle(trailObj);
-        }}}}
+        }}}}*/
     }
     public GameObject GetFlareVFX(){GameObject go=GameAssets.instance.GetVFX("FlareShoot");if(GameAssets.instance.GetFlares(flaresName)!=null){go=GameAssets.instance.GetFlareRandom(flaresName);}return go;}
     public CstmzDeathFx GetDeathFx(){return GameAssets.instance.GetDeathFx(deathFxName);}

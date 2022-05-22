@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,34 +34,16 @@ public class ShopSlot : MonoBehaviour{
         }
     }
     public void Purchase(){
+    if(Player.instance!=null){
     if(GameSession.instance.coins>=price&&limitCount<limit){
         GameSession.instance.coins-=price;
         purchasedCount++;
         Shop.instance.RepChange(rep);
         if(Shop.instance.currentSlotID>=Shop.instance.lootTable.currentQueue.slotsWhenLimit)limitCount++;
         var pos=Player.instance.transform.position;
-        switch(item.ID){
-            case 0:Instantiate(GameAssets.instance.Get("Laser2Pwrup"),pos,Quaternion.identity);break;
-            case 1:Instantiate(GameAssets.instance.Get("Laser3Pwrup"),pos,Quaternion.identity);break;
-            case 2:Instantiate(GameAssets.instance.Get("ArmorPwrup"),pos,Quaternion.identity);break;
-            case 3:Instantiate(GameAssets.instance.Get("LunarGel"),pos,Quaternion.identity);break;
-            case 4:Instantiate(GameAssets.instance.Get("Battery"),pos,Quaternion.identity);break;
-            case 5:Instantiate(GameAssets.instance.Get("ScalerPwrup"),pos,Quaternion.identity);break;
-            case 6:Instantiate(GameAssets.instance.Get("ShadowdashPwrup"),pos,Quaternion.identity);break;
-            case 7:Instantiate(GameAssets.instance.Get("MagnetPwrup"),pos,Quaternion.identity);break;
-            case 8:Instantiate(GameAssets.instance.Get("LSaberPwrup"),pos,Quaternion.identity);break;
-            case 9:Instantiate(GameAssets.instance.Get("HRocketPwrup"),pos,Quaternion.identity);break;
-            case 10:Instantiate(GameAssets.instance.Get("QRocketPwrup"),pos,Quaternion.identity);break;
-            case 11:Instantiate(GameAssets.instance.Get("InverterPwrup"),pos,Quaternion.identity);break;
-            case 12:Instantiate(GameAssets.instance.Get("MatrixPwrup"),pos,Quaternion.identity);break;
-            case 13:Instantiate(GameAssets.instance.Get("AccelPwrup"),pos,Quaternion.identity);break;
-            case 14:Instantiate(GameAssets.instance.Get("CStreamPwrup"),pos,Quaternion.identity);break;
-            case 15:Instantiate(GameAssets.instance.Get("BlackFiol"),pos,Quaternion.identity);break;
-            case 16:Instantiate(GameAssets.instance.Get("RandomizerPwrup"),pos,Quaternion.identity);break;
-            case 17:Instantiate(GameAssets.instance.Get("MLaserPwrup"),pos,Quaternion.identity);break;
-            case 18:Instantiate(GameAssets.instance.Get("PLaserPwrup"),pos,Quaternion.identity);break;
-        }
+        if(!String.IsNullOrEmpty(item.assetName)){Instantiate(GameAssets.instance.Get(item.assetName),pos,Quaternion.identity);}
+        else{}
         Shop.instance.Purchase();
     }
-    }
+    }}
 }

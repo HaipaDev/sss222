@@ -74,7 +74,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 #region//Player Data
 	public PlayerData playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
 	[System.Serializable]public class PlayerData{
-		public int buildVersion=1;
+		public int buildVersion;
 		public int[] highscore=new int[0];
 		public string skinName="def";
 		public float[] overlayColor=new float[3]{0,1,1};
@@ -203,12 +203,16 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool vibrations=true;
 		public bool discordRPC=true;
 		public bool autoselectNewItem=true;
-		public bool alwaysReplaceCurrentSlot;
+		public bool alwaysReplaceCurrentSlot=false;
 		public bool autoUseMedkitsIfLow=false;
+		public bool allowSelectingEmptySlots=true;
+		public bool allowScrollingEmptySlots=false;
 		
 		public float masterVolume=0;
-		public float soundVolume=0;
+		public float soundVolume=-5;
+		public float ambienceVolume=-20;
 		public float musicVolume=-25;
+		public bool windDownMusic=true;
 		
 		
 		public PlaneDir playfieldRot=PlaneDir.vert;

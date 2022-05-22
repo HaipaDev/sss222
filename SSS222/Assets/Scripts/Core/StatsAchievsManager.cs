@@ -100,7 +100,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     }
     public void SetSteamStats(){
         //SteamUserStats.RequestCurrentStats();
-        //Steamworks.SteamUserStats.AddStat("deaths",1);
+        Steamworks.SteamUserStats.AddStat("deaths",1);
         var arcadeHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Arcade")];
         /*if(Steamworks.SteamUserStats.GetStatInt("arcadeScore")<arcadeHighscore)*/SteamUserStats.SetStat("arcadeScore",arcadeHighscore);
         var hardcoreHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Hardcore")];

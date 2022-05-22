@@ -69,14 +69,27 @@ public class CometRandomProperties : MonoBehaviour{
         rotationSpeed=Random.Range(2.8f,4.7f)*(GetComponent<Rigidbody2D>().velocity.y*-1);
     }
     public int LunarScore(){return Random.Range((int)lunarScore.x,(int)lunarScore.y);}
+    bool _ambiencePlayed=false;
     void Update(){
-        if(healhitCount>=3&&!isLunar){MakeLunar();}
         if(!GameSession.GlobalTimeIsPaused){
-        if(transform.GetChild(0)!=null){
-            float step=rotationSpeed*Time.deltaTime;
-            transform.GetChild(0).Rotate(new Vector3(0,0,step));
+            if(healhitCount>=3&&!isLunar){MakeLunar();}
+            if(transform.GetChild(0)!=null){
+                float step=rotationSpeed*Time.deltaTime;
+                transform.GetChild(0).Rotate(new Vector3(0,0,step));
+            }
+            if(Player.instance!=null){
+                var _dist=(float)System.Math.Round(Vector2.Distance(Player.instance.transform.position,transform.position),2);var _minDist=2.2f;
+                if(_dist<=_minDist&&!GetComponent<AudioSource>().isPlaying&&!_ambiencePlayed){var _volume=Mathf.Abs(1-((_minDist-_dist)*2));GetComponent<AudioSource>().volume=_volume;GetComponent<AudioSource>().Play();_ambiencePlayed=true;}//Debug.Log("Playing Comet ambience at volume: "+_volume+" at distance: "+_dist);}
+                /*var _distX=(float)System.Math.Round(Vector2.Distance(new Vector2(Player.instance.transform.position.x,0),new Vector2(transform.position.x,0)),2);var _minDistX=2.2f;
+                var _distY=(float)System.Math.Round(Vector2.Distance(new Vector2(0,Player.instance.transform.position.y),new Vector2(0,transform.position.y)),2);var _minDistY=2.2f;
+                    var _volume=1f;//Mathf.Abs(1-((_minDist-_dist)*2));
+                    if(_distX<=_minDistX&&!GetComponent<AudioSource>().isPlaying){_volume=Mathf.Abs(1-((_minDistX-_distX)*2));GetComponent<AudioSource>().Play();Debug.Log("Playing Comet ambience at volume: "+_volume);_ambiencePlayed=true;}else{_volume=0f;}//+" at distance: "+_dist);}
+                    if(transform.position.y<Player.instance.transform.position.y){_volume=Mathf.Abs(1-((_minDistY-_distY)*2));}
+                    GetComponent<AudioSource>().volume=_volume;*/
+            }
         }
-        }
+
+        
     }
     [ContextMenu("MakeLunar")][Button("Make Lunar")]
     public void MakeLunar(){isLunar=true;TransformIntoLunar();}

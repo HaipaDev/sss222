@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class TrailVFX : MonoBehaviour{
     
@@ -8,7 +9,7 @@ public class TrailVFX : MonoBehaviour{
     [SerializeField] public string part="TrailDef";
     [SerializeField] public Vector2 offset=new Vector2(0f,0.33f);
     [SerializeField] bool onTop=false;
-    [SerializeField] public bool cstmzTrail=false;
+    [DisableInEditorMode][SerializeField] public bool cstmzTrail=false;
     [Header("Vars")]
     public GameObject trailObj;
     void Update(){
@@ -19,22 +20,22 @@ public class TrailVFX : MonoBehaviour{
         if(trailObj==null){
             if(!System.String.IsNullOrEmpty(part)){
                 if(!cstmzTrail){if(GameAssets.instance.GetVFX(part)!=null){
-                    trailObj=Instantiate(GameAssets.instance.GetVFX(part),new Vector3(xx,yy,zz),Quaternion.identity,transform);
-                    if(SaveSerial.instance.settingsData.particles||_exceptions()){trailObj.GetComponent<ParticleSystem>().Play();}
+                    if(trailObj==null){trailObj=Instantiate(GameAssets.instance.GetVFX(part),new Vector3(xx,yy,zz),Quaternion.identity,transform);}//Debug.Log("Creating particle for: "+gameObject.name);}
+                    if(SaveSerial.instance.settingsData.particles){trailObj.GetComponent<ParticleSystem>().Play();}//Debug.Log("Playing particle first time for: "+gameObject.name);}
                 }}else{if(GameAssets.instance.GetTrail(part)!=null){
-                    trailObj=Instantiate(GameAssets.instance.GetTrail(part).part,new Vector3(xx,yy,zz),Quaternion.identity,transform);
-                    if(SaveSerial.instance.settingsData.particles||_exceptions()){trailObj.GetComponent<ParticleSystem>().Play();}
+                    if(trailObj==null){trailObj=Instantiate(GameAssets.instance.GetTrail(part).part,new Vector3(xx,yy,zz),Quaternion.identity,transform);}//Debug.Log("Creating particle for: "+gameObject.name);}
+                    if(SaveSerial.instance.settingsData.particles){trailObj.GetComponent<ParticleSystem>().Play();}//Debug.Log("Playing particle first time for: "+gameObject.name);}
                 }}
             }else{Debug.LogWarning("No particle name set for TrailVFX of "+gameObject.name);}
         }
         
         if(trailObj!=null){
-            if(!SaveSerial.instance.settingsData.particles&&!_exceptions()&&trailObj.GetComponent<ParticleSystem>().isPlaying){trailObj.GetComponent<ParticleSystem>().Stop();}
-            if((SaveSerial.instance.settingsData.particles||_exceptions())&&trailObj.GetComponent<ParticleSystem>().isStopped){trailObj.GetComponent<ParticleSystem>().Play();}
+            if(!SaveSerial.instance.settingsData.particles&&!_exceptions()&&trailObj.GetComponent<ParticleSystem>().isPlaying){trailObj.GetComponent<ParticleSystem>().Stop();Debug.Log("Stopping particle for: "+gameObject.name);}
+            if((SaveSerial.instance.settingsData.particles)&&trailObj.GetComponent<ParticleSystem>().isStopped){trailObj.GetComponent<ParticleSystem>().Play();Debug.Log("Playing particle for: "+gameObject.name);}
         }
     }
     public void ClearTrail(){Destroy(trailObj);trailObj=null;}
-    public void SetNewTrail(string str,bool _cstmzTrail=false){if(part!=str)ClearTrail();part=str;cstmzTrail=_cstmzTrail;}
+    public void SetNewTrail(string str,bool _cstmzTrail=false){if(part!=str){ClearTrail();part=str;cstmzTrail=_cstmzTrail;}}//Debug.Log("Setting new Trail for: "+gameObject.name);}}
 
     bool _exceptions(){/*if(trailObj.GetComponent<DamageParticle>()!=null
     ||trailObj.name.Contains(GameAssets.instance.GetVFX("trailObjDMG").name)

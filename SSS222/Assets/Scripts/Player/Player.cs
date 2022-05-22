@@ -812,25 +812,27 @@ public class Player : MonoBehaviour{    public static Player instance;
         //var cargoDist=2.8f;
         GameObject go=null;
         WeaponProperties w=null;
-        if(!_isPowerupEmptyCur()){if(GetWeaponProperty(_curPwrupName())!=null){w=GetWeaponProperty(_curPwrupName());}else{Debug.LogWarning(_curPwrupName()+" not added to WeaponProperties List");}}
-        if(w!=null&&w.weaponType==weaponType.melee){
-            weaponTypeMelee wp=null;
-            if(w.weaponType==weaponType.melee){wp=(weaponTypeMelee)w.weaponTypeProperties;}
-            costTypeProperties wc=null;
-            if(w.costType==costType.energy){wc=(costTypeEnergy)w.costTypeProperties;}
-            GameObject asset=GameAssets.instance.Get(w.assetName);
-            if(ComparePowerupStrCur(w.name)&&((w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn))){
-                foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
-                if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+new Vector3(wp.offset.x,wp.offset.y,0.01f);}
-                if(meleeCostTimer>0){meleeCostTimer-=Time.deltaTime;}
-                else if(meleeCostTimer<=0){meleeCostTimer=wp.costPeriod;
-                    if((w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){AddSubEnergy((float)System.Math.Round(wc.cost*shipScale,2),false);}}
-            }
+        if(!_isCurPowerupAnItem()){
+            if(!_isPowerupEmptyCur()){if(GetWeaponProperty(_curPwrupName())!=null){w=GetWeaponProperty(_curPwrupName());}else{Debug.LogWarning(_curPwrupName()+" not added to WeaponProperties List");}}
+            if(w!=null&&w.weaponType==weaponType.melee){
+                weaponTypeMelee wp=null;
+                if(w.weaponType==weaponType.melee){wp=(weaponTypeMelee)w.weaponTypeProperties;}
+                costTypeProperties wc=null;
+                if(w.costType==costType.energy){wc=(costTypeEnergy)w.costTypeProperties;}
+                GameObject asset=GameAssets.instance.Get(w.assetName);
+                if(ComparePowerupStrCur(w.name)&&((w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn))){
+                    foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
+                    if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+new Vector3(wp.offset.x,wp.offset.y,0.01f);}
+                    if(meleeCostTimer>0){meleeCostTimer-=Time.deltaTime;}
+                    else if(meleeCostTimer<=0){meleeCostTimer=wp.costPeriod;
+                        if((w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){AddSubEnergy((float)System.Math.Round(wc.cost*shipScale,2),false);}}
+                }
 
-            //Hide when near Cargo
-            /*if(go!=null){if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(go.transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
-                go.SetActive(false);}else{go.SetActive(true);}
-            }*/
+                //Hide when near Cargo
+                /*if(go!=null){if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(go.transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
+                    go.SetActive(false);}else{go.SetActive(true);}
+                }*/
+            }
         }
     }
     void HideMeleeWeapons(){
@@ -887,22 +889,34 @@ public class Player : MonoBehaviour{    public static Player instance;
 
     
     void SelectItemSlot(){   if(!GameSession.GlobalTimeIsPaused){
-            if(Input.GetAxis("Mouse ScrollWheel")>0f||Input.GetKeyDown(KeyCode.JoystickButton5)){if(powerupCurID<powerups.Length-1){powerupCurID++;}else{powerupCurID=0;}}
-            else if(Input.GetAxis("Mouse ScrollWheel")<0f||Input.GetKeyDown(KeyCode.JoystickButton4)){if(powerupCurID>0){powerupCurID--;}else{powerupCurID=powerups.Length-1;}}
-            if(Input.GetKeyDown(KeyCode.Alpha1)){powerupCurID=0;}
-            else if(Input.GetKeyDown(KeyCode.Alpha2)){if(powerups.Length>1){powerupCurID=1;}}
-            else if(Input.GetKeyDown(KeyCode.Alpha3)){if(powerups.Length>2){powerupCurID=2;}}
-            else if(Input.GetKeyDown(KeyCode.Alpha4)){if(powerups.Length>3){powerupCurID=3;}}
-            else if(Input.GetKeyDown(KeyCode.Alpha5)){if(powerups.Length>4){powerupCurID=4;}}
-            else if(Input.GetKeyDown(KeyCode.Alpha6)){if(powerups.Length>5){powerupCurID=5;}}
-            else if(Input.GetKeyDown(KeyCode.Alpha7)){if(powerups.Length>6){powerupCurID=6;}}
-            else if(Input.GetKeyDown(KeyCode.Alpha8)){if(powerups.Length>7){powerupCurID=7;}}
-            else if(Input.GetKeyDown(KeyCode.Alpha9)){if(powerups.Length>8){powerupCurID=8;}}
-            else if(Input.GetKeyDown(KeyCode.Alpha0)){if(powerups.Length>9){powerupCurID=9;}}
-            else if(Input.GetKeyDown(KeyCode.Backslash)){if(powerups.Length>1/*||(powerups.Length==1&&powerups[0].name==powerupDefault)*/)ClearCurrentPowerup();}
-            else if(Input.GetKeyDown(KeyCode.Minus)){if(powerupCurID>0){powerupCurID--;}}
-            else if(Input.GetKeyDown(KeyCode.Equals)){if(powerupCurID<powerups.Length){powerupCurID++;}}
+            if(Input.GetAxis("Mouse ScrollWheel")>0f||Input.GetKeyDown(KeyCode.JoystickButton5)||Input.GetKeyDown(KeyCode.Equals)){
+                int i=0;
+                if(powerupCurID<powerups.Length-1){for(i=powerupCurID+1;i<powerups.Length-1;i++){if(_isPowerupSlotScrollable(i)){Debug.Log("Up: "+i);break;}}}
+                else{for(i=0;i<powerups.Length-1;i++){if(_isPowerupSlotScrollable(i)){Debug.Log("Up(Last): "+i);break;}}}
+                if(_isPowerupSlotScrollable(i)){powerupCurID=i;return;}
+            }
+            else if(Input.GetAxis("Mouse ScrollWheel")<0f||Input.GetKeyDown(KeyCode.JoystickButton4)||Input.GetKeyDown(KeyCode.Minus)){
+                int i=0;
+                if(powerupCurID>0){for(i=powerupCurID-1;i>0;i--){if(_isPowerupSlotScrollable(i)){Debug.Log("Down: "+i);break;}}}
+                else{for(i=powerups.Length-1;i>0;i--){if(_isPowerupSlotScrollable(i)){Debug.Log("Down(First): "+i);break;}}}
+                if(_isPowerupSlotScrollable(i)){powerupCurID=i;return;}
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha1)){SelectPowerup(0);}
+            else if(Input.GetKeyDown(KeyCode.Alpha2)){SelectPowerup(1);}
+            else if(Input.GetKeyDown(KeyCode.Alpha3)){SelectPowerup(2);}
+            else if(Input.GetKeyDown(KeyCode.Alpha4)){SelectPowerup(3);}
+            else if(Input.GetKeyDown(KeyCode.Alpha5)){SelectPowerup(4);}
+            else if(Input.GetKeyDown(KeyCode.Alpha6)){SelectPowerup(5);}
+            else if(Input.GetKeyDown(KeyCode.Alpha7)){SelectPowerup(6);}
+            else if(Input.GetKeyDown(KeyCode.Alpha8)){SelectPowerup(7);}
+            else if(Input.GetKeyDown(KeyCode.Alpha9)){SelectPowerup(8);}
+            else if(Input.GetKeyDown(KeyCode.Alpha0)){SelectPowerup(9);}
+            else if(Input.GetKeyDown(KeyCode.Backslash)){if(powerups.Length>1)DropCurrentPowerup();}
+            void SelectPowerup(int _i){if(powerups.Length>_i&&_isPowerupSlotSelectable(_i)){powerupCurID=_i;}}
     }}
+    bool _isPowerupSlotSelectable(int i){return ((!SaveSerial.instance.settingsData.allowSelectingEmptySlots&&!_isPowerupEmptyID(i))||SaveSerial.instance.settingsData.allowSelectingEmptySlots);}
+    bool _isPowerupSlotScrollable(int i){return ((!SaveSerial.instance.settingsData.allowScrollingEmptySlots&&!_isPowerupEmptyID(i))||SaveSerial.instance.settingsData.allowScrollingEmptySlots);}
+    void DropCurrentPowerup(){ClearCurrentPowerup();}
 #endregion
  
 #region//Statuses
@@ -1220,15 +1234,16 @@ public class Player : MonoBehaviour{    public static Player instance;
         ResortStatuses();
     }
 
-    public bool _isPowerupEmpty(Powerup powerup){bool b=false;if(powerup==null){b=true;}else if(powerup!=null&&String.IsNullOrEmpty(powerup.name)){b=true;}return b;}
-    public bool _isPowerupEmptyID(int id){bool b=false;if(powerups[id]==null){b=true;}else if(powerups[id]!=null&&String.IsNullOrEmpty(powerups[id].name)){b=true;}return b;}
-    public bool _isPowerupEmptyCur(){bool b=false;if(powerups[powerupCurID]==null){b=true;}else if(powerups[powerupCurID]!=null&&String.IsNullOrEmpty(powerups[powerupCurID].name)){b=true;}return b;}
+    public bool _isPowerupEmpty(Powerup powerup){return (powerup==null||(powerup!=null&&String.IsNullOrEmpty(powerup.name)));}
+    public bool _isPowerupEmptyID(int id){return (powerups[id]==null||(powerups[id]!=null&&String.IsNullOrEmpty(powerups[id].name)));}
+    public bool _isPowerupEmptyCur(){return _isPowerupEmptyID(powerupCurID);}
     public Powerup GetPowerup(int id){Powerup pwrup=null;if(id<powerups.Length){
         pwrup=powerups[id];}return pwrup;}
     public Powerup GetPowerupStr(string str){Powerup pwrup=null;
         pwrup=Array.Find(powerups,x=>x.name==str);return pwrup;}
     public Powerup _curPwrup(){Powerup pwrup=null;if(powerups.Length>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
     public string _curPwrupName(){string str="";if(powerups.Length>powerupCurID){if(_curPwrup()!=null)str=_curPwrup().name;}return str;}
+    public bool _isCurPowerupAnItem(){return _curPwrupName().Contains("item");}
     public bool ContainsPowerup(string str){bool b=false;if(Array.Exists(powerups,x=>x.name==str)){b=true;}return b;}
     public void SetPowerup(Powerup val){if(!ContainsPowerup(val.name)){
         if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;

@@ -94,6 +94,7 @@ public class AudioManager : MonoBehaviour{	public static AudioManager instance;
 	void Update(){
 		audioMixer.SetFloat("MasterVolume", SaveSerial.instance.settingsData.masterVolume);
 		audioMixer.SetFloat("SoundVolume", SaveSerial.instance.settingsData.soundVolume);
+		audioMixer.SetFloat("AmbienceVolume", SaveSerial.instance.settingsData.ambienceVolume);
 		audioMixer.SetFloat("MusicVolume", SaveSerial.instance.settingsData.musicVolume);
 	}
 }
