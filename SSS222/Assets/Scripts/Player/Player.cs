@@ -30,8 +30,6 @@ public class Player : MonoBehaviour{    public static Player instance;
     [SerializeField] public bool energyOn = true;
     [DisableInEditorMode]public float energy = 120f;
     [SerializeField] public float energyMax = 120f;
-    [SerializeField] public bool ammoOn=true;
-    //[SerializeField] public int ammo = -4;
     [SerializeField] public Powerup[] powerups;
     [SerializeField] public int powerupCurID=0;
     [SerializeField] public string powerupDefault="laser";
@@ -285,7 +283,6 @@ public class Player : MonoBehaviour{    public static Player instance;
         energyOn=i.energyOnPlayer;
         energy=i.energyPlayer;
         energyMax=i.energyMaxPlayer;
-        ammoOn=i.ammoOn;
         fuelOn=i.fuelOn;
         fuelDrainAmnt=i.fuelDrainAmnt;
         fuelDrainFreq=i.fuelDrainFreq;
@@ -359,10 +356,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             HandleInput(false);
             health=Mathf.Clamp(health,0,healthMax);
             energy=Mathf.Clamp(energy,0,energyMax);
-            //ammo=Mathf.Clamp(ammo,-4,999);
-            SelectItemSlot();
             LosePowerup();
-            //if(!ammoOn)ammo=-4;
             DrawMeleeWeapons();
             HideMeleeWeapons();
             UpdateItems();
@@ -400,8 +394,8 @@ public class Player : MonoBehaviour{    public static Player instance;
                 if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);
                 overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
                 if(overheated==true&&overheatedTimer>0&&!GameSession.GlobalTimeIsPaused){overheatedTimer-=Time.deltaTime;
-                    GameAssets.instance.VFX("Flare",new Vector2((transform.position.x+0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
-                    GameAssets.instance.VFX("Flare",new Vector2((transform.position.x-0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
+                    GameAssets.instance.VFX("FlareHit",new Vector2((transform.position.x+0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
+                    GameAssets.instance.VFX("FlareHit",new Vector2((transform.position.x-0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
                     }
                 if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
             }
@@ -416,6 +410,7 @@ public class Player : MonoBehaviour{    public static Player instance;
 
             if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
         }
+        SelectItemSlot();
         Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
         Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
         if(shaderMatProps!=null){GetComponent<SpriteRenderer>().material=GameAssets.instance.UpdateShaderMatProps(GetComponent<SpriteRenderer>().material,shaderMatProps);}
@@ -590,11 +585,11 @@ public class Player : MonoBehaviour{    public static Player instance;
                         if(!SaveSerial.instance.settingsData.dtapMouseShoot){
                             UseItemCurrent();
                             if(shootCoroutine!=null){return;}
-                            else if(shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur()){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                            else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                         }else{
                             float timeSinceLastClick=Time.time-lastClickShootTime;
                             if(shootCoroutine!=null){return;}
-                            else if(timeSinceLastClick<=DCLICK_TIME){UseItemCurrent();if(shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur())shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                            else if(timeSinceLastClick<=DCLICK_TIME){UseItemCurrent();if(shootCoroutine==null&&shootTimer<=0f)shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                             else{lastClickShootTime=Time.time;}
                         }
                         
@@ -605,7 +600,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                     }
                 }else{
                     if(shootCoroutine!=null){return;}
-                    else if(shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur()){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                    else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     //shootCoroutine=null;
                     if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
@@ -615,7 +610,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                         UseItemCurrent();
                         float timeSinceLastClick=Time.time-lastClickShootTime;
                         if(shootCoroutine!=null){return;}
-                        else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur()){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                        else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                         else{lastClickShootTime=Time.time;}
                     }if(!Input.GetButton("Fire1")||shootTimer<-1f){
                         if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
@@ -626,7 +621,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             }else{//Regular shooting on Touch in ShootButton()
                 if(autoShoot){//Autoshoot on Touch
                     if(shootCoroutine!=null){return;}
-                    else if(shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur()){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                    else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     if(moving==true)timerEnRegen+=Time.deltaTime;
                 }
             }
@@ -637,7 +632,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(!autoShoot){
             if(pressed){
                 if(shootCoroutine!=null){return;}
-                else if(shootCoroutine==null&&shootTimer<=0f&&!_isPowerupEmptyCur()){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
+                else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
             }else if(pressed==false||shootTimer<-1f){
                 if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                 shootCoroutine=null;
@@ -716,96 +711,100 @@ public class Player : MonoBehaviour{    public static Player instance;
 #region//Powerups & Slotted items
     public IEnumerator ShootContinuously(){     while(!GameSession.GlobalTimeIsPaused){
         WeaponProperties w=null;
-        if(!_isPowerupEmptyCur()){if(GetWeaponProperty(_curPwrupName())!=null){w=GetWeaponProperty(_curPwrupName());}else{Debug.LogWarning(powerups[powerupCurID]+" not added to WeaponProperties List");}}
-        if(w!=null){
-        costTypeProperties wc=null;
-        costTypeCrystalAmmo wcCA=null;
-        costTypeBlackEnergy wcBE=null;
-        if(w.costType==costType.energy){wc=(costTypeEnergy)w.costTypeProperties;}
-        if(w.costType==costType.ammo){wc=(costTypeAmmo)w.costTypeProperties;}
-        if(w.costType==costType.crystalAmmo){wc=(costTypeCrystalAmmo)w.costTypeProperties;wcCA=(costTypeCrystalAmmo)wc;}
-        if(w.costType==costType.blackEnergy){wc=(costTypeBlackEnergy)w.costTypeProperties;wcBE=(costTypeBlackEnergy)wc;}
-        if(w.weaponType==weaponType.bullet){
-            var ammo=_curPwrup().ammo;
-            if((w.costType==costType.energy&&((energyOn&&energy>0)||(!energyOn)))
-            ||((w.costType==costType.ammo&&ammo>0))
-            ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(ammo>0||GameSession.instance.coins>0))
-            ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(GameSession.instance.xp>0))){
-                if(overheated!=true&&electrc!=true){
-                    weaponTypeBullet wp=null;
-                    if(w.weaponType==weaponType.bullet){wp=(weaponTypeBullet)w.weaponTypeProperties;}
-                    string asset=w.assetName;
-                    GameObject bulletL=null,bulletR=null;
-                    GameObject flareL=null,flareR=null;
-                    Vector2 posL=(Vector2)transform.position+wp.leftAnchor*shipScale,posR=(Vector2)transform.position+wp.rightAnchor*shipScale;
-                    float speedx=wp.speed.x,speedy=wp.speed.y;
-                    if(wp.speedE!=Vector2.zero){speedx=UnityEngine.Random.Range(wp.speed.x,wp.speedE.x);speedy=UnityEngine.Random.Range(wp.speed.y,wp.speedE.y);}
-                    float speedoffxL,speedoffyL;
-                    float speedoffxR,speedoffyR;
-                    Vector2 sL=new Vector2(-speedx,speedy),sR=new Vector2(speedx,speedy);
-                    Vector3 rL=new Vector3(),rR=new Vector3();
-                    float soundIntervalL=0,soundIntervalR=0;
-                    
-                    void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,
-                    rL=new Vector3(rL.x+=wp.serialOffsetAngle.x,0,rL.z+=wp.serialOffsetAngle.y),soundIntervalL+=wp.serialOffsetSound){
-                        if(wp.leftAnchorE!=Vector2.zero){posL=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.leftAnchor.x,wp.leftAnchorE.x),UnityEngine.Random.Range(wp.leftAnchor.y,wp.leftAnchorE.y))*shipScale;}
-                        bulletL=GameAssets.instance.Make(asset, posL) as GameObject;
-                        if(bulletL!=null){
-                            if(bulletResize){bulletL.transform.localScale*=shipScale;}
-                            if(i>0){speedoffxL=wp.serialOffsetSpeed.x;speedoffyL=wp.serialOffsetSpeed.y;
-                                if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxL=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyL=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
-                                sL=new Vector2(sL.x-=speedoffxL,sL.y+=speedoffyL);}
-                            if(bulletL.GetComponent<Rigidbody2D>()!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;
-                            //if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();
-                            if(bulletL.GetComponent<BounceThroughEnemies>()!=null)bulletL.GetComponent<BounceThroughEnemies>().speed=sL.y;
-                            if(bulletL.GetComponent<BounceBetweenEnemies>()!=null)bulletL.GetComponent<BounceBetweenEnemies>().speed=sL.y;
-                            bulletL.transform.Rotate(rL);
-                            if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalR;
-                            if(bulletL.GetComponent<Tag_PlayerWeapon>()!=null&&w.costType==costType.energy){bulletL.GetComponent<Tag_PlayerWeapon>().energy=wc.cost/wp.bulletAmount;}
-                        }}
-                        if(wp.flare){
-                            if(ShipCustomizationManager.instance!=null){flareL=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),posL,Quaternion.identity);Destroy(flareL,wp.flareDur);}
-                            else{flareL=GameAssets.instance.GetVFX("FlareShoot");}
-                        }
-                    }
-                    void RightSide(){for(var i=0;i<wp.bulletAmount;i++,
-                    rR=new Vector3(rR.x-=wp.serialOffsetAngle.x,0,rR.z-=wp.serialOffsetAngle.y),soundIntervalR+=wp.serialOffsetSound){
-                        if(wp.rightAnchorE!=Vector2.zero){posR=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.rightAnchor.x,wp.rightAnchorE.x),UnityEngine.Random.Range(wp.rightAnchor.y,wp.rightAnchorE.y))*shipScale;}
-                        bulletR=GameAssets.instance.Make(asset, posR) as GameObject;
-                        if(bulletR!=null){
-                            if(bulletResize){bulletR.transform.localScale*=shipScale;}
-                            if(i>0){speedoffxR=wp.serialOffsetSpeed.x;speedoffyR=wp.serialOffsetSpeed.y;
-                                if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxR=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyR=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
-                                sR=new Vector2(sR.x+=speedoffxR,sR.y+=speedoffyR);}
-                            if(bulletR.GetComponent<Rigidbody2D>()!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;
-                            //if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();
-                            if(bulletR.GetComponent<BounceThroughEnemies>()!=null)bulletR.GetComponent<BounceThroughEnemies>().speed=sR.y;
-                            if(bulletR.GetComponent<BounceBetweenEnemies>()!=null)bulletR.GetComponent<BounceBetweenEnemies>().speed=sR.y;
-                            bulletR.transform.Rotate(rR);
-                            if(bulletR.GetComponent<IntervalSound>()!=null)bulletR.GetComponent<IntervalSound>().interval=soundIntervalR;
-                            if(bulletR.GetComponent<Tag_PlayerWeapon>()!=null&&w.costType==costType.energy){bulletR.GetComponent<Tag_PlayerWeapon>().energy=wc.cost/wp.bulletAmount;}
-                        }}
-                        if(wp.flare){
-                            if(ShipCustomizationManager.instance!=null){flareR=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),posR,Quaternion.identity);Destroy(flareR,wp.flareDur);}
-                            else{flareR=GameAssets.instance.GetVFX("FlareShoot");}
-                        }
-                    }
-                    if(wp.leftSide)LeftSide();
-                    if(wp.rightSide)RightSide();
-                    if(wp.randomSide){if(UnityEngine.Random.Range(0,100)<50){LeftSide();}else{RightSide();}}
-                    if(w.costType==costType.energy){AddSubEnergy(wc.cost,false);}
-                    if(w.costType==costType.ammo){if(ammo>=wc.cost)AddSubAmmo(wc.cost,_curPwrupName(),false);else{AddSubAmmo(ammo-wc.cost,_curPwrupName(),false);}}
-                    if(w.costType==costType.crystalAmmo){if(ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,_curPwrupName(),false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,_curPwrupName(),true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
-                    if(w.costType==costType.blackEnergy){if(GameSession.instance.xp>=wc.cost){AddSubXP(wc.cost,false);}if(w.costType==costType.blackEnergy){AddSubEnergy(wcBE.regularEnergyCost);}}
-                    if(w.ovheat!=0)Overheat(w.ovheat);
-                    if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
-                    shootTimer=(wp.shootDelay/wp.tapDelayMulti)/shootMulti;
-                    StatsAchievsManager.instance.AddShotsTotal();
-                    yield return new WaitForSeconds((wp.shootDelay/wp.holdDelayMulti)/shootMulti);
+        if(!_isPowerupEmptyCur()){
+            if(GetWeaponPropertyCur()!=null){w=GetWeaponPropertyCur();}
+            else{Debug.LogWarning(powerups[powerupCurID]+" not added to WeaponProperties List");}
+            
+            if(w!=null){
+                costTypeProperties wc=null;
+                costTypeCrystalAmmo wcCA=null;
+                costTypeBlackEnergy wcBE=null;
+                if(w.costType==costType.energy){wc=(costTypeEnergy)w.costTypeProperties;}
+                if(w.costType==costType.ammo){wc=(costTypeAmmo)w.costTypeProperties;}
+                if(w.costType==costType.crystalAmmo){wc=(costTypeCrystalAmmo)w.costTypeProperties;wcCA=(costTypeCrystalAmmo)wc;}
+                if(w.costType==costType.blackEnergy){wc=(costTypeBlackEnergy)w.costTypeProperties;wcBE=(costTypeBlackEnergy)wc;}
+                if(w.weaponType==weaponType.bullet){
+                    var _ammo=_curPwrup().ammo;
+                    if((w.costType==costType.energy&&((energyOn&&energy>0)||(!energyOn)))
+                    ||((w.costType==costType.ammo&&_ammo>0))
+                    ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(_ammo>0||GameSession.instance.coins>0))
+                    ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(GameSession.instance.xp>0))){
+                        if((/*w.costType==costType.ammo&&*/!overheated)&&((w.costType==costType.energy&&!electrc)||w.costType!=costType.energy)){
+                            weaponTypeBullet wp=null;
+                            if(w.weaponType==weaponType.bullet){wp=(weaponTypeBullet)w.weaponTypeProperties;}
+                            string asset=w.assetName;
+                            GameObject bulletL=null,bulletR=null;
+                            GameObject flareL=null,flareR=null;
+                            Vector2 posL=(Vector2)transform.position+wp.leftAnchor*shipScale,posR=(Vector2)transform.position+wp.rightAnchor*shipScale;
+                            float speedx=wp.speed.x,speedy=wp.speed.y;
+                            if(wp.speedE!=Vector2.zero){speedx=UnityEngine.Random.Range(wp.speed.x,wp.speedE.x);speedy=UnityEngine.Random.Range(wp.speed.y,wp.speedE.y);}
+                            float speedoffxL,speedoffyL;
+                            float speedoffxR,speedoffyR;
+                            Vector2 sL=new Vector2(-speedx,speedy),sR=new Vector2(speedx,speedy);
+                            Vector3 rL=new Vector3(),rR=new Vector3();
+                            float soundIntervalL=0,soundIntervalR=0;
+                            
+                            void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,
+                            rL=new Vector3(rL.x+=wp.serialOffsetAngle.x,0,rL.z+=wp.serialOffsetAngle.y),soundIntervalL+=wp.serialOffsetSound){
+                                if(wp.leftAnchorE!=Vector2.zero){posL=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.leftAnchor.x,wp.leftAnchorE.x),UnityEngine.Random.Range(wp.leftAnchor.y,wp.leftAnchorE.y))*shipScale;}
+                                bulletL=GameAssets.instance.Make(asset, posL) as GameObject;
+                                if(bulletL!=null){
+                                    if(bulletResize){bulletL.transform.localScale*=shipScale;}
+                                    if(i>0){speedoffxL=wp.serialOffsetSpeed.x;speedoffyL=wp.serialOffsetSpeed.y;
+                                        if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxL=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyL=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
+                                        sL=new Vector2(sL.x-=speedoffxL,sL.y+=speedoffyL);}
+                                    if(bulletL.GetComponent<Rigidbody2D>()!=null)bulletL.GetComponent<Rigidbody2D>().velocity=sL;
+                                    //if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();
+                                    if(bulletL.GetComponent<BounceThroughEnemies>()!=null)bulletL.GetComponent<BounceThroughEnemies>().speed=sL.y;
+                                    if(bulletL.GetComponent<BounceBetweenEnemies>()!=null)bulletL.GetComponent<BounceBetweenEnemies>().speed=sL.y;
+                                    bulletL.transform.Rotate(rL);
+                                    if(bulletL.GetComponent<IntervalSound>()!=null)bulletL.GetComponent<IntervalSound>().interval=soundIntervalR;
+                                    if(bulletL.GetComponent<Tag_PlayerWeapon>()!=null&&w.costType==costType.energy){bulletL.GetComponent<Tag_PlayerWeapon>().energy=wc.cost/wp.bulletAmount;}
+                                }}
+                                if(wp.flare){
+                                    if(ShipCustomizationManager.instance!=null){flareL=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),posL,Quaternion.identity);Destroy(flareL,wp.flareDur);}
+                                    else{flareL=GameAssets.instance.GetVFX("FlareShoot");}
+                                }
+                            }
+                            void RightSide(){for(var i=0;i<wp.bulletAmount;i++,
+                            rR=new Vector3(rR.x-=wp.serialOffsetAngle.x,0,rR.z-=wp.serialOffsetAngle.y),soundIntervalR+=wp.serialOffsetSound){
+                                if(wp.rightAnchorE!=Vector2.zero){posR=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.rightAnchor.x,wp.rightAnchorE.x),UnityEngine.Random.Range(wp.rightAnchor.y,wp.rightAnchorE.y))*shipScale;}
+                                bulletR=GameAssets.instance.Make(asset, posR) as GameObject;
+                                if(bulletR!=null){
+                                    if(bulletResize){bulletR.transform.localScale*=shipScale;}
+                                    if(i>0){speedoffxR=wp.serialOffsetSpeed.x;speedoffyR=wp.serialOffsetSpeed.y;
+                                        if(wp.serialOffsetSpeedE!=Vector2.zero){speedoffxR=UnityEngine.Random.Range(wp.serialOffsetSpeed.x,wp.serialOffsetSpeedE.x);speedoffyR=UnityEngine.Random.Range(wp.serialOffsetSpeed.y,wp.serialOffsetSpeedE.y);}
+                                        sR=new Vector2(sR.x+=speedoffxR,sR.y+=speedoffyR);}
+                                    if(bulletR.GetComponent<Rigidbody2D>()!=null)bulletR.GetComponent<Rigidbody2D>().velocity=sR;
+                                    //if(bulletR.GetComponent<ShootInArc>()!=null)bulletR.GetComponent<ShootInArc>().Shoot();
+                                    if(bulletR.GetComponent<BounceThroughEnemies>()!=null)bulletR.GetComponent<BounceThroughEnemies>().speed=sR.y;
+                                    if(bulletR.GetComponent<BounceBetweenEnemies>()!=null)bulletR.GetComponent<BounceBetweenEnemies>().speed=sR.y;
+                                    bulletR.transform.Rotate(rR);
+                                    if(bulletR.GetComponent<IntervalSound>()!=null)bulletR.GetComponent<IntervalSound>().interval=soundIntervalR;
+                                    if(bulletR.GetComponent<Tag_PlayerWeapon>()!=null&&w.costType==costType.energy){bulletR.GetComponent<Tag_PlayerWeapon>().energy=wc.cost/wp.bulletAmount;}
+                                }}
+                                if(wp.flare){
+                                    if(ShipCustomizationManager.instance!=null){flareR=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),posR,Quaternion.identity);Destroy(flareR,wp.flareDur);}
+                                    else{flareR=GameAssets.instance.GetVFX("FlareShoot");}
+                                }
+                            }
+                            if(wp.leftSide)LeftSide();
+                            if(wp.rightSide)RightSide();
+                            if(wp.randomSide){if(UnityEngine.Random.Range(0,100)<50){LeftSide();}else{RightSide();}}
+                            if(w.costType==costType.energy){AddSubEnergy(wc.cost,false);}
+                            if(w.costType==costType.ammo){if(_ammo>=wc.cost)AddSubAmmo(wc.cost,_curPwrupName(),false);else{AddSubAmmo(_ammo-wc.cost,_curPwrupName(),false);}}
+                            if(w.costType==costType.crystalAmmo){if(_ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,_curPwrupName(),false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,_curPwrupName(),true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
+                            if(w.costType==costType.blackEnergy){if(GameSession.instance.xp>=wc.cost){AddSubXP(wc.cost,false);}if(w.costType==costType.blackEnergy){AddSubEnergy(wcBE.regularEnergyCost);}}
+                            if(w.ovheat!=0)Overheat(w.ovheat);
+                            if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
+                            shootTimer=(wp.shootDelay/wp.tapDelayMulti)/shootMulti;
+                            StatsAchievsManager.instance.AddShotsTotal();
+                            yield return new WaitForSeconds((wp.shootDelay/wp.holdDelayMulti)/shootMulti);
+                        }else{yield break;}
+                    }else{if(!autoShoot){AudioManager.instance.Play("NoEnergy");} shootTimer=0f; shootCoroutine=null; yield break;}
                 }else{yield break;}
-                }else{if(!autoShoot){AudioManager.instance.Play("NoEnergy");} shootTimer=0f; shootCoroutine=null; yield break;}
-        }else{yield break;}
-        }else{yield break;}
+            }else{yield break;}
+        }else{shootTimer=0.1f;yield return new WaitForSeconds(0.1f);}
     }}
 
     void DrawMeleeWeapons(){
@@ -813,19 +812,28 @@ public class Player : MonoBehaviour{    public static Player instance;
         GameObject go=null;
         WeaponProperties w=null;
         if(!_isCurPowerupAnItem()){
-            if(!_isPowerupEmptyCur()){if(GetWeaponProperty(_curPwrupName())!=null){w=GetWeaponProperty(_curPwrupName());}else{Debug.LogWarning(_curPwrupName()+" not added to WeaponProperties List");}}
-            if(w!=null&&w.weaponType==weaponType.melee){
+            if(!_isPowerupEmptyCur()){if(GetWeaponPropertyCur()!=null){w=GetWeaponPropertyCur();}else{Debug.LogWarning(_curPwrupName()+" not added to WeaponProperties List");}}
+            if(w!=null&&w.weaponType==weaponType.melee&&((w.costType==costType.energy&&!electrc)||w.costType!=costType.energy)){
                 weaponTypeMelee wp=null;
                 if(w.weaponType==weaponType.melee){wp=(weaponTypeMelee)w.weaponTypeProperties;}
                 costTypeProperties wc=null;
                 if(w.costType==costType.energy){wc=(costTypeEnergy)w.costTypeProperties;}
+                //if(w.costType==costType.ammo){wc=(costTypeAmmo)w.costTypeProperties;}
                 GameObject asset=GameAssets.instance.Get(w.assetName);
-                if(ComparePowerupStrCur(w.name)&&((w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn))){
+                //costTypeAmmo
+                //var _ammo=(costTypeAmmo)wc.ammo;
+                if(ComparePowerupStrCur(w.name)&&
+                (
+                    (w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)
+                    //||((w.costType==costType.ammo&&_ammo>0))
+                )
+                ){
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
                     if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+new Vector3(wp.offset.x,wp.offset.y,0.01f);}
                     if(meleeCostTimer>0){meleeCostTimer-=Time.deltaTime;}
                     else if(meleeCostTimer<=0){meleeCostTimer=wp.costPeriod;
                         if((w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){AddSubEnergy((float)System.Math.Round(wc.cost*shipScale,2),false);}}
+                        //else if(w.costType==costType.ammo&&energy)
                 }
 
                 //Hide when near Cargo
@@ -839,7 +847,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         foreach(WeaponProperties ws in weaponProperties){
             if(ws.weaponType==weaponType.melee){
                 var wpt=(weaponTypeMelee)ws.weaponTypeProperties;
-                if(!ComparePowerupStrCur(ws.name)){
+                if(!ComparePowerupStrCur(ws.name)||((ws.costType==costType.energy&&electrc)||ws.costType!=costType.energy)){
                     GameObject asset=GameAssets.instance.Get(ws.assetName);
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(ws.assetName)){Destroy(t.gameObject);}}
                 }
@@ -880,39 +888,56 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
 
     public void MedkitUse(){
-        if(health<healthMax&&health>(healthMax-GameRules.instance.medkit_hpGain)){
-            int val=Mathf.RoundToInt(GameRules.instance.medkit_hpGain-(healthMax-health));
-            if(val>0)GameSession.instance.AddToScoreNoEV(val);}
-        else{HPAdd(GameRules.instance.medkit_hpGain);}
+        if(health<=healthMax-GameRules.instance.medkit_hpGain){HPAdd(GameRules.instance.medkit_hpGain);}
+        else{float _hpDif=healthMax-health;HPAdd(_hpDif);int _scoreVal=Mathf.RoundToInt(GameRules.instance.medkit_hpGain-_hpDif);GameSession.instance.AddToScoreNoEV(_scoreVal);}
+        /*if(health<healthMax&&health>(healthMax-GameRules.instance.medkit_hpGain)){
+            int _scoreVal=Mathf.RoundToInt(GameRules.instance.medkit_hpGain-(healthMax-health));
+            if(_scoreVal>0)GameSession.instance.AddToScoreNoEV(_scoreVal);}
+        else{HPAdd(GameRules.instance.medkit_hpGain);}*/
         AddSubEnergy(GameRules.instance.medkit_energyGain,true);
     }
 
     
-    void SelectItemSlot(){   if(!GameSession.GlobalTimeIsPaused){
+    void SelectItemSlot(){   if(!PauseMenu.GameIsPaused&&!hacked){
             if(Input.GetAxis("Mouse ScrollWheel")>0f||Input.GetKeyDown(KeyCode.JoystickButton5)||Input.GetKeyDown(KeyCode.Equals)){
                 int i=0;
-                if(powerupCurID<powerups.Length-1){for(i=powerupCurID+1;i<powerups.Length-1;i++){if(_isPowerupSlotScrollable(i)){Debug.Log("Up: "+i);break;}}}
-                else{for(i=0;i<powerups.Length-1;i++){if(_isPowerupSlotScrollable(i)){Debug.Log("Up(Last): "+i);break;}}}
+                if(powerupCurID<powerups.Length-1){for(i=powerupCurID+1;i<powerups.Length-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up: "+i);*/break;}}}
+                else{for(i=0;i<powerups.Length-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up(Last): "+i);*/break;}}}
                 if(_isPowerupSlotScrollable(i)){powerupCurID=i;return;}
             }
             else if(Input.GetAxis("Mouse ScrollWheel")<0f||Input.GetKeyDown(KeyCode.JoystickButton4)||Input.GetKeyDown(KeyCode.Minus)){
                 int i=0;
-                if(powerupCurID>0){for(i=powerupCurID-1;i>0;i--){if(_isPowerupSlotScrollable(i)){Debug.Log("Down: "+i);break;}}}
-                else{for(i=powerups.Length-1;i>0;i--){if(_isPowerupSlotScrollable(i)){Debug.Log("Down(First): "+i);break;}}}
+                if(powerupCurID>0){for(i=powerupCurID-1;i>0;i--){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Down: "+i);*/break;}}}
+                else{for(i=powerups.Length-1;i>0;i--){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Down(First): "+i);*/break;}}}
                 if(_isPowerupSlotScrollable(i)){powerupCurID=i;return;}
             }
-            if(Input.GetKeyDown(KeyCode.Alpha1)){SelectPowerup(0);}
-            else if(Input.GetKeyDown(KeyCode.Alpha2)){SelectPowerup(1);}
-            else if(Input.GetKeyDown(KeyCode.Alpha3)){SelectPowerup(2);}
-            else if(Input.GetKeyDown(KeyCode.Alpha4)){SelectPowerup(3);}
-            else if(Input.GetKeyDown(KeyCode.Alpha5)){SelectPowerup(4);}
-            else if(Input.GetKeyDown(KeyCode.Alpha6)){SelectPowerup(5);}
-            else if(Input.GetKeyDown(KeyCode.Alpha7)){SelectPowerup(6);}
-            else if(Input.GetKeyDown(KeyCode.Alpha8)){SelectPowerup(7);}
-            else if(Input.GetKeyDown(KeyCode.Alpha9)){SelectPowerup(8);}
-            else if(Input.GetKeyDown(KeyCode.Alpha0)){SelectPowerup(9);}
-            else if(Input.GetKeyDown(KeyCode.Backslash)){if(powerups.Length>1)DropCurrentPowerup();}
+            
+            bool _isReplaced=false;
+            int _key1=49;
+            for(int i=0,_key=_key1;i<9&&i<powerups.Length;i++,_key++){
+                if(_key>57)_key=48;//for the '0' key
+                if(Input.GetKey((KeyCode)_key)){ReplacePowerupsSlots(i);}
+                if(Input.GetKeyUp((KeyCode)_key)&&!_isReplaced){SelectPowerup(i);}
+                if(Input.GetKeyUp((KeyCode)_key)&&_isReplaced){_isReplaced=false;}
+            }
+            
+            if(Input.GetKeyUp(KeyCode.Backslash)){if(powerups.Length>1)DropCurrentPowerup();}
             void SelectPowerup(int _i){if(powerups.Length>_i&&_isPowerupSlotSelectable(_i)){powerupCurID=_i;}}
+            void ReplacePowerupsSlots(int id){
+                for(int i=0,_key=_key1;i<9&&i<powerups.Length;i++,_key++){
+                    if(_key>57)_key=48;//for the '0' key
+                    if(Input.GetKeyDown((KeyCode)_key)){
+                        if(_key==48)_key=57;//bring it back after checking
+                        var _pressedIDFromKey=(_key-_key1);
+                        //Debug.Log("Held: "+i+" | "+"key: "+_key+" (id: "+_pressedIDFromKey+")");
+                        Powerup  _tempPowerup=GetPowerup(id);
+                        powerups[id]=GetPowerup(_pressedIDFromKey);
+                        powerups[_pressedIDFromKey]=_tempPowerup;
+                        _isReplaced=true;
+                        SelectPowerup(_pressedIDFromKey);
+                    }
+                }
+            }
     }}
     bool _isPowerupSlotSelectable(int i){return ((!SaveSerial.instance.settingsData.allowSelectingEmptySlots&&!_isPowerupEmptyID(i))||SaveSerial.instance.settingsData.allowSelectingEmptySlots);}
     bool _isPowerupSlotScrollable(int i){return ((!SaveSerial.instance.settingsData.allowScrollingEmptySlots&&!_isPowerupEmptyID(i))||SaveSerial.instance.settingsData.allowScrollingEmptySlots);}
@@ -1243,7 +1268,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         pwrup=Array.Find(powerups,x=>x.name==str);return pwrup;}
     public Powerup _curPwrup(){Powerup pwrup=null;if(powerups.Length>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
     public string _curPwrupName(){string str="";if(powerups.Length>powerupCurID){if(_curPwrup()!=null)str=_curPwrup().name;}return str;}
-    public bool _isCurPowerupAnItem(){return _curPwrupName().Contains("item");}
+    public bool _isCurPowerupAnItem(){if(!_isPowerupEmptyCur())return _curPwrupName().Contains("item");else return false;}
     public bool ContainsPowerup(string str){bool b=false;if(Array.Exists(powerups,x=>x.name==str)){b=true;}return b;}
     public void SetPowerup(Powerup val){if(!ContainsPowerup(val.name)){
         if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
@@ -1423,9 +1448,10 @@ public class Player : MonoBehaviour{    public static Player instance;
             }
         }return null;
     }
+    public WeaponProperties GetWeaponPropertyCur(){return GetWeaponProperty(_curPwrupName());}
     void LosePowerup(){
         if(losePwrupOutOfEn&&energy<=0&&!ComparePowerupStrCur(powerupDefault)){ResetPowerupDef();}
-        if(!_isPowerupEmptyCur()){if(ammoOn&&((GetWeaponProperty(_curPwrupName())!=null&&GetWeaponProperty(_curPwrupName()).costType==costType.ammo))){if(losePwrupOutOfAmmo&&_curPwrup().ammo<=0)ResetPowerupDef();}}
+        if(!_isPowerupEmptyCur()){if(GetWeaponPropertyCur()!=null&&GetWeaponPropertyCur().costType==costType.ammo){if(losePwrupOutOfAmmo&&_curPwrup().ammo<=0)ResetPowerupDef();}}
     }
 
     public void SetSpeedPrev(){

@@ -105,7 +105,6 @@ MonoBehaviour:
   energyOnPlayer: 1
   energyPlayer: 60
   energyMaxPlayer: 180
-  ammoOn: 1
   fuelOn: 0
   fuelDrainAmnt: 0.1
   fuelDrainFreq: 0.5
@@ -149,6 +148,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e913b426dcd9a2c46872469ef76d3b27, type: 2}
   - {fileID: 11400000, guid: d9e665abbbe16ee4b9f0d9ab5e94954d, type: 2}
   - {fileID: 11400000, guid: 873e180e33e72a84a95efe650b9264be, type: 2}
+  - {fileID: 11400000, guid: 777783c42d196d9418ae8c589b850bb7, type: 2}
   flipTime: 7
   gcloverTime: 6
   dashingEnabled: 1
@@ -269,7 +269,7 @@ MonoBehaviour:
     - name: 
       lootItem: {fileID: 11400000, guid: 8ee29e2bede3b904bb2b52557eb0f6b9, type: 2}
       rarity: 0
-      dropChance: 1.75
+      dropChance: 2.4
       levelReq: 1
     - name: 
       lootItem: {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
@@ -306,7 +306,7 @@ MonoBehaviour:
       rarity: 0
       dropChance: 3
       levelReq: 2
-    sum: 34.25
+    sum: 34.9
     spawnReqsType: 0
     spawnReqs:
       rid: 1
@@ -925,6 +925,23 @@ MonoBehaviour:
     phaseFreqFirst: 0
     phaseFreq: 0.02
     phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: LSaberHit
+    soundPhase: .
+    dispDmgCount: 0
+    colliEvents: []
+  - name: CPick
+    colliType: 1
+    dmg: 15
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 3
+    phase: 1
+    dmgPhase: 1
+    phaseFreqFirst: 0.01
+    phaseFreq: 0.05
+    phaseCountLimit: 10
     dmgFx: 0
     dmgFxValues: []
     sound: LSaberHit

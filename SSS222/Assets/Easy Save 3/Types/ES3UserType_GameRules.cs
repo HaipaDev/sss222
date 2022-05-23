@@ -47,7 +47,6 @@ namespace ES3Types
 			writer.WriteProperty("energyOnPlayer", instance.energyOnPlayer, ES3Type_bool.Instance);
 			writer.WriteProperty("energyPlayer", instance.energyPlayer, ES3Type_float.Instance);
 			writer.WriteProperty("energyMaxPlayer", instance.energyMaxPlayer, ES3Type_float.Instance);
-			writer.WriteProperty("ammoOn", instance.ammoOn, ES3Type_bool.Instance);
 			writer.WriteProperty("fuelOn", instance.fuelOn, ES3Type_bool.Instance);
 			writer.WriteProperty("fuelDrainAmnt", instance.fuelDrainAmnt, ES3Type_float.Instance);
 			writer.WriteProperty("fuelDrainFreq", instance.fuelDrainFreq, ES3Type_float.Instance);
@@ -295,9 +294,6 @@ namespace ES3Types
 						break;
 					case "energyMaxPlayer":
 						instance.energyMaxPlayer = reader.Read<System.Single>(ES3Type_float.Instance);
-						break;
-					case "ammoOn":
-						instance.ammoOn = reader.Read<System.Boolean>(ES3Type_bool.Instance);
 						break;
 					case "fuelOn":
 						instance.fuelOn = reader.Read<System.Boolean>(ES3Type_bool.Instance);

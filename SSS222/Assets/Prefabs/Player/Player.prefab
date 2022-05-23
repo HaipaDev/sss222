@@ -5115,7 +5115,6 @@ MonoBehaviour:
   energyOn: 1
   energy: 180
   energyMax: 120
-  ammoOn: 1
   powerups: []
   powerupCurID: 0
   powerupDefault: laser
@@ -5397,7 +5396,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 20
+  Priority: 240
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

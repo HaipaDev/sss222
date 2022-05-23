@@ -130,7 +130,7 @@ public class UpgradeMenu : MonoBehaviour{
     void Update(){
         if(Input.GetKeyDown(KeyCode.F)||Input.GetKeyDown(KeyCode.JoystickButton3)){
             if(UpgradeMenuIsOpen){Resume();
-            }else{if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && Player.instance!=null)Open();}
+            }else{if(PauseMenu.GameIsPaused!=true && Shop.shopOpened!=true && Player.instance!=null)if(!Player.instance.hacked)Open();}
         }
         if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){
             if(upgradeMenu2UI.activeSelf||lvltreeUI.activeSelf){Back();Open();return;}

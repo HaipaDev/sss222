@@ -14,10 +14,10 @@ public class LootTableEntryPowerup{
 }
 [System.Serializable]
 public class ItemPercentagePowerup{
-    [HideInInspector]public string name;
+    [ReadOnly]public string name;
 }
 public class LootTablePowerups : MonoBehaviour{
-    [SerializeField]public List<LootTableEntryPowerup> itemList;
+    [Searchable][SerializeField]public List<LootTableEntryPowerup> itemList;
     [DisableInPlayMode][SerializeField]public int currentLvl;
 
     [ReadOnly]public List<float> dropList;

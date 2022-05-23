@@ -8,7 +8,7 @@ public class AmmoDisplay : MonoBehaviour{
     void Start(){txt=GetComponent<TMPro.TextMeshProUGUI>();}
 
     void Update(){
-        if(Player.instance.ammoOn&&Player.instance._curPwrup().ammo>0){
+        if(Player.instance._curPwrup().ammo>0){
             txt.text=Player.instance._curPwrup().ammo.ToString();
             if(GetComponent<HUD_Visibility>()!=null){if(GetComponent<HUD_Visibility>().enabled){txt.alpha=GetComponent<HUD_Visibility>().alphaVal;}
             else txt.alpha=1;}else txt.alpha=1;

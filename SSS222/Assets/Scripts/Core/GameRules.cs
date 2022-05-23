@@ -55,7 +55,6 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool energyOnPlayer=true;
     public float energyPlayer=180;
     public float energyMaxPlayer=180;
-    public bool ammoOn=false;
     public bool fuelOn=false;
     public float fuelDrainAmnt=0.1f;
     public float fuelDrainFreq=0.5f;
@@ -136,15 +135,15 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [Button("VaildateWaveSpawnReqs")][ContextMenu("VaildateWaveSpawnReqs")]void VaildateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
     #endregion
     [SerializeReference]public spawnReqs waveSpawnReqs=new spawnScore();
-    public List<LootTableEntryWaves> waveList;
+    [Searchable]public List<LootTableEntryWaves> waveList;
     [ReadOnly]public float wavesWeightsSumTotal;
     public int startingWave=0;
     public bool startingWaveRandom=false;
     public bool uniqueWaves=true;
 [Header("Disrupters")]
-    public List<DisrupterConfig> disrupterList;
+    [Searchable]public List<DisrupterConfig> disrupterList;
 [Header("Powerups")]
-    public List<PowerupsSpawnerGR> powerupSpawners;
+    [Searchable]public List<PowerupsSpawnerGR> powerupSpawners;
     #region//VaildatePowerupsSpawn
     [Button("VaildatePowerupsSpawnReqs")][ContextMenu("VaildatePowerupsSpawnReqs")]void VaildatePowerupsSpawnReqs(){foreach(PowerupsSpawnerGR p in powerupSpawners){
         spawnReqsMono.Validate(ref p.spawnReqs, ref p.spawnReqsType);}}
@@ -380,7 +379,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 public class PowerupsSpawnerGR{
     public string name;
     public string sprAssetName;
-    public List<LootTableEntryPowerup> powerupList;
+    [Searchable]public List<LootTableEntryPowerup> powerupList;
     [ReadOnly]public float sum;
     public void SumUpPowerupsWeightsTotal(){
         sum=0;

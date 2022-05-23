@@ -89,6 +89,8 @@ MonoBehaviour:
     gobj: {fileID: 4548736405339070879, guid: d44872e141aa7484a8ce2adfdcd8fb86, type: 3}
   - name: lsaberPwrup
     gobj: {fileID: 4548736405339070879, guid: da69c5e66b1dd2941ba313f4c96bc246, type: 3}
+  - name: cpickPwrup
+    gobj: {fileID: 4548736405339070879, guid: 4289ef0e22d9d71408103d5a6ec1443d, type: 3}
   - name: flipPwrup
     gobj: {fileID: 4548736405339070879, guid: 5924af7ffd96c8147b6d83568c56580e, type: 3}
   - name: gcloverPwrup
@@ -159,6 +161,8 @@ MonoBehaviour:
     gobj: {fileID: 5313808222654050488, guid: eeaf92f603acb7940b5e4aaf74fdcded, type: 3}
   - name: LSaber
     gobj: {fileID: 4755926375889011706, guid: 3e89128ea081f674e9b29c1043314229, type: 3}
+  - name: CPick
+    gobj: {fileID: 4755926375889011706, guid: a5d67f7356d8e3b47a9c12bdc128c75b, type: 3}
   - name: HRocket
     gobj: {fileID: 3039900905274326842, guid: 7ff6c0d23daef534d9bdbc28ea7b0f05, type: 3}
   - name: QRocket
@@ -189,7 +193,7 @@ MonoBehaviour:
     gobj: {fileID: 5313808222654050488, guid: 31832a8c249783e449d9e8aad6457ca7, type: 3}
   - name: laserPwrup
     gobj: {fileID: 274471404120805607, guid: 23e4dd546345bed42be3acf9be782139, type: 3}
-  - name: firePwrup
+  - name: onfirePwrup
     gobj: {fileID: 274471404120805607, guid: ab568bb9c0780204bb4c39b998fc6f42, type: 3}
   - name: decayPwrup
     gobj: {fileID: 274471404120805607, guid: ab9a9e6252227f54d94263864f733720, type: 3}
@@ -323,6 +327,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
   - {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
   - {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
+  - {fileID: 11400000, guid: fd59d5a61f20a394e98c9683441e0333, type: 2}
   enemyBullets:
   - name: Soundwave
     gobj: {fileID: 5313808222654050488, guid: 81b70e401568d1741932aba7d5e6c77b, type: 3}

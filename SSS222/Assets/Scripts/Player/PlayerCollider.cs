@@ -148,7 +148,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(w!=null){PowerupCollect(w.name);}
                 
                 //Other statuses
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("firePwrup").name)){player.OnFire(10);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("onfirePwrup").name)){player.OnFire(10);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("decayPwrup").name)){player.Decay(10);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("blindPwrup").name)){player.Blind(10,4);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("electrcPwrup").name)){player.Electrc(10);}
