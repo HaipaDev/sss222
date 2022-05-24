@@ -68,6 +68,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 			hyperGamerLoginData = SaveGame.Load<HyperGamerLoginData>(filenameLogin);
 
 			Debug.Log("Login loaded");
+			DBAccess.instance.LoginHyperGamer(hyperGamerLoginData.username,hyperGamerLoginData.password);
 		}else Debug.Log("Login Data file not found in "+Application.persistentDataPath+"/"+filename);
 	}
 #endregion
@@ -207,6 +208,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool autoUseMedkitsIfLow=false;
 		public bool allowSelectingEmptySlots=true;
 		public bool allowScrollingEmptySlots=false;
+		public bool autosubmitScores=true;
 		
 		public float masterVolume=0;
 		public float soundVolume=-5;

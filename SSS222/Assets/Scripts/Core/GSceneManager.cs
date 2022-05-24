@@ -125,7 +125,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             var scene=SceneManager.GetActiveScene().name;
             if(scene=="ChooseGameMode"||scene=="Credits"||scene=="Socials"){//||scene=="Customization){
                 LoadStartMenu();
-            }else if(scene=="Login"||scene=="Leaderboards"||scene=="Achievements"||scene=="StatsSocial"){
+            }else if(scene=="Login"/*||scene=="Leaderboards"*/||scene=="Achievements"||scene=="StatsSocial"){
                 LoadSocialsScene();
             }else if(scene=="InfoGameMode"||scene=="AdventureZones"){
                 LoadGameModeChooseScene();

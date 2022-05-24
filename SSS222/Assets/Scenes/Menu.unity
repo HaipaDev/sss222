@@ -262,6 +262,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -279,10 +280,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   es: {fileID: 1750130228}
-  btn: {fileID: 4663692514586871310}
-  btnLast: {fileID: 0}
   currentSelected: {fileID: 0}
   lastSelected: {fileID: 0}
+  btn: {fileID: 4663692514586871310}
+  btnLast: {fileID: 0}
   inputSelecting: 1
   mousePosPrev: {x: 0, y: 0}
 --- !u!1001 &1980758375

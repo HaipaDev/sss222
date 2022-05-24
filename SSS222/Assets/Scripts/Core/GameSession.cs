@@ -297,6 +297,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         StatsAchievsManager.instance.AddPlaytime(GetGameSessionTime());
         StatsAchievsManager.instance.SumStatsTotal();
         StatsAchievsManager.instance.SetSteamStats();
+        if(SaveSerial.instance.settingsData.autosubmitScores)SubmitScore.SubmitScoreFunc();
     }
     public void SaveAdventure(){StartCoroutine(SaveAdventureI());}
     IEnumerator SaveAdventureI(){

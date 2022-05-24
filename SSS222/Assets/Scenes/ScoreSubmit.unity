@@ -256,6 +256,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -464,16 +465,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ScoreSubmitCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 1041459370042147209, guid: 6338ca31a4d167b4eb7e37806c091982,
-        type: 3}
-      propertyPath: m_BlockingMask.m_Bits
-      value: 1847
-      objectReference: {fileID: 0}
-    - target: {fileID: 1420641697527899176, guid: 6338ca31a4d167b4eb7e37806c091982,
-        type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4292143340
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6338ca31a4d167b4eb7e37806c091982, type: 3}

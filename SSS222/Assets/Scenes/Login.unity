@@ -256,6 +256,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -273,10 +274,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   es: {fileID: 1750130228}
-  btn: {fileID: 0}
-  btnLast: {fileID: 0}
   currentSelected: {fileID: 0}
   lastSelected: {fileID: 0}
+  btn: {fileID: 0}
+  btnLast: {fileID: 0}
   inputSelecting: 1
   mousePosPrev: {x: 0, y: 0}
 --- !u!1001 &1980758375
@@ -464,11 +465,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LoginCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 6457284918908559956, guid: 10062537847b42842afd02e9c1da459b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 1696.5006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10062537847b42842afd02e9c1da459b, type: 3}

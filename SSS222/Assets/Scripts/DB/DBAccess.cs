@@ -99,7 +99,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
         }else if(SaveSerial.instance.hyperGamerLoginData.registeredCount>=SaveSerial.instance.maxRegisteredHyperGamers){
             SetLoginMessage("You cant register more than 3 accounts");
         }else{
-            HyperGamer document=new HyperGamer{username=username,password=password,dateRegister=System.DateTime.Now,dateLastLogin=System.DateTime.Now};
+            HyperGamer document=new HyperGamer{username=username,password=password,dateRegister=System.DateTime.Now,dateLastLogin=System.DateTime.Now,appRegistered=hyperLastLoginAppDisplay};
             await hyperGamers.InsertOneAsync(document);
             SaveSerial.instance.SetLogin(username,password);SaveSerial.instance.SaveLogin();SaveSerial.instance.hyperGamerLoginData.registeredCount++;
         }
@@ -150,6 +150,7 @@ public class HyperGamer {
 
     public string username {  set; get; }
     public string password { set; get; }
+    public string appRegistered { set; get; }
     public string appLastLogin { set; get; }
     public System.DateTime dateLastLogin { set; get; }
     public System.DateTime dateRegister { set; get; }

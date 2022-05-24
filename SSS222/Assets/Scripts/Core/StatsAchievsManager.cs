@@ -57,20 +57,18 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
             a=GetAchievByName(str,true);//if(a==null)a=GetAchievByDesc(str,true);
             if(a!=null){if(!a._isCompleted()){
                 a.achievData.completed=true;a.achievData.dateAchieved=DateTime.Now;AchievPopups.instance.AddToQueue(a);SaveAchievs();
-
-                //if(!a.steamStats){
-                    var sa=new Steamworks.Data.Achievement(str);
-                    if(!sa.State)sa.Trigger();
-                //}else{
-                    if(str.Contains("arcade_score")){Steamworks.SteamUserStats.SetStat("arcadeScore",GameSession.instance.score);}
-                    if(str.Contains("hardcore_score")){Steamworks.SteamUserStats.SetStat("hardcoreScore",GameSession.instance.score);}
-                    if(str.Contains("classic_score")){Steamworks.SteamUserStats.SetStat("classicScore",GameSession.instance.score);}
-                    if(str.Contains("meteor_score")){Steamworks.SteamUserStats.SetStat("meteorScore",GameSession.instance.score);}
-                    if(str.Contains("comets_kills")){Steamworks.SteamUserStats.SetStat("cometsDestroyed",statsTotal.killsComets);}
-                    if(str.Contains("mechas_kills")){Steamworks.SteamUserStats.SetStat("mechasDestroyed",statsTotal.killsMecha);}
-                //}
-                    SteamUserStats.StoreStats();
-            }}
+            }
+            var sa=new Steamworks.Data.Achievement(str);
+            if(!sa.State)sa.Trigger();
+            if(str.Contains("arcade_score")){Steamworks.SteamUserStats.SetStat("arcadeScore",GameSession.instance.score);}
+            if(str.Contains("hardcore_score")){Steamworks.SteamUserStats.SetStat("hardcoreScore",GameSession.instance.score);}
+            if(str.Contains("classic_score")){Steamworks.SteamUserStats.SetStat("classicScore",GameSession.instance.score);}
+            if(str.Contains("meteor_score")){Steamworks.SteamUserStats.SetStat("meteorScore",GameSession.instance.score);}
+            if(str.Contains("comets_kills")){Steamworks.SteamUserStats.SetStat("cometsDestroyed",statsTotal.killsComets);}
+            if(str.Contains("mechas_kills")){Steamworks.SteamUserStats.SetStat("mechasDestroyed",statsTotal.killsMecha);}
+            
+            SteamUserStats.StoreStats();
+            }
         }
     }
     public Achievement GetAchievByName(string str,bool ignoreWarning=false){var i=achievsList.Find(x=>x.name==str);if(i!=null){return i;}else{if(!ignoreWarning){Debug.LogWarning("No achiev by name: "+str);}return null;}}
@@ -188,7 +186,7 @@ public class Achievement{
     public Sprite icon;
     public Sprite iconInc;
     public bool epic;
-    //public bool steamStats;
+    public bool hidden;
     [Header("Values")]
     [DisableInEditorMode]public AchievData achievData;
     public bool _isCompleted(){return achievData.completed;}
