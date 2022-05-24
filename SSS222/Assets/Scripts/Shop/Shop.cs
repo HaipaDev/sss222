@@ -54,7 +54,7 @@ public class Shop : MonoBehaviour{
         if(shopTimeMax!=-5&&shopTimer<=0&&shopTimer!=-4){Resume();}
         if(purchaseTimer>0){purchaseTimer-=Time.unscaledDeltaTime;}
         if(purchaseTimer<=0&&purchaseTimer!=-4){GameSession.instance.gameSpeed=0;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=true;}purchaseTimer=-4;}
-        if(currentSlotsList.FindAll(x=>x.limitCount>=x.limit).Count>lootTable.currentQueue.slotList.Count/2){NewQueue();}
+        if(currentSlotsList.Count>0)if(currentSlotsList.FindAll(x=>x.limitCount>=x.limit).Count>lootTable.currentQueue.slotList.Count/2){NewQueue();}
     }
     void CheckSpawnReqs(){
         if(shopSpawnReqs!=GameRules.instance.shopSpawnReqs)shopSpawnReqs=GameRules.instance.shopSpawnReqs;
@@ -73,7 +73,7 @@ public class Shop : MonoBehaviour{
                 enemy.health=-1;
                 enemy.Die();
             }*/
-            GameSession.instance.gameSpeed=0f;}
+            GameSession.instance.gameSpeed=GameRules.instance.shopOpenGameSpeed;}
             GameSession.instance.RandomizeShopScoreMax();
         }/*}while(GameSession.instance.coins<=0);*/yield return null;
     }
@@ -98,7 +98,7 @@ public class Shop : MonoBehaviour{
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         //RandomizeShop();
         shopOpen=false;
-        GameSession.instance.gameSpeed=0;
+        GameSession.instance.gameSpeed=GameRules.instance.shopOpenGameSpeed;
         shopOpened=true;
         shopTimer=shopTimeMax;
     }

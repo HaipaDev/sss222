@@ -79,7 +79,7 @@ MonoBehaviour:
   statUpgOn: 0
   iteminvOn: 1
   barrierOn: 0
-  instaPause: 1
+  instaPause: 0
   musicSlowdownOnPause: 1
   musicSlowdownOnPaceChange: 1
   scoreMulti: 1
@@ -207,6 +207,7 @@ MonoBehaviour:
     enCost: 0
     cooldown: 90
   timeOverhaul: 10
+  playerExhaustROF: 1
   crystalMend_refillCost: 2
   energyDiss_refillCost: 3.3
   waveSpawnReqsType: 1
@@ -309,7 +310,7 @@ MonoBehaviour:
     sum: 34.9
     spawnReqsType: 0
     spawnReqs:
-      rid: 1
+      rid: 7402535153654038538
     powerupSpawnPosRange: {x: -3, y: 3}
   - name: Weapons
     sprAssetName: laser3Pwrup
@@ -1150,7 +1151,7 @@ MonoBehaviour:
     soundPhase: 
     dispDmgCount: 0
     colliEvents: []
-  - name: PlayerExhaust
+  - name: PlayerExhaustROF
     colliType: 1
     dmg: 0
     dmgBySize: 0
@@ -1491,6 +1492,7 @@ MonoBehaviour:
   reputationThresh: 01000000030000000500000008000000
   shopTimeLimitEnabled: 1
   shopTimeLimit: 10
+  shopOpenGameSpeed: 0
   xpMax: 100
   xp_wave: 20
   xp_shop: 3
@@ -1548,6 +1550,7 @@ MonoBehaviour:
           m_CallState: 2
     lvls: {x: 1, y: 1}
     skipRe: 0
+  upgradeMenuOpenGameSpeed: 0
   saveBarsFromLvl: 0
   total_UpgradesCountMax: 5
   other_UpgradesCountMax: 10
@@ -1606,17 +1609,6 @@ MonoBehaviour:
         scoreNeeded: 1
         score: 0
         specialId: -1
-    - rid: 1
-      type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
-      data:
-        timeEnabled: 1
-        time: {x: 9, y: 16}
-        timer: -4
-        repeat: 1
-        repeatInterval: 0.75
-        repI: 1
-        bothNeeded: 1
-        startTimeAfterSecond: 0
     - rid: 2
       type: {class: spawnKills, ns: , asm: Assembly-CSharp}
       data:
@@ -1641,7 +1633,18 @@ MonoBehaviour:
         repI: 1
         bothNeeded: 0
         startTimeAfterSecond: 0
-        scoreMaxSetRange: {x: 200, y: 450}
+        scoreMaxSetRange: {x: 175, y: 225}
         scoreNeeded: 1
         score: 0
         specialId: -2
+    - rid: 7402535153654038538
+      type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 1
+        time: {x: 9, y: 16}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        repI: 1
+        bothNeeded: 0
+        startTimeAfterSecond: 0

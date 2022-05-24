@@ -9,12 +9,16 @@ public class PauseMenu : MonoBehaviour{
     public GameObject pauseMenuUI;
     public GameObject optionsUI;
     public float prevGameSpeed = 1f;
+    float slowPauseSpeed = 0.075f;
+    float unpausedTimer;
+    float unpausedTimeReq=0.3f;
     IEnumerator slowDownCo;
     //Shop shop;
     IEnumerator Start(){
         instance=this;
         yield return new WaitForSeconds(0.05f);
         Resume();
+        if(GameRules.instance.instaPause)unpausedTimeReq=0;
         //shop=FindObjectOfType<Shop>();
     }
     void Update(){
@@ -25,9 +29,13 @@ public class PauseMenu : MonoBehaviour{
                 if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();PauseEmpty();}
             }else{
                 if(((Shop.instance!=null&&Shop.shopOpened!=true)||(Shop.instance==null))&&
-                ((UpgradeMenu.instance!=null&&UpgradeMenu.UpgradeMenuIsOpen!=true)||(UpgradeMenu.instance==null))&&!GameOverCanvas.instance.gameOver)Pause();
+                ((UpgradeMenu.instance!=null&&UpgradeMenu.UpgradeMenuIsOpen!=true)||(UpgradeMenu.instance==null))&&!GameOverCanvas.instance.gameOver&&(unpausedTimer>=unpausedTimeReq||unpausedTimer==-1))Pause();
             }
         }//if(Input.GetKeyDown(KeyCode.R)){//in GameSession}
+        if(!GameIsPaused){
+            if(unpausedTimer==-1)unpausedTimer=0;
+            unpausedTimer+=Time.unscaledDeltaTime;
+        }
     }
     public void Resume(){
         pauseMenuUI.SetActive(false);
@@ -45,6 +53,7 @@ public class PauseMenu : MonoBehaviour{
         GameIsPaused = true;
         if(!GameRules.instance.instaPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
         else{GameSession.instance.gameSpeed=0;}
+        unpausedTimer=-1;
         //Debug.Log("Pausing");
     }
     public void Pause(){
@@ -57,12 +66,12 @@ public class PauseMenu : MonoBehaviour{
     }
     IEnumerator SlowDown(){
         while(GameSession.instance.gameSpeed>0){
-        GameSession.instance.speedChanged=true; GameSession.instance.gameSpeed -= 0.075f;
+        GameSession.instance.speedChanged=true; GameSession.instance.gameSpeed-=slowPauseSpeed;
         yield return new WaitForEndOfFrame();
         }
     }IEnumerator SpeedUp(){
         while(GameSession.instance.gameSpeed<1){
-        GameSession.instance.speedChanged=true; GameSession.instance.gameSpeed += 0.075f;
+        GameSession.instance.speedChanged=true; GameSession.instance.gameSpeed+=slowPauseSpeed;
         yield return new WaitForEndOfFrame();
         }
     }

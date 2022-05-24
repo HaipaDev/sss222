@@ -116,7 +116,7 @@ public class spawnReqsMono:MonoBehaviour{
     }
 
     public static void RestartAllValues(){foreach(spawnReqs sr in spawnReqsMono.instance.spawnReqsList){
-        if(sr is spawnReqs&&!sr.GetType().IsSubclassOf(typeof(spawnReqs))){var ss=(spawnReqs)sr;if(ss.timer!=-5)ss.timer=-4;}
+        if(sr is spawnReqs/*&&!sr.GetType().IsSubclassOf(typeof(spawnReqs))*/){var ss=(spawnReqs)sr;if(ss.timer!=-5)ss.timer=-4;}
         if(sr is spawnScore){var ss=(spawnScore)sr;if(ss.score!=-5)ss.score=0;}
         if(sr is spawnEnergy&&!sr.GetType().IsSubclassOf(typeof(spawnEnergy))){var ss=(spawnEnergy)sr;if(ss.energy!=-5)ss.energy=0;}
         if(sr is spawnMissed){var ss=(spawnMissed)sr;if(ss.energy!=-5)ss.energy=0;}
@@ -129,7 +129,7 @@ public class spawnReqsMono:MonoBehaviour{
         if(sr is spawnStayingTime&&!sr.GetType().IsSubclassOf(typeof(spawnStayingTime))){var ss=(spawnStayingTime)sr;if(ss.timer2!=-5)ss.timer2=0;}
         if(sr is spawnMovingTime){var ss=(spawnMovingTime)sr;if(ss.timer2!=-5)ss.timer2=0;}
     }}
-    public static void ResetSpawnReqsList(){spawnReqsMono.instance.spawnReqsList=new List<spawnReqs>();}
+    public static void ResetSpawnReqsList(){spawnReqsMono.instance.spawnReqsList=new List<spawnReqs>(0);}
 }
 
 public enum spawnReqsType{time,score,energy,missed,dmg,kills,wavesTotal,waveCounts,powerupsTotal,powerupCounts,stayingTime,movingTime}
@@ -144,7 +144,7 @@ public enum spawnReqsType{time,score,energy,missed,dmg,kills,wavesTotal,waveCoun
     public int repeat=1;
     [HideIf("@this.repeat <= 1")]public float repeatInterval=0.75f;
     [HideIf("@this.repeat <= 1")][DisableInEditorMode]public int repI=1;
-    [EnableIf("@this.GetType().IsSubclassOf(typeof(spawnReqs)) && timeEnabled")]public bool bothNeeded=true;
+    [EnableIf("@this.GetType().IsSubclassOf(typeof(spawnReqs)) && timeEnabled")]public bool bothNeeded=false;
     [EnableIf("@this.GetType().IsSubclassOf(typeof(spawnReqs)) && timeEnabled")]public bool startTimeAfterSecond=false;
 }
 public class _spawnReqsCounts:spawnReqs{

@@ -75,6 +75,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: instaPause
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: laserSpeed
       value: 9
       objectReference: {fileID: 0}
@@ -252,6 +257,11 @@ PrefabInstance:
         type: 3}
       propertyPath: overheatTimerMax
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: playerExhaustROF
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -501,6 +511,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: powerupSpawners.Array.data[0].sum
+      value: 34.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: powerupSpawners.Array.data[1].sum
       value: 0
       objectReference: {fileID: 0}
@@ -608,6 +623,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[0].scoreMaxSetRange.y
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: managedReferences[3].scoreMaxSetRange.x
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

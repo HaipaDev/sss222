@@ -20,24 +20,26 @@ public class PlayerSkills : MonoBehaviour{
     public float timerTeleport=-4;
     public float timerOverhaul=-4;
     public float timeOverhaul=10;
+    public bool exhaustROF=true;
 
     Player player;
     GameObject timerUI;
     void Awake(){StartCoroutine(SetValues());}
     IEnumerator SetValues(){
         yield return new WaitForSecondsRealtime(0.15f);
-        //Set values
         var i=GameRules.instance;
         if(i!=null){
             skills=i.skillsPlayer;
             timeOverhaul=i.timeOverhaul;
+            exhaustROF=i.playerExhaustROF;
         }
+        if(!exhaustROF){GetComponent<PlayerExhaust>().DestroyExhaust();}
+        if(GameRules.instance.modulesOn!=true){Destroy(this);}
         ResizeSet();
     }
     void Start(){
         player=GetComponent<Player>();
         timerUI=GameObject.Find("SkillTimer_par");
-        if(GameRules.instance.modulesOn!=true){Destroy(this);}
     }
 
     void Update(){

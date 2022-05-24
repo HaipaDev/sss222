@@ -29,22 +29,24 @@ public class PowerupDisplay : MonoBehaviour{
     }
     void Update(){
         if(Player.instance!=null){if(number<Player.instance.powerups.Length){
-            if(number>=0){
-                if(Player.instance.GetPowerup(number)!=null){pwrup=Player.instance.GetPowerup(number).name;}
+            var _id=number;
+            if(number==-1&&Player.instance.powerups.Length==1)_id=0;
+            if(_id>=0){
+                if(Player.instance.GetPowerup(_id)!=null){pwrup=Player.instance.GetPowerup(_id).name;}
             }else{pwrup=Player.instance._curPwrupName();if(!GameRules.instance.displayCurrentPowerup){Destroy(gameObject);}}
 
             ammo=0;
-            if(number>=0){ammo=Player.instance.GetPowerup(number).ammo;}
+            if(number>=0){ammo=Player.instance.GetPowerup(_id).ammo;}
             if(Player.instance._curPwrup()!=null)timer=Player.instance._curPwrup().timer;
             float timerMax=0;if(!String.IsNullOrEmpty(Player.instance._curPwrupName())){if(Player.instance.GetWeaponProperty(Player.instance._curPwrupName())!=null)timerMax=Player.instance.GetWeaponProperty(Player.instance._curPwrupName()).duration;}
 
             if(!displayTimerTxt){
-                if(number>=0){ammo=Player.instance.GetPowerup(number).ammo;}
+                if(_id>=0){ammo=Player.instance.GetPowerup(_id).ammo;}
                 else{if(Player.instance._curPwrup()!=null)ammo=Player.instance._curPwrup().ammo;}
                 if(ammo<=0&&ammo>-5){numberDisplay.SetActive(false);}
                 else{numberDisplay.SetActive(true);}
                 
-                if(number>=0&&Player.instance!=null&&Player.instance.powerupCurID==number){highlightIMG.enabled=true;}
+                if(_id>=0&&Player.instance!=null&&Player.instance.powerupCurID==_id){highlightIMG.enabled=true;}
                 else{highlightIMG.enabled=false;}
 
                 if(timer>0){highlightIMG.fillAmount=(timer/timerMax);highlightIMG.color=highlightTimerColor;}
@@ -54,7 +56,7 @@ public class PowerupDisplay : MonoBehaviour{
                 if(timer<10f&&timer>=0f){timer=(float)System.Math.Round((float)timer,1);if(txt!=null)txt.characterSpacing=-25f;}
                 else if(timer>10f){timer=(float)Mathf.RoundToInt(timer);if(txt!=null)txt.characterSpacing=0f;}
 
-                if(number>=0&&Player.instance!=null&&Player.instance.powerupCurID==number){highlightIMG.enabled=true;highlightIMG.fillAmount=1;highlightIMG.color=new Color(1,1,1,35f/255f);}
+                if(_id>=0&&Player.instance!=null&&Player.instance.powerupCurID==_id){highlightIMG.enabled=true;highlightIMG.fillAmount=1;highlightIMG.color=new Color(1,1,1,35f/255f);}
                 else{highlightIMG.enabled=false;}
             }
             if(txt!=null){
@@ -70,7 +72,7 @@ public class PowerupDisplay : MonoBehaviour{
                 if(name.Contains(Player.instance._itemSuffix)){name=name.Split('_')[0];}name=name+"Pwrup";
                 img.sprite=GameAssets.instance.Get(name).GetComponent<SpriteRenderer>().sprite;
             }else{img.sprite=GameAssets.instance.Spr("nullPwrup");}
-        }}else{img.sprite=GameAssets.instance.Spr("nullPwrup");}
+        }}else{img.sprite=GameAssets.instance.Spr("nullPwrup");txt.text="";highlightIMG.fillAmount=0;}
     }
     public void SetPlayerPowerup(){if(Player.instance!=null)if(number>=0)Player.instance.powerupCurID=number;}
 }

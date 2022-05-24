@@ -34,8 +34,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool instaPause=true;
     public bool musicSlowdownOnPause=true;
     public bool musicSlowdownOnPaceChange=true;
-    //public bool upgradeMenuPause=true;
-    //[HideIf("@this.upgradeMenuPause==true")][Range(0,1f)]public float upgradeMenuSlowdownSpeed=0.2f;
+    //public float upgradeMenuOpenGameSpeed=0;
+    //public float shopOpenGameSpeed=0;
 
     public float scoreMulti=1;
     public float luckMulti=1;
@@ -124,13 +124,14 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 [Header("Skills")]
     public Skill[] skillsPlayer;
     public float timeOverhaul=10;
+    public bool playerExhaustROF=true;
     public int crystalMend_refillCost=2;
     public float energyDiss_refillCost=3.3f;
 #endregion
 #region//Spawns - Waves, Disrupters, Powerups
 [Title("Spawns - Waves, Disrupters, Powerups", titleAlignment: TitleAlignments.Centered)]
 [Header("Waves")]
-    [SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
+    [OnValueChanged("VaildateWaveSpawnReqs")][SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
     #region//VaildateWaveSpawn
     [Button("VaildateWaveSpawnReqs")][ContextMenu("VaildateWaveSpawnReqs")]void VaildateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
     #endregion
@@ -169,7 +170,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #endregion
 #region//Shop
 [Title("Shop", titleAlignment: TitleAlignments.Centered)]
-    public spawnReqsType shopSpawnReqsType=spawnReqsType.score;
+    [OnValueChanged("VaildateShopSpawnReqs")]public spawnReqsType shopSpawnReqsType=spawnReqsType.score;
     [Button("VaildateShopSpawnReqs")][ContextMenu("VaildateShopSpawnReqs")]void VaildateShopSpawnReqs(){spawnReqsMono.Validate(ref shopSpawnReqs, ref shopSpawnReqsType);}
     [SerializeReference]public spawnReqs shopSpawnReqs=new spawnScore();
     public List<LootTableEntryShop> shopList;
@@ -182,6 +183,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public int[] reputationThresh=new int[repLength];
     public bool shopTimeLimitEnabled=true;
     public float shopTimeLimit=10;
+    public float shopOpenGameSpeed=0;
 #endregion
 #region//Leveling
 [Title("Leveling", titleAlignment: TitleAlignments.Centered)]
@@ -198,6 +200,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #endregion
 #region//Upgrades
 [Title("Upgrades", titleAlignment: TitleAlignments.Centered)]
+    public float upgradeMenuOpenGameSpeed=0;
     [ShowIf("@this.cfgName.Contains(\"Adventure\")")]public int saveBarsFromLvl=5;
     public int total_UpgradesCountMax=5;
     public int other_UpgradesCountMax=10;
@@ -385,8 +388,9 @@ public class PowerupsSpawnerGR{
         sum=0;
         foreach(LootTableEntryPowerup w in powerupList){sum+=w.dropChance;}
     }
-    public spawnReqsType spawnReqsType;
+    [OnValueChanged("VaildatePowerupsSpawnReqs")]public spawnReqsType spawnReqsType;
     [SerializeReference] public spawnReqs spawnReqs;
+    void VaildatePowerupsSpawnReqs(){spawnReqsMono.Validate(ref spawnReqs, ref spawnReqsType);}
     public Vector2 powerupSpawnPosRange=new Vector2(-3f,3f);
 }
 

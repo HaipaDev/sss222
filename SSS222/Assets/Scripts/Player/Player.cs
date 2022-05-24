@@ -890,10 +890,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     public void MedkitUse(){
         if(health<=healthMax-GameRules.instance.medkit_hpGain){HPAdd(GameRules.instance.medkit_hpGain);}
         else{float _hpDif=healthMax-health;HPAdd(_hpDif);int _scoreVal=Mathf.RoundToInt(GameRules.instance.medkit_hpGain-_hpDif);GameSession.instance.AddToScoreNoEV(_scoreVal);}
-        /*if(health<healthMax&&health>(healthMax-GameRules.instance.medkit_hpGain)){
-            int _scoreVal=Mathf.RoundToInt(GameRules.instance.medkit_hpGain-(healthMax-health));
-            if(_scoreVal>0)GameSession.instance.AddToScoreNoEV(_scoreVal);}
-        else{HPAdd(GameRules.instance.medkit_hpGain);}*/
+        if(health==healthMax&&GameRules.instance.medkit_hpGain==1){GameSession.instance.AddToScoreNoEV(25);}
         AddSubEnergy(GameRules.instance.medkit_energyGain,true);
     }
 
@@ -1340,7 +1337,7 @@ public class Player : MonoBehaviour{    public static Player instance;
 
     public void HPAdd(float hp){Damage(hp,dmgType.heal);}
     public void Damage(float dmg, dmgType type,bool ignoreInvert=true, float electrTime=4f){//Later add on possible Inverter options?
-        if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HpPopUpHUD(-dmgTot);}
+        if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HpPopUpHUD(-dmgTot);FindObjectOfType<HPBarLost>().TriggerBar();}
         else if(gclover){AudioManager.instance.Play("GCloverHit");}
 
         if(type==dmgType.silent){damaged=true;}

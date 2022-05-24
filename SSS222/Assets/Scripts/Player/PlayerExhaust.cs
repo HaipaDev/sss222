@@ -20,4 +20,5 @@ public class PlayerExhaust : MonoBehaviour{
                 }
         }
     }
+    public void DestroyExhaust(){Destroy(exhaustColliderObj);Destroy(this);}
 }

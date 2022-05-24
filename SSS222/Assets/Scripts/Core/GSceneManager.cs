@@ -92,7 +92,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         yield return new WaitForSecondsRealtime(0.01f);
         //spawnReqsMono.RestartAllValues();
         //spawnReqsMono.ResetSpawnReqsList();
-        GameSession.instance.RemoveSpawnReqsMono();
+        GameSession.instance.ResetAndRemoveSpawnReqsMono();
         GameSession.instance.ResetScore();
         GameSession.instance.ResetMusicPitch();
         yield return new WaitForSecondsRealtime(0.05f);

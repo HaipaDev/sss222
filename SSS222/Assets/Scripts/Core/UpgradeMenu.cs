@@ -151,7 +151,7 @@ public class UpgradeMenu : MonoBehaviour{
         prevGameSpeed=GameSession.instance.gameSpeed;
         upgradeMenuUI.SetActive(true);
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
-        /*if(GameRules.instance.upgradeMenuPause)*/GameSession.instance.gameSpeed=0f;
+        /*if(GameRules.instance.upgradeMenuPause)*/GameSession.instance.gameSpeed=GameRules.instance.upgradeMenuOpenGameSpeed;
         //else{GameSession.instance.gameSpeed=GameRules.instance.upgradeMenuSlowdownSpeed;}
         UpgradeMenuIsOpen=true;
         StartCoroutine(ForceLayoutUpdate());
