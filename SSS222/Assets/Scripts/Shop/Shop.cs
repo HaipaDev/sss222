@@ -155,6 +155,7 @@ public class Shop : MonoBehaviour{
             purchases+=1;
             //RepPlus(1);
             if(!purchased)purchased=true;
+            if(GameSession.instance.steamAchievsStatsLeaderboards){Steamworks.SteamUserStats.AddStat("trade",1);Steamworks.SteamUserStats.StoreStats();}
             //GameSession.instance.gameSpeed=0.05f;purchaseTimer=0.3f;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=false;}
         }
     //}

@@ -44,16 +44,20 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool loggedIn;
 		public string username;
 		public string password;
+		public DateTime lastLoggedIn;
 	}
 	public void SetLogin(string username, string password){
 		hyperGamerLoginData.loggedIn=true;
 		hyperGamerLoginData.username=username;
 		hyperGamerLoginData.password=password;
+		hyperGamerLoginData.lastLoggedIn=DateTime.Now;
+		Debug.Log("Login data set");
 	}
 	public void LogOut(){
 		hyperGamerLoginData.loggedIn=false;
 		hyperGamerLoginData.username="";
 		hyperGamerLoginData.password="";
+		Debug.Log("Logged out");
 	}
 	public void SaveLogin(){
 		SaveGame.Encode = loginEncode;
@@ -68,8 +72,16 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 			hyperGamerLoginData = SaveGame.Load<HyperGamerLoginData>(filenameLogin);
 
 			Debug.Log("Login loaded");
-			DBAccess.instance.LoginHyperGamer(hyperGamerLoginData.username,hyperGamerLoginData.password);
+			TimeSpan tsSession=DateTime.Now.Subtract(hyperGamerLoginData.lastLoggedIn);
+			if(false/*tsSession.TotalDays>=14*/){LogOut();}
+			else{TryLogin(hyperGamerLoginData.username,hyperGamerLoginData.password);}
 		}else Debug.Log("Login Data file not found in "+Application.persistentDataPath+"/"+filename);
+	}
+	public void TryLogin(string username, string password){
+		//try{
+			if(DBAccess.instance!=null){if(hyperGamerLoginData.username!="")DBAccess.instance.LoginHyperGamer(hyperGamerLoginData.username,hyperGamerLoginData.password);}
+			else{Debug.Log("No DBAccess, cant try to login");}
+		//}catch{}
 	}
 #endregion
 #region//Player Data
@@ -114,6 +126,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public StatsData statsData=new StatsData(){statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()]};
 	[System.Serializable]public class StatsData{
 		public StatsGamemode[] statsGamemodesList=new StatsGamemode[0];
+		public float sandboxTime=0;
+		public List<string> uniquePowerups;
 	}
 	public void SaveStats(){
 		SaveGame.Encode = statsEncode;

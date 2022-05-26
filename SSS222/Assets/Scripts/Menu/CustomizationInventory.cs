@@ -103,6 +103,8 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         ShipCustomizationManager.instance.flaresName=flaresName;
         ShipCustomizationManager.instance.deathFxName=deathFxName;
 
+        if(skinName!="def"&&trailName!="def"&&flaresName!="def"){StatsAchievsManager.instance.CustomizedAll();}
+
         RefreshParticles();
 
         if(Input.GetKeyDown(KeyCode.Escape)){if(variantsPanel.activeSelf){CloseVariants();}else{GSceneManager.instance.LoadStartMenu();}}
@@ -372,17 +374,20 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public Sprite GetOverlaySprite(string str){return ShipCustomizationManager.instance.GetOverlaySprite(str);}
     CstmzSkinVariant GetSkinVariant(string str,int id){return GameAssets.instance.GetSkinVariant(str,id);}
     public bool SkinHasVariants(string str){bool b=false;if(GetSkin(str).variants.Length>0){b=true;}return b;}
-    public void SetSkin(string str){skinName=str;if(variantsPanel.activeSelf){variantsPanel.SetActive(false);colorSliders.SetActive(false);}HighlightSelectedElement();HighlightSelectedType();}
+    public void SetSkin(string str){skinName=str;if(variantsPanel.activeSelf){variantsPanel.SetActive(false);colorSliders.SetActive(false);}HighlightSelectedElement();HighlightSelectedType();
+        if(skinName!="def"){StatsAchievsManager.instance.Customized();}}
 
     public CstmzTrail GetTrail(string str){return GameAssets.instance.GetTrail(str);}
-    public void SetTrail(string str){trailName=str;HighlightSelectedElement();HighlightSelectedType();}
+    public void SetTrail(string str){trailName=str;HighlightSelectedElement();HighlightSelectedType();
+        if(trailName!="def"){StatsAchievsManager.instance.Customized();}}
 
     public CstmzFlares GetFlares(string str){return GameAssets.instance.GetFlares(str);}
     public GameObject GetFlareVFX(string str){GameObject go=null;
         if(GameAssets.instance.GetFlares(str)!=null){go=GameAssets.instance.GetFlareRandom(str);}
         return go;
     }
-    public void SetFlares(string str){flaresName=str;HighlightSelectedElement();HighlightSelectedType();}
+    public void SetFlares(string str){flaresName=str;HighlightSelectedElement();HighlightSelectedType();
+        if(flaresName!="def"){StatsAchievsManager.instance.Customized();}}
 
     public CstmzDeathFx GetDeathFx(string str){return GameAssets.instance.GetDeathFx(str);}
     public GameObject GetDeathFxObj(string str){GameObject go=null;

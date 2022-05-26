@@ -360,6 +360,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             DrawMeleeWeapons();
             HideMeleeWeapons();
             UpdateItems();
+            QuickHeal();
             if(GetComponent<PlayerSkills>()!=null){if(GetComponent<PlayerSkills>().timerTeleport==-4){Shoot();}}else{Shoot();}
             Statuses();
             CalculateDefenseSpeed();
@@ -881,12 +882,15 @@ public class Player : MonoBehaviour{    public static Player instance;
                 if(GetPowerupStr(name).ammo>0){
                     if(name=="medkit"+_itemSuffix){MedkitUse();}
                     GetPowerupStr(name).ammo--;
-                    if(GetPowerupStr(name).ammo==0){ClearCurrentPowerup();}
-                }else{ClearCurrentPowerup();}
+                    if(GetPowerupStr(name).ammo==0){ClearPowerup(name);}
+                }else{ClearPowerup(name);}
             }
         }
     }
-
+    void QuickHeal(){
+        if(Input.GetKeyDown(KeyCode.H)){Debug.Log("Quick healing");UseItem("medkit_item");}
+        //if(ContainsPowerup("medkit")){MedkitUse();GetPowerupStr("medkit").ammo--;}
+    }
     public void MedkitUse(){
         if(health<=healthMax-GameRules.instance.medkit_hpGain){HPAdd(GameRules.instance.medkit_hpGain);}
         else{float _hpDif=healthMax-health;HPAdd(_hpDif);int _scoreVal=Mathf.RoundToInt(GameRules.instance.medkit_hpGain-_hpDif);GameSession.instance.AddToScoreNoEV(_scoreVal);}

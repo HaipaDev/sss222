@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public class AchievPopups : MonoBehaviour{  public static AchievPopups instance;
-    public List<Achievement> queue;
+    public List<string> queue;
     [Header("Current achievement")]
     [SerializeField] new TextMeshProUGUI name;
     [SerializeField] TextMeshProUGUI desc;
@@ -24,17 +24,17 @@ public class AchievPopups : MonoBehaviour{  public static AchievPopups instance;
     }
     void Update(){
         if(!playing&&queue.Count>0){playing=true;PopupAchiev();}
-        if(finished){RemoveDoneFromQueue();GetComponent<Animator>().ResetTrigger("Play");if(transform.GetChild(0).gameObject.activeSelf)transform.GetChild(0).gameObject.SetActive(false);}
-        else{if(queue.Count>0)firstInQueueName=queue[0].displayName;}
+        if(finished){RemoveDoneFromQueue();GetComponent<Animator>().ResetTrigger("on");if(transform.GetChild(0).gameObject.activeSelf)transform.GetChild(0).gameObject.SetActive(false);}
+        //else{if(queue.Count>0)firstInQueueName=GetCurrentAchiev();}
     }
     void PopupAchiev(){
         finished=false;
         if(!transform.GetChild(0).gameObject.activeSelf)transform.GetChild(0).gameObject.SetActive(true);
-        GetComponent<Animator>().SetTrigger("Play");
-        name.text=queue[0].displayName;
-        desc.text=queue[0].desc;
-        icon.sprite=queue[0].icon;
-        epic=queue[0].epic;
+        GetComponent<Animator>().SetTrigger("on");
+        name.text=GetCurrentAchiev().displayName;
+        desc.text=GetCurrentAchiev().desc;
+        icon.sprite=GetCurrentAchiev().icon;
+        epic=GetCurrentAchiev().epic;
         if(epic){Color c=StatsAchievsManager.instance.epicCompletedColor;Vector4 _c=new Vector4(c.r,c.g,c.b,100f/255f);
         GetComponentInChildren<Image>().color=_c;}
         else{Color c=StatsAchievsManager.instance.completedColor;Vector4 _c=new Vector4(c.r,c.g,c.b,100f/255f);
@@ -42,10 +42,11 @@ public class AchievPopups : MonoBehaviour{  public static AchievPopups instance;
         if(epic){AudioManager.instance.PlayOnce("AchievEpic");}
         else{AudioManager.instance.PlayOnce("Achiev");}
     }
-    public void AddToQueue(Achievement a){
+    Achievement GetCurrentAchiev(){return StatsAchievsManager.instance.GetAchievByName(queue[0]);}
+    public void AddToQueue(string a){
         if(!queue.Contains(a))queue.Add(a);
     }
     public void RemoveDoneFromQueue(){
-        if(queue.Count>0){if(queue[0].displayName==firstInQueueName)queue.RemoveAt(0);}finished=false;return;
+        if(queue.Count>0){queue.RemoveAt(0);}finished=false;return;
     }
 }

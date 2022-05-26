@@ -23,6 +23,8 @@ public class StatsSocialText : MonoBehaviour{
             //+"<color=grey>Kills Violet: </color>"+GetStatTot("killsViolet")+"\n"
             +"<color=grey>Kills Comets: </color>"+GetStatTot("killsComets")+"\n"
             +"<color=grey>Shots Total: </color>"+GetStatTot("shotsTotal")+"\n";
+        }else if(ddvalue.Contains("Sandbox")){
+            txt.text="<color=grey>Time spent: </color>"+StatsAchievsManager.instance.sandboxTime+"\n";
         }else{
             txt.text=
             "<color=grey>Highscore: </color>"+GameSession.instance.GetHighscoreByName(ddvalue)+"\n"

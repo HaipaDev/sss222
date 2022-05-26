@@ -297,6 +297,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
         return ss;
 	}
+	public static bool CaseInsStrCmpr(string str,string toComp){return str.IndexOf(toComp, StringComparison.OrdinalIgnoreCase) >= 0;}
 #endregion
 
 #region//Public functions

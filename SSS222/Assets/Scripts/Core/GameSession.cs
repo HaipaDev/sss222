@@ -55,6 +55,8 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     [Header("Other")]
     public string gameVersion;
     [SerializeField][ReadOnly] string _tempSandboxSaveName;
+    public bool isSteam=true;
+    public bool steamAchievsStatsLeaderboards=true;
     public bool cheatmode;
     public bool dmgPopups=true;
     public bool analyticsOn=true;
@@ -498,8 +500,12 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         else if(gamemodeSelected<0){gr=GameCreator.instance.adventureZonesPrefabs[Mathf.Abs(gamemodeSelected)-1];}
         return gr;
     }
-    public string GetCurrentGamemodeName(){string n="";if(gamemodeSelected>0&&gamemodeSelected<GameCreator.instance.gamerulesetsPrefabs.Length+1){n=GameCreator.instance.gamerulesetsPrefabs[gamemodeSelected-1].cfgName;}
-        else if(gamemodeSelected<0&&Mathf.Abs(gamemodeSelected)<GameCreator.instance.adventureZonesPrefabs.Length){n=GameCreator.instance.adventureZonesPrefabs[Mathf.Abs(gamemodeSelected)].cfgName;}return n;}
+    public string GetCurrentGamemodeName(){
+        string n="";if(gamemodeSelected>0&&gamemodeSelected<GameCreator.instance.gamerulesetsPrefabs.Length+1){n=GameCreator.instance.gamerulesetsPrefabs[gamemodeSelected-1].cfgName;}
+        else if(gamemodeSelected<0&&Mathf.Abs(gamemodeSelected)<GameCreator.instance.adventureZonesPrefabs.Length){n=GameCreator.instance.adventureZonesPrefabs[Mathf.Abs(gamemodeSelected)].cfgName;}
+        else if(gamemodeSelected==0){n="Sandbox Mode";}
+        return n;}
+    public bool _isSandboxMode(){return (SceneManager.GetActiveScene().name.Contains("Sandbox")||(SceneManager.GetActiveScene().name=="Game"&&GetCurrentGamemodeName().Contains("Sandbox")));}
 
         
     //public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}

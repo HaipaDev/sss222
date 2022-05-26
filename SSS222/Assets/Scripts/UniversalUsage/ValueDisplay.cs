@@ -108,6 +108,7 @@ public class ValueDisplay : MonoBehaviour{
     #region//DBAccess
         if(DBAccess.instance!=null){    var db=DBAccess.instance;
             if(value=="loginMessage"){_txt=db.loginMessage;}
+            else if(value=="loggedInMessage"){_txt=db.loggedInMessage;}
             else if(value=="submitMessage"){_txt=db.submitMessage;}
         }
     #endregion

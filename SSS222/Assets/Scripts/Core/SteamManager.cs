@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
+using Steamworks.Data;
 
 public class SteamManager : MonoBehaviour{  public static SteamManager instance;
     const int appID=playtestID;
@@ -9,8 +10,13 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
     const int playtestID=2000200;
     void Awake(){
         if(SteamManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
-        InitSteam();
-        SteamUserStats.RequestCurrentStats();
+    }
+    void Start(){//IEnumerator Start(){
+        //yield return new WaitForSeconds(0.1f);
+        if(GameSession.instance!=null){if(GameSession.instance.isSteam){
+            InitSteam();
+            SteamUserStats.RequestCurrentStats();
+        }}
     }
     void Update(){
         //SteamClient.RunCallbacks();
@@ -31,4 +37,11 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
         }
     }
     void OnApplicationQuit(){SteamClient.Shutdown();}
+    public async void SubmitScore(string name,int score){
+        Steamworks.Data.Leaderboard? leaderboard = await SteamUserStats.FindLeaderboardAsync(name);
+        if(leaderboard.HasValue){
+            Steamworks.Data.Leaderboard lb=(Steamworks.Data.Leaderboard)leaderboard;
+            var result = await lb.SubmitScoreAsync(score);
+        }
+    }
 }

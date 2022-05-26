@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Steamworks;
+using Steamworks.Data;
 
 public class SubmitScore : MonoBehaviour{
     [SerializeField]GameObject autosubmitScoresToggle;
@@ -10,6 +12,7 @@ public class SubmitScore : MonoBehaviour{
         autosubmitScoresToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.autosubmitScores;
     }
     public static void SubmitScoreFunc(){
+        //if(GameSession.instance.steamAchievsStatsLeaderboards)SteamManager.instance.SubmitScore(GameSession.instance.GetCurrentGamemodeName(),GameSession.instance.GetHighscoreCurrent());
         if(SaveSerial.instance.hyperGamerLoginData.username!=""&&SaveSerial.instance.hyperGamerLoginData.loggedIn){
             DBAccess.instance.SaveScoreToDB(SaveSerial.instance.hyperGamerLoginData.username,GameSession.instance.GetHighscoreCurrent());
             if(_exceptionScenes())if(FindObjectOfType<DisplayLeaderboard>().currentUser)FindObjectOfType<DisplayLeaderboard>().DisplayCurrentUserHighscore();

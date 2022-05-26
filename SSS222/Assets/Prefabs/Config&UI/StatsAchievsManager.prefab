@@ -146,8 +146,117 @@ MonoBehaviour:
     achievData:
       name: 
       completed: 0
+  - name: coreCollect
+    displayName: The Dark Power
+    desc: Collect a Power Core
+    icon: {fileID: 21300000, guid: c845a53eb43a2ff418935792c08b9ea1, type: 3}
+    iconInc: {fileID: 21300000, guid: eff571c9b63e3fe42b96e207473852a7, type: 3}
+    epic: 0
+    hidden: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: powerups
+    displayName: PowerMan
+    desc: Collect each type of powerup once
+    icon: {fileID: 21300000, guid: 3f6cf24bda3cc4f4d8d61218de832389, type: 3}
+    iconInc: {fileID: 21300000, guid: 1c9f082f404a27d41b96f348129f56da, type: 3}
+    epic: 0
+    hidden: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: shots_fired-1
+    displayName: Shots Fired
+    desc: Fire over 10k times
+    icon: {fileID: 21300000, guid: 95590194b5021ba4c828a8a8ec7d3612, type: 3}
+    iconInc: {fileID: 21300000, guid: 858e976a82213ea448e32a9a112f2791, type: 3}
+    epic: 0
+    hidden: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: deepFried
+    displayName: Deep Fried
+    desc: Set your audio value above 1.15x
+    icon: {fileID: 21300000, guid: 89f8b4f250afd9744a824083efd0be63, type: 3}
+    iconInc: {fileID: 21300000, guid: 2c4f312d1fe6dc64ba1ae09e81f3f76a, type: 3}
+    epic: 0
+    hidden: 1
+    achievData:
+      name: 
+      completed: 0
+  - name: determination
+    displayName: Determination
+    desc: Survive for 1 minute when on low HP
+    icon: {fileID: 21300000, guid: cfcbbeea48ff74b4ea74e26405f43b26, type: 3}
+    iconInc: {fileID: 21300000, guid: 2a73070c4ae6aa44ba1ba29b4a829153, type: 3}
+    epic: 0
+    hidden: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: trading-1
+    displayName: How much is this?
+    desc: Trade for the first time
+    icon: {fileID: 21300000, guid: 42145bef474afd045826dfdf3924b0e8, type: 3}
+    iconInc: {fileID: 21300000, guid: d9d9083d2a6aadb458ceec70d86b3139, type: 3}
+    epic: 0
+    hidden: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: trading-2
+    displayName: Im a regular here
+    desc: Trade for over 20 times
+    icon: {fileID: 21300000, guid: 2dc32af874b2ce144ad9c8ab48d72837, type: 3}
+    iconInc: {fileID: 21300000, guid: 7c3e271f61f029d43bf26b9a6f36c162, type: 3}
+    epic: 0
+    hidden: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: customize
+    displayName: Thats me
+    desc: Customize any element of your ship for the first time
+    icon: {fileID: 21300000, guid: 5867c7e3a81078346a3b552fda72ca18, type: 3}
+    iconInc: {fileID: 21300000, guid: 13a64504350c1fa40bb6257807d71df7, type: 3}
+    epic: 0
+    hidden: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: customize-all
+    displayName: Colorful
+    desc: Customize all elements of your ship
+    icon: {fileID: 21300000, guid: 2109e36773ea00742b19bb0739dd9ce6, type: 3}
+    iconInc: {fileID: 21300000, guid: 3f7847a7298ff2d4f8064b6605c2640a, type: 3}
+    epic: 0
+    hidden: 0
+    achievData:
+      name: 
+      completed: 0
+  - name: customize-crisis
+    displayName: Personality Crisis
+    desc: Change your skin 20 times in 5 minutes
+    icon: {fileID: 21300000, guid: e42373378c100d6408b3d2d7f73e2e9a, type: 3}
+    iconInc: {fileID: 21300000, guid: fe7e4e44dc351b04c835fdecdda39d33, type: 3}
+    epic: 0
+    hidden: 1
+    achievData:
+      name: 
+      completed: 0
+  - name: sandbox_time-1
+    displayName: True Creator
+    desc: Spent over 15 minutes in Sandbox Mode
+    icon: {fileID: 21300000, guid: 66794c6ad6bd7834cb728bef23055d37, type: 3}
+    iconInc: {fileID: 21300000, guid: 48d35658228e05b458915c3c6bd0c590, type: 3}
+    epic: 0
+    hidden: 0
+    achievData:
+      name: 
+      completed: 0
   _achievsListCount: 7
-  achievsLoaded: 0
   uncompletedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   completedColor: {r: 0.21568628, g: 1, b: 0.21568628, a: 1}
   epicUncompletedColor: {r: 0.6117647, g: 0.4745098, b: 0.7490196, a: 1}
@@ -164,6 +273,18 @@ MonoBehaviour:
     killsComets: 0
     shotsTotal: 0
   _statsGamemodesListCount: 4
+  sandboxTime: 0
+  sandboxTimeMax: 900
+  personalityCrisisCount: 0
+  personalityCrisisCountMax: 20
+  personalityCrisisTimeMax: 300
+  personalityCrisisTimer: 0
+  personalityCrisisTimerOn: 0
+  determinationTimeMax: 60
+  determinationTimer: 0
+  determinationTimerOn: 0
+  uniquePowerups: []
+  achievsLoaded: 0
   statsLoaded: 0
   statsTotalSummed: 0
 --- !u!1001 &753093157466381974
@@ -173,11 +294,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7470442380808647751}
     m_Modifications:
-    - target: {fileID: 3814260021439161448, guid: ec19159ca2adaf1498af3c9e7784a30a,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3814260021439161449, guid: ec19159ca2adaf1498af3c9e7784a30a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -283,35 +399,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3814260021439161451, guid: ec19159ca2adaf1498af3c9e7784a30a,
-        type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3814260021439161453, guid: ec19159ca2adaf1498af3c9e7784a30a,
         type: 3}
       propertyPath: m_Name
       value: AchievPopupsCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 8442132583816927984, guid: ec19159ca2adaf1498af3c9e7784a30a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8442132583816927987, guid: ec19159ca2adaf1498af3c9e7784a30a,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.21568628
-      objectReference: {fileID: 0}
-    - target: {fileID: 8442132583816927987, guid: ec19159ca2adaf1498af3c9e7784a30a,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8442132583816927987, guid: ec19159ca2adaf1498af3c9e7784a30a,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.21568628
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec19159ca2adaf1498af3c9e7784a30a, type: 3}

@@ -98,7 +98,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         if(SceneManager.GetActiveScene().name=="Options")OpenSettings();
         SetPanelActive(0);
     }
-    void Update(){postProcessVolume=FindObjectOfType<PostProcessVolume>();if(SaveSerial.instance!=null){
+    void Update(){postProcessVolume=FindObjectOfType<PostProcessVolume>();
         if(settingsData.pprocessing==true&&postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
         if(settingsData.pprocessing==true&&FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume.enabled=true;}
         if(settingsData.pprocessing==false&&FindObjectOfType<PostProcessVolume>()!=null){postProcessVolume=FindObjectOfType<PostProcessVolume>();postProcessVolume.enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
@@ -106,7 +106,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         if(settingsData.soundVolume<=-50){settingsData.soundVolume=-80;}
         if(settingsData.ambienceVolume<=-50){settingsData.ambienceVolume=-80;}
         if(settingsData.musicVolume<=-50){settingsData.musicVolume=-80;}
-    }}
+    }
     public void SetPanelActive(int i){panelActive=i;foreach(GameObject p in panels){p.SetActive(false);}panels[panelActive].SetActive(true);}
     public void OpenSettings(){transform.GetChild(0).gameObject.SetActive(true);transform.GetChild(1).gameObject.SetActive(false);}
     public void OpenDeleteAll(){transform.GetChild(1).gameObject.SetActive(true);transform.GetChild(0).gameObject.SetActive(false);}
@@ -114,39 +114,38 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
 
 
     #region//Game
-    public void SetOnScreenButtons(bool isOn){if(SaveSerial.instance!=null)settingsData.scbuttons=isOn;}
-    public void SetVibrations(bool isOn){if(SaveSerial.instance!=null)settingsData.vibrations=isOn;}
-    public void SetDiscordRPC(bool isOn){if(SaveSerial.instance!=null)settingsData.discordRPC=isOn;}
-    public void SetAutoselectNewItem(bool isOn){if(SaveSerial.instance!=null)settingsData.autoselectNewItem=isOn;
+    public void SetOnScreenButtons(bool isOn){settingsData.scbuttons=isOn;}
+    public void SetVibrations(bool isOn){settingsData.vibrations=isOn;}
+    public void SetDiscordRPC(bool isOn){settingsData.discordRPC=isOn;}
+    public void SetAutoselectNewItem(bool isOn){settingsData.autoselectNewItem=isOn;
         if(isOn){
             if(settingsData.alwaysReplaceCurrentSlot){settingsData.alwaysReplaceCurrentSlot=false;alwaysReplaceCurrentSlotToggle.GetComponent<Toggle>().isOn=false;}
         }
     }
-    public void SetAlwaysReplaceCurrentSlot(bool isOn){if(SaveSerial.instance!=null)settingsData.alwaysReplaceCurrentSlot=isOn;
+    public void SetAlwaysReplaceCurrentSlot(bool isOn){settingsData.alwaysReplaceCurrentSlot=isOn;
         if(isOn){
             if(settingsData.autoselectNewItem){settingsData.autoselectNewItem=false;autoselectNewItemToggle.GetComponent<Toggle>().isOn=false;}
         }
     }   
-    public void SetAutouseMedkitsIfLow(bool isOn){if(SaveSerial.instance!=null)settingsData.autoUseMedkitsIfLow=isOn;}
-    public void SetAllowSelectingEmptySlots(bool isOn){if(SaveSerial.instance!=null)settingsData.allowSelectingEmptySlots=isOn;
+    public void SetAutouseMedkitsIfLow(bool isOn){settingsData.autoUseMedkitsIfLow=isOn;}
+    public void SetAllowSelectingEmptySlots(bool isOn){settingsData.allowSelectingEmptySlots=isOn;
         if(isOn){
             if(settingsData.allowScrollingEmptySlots&&settingsData.alwaysReplaceCurrentSlot){settingsData.alwaysReplaceCurrentSlot=false;alwaysReplaceCurrentSlotToggle.GetComponent<Toggle>().isOn=false;}
         }
     }
-    public void SetAllowScrollingEmptySlots(bool isOn){if(SaveSerial.instance!=null)settingsData.allowScrollingEmptySlots=isOn;
+    public void SetAllowScrollingEmptySlots(bool isOn){settingsData.allowScrollingEmptySlots=isOn;
         if(isOn){
             if(settingsData.allowSelectingEmptySlots&&settingsData.alwaysReplaceCurrentSlot){settingsData.alwaysReplaceCurrentSlot=false;alwaysReplaceCurrentSlotToggle.GetComponent<Toggle>().isOn=false;}
         }
     }
     public void SetPlayfieldRot(bool horiz){
-        PlaneDir h=PlaneDir.vert;if(horiz==true){h=PlaneDir.horiz;}if(SaveSerial.instance!=null)settingsData.playfieldRot=h;
+        PlaneDir h=PlaneDir.vert;if(horiz==true){h=PlaneDir.horiz;}settingsData.playfieldRot=h;
         if(SceneManager.GetActiveScene().name=="Game"&&Application.isPlaying){
             if(h==PlaneDir.horiz){FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,90);FindObjectOfType<Camera>().orthographicSize=GameSession.instance.horizCameraSize;}
             else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=GameSession.instance.vertCameraSize;}
         }
     }
-    public void SetSteering(){  if(SaveSerial.instance!=null){
-        var s=settingsData;
+    public void SetSteering(){
         switch(settingsData.inputType){
             case (InputType)0:
                 settingsData.inputType=(InputType)1;
@@ -162,10 +161,8 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
                 settingsData.inputType=(InputType)0;
                 break;
         }
-    }}
+    }
     public void SetJoystick(){
-        if(SaveSerial.instance!=null){
-        var s=settingsData;
         switch(settingsData.joystickType){
             case (JoystickType)0:
                 settingsData.joystickType=(JoystickType)1;
@@ -178,78 +175,74 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
                 break;
         }
         if(FindObjectOfType<Tag_Joystick>()!=null)FindObjectOfType<Tag_Joystick>().StartCoroutine(FindObjectOfType<Tag_Joystick>().ChangeType());
-        }
     }
-    public void SetJoystickSize(float size){if(SaveSerial.instance!=null)settingsData.joystickSize=size;}
+    public void SetJoystickSize(float size){settingsData.joystickSize=size;}
     public void SetLefthand(bool isOn){
-        if(SaveSerial.instance!=null)settingsData.lefthand=isOn;
+        settingsData.lefthand=isOn;
         if(FindObjectOfType<SwitchPlacesCanvas>()!=null)FindObjectOfType<SwitchPlacesCanvas>().Set();
     }
-    public void SetDTapMouse(bool isOn){if(SaveSerial.instance!=null)settingsData.dtapMouseShoot=isOn;}
+    public void SetDTapMouse(bool isOn){settingsData.dtapMouseShoot=isOn;}
     public void SetCheatmode(bool isOn){if(GameSession.instance!=null)GameSession.instance.cheatmode=isOn;}
     #endregion
 
 
     #region//Sound
-    public void SetMasterVolume(float val){if(SaveSerial.instance!=null)System.Math.Round(settingsData.masterVolume=val,2);}
-    public void SetSoundVolume(float val){if(SaveSerial.instance!=null)System.Math.Round(settingsData.soundVolume=val,2);}
-    public void SetAmbienceVolume(float val){if(SaveSerial.instance!=null)System.Math.Round(settingsData.ambienceVolume=val,2);}
-    public void SetMusicVolume(float val){if(SaveSerial.instance!=null)System.Math.Round(settingsData.musicVolume=val,2);}
-    public void SetMusicWinddown(bool isOn){if(SaveSerial.instance!=null)settingsData.windDownMusic=isOn;}
+    public void SetMasterVolume(float val){settingsData.masterVolume=(float)System.Math.Round(val,2);if(val>1.15f)StatsAchievsManager.instance.DeepFried();}
+    public void SetSoundVolume(float val){settingsData.soundVolume=(float)System.Math.Round(val,2);if(val>1.15f)StatsAchievsManager.instance.DeepFried();}
+    public void SetAmbienceVolume(float val){settingsData.ambienceVolume=(float)System.Math.Round(val,2);if(val>1.15f)StatsAchievsManager.instance.DeepFried();}
+    public void SetMusicVolume(float val){settingsData.musicVolume=(float)System.Math.Round(val,2);if(val>1.15f)StatsAchievsManager.instance.DeepFried();}
+    public void SetMusicWinddown(bool isOn){settingsData.windDownMusic=isOn;}
     #endregion
 
 
     #region//Graphics
     public void SetQuality(int qualityIndex){
         QualitySettings.SetQualityLevel(qualityIndex);
-        if(SaveSerial.instance!=null){
-            var s=settingsData;
-            settingsData.quality=qualityIndex;
-            if(qualityIndex<=1){
-                settingsData.pprocessing=false;
-                settingsData.dmgPopups=false;
-                pprocessingToggle.GetComponent<Toggle>().isOn=false;
-                dmgPopupsToggle.GetComponent<Toggle>().isOn=false;
-            }if(qualityIndex==0){
-                settingsData.screenshake=false;
-                settingsData.particles=false;
-                settingsData.screenflash=false;
-                screenshakeToggle.GetComponent<Toggle>().isOn=false;
-                particlesToggle.GetComponent<Toggle>().isOn=false;
-                screenflashToggle.GetComponent<Toggle>().isOn=false;
-            }if(qualityIndex>1){
-                settingsData.particles=true;
-                particlesToggle.GetComponent<Toggle>().isOn=true;
-            }if(qualityIndex>4){
-                settingsData.pprocessing=true;
-                pprocessingToggle.GetComponent<Toggle>().isOn=true;
-            }
+        settingsData.quality=qualityIndex;
+        if(qualityIndex<=1){
+            settingsData.pprocessing=false;
+            settingsData.dmgPopups=false;
+            pprocessingToggle.GetComponent<Toggle>().isOn=false;
+            dmgPopupsToggle.GetComponent<Toggle>().isOn=false;
+        }if(qualityIndex==0){
+            settingsData.screenshake=false;
+            settingsData.particles=false;
+            settingsData.screenflash=false;
+            screenshakeToggle.GetComponent<Toggle>().isOn=false;
+            particlesToggle.GetComponent<Toggle>().isOn=false;
+            screenflashToggle.GetComponent<Toggle>().isOn=false;
+        }if(qualityIndex>1){
+            settingsData.particles=true;
+            particlesToggle.GetComponent<Toggle>().isOn=true;
+        }if(qualityIndex>4){
+            settingsData.pprocessing=true;
+            pprocessingToggle.GetComponent<Toggle>().isOn=true;
         }
     }
-    public void SetScreenshake(bool isOn){if(SaveSerial.instance!=null)settingsData.screenshake=isOn;}
-    public void SetDmgPopups(bool isOn){if(SaveSerial.instance!=null)settingsData.dmgPopups=isOn;}
-    public void SetParticles(bool isOn){if(SaveSerial.instance!=null)settingsData.particles=isOn;}
-    public void SetScreenflash(bool isOn){if(SaveSerial.instance!=null)settingsData.screenflash=isOn;}
-    public void SetPlayerWeaponsFade(bool isOn){if(SaveSerial.instance!=null)settingsData.playerWeaponsFade=isOn;}
+    public void SetScreenshake(bool isOn){settingsData.screenshake=isOn;}
+    public void SetDmgPopups(bool isOn){settingsData.dmgPopups=isOn;}
+    public void SetParticles(bool isOn){settingsData.particles=isOn;}
+    public void SetScreenflash(bool isOn){settingsData.screenflash=isOn;}
+    public void SetPlayerWeaponsFade(bool isOn){settingsData.playerWeaponsFade=isOn;}
     public void SetFullscreen(bool isOn){
         Screen.fullScreen=isOn;
-        if(SaveSerial.instance!=null)settingsData.fullscreen=isOn;
+        settingsData.fullscreen=isOn;
         Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,isOn,60);
     }
     public void SetPostProcessing(bool isOn){
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
-        if(SaveSerial.instance!=null)if(SaveSerial.instance!=null)settingsData.pprocessing=isOn;
+        settingsData.pprocessing=isOn;
         if(isOn==true&&postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}//FindObjectOfType<Level>().RestartScene();}
         if(isOn==true&&postProcessVolume!=null){postProcessVolume.enabled=true;}
         if(isOn==false&&FindObjectOfType<PostProcessVolume>()!=null){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
     }
 
-    public void SetHudVis_Graphics(float val){if(SaveSerial.instance!=null)settingsData.hudVis_graphics=val;}
-    public void SetHudVis_Text(float val){if(SaveSerial.instance!=null)settingsData.hudVis_text=val;}
-    public void SetHudVis_BarFill(float val){if(SaveSerial.instance!=null)settingsData.hudVis_barFill=val;}
-    public void SetHudVis_AbsorpFill(float val){if(SaveSerial.instance!=null)settingsData.hudVis_absorpFill=val;}
-    public void SetHudVis_Popups(float val){if(SaveSerial.instance!=null)settingsData.hudVis_popups=val;}
-    public void SetHudVis_Notif(float val){if(SaveSerial.instance!=null)settingsData.hudVis_notif=val;}
+    public void SetHudVis_Graphics(float val){settingsData.hudVis_graphics=val;}
+    public void SetHudVis_Text(float val){settingsData.hudVis_text=val;}
+    public void SetHudVis_BarFill(float val){settingsData.hudVis_barFill=val;}
+    public void SetHudVis_AbsorpFill(float val){settingsData.hudVis_absorpFill=val;}
+    public void SetHudVis_Popups(float val){settingsData.hudVis_popups=val;}
+    public void SetHudVis_Notif(float val){settingsData.hudVis_notif=val;}
     #endregion
     
 

@@ -21,7 +21,7 @@ public class DisplayLeaderboard : MonoBehaviour{
     }
     void Update(){
         txtRank.text="#"+rank.ToString();
-        if(Login.developerNicknames.Contains(username)){txtScore.text="<color="+Login.developerNicknameColor+">"+username+"</color> : \n <color=#d4d4d4>"+score.ToString()+"</color>";}
+        if(Login._isDeveloperNick(username)){txtScore.text="<color="+Login.developerNicknameColor+">"+username+"</color> : \n <color=#d4d4d4>"+score.ToString()+"</color>";}
         else{txtScore.text=username+" : \n <color=#d4d4d4>"+score.ToString()+"</color>";}
     }
     public void CurrentUserHighscoreBtn(){

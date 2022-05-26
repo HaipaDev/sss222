@@ -21,8 +21,8 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     IMongoCollection<Model_Score> scores_meteormadness;
     IMongoCollection<Model_Score> scores_hardcore;
     IMongoCollection<HyperGamer> hyperGamers;
-    public string registerMessage;
     public string loginMessage;
+    public string loggedInMessage;
     public string submitMessage;
 
     public string hyperLastLoginAppDisplay="SSS222";
@@ -44,6 +44,8 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
         db_hyperGamers=client_hyperGamers.GetDatabase(DATABASE_NAME_hyperGamers);
         hyperGamers=db_hyperGamers.GetCollection<HyperGamer>("userdata");
 
+        //LoginHyperGamer(SaveSerial.instance.hyperGamerLoginData.username,SaveSerial.instance.hyperGamerLoginData.password);
+
         //SaveScoreToDB("testname",100);
         //GetScoresFromDB();
     }
@@ -58,7 +60,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
             else if(score<=sameNameScore.ToList()[0].score){SetSubmitMessage("Score is lower or equals to submitted");}
             else{await scores.FindOneAndUpdateAsync(e=>e.name==name,Builders<Model_Score>.Update.Set(e=>e.score,score));SetSubmitMessage("Score overwritten!");}
         }else{if(score!=0){
-            Model_Score document=new Model_Score { name=name, score=score, version=GameSession.instance.gameVersion, date=System.DateTime.Now };
+            Model_Score document=new Model_Score { name=name, score=score, playtime=GameSession.instance.currentPlaytime, version=GameSession.instance.gameVersion, date=System.DateTime.Now };
             await scores.InsertOneAsync(document);
             SetSubmitMessage("New score submitted!");
         }else{SetSubmitMessage("Score is equals 0!");}}
@@ -88,7 +90,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
 
     public async void RegisterHyperGamer(string username,string password){
         System.Threading.CancellationToken cancellationToken=System.Threading.CancellationToken.None;
-        var loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
+        var loginUsername=await hyperGamers.FindAsync(e=>/*GameAssets.CaseInsStrCmpr(e.username,username)*/e.username==username,null,cancellationToken);
         //if(loginData.ToList().Count>0){
             //loginData=await hyperGamers.FindAsync(e => e.username==username&&e.password==password);
         bool collectionBiggerThan0=false;
@@ -97,11 +99,16 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
         if(collectionBiggerThan0&&loginUsername.ToList()[0].username==username){
             SetLoginMessage("You cant register an account that already exists");
         }else if(SaveSerial.instance.hyperGamerLoginData.registeredCount>=SaveSerial.instance.maxRegisteredHyperGamers){
-            SetLoginMessage("You cant register more than 3 accounts");
+            SetLoginMessage("You cant register more than 3 accounts per device");
         }else{
-            HyperGamer document=new HyperGamer{username=username,password=password,dateRegister=System.DateTime.Now,dateLastLogin=System.DateTime.Now,appRegistered=hyperLastLoginAppDisplay};
+            HyperGamer document=new HyperGamer{username=username,password=password,
+                dateRegister=System.DateTime.Now,dateLastLogin=System.DateTime.Now,
+                appRegistered=hyperLastLoginAppDisplay,appLastLogin=hyperLastLoginAppDisplay,
+                isSteam=GameSession.instance.isSteam};
             await hyperGamers.InsertOneAsync(document);
-            SaveSerial.instance.SetLogin(username,password);SaveSerial.instance.SaveLogin();SaveSerial.instance.hyperGamerLoginData.registeredCount++;
+            string _pass=password;if(FindObjectOfType<Login>()!=null){if(!FindObjectOfType<Login>()._rememberPassword())_pass="";}
+            SaveSerial.instance.SetLogin(username,_pass);SaveSerial.instance.SaveLogin();
+            SaveSerial.instance.hyperGamerLoginData.registeredCount++;
         }
     }
     public async void LoginHyperGamer(string username,string password){
@@ -111,23 +118,47 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
         if(loginUsername.ToList().Count>0){collectionBiggerThan0=true;
             loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
             if(collectionBiggerThan0&&loginUsername.ToList()[0].password!=password){
-                SetLoginMessage("Wrong password");
+                SetLoginMessage("Wrong password");if(SaveSerial.instance.hyperGamerLoginData.loggedIn)SaveSerial.instance.LogOut();
             }
             loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
             if(collectionBiggerThan0&&loginUsername.ToList()[0].password==password){
                 loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
-                SaveSerial.instance.SetLogin(username,password);SaveSerial.instance.SaveLogin();
                 await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.dateLastLogin,System.DateTime.Now));
                 await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.appLastLogin,hyperLastLoginAppDisplay));
+                string _pass=password;if(FindObjectOfType<Login>()!=null){if(!FindObjectOfType<Login>()._rememberPassword())_pass="";}
+                SaveSerial.instance.SetLogin(username,_pass);SaveSerial.instance.SaveLogin();
             }
-        }else{SetLoginMessage("Login not found");}
+        }else{SetLoginMessage("Login not found");if(SaveSerial.instance.hyperGamerLoginData.loggedIn)SaveSerial.instance.LogOut();}
+    }
+    public async void ChangePassHyperGamer(string password,string newPass){
+        System.Threading.CancellationToken cancellationToken=System.Threading.CancellationToken.None;
+        var loginUsername=await hyperGamers.FindAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,null,cancellationToken);
+        bool collectionBiggerThan0=false;
+        if(loginUsername.ToList().Count>0){collectionBiggerThan0=true;
+            loginUsername=await hyperGamers.FindAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,null,cancellationToken);
+            if(collectionBiggerThan0&&loginUsername.ToList()[0].password!=password){
+                SetLoggedInMessage("Wrong password");
+            }
+            loginUsername=await hyperGamers.FindAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,null,cancellationToken);
+            if(collectionBiggerThan0&&loginUsername.ToList()[0].password==password){
+                loginUsername=await hyperGamers.FindAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,null,cancellationToken);
+                SaveSerial.instance.SetLogin(SaveSerial.instance.hyperGamerLoginData.username,newPass);SaveSerial.instance.SaveLogin();
+                await hyperGamers.FindOneAndUpdateAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,Builders<HyperGamer>.Update.Set(e=>e.password,newPass));
+                SetLoggedInMessage("Password changed");
+            }
+        }else{SetLoggedInMessage("Login not found");if(SaveSerial.instance.hyperGamerLoginData.loggedIn)SaveSerial.instance.LogOut();}
+    }
+    public void DeleteHyperGamer(string password){
+        hyperGamers.FindOneAndDelete(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username);SaveSerial.instance.LogOut();SetLoginMessage("Account deleted");
     }
 
 
     public void SetLoginMessage(string msg){StartCoroutine(SetLoginMessageI(msg));}
-    IEnumerator SetLoginMessageI(string msg){DBAccess.instance.loginMessage=msg;yield return new WaitForSecondsRealtime(2);DBAccess.instance.loginMessage="";}
+    IEnumerator SetLoginMessageI(string msg){DBAccess.instance.loginMessage=msg;yield return new WaitForSecondsRealtime(2f);if(DBAccess.instance.loginMessage==msg)DBAccess.instance.loginMessage="";}
+    public void SetLoggedInMessage(string msg){StartCoroutine(SetLoggedInMessageI(msg));}
+    IEnumerator SetLoggedInMessageI(string msg){DBAccess.instance.loggedInMessage=msg;yield return new WaitForSecondsRealtime(2f);if(DBAccess.instance.loggedInMessage==msg)DBAccess.instance.loggedInMessage="";}
     public void SetSubmitMessage(string msg){StartCoroutine(SetSubmitMessageI(msg));}
-    IEnumerator SetSubmitMessageI(string msg){DBAccess.instance.submitMessage=msg;yield return new WaitForSecondsRealtime(2);DBAccess.instance.submitMessage="";}
+    IEnumerator SetSubmitMessageI(string msg){DBAccess.instance.submitMessage=msg;yield return new WaitForSecondsRealtime(2f);if(DBAccess.instance.submitMessage==msg)DBAccess.instance.submitMessage="";}
 }
 // Model_User Sample
 [System.Serializable]
@@ -137,6 +168,7 @@ public class Model_Score {
     //public int id { set; get; }
     public string name {  set; get; }
     public int score { set; get; }
+    public float playtime { set; get; }
     public string version { set; get; }
     public System.DateTime date { set; get; }
     
@@ -150,6 +182,7 @@ public class HyperGamer {
 
     public string username {  set; get; }
     public string password { set; get; }
+    public bool isSteam { set; get; }
     public string appRegistered { set; get; }
     public string appLastLogin { set; get; }
     public System.DateTime dateLastLogin { set; get; }

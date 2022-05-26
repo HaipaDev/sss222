@@ -54,12 +54,12 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Battery").name)){player.AddSubEnergy(gr.battery_energyGain,true);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){player.AddSubCoins(gr.crystalGain,true);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("CoinB").name)){player.AddSubCoins(gr.crystalBigGain,true);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(gr.coresCollectGain);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(gr.coresCollectGain);StatsAchievsManager.instance.CoreCollected();}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestBall").name)){player.AddSubXP(gr.benergyBallGain);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestVial").name)){player.AddSubXP(gr.benergyVialGain);}
                 if(other.GetComponent<Tag_Collectible>().isPowerup){//if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
                     spawnReqsMono.AddPwrups(other.gameObject.name);
-                    StatsAchievsManager.instance.AddPowerups();
+                    if(!GameSession.instance._isSandboxMode())StatsAchievsManager.instance.AddPowerups(other.gameObject.name);
                     GameSession.instance.AddXP(gr.xp_powerup);//XP For powerups
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("LunarGel").name)){if(gr.lunarGel_absorp){HPAbsorp(GameRules.instance.lunarGel_hpGain);}else{HPAdd(GameRules.instance.lunarGel_hpGain);}}

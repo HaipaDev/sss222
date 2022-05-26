@@ -95,6 +95,8 @@ MonoBehaviour:
     gobj: {fileID: 4548736405339070879, guid: 5924af7ffd96c8147b6d83568c56580e, type: 3}
   - name: gcloverPwrup
     gobj: {fileID: 4548736405339070879, guid: e862a3dbc125f6a479dc758a97999268, type: 3}
+  - name: shadowPwrup
+    gobj: {fileID: 4548736405339070879, guid: b8bc1ba80b2b8024194cb002d7afb980, type: 3}
   - name: shadowdashPwrup
     gobj: {fileID: 4548736405339070879, guid: b8bc1ba80b2b8024194cb002d7afb980, type: 3}
   - name: shadowtracesPwrup
@@ -295,6 +297,8 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: a1e2036529aa2324ab1e0a53dcfae988, type: 3}
   - name: questionMark
     spr: {fileID: 21300000, guid: 80ce7bb650e1ee74f9e503818fa3dfd7, type: 3}
+  - name: AchievHidden
+    spr: {fileID: 21300000, guid: 33dccb683b24bd848b8c218038ed2dd2, type: 3}
   materials:
   - name: AIOShaderMat
     mat: {fileID: 2100000, guid: 94bd4665afcd8b743921007cb09b25c0, type: 2}

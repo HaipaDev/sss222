@@ -280,7 +280,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4755926375889011706}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 101f6d01480354a42b7e084db3999f04, type: 3}
   m_Name: 
@@ -313,7 +313,6 @@ GameObject:
   - component: {fileID: 154659930698789003}
   - component: {fileID: 8981701859103085409}
   - component: {fileID: 6877548195606944552}
-  - component: {fileID: 2718095353847745622}
   - component: {fileID: 8540648612432389783}
   m_Layer: 8
   m_Name: CPick
@@ -473,19 +472,6 @@ MonoBehaviour:
   maxParticles: 2
   offset: {x: 0, y: 0.1}
   alignToDirection: 1
---- !u!114 &2718095353847745622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9179950860950058018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101f6d01480354a42b7e084db3999f04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interval: 0
 --- !u!114 &8540648612432389783
 MonoBehaviour:
   m_ObjectHideFlags: 0
