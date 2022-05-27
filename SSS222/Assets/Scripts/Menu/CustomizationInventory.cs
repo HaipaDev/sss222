@@ -46,7 +46,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         if(String.IsNullOrEmpty(deathFxName)||GetDeathFx(deathFxName)==null){deathFxName="def";}
         if(String.IsNullOrEmpty(musicName)||GetMusic(musicName)==null){musicName=CstmzMusic._cstmzMusicDef;}
         skinName=SaveSerial.instance.playerData.skinName;
-        SetCategory(Array.Find(GameAssets.instance.skins,x=>x.name.Contains(GetSkinName(SaveSerial.instance.playerData.skinName))).category);
+        SetCategory(GameAssets.instance.skins.Find(x=>x.name.Contains(GetSkinName(SaveSerial.instance.playerData.skinName))).category);
 
         overlayColorArr[0] = SaveSerial.instance.playerData.overlayColor[0];
         overlayColorArr[1] = SaveSerial.instance.playerData.overlayColor[1];
@@ -118,7 +118,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     void DeleteAllElements(){foreach(Transform t in elementsListContent){Destroy(t.gameObject);}}
     void CreateAllElements(){
         if(typeSelected==CstmzType.skin){
-            var currentCategorySkins=Array.FindAll(GameAssets.instance.skins,x=>x.category==categorySelected);
+            var currentCategorySkins=GameAssets.instance.skins.FindAll(x=>x.category==categorySelected);
             foreach(CstmzSkin ge in currentCategorySkins){
                 var go=Instantiate(cstmzElementPrefab,elementsListContent);
                 go.name="SkinElement_"+ge.name;
@@ -130,7 +130,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 ce.overlayImg.GetComponent<Image>().sprite=ge.sprOverlay;
             }
         }else if(typeSelected==CstmzType.trail){
-            var currentCategoryTrails=Array.FindAll(GameAssets.instance.trails,x=>x.category==categorySelected);
+            var currentCategoryTrails=GameAssets.instance.trails.FindAll(x=>x.category==categorySelected);
             foreach(CstmzTrail ge in currentCategoryTrails){
                 var go=Instantiate(cstmzElementPrefab,elementsListContent);
                 go.name="TrailElement_"+ge.name;
@@ -144,7 +144,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 GameAssets.instance.TransformIntoUIParticle(goPt);
             }
         }else if(typeSelected==CstmzType.flares){
-            var currentCategoryFlares=Array.FindAll(GameAssets.instance.flares,x=>x.category==categorySelected);
+            var currentCategoryFlares=GameAssets.instance.flares.FindAll(x=>x.category==categorySelected);
             foreach(CstmzFlares ge in currentCategoryFlares){
                 var go=Instantiate(cstmzElementPrefab,elementsListContent);
                 go.name="FlaresElement_"+ge.name;
@@ -161,7 +161,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
             }
         }else if(typeSelected==CstmzType.deathFx){
-            var currentCategoryDeathFxs=Array.FindAll(GameAssets.instance.deathFxs,x=>x.category==categorySelected);
+            var currentCategoryDeathFxs=GameAssets.instance.deathFxs.FindAll(x=>x.category==categorySelected);
             foreach(CstmzDeathFx ge in currentCategoryDeathFxs){
                 var go=Instantiate(cstmzElementPrefab,elementsListContent);
                 go.name="DeathFxElement_"+ge.name;
@@ -175,7 +175,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 GameAssets.instance.TransformIntoUIParticle(goPt,0,-1,true);
             }
         }else if(typeSelected==CstmzType.music){
-            var currentCategoryMusic=Array.FindAll(GameAssets.instance.musics,x=>x.category==categorySelected);
+            var currentCategoryMusic=GameAssets.instance.musics.FindAll(x=>x.category==categorySelected);
             foreach(CstmzMusic ge in currentCategoryMusic){
                 var go=Instantiate(cstmzElementPrefab,elementsListContent);
                 go.name="MusicElement_"+ge.name;
@@ -276,9 +276,9 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
 
     public void OpenVariants(string str){   string _str=str;
         if(!String.IsNullOrEmpty(_str)){_str=skinName;}
-        if(GetSkin(_str).variants.Length>0||GetOverlaySprite(_str)!=null){
+        if(GetSkin(_str).variants.Count>0||GetOverlaySprite(_str)!=null){
             variantsPanel.SetActive(true);
-            if(GetOverlaySprite(_str)!=null||Array.Find(GetSkin(_str).variants,x=>x.sprOverlay!=null)!=null){colorSliders.SetActive(true);}
+            if(GetOverlaySprite(_str)!=null||GetSkin(_str).variants.Find(x=>x.sprOverlay!=null)!=null){colorSliders.SetActive(true);}
             RecreateAllVariants(_str);
         }
     }
@@ -296,8 +296,8 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         ce1.elementPv.GetComponent<Image>().sprite=GetSkinSprite(str);
         if(GetOverlaySprite(str)!=null)ce1.overlayImg.GetComponent<Image>().sprite=GetOverlaySprite(str);
         //Create all others
-        CstmzSkinVariant[] variants=GetSkin(str).variants;
-        for(int i=0;i<variants.Length;i++){
+        List<CstmzSkinVariant> variants=GetSkin(str).variants;
+        for(int i=0;i<variants.Count;i++){
             var gs=variants[i];
             var go=Instantiate(cstmzElementPrefab,variantsListContent);
             go.name="SkinVariant_"+i;
@@ -373,7 +373,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public Sprite GetSkinSprite(string str){return ShipCustomizationManager.instance.GetSkinSprite(str);}
     public Sprite GetOverlaySprite(string str){return ShipCustomizationManager.instance.GetOverlaySprite(str);}
     CstmzSkinVariant GetSkinVariant(string str,int id){return GameAssets.instance.GetSkinVariant(str,id);}
-    public bool SkinHasVariants(string str){bool b=false;if(GetSkin(str).variants.Length>0){b=true;}return b;}
+    public bool SkinHasVariants(string str){bool b=false;if(GetSkin(str).variants.Count>0){b=true;}return b;}
     public void SetSkin(string str){skinName=str;if(variantsPanel.activeSelf){variantsPanel.SetActive(false);colorSliders.SetActive(false);}HighlightSelectedElement();HighlightSelectedType();
         if(skinName!="def"){StatsAchievsManager.instance.Customized();}}
 

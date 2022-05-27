@@ -112,7 +112,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public void SaberBlocked(){CompleteAchiev("saberBlock");}
     public void CoreCollected(){CompleteAchiev("coreCollect");}
     public void DeepFried(){CompleteAchiev("deepFried");}
-    public void Customized(){Debug.Log("Customized");CompleteAchiev("customize");SetPersonalityCrisisTimer();AddPersonalityCrisisCount();}
+    public void Customized(){CompleteAchiev("customize");SetPersonalityCrisisTimer();AddPersonalityCrisisCount();}
     public void CustomizedAll(){CompleteAchiev("customize-all");}
 
     [Button]public void ClearSteamAchievs(){foreach(Steamworks.Data.Achievement sa in SteamUserStats.Achievements){sa.Clear();}}
@@ -184,7 +184,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public void AddShotsTotal(){var s=GetStatsForCurrentGamemode();if(s!=null)s.shotsTotal++;}
 
     
-    public void AddPersonalityCrisisCount(){Debug.Log("Before: "+personalityCrisisCount);personalityCrisisCount++;Debug.Log("Added 1 to Personality Crisis Count: "+personalityCrisisCount);}
+    public void AddPersonalityCrisisCount(){personalityCrisisCount++;}
     public void SetPersonalityCrisisTimer(){if(!personalityCrisisTimerOn)personalityCrisisTimerOn=true;}
     public void SetDeterminationTimer(){if(!determinationTimerOn)determinationTimerOn=true;}
     public void StopDeterminationTimer(){determinationTimerOn=false;determinationTimer=0;}

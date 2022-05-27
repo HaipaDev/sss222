@@ -84,9 +84,9 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool playerWeaponsFade=true;
     public List<WeaponProperties> weaponProperties;
 [Header("State Defaults")]
+    public bool addToStatusTimer=true;
     public float flipTime = 7f;
     public float gcloverTime = 6f;
-    public bool dashingEnabled = true;
     public float shadowTime = 10f;
     public float shadowLength=0.33f;
     public float shadowtracesSpeed=1.3f;

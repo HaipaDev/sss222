@@ -162,7 +162,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
 
         //Set speed to normal
         if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
-        (Player.instance!=null&&Player.instance.matrix==false&&Player.instance.accel==false)&&speedChanged!=true){gameSpeed=defaultGameSpeed;}
+        (Player.instance!=null&&!Player.instance._hasStatus("matrix")&&!Player.instance._hasStatus("accel"))&&speedChanged!=true){gameSpeed=defaultGameSpeed;}
         if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
         if(Player.instance==null){gameSpeed=defaultGameSpeed;}
         
@@ -177,7 +177,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Escape)){GSceneManager.instance.LoadStartMenuGame();}
         }
 
-        if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(Player.instance!=null&&Player.instance.inverter==true)){
+        if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(Player.instance!=null&&Player.instance._hasStatus("inverter"))){
             foreach(AudioSource sound in FindObjectsOfType<AudioSource>()){
                 if(sound!=null){
                     GameObject snd=sound.gameObject;
@@ -189,7 +189,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 }
             }
         }
-        if(Player.instance!=null&&Player.instance.inverter==false){
+        if(Player.instance!=null&&!Player.instance._hasStatus("inverter")){
             foreach(AudioSource sound in AudioManager.instance.GetComponents(typeof(AudioSource))){
                 if(sound!=null){
                     GameObject snd=sound.gameObject;

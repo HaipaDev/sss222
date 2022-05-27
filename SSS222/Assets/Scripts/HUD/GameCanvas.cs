@@ -122,7 +122,7 @@ public class GameCanvas : MonoBehaviour{
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(amnt<0)symbol="-";
-        if(Player.instance!=null&&(!Player.instance.infEnergy)||(Player.instance.infEnergy&&symbol=="+")){
+        if(Player.instance!=null&&(!Player.instance._hasStatus("infenergy"))||(Player.instance._hasStatus("infenergy")&&symbol=="+")){
         enPopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();}
         }else{Debug.LogWarning("EnergyPopUpHUD not present");}
     }
@@ -218,7 +218,7 @@ public class GameCanvas : MonoBehaviour{
         //enpupupHud.GetComponent<Animator>().SetTrigger(0);
         string symbol="+";
         if(amnt<0)symbol="-";
-        if(Player.instance!=null&&(!Player.instance.infEnergy)||(Player.instance.infEnergy&&symbol=="+")){
+        if(Player.instance!=null&&(!Player.instance._hasStatus("infenergy"))||(Player.instance._hasStatus("infenergy")&&symbol=="+")){
         ammoPopup.GetComponentInChildren<TextMeshProUGUI>().text=symbol+Mathf.Abs(amnt).ToString();
         //energyUsedCount+=Mathf.Abs(amnt);
         }

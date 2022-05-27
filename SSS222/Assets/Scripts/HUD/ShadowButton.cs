@@ -16,14 +16,14 @@ public class ShadowButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     void Start(){
         defPos=transform.position;
         TurnOff();
-        if(!GameRules.instance.dashingEnabled)Destroy(gameObject);
+        Destroy(gameObject);
     }
     void Update(){
         if(Player.instance!=null){
-            if(!Player.instance.shadow||((!drag&&SaveSerial.instance.settingsData.inputType!=InputType.touch)||
+            if(!Player.instance._hasStatus("shadow")||((!drag&&SaveSerial.instance.settingsData.inputType!=InputType.touch)||
             (drag&&(SaveSerial.instance.settingsData.inputType!=InputType.mouse||!SaveSerial.instance.settingsData.dtapMouseShoot)))){
                 TurnOff();}
-            else if(Player.instance.shadow&&((!drag&&SaveSerial.instance.settingsData.inputType==InputType.touch)||
+            else if(Player.instance._hasStatus("shadow")&&((!drag&&SaveSerial.instance.settingsData.inputType==InputType.touch)||
             (drag&&SaveSerial.instance.settingsData.inputType==InputType.mouse&&SaveSerial.instance.settingsData.dtapMouseShoot))){
                 TurnOn();}
             pPosScr=Camera.main.WorldToScreenPoint(Player.instance.transform.position);

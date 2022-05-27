@@ -34,17 +34,17 @@ public class PlayerCollider : MonoBehaviour{
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){
                     Enemy en=other.GetComponent<Enemy>();
                     if(player.dashing==false){
-                        if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
-                        else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
+                        if(dmg!=0&&!player._hasStatus("gclover")){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
+                        else if(dmg!=0&&player._hasStatus("gclover")){AudioManager.instance.Play("GCloverHit");}
                         GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,transform.position.y+0.5f),0.3f);
                         if(dmgVal!=null){if(!dmgVal.phase)if(en!=null)en.Kill(false);}
                     }
-                    else if(player.shadow==true&&player.dashing==true){
-                        if(en!=null){if(en.killOnDash){en.Kill();}else{float dmgS=UniCollider.GetDmgValAbs("Shadowdash").dmg;en.health-=dmgS;UniCollider.DMG_VFX(0,other,other.transform,dmgS);}}
+                    else if(player._hasStatus("shadowdash")&&player.dashing==true){
+                        if(en!=null){if(en.killOnDash){en.Kill(explode:false);}else{float dmgS=UniCollider.GetDmgValAbs("Shadowdash").dmg;en.health-=dmgS;UniCollider.DMG_VFX(0,other,other.transform,dmgS);}}
                    }
                 }else{
-                    if(dmg!=0&&!player.gclover){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
-                    else if(dmg!=0&&player.gclover){AudioManager.instance.Play("GCloverHit");}
+                    if(dmg!=0&&!player._hasStatus("gclover")){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
+                    else if(dmg!=0&&player._hasStatus("gclover")){AudioManager.instance.Play("GCloverHit");}
                 }
             }
             #endregion
@@ -80,8 +80,8 @@ public class PlayerCollider : MonoBehaviour{
                 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("flipPwrup").name)) {
                     PwrupEnergyAdd();
-                    if(player.flip==true){PwrupEnergyAddDupl();}
-                    player.SetStatus("flip"); 
+                    if(player._hasStatus("flip")){PwrupEnergyAddDupl();}
+                    player.SetStatus("flip",player.flipTime); 
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("inverterPwrup").name)){
                     if(player.energyOn){
@@ -89,32 +89,34 @@ public class PlayerCollider : MonoBehaviour{
                         var tempHP=player.health; var tempEn=player.energy;
                         player.energy=tempHP; player.health=tempEn;
                     }
-                    player.SetStatus("inverter"); player.inverterTimer=0;
+                    player.SetStatus("inverter",player.inverterTime);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("magnetPwrup").name)){
                     PwrupEnergyAdd();
-                    if(player.magnet==true){PwrupEnergyAddDupl();}
-                    player.SetStatus("magnet");
+                    if(player._hasStatus("magnet")){PwrupEnergyAddDupl();}
+                    player.SetStatus("magnet",player.magnetTime);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("scalerPwrup").name)){
                     PwrupEnergyAdd();
-                    if(player.scaler==true){PwrupEnergyAddDupl();}
-                    player.SetStatus("scaler");
+                    if(player._hasStatus("scaler")){PwrupEnergyAddDupl();}
+                    player.SetStatus("scaler",player.scalerTime);
                     player.shipScale=player.shipScaleDefault*player.scalerSizes[UnityEngine.Random.Range(0,player.scalerSizes.Length-1)];
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("gcloverPwrup").name)){
-                    player.SetStatus("gclover");
+                    player.SetStatus("gclover",player.gcloverTime);
                     GameSession.instance.MultiplyScore(1.25f);
                     player.energy=player.energyMax;
                     GameAssets.instance.VFX("GCloverOutVFX", Vector2.zero,1f);
                 }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("shadowdashPwrup").name)||other.gameObject.name.Contains(GameAssets.instance.Get("shadowtracesPwrup").name)){
-                    if(other.gameObject.name.Contains(GameAssets.instance.Get("shadowtracesPwrup").name)){
-                        if(!player.shadow){player.SetSpeedPrev();player.moveSpeedCurrent*=player.shadowtracesSpeed;}
-                    }
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("shadowdashPwrup").name)){
                     PwrupEnergyAdd();
-                    if(player.shadow==true){PwrupEnergyAddDupl();}
-                    player.SetStatus("shadow");
+                    if(player._hasStatus("shadowdash")){PwrupEnergyAddDupl();}
+                    player.SetStatus("shadowdash",player.shadowTime);
+                    player.shadowed=true;
+                }
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("shadowtracesPwrup").name)){
+                    if(!player._hasStatus("shadowtracesPwrup")){player.SetSpeedPrev();player.moveSpeedCurrent*=player.shadowtracesSpeed;}
+                    player.SetStatus("shadowtraces",player.shadowTime);
                     player.shadowed=true;
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("assassinPwrup").name)){
@@ -134,8 +136,11 @@ public class PlayerCollider : MonoBehaviour{
                     player.InfEnergy(13);
                     player.GetComponent<PlayerSkills>().ResetSkillCooldowns();
                 }
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("matrixPwrup").name)){player.SetStatus("matrix");}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("accelPwrup").name)){player.SetStatus("accel");}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("matrixPwrup").name)){player.SetStatus("matrix",player.matrixTime);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("accelPwrup").name)){player.SetStatus("accel",player.accelTime);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("noHealPwrup").name)){player.SetStatus("noHeal",player.noHealTime);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("lifeStealPwrup").name)){player.SetStatus("lifeSteal",player.lifeStealTime);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("thornsPwrup").name)){player.SetStatus("thorns",player.thornsTime);}
                 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("randomizerPwrup").name)){
                     var item=other.GetComponent<LootTable>().GetItem();
@@ -182,7 +187,7 @@ public class PlayerCollider : MonoBehaviour{
             }
             #endregion
             string hitName="";
-            if((dmg!=0||other.gameObject.name.Contains(GameAssets.instance.Get("inverterPwrup").name)||other.gameObject.name.Contains("Zone_"))&&!player.gclover){hitName=other.gameObject.name;
+            if((dmg!=0||other.gameObject.name.Contains(GameAssets.instance.Get("inverterPwrup").name)||other.gameObject.name.Contains("Zone_"))&&!player._hasStatus("gclover")){hitName=other.gameObject.name;
                 if(hitName.Contains("(Clone)"))hitName=hitName.Replace("(Clone)","");lastHitName=hitName;lastHitDmg=dmg;lastHitPhasing=false;}
             if(hitName.Contains("Zone_")){hitName=hitName.Split('_')[0];lastHitName=hitName;}
             UniCollider.DMG_VFX(2,other,transform,dmg);
@@ -220,7 +225,7 @@ public class PlayerCollider : MonoBehaviour{
                 UniCollider.DMG_VFX(3,other,transform,dmg);
 
                 string hitName="";
-                if((dmg!=0||other.gameObject.name.Contains("Zone_"))&&!player.gclover){hitName=other.gameObject.name;
+                if((dmg!=0||other.gameObject.name.Contains("Zone_"))&&!player._hasStatus("gclover")){hitName=other.gameObject.name;
                     if(hitName.Contains("(Clone)"))hitName=hitName.Replace("(Clone)","");lastHitName=hitName;lastHitDmg=dmg;lastHitPhasing=true;}
                 if(hitName.Contains("Zone_")){hitName=hitName.Split('_')[0];lastHitName=hitName;}
             }

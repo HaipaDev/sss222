@@ -64,7 +64,7 @@ public class PlayerSkills : MonoBehaviour{
             if(skillsBinds[i]==skillKeyBind.Q){cooldownQ=cooldowns[i];}
             else if(skillsBinds[i]==skillKeyBind.E){cooldownE=cooldowns[i];}
         }
-        if(player.hacked!=true){
+        if(!player._hasStatus("hacked")){
             if(Input.GetKeyDown(KeyCode.Q)||Input.GetKeyDown(KeyCode.JoystickButton2) || key==1){
                 foreach(Skill skill in skills){
                     var i=skill.ID;
@@ -148,10 +148,10 @@ public class PlayerSkills : MonoBehaviour{
                 GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;timerTeleport=-4;currentSkillID=-1;
             }
         }
-        if(timerOverhaul>0&&player.infEnergy){
+        if(timerOverhaul>0&&player._hasStatus("infenergy")){
             timerOverhaul-=Time.deltaTime;
-        }if((timerOverhaul<0&&timerOverhaul!=-4)&&player.infEnergy){timerOverhaul=timeOverhaul;}
-        if(!player.infEnergy&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}
+        }if((timerOverhaul<0&&timerOverhaul!=-4)&&player._hasStatus("infenergy")){timerOverhaul=timeOverhaul;}
+        if(!player._hasStatus("infenergy")&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}
     }}
     #endregion
     public void ResetSkillCooldowns(){

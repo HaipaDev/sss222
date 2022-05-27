@@ -78,79 +78,12 @@ public class Player : MonoBehaviour{    public static Player instance;
 #endregion
 #region//Statuses
     [Header("Statuses")]
-    public List<string> statuses;
-    public string statusc="";
-    [SerializeField] public bool flip=false;
-    public float flipTimer=-4;
-    [SerializeField] public bool gclover=false;
-    public float gcloverTimer =-4;
-    [SerializeField] public bool shadow=false;
-    public float shadowTimer=-4;
+    [SerializeField] public List<StatusFx> statuses=new List<StatusFx>();
     public float dashTime;
-    [SerializeField] public bool inverter=false;
-    public float inverterTimer=14;
-    [SerializeField] public bool magnet=false;
-    public float magnetTimer=-4;
-    [SerializeField] public bool matrix=false;
-    public float matrixTimer=-4;
-    [SerializeField] public bool scaler=false;
-    public float scalerTimer=-4;
-    public float pmultiTimer=-4;
-    [SerializeField] public bool accel=false;
-    public float accelTimer=-4;
-    [SerializeField] public bool onfire=false;
-    public float onfireTimer=-4;
-    [HideInInspector]public float onfireTime=-4;
-    [SerializeField] public bool decay=false;
-    public float decayTimer=-4;
-    [HideInInspector]public float decayTime=-4;
-    [SerializeField] public bool electrc=false;
-    public float electrcTimer=-4;
-    [HideInInspector]public float electrcTime=-4;
-    [SerializeField] public bool frozen=false;
-    public float frozenTimer=-4;
-    [HideInInspector]public float frozenTime=-4;
-    [SerializeField] public bool armored=false;
-    public float armoredTimer=-4;
-    [HideInInspector]public float armoredTime=-4;
-    [HideInInspector]public float armoredStrength=1;
-    [SerializeField] public bool fragile=false;
-    public float fragileTimer=-4;
-    [HideInInspector]public float fragileTime=-4;
-    [HideInInspector]public float fragileStrength=1;
-    [SerializeField] public bool power=false;
-    public float powerTimer=-4;
-    [HideInInspector]public float powerTime=-4;
-    [HideInInspector]public float powerStrength=1;
-    [SerializeField] public bool weakns=false;
-    public float weaknsTimer=-4;
-    [HideInInspector]public float weaknsTime=-4;
-    [HideInInspector]public float weaknsStrength=1;
-    [SerializeField] public bool hacked=false;
-    public float hackedTimer=-4;
-    [HideInInspector]public float hackedTime=-4;
-    [SerializeField] public bool blind=false;
-    public float blindTimer=-4;
-    [HideInInspector]public float blindStrenght;
-    [HideInInspector]public float blindTime=-4;
-    [SerializeField] public bool infEnergy=false;
-    public float infEnergyTimer=-4;
     public float infPrevEnergy;
-    [HideInInspector]public float infEnergyTime=-4;
-    [SerializeField] public bool speed=false;
     public List<float> speedPrev=new List<float>(1);
-    public float speedTimer=-4;
-    [HideInInspector]public float speedTime=-4;
-    [HideInInspector]public float speedStrength=1;
-    [SerializeField] public bool slow=false;
-    public float slowTimer=-4;
-    [HideInInspector]public float slowTime=-4;
-    [HideInInspector]public float slowStrength=1;
-    
-    [Header("State Defaults")]
     [SerializeField] public float flipTime=7f;
     [SerializeField] public float gcloverTime=6f;
-    [SerializeField] public bool dashingEnabled=true;
     [SerializeField] public float shadowTime=10f;
     [SerializeField] public float shadowLength=0.33f;
     [SerializeField] public float shadowtracesSpeed=1.3f;
@@ -165,6 +98,9 @@ public class Player : MonoBehaviour{    public static Player instance;
     [SerializeField] public float matrixTime=7f;
     [SerializeField] public float pmultiTime=24f;
     [SerializeField] public float accelTime=7f;
+    [SerializeField] public float noHealTime=14f;
+    [SerializeField] public float lifeStealTime=13f;
+    [SerializeField] public float thornsTime=13f;
     [SerializeField] public float onfireTickrate=0.38f;
     [SerializeField] public float onfireDmg=1f;
     [SerializeField] public float decayTickrate=0.5f;
@@ -192,8 +128,9 @@ public class Player : MonoBehaviour{    public static Player instance;
     [HideInInspector]public bool flamed = false;
     [HideInInspector]public bool electricified = false;
     [HideInInspector]public float shootTimer = 2f;
-    [HideInInspector]public float instantiateTime = 0.025f;
-    [HideInInspector]public float instantiateTimer = 0f;
+    [HideInInspector]public float shadowdashInstTime = 0.025f;
+    [HideInInspector]public float shadowtracesInstTime = 0.1f;
+    [HideInInspector]public float shadowInstTimer = 0f;
     [SerializeField]public float meleeCostTimer;
     [SerializeField]public Vector2 mousePos;
     [HideInInspector]public Vector2 mouseDir;
@@ -265,6 +202,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
         //inputMaster.Player.Shoot.performed += _ => Shoot();
         //if(!speeded&&!slowed){speedPrev=moveSpeedInit;}
+        statuses=new List<StatusFx>();
     }
     IEnumerator SetGameRuleValues(){
     yield return new WaitForSecondsRealtime(0.07f);
@@ -304,7 +242,6 @@ public class Player : MonoBehaviour{    public static Player instance;
         ///State Defaults
         flipTime=i.flipTime;
         gcloverTime=i.gcloverTime;
-        dashingEnabled=i.dashingEnabled;
         shadowTime=i.shadowTime;
         shadowLength=i.shadowLength;
         shadowtracesSpeed=i.shadowtracesSpeed;
@@ -356,6 +293,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             HandleInput(false);
             health=Mathf.Clamp(health,0,healthMax);
             energy=Mathf.Clamp(energy,0,energyMax);
+        transform.localScale=new Vector3(shipScale,shipScale,1);
             LosePowerup();
             DrawMeleeWeapons();
             HideMeleeWeapons();
@@ -367,7 +305,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             Regen();
             Die();
             CountTimeMovementPressed();
-            if(frozen!=true&&(!fuelOn||(fuelOn&&energy>0))){
+            if(!_hasStatus("frozen")&&(!fuelOn||(fuelOn&&energy>0))){
                 if(GetComponent<TrailVFX>()!=null){
                     if(GetComponent<TrailVFX>().enabled==false){GetComponent<TrailVFX>().enabled=true;}
                     if(GetComponent<TrailVFX>().trailObj!=null)if(GetComponent<TrailVFX>().trailObj.activeSelf==false){GetComponent<TrailVFX>().trailObj.SetActive(true);}
@@ -382,10 +320,10 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }
             }
             if(shootTimer>0)shootTimer-=Time.deltaTime;
-            if(instantiateTimer>0)instantiateTimer-=Time.deltaTime;
+            if(shadowInstTimer>0)shadowInstTimer-=Time.deltaTime;
             velocity=rb.velocity;
-            if(moving==false){spawnReqsMono.AddStayingTime(Time.deltaTime);GameSession.instance.stayingTimeXP+=Time.deltaTime;/*stayingTimerTotal+=Time.deltaTime;*/timerHpRegen+=Time.deltaTime;}
-            if(moving==true){spawnReqsMono.AddMovingTime(Time.deltaTime);GameSession.instance.movingTimeXP+=Time.deltaTime;//timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;
+            if(!moving){spawnReqsMono.AddStayingTime(Time.deltaTime);GameSession.instance.stayingTimeXP+=Time.deltaTime;/*stayingTimerTotal+=Time.deltaTime;*/timerHpRegen+=Time.deltaTime;}
+            if(moving){spawnReqsMono.AddMovingTime(Time.deltaTime);GameSession.instance.movingTimeXP+=Time.deltaTime;//timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;
                 if(fuelOn){if(fuelDrainTimer<=0){if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt,false);}fuelDrainTimer=fuelDrainFreq;}else{fuelDrainTimer-=Time.deltaTime;}}
             }
 
@@ -423,16 +361,19 @@ public class Player : MonoBehaviour{    public static Player instance;
         //MovePlayer();
         //if (!Input.GetButton("Fire1")){if(shootCoroutine!=null){StopCoroutine(shootCoroutine);StopCoroutine(ShootContinuously());}}
         Vector2 mPos=new Vector2(0,0);
+        Vector2 _cappedmPos=mPos;
         if(inputType==InputType.mouse){
             if(moveX&&moveY)mPos=new Vector2(mousePos.x,mousePos.y);
             if(moveX&&!moveY)mPos=new Vector2(mousePos.x,transform.position.y);
             if(!moveX&&moveY)mPos=new Vector2(transform.position.x,mousePos.y);
-            dist=Vector2.Distance(mPos,transform.position);
+            _cappedmPos=new Vector2(Mathf.Clamp(mPos.x,xRange.x,xRange.y),Mathf.Clamp(mPos.y,yRange.x,yRange.y));
+            dist=Vector2.Distance(_cappedmPos,transform.position);
         }else if(inputType==InputType.drag){
             if(moveX&&moveY)mPos=new Vector2(mousePos.x,mousePos.y);
             if(moveX&&!moveY)mPos=new Vector2(mousePos.x,dragStartPos.y);
             if(!moveX&&moveY)mPos=new Vector2(dragStartPos.x,mousePos.y);
-            if(dragStartPos!=Vector2.zero)dist=Vector2.Distance(mPos,dragStartPos);
+            _cappedmPos=new Vector2(Mathf.Clamp(mPos.x,xRange.x,xRange.y),Mathf.Clamp(mPos.y,yRange.x,yRange.y));
+            if(dragStartPos!=Vector2.zero)dist=Vector2.Distance(_cappedmPos,dragStartPos);
             else{dist=0;}
         }
     }
@@ -648,7 +589,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         DClick(0);
     }
     public void DClick(int dir){
-        if((dashingEnabled&&shadow)&&(energy>0||!energyOn)){
+        if(_hasStatus("shadowdash")&&(energy>0||!energyOn)){
             if(inputType==InputType.mouse){
                 if(moveX&&moveY)tpPos=mousePos;
                 if(moveX&&!moveY)tpPos=new Vector2(mousePos.x,transform.position.y);
@@ -730,7 +671,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                     ||((w.costType==costType.ammo&&_ammo>0))
                     ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(_ammo>0||GameSession.instance.coins>0))
                     ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(GameSession.instance.xp>0))){
-                        if((/*w.costType==costType.ammo&&*/!overheated)&&((w.costType==costType.energy&&!electrc)||w.costType!=costType.energy)){
+                        if((/*w.costType==costType.ammo&&*/!overheated)&&((w.costType==costType.energy&&!_hasStatus("electrc"))||w.costType!=costType.energy)){
                             weaponTypeBullet wp=null;
                             if(w.weaponType==weaponType.bullet){wp=(weaponTypeBullet)w.weaponTypeProperties;}
                             string asset=w.assetName;
@@ -814,7 +755,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         WeaponProperties w=null;
         if(!_isCurPowerupAnItem()){
             if(!_isPowerupEmptyCur()){if(GetWeaponPropertyCur()!=null){w=GetWeaponPropertyCur();}else{Debug.LogWarning(_curPwrupName()+" not added to WeaponProperties List");}}
-            if(w!=null&&w.weaponType==weaponType.melee&&((w.costType==costType.energy&&!electrc)||w.costType!=costType.energy)){
+            if(w!=null&&w.weaponType==weaponType.melee&&((w.costType==costType.energy&&!_hasStatus("electrc"))||w.costType!=costType.energy)){
                 weaponTypeMelee wp=null;
                 if(w.weaponType==weaponType.melee){wp=(weaponTypeMelee)w.weaponTypeProperties;}
                 costTypeProperties wc=null;
@@ -848,7 +789,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         foreach(WeaponProperties ws in weaponProperties){
             if(ws.weaponType==weaponType.melee){
                 var wpt=(weaponTypeMelee)ws.weaponTypeProperties;
-                if(!ComparePowerupStrCur(ws.name)||((ws.costType==costType.energy&&electrc)||ws.costType!=costType.energy)){
+                if(!ComparePowerupStrCur(ws.name)||((ws.costType==costType.energy&&_hasStatus("electr"))||ws.costType!=costType.energy)){
                     GameObject asset=GameAssets.instance.Get(ws.assetName);
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(ws.assetName)){Destroy(t.gameObject);}}
                 }
@@ -899,7 +840,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
 
     
-    void SelectItemSlot(){   if(!PauseMenu.GameIsPaused&&!hacked){
+    void SelectItemSlot(){   if(!PauseMenu.GameIsPaused&&!_hasStatus("hacked")){
             if(Input.GetAxis("Mouse ScrollWheel")>0f||Input.GetKeyDown(KeyCode.JoystickButton5)||Input.GetKeyDown(KeyCode.Equals)){
                 int i=0;
                 if(powerupCurID<powerups.Length-1){for(i=powerupCurID+1;i<powerups.Length-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up: "+i);*/break;}}}
@@ -947,67 +888,98 @@ public class Player : MonoBehaviour{    public static Player instance;
  
 #region//Statuses
     void Statuses(){
-        if(flip==true){moveDir=-1;}else{moveDir=1;}
-        if(flipTimer<=0&&flipTimer>-4){ResetStatus("flip");AudioManager.instance.Play("PowerupOff");}
+        if(!GameSession.GlobalTimeIsPaused){
+            if(_hasStatus("flip")){
+                if(GetStatus("flip").timer>0){GetStatus("flip").timer-=Time.deltaTime;}
+                else{RemoveStatus("flip");AudioManager.instance.Play("PowerupOff");}
+                moveDir=-1;
+            }else{moveDir=1;}
 
-        if(gclover==true){
-            health=healthMax;
-            FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover=true;
-        }else{
-            FindObjectOfType<HPBar>().GetComponent<HPBar>().gclover=false;
-        }
-        if(gcloverTimer<=0&&gcloverTimer>-4||gcloverTimer<-5){AudioManager.instance.Play("GCloverOff");ResetStatus("gclover");}
+            if(_hasStatus("gclover")){
+                if(GetStatus("gclover").timer>0){GetStatus("gclover").timer-=Time.deltaTime;}
+                else{AudioManager.instance.Play("GCloverOff");RemoveStatus("gclover");}
+                health=healthMax;
+            }
 
-        if(shadowTimer<=0&&shadowTimer>-4||shadowTimer<-5){AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();ResetStatus("shadow");}
-        if(shadow==true){Shadow();if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==true)GetComponent<TrailVFX>().enabled=false;}}
-        else{dashTime=-4;if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==false)GetComponent<TrailVFX>().enabled=true;}}
-        if(dashingEnabled){
-            if(shadow==true&&dashTime<=0&&dashTime!=-4){rb.velocity=Vector2.zero; dashing=false; /*moveX=moveXwas;moveY=moveYwas;*/ dashTime=-4;}
-            else{if(!GameSession.GlobalTimeIsPaused){dashTime-=Time.deltaTime;}
-            if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}/*if(rb.velocity!=Vector2.zero)rb.velocity-=new Vector2(0.01f,0.01f);*/}
-            if(energyOn&&energy<=0){shadow=false;}
-            if(shadow==false){dashing=false;}
-        }
+            if(_hasStatus("shadowdash")){
+                if(GetStatus("shadowdash").timer>0){GetStatus("shadowdash").timer-=Time.deltaTime;}
+                else{AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();RemoveStatus("shadowdash");}
 
-        if(blind==true){if(BlindnessUI.instance!=null){if(!BlindnessUI.instance.on)BlindnessUI.instance.on=true;}}
-        if(blindTimer<=0&&blindTimer>-4||blindTimer<-5){if(BlindnessUI.instance!=null){BlindnessUI.instance.on=false;}}
+                if(dashTime<=0&&dashTime!=-4){rb.velocity=Vector2.zero;dashing=false;dashTime=-4;}
+                else{if(!GameSession.GlobalTimeIsPaused)dashTime-=Time.deltaTime;}
+                if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}
+                if(energyOn&&energy<=0){RemoveStatus("shadowdash");}
+                Shadow();if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==true)GetComponent<TrailVFX>().enabled=false;}
+            }else{dashing=false;dashTime=-4;if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==false)GetComponent<TrailVFX>().enabled=true;}}
+            if(_hasStatus("shadowtraces")){
+                if(GetStatus("shadowtraces").timer>0){GetStatus("shadowtraces").timer-=Time.deltaTime;}
+                else{AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();RemoveStatus("shadowtraces");}
+                Shadow();
+            }
+            
+            if(_hasStatus("blind")){
+                if(GetStatus("blind").timer>0){GetStatus("blind").timer-=Time.deltaTime;}
+                else{RemoveStatus("blind");if(BlindnessUI.instance!=null)BlindnessUI.instance.on=false;}
+                if(BlindnessUI.instance!=null){if(!BlindnessUI.instance.on)BlindnessUI.instance.on=true;}
+            }
 
-        if(inverter==true){if(InverterFx.instance!=null){if(!InverterFx.instance.on)InverterFx.instance.on=true;}}
-        //else{if(InverterFx.instance.on){InverterFx.instance.on=false;}if(InverterFx.instance.revertMusic==false){InverterFx.instance.revertMusic=true;}
-        //    if(MusicPlayer.instance!=null&&MusicPlayer.instance.GetComponent<AudioSource>().pitch==-1){MusicPlayer.instance.GetComponent<AudioSource>().pitch=1;}}
-        if(inverterTimer>=inverterTime&&inverterTimer<inverterTime+4){inverterTimer=inverterTime+4;ResetStatus("inverter");if(InverterFx.instance!=null){InverterFx.instance.on=false;InverterFx.instance.reverted=false;}}
-
-        if(magnet==true){
-            if(FindObjectsOfType<Tag_MagnetAffected>()!=null){
-                Tag_MagnetAffected[] objs=FindObjectsOfType<Tag_MagnetAffected>();
-                foreach(Tag_MagnetAffected obj in objs){
-                    var followC=obj.GetComponent<Follow>();
-                    if(followC==null){Follow follow=obj.gameObject.AddComponent(typeof(Follow)) as Follow;follow.target=this.gameObject;follow.distReq=4;follow.speedFollow=5;}
-                    else{followC.distReq=obj.GetDistReq();followC.speedFollow=obj.GetSpeedFollow();}
-                }
-            }else{
-                Tag_Collectible[] objs=FindObjectsOfType<Tag_Collectible>();
-                foreach(Tag_Collectible obj in objs){
-                    var follow=obj.GetComponent<Follow>();
-                    if(follow!=null)Destroy(follow);
+            if(_hasStatus("inverter")){if(InverterFx.instance!=null){if(!InverterFx.instance.on)InverterFx.instance.on=true;}
+                //else{if(InverterFx.instance.on){InverterFx.instance.on=false;}if(InverterFx.instance.revertMusic==false){InverterFx.instance.revertMusic=true;}
+                //    if(MusicPlayer.instance!=null&&MusicPlayer.instance.GetComponent<AudioSource>().pitch==-1){MusicPlayer.instance.GetComponent<AudioSource>().pitch=1;}}
+                if(GetStatus("inverter").timer<inverterTime&&GetStatus("inverter").timer>-4){GetStatus("inverter").timer+=Time.deltaTime;}
+                else if(GetStatus("inverter").timer>=inverterTime&&GetStatus("inverter").timer<inverterTime+4){
+                    GetStatus("inverter").timer=inverterTime+4;RemoveStatus("inverter");
+                    if(InverterFx.instance!=null){InverterFx.instance.on=false;InverterFx.instance.reverted=false;}
                 }
             }
-        }
-        if(magnetTimer<=0&&magnetTimer>-4||magnetTimer<-5){ResetStatus("magnet");}
-        
-        if(scaler==true){
-            //Scaler function in PlayerCollider
-        }else{
-            shipScale=shipScaleDefault;
-        }
-        if(scalerTimer<=0&&scalerTimer>-4||scalerTimer<-5){ResetStatus("scaler");}
-        transform.localScale=new Vector3(shipScale,shipScale,1);
-        
-        if(pmultiTimer<=0&&pmultiTimer>-4||pmultiTimer<-5){GameSession.instance.scoreMulti=GameSession.instance.defaultGameSpeed;ResetStatus("pmulti");}
+            if(_hasStatus("scaler"))if(GetStatus("scaler").timer>0){GetStatus("scaler").timer-=Time.deltaTime;}else{RemoveStatus("scaler");}
+            else{shipScale=shipScaleDefault;}
 
+            if(_hasStatus("magnet")){
+                if(GetStatus("magnet").timer>0){GetStatus("magnet").timer-=Time.deltaTime;}
+                else{RemoveStatus("magnet");}
+                if(FindObjectsOfType<Tag_MagnetAffected>()!=null){
+                    Tag_MagnetAffected[] objs=FindObjectsOfType<Tag_MagnetAffected>();
+                    foreach(Tag_MagnetAffected obj in objs){
+                        var followC=obj.GetComponent<Follow>();
+                        if(followC==null){Follow follow=obj.gameObject.AddComponent(typeof(Follow)) as Follow;follow.target=this.gameObject;follow.distReq=4;follow.speedFollow=5;}
+                        else{followC.distReq=obj.GetDistReq();followC.speedFollow=obj.GetSpeedFollow();}
+                    }
+                }else{
+                    Tag_Collectible[] objs=FindObjectsOfType<Tag_Collectible>();
+                    foreach(Tag_Collectible obj in objs){
+                        var follow=obj.GetComponent<Follow>();
+                        if(follow!=null)Destroy(follow);
+                    }
+                }
+            }
+
+            if(_hasStatus("onfire"))if(GetStatus("onfire").timer>0){GetStatus("onfire").timer-=Time.deltaTime*(1+dist);}else{RemoveStatus("onfire");}
+            if(_hasStatus("decay"))if(GetStatus("decay").timer>0){GetStatus("decay").timer-=Time.deltaTime;}else{RemoveStatus("decay");}
+            if(_hasStatus("electrc"))if(GetStatus("electrc").timer>0){GetStatus("electrc").timer-=Time.deltaTime;}else{RemoveStatus("electrc");}
+            if(_hasStatus("frozen"))if(GetStatus("frozen").timer>0){GetStatus("frozen").timer-=Time.deltaTime;}else{RemoveStatus("frozen");}
+            if(_hasStatus("armored"))if(GetStatus("armored").timer>0){GetStatus("armored").timer-=Time.deltaTime;}else{RemoveStatus("armored");}
+            if(_hasStatus("fragile"))if(GetStatus("fragile").timer>0){GetStatus("fragile").timer-=Time.deltaTime;}else{RemoveStatus("fragile");}
+            if(_hasStatus("power"))if(GetStatus("power").timer>0){GetStatus("power").timer-=Time.deltaTime;}else{RemoveStatus("power");}
+            if(_hasStatus("weak"))if(GetStatus("weak").timer>0){GetStatus("weak").timer-=Time.deltaTime;}else{RemoveStatus("weakns");}
+            if(_hasStatus("hacked"))if(GetStatus("hacked").timer>0){GetStatus("hacked").timer-=Time.deltaTime;}else{RemoveStatus("hacked");}
+            if(_hasStatus("blind"))if(GetStatus("blind").timer>0){GetStatus("blind").timer-=Time.deltaTime;}else{RemoveStatus("blind");}
+
+            //CalculateDefenseSpeed();
+            
+            if(_hasStatus("power")&&!_hasStatus("weak")){dmgMulti=dmgMultiInit*GetStatus("power").strength;}else if(!_hasStatus("power")&&_hasStatus("weak")){dmgMulti=dmgMultiInit/GetStatus("weak").strength;}
+            if(!_hasStatus("power")&&!_hasStatus("weak")){dmgMulti=dmgMultiInit;}if(_hasStatus("power")&&_hasStatus("weak")){dmgMulti=(dmgMultiInit/GetStatus("weak").strength)*GetStatus("power").strength;}
+            if(_hasStatus("onfire")){if(_hasStatus("frozen")){RemoveStatus("frozen");/*Damage(1,dmgType.silent);*/}}
+            if(_hasStatus("infEnergy")){energy=infPrevEnergy;if(GetStatus("infEnergy").timer>0){GetStatus("infEnergy").timer-=Time.deltaTime;}else{RemoveStatus("infEnergy");}}
+
+            if(_hasStatus("speed"))if(GetStatus("speed").timer>0){GetStatus("speed").timer-=Time.deltaTime;}else{RevertToSpeedPrev();RemoveStatus("speed");}
+            if(_hasStatus("slow"))if(GetStatus("slow").timer>0){GetStatus("slow").timer-=Time.deltaTime;}else{RevertToSpeedPrev();RemoveStatus("slow");}
+        }
+        
+        #region//Matrix & Accel
         if(!GameSession.GlobalTimeIsPausedNotSlowed){
-            if(matrix==true&&accel==false){
-                matrixTimer-=Time.unscaledDeltaTime;
+            if(_hasStatus("matrix")&&!_hasStatus("accel")){
+                GetStatus("matrix").timer-=Time.unscaledDeltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if((inputType==InputType.mouse || inputType==InputType.drag) && dist<1){
@@ -1022,12 +994,11 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
                 }
+                if(GetStatus("matrix").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; RemoveStatus("matrix");}
             }
-            if(matrixTimer <=0 && matrixTimer>-4){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; ResetStatus("matrix");}
 
-
-            if(accel==true&&matrix==false){
-                accelTimer-=Time.unscaledDeltaTime;
+            if(_hasStatus("accel")&&!_hasStatus("matrix")){
+                GetStatus("accel").timer-=Time.unscaledDeltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if((inputType==InputType.mouse || inputType==InputType.drag) && dist>0.35){
@@ -1042,12 +1013,12 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
                 }
+                if(GetStatus("accel").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; RemoveStatus("accel");}
             }
-            if(accelTimer <=0 && accelTimer>-4){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; ResetStatus("accel");}
 
-            if(accel==true&&matrix==true){
-                accelTimer-=Time.unscaledDeltaTime;//accelTimer-=Time.deltaTime;
-                matrixTimer-=Time.unscaledDeltaTime;//matrixTimer-=Time.deltaTime;
+            if(_hasStatus("matrix")&&_hasStatus("accel")){
+                GetStatus("accel").timer-=Time.unscaledDeltaTime;//GetStatus("accel").timer-=Time.deltaTime;
+                GetStatus("matrix").timer-=Time.unscaledDeltaTime;//GetStatus("matrix").timer-=Time.deltaTime;
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(inputType==InputType.mouse || inputType==InputType.drag){
@@ -1062,58 +1033,30 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
                 }
+                if(GetStatus("matrix").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;RemoveStatus("matrix");}
+                if(GetStatus("accel").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;RemoveStatus("accel");}
             }
         }
-        if(!GameSession.GlobalTimeIsPaused){
-            //Timers
-            if(flipTimer>0){flipTimer-=Time.deltaTime;}
-            if(gcloverTimer>0){gcloverTimer-=Time.deltaTime;}
-            if(shadowTimer>0){shadowTimer-=Time.deltaTime;}
-            if(magnetTimer>0){magnetTimer-=Time.deltaTime;}
-            if(scalerTimer>0){scalerTimer-=Time.deltaTime;}
-            if(pmultiTimer>0){pmultiTimer-=Time.deltaTime;}
-            if(inverterTimer<inverterTime&&inverterTimer>-4){inverterTimer+=Time.deltaTime;}
-
-            if(onfireTimer>0){onfireTimer-=Time.deltaTime*(1+dist);}else{if(onfireTimer>-4)ResetStatus("onfire");}
-            if(decayTimer>0){decayTimer-=Time.deltaTime;}else{if(decayTimer>-4)ResetStatus("decay");}
-            if(electrcTimer>0){electrcTimer-=Time.deltaTime;}else{if(electrcTimer>-4)ResetStatus("electrc");}
-            if(frozenTimer>0){frozenTimer-=Time.deltaTime;}else{if(frozenTimer>-4)ResetStatus("frozen");}
-            if(armoredTimer>0){armoredTimer-=Time.deltaTime;}else{if(armoredTimer>-4)if(armored){armoredStrength=1;}ResetStatus("armored");}
-            if(fragileTimer>0){fragileTimer-=Time.deltaTime;}else{if(fragileTimer>-4)if(fragile){fragileStrength=1;}ResetStatus("fragile");}
-            if(powerTimer>0){powerTimer-=Time.deltaTime;}else{if(powerTimer>-4)if(power){powerStrength=1;}ResetStatus("power");}
-            if(weaknsTimer>0){weaknsTimer-=Time.deltaTime;}else{if(weaknsTimer>-4)if(weakns){weaknsStrength=1;}ResetStatus("weakns");}
-            if(hackedTimer>0){hackedTimer-=Time.deltaTime;}else{if(hackedTimer>-4)ResetStatus("hacked");}
-            if(blindTimer>0){blindTimer-=Time.deltaTime;}else{if(blindTimer>-4)ResetStatus("blind");}
-            if(speedTimer>0){speedTimer-=Time.deltaTime;}else{if(speedTimer>-4)if(speed){speedStrength=1;RevertToSpeedPrev();}ResetStatus("speed");}
-            if(slowTimer>0){slowTimer-=Time.deltaTime;}else{if(slowTimer>-4)if(slow){slowStrength=1;RevertToSpeedPrev();}ResetStatus("slow");}
-            //if(armored==true&&fragile!=true){armorMulti=armorMultiInit*armoredStrength;}else if(armored!=true&&fragile==true){armorMulti=armorMultiInit/fragileStrength;}
-            //if(armored!=true&&fragile!=true){armorMulti=armorMultiInit;}if(armored==true&&fragile==true){armorMulti=(dmgMultiInit/fragileStrength)*armoredStrength;}
-            if(power==true&&weakns!=true){dmgMulti=dmgMultiInit*powerStrength;}else if(power!=true&&weakns==true){dmgMulti=dmgMultiInit/weaknsStrength;}
-            if(power!=true&&weakns!=true){dmgMulti=dmgMultiInit;}if(power==true&&weakns==true){dmgMulti=(dmgMultiInit/weaknsStrength)*powerStrength;}
-            if(onfire){if(frozen){ResetStatus("frozen");/*Damage(1,dmgType.silent);*/}}
-            if(infEnergyTimer>0){infEnergyTimer-=Time.deltaTime;}else{if(infEnergyTimer>-4){ResetStatus("infEnergy");}}
-            if(infEnergy){energy=infPrevEnergy;}
-            if(speed==true&&slow!=true){moveSpeedCurrent=speedPrev[speedPrev.Count-1]*speedStrength;}else if(speed!=true&&slow==true){moveSpeedCurrent=speedPrev[speedPrev.Count-1]/slowStrength;}
-            else if(speed&&slow){if(speedPrev.Count>1)moveSpeedCurrent=speedPrev[speedPrev.Count-2]/slowStrength*speedStrength;
-            else moveSpeedCurrent=speedPrev[speedPrev.Count-1]/slowStrength*speedStrength;}
-            //if(speeded!=true&&slowed!=true){moveSpeedCurrent=moveSpeed;}if(speeded==true&&slowed==true){}
-        }
+        #endregion
     }
     void CalculateDefenseSpeed(){
-        int defArmored=0;
-        //if(armoredStrength)
-        defense=defenseModifBase+defArmored;
+        if(_hasStatus("armored")&&!_hasStatus("fragile")){if(defenseInit==1){defenseModifBase=2;}else{defenseModifBase=Mathf.RoundToInt(defenseInit*GetStatus("armored").strength+0.5f);}}
+        if(!_hasStatus("armored")&&_hasStatus("fragile")){if(defenseInit==1){defenseModifBase=0;}else{defenseModifBase=Mathf.RoundToInt(defenseInit/GetStatus("fragile").strength+1);}}
+        if(_hasStatus("armored")&&_hasStatus("fragile")||!_hasStatus("armored")&&!_hasStatus("fragile")){defenseModifBase=defenseInit;}
+        defense=defenseModifBase;
+
+        if(_hasStatus("speed")&&!_hasStatus("slow")){moveSpeedCurrent=speedPrev[speedPrev.Count-1]*GetStatus("speed").strength;}else if(!_hasStatus("speed")&&_hasStatus("slow")){moveSpeedCurrent=speedPrev[speedPrev.Count-1]/GetStatus("slow").strength;}
+        else if(_hasStatus("speed")&&_hasStatus("slow")){if(speedPrev.Count>1)moveSpeedCurrent=speedPrev[speedPrev.Count-2]/GetStatus("slow").strength*GetStatus("speed").strength;
+        else moveSpeedCurrent=speedPrev[speedPrev.Count-1]/GetStatus("slow").strength*GetStatus("speed").strength;}
     }
     
     private void Shadow(){
-        if(!GameSession.GlobalTimeIsPaused&&instantiateTimer<=0){
+        if(!GameSession.GlobalTimeIsPaused&&shadowInstTimer<=0){
             GameObject shadow=null;
-            if(dashingEnabled){shadow=GameAssets.instance.Make("PlayerShadow",transform.position);instantiateTimer=instantiateTime;}
-            else{shadow=GameAssets.instance.Make("PlayerShadowColli",transform.position);instantiateTimer=instantiateTime*4f;}
+            if(_hasStatus("shadowdash")){shadow=GameAssets.instance.Make("PlayerShadow",transform.position);shadowInstTimer=shadowdashInstTime;}
+            else if(_hasStatus("shadowtraces")){shadow=GameAssets.instance.Make("PlayerShadowColli",transform.position);shadowInstTimer=shadowtracesInstTime;}
             shadow.transform.localScale=new Vector3(shipScale,shipScale,1);
             Destroy(shadow.gameObject,shadowLength);
-            
-            //yield return new WaitForSeconds(0.2f);
         }
     }
     void Regen(){//Move to a universal modules script instead of PlayerSkills
@@ -1122,142 +1065,99 @@ public class Player : MonoBehaviour{    public static Player instance;
             enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax);
             if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt<=0){if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){HPAbsorp(crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}}
             if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt<=0){if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){EnAbsorp(energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}}
-            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax)Damage(hpRegenAmnt,dmgType.heal);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}
-            if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax)AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}
+            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax&&!_hasStatus("noHeal")){Damage(hpRegenAmnt,dmgType.heal);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}}
+            if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax){AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}}
         }
     }
     public void Recoil(float strength, float time){if(recoilOn)StartCoroutine(RecoilI(strength,time));}
-    IEnumerator RecoilI(float strength,float time){
+    IEnumerator RecoilI(float strength,float time){     if(!GameSession.GlobalTimeIsPaused){
         Shake.instance.CamShake(0.1f,1/(time*4));
         if(SaveSerial.instance.settingsData.vibrations)Vibrator.Vibrate(2);
         rb.velocity = Vector2.down*strength;
         yield return new WaitForSeconds(time);
         rb.velocity=Vector2.zero;
-    }
+    }}
     
     public void OnFire(float duration,float strength=1){
-        onfireTime=duration;
-        SetStatus("onfire");
-        StartCoroutine(OnFireI(strength));
+        SetStatus("onfire",duration,strength);
+        StartCoroutine(OnFireI());
     }
-    IEnumerator OnFireI(float strength){while(onfire){
-        Damage(onfireDmg*strength,dmgType.flame);
+    IEnumerator OnFireI(){while(_hasStatus("onfire")){
+        Damage(onfireDmg*GetStatus("onfire").strength,dmgType.flame);
         yield return new WaitForSeconds(onfireTickrate);
     }yield break;}
     public void Decay(float duration,float strength=1){
-        decayTime=duration;
-        SetStatus("decay");
-        StartCoroutine(DecayI(strength));
+        SetStatus("decay",duration,strength);
+        StartCoroutine(DecayI());
     }
-    IEnumerator DecayI(float strength){while(decay){
-        Damage(decayDmg*strength,dmgType.decay);
+    IEnumerator DecayI(){while(_hasStatus("decay")){
+        Damage(decayDmg*GetStatus("decay").strength,dmgType.decay);
         yield return new WaitForSeconds(decayTickrate);
     }yield break;}
     public void Electrc(float duration){
-        electrcTime=duration;
-        SetStatus("electrc");
+        SetStatus("electrc",duration);
     }
     public void Freeze(float duration){
-        frozenTime=duration;
-        SetStatus("frozen");
+        SetStatus("frozen",duration);
     }
-    public void Armor(float duration,/*int*/float strength=1){
-        armoredTime=duration;
-        if(strength!=1)armoredStrength=strength;
-        else armoredStrength=1.5f;
-        SetStatus("armored");
+    public void Armor(float duration,/*int*/float strength=1){float _strgh=strength;
+        //if(strength!=1)_strgh=strength;
+        //else _strgh=1.5f;
+        SetStatus("armored",duration,_strgh);
     }
-    public void Fragile(float duration,/*int*/float strength=1){
-        fragileTime=duration;
-        if(strength!=1)fragileStrength=strength;
-        else fragileStrength=1.5f;
-        SetStatus("fragile");
-    }public void Power(float duration,float strength=1){
-        powerTime=duration;
-        if(strength!=1)powerStrength=strength;
-        else powerStrength=1.5f;
-        SetStatus("power");
-    }public void Weaken(float duration,float strength=1){
-        weaknsTime=duration;
-        if(strength!=1)weaknsStrength=strength;
-        else weaknsStrength=1.5f;
-        SetStatus("weakns");
+    public void Fragile(float duration,/*int*/float strength=1){float _strgh=strength;
+        //if(strength!=1)_strgh=strength;
+        //else _strgh=1.5f;
+        SetStatus("fragile",duration,_strgh);
+    }public void Power(float duration,float strength=1){float _strgh=strength;
+        if(strength!=1)_strgh=strength;
+        else _strgh=1.5f;
+        SetStatus("power",duration,_strgh);
+    }public void Weaken(float duration,float strength=1){float _strgh=strength;
+        if(strength!=1)_strgh=strength;
+        else _strgh=1.5f;
+        SetStatus("weakns",duration,_strgh);
     }public void Hack(float duration){
-        hackedTime=duration;
-        SetStatus("hacked");
-    }public void Blind(float duration,float strength=1){
-        blindTime=duration;
-        if(strength!=1)blindStrenght=strength;
-        else blindStrenght=1.5f;
-        SetStatus("blind");
-    }public void Speed(float duration,float strength=1){
-        speedTime=duration;
-        if(speed!=true){
+        SetStatus("hacked",duration);
+    }public void Blind(float duration,float strength=1){float _strgh=strength;
+        if(strength!=1)_strgh=strength;
+        else _strgh=1.5f;
+        SetStatus("blind",duration,_strgh);
+    }public void Speed(float duration,float strength=1){float _strgh=strength;
+        if(strength!=1)_strgh=strength;
+        else _strgh=1.5f;
+        SetStatus("speed",duration,_strgh);
+        if(!_hasStatus("speed")){
             SetSpeedPrev();
-            if(strength!=1)speedStrength=strength;
-            else speedStrength=1.5f;
-            SetStatus("speed");
         }
-    }public void Slow(float duration,float strength=1){
-        slowTime=duration;
-        if(slow!=true){
+    }public void Slow(float duration,float strength=1){float _strgh=strength;
+        if(strength!=1)_strgh=strength;
+        else _strgh=1.5f;
+        SetStatus("slow",duration,_strgh);
+        if(!_hasStatus("slow")){
             SetSpeedPrev();
-            if(strength!=1)slowStrength=strength;
-            else slowStrength=1.5f;
-            SetStatus("slow");
         }
     }public void InfEnergy(float duration){
+        SetStatus("infEnergy",duration);
         infPrevEnergy=energy;
-        infEnergyTime=duration;
-        SetStatus("infEnergy");
     }
 #endregion
 
 #region//Other Functions
-    public void SetStatus(string status){
-        statusc=status;
-        //var v = this.GetType().GetProperty(status);
-        if(this.GetType().GetField(status)!=null)this.GetType().GetField(status).SetValue(this,true);
-        var i=this.GetType().GetField(status+"Time").GetValue(this);
-        this.GetType().GetField((status+"Timer")).SetValue(this,i);
-        //v.SetValue(this,true,null);
-        //((dynamic)this).status=true;
-	    //this.GetType().GetProperty(status+"Timer").SetValue(this,status+"Time");
-        ResizeStatuses();
-        SortStatuses();
-    }public void ResetStatus(string status){
-        if(this.GetType().GetField(status)!=null)this.GetType().GetField(status).SetValue(this,false);
-        this.GetType().GetField((status+"Timer")).SetValue(this,-4);
-        for(var i=0;i<statuses.Count;i++){
-            if(statuses[i]==status){statuses[i]="";}
+    public bool _hasStatus(string status){return statuses.Exists(x=>x.name==status);}
+    public StatusFx GetStatus(string status){return statuses.Find(x=>x.name==status);}
+    public void SetStatus(string status,float time,float strength=1){
+        if(!_hasStatus(status)){statuses.Add(new StatusFx{name=status,timer=time,strength=strength});}
+        else{
+            if(GameRules.instance.addToStatusTimer){GetStatus(status).timer+=time;}
+            if(GetStatus(status).strength<strength){ResetStatus(status,time,strength);}//GetStatus(status).strength=strength;}
         }
-        ResortStatuses();
-    }void SortStatuses(){
-        //ResizeStatuses();
-        //Array.Resize(ref statuses,statuses.Length+1);
-        //for(var i=0;i<statuses.Count;i++){
-        //if(statuses[i]!=statusc){
-        if(!statuses.Contains(statusc)){
-            statuses.Add(statusc);statusc="";
-            //if(i>0&&statuses[i]!=""){statuses.Add(statusc);statusc="";}
-            //if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
-        //}
-        }
-    }void ResortStatuses(){
-        for(var i=0;i<statuses.Count-1;i++){
-            if(i>-1&&i<statuses.Count){
-                if(statuses[i]=="" && statuses[i+1]!=""){statuses[i]=statuses[i+1];statuses[i+1]="";statuses.Remove(statuses[i+1]);}
-                //if(status2=="" && status3!=""){status2=status3;status3="";}
-                //if(status3=="" && status2!="" && status1!=""){status3=statusc;statusc="";}
-            }
-        }
-        ResizeStatuses();
-    }public void ResizeStatuses(){statuses.RemoveAll(x=>x=="");}
+    }public void RemoveStatus(string status){statuses.RemoveAll(x=>x.name==status);}
+    public void ResetStatus(string status,float time,float strength=1){RemoveStatus(status);SetStatus(status,time,strength);}
 
-    public void ResetStatusRandom(){
+    public void RemoveStatusRandom(){
         var i=UnityEngine.Random.Range(0,statuses.Count-1);
-        statuses[i]="";
-        ResortStatuses();
+        statuses.RemoveAt(i);
     }
 
     public bool _isPowerupEmpty(Powerup powerup){return (powerup==null||(powerup!=null&&String.IsNullOrEmpty(powerup.name)));}
@@ -1341,8 +1241,8 @@ public class Player : MonoBehaviour{    public static Player instance;
 
     public void HPAdd(float hp){Damage(hp,dmgType.heal);}
     public void Damage(float dmg, dmgType type,bool ignoreInvert=true, float electrTime=4f){//Later add on possible Inverter options?
-        if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!gclover)if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HpPopUpHUD(-dmgTot);FindObjectOfType<HPBarLost>().TriggerBar();}
-        else if(gclover){AudioManager.instance.Play("GCloverHit");}
+        if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!_hasStatus("gclover"))if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HpPopUpHUD(-dmgTot);FindObjectOfType<HPBarLost>().TriggerBar();}
+        else if(_hasStatus("gclover")){AudioManager.instance.Play("GCloverHit");}
 
         if(type==dmgType.silent){damaged=true;}
         if(type==dmgType.normal){damaged=true;AudioManager.instance.Play("ShipHit");}
@@ -1354,8 +1254,8 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(type==dmgType.healSilent){if(dmg!=0){health+=dmg;HpPopUpHUD(dmg);}}
     }
     public void AddSubEnergy(float value, bool add=false,bool ignoreInvert=false){
-        if(energyOn&&!infEnergy){
-            if(inverter!=true||ignoreInvert){
+        if(energyOn&&!_hasStatus("infEnergy")){
+            if(!_hasStatus("inverter")||ignoreInvert){
                 if(add){energy+=value;EnPopUpHUD(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(-value);}//EnergyCountVortexWheel-=value;}
                 else{energy-=value;EnPopUpHUD(-value);spawnReqsMono.AddEnergy(value);}//if(FindObjectOfType<DisruptersSpawner>()!=null)FindObjectOfType<DisruptersSpawner>().AddEnergy(value);}//EnergyCountVortexWheel+=value;}
             }else{
@@ -1369,7 +1269,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         var pwrup=Array.Find(powerups,x=>x.name==name);
         if(pwrup!=null){
             if(pwrup.ammo<0)pwrup.ammo=0;
-            if(inverter!=true||ignoreInvert){
+            if(!_hasStatus("inverter")||ignoreInvert){
                 if(add){pwrup.ammo+=v;AmmoPopUpHUD(v);}
                 else{if(pwrup.ammo>=v)pwrup.ammo-=v;AmmoPopUpHUD(-v);}
             }else{
@@ -1379,7 +1279,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
     }
     public void AddSubCoins(int value, bool add=true,bool ignoreInvert=false){
-        if(inverter!=true||ignoreInvert){
+        if(!_hasStatus("inverter")||ignoreInvert){
             if(add){GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
             else{GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
         }else{
@@ -1388,7 +1288,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
     }
     public void AddSubXP(float value, bool add=true,bool ignoreInvert=false){
-        if(inverter!=true||ignoreInvert){
+        if(!_hasStatus("inverter")||ignoreInvert){
             if(add){GameSession.instance.AddXP(value);}
             else{GameSession.instance.AddXP(-value);}
         }else{
@@ -1397,7 +1297,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
     }
     public void AddSubCores(int value, bool add=true,bool ignoreInvert=false){
-        if(inverter!=true||ignoreInvert){
+        if(!_hasStatus("inverter")||ignoreInvert){
             if(add){GameSession.instance.cores+=value;CoresPopUpHUD(value);}
             else{GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
         }else{
@@ -1406,7 +1306,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
     }
     public void HPAbsorp(float value, bool add=true,bool ignoreInvert=true){
-        if(inverter!=true||ignoreInvert){
+        if(!_hasStatus("inverter")||ignoreInvert){
             if(add){hpAbsorpAmnt+=value;HpAbsorpPopUpHUD(value);}
             else{hpAbsorpAmnt-=value;HpAbsorpPopUpHUD(-value);}
         }else{
@@ -1415,7 +1315,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
     }
     public void EnAbsorp(float value, bool add=true,bool ignoreInvert=true){
-        if(inverter!=true||ignoreInvert){
+        if(!_hasStatus("inverter")||ignoreInvert){
             if(add){enAbsorpAmnt+=value;EnAbsorpPopUpHUD(value);}
             else{enAbsorpAmnt-=value;EnAbsorpPopUpHUD(-value);}
         }else{
@@ -1428,7 +1328,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(overheatOn){
         if(overheatTimerMax!=-4){
         if(overheated!=true){
-            if(inverter!=true||ignoreInvert){
+            if(!_hasStatus("inverter")||ignoreInvert){
                 if(add){if(overheatTimer==-4){overheatTimer=0;}overheatTimer+=value;overheatCdTimer=overheatCooldown;}
                 else{overheatTimer-=value;}
             }else{
@@ -1486,4 +1386,10 @@ void XPPopUpHUD(float amnt){GameCanvas.instance.XpPopupSwitch(amnt);}
 void ScorePopUpHUD(float amnt){GameCanvas.instance.ScorePopupSwitch(amnt);}
 void AmmoPopUpHUD(float amnt){GameCanvas.instance.AmmoPopupSwitch(amnt);}
 #endregion
+}
+[System.Serializable]
+public class StatusFx{
+    public string name;
+    public float timer=0;
+    public float strength=1;
 }

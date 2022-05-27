@@ -73,8 +73,8 @@ public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustom
         if(skin.animSpeed>0){yield return new WaitForSeconds(skin.animSpeed);}
         else{yield return new WaitForSeconds(skin.animVals[iAnim].delay);}
         spr=skin.animVals[iAnim].spr;
-        if(iAnim==skin.animVals.Length-1)iAnim=0;
-        if(iAnim<skin.animVals.Length)iAnim++;
+        if(iAnim==skin.animVals.Count-1)iAnim=0;
+        if(iAnim<skin.animVals.Count)iAnim++;
         animSpr=spr;
         if(skinName==skin.name)anim=StartCoroutine(AnimateSkin(skin));
         else{if(anim!=null)StopCoroutine(anim);anim=null;iAnim=0;}

@@ -158,7 +158,7 @@ public class Enemy : MonoBehaviour{
             rb.velocity=new Vector2(0,3f);
         }
     }
-    public void Die(){if(health<=0&&health!=-1000){
+    public void Die(bool explode=true){if(health<=0&&health!=-1000){
         GameSession.instance.AddEnemyCount();
         StatsAchievsManager.instance.AddKills(Name,type);
         int score=Random.Range((int)scoreValue.x,(int)scoreValue.y+1);
@@ -198,10 +198,9 @@ public class Enemy : MonoBehaviour{
                 }
             }}}
         }
-        AudioManager.instance.Play("Explosion");
         if(GetComponent<Goblin>()!=null){GetComponent<Goblin>().DropPowerup(true);if(GetComponent<Goblin>().bossForm){GetComponent<Goblin>().GoblinBossDrop();}}
-        if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
-        GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject,0.01f);//}
+        
+        if(explode){AudioManager.instance.Play("Explosion");GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject,0.01f);}
         Shake.instance.CamShake(2,1);
     }}
     void OnDestroy(){
@@ -212,10 +211,10 @@ public class Enemy : MonoBehaviour{
     void DestroyOutside(){
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){giveScore=true;health=-1;Die();}else{Destroy(gameObject,0.001f);if(GetComponent<Goblin>()!=null){foreach(GameObject obj in GetComponent<Goblin>().powerups)Destroy(obj);}}}
     }
-    public void Kill(bool giveScore=true){
+    public void Kill(bool giveScore=true,bool explode=true){
         this.giveScore=giveScore;
         health=-1;
-        Die();
+        Die(explode);
     }
     public void Damage(float dmg){health-=dmg;}
     //Collisions in EnemyCollider

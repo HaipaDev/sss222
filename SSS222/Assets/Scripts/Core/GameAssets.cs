@@ -10,24 +10,24 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
     [AssetsOnly]public GameObject waveSpawnerPrefab;
     [AssetsOnly]public GameObject disrupterSpawnerPrefab;
 	[Header("Main")]
-	[AssetsOnly,Searchable]public GObject[] objects;
-	[AssetsOnly,Searchable]public GObject[] vfx;
+	[AssetsOnly,Searchable]public List<GObject> objects;
+	[AssetsOnly,Searchable]public List<GObject> vfx;
 	[AssetsOnly,Searchable]public List<GSprite> sprites;
-	[AssetsOnly,Searchable]public GMaterial[] materials;
+	[AssetsOnly,Searchable]public List<GMaterial> materials;
 	[AssetsOnly,Searchable]public List<PowerupItem> powerupItems;
 	[AssetsOnly,Searchable]public List<GObject> enemyBullets;
 	[Header("Customization")]
-	[AssetsOnly,Searchable]public CstmzSkin[] skins;
-	[AssetsOnly,Searchable]public CstmzTrail[] trails;
-	[AssetsOnly,Searchable]public CstmzFlares[] flares;
-	[AssetsOnly,Searchable]public CstmzDeathFx[] deathFxs;
-	[AssetsOnly,Searchable]public CstmzMusic[] musics;
+	[AssetsOnly,Searchable]public List<CstmzSkin> skins;
+	[AssetsOnly,Searchable]public List<CstmzTrail> trails;
+	[AssetsOnly,Searchable]public List<CstmzFlares> flares;
+	[AssetsOnly,Searchable]public List<CstmzDeathFx> deathFxs;
+	[AssetsOnly,Searchable]public List<CstmzMusic> musics;
     
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
 
 #region//Main
     public GameObject Make(string obj, Vector2 pos){
-		GObject o=Array.Find(objects, item => item.name == obj);
+		GObject o=objects.Find(item => item.name == obj);
 		if(o==null){
 			Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
@@ -37,7 +37,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return objref;
 	}
     public GameObject MakeSpread(string obj, Vector2 pos, int amnt=3, float rangeX=0.5f, float rangeY=0.5f){
-		GObject o=Array.Find(objects, item => item.name == obj);
+		GObject o=objects.Find(item => item.name == obj);
 		if(o==null){
 			Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
@@ -53,7 +53,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return objref;
 	}
     public GameObject VFX(string obj, Vector2 pos, float duration=0){
-		GObject o=Array.Find(vfx, item => item.name == obj);
+		GObject o=vfx.Find(item => item.name == obj);
 		if(o==null){
 			Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
@@ -67,7 +67,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}else return null;
 	}
     public GameObject Get(string obj,bool ignoreWarning=false){
-		GObject o=Array.Find(objects, item => item.name == obj);
+		GObject o=objects.Find(item => item.name == obj);
 		if(o==null){
 			if(!String.IsNullOrEmpty(obj)&&!ignoreWarning)Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
@@ -76,7 +76,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return gobj;
 	}
 	public Sprite GetObjSpr(string obj,bool ignoreWarning=false){
-		GObject o=Array.Find(objects, item => item.name == obj);
+		GObject o=objects.Find(item => item.name == obj);
 		if(o==null){
 			if(!String.IsNullOrEmpty(obj)&&!ignoreWarning)Debug.LogWarning("Object: " + obj + " not found!");
 			return null;
@@ -87,7 +87,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return spr;
 	}
 	public GameObject GetVFX(string obj){
-		GObject o=Array.Find(vfx, item => item.name == obj);
+		GObject o=vfx.Find(item => item.name == obj);
 		if(o==null){
 			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("VFX: " + obj + " not found!");
 			return null;
@@ -122,7 +122,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
 
 	public Material Mat(string mat){
-		GMaterial m=Array.Find(materials, item => item.name == mat);
+		GMaterial m=materials.Find(item => item.name == mat);
 		if(m==null){
 			if(!String.IsNullOrEmpty(mat))Debug.LogWarning("Material: " + mat + " not found!");
 			return null;
@@ -165,7 +165,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 
 #region//Customizables
 	public CstmzSkin GetSkin(string str){
-		CstmzSkin s=Array.Find(skins, item => item.name == str);
+		CstmzSkin s=skins.Find(item => item.name == str);
         //Sprite gs=s.str;
 		//Sprite s=skins[i];
 		if(s==null){
@@ -175,7 +175,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return s;
 	}
 	public CstmzSkinVariant GetSkinVariant(string str,int id){
-		CstmzSkinVariant s=Array.Find(skins, item => item.name == str).variants[id];
+		CstmzSkinVariant s=skins.Find(item => item.name == str).variants[id];
 		if(s==null){
 			Debug.LogWarning("SkinVariant by id: " + id + " not found!");
 			return null;
@@ -183,8 +183,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return s;
 	}
 	public int GetSkinID(string str){
-		int i=Array.FindIndex(skins, item => item.name == str);
-		if(Array.Find(skins,item => item.name == str)==null){
+		int i=skins.FindIndex(item => item.name == str);
+		if(skins.Find(item => item.name == str)==null){
 			Debug.LogWarning("Skin: " + str + " not found!");
 			return 0;
 		}
@@ -198,7 +198,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
 
 	public CstmzTrail GetTrail(string str){
-		CstmzTrail s=Array.Find(trails, item => item.name == str);
+		CstmzTrail s=trails.Find(item => item.name == str);
 		if(s==null){
 			Debug.LogWarning("Trail: " + str + " not found!");
 			return null;
@@ -207,7 +207,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
 
 	public CstmzFlares GetFlares(string str){
-		CstmzFlares s=Array.Find(flares, item => item.name == str);
+		CstmzFlares s=flares.Find(item => item.name == str);
 		if(s==null){
 			Debug.LogWarning("Flares: " + str + " not found!");
 			return null;
@@ -215,7 +215,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return s;
 	}
 	public GameObject GetFlareFirst(string str){
-		CstmzFlares s=Array.Find(flares, item => item.name == str);
+		CstmzFlares s=flares.Find(item => item.name == str);
 		if(s==null){
 			Debug.LogWarning("Flares: " + str + " not found!");
 			return null;
@@ -223,7 +223,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return s.parts[0];
 	}
 	public GameObject GetFlareRandom(string str){
-		CstmzFlares s=Array.Find(flares, item => item.name == str);
+		CstmzFlares s=flares.Find(item => item.name == str);
 		GameObject go=s.parts[UnityEngine.Random.Range(0,s.parts.Length)];
 		if(s==null){
 			Debug.LogWarning("Flares: " + str + " not found!");
@@ -233,7 +233,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
 
 	public CstmzDeathFx GetDeathFx(string str){
-		CstmzDeathFx s=Array.Find(deathFxs, item => item.name == str);
+		CstmzDeathFx s=deathFxs.Find(item => item.name == str);
 		if(s==null){
 			Debug.LogWarning("DeathFx: " + str + " not found!");
 			return null;
@@ -242,7 +242,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
 
 	public CstmzMusic GetMusic(string str){
-		CstmzMusic s=Array.Find(musics, item => item.name == str);
+		CstmzMusic s=musics.Find(item => item.name == str);
 		if(s==null){
 			Debug.LogWarning("Music: " + str + " not found!");
 			return null;
@@ -250,7 +250,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return s;
 	}
 	public CstmzMusic GetMusicRandom(string str){
-		CstmzMusic s=musics[UnityEngine.Random.Range(0,musics.Length)];
+		CstmzMusic s=musics[UnityEngine.Random.Range(0,musics.Count)];
 		if(s==null){
 			Debug.LogWarning("Music: " + str + " not found!");
 			return null;
@@ -260,11 +260,11 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	
 	public string GetDisplayName(string str,CstmzType cstmzType){
 		string ss=null;
-		if(cstmzType==CstmzType.skin){ss=Array.Find(skins,item=>item.name==str).displayName;}
-		if(cstmzType==CstmzType.trail){ss=Array.Find(trails,item=>item.name==str).displayName;}
-		if(cstmzType==CstmzType.flares){ss=Array.Find(flares,item=>item.name==str).displayName;}
-		if(cstmzType==CstmzType.deathFx){ss=Array.Find(deathFxs,item=>item.name==str).displayName;}
-		if(cstmzType==CstmzType.music){ss=Array.Find(musics,item=>item.name==str).displayName;}
+		if(cstmzType==CstmzType.skin){ss=skins.Find(item=>item.name==str).displayName;}
+		if(cstmzType==CstmzType.trail){ss=trails.Find(item=>item.name==str).displayName;}
+		if(cstmzType==CstmzType.flares){ss=flares.Find(item=>item.name==str).displayName;}
+		if(cstmzType==CstmzType.deathFx){ss=deathFxs.Find(item=>item.name==str).displayName;}
+		if(cstmzType==CstmzType.music){ss=musics.Find(item=>item.name==str).displayName;}
 		if(ss==null){
 			Debug.LogWarning("DisplayName for: " + str + "of type("+cstmzType+") not found!");
 			return null;
@@ -289,8 +289,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}*/
 	public string GetArtist(string str,CstmzType cstmzType){
 		string ss=null;
-		if(cstmzType==CstmzType.skin){ss=Array.Find(skins,item=>item.name==str).artist;}
-		if(cstmzType==CstmzType.music){ss=Array.Find(musics,item=>item.name==str).artist;}
+		if(cstmzType==CstmzType.skin){ss=skins.Find(item=>item.name==str).artist;}
+		if(cstmzType==CstmzType.music){ss=musics.Find(item=>item.name==str).artist;}
 		if(ss==null){
 			//Debug.LogWarning("Artist for: " + str + "of type("+cstmzType+") not found!");
 			return null;
@@ -422,10 +422,10 @@ public class CstmzSkin:_ArtistInfo,_CstmzTypable{
 	public bool animated=false;
 	[HideIf("animated")]public Sprite spr;
 	[ShowIf("animated")]public float animSpeed=0.05f;//Leave at 0 to make each frame speed controlable
-	[ShowIf("animated")]public SimpleAnim[] animVals;
+	[ShowIf("animated")]public List<SimpleAnim> animVals;
 	public Sprite sprOverlay;
 	//public int variantDefault=-1;
-	public CstmzSkinVariant[] variants;
+	public List<CstmzSkinVariant> variants;
 }
 [System.Serializable]
 public class CstmzSkinVariant:_CstmzTypable{

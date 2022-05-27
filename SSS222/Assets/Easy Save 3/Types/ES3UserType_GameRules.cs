@@ -74,7 +74,7 @@ namespace ES3Types
 			writer.WriteProperty("weaponProperties", instance.weaponProperties, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<WeaponProperties>)));
 			writer.WriteProperty("flipTime", instance.flipTime, ES3Type_float.Instance);
 			writer.WriteProperty("gcloverTime", instance.gcloverTime, ES3Type_float.Instance);
-			writer.WriteProperty("dashingEnabled", instance.dashingEnabled, ES3Type_bool.Instance);
+			//writer.WriteProperty("dashingEnabled", instance.dashingEnabled, ES3Type_bool.Instance);
 			writer.WriteProperty("shadowTime", instance.shadowTime, ES3Type_float.Instance);
 			writer.WriteProperty("shadowLength", instance.shadowLength, ES3Type_float.Instance);
 			writer.WriteProperty("shadowtracesSpeed", instance.shadowtracesSpeed, ES3Type_float.Instance);
@@ -376,9 +376,9 @@ namespace ES3Types
 					case "gcloverTime":
 						instance.gcloverTime = reader.Read<System.Single>(ES3Type_float.Instance);
 						break;
-					case "dashingEnabled":
+					/*case "dashingEnabled":
 						instance.dashingEnabled = reader.Read<System.Boolean>(ES3Type_bool.Instance);
-						break;
+						break;*/
 					case "shadowTime":
 						instance.shadowTime = reader.Read<System.Single>(ES3Type_float.Instance);
 						break;

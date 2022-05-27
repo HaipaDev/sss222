@@ -99,12 +99,12 @@ MonoBehaviour:
     pixelate: 1
     blur: 0
     lowResBlur: 1
-  healthPlayer: 150
-  healthMaxPlayer: 150
-  defensePlayer: 0
+  healthPlayer: 120
+  healthMaxPlayer: 120
+  defensePlayer: 2
   energyOnPlayer: 1
   energyPlayer: 60
-  energyMaxPlayer: 180
+  energyMaxPlayer: 130
   fuelOn: 0
   fuelDrainAmnt: 0.1
   fuelDrainFreq: 0.5
@@ -149,9 +149,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9e665abbbe16ee4b9f0d9ab5e94954d, type: 2}
   - {fileID: 11400000, guid: 873e180e33e72a84a95efe650b9264be, type: 2}
   - {fileID: 11400000, guid: 777783c42d196d9418ae8c589b850bb7, type: 2}
+  addToStatusTimer: 1
   flipTime: 7
   gcloverTime: 6
-  dashingEnabled: 1
   shadowTime: 10
   shadowLength: 0.33
   shadowtracesSpeed: 1.3

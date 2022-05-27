@@ -87,11 +87,11 @@ public class UniCollider : MonoBehaviour{
             }
         }else if(type==2){//Player - TriggerEnter
             var player=Player.instance;
-            if(GameSession.instance.dmgPopups==true&&dmg>0&&!player.gclover&&!player.dashing){color=ColorInt32.dmgPlayerHitColor;scale=2;}
+            if(GameSession.instance.dmgPopups==true&&dmg>0&&!player._hasStatus("gclover")&&!player.dashing){color=ColorInt32.dmgPlayerHitColor;scale=2;}
             else if(dmg<0){color=ColorInt32.dmgPlayerHealColor;scale=1.5f;}
         }else if(type==3){//Player - TriggerStay
             var player=Player.instance;
-            if(GameSession.instance.dmgPopups==true&&dmg>0&&!player.gclover&&!player.dashing){color=ColorInt32.dmgPlayerPhaseColor;scale=2;}
+            if(GameSession.instance.dmgPopups==true&&dmg>0&&!player._hasStatus("gclover")&&!player.dashing){color=ColorInt32.dmgPlayerPhaseColor;scale=2;}
             else if(dmg<0){color=ColorInt32.dmgPlayerHealColor;scale=1.4f;}
         }else if(type==4){//Player - Absorp
             var player=Player.instance;

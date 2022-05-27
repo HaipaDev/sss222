@@ -25,7 +25,7 @@ public class StatusDisplay : MonoBehaviour{
 
         
         if(Player.instance!=null){
-            if(Player.instance.statuses.Count>number){if(Player.instance.statuses[number]!=""){state=Player.instance.statuses[number];}else state="";}else state="";
+            if(Player.instance.statuses.Count>number){if(Player.instance.statuses[number].name!=""){state=Player.instance.statuses[number].name;}else state="";}else state="";
             /*if(number==1){state=Player.instance.status1;}
             if(number==2){state=Player.instance.status2;}
             if(number==3){state=Player.instance.status3;}*/
@@ -43,7 +43,7 @@ public class StatusDisplay : MonoBehaviour{
                 this.GetType().GetField("sprite").SetValue(this,sprr);
                 img.sprite=sprite;*/
                 if(GameAssets.instance!=null)img.sprite=GameAssets.instance.Get(state+"Pwrup").GetComponent<SpriteRenderer>().sprite;
-                var timer=Player.instance.GetType().GetField(state+"Timer").GetValue(Player.instance);
+                var timer=Player.instance.GetStatus(state).timer;//Player.instance.GetType().GetField(state+"Timer").GetValue(Player.instance);
                 if((float)timer<10f&&(float)timer>=0f){value=(float)System.Math.Round((float)timer, 1);txt.characterSpacing=-25f;}
                 else if((float)timer>10f){value=(float)Mathf.RoundToInt((float)timer);txt.characterSpacing=0f;}
                 else if((float)timer==-5f){value=-5f;}

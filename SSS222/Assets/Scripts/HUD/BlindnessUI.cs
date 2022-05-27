@@ -12,7 +12,7 @@ public class BlindnessUI : MonoBehaviour{
         if(instance!=null){Destroy(gameObject);}else{instance=this;}
     }
     void Update(){
-        if(scaleWithPlayer){if(Player.instance!=null)scale=7-Player.instance.blindStrenght;}
+        if(scaleWithPlayer){if(Player.instance!=null){if(Player.instance._hasStatus("blind"))scale=7-Player.instance.GetStatus("blind").strength;}}
         GetComponent<Image>().enabled=on;
         transform.parent.GetComponent<Image>().enabled=on;
         GetComponent<RectTransform>().localScale=new Vector2(scale,scale);
