@@ -54,7 +54,6 @@ public class LaunchRadialBullets : MonoBehaviour {
 		}
 		//if(rotate==true){transform.Rotate(0.0f, 0.0f, angle, Space.Self);}
 	}
-	public void SetProjectile(GameObject proj){
-		projectile=proj;
-	}
+	public void SetProjectile(GameObject proj){projectile=proj;}
+	public void Setup(GameObject proj,int num=4,float rad=5,float speed=5){projectile=proj;numberOfProjectiles=num;radius=rad;moveSpeed=speed;}
 }

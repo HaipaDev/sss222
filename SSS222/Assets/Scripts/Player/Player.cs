@@ -36,10 +36,6 @@ public class Player : MonoBehaviour{    public static Player instance;
     [SerializeField] public bool weaponsLimited=false;
     [SerializeField] public bool losePwrupOutOfEn;
     [SerializeField] public bool losePwrupOutOfAmmo;
-    [SerializeField] public bool fuelOn=false;
-    [SerializeField] public float fuelDrainAmnt=0.1f;
-    [SerializeField] public float fuelDrainFreq=0.5f;
-    [SerializeField] public float fuelDrainTimer=-4;
     [SerializeField] public int energyRefillUnlocked;
     [SerializeField] public bool overheatOn=true;
     [DisableInEditorMode]public float overheatTimer = -4f;
@@ -89,7 +85,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     [SerializeField] public float shadowtracesSpeed=1.3f;
     [SerializeField] public float dashSpeed=10f;
     [SerializeField] public float startDashTime=0.2f;
-    [SerializeField] public float inverterTime=10f;
+    [SerializeField] public float inverterTimeMax=10f;
     [SerializeField] public float magnetTime=15f;
     [SerializeField] public float scalerTime=15f;
     [SerializeField] public float[] scalerSizes={0.45f,0.75f,1.2f,1.5f,1.75f,2f,2.5f};
@@ -101,10 +97,14 @@ public class Player : MonoBehaviour{    public static Player instance;
     [SerializeField] public float noHealTime=14f;
     [SerializeField] public float lifeStealTime=13f;
     [SerializeField] public float thornsTime=13f;
+    [SerializeField] public float fuelTime=30f;
     [SerializeField] public float onfireTickrate=0.38f;
     [SerializeField] public float onfireDmg=1f;
     [SerializeField] public float decayTickrate=0.5f;
     [SerializeField] public float decayDmg=0.5f;
+    [SerializeField] public float fuelDrainAmnt=0.1f;
+    [SerializeField] public float fuelDrainFreq=0.5f;
+    [SerializeField] public float fuelDrainTimer=-4;
 #endregion
 
 #region//Weapon Properties / Energy Costs etc
@@ -202,9 +202,9 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
         //inputMaster.Player.Shoot.performed += _ => Shoot();
         //if(!speeded&&!slowed){speedPrev=moveSpeedInit;}
-        statuses=new List<StatusFx>();
     }
     IEnumerator SetGameRuleValues(){
+    statuses=new List<StatusFx>();
     yield return new WaitForSecondsRealtime(0.07f);
     //Set values
     var i=GameRules.instance;
@@ -221,7 +221,6 @@ public class Player : MonoBehaviour{    public static Player instance;
         energyOn=i.energyOnPlayer;
         energy=i.energyPlayer;
         energyMax=i.energyMaxPlayer;
-        fuelOn=i.fuelOn;
         fuelDrainAmnt=i.fuelDrainAmnt;
         fuelDrainFreq=i.fuelDrainFreq;
         powerups=new Powerup[i.powerupsCapacity];
@@ -240,6 +239,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         recoilOn=i.recoilOnPlayer;
         critChance=i.critChancePlayer;
         ///State Defaults
+        foreach(StatusFx st in i.statusesStart){statuses.Add(st);}
         flipTime=i.flipTime;
         gcloverTime=i.gcloverTime;
         shadowTime=i.shadowTime;
@@ -247,7 +247,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         shadowtracesSpeed=i.shadowtracesSpeed;
         dashSpeed=i.dashSpeed;
         startDashTime=i.startDashTime;
-        inverterTime=i.inverterTime;
+        inverterTimeMax=i.inverterTimeMax;
         magnetTime=i.magnetTime;
         scalerTime=i.scalerTime;
         scalerSizes=i.scalerSizes;
@@ -305,7 +305,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             Regen();
             Die();
             CountTimeMovementPressed();
-            if(!_hasStatus("frozen")&&(!fuelOn||(fuelOn&&energy>0))){
+            if(!_hasStatus("frozen")){//&&(!_hasStatus("fuel")||(_hasStatus("fuel")&&energy>0))){
                 if(GetComponent<TrailVFX>()!=null){
                     if(GetComponent<TrailVFX>().enabled==false){GetComponent<TrailVFX>().enabled=true;}
                     if(GetComponent<TrailVFX>().trailObj!=null)if(GetComponent<TrailVFX>().trailObj.activeSelf==false){GetComponent<TrailVFX>().trailObj.SetActive(true);}
@@ -324,7 +324,13 @@ public class Player : MonoBehaviour{    public static Player instance;
             velocity=rb.velocity;
             if(!moving){spawnReqsMono.AddStayingTime(Time.deltaTime);GameSession.instance.stayingTimeXP+=Time.deltaTime;/*stayingTimerTotal+=Time.deltaTime;*/timerHpRegen+=Time.deltaTime;}
             if(moving){spawnReqsMono.AddMovingTime(Time.deltaTime);GameSession.instance.movingTimeXP+=Time.deltaTime;//timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;
-                if(fuelOn){if(fuelDrainTimer<=0){if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt,false);}fuelDrainTimer=fuelDrainFreq;}else{fuelDrainTimer-=Time.deltaTime;}}
+                if(_hasStatus("fuel")){
+                    if(fuelDrainTimer<=0){
+                        if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt*GetStatus("fuel").strength,false);}
+                        else if(fuelDrainTimer!=-4&&energy<=0){Damage(fuelDrainAmnt*GetStatus("fuel").strength);}
+                        fuelDrainTimer=fuelDrainFreq;
+                    }else{fuelDrainTimer-=Time.deltaTime;}
+                }
             }
 
             if(overheatOn){
@@ -820,20 +826,19 @@ public class Player : MonoBehaviour{    public static Player instance;
     public void UseItem(string name){
         if(!String.IsNullOrEmpty(name)){
             if(name.Contains(_itemSuffix)){
-                if(GetPowerupStr(name).ammo>0){
-                    if(name=="medkit"+_itemSuffix){MedkitUse();}
-                    GetPowerupStr(name).ammo--;
-                    if(GetPowerupStr(name).ammo==0){ClearPowerup(name);}
-                }else{ClearPowerup(name);}
+                if(ContainsPowerup(name)){
+                    if(GetPowerupStr(name).ammo>0){
+                        if(name=="medkit"+_itemSuffix){MedkitUse();}
+                        GetPowerupStr(name).ammo--;
+                        if(GetPowerupStr(name).ammo==0){ClearPowerup(name);}
+                    }else{ClearPowerup(name);}
+                }
             }
         }
     }
-    void QuickHeal(){
-        if(Input.GetKeyDown(KeyCode.H)){Debug.Log("Quick healing");UseItem("medkit_item");}
-        //if(ContainsPowerup("medkit")){MedkitUse();GetPowerupStr("medkit").ammo--;}
-    }
+    void QuickHeal(){if(Input.GetKeyDown(KeyCode.H)){UseItem("medkit_item");}}
     public void MedkitUse(){
-        if(health<=healthMax-GameRules.instance.medkit_hpGain){HPAdd(GameRules.instance.medkit_hpGain);}
+        if(health<=healthMax-GameRules.instance.medkit_hpGain&&!_hasStatus("noHeal")){HPAdd(GameRules.instance.medkit_hpGain);}
         else{float _hpDif=healthMax-health;HPAdd(_hpDif);int _scoreVal=Mathf.RoundToInt(GameRules.instance.medkit_hpGain-_hpDif);GameSession.instance.AddToScoreNoEV(_scoreVal);}
         if(health==healthMax&&GameRules.instance.medkit_hpGain==1){GameSession.instance.AddToScoreNoEV(25);}
         AddSubEnergy(GameRules.instance.medkit_energyGain,true);
@@ -888,16 +893,30 @@ public class Player : MonoBehaviour{    public static Player instance;
  
 #region//Statuses
     void Statuses(){
+        void CountdownStatusTimer(string name,string playSound="",bool unscaledTime=false,bool revertToPrevSpeed=false,bool countQuickerWhenMoving=false){
+            if(_hasStatus(name)){
+                if(GetStatus(name).timer>0){
+                    float _step=0;float _mult=1;
+                    if(countQuickerWhenMoving){_mult=(1+dist);}
+                    if(!unscaledTime){_step=Time.deltaTime*_mult;}else{_step=Time.unscaledDeltaTime*_mult;}
+                    GetStatus(name).timer-=_step;
+                }
+                else{if(GetStatus(name).timer!=-5){
+                    RemoveStatus(name);
+                    if(playSound=="-"){AudioManager.instance.Play("PowerupOff");}else if(playSound!="-"&&playSound!=""){AudioManager.instance.Play(playSound);}
+                    if(revertToPrevSpeed)RevertToSpeedPrev();
+                }}
+            }
+        }
+
         if(!GameSession.GlobalTimeIsPaused){
             if(_hasStatus("flip")){
-                if(GetStatus("flip").timer>0){GetStatus("flip").timer-=Time.deltaTime;}
-                else{RemoveStatus("flip");AudioManager.instance.Play("PowerupOff");}
+                CountdownStatusTimer("flip","-");
                 moveDir=-1;
             }else{moveDir=1;}
 
             if(_hasStatus("gclover")){
-                if(GetStatus("gclover").timer>0){GetStatus("gclover").timer-=Time.deltaTime;}
-                else{AudioManager.instance.Play("GCloverOff");RemoveStatus("gclover");}
+                CountdownStatusTimer("scaler","GCloverOff");
                 health=healthMax;
             }
 
@@ -926,18 +945,17 @@ public class Player : MonoBehaviour{    public static Player instance;
             if(_hasStatus("inverter")){if(InverterFx.instance!=null){if(!InverterFx.instance.on)InverterFx.instance.on=true;}
                 //else{if(InverterFx.instance.on){InverterFx.instance.on=false;}if(InverterFx.instance.revertMusic==false){InverterFx.instance.revertMusic=true;}
                 //    if(MusicPlayer.instance!=null&&MusicPlayer.instance.GetComponent<AudioSource>().pitch==-1){MusicPlayer.instance.GetComponent<AudioSource>().pitch=1;}}
-                if(GetStatus("inverter").timer<inverterTime&&GetStatus("inverter").timer>-4){GetStatus("inverter").timer+=Time.deltaTime;}
-                else if(GetStatus("inverter").timer>=inverterTime&&GetStatus("inverter").timer<inverterTime+4){
-                    GetStatus("inverter").timer=inverterTime+4;RemoveStatus("inverter");
+                if(GetStatus("inverter").timer<inverterTimeMax&&GetStatus("inverter").timer>-4){GetStatus("inverter").timer+=Time.deltaTime;}
+                else if(GetStatus("inverter").timer>=inverterTimeMax&&GetStatus("inverter").timer!=-5){
+                    GetStatus("inverter").timer=inverterTimeMax+4;RemoveStatus("inverter");AudioManager.instance.Play("PowerupOff");
                     if(InverterFx.instance!=null){InverterFx.instance.on=false;InverterFx.instance.reverted=false;}
                 }
             }
-            if(_hasStatus("scaler"))if(GetStatus("scaler").timer>0){GetStatus("scaler").timer-=Time.deltaTime;}else{RemoveStatus("scaler");}
+            if(_hasStatus("scaler")){CountdownStatusTimer("scaler","-");}
             else{shipScale=shipScaleDefault;}
 
             if(_hasStatus("magnet")){
-                if(GetStatus("magnet").timer>0){GetStatus("magnet").timer-=Time.deltaTime;}
-                else{RemoveStatus("magnet");}
+                CountdownStatusTimer("magnet","-");
                 if(FindObjectsOfType<Tag_MagnetAffected>()!=null){
                     Tag_MagnetAffected[] objs=FindObjectsOfType<Tag_MagnetAffected>();
                     foreach(Tag_MagnetAffected obj in objs){
@@ -954,16 +972,20 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }
             }
 
-            if(_hasStatus("onfire"))if(GetStatus("onfire").timer>0){GetStatus("onfire").timer-=Time.deltaTime*(1+dist);}else{RemoveStatus("onfire");}
-            if(_hasStatus("decay"))if(GetStatus("decay").timer>0){GetStatus("decay").timer-=Time.deltaTime;}else{RemoveStatus("decay");}
-            if(_hasStatus("electrc"))if(GetStatus("electrc").timer>0){GetStatus("electrc").timer-=Time.deltaTime;}else{RemoveStatus("electrc");}
-            if(_hasStatus("frozen"))if(GetStatus("frozen").timer>0){GetStatus("frozen").timer-=Time.deltaTime;}else{RemoveStatus("frozen");}
-            if(_hasStatus("armored"))if(GetStatus("armored").timer>0){GetStatus("armored").timer-=Time.deltaTime;}else{RemoveStatus("armored");}
-            if(_hasStatus("fragile"))if(GetStatus("fragile").timer>0){GetStatus("fragile").timer-=Time.deltaTime;}else{RemoveStatus("fragile");}
-            if(_hasStatus("power"))if(GetStatus("power").timer>0){GetStatus("power").timer-=Time.deltaTime;}else{RemoveStatus("power");}
-            if(_hasStatus("weak"))if(GetStatus("weak").timer>0){GetStatus("weak").timer-=Time.deltaTime;}else{RemoveStatus("weakns");}
-            if(_hasStatus("hacked"))if(GetStatus("hacked").timer>0){GetStatus("hacked").timer-=Time.deltaTime;}else{RemoveStatus("hacked");}
-            if(_hasStatus("blind"))if(GetStatus("blind").timer>0){GetStatus("blind").timer-=Time.deltaTime;}else{RemoveStatus("blind");}
+            CountdownStatusTimer("onfire",countQuickerWhenMoving:true);
+            CountdownStatusTimer("decay");
+            CountdownStatusTimer("electrc");
+            CountdownStatusTimer("frozen");
+            CountdownStatusTimer("armored");
+            CountdownStatusTimer("fragile");
+            CountdownStatusTimer("power");
+            CountdownStatusTimer("weakns");
+            CountdownStatusTimer("hacked");
+            CountdownStatusTimer("blind");
+            CountdownStatusTimer("noHeal");
+            CountdownStatusTimer("lifeSteal");
+            CountdownStatusTimer("thorns");
+            CountdownStatusTimer("fuel");
 
             //CalculateDefenseSpeed();
             
@@ -972,14 +994,14 @@ public class Player : MonoBehaviour{    public static Player instance;
             if(_hasStatus("onfire")){if(_hasStatus("frozen")){RemoveStatus("frozen");/*Damage(1,dmgType.silent);*/}}
             if(_hasStatus("infEnergy")){energy=infPrevEnergy;if(GetStatus("infEnergy").timer>0){GetStatus("infEnergy").timer-=Time.deltaTime;}else{RemoveStatus("infEnergy");}}
 
-            if(_hasStatus("speed"))if(GetStatus("speed").timer>0){GetStatus("speed").timer-=Time.deltaTime;}else{RevertToSpeedPrev();RemoveStatus("speed");}
-            if(_hasStatus("slow"))if(GetStatus("slow").timer>0){GetStatus("slow").timer-=Time.deltaTime;}else{RevertToSpeedPrev();RemoveStatus("slow");}
+            CountdownStatusTimer("speed",revertToPrevSpeed:true);
+            CountdownStatusTimer("slow",revertToPrevSpeed:true);
         }
         
         #region//Matrix & Accel
         if(!GameSession.GlobalTimeIsPausedNotSlowed){
             if(_hasStatus("matrix")&&!_hasStatus("accel")){
-                GetStatus("matrix").timer-=Time.unscaledDeltaTime;
+                CountdownStatusTimer("matrix",unscaledTime:true);
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if((inputType==InputType.mouse || inputType==InputType.drag) && dist<1){
@@ -994,11 +1016,11 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
                 }
-                if(GetStatus("matrix").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; RemoveStatus("matrix");}
+                //if(GetStatus("matrix").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; RemoveStatus("matrix");}
             }
 
             if(_hasStatus("accel")&&!_hasStatus("matrix")){
-                GetStatus("accel").timer-=Time.unscaledDeltaTime;
+                CountdownStatusTimer("accel",unscaledTime:true);
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if((inputType==InputType.mouse || inputType==InputType.drag) && dist>0.35){
@@ -1013,12 +1035,12 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
                 }
-                if(GetStatus("accel").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; RemoveStatus("accel");}
+                //if(GetStatus("accel").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; RemoveStatus("accel");}
             }
 
             if(_hasStatus("matrix")&&_hasStatus("accel")){
-                GetStatus("accel").timer-=Time.unscaledDeltaTime;//GetStatus("accel").timer-=Time.deltaTime;
-                GetStatus("matrix").timer-=Time.unscaledDeltaTime;//GetStatus("matrix").timer-=Time.deltaTime;
+                CountdownStatusTimer("matrix",unscaledTime:true);
+                CountdownStatusTimer("accel",unscaledTime:true);
                 //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(inputType==InputType.mouse || inputType==InputType.drag){
@@ -1033,8 +1055,8 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }else{
                     if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
                 }
-                if(GetStatus("matrix").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;RemoveStatus("matrix");}
-                if(GetStatus("accel").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;RemoveStatus("accel");}
+                //if(GetStatus("matrix").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;RemoveStatus("matrix");}
+                //if(GetStatus("accel").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;RemoveStatus("accel");}
             }
         }
         #endregion
@@ -1050,7 +1072,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         else moveSpeedCurrent=speedPrev[speedPrev.Count-1]/GetStatus("slow").strength*GetStatus("speed").strength;}
     }
     
-    private void Shadow(){
+    void Shadow(){
         if(!GameSession.GlobalTimeIsPaused&&shadowInstTimer<=0){
             GameObject shadow=null;
             if(_hasStatus("shadowdash")){shadow=GameAssets.instance.Make("PlayerShadow",transform.position);shadowInstTimer=shadowdashInstTime;}
@@ -1061,12 +1083,20 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
     void Regen(){//Move to a universal modules script instead of PlayerSkills
         if(!GameSession.GlobalTimeIsPaused){
-            hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax);
-            enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax);
+            hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax/4);
+            enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax/4);
             if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt<=0){if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){HPAbsorp(crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}}
             if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt<=0){if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){EnAbsorp(energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}}
-            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax&&!_hasStatus("noHeal")){Damage(hpRegenAmnt,dmgType.heal);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}}
-            if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax){AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}}
+            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax&&!_hasStatus("noHeal")){HPAddSilent(hpRegenAmnt);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}}
+            if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax&&!_hasStatus("infEnergy")&&!_hasStatus("electrc")){AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}}
+        }
+    }
+    public void Thorns(){
+        if(_hasStatus("thorns")){
+            var lrb=gameObject.AddComponent<LaunchRadialBullets>();
+            lrb.Setup(GameAssets.instance.Get("LSpike"),6);
+            lrb.Shoot();
+            Destroy(lrb,0.01f);
         }
     }
     public void Recoil(float strength, float time){if(recoilOn)StartCoroutine(RecoilI(strength,time));}
@@ -1149,8 +1179,10 @@ public class Player : MonoBehaviour{    public static Player instance;
     public void SetStatus(string status,float time,float strength=1){
         if(!_hasStatus(status)){statuses.Add(new StatusFx{name=status,timer=time,strength=strength});}
         else{
-            if(GameRules.instance.addToStatusTimer){GetStatus(status).timer+=time;}
-            if(GetStatus(status).strength<strength){ResetStatus(status,time,strength);}//GetStatus(status).strength=strength;}
+            if(GetStatus(status).timer!=-5){
+                if(GameRules.instance.addToStatusTimer){GetStatus(status).timer+=time;}
+                if(GetStatus(status).strength<strength){ResetStatus(status,time,strength);}//GetStatus(status).strength=strength;}
+            }
         }
     }public void RemoveStatus(string status){statuses.RemoveAll(x=>x.name==status);}
     public void ResetStatus(string status,float time,float strength=1){RemoveStatus(status);SetStatus(status,time,strength);}
@@ -1240,7 +1272,8 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
 
     public void HPAdd(float hp){Damage(hp,dmgType.heal);}
-    public void Damage(float dmg, dmgType type,bool ignoreInvert=true, float electrTime=4f){//Later add on possible Inverter options?
+    public void HPAddSilent(float hp){Damage(hp,dmgType.healSilent);}
+    public void Damage(float dmg, dmgType type=dmgType.normal,bool ignoreInvert=true, float electrTime=4f){//Later add on possible Inverter options?
         if(type!=dmgType.heal&&type!=dmgType.healSilent&&type!=dmgType.decay&&!_hasStatus("gclover"))if(dmg!=0){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HpPopUpHUD(-dmgTot);FindObjectOfType<HPBarLost>().TriggerBar();}
         else if(_hasStatus("gclover")){AudioManager.instance.Play("GCloverHit");}
 

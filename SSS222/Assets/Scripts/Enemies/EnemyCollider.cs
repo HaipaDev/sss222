@@ -27,6 +27,13 @@ public class EnemyCollider : MonoBehaviour{
                     if(crit){UniCollider.DMG_VFX(0,other,transform,dmg,crit);}
                     else UniCollider.DMG_VFX(0,other,transform,dmg);
                 }
+                if(en._healable()){
+                    if(Player.instance!=null){if(Player.instance._hasStatus("lifeSteal")){
+                        HealBeam hb=Instantiate(GameAssets.instance.Get("HealBeam"),(Vector2)transform.position,Quaternion.identity).GetComponent<HealBeam>();
+                        hb.value=dmg/100*(Player.instance.GetStatus("lifeSteal").strength);
+                        hb.absorp=false;
+                    }}
+                }
             }
     }}}
     void OnTriggerStay2D(Collider2D other){  if(!other.CompareTag(tag)){if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){

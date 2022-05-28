@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour{
             xpChance=e.xpChance;
             drops=e.drops;
         }
-        if(GetComponent<Goblin>()!=null||GetComponent<VortexWheel>()!=null||GetComponent<HealingDrone>()!=null)shooting=false;
+        if(GetComponent<Goblin>()!=null||GetComponent<VortexWheel>()!=null/*||GetComponent<HealingDrone>()!=null*/)shooting=false;
 
             yield return new WaitForSeconds(0.04f);
             for(var d=0;d<drops.Count;d++){dropValues.Add(drops[d].dropChance);}

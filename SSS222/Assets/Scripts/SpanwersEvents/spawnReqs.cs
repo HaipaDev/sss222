@@ -146,6 +146,8 @@ public enum spawnReqsType{time,score,energy,missed,dmg,kills,wavesTotal,waveCoun
     [HideIf("@this.repeat <= 1")][DisableInEditorMode]public int repI=1;
     [EnableIf("@this.GetType().IsSubclassOf(typeof(spawnReqs)) && timeEnabled")]public bool bothNeeded=false;
     [EnableIf("@this.GetType().IsSubclassOf(typeof(spawnReqs)) && timeEnabled")]public bool startTimeAfterSecond=false;
+    [InfoBox("-1 for Waves & -2 for Shop")]
+    [DisableInPlayModeAttribute]public int specialId=0;
 }
 public class _spawnReqsCounts:spawnReqs{
     public int countsNeeded=3;
@@ -156,8 +158,6 @@ public class _spawnReqsCounts:spawnReqs{
     public Vector2Int scoreMaxSetRange=new Vector2Int(15,30);
     public int scoreNeeded=1;
     [DisableInEditorMode]public int score=0;
-    [InfoBox("-1 for Waves & -2 for Shop")]
-    [DisableInPlayModeAttribute]public int specialId=0;
 }
 [System.Serializable]public class spawnEnergy:spawnReqs{
     public float energyNeeded=100;

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1887362649180442507}
   - component: {fileID: 5381357303093761109}
   - component: {fileID: 4830943442673253679}
-  - component: {fileID: -9072771260210855088}
+  - component: {fileID: 439336350758034681}
   m_Layer: 8
   m_Name: ShadowBT
   m_TagString: PlayerWeapons
@@ -34,6 +34,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -284,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 0
---- !u!114 &-9072771260210855088
+--- !u!114 &439336350758034681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -293,10 +294,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5313808222654050488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4ddb65a8e30b443b3d2cfa1dec336b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d790abe7d01ea94490a672728321956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: ShadowTrail
+  part: Trail_Shadow
   offset: {x: 0, y: 0.33}
-  onTop: 1
-  BFlame: {fileID: 0}
+  onTop: 0
+  cstmzTrail: 0
+  trailObj: {fileID: 0}

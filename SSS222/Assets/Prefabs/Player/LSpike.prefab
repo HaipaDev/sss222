@@ -11,15 +11,13 @@ GameObject:
   - component: {fileID: 1124888406501111564}
   - component: {fileID: 284585900876537960}
   - component: {fileID: 5882422370530315119}
-  - component: {fileID: 405315226629103612}
-  - component: {fileID: 2657704310505367730}
+  - component: {fileID: -1866281790211962452}
+  - component: {fileID: 487403076291435772}
   - component: {fileID: 1887362649180442507}
   - component: {fileID: 5381357303093761109}
   - component: {fileID: 4830943442673253679}
-  - component: {fileID: -1996952101110769926}
-  - component: {fileID: 8613208344045717770}
   m_Layer: 8
-  m_Name: GloomyScythe
+  m_Name: LSpike
   m_TagString: PlayerWeapons
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 5313808222654050488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ee90b3958b01c7d44b8877b1e8ac353a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0934cce500ae8e54f9bdc497d640e88c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -113,8 +111,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &405315226629103612
-CapsuleCollider2D:
+--- !u!61 &-1866281790211962452
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -126,10 +124,20 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02, y: 0.06}
-  m_Size: {x: 1.05, y: 0.25}
-  m_Direction: 1
---- !u!114 &2657704310505367730
+  m_Offset: {x: -0.0008440837, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.1724138, y: 0.4827586}
+    newSize: {x: 0.2962963, y: 0.44444445}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.22032945, y: 0.44444445}
+  m_EdgeRadius: 0
+--- !u!114 &487403076291435772
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,11 +149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9753b199051f04aa65d5f167c5dd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energy: 0
-  charged: 0
+  opacity: 1
   blockable: 0
   healing: 0
-  opacity: 1
+  energy: 0
+  charged: 0
 --- !u!114 &1887362649180442507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,9 +168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   assetName: GlowAuto
   materialClone: 1
-  color: {r: 1, g: 1, b: 1, a: 1}
-  size: {x: 2.6, y: 0}
-  emissionSpeed: 7.63
+  color: {r: 0.4431373, g: 0.81568635, b: 0.18431373, a: 0.3137255}
+  size: {x: 0.6, y: 0.6}
+  emissionSpeed: 0
   maxParticles: 0
   offset: {x: 0, y: 0}
   alignToDirection: 0
@@ -177,7 +185,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3264893150293988699, guid: cdf423136b4935c44a751cae8c8b0d94,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 41eb536b204fdd94a95ab1126ac215eb, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 46c784421e0f08542b390f8e167756a7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -276,37 +284,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 0
---- !u!114 &-1996952101110769926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7002f9888ce4624091c238eff4da6cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 360
-  waitTime: 0.65
-  waitTimer: 0
-  scytheFlySFX: {fileID: 8300000, guid: c23309e0609f07a4a912f49e84fbd57d, type: 3}
-  vSpeedMax: 9
---- !u!114 &8613208344045717770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313808222654050488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d790abe7d01ea94490a672728321956, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: Trail_Shadow
-  offset: {x: 0, y: 0.33}
-  onTop: 0
-  cstmzTrail: 0
-  trailObj: {fileID: 0}

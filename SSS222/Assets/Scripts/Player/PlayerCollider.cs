@@ -34,7 +34,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){
                     Enemy en=other.GetComponent<Enemy>();
                     if(player.dashing==false){
-                        if(dmg!=0&&!player._hasStatus("gclover")){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
+                        if(dmg!=0&&!player._hasStatus("gclover")){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");ThornsHit();}
                         else if(dmg!=0&&player._hasStatus("gclover")){AudioManager.instance.Play("GCloverHit");}
                         GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,transform.position.y+0.5f),0.3f);
                         if(dmgVal!=null){if(!dmgVal.phase)if(en!=null)en.Kill(false);}
@@ -66,7 +66,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("HealBeam").name)){
                     HealBeam hb=other.GetComponent<HealBeam>();
                     if(hb.absorp)HPAbsorp(hb.value);
-                    else HPAdd(hb.value);
+                    else HPAddSilent(hb.value);
                 }
 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("medkitPwrup").name)){
@@ -89,7 +89,7 @@ public class PlayerCollider : MonoBehaviour{
                         var tempHP=player.health; var tempEn=player.energy;
                         player.energy=tempHP; player.health=tempEn;
                     }
-                    player.SetStatus("inverter",player.inverterTime);
+                    player.SetStatus("inverter",0);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("magnetPwrup").name)){
                     PwrupEnergyAdd();
@@ -141,6 +141,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("noHealPwrup").name)){player.SetStatus("noHeal",player.noHealTime);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("lifeStealPwrup").name)){player.SetStatus("lifeSteal",player.lifeStealTime);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("thornsPwrup").name)){player.SetStatus("thorns",player.thornsTime);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("fuelPwrup").name)){player.SetStatus("fuel",player.fuelTime);}
                 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("randomizerPwrup").name)){
                     var item=other.GetComponent<LootTable>().GetItem();
@@ -169,6 +170,7 @@ public class PlayerCollider : MonoBehaviour{
 
 
                 void HPAdd(float hp){player.HPAdd(hp);UniCollider.DMG_VFX(2,other,transform,-hp);}
+                void HPAddSilent(float hp){player.HPAddSilent(hp);UniCollider.DMG_VFX(2,other,transform,-hp);}
                 void HPAbsorp(float hp){player.HPAbsorp(hp);UniCollider.DMG_VFX(4,other,player.transform,hp);}
                 
 
@@ -269,6 +271,7 @@ public class PlayerCollider : MonoBehaviour{
             }
         }
    }
+   void ThornsHit(){player.Thorns();}
    public string _LastHitName(){return lastHitName;}
    public float _LastHp(){return lastHp;}
    public float _LastHitDmg(){return lastHitDmg;}

@@ -27,8 +27,7 @@ public class UniCollider : MonoBehaviour{
                     if(co.dmgPlayer!=0){if(Player.instance!=null){Player.instance.Damage(co.dmgPlayer,co.dmgPlayerType);}}
                     if(!String.IsNullOrEmpty(co.assetMake)){if(GameAssets.instance.Get(co.assetMake)!=null)GameAssets.instance.Make(co.assetMake,(Vector2)transform.position+co.assetPos);}
                     if(co.healBeamPlayer!=0){
-                        GameObject go=Instantiate(GameAssets.instance.Get("HealBeam"),(Vector2)transform.position+co.assetPos,Quaternion.identity);
-                        HealBeam hb=go.GetComponent<HealBeam>();
+                        HealBeam hb=Instantiate(GameAssets.instance.Get("HealBeam"),(Vector2)transform.position+co.assetPos,Quaternion.identity).GetComponent<HealBeam>();
                         if(co.healBeamPlayer>0){hb.value=co.healBeamPlayer;}
                         else if(co.healBeamPlayer==-1||co.healBeamPlayer==-7){hb.value=dmg;}
                         else if(co.healBeamPlayer==-2||co.healBeamPlayer==-8){hb.value=dmg/2;}

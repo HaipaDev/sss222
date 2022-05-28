@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class Tag_PlayerWeapon:MonoBehaviour{
-    public float energy;
-    public bool charged;
-    public bool blockable;
-    public bool healing;
     [SerializeField] float opacity=0.3f;
+    [SerializeField] public bool blockable;
+    [SerializeField] public bool healing;
+    [DisableInEditorMode] public float energy;
+    [DisableInEditorMode] public bool charged;
     void Start(){
         if(GetComponent<Tag_PauseVelocity>()==null)gameObject.AddComponent<Tag_PauseVelocity>();
         if(GameRules.instance.playerWeaponsFade&&SaveSerial.instance.settingsData.playerWeaponsFade){

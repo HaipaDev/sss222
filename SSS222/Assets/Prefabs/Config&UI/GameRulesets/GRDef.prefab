@@ -105,9 +105,6 @@ MonoBehaviour:
   energyOnPlayer: 1
   energyPlayer: 60
   energyMaxPlayer: 130
-  fuelOn: 0
-  fuelDrainAmnt: 0.1
-  fuelDrainFreq: 0.5
   powerupsStarting:
   - name: laser
     ammo: -5
@@ -149,6 +146,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9e665abbbe16ee4b9f0d9ab5e94954d, type: 2}
   - {fileID: 11400000, guid: 873e180e33e72a84a95efe650b9264be, type: 2}
   - {fileID: 11400000, guid: 777783c42d196d9418ae8c589b850bb7, type: 2}
+  statusesStart: []
   addToStatusTimer: 1
   flipTime: 7
   gcloverTime: 6
@@ -158,7 +156,7 @@ MonoBehaviour:
   shadowCost: 5
   dashSpeed: 10
   startDashTime: 0.2
-  inverterTime: 10
+  inverterTimeMax: 10
   magnetTime: 15
   scalerTime: 15
   scalerSizes:
@@ -176,6 +174,8 @@ MonoBehaviour:
   onfireDmg: 1
   decayTickrate: 0.5
   decayDmg: 0.5
+  fuelDrainAmnt: 0.1
+  fuelDrainFreq: 0.5
   energyBall_energyGain: 6
   battery_energyGain: 11
   benergyBallGain: 1
@@ -212,7 +212,7 @@ MonoBehaviour:
   energyDiss_refillCost: 3.3
   waveSpawnReqsType: 1
   waveSpawnReqs:
-    rid: 0
+    rid: 7402535244629278720
   waveList:
   - name: CometsFlyby
     lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
@@ -1477,9 +1477,26 @@ MonoBehaviour:
     soundPhase: 
     dispDmgCount: 0
     colliEvents: []
+  - name: LSpike
+    colliType: 1
+    dmg: 7
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 1
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 3
+    dmgFx: 0
+    dmgFxValues: []
+    sound: EnemyHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
   shopSpawnReqsType: 1
   shopSpawnReqs:
-    rid: 3
+    rid: 7402535244629278721
   shopList:
   - name: 
     lootItem: {fileID: 11400000, guid: b082a4e514cd17e45aadeb523cbde903, type: 2}
@@ -1594,21 +1611,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 0
-      type: {class: spawnScore, ns: , asm: Assembly-CSharp}
-      data:
-        timeEnabled: 0
-        time: {x: 10, y: 20}
-        timer: -4
-        repeat: 1
-        repeatInterval: 0.75
-        repI: 1
-        bothNeeded: 0
-        startTimeAfterSecond: 0
-        scoreMaxSetRange: {x: 18, y: 36}
-        scoreNeeded: 1
-        score: 0
-        specialId: -1
     - rid: 2
       type: {class: spawnKills, ns: , asm: Assembly-CSharp}
       data:
@@ -1622,21 +1624,6 @@ MonoBehaviour:
         startTimeAfterSecond: 0
         killsNeeded: 20
         kills: 0
-    - rid: 3
-      type: {class: spawnScore, ns: , asm: Assembly-CSharp}
-      data:
-        timeEnabled: 0
-        time: {x: 10, y: 20}
-        timer: -4
-        repeat: 1
-        repeatInterval: 0.75
-        repI: 1
-        bothNeeded: 0
-        startTimeAfterSecond: 0
-        scoreMaxSetRange: {x: 175, y: 225}
-        scoreNeeded: 1
-        score: 0
-        specialId: -2
     - rid: 7402535153654038538
       type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
       data:
@@ -1648,3 +1635,33 @@ MonoBehaviour:
         repI: 1
         bothNeeded: 0
         startTimeAfterSecond: 0
+    - rid: 7402535244629278720
+      type: {class: spawnScore, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 0
+        time: {x: 10, y: 20}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        repI: 1
+        bothNeeded: 0
+        startTimeAfterSecond: 0
+        scoreMaxSetRange: {x: 15, y: 30}
+        scoreNeeded: 1
+        score: 0
+        specialId: 0
+    - rid: 7402535244629278721
+      type: {class: spawnScore, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 0
+        time: {x: 10, y: 20}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        repI: 1
+        bothNeeded: 0
+        startTimeAfterSecond: 0
+        scoreMaxSetRange: {x: 15, y: 30}
+        scoreNeeded: 1
+        score: 0
+        specialId: 0
