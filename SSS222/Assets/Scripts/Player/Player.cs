@@ -293,7 +293,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             HandleInput(false);
             health=Mathf.Clamp(health,0,healthMax);
             energy=Mathf.Clamp(energy,0,energyMax);
-        transform.localScale=new Vector3(shipScale,shipScale,1);
+            transform.localScale=new Vector3(shipScale,shipScale,1);
             LosePowerup();
             DrawMeleeWeapons();
             HideMeleeWeapons();
@@ -305,6 +305,11 @@ public class Player : MonoBehaviour{    public static Player instance;
             Regen();
             Die();
             CountTimeMovementPressed();
+            SelectItemSlot();
+            Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
+            Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
+            if(shaderMatProps!=null){GetComponent<SpriteRenderer>().material=GameAssets.instance.UpdateShaderMatProps(GetComponent<SpriteRenderer>().material,shaderMatProps);}
+            else{GetComponent<SpriteRenderer>().material=GameAssets.instance.UpdateShaderMatProps(GetComponent<SpriteRenderer>().material,new ShaderMatProps());}
             if(!_hasStatus("frozen")){//&&(!_hasStatus("fuel")||(_hasStatus("fuel")&&energy>0))){
                 if(GetComponent<TrailVFX>()!=null){
                     if(GetComponent<TrailVFX>().enabled==false){GetComponent<TrailVFX>().enabled=true;}
@@ -334,14 +339,20 @@ public class Player : MonoBehaviour{    public static Player instance;
             }
 
             if(overheatOn){
+                GetComponent<SpriteRenderer>().material.EnableKeyword("HITEFFECT_ON");
+                GetComponent<SpriteRenderer>().material.SetColor("_HitEffectColor",new Color(1,0.6f,0,1));
+                GetComponent<SpriteRenderer>().material.SetFloat("_HitEffectGlow",1.5f);
+                GetComponent<SpriteRenderer>().material.SetFloat("_HitEffectBlend",Mathf.Clamp((overheatTimer/overheatTimerMax)*0.3f,0,0.3f));
                 if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
                 if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
-                if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){OnFire(3.8f,1);
-                overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;}
+                if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){
+                    OnFire(3.8f,1);
+                    overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;
+                }
                 if(overheated==true&&overheatedTimer>0&&!GameSession.GlobalTimeIsPaused){overheatedTimer-=Time.deltaTime;
                     GameAssets.instance.VFX("FlareHit",new Vector2((transform.position.x+0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
                     GameAssets.instance.VFX("FlareHit",new Vector2((transform.position.x-0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
-                    }
+                }
                 if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
             }
             if(Application.platform==RuntimePlatform.Android){mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);}
@@ -355,10 +366,6 @@ public class Player : MonoBehaviour{    public static Player instance;
 
             if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
         }
-        SelectItemSlot();
-        Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
-        Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
-        if(shaderMatProps!=null){GetComponent<SpriteRenderer>().material=GameAssets.instance.UpdateShaderMatProps(GetComponent<SpriteRenderer>().material,shaderMatProps);}
     }
     public void SetInputType(InputType type){inputType=type;}
     void FixedUpdate(){
