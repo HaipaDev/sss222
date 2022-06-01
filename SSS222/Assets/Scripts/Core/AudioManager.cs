@@ -92,10 +92,10 @@ public class AudioManager : MonoBehaviour{	public static AudioManager instance;
 		}else{return s.source;}
 	}
 	void Update(){
-		audioMixer.SetFloat("MasterVolume", SaveSerial.instance.settingsData.masterVolume);
-		audioMixer.SetFloat("SoundVolume", SaveSerial.instance.settingsData.soundVolume);
-		audioMixer.SetFloat("AmbienceVolume", SaveSerial.instance.settingsData.ambienceVolume);
-		audioMixer.SetFloat("MusicVolume", SaveSerial.instance.settingsData.musicVolume);
+		audioMixer.SetFloat("MasterVolume", GameAssets.InvertNormalizedMin(SaveSerial.instance.settingsData.masterVolume,-50));
+		audioMixer.SetFloat("SoundVolume", GameAssets.InvertNormalizedMin(SaveSerial.instance.settingsData.soundVolume,-50));
+		audioMixer.SetFloat("AmbienceVolume", GameAssets.InvertNormalizedMin(SaveSerial.instance.settingsData.ambienceVolume,-50));
+		audioMixer.SetFloat("MusicVolume", GameAssets.InvertNormalizedMin(SaveSerial.instance.settingsData.musicVolume,-50));
 	}
 }
 

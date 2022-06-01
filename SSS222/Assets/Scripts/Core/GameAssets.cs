@@ -360,7 +360,9 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
  	}
 	//public static float DeltaPercentMinMax(float cur,float max){return (cur-max)/100;}
-	public static float Normalize(float cur,float min,float max){return (cur-min)/(max-min);}
+	public static float Normalize(float val,float min,float max){return (val-min)/(max-min);}
+	public static float InvertNormalized(float val){return 1-val;}
+	public static float InvertNormalizedMin(float val,float min){return (1-val)*min;}
 #endregion
 }
 

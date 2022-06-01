@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -68,10 +69,13 @@ MonoBehaviour:
   gameSpeed: 1
   defaultGameSpeed: 1
   speedChanged: 0
-  slowingPause: 0
   vertCameraSize: 7
   horizCameraSize: 3.92
   gameVersion: 0.6t5
+  buildVersion: 2.4
+  _tempSandboxSaveName: 
+  isSteam: 1
+  steamAchievsStatsLeaderboards: 1
   cheatmode: 0
   dmgPopups: 1
   analyticsOn: 1

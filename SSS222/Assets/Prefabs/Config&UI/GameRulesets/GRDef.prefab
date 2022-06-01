@@ -125,6 +125,7 @@ MonoBehaviour:
   bulletResize: 0
   bflameDmgTillLvl: 1
   overheatOnPlayer: 1
+  overheatShaderIdentif: 1
   overheatTimerMax: 11.44
   overheatCooldown: 0.5
   overheatedTime: 3
@@ -1496,7 +1497,7 @@ MonoBehaviour:
     colliEvents: []
   shopSpawnReqsType: 1
   shopSpawnReqs:
-    rid: 7402535244629278721
+    rid: 7268785640884928513
   shopList:
   - name: 
     lootItem: {fileID: 11400000, guid: b082a4e514cd17e45aadeb523cbde903, type: 2}
@@ -1622,8 +1623,24 @@ MonoBehaviour:
         repI: 1
         bothNeeded: 1
         startTimeAfterSecond: 0
+        specialId: 0
         killsNeeded: 20
         kills: 0
+    - rid: 7268785640884928513
+      type: {class: spawnScore, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 1
+        time: {x: 10, y: 20}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        repI: 1
+        bothNeeded: 0
+        startTimeAfterSecond: 0
+        specialId: -2
+        scoreMaxSetRange: {x: 150, y: 250}
+        scoreNeeded: 1
+        score: 0
     - rid: 7402535153654038538
       type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
       data:
@@ -1635,6 +1652,7 @@ MonoBehaviour:
         repI: 1
         bothNeeded: 0
         startTimeAfterSecond: 0
+        specialId: 0
     - rid: 7402535244629278720
       type: {class: spawnScore, ns: , asm: Assembly-CSharp}
       data:
@@ -1646,22 +1664,7 @@ MonoBehaviour:
         repI: 1
         bothNeeded: 0
         startTimeAfterSecond: 0
+        specialId: -1
         scoreMaxSetRange: {x: 15, y: 30}
         scoreNeeded: 1
         score: 0
-        specialId: 0
-    - rid: 7402535244629278721
-      type: {class: spawnScore, ns: , asm: Assembly-CSharp}
-      data:
-        timeEnabled: 0
-        time: {x: 10, y: 20}
-        timer: -4
-        repeat: 1
-        repeatInterval: 0.75
-        repI: 1
-        bothNeeded: 0
-        startTimeAfterSecond: 0
-        scoreMaxSetRange: {x: 15, y: 30}
-        scoreNeeded: 1
-        score: 0
-        specialId: 0

@@ -339,10 +339,12 @@ public class Player : MonoBehaviour{    public static Player instance;
             }
 
             if(overheatOn){
-                GetComponent<SpriteRenderer>().material.EnableKeyword("HITEFFECT_ON");
-                GetComponent<SpriteRenderer>().material.SetColor("_HitEffectColor",new Color(1,0.6f,0,1));
-                GetComponent<SpriteRenderer>().material.SetFloat("_HitEffectGlow",1.5f);
-                GetComponent<SpriteRenderer>().material.SetFloat("_HitEffectBlend",Mathf.Clamp((overheatTimer/overheatTimerMax)*0.3f,0,0.3f));
+                if(GameRules.instance.overheatShaderIdentif){
+                    GetComponent<SpriteRenderer>().material.EnableKeyword("HITEFFECT_ON");
+                    GetComponent<SpriteRenderer>().material.SetColor("_HitEffectColor",new Color(1,0.6f,0,1));
+                    GetComponent<SpriteRenderer>().material.SetFloat("_HitEffectGlow",1.5f);
+                    GetComponent<SpriteRenderer>().material.SetFloat("_HitEffectBlend",Mathf.Clamp((overheatTimer/overheatTimerMax)*0.3f,0,0.3f));
+                }
                 if(overheatCdTimer>0)overheatCdTimer-=Time.deltaTime;
                 if(overheatCdTimer<=0&&overheatTimer>0)overheatTimer-=Time.deltaTime*2;
                 if(overheatTimer>=overheatTimerMax&&overheatTimerMax!=-4&&overheated!=true){

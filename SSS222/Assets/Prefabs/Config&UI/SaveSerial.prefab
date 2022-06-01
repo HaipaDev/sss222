@@ -46,9 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filenameLogin: hyperGamerLogin
   filename: playerData
-  statsFilename: statsData
+  filenameStats: statsData
   filenameAdventure: adventureData
-  filenameSettings: gameSettings.cfg
+  filenameSettings: gameSettings
   maxRegisteredHyperGamers: 3
   hyperGamerLoginData:
     registeredCount: 0
@@ -56,8 +56,7 @@ MonoBehaviour:
     username: 
     password: 
   playerData:
-    buildVersion: 2
-    highscore: 
+    highscore: 00000000000000000000000000000000
     skinName: def
     overlayColor:
     - 0
@@ -68,8 +67,12 @@ MonoBehaviour:
     deathFxName: def
     musicName: findYou
     achievsCompleted: []
+  buildFirstLoaded: 0
+  buildLastLoaded: 0
   statsData:
     statsGamemodesList: []
+    sandboxTime: 0
+    uniquePowerups: []
   advD:
     coins: 0
     cores: 0
@@ -105,10 +108,10 @@ MonoBehaviour:
     allowSelectingEmptySlots: 1
     allowScrollingEmptySlots: 0
     autosubmitScores: 1
-    masterVolume: 0
-    soundVolume: -5
-    ambienceVolume: -20
-    musicVolume: -25
+    masterVolume: 0.95
+    soundVolume: 0.95
+    ambienceVolume: 0.55
+    musicVolume: 0.66
     windDownMusic: 1
     playfieldRot: 0
     quality: 4

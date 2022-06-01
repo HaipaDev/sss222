@@ -28,6 +28,7 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
         }
         catch(System.Exception e){
             Debug.LogError(e);
+            GameSession.instance.steamAchievsStatsLeaderboards=false;
             // Something went wrong - it's one of these:
             //
             //     Steam is closed?

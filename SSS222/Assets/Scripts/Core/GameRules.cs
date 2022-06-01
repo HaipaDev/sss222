@@ -73,6 +73,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool bulletResize;
     public int bflameDmgTillLvl=1;
     public bool overheatOnPlayer=true;
+    public bool overheatShaderIdentif=true;
     public float overheatTimerMax = 8.66f;
     public float overheatCooldown = 0.65f;
     public float overheatedTime=3;

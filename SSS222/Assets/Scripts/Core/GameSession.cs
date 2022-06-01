@@ -54,6 +54,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public float horizCameraSize=3.92f;
     [Header("Other")]
     public string gameVersion;
+	public float buildVersion;
     [SerializeField][ReadOnly] string _tempSandboxSaveName;
     public bool isSteam=true;
     public bool steamAchievsStatsLeaderboards=true;
@@ -84,7 +85,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     }
     void SetUpSingleton(){if(GameSession.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
     void Start(){
-        Array.Clear(SaveSerial.instance.playerData.highscore,0,SaveSerial.instance.playerData.highscore.Length);
         if(SceneManager.GetActiveScene().name=="Game"){ReAddSpawnReqsMono();}
         else if(SceneManager.GetActiveScene().name!="Game"){RemoveSpawnReqsMono();}
 

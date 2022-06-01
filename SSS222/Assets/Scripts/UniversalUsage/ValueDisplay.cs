@@ -99,10 +99,10 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="joystickType"){_txt=ss.joystickType.ToString();}
             else if(value=="joystickSize"){_txt=System.Math.Round(ss.joystickSize,2).ToString();}
             else if(value=="loginUsername"){if(Login.developerNicknames.Contains(sh.username)){_txt="<color="+Login.developerNicknameColor+">"+sh.username+"</color>";}else{_txt=sh.username;}}
-            else if(value=="masterVolume"){var _vol=Mathf.Clamp((float)Math.Round(GameAssets.Normalize(ss.masterVolume,-50,0),2),0,2);_txt=_vol.ToString();}
-            else if(value=="soundVolume"){var _vol=Mathf.Clamp((float)Math.Round(GameAssets.Normalize(ss.soundVolume,-50,0),2),0,2);_txt=_vol.ToString();}
-            else if(value=="ambienceVolume"){var _vol=Mathf.Clamp((float)Math.Round(GameAssets.Normalize(ss.ambienceVolume,-50,0),2),0,2);_txt=_vol.ToString();}
-            else if(value=="musicVolume"){var _vol=Mathf.Clamp((float)Math.Round(GameAssets.Normalize(ss.musicVolume,-50,0),2),0,2);_txt=_vol.ToString();}
+            else if(value=="masterVolume"){_txt=ss.masterVolume.ToString();}
+            else if(value=="soundVolume"){_txt=ss.soundVolume.ToString();}
+            else if(value=="ambienceVolume"){_txt=ss.ambienceVolume.ToString();}
+            else if(value=="musicVolume"){_txt=ss.musicVolume.ToString();}
         }
     #endregion
     #region//DBAccess
