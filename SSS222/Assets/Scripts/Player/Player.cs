@@ -331,8 +331,9 @@ public class Player : MonoBehaviour{    public static Player instance;
             if(moving){spawnReqsMono.AddMovingTime(Time.deltaTime);GameSession.instance.movingTimeXP+=Time.deltaTime;//timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;
                 if(_hasStatus("fuel")){
                     if(fuelDrainTimer<=0){
-                        if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(fuelDrainAmnt*GetStatus("fuel").strength,false);}
-                        else if(fuelDrainTimer!=-4&&energy<=0){Damage(fuelDrainAmnt*GetStatus("fuel").strength);}
+                        var _drain=fuelDrainAmnt*GetStatus("fuel").strength;
+                        if(fuelDrainTimer!=-4&&energy>0){AddSubEnergy(_drain,false);}
+                        else if(fuelDrainTimer!=-4&&energy<=0){GetComponent<PlayerCollider>().SetLastHit("Fuel",_drain);Damage(_drain);}
                         fuelDrainTimer=fuelDrainFreq;
                     }else{fuelDrainTimer-=Time.deltaTime;}
                 }
@@ -1118,19 +1119,25 @@ public class Player : MonoBehaviour{    public static Player instance;
     }}
     
     public void OnFire(float duration,float strength=1){
+        //if(!_hasStatus("onfire"))StartCoroutine(OnFireI());
         SetStatus("onfire",duration,strength);
         StartCoroutine(OnFireI());
     }
     IEnumerator OnFireI(){while(_hasStatus("onfire")){
-        Damage(onfireDmg*GetStatus("onfire").strength,dmgType.flame);
+        var dmg=onfireDmg*GetStatus("onfire").strength;
+        GetComponent<PlayerCollider>().SetLastHit("Fire",dmg);
+        Damage(dmg,dmgType.flame);
         yield return new WaitForSeconds(onfireTickrate);
     }yield break;}
     public void Decay(float duration,float strength=1){
+        //if(!_hasStatus("decay"))StartCoroutine(DecayI());
         SetStatus("decay",duration,strength);
         StartCoroutine(DecayI());
     }
     IEnumerator DecayI(){while(_hasStatus("decay")){
-        Damage(decayDmg*GetStatus("decay").strength,dmgType.decay);
+        var dmg=decayDmg*GetStatus("decay").strength;
+        GetComponent<PlayerCollider>().SetLastHit("Decay",dmg);
+        Damage(dmg,dmgType.decay);
         yield return new WaitForSeconds(decayTickrate);
     }yield break;}
     public void Electrc(float duration){

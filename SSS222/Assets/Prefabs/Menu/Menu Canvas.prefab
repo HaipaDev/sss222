@@ -2389,7 +2389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b49163d5326f942bba584de186f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: buildVersion
+  value: buildVersion-Menu
   onlyOnEnable: 0
   onValidate: 1
 --- !u!1 &2191775207231182309
@@ -6392,6 +6392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   socialsButton: {fileID: 2991759886001903100}
+  shipUI: {fileID: 4452029644203034926}
 --- !u!1 &7332801927278242730
 GameObject:
   m_ObjectHideFlags: 0
@@ -6476,11 +6477,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4274158129543489597}
     m_Modifications:
-    - target: {fileID: 4592694107940938764, guid: 33b13d5c324265444a994a7b4c39d52c,
-        type: 3}
-      propertyPath: overlayObj
-      value: 
-      objectReference: {fileID: 2937026654512202030}
     - target: {fileID: 4637613446949488407, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_Pivot.x
@@ -6549,17 +6545,17 @@ PrefabInstance:
     - target: {fileID: 4637613446949488407, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4637613446949488407, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4637613446949488407, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4637613446949488407, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
@@ -6596,6 +6592,11 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 2877570869355007850}
+    - target: {fileID: 5761278737977677134, guid: 33b13d5c324265444a994a7b4c39d52c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6341857257389886020}
     - target: {fileID: 8372861476689930743, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_Name
@@ -6603,19 +6604,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8685612909260543129, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
-      propertyPath: spacingY
-      value: -400
-      objectReference: {fileID: 0}
-    - target: {fileID: 8685612909260543129, guid: 33b13d5c324265444a994a7b4c39d52c,
-        type: 3}
       propertyPath: buttonsList
       value: 
       objectReference: {fileID: 5810708904779283751}
-    - target: {fileID: 8685612909260543129, guid: 33b13d5c324265444a994a7b4c39d52c,
-        type: 3}
-      propertyPath: speedFollowButton
-      value: 1000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33b13d5c324265444a994a7b4c39d52c, type: 3}
 --- !u!224 &695441803194869710 stripped
@@ -6624,9 +6615,9 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5330758348597682393}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2937026654512202030 stripped
+--- !u!1 &4452029644203034926 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 7005562899587473911, guid: 33b13d5c324265444a994a7b4c39d52c,
+  m_CorrespondingSourceObject: {fileID: 8372861476689930743, guid: 33b13d5c324265444a994a7b4c39d52c,
     type: 3}
   m_PrefabInstance: {fileID: 5330758348597682393}
   m_PrefabAsset: {fileID: 0}

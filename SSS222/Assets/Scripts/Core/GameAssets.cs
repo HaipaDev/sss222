@@ -302,43 +302,45 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 
 #region//Public functions
 	public void TransformIntoUIParticle(GameObject go,float mult=0,float dur=-4,bool multShape=false){
-		var ps=go.GetComponent<ParticleSystem>();var psMain=ps.main;
-		if(mult==0){
-			if(ps.startSize<=1){mult=100;}
-			if(ps.startSize<=10&&ps.startSize>1){mult=10;}
-		}
-		if(dur>0){Destroy(go,dur);}
-		else if(dur==0){Destroy(go,psMain.startLifetime.constantMax+psMain.duration);}
-		else if(dur==-1){Destroy(go,psMain.startLifetime.constantMax+psMain.duration*2);}
-		var startSize=psMain.startSize;
-		var sizeMin=startSize.constantMin;var sizeMax=startSize.constantMax;if(sizeMin==0){sizeMin=sizeMax;}
-		var startSpeed=psMain.startSpeed;
-		var speedMin=startSpeed.constantMin;var speedMax=startSpeed.constantMax;if(speedMin==0){speedMin=speedMax;}
-		var startColor=new ParticleSystem.MinMaxGradient(psMain.startColor.colorMin,psMain.startColor.colorMax);
-		var _color=startColor.colorMin;if(startColor.colorMin.r<0){_color=startColor.colorMax;}
-		if(_color==Color.clear){_color=Color.white;}
-		//psMain.startColor=new ParticleSystem.MinMaxGradient(_color,psMain.startColor.colorMax);
-		var colorBySpeed=ps.colorBySpeed;
-		var colorMin=colorBySpeed.range.x;var colorMax=colorBySpeed.range.y;
-		psMain.startSize=new ParticleSystem.MinMaxCurve(sizeMin*mult, sizeMax*mult);
-		psMain.startSpeed=new ParticleSystem.MinMaxCurve(speedMin*mult, speedMax*mult);
-		//colorBySpeed.range=new Vector2(colorMin*mult, colorMax*mult);
-		//colorBySpeed.range=new Vector2(colorMin*30, colorMax*30);
-		var psShape=ps.shape;if(multShape){psShape.scale*=mult;}
+		if(go.GetComponent<UnityEngine.UI.Extensions.UIParticleSystem>()==null){
+			var ps=go.GetComponent<ParticleSystem>();var psMain=ps.main;
+			if(mult==0){
+				if(ps.startSize<=1){mult=100;}
+				if(ps.startSize<=10&&ps.startSize>1){mult=10;}
+			}
+			if(dur>0){Destroy(go,dur);}
+			else if(dur==0){Destroy(go,psMain.startLifetime.constantMax+psMain.duration);}
+			else if(dur==-1){Destroy(go,psMain.startLifetime.constantMax+psMain.duration*2);}
+			var startSize=psMain.startSize;
+			var sizeMin=startSize.constantMin;var sizeMax=startSize.constantMax;if(sizeMin==0){sizeMin=sizeMax;}
+			var startSpeed=psMain.startSpeed;
+			var speedMin=startSpeed.constantMin;var speedMax=startSpeed.constantMax;if(speedMin==0){speedMin=speedMax;}
+			var startColor=new ParticleSystem.MinMaxGradient(psMain.startColor.colorMin,psMain.startColor.colorMax);
+			var _color=startColor.colorMin;if(startColor.colorMin.r<0){_color=startColor.colorMax;}
+			if(_color==Color.clear){_color=Color.white;}
+			//psMain.startColor=new ParticleSystem.MinMaxGradient(_color,psMain.startColor.colorMax);
+			var colorBySpeed=ps.colorBySpeed;
+			var colorMin=colorBySpeed.range.x;var colorMax=colorBySpeed.range.y;
+			psMain.startSize=new ParticleSystem.MinMaxCurve(sizeMin*mult, sizeMax*mult);
+			psMain.startSpeed=new ParticleSystem.MinMaxCurve(speedMin*mult, speedMax*mult);
+			//colorBySpeed.range=new Vector2(colorMin*mult, colorMax*mult);
+			//colorBySpeed.range=new Vector2(colorMin*30, colorMax*30);
+			var psShape=ps.shape;if(multShape){psShape.scale*=mult;}
 
-		var psUI=go.AddComponent<UnityEngine.UI.Extensions.UIParticleSystem>();
-		var _tex=ps.GetComponent<Renderer>().material.GetTexture("_MainTex");
-		Material mat=new Material(Shader.Find("UI Extensions/Particles/Additive"));
-		/*Debug.Log(go.name+" | ColorMin: "+startColor.colorMin);
-		Debug.Log(go.name+" | ColorMax: "+startColor.colorMax);
-		float H,S,V;Color.RGBToHSV(_color,out H,out S,out V);
-		Debug.Log(go.name+" | _color: "+_color + " | HSV("+H+", "+S+", "+V+")");*/
-		if(_isColorDark(_color)){
-			//Debug.Log(go.name+" - IsDark");
-			mat=new Material(Shader.Find("UI Extensions/Particles/Alpha Blended"));
+			var psUI=go.AddComponent<UnityEngine.UI.Extensions.UIParticleSystem>();
+			var _tex=ps.GetComponent<Renderer>().material.GetTexture("_MainTex");
+			Material mat=new Material(Shader.Find("UI Extensions/Particles/Additive"));
+			/*Debug.Log(go.name+" | ColorMin: "+startColor.colorMin);
+			Debug.Log(go.name+" | ColorMax: "+startColor.colorMax);
+			float H,S,V;Color.RGBToHSV(_color,out H,out S,out V);
+			Debug.Log(go.name+" | _color: "+_color + " | HSV("+H+", "+S+", "+V+")");*/
+			if(_isColorDark(_color)){
+				//Debug.Log(go.name+" - IsDark");
+				mat=new Material(Shader.Find("UI Extensions/Particles/Alpha Blended"));
+			}
+			mat.SetTexture("_MainTex",_tex);
+			psUI.material=mat;
 		}
-		mat.SetTexture("_MainTex",_tex);
-		psUI.material=mat;
 	}
 	public static bool _isColorDark(Color color){bool b=false;float H,S,V;Color.RGBToHSV(color,out H,out S,out V);if(V<=0.3f){b=true;}return b;}
 	public void MakeParticleLooping(ParticleSystem ps){var psMain=ps.main;psMain.loop=true;psMain.stopAction=ParticleSystemStopAction.None;}

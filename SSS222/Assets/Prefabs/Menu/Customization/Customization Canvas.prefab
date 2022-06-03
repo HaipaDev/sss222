@@ -4456,7 +4456,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5386444580151253561}
   m_HandleRect: {fileID: 3097217383425078076}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -8278,8 +8278,19 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -500
       objectReference: {fileID: 0}
+    - target: {fileID: 8514882747794380144, guid: ef0827cb3a620194996d9ab0eca22edf,
+        type: 3}
+      propertyPath: trailObj
+      value: 
+      objectReference: {fileID: 3459126938983746818}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef0827cb3a620194996d9ab0eca22edf, type: 3}
+--- !u!1 &3459126938983746818 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3349050048016306589, guid: ef0827cb3a620194996d9ab0eca22edf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2196488717505928351}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8468487310469192669 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7781484095966758722, guid: ef0827cb3a620194996d9ab0eca22edf,

@@ -28,8 +28,10 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="coins") _txt=gs.coins.ToString();
             else if(value=="cores") _txt=gs.cores.ToString();
             else if(value.Contains("highscore")) _txt=gs.GetHighscoreCurrent().ToString();
-            else if(value=="gameSpeed") _txt="v"+gs.gameSpeed;
+            else if(value=="gameSpeed") _txt=gs.gameSpeed.ToString();
             else if(value=="gameVersion") _txt=gs.gameVersion;
+            else if(value=="buildVersion") _txt=gs.buildVersion.ToString();
+            else if(value=="buildVersion-Menu") _txt="build "+gs.buildVersion.ToString();
             else if(value=="timePlayed") _txt=gs.GetGameSessionTimeFormat();
             else if(value=="scoreMulti") _txt=gs.scoreMulti.ToString();
             else if(value=="luck") _txt=gs.luckMulti.ToString();

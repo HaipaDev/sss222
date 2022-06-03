@@ -42,6 +42,10 @@ public class ShipUI : MonoBehaviour{
                 }
             }
         }
+        if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().trailObj!=null){
+            GameAssets.instance.TransformIntoUIParticle(GetComponent<TrailVFX>().trailObj);
+            GetComponent<TrailVFX>().trailObj.transform.localPosition=GetComponent<TrailVFX>().offset*-200;
+        }}
     }
     bool _mousePressedInBound=false;
     void MousePressedInBounds(){
@@ -53,12 +57,15 @@ public class ShipUI : MonoBehaviour{
     IEnumerator FlaresPreviewI(){
         if(flaresParent.childCount==0&&ShipCustomizationManager.instance!=null){
             var ps=ShipCustomizationManager.instance.GetFlareVFX().GetComponent<ParticleSystem>();var psMain=ps.main;var dur=psMain.duration;
-            var flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);
-                GameAssets.instance.TransformIntoUIParticle(flareObj,0,-1);flareObj.transform.localPosition=new Vector2(-44f,6f);
-            flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);
-                GameAssets.instance.TransformIntoUIParticle(flareObj,0,-1);flareObj.transform.localPosition=new Vector2(44f,6f);
+            MakeFlares();
             yield return new WaitForSeconds(psMain.startLifetime.constantMax+psMain.duration*2);
             if(flaresPreview)StartCoroutine(FlaresPreviewI());
         }else{yield return null;}
+    }
+    public void MakeFlares(){
+        var flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);
+            GameAssets.instance.TransformIntoUIParticle(flareObj,0,-1);flareObj.transform.localPosition=new Vector2(-44f,6f);
+        flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);
+            GameAssets.instance.TransformIntoUIParticle(flareObj,0,-1);flareObj.transform.localPosition=new Vector2(44f,6f);
     }
 }

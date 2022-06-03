@@ -276,4 +276,5 @@ public class PlayerCollider : MonoBehaviour{
    public float _LastHp(){return lastHp;}
    public float _LastHitDmg(){return lastHitDmg;}
    public bool _LastHitPhasing(){return lastHitPhasing;}
+   public void SetLastHit(string name,float dmg, bool phasing=false){lastHp=player.health;lastHitName=name;lastHitDmg=dmg;lastHitPhasing=phasing;}
 }
