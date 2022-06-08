@@ -27,7 +27,7 @@ public class Login : MonoBehaviour{
     //public static bool _isDeveloperNick(string str){foreach(string dn in developerNicknames){return str.IndexOf(dn, StringComparison.OrdinalIgnoreCase) >= 0;}return false;}
     public static bool _isDeveloperNick(string str){foreach(string dn in developerNicknames){return GameAssets.CaseInsStrCmpr(str,dn);}return false;}
     void Start(){
-        if(!String.IsNullOrEmpty(SaveSerial.instance.hyperGamerLoginData.username))username.text=SaveSerial.instance.hyperGamerLoginData.username;
+        username.text=SaveSerial.instance.hyperGamerLoginData.username;
     }
     void Update(){
         if(SaveSerial.instance.hyperGamerLoginData.loggedIn){if(!logOutPanel.activeSelf){logOutPanel.SetActive(true);bothPanel.SetActive(false);}}

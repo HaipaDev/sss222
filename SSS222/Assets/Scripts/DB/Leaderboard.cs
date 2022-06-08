@@ -6,26 +6,41 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Steamworks;
+using Steamworks.Data;
 
 public class Leaderboard : MonoBehaviour{
-    [SerializeField] DisplayLeaderboard currentUserScore;
-    [SerializeField] GameObject container;
-    [SerializeField] int containerChildCount;
-    [AssetsOnly][SerializeField] GameObject leaderboardElement1;
-    [AssetsOnly][SerializeField] GameObject leaderboardElement2;
-    [SerializeReference] List<Model_Score> result;
-    [SerializeReference] List<Model_Score> resultSorted;
+    [Header("Prefabs")]
+    [AssetsOnly][SerializeField] GameObject lbElement1;
+    [AssetsOnly][SerializeField] GameObject lbElement2;
+    [AssetsOnly][SerializeField] GameObject gameModeListElementPrefab;
+
+    [Header("Containers and CurrentUserScores")]
+    [SerializeField] RectTransform hgCont;
+    [SerializeField] RectTransform steamGlobalCont;
+    [SerializeField] RectTransform steamFriendsCont;
+    [SceneObjectsOnly][SerializeField] DisplayLeaderboard currentUserScore;
+    [SceneObjectsOnly][SerializeField] DisplayLeaderboard currentUserScoreSteamGlobal;
+    [SceneObjectsOnly][SerializeField] DisplayLeaderboard currentUserScoreSteamFriends;
+
+    [Header("Panels")]
     [SceneObjectsOnly][SerializeField] GameObject mainPanel;
+    [SceneObjectsOnly][SerializeField] GameObject steamGlobalPanel;
+    [SceneObjectsOnly][SerializeField] GameObject hyperGamersPanel;
+    [SceneObjectsOnly][SerializeField] GameObject steamFriendsPanel;
     [SceneObjectsOnly][SerializeField] GameObject gameModesPanel;
     [SceneObjectsOnly][SerializeField] Transform gameModesListTransform;
-    [AssetsOnly][SerializeField] GameObject gameModeListElementPrefab;
+
     void Start(){
         ClearLeaderboards();
         DisplayLeaderboards();
         OpenMainPanel();
         SetGameModesButtons();
+        if(!GameSession.instance.steamAchievsStatsLeaderboards){Destroy(steamGlobalPanel);Destroy(steamFriendsPanel);}
     }
-    void Update(){if(Input.GetKeyDown(KeyCode.Escape)){Back();}}
+    void Update(){
+        if(Input.GetKeyDown(KeyCode.Escape)){Back();}
+    }
     public void OpenMainPanel(){CloseAllPanels();mainPanel.SetActive(true);}
     public void OpenGameModesPanel(){CloseAllPanels();gameModesPanel.SetActive(true);}
     public void Back(){if(gameModesPanel.activeSelf){OpenMainPanel();}else{GSceneManager.instance.LoadSocialsScene();}}
@@ -34,40 +49,90 @@ public class Leaderboard : MonoBehaviour{
         gameModesPanel.SetActive(false);
     }
     public void ClearLeaderboards(){
-        for(var i=0;i<container.transform.childCount;i++){Destroy(container.transform.GetChild(i).gameObject);}
+        for(var i=0;i<hgCont.childCount;i++){Destroy(hgCont.GetChild(i).gameObject);}
+        for(var i=0;i<steamGlobalCont.childCount;i++){Destroy(steamGlobalCont.GetChild(i).gameObject);}
+        for(var i=0;i<steamFriendsCont.childCount;i++){Destroy(steamFriendsCont.GetChild(i).gameObject);}
     }
     public async void DisplayLeaderboards(){
-        var task=DBAccess.instance.GetScoresFromDB();
-        result=await task;
+        var hgScores=await DBAccess.instance.GetScoresFromDB();
+        var hgScoresSorted=hgScores.OrderByDescending(e=>e.score).ToList();
 
-        resultSorted=result;
-        resultSorted=resultSorted.OrderByDescending(e=>e.score).ToList();
-
-        if(container!=null)if(container.transform.childCount>0){containerChildCount=container.transform.childCount;}
-
-        if(resultSorted.Count>0){
-            if(containerChildCount>0){
-                containerChildCount=container.transform.childCount;
-                for(var i=0;i<containerChildCount;i++){
-                    var go=container.transform.GetChild(i);
+        if(hgScoresSorted.Count>0){
+            if(hgCont.childCount>0){
+                for(var i=0;i<hgCont.childCount;i++){
+                    var go=hgCont.GetChild(i);
                     go.GetComponent<DisplayLeaderboard>().rank=i+1;
-                    go.GetComponent<DisplayLeaderboard>().username=resultSorted[i].name;
-                    go.GetComponent<DisplayLeaderboard>().score=resultSorted[i].score;
+                    go.GetComponent<DisplayLeaderboard>().username=hgScoresSorted[i].name;
+                    go.GetComponent<DisplayLeaderboard>().score=hgScoresSorted[i].score;
                 }
             }
-            for(var i=containerChildCount;i<resultSorted.Count;i++){
-                var element=leaderboardElement2;
-                if(i==0){element=leaderboardElement1;}
-                GameObject go=Instantiate(element,container.transform);
+            for(var i=hgCont.childCount;i<hgScoresSorted.Count;i++){
+                var element=lbElement2;
+                if(i==0)element=lbElement1;
+                if(hgScoresSorted[i].name==SaveSerial.instance.hyperGamerLoginData.username&&SaveSerial.instance.hyperGamerLoginData.loggedIn){element=lbElement1;element.GetComponent<UnityEngine.UI.Image>().color=currentUserScore.GetComponent<UnityEngine.UI.Image>().color;}
+                GameObject go=Instantiate(element,hgCont);
                 string[]name=go.name.Split('_');
-                go.name=name[0]+"_0"+(i+1);
+                go.name=name[0]+"_"+(i+1);
                 go.GetComponent<DisplayLeaderboard>().rank=i+1;
-                go.GetComponent<DisplayLeaderboard>().username=resultSorted[i].name;
-                go.GetComponent<DisplayLeaderboard>().score=resultSorted[i].score;
+                go.GetComponent<DisplayLeaderboard>().username=hgScoresSorted[i].name;
+                go.GetComponent<DisplayLeaderboard>().score=hgScoresSorted[i].score;
             }
         }
-        
         if(currentUserScore!=null){currentUserScore.DisplayCurrentUserHighscore();}
+
+        //Steam Leaderboards
+        if(GameSession.instance.steamAchievsStatsLeaderboards){
+            Steamworks.Data.Leaderboard? lb = await SteamUserStats.FindLeaderboardAsync(GameSession.instance.GetCurrentGamemodeName());
+            if(lb.HasValue){
+                var globalScores = await lb.Value.GetScoresAsync(100);
+                if(globalScores.Length>0){
+                    if(steamGlobalCont.childCount>0){
+                        for(var i=0;i<steamGlobalCont.childCount;i++){
+                            var go=steamGlobalCont.GetChild(i);
+                            go.GetComponent<DisplayLeaderboard>().rank=i+1;
+                            go.GetComponent<DisplayLeaderboard>().username=globalScores[i].User.Name;
+                            go.GetComponent<DisplayLeaderboard>().score=globalScores[i].Score;
+                        }
+                    }
+                    for(var i=steamGlobalCont.childCount;i<globalScores.Length;i++){
+                        var element=lbElement2;
+                        if(i==0)element=lbElement1;
+                        if(globalScores[i].User.Name==SteamClient.Name){element=lbElement1;element.GetComponent<UnityEngine.UI.Image>().color=currentUserScore.GetComponent<UnityEngine.UI.Image>().color;}
+                        GameObject go=Instantiate(element,steamGlobalCont);
+                        string[]name=go.name.Split('_');
+                        go.name=name[0]+"_"+(i+1);
+                        go.GetComponent<DisplayLeaderboard>().rank=i+1;
+                        go.GetComponent<DisplayLeaderboard>().username=globalScores[i].User.Name;
+                        go.GetComponent<DisplayLeaderboard>().score=globalScores[i].Score;
+                    }
+                }
+                if(currentUserScoreSteamGlobal!=null){currentUserScoreSteamGlobal.DisplayCurrentUserHighscoreSteam();}
+
+                var friendsScores = await lb.Value.GetScoresFromFriendsAsync();
+                if(friendsScores.Length>0){
+                    if(steamFriendsCont.childCount>0){
+                        for(var i=0;i<steamFriendsCont.childCount;i++){
+                            var go=steamFriendsCont.GetChild(i);
+                            go.GetComponent<DisplayLeaderboard>().rank=i+1;
+                            go.GetComponent<DisplayLeaderboard>().username=friendsScores[i].User.Name;
+                            go.GetComponent<DisplayLeaderboard>().score=friendsScores[i].Score;
+                        }
+                    }
+                    for(var i=steamFriendsCont.childCount;i<friendsScores.Length;i++){
+                        var element=lbElement2;
+                        if(i==0)element=lbElement1;
+                        if(friendsScores[i].User.Name==SteamClient.Name){element=lbElement1;element.GetComponent<UnityEngine.UI.Image>().color=currentUserScore.GetComponent<UnityEngine.UI.Image>().color;}
+                        GameObject go=Instantiate(element,steamFriendsCont);
+                        string[]name=go.name.Split('_');
+                        go.name=name[0]+"_"+(i+1);
+                        go.GetComponent<DisplayLeaderboard>().rank=i+1;
+                        go.GetComponent<DisplayLeaderboard>().username=friendsScores[i].User.Name;
+                        go.GetComponent<DisplayLeaderboard>().score=friendsScores[i].Score;
+                    }
+                }
+                if(currentUserScoreSteamFriends!=null){currentUserScoreSteamFriends.DisplayCurrentUserHighscoreSteam(true);}
+            }
+        }
     }
     void SetGameModesButtons(){
         foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){
@@ -80,7 +145,7 @@ public class Leaderboard : MonoBehaviour{
             go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr.cfgDesc;
             if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
             if(gr.cfgIconsGo!=null){Instantiate(gr.cfgIconsGo,go.transform.GetChild(1));}
-            else{go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.SprAny(gr.cfgIconAssetName);}
+            else{go.transform.GetChild(1).gameObject.AddComponent<UnityEngine.UI.Image>().sprite=GameAssets.instance.SprAny(gr.cfgIconAssetName);}
         }
     }
     public void SetGamemode(string name){

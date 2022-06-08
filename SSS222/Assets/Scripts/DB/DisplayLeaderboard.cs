@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Steamworks;
+using Steamworks.Data;
 
 public class DisplayLeaderboard : MonoBehaviour{
     public bool currentUser;
@@ -17,7 +19,7 @@ public class DisplayLeaderboard : MonoBehaviour{
     void Start(){
         txtRank=transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         txtScore=transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        DisplayCurrentUserHighscore();
+        if(currentUser)DisplayCurrentUserHighscore();
     }
     void Update(){
         txtRank.text="#"+rank.ToString();
@@ -34,30 +36,47 @@ public class DisplayLeaderboard : MonoBehaviour{
         }
     }
     public async void DisplayCurrentUserHighscore(){
-    if(currentUser){
-        int currentUserRank=0;
-        string currentUserName="";
-        int currentUserScore=0;
-        if(SaveSerial.instance.hyperGamerLoginData.loggedIn){
-            var task=FindObjectOfType<DBAccess>().GetScoresFromDB();
-            var resultSorted=await task;
-            resultSorted=resultSorted.OrderByDescending(e=>e.score).ToList();
-            
-            for(var i=0;i<resultSorted.Count;i++){if(resultSorted[i].name==SaveSerial.instance.hyperGamerLoginData.username){
-                currentUserRank=i;currentUserName=SaveSerial.instance.hyperGamerLoginData.username;currentUserScore=resultSorted[i].score;}}
-            if(currentUserScore>0){
-                rank=currentUserRank+1;
+        if(currentUser){
+            int currentUserRank=0;
+            int currentUserScore=0;
+            if(SaveSerial.instance.hyperGamerLoginData.loggedIn){
+                var result=await DBAccess.instance.GetScoresFromDB();
+                var resultSorted=result.OrderByDescending(e=>e.score).ToList();
+                
+                for(var i=0;i<resultSorted.Count;i++){if(resultSorted[i].name==SaveSerial.instance.hyperGamerLoginData.username){
+                    currentUserRank=i;currentUserScore=resultSorted[i].score;}}
+                if(currentUserScore>0){
+                    rank=currentUserRank+1;
+                }else{rank=0;}
+
+                username=SaveSerial.instance.hyperGamerLoginData.username;
+                score=currentUserScore;
             }else{
                 rank=0;
-                currentUserName=SaveSerial.instance.hyperGamerLoginData.username;
+                username="Not logged in";
+                score=currentUserScore;
             }
-            username=currentUserName;
-            score=currentUserScore;
-        }else{
-            rank=0;
-            username="Not logged in";
-            score=currentUserScore;
         }
     }
+    public async void DisplayCurrentUserHighscoreSteam(bool friends=false){
+        if(currentUser){
+            int currentUserRank=0;
+            int currentUserScore=0;
+
+            Steamworks.Data.Leaderboard? leaderboard = await SteamUserStats.FindLeaderboardAsync(GameSession.instance.GetCurrentGamemodeName());
+            if(leaderboard.HasValue){
+                LeaderboardEntry[] scores=await leaderboard.Value.GetScoresAsync(100);
+                if(friends){scores=await leaderboard.Value.GetScoresFromFriendsAsync();}
+                if(scores.Length>0){
+                    for(var i=0;i<scores.Length;i++){if(scores[i].User.Name==SteamClient.Name){
+                        currentUserRank=i;currentUserScore=scores[i].Score;}}
+                    if(currentUserScore>0){
+                        rank=currentUserRank+1;
+                    }
+                }else{rank=0;}
+                username=SteamClient.Name;
+                score=currentUserScore;
+            }
+        }
     }
 }

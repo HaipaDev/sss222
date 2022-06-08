@@ -1127,7 +1127,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         var dmg=onfireDmg*GetStatus("onfire").strength;
         GetComponent<PlayerCollider>().SetLastHit("Fire",dmg);
         Damage(dmg,dmgType.flame);
-        yield return new WaitForSeconds(onfireTickrate);
+        yield return new WaitForSeconds(onfireTickrate);///GetStatus("onfire").strength);
     }yield break;}
     public void Decay(float duration,float strength=1){
         //if(!_hasStatus("decay"))StartCoroutine(DecayI());
@@ -1138,7 +1138,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         var dmg=decayDmg*GetStatus("decay").strength;
         GetComponent<PlayerCollider>().SetLastHit("Decay",dmg);
         Damage(dmg,dmgType.decay);
-        yield return new WaitForSeconds(decayTickrate);
+        yield return new WaitForSeconds(decayTickrate);///GetStatus("decay").strength);
     }yield break;}
     public void Electrc(float duration){
         SetStatus("electrc",duration);

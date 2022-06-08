@@ -13,10 +13,12 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
     }
     void Start(){//IEnumerator Start(){
         //yield return new WaitForSeconds(0.1f);
+        if(Application.platform==RuntimePlatform.WindowsPlayer||Application.platform==RuntimePlatform.WindowsEditor){
         if(GameSession.instance!=null){if(GameSession.instance.isSteam){
             InitSteam();
             SteamUserStats.RequestCurrentStats();
         }}
+        }else{if(GameSession.instance!=null){GameSession.instance.isSteam=false;}}
     }
     void Update(){
         //SteamClient.RunCallbacks();
