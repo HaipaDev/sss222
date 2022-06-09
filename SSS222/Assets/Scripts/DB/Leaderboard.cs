@@ -13,6 +13,7 @@ public class Leaderboard : MonoBehaviour{
     [Header("Prefabs")]
     [AssetsOnly][SerializeField] GameObject lbElement1;
     [AssetsOnly][SerializeField] GameObject lbElement2;
+    [AssetsOnly][SerializeField] GameObject lbElement3;
     [AssetsOnly][SerializeField] GameObject gameModeListElementPrefab;
 
     [Header("Containers and CurrentUserScores")]
@@ -39,7 +40,7 @@ public class Leaderboard : MonoBehaviour{
         if(!GameSession.instance.steamAchievsStatsLeaderboards){Destroy(steamGlobalPanel);Destroy(steamFriendsPanel);}
     }
     void Update(){
-        if(Input.GetKeyDown(KeyCode.Escape)){Back();}
+        if(GSceneManager.EscPressed()){Back();}
     }
     public void OpenMainPanel(){CloseAllPanels();mainPanel.SetActive(true);}
     public void OpenGameModesPanel(){CloseAllPanels();gameModesPanel.SetActive(true);}
@@ -69,7 +70,7 @@ public class Leaderboard : MonoBehaviour{
             for(var i=hgCont.childCount;i<hgScoresSorted.Count;i++){
                 var element=lbElement2;
                 if(i==0)element=lbElement1;
-                if(hgScoresSorted[i].name==SaveSerial.instance.hyperGamerLoginData.username&&SaveSerial.instance.hyperGamerLoginData.loggedIn){element=lbElement1;element.GetComponent<UnityEngine.UI.Image>().color=currentUserScore.GetComponent<UnityEngine.UI.Image>().color;}
+                if(hgScoresSorted[i].name==SaveSerial.instance.hyperGamerLoginData.username&&SaveSerial.instance.hyperGamerLoginData.loggedIn&&(hgScoresSorted[i].name!=""&&SaveSerial.instance.hyperGamerLoginData.username!="")){element=lbElement3;}
                 GameObject go=Instantiate(element,hgCont);
                 string[]name=go.name.Split('_');
                 go.name=name[0]+"_"+(i+1);
@@ -97,7 +98,7 @@ public class Leaderboard : MonoBehaviour{
                     for(var i=steamGlobalCont.childCount;i<globalScores.Length;i++){
                         var element=lbElement2;
                         if(i==0)element=lbElement1;
-                        if(globalScores[i].User.Name==SteamClient.Name){element=lbElement1;element.GetComponent<UnityEngine.UI.Image>().color=currentUserScore.GetComponent<UnityEngine.UI.Image>().color;}
+                        if(globalScores[i].User.Name==SteamClient.Name&&(globalScores[i].User.Name!=""&&SteamClient.Name!="")){element=lbElement3;}
                         GameObject go=Instantiate(element,steamGlobalCont);
                         string[]name=go.name.Split('_');
                         go.name=name[0]+"_"+(i+1);
@@ -121,7 +122,7 @@ public class Leaderboard : MonoBehaviour{
                     for(var i=steamFriendsCont.childCount;i<friendsScores.Length;i++){
                         var element=lbElement2;
                         if(i==0)element=lbElement1;
-                        if(friendsScores[i].User.Name==SteamClient.Name){element=lbElement1;element.GetComponent<UnityEngine.UI.Image>().color=currentUserScore.GetComponent<UnityEngine.UI.Image>().color;}
+                        if(friendsScores[i].User.Name==SteamClient.Name&&(friendsScores[i].User.Name!=""&&SteamClient.Name!="")){element=lbElement3;}
                         GameObject go=Instantiate(element,steamFriendsCont);
                         string[]name=go.name.Split('_');
                         go.name=name[0]+"_"+(i+1);

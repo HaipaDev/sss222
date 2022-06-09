@@ -107,7 +107,10 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
 
         RefreshParticles();
 
-        if(Input.GetKeyDown(KeyCode.Escape)){if(variantsPanel.activeSelf){CloseVariants();}else{GSceneManager.instance.LoadStartMenu();}}
+        if(GSceneManager.EscPressed()){
+            if(variantsPanel.activeSelf){CloseVariants();}
+            else{GSceneManager.instance.LoadStartMenu();}
+        }
     }
 
     public void RecreateAllElements(){DeleteAllElements();CreateAllElements();HighlightSelectedElement();}

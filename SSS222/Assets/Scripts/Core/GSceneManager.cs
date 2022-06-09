@@ -120,26 +120,13 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameSession.instance.speedChanged=false;
         GameSession.instance.gameSpeed=1f;
     }
-    void CheckESC(){
-    if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Joystick1Button1)){
+    public static bool EscPressed(){return Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Joystick1Button1);}
+    void CheckESC(){    if(EscPressed()){
             var scene=SceneManager.GetActiveScene().name;
-            if(scene=="ChooseGameMode"||scene=="Credits"||scene=="Socials"){//||scene=="Customization){
-                LoadStartMenu();
-            }else if(scene=="Login"/*||scene=="Leaderboards"*/||scene=="Achievements"||scene=="StatsSocial"){
-                LoadSocialsScene();
-            }else if(scene=="InfoGameMode"||scene=="AdventureZones"){
-                LoadGameModeChooseScene();
-            }else if(scene=="ScoreSubmit"){
-                LoadGameModeInfoScene();
-            }else if(scene=="Options"){
-                if(FindObjectOfType<SettingsMenu>()!=null){
-                    if(FindObjectOfType<SettingsMenu>().transform.GetChild(1).gameObject.activeSelf==true){
-                        FindObjectOfType<SettingsMenu>().OpenSettings();
-                    }else{
-                        LoadStartMenu(); 
-                    }
-                }else Debug.LogError("No SettingsMenu");
-            }
+            if(scene=="ChooseGameMode"||scene=="Credits"||scene=="Socials"){LoadStartMenu();}
+            else if(scene=="Achievements"||scene=="StatsSocial"){LoadSocialsScene();}
+            else if(scene=="InfoGameMode"||scene=="AdventureZones"){LoadGameModeChooseScene();}
+            else if(scene=="ScoreSubmit"){LoadGameModeInfoScene();}
     }}
 
     /*void LoadLevel(string sceneName){

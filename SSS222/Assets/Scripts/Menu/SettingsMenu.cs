@@ -106,11 +106,18 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         if(settingsData.soundVolume<=-50){settingsData.soundVolume=-80;}
         if(settingsData.ambienceVolume<=-50){settingsData.ambienceVolume=-80;}
         if(settingsData.musicVolume<=-50){settingsData.musicVolume=-80;}
+
+        CheckESC();
     }
     public void SetPanelActive(int i){panelActive=i;foreach(GameObject p in panels){p.SetActive(false);}panels[panelActive].SetActive(true);}
     public void OpenSettings(){transform.GetChild(0).gameObject.SetActive(true);transform.GetChild(1).gameObject.SetActive(false);}
     public void OpenDeleteAll(){transform.GetChild(1).gameObject.SetActive(true);transform.GetChild(0).gameObject.SetActive(false);}
     public void Close(){transform.GetChild(0).gameObject.SetActive(false);transform.GetChild(1).gameObject.SetActive(false);}
+    void CheckESC(){    if(GSceneManager.EscPressed()){
+            if(transform.GetChild(1).gameObject.activeSelf){OpenSettings();return;}
+            else{GSceneManager.instance.LoadStartMenu();}
+        }
+    }
 
 
     #region//Game

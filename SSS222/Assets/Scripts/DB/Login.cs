@@ -43,7 +43,33 @@ public class Login : MonoBehaviour{
             passwordLoggedIn.contentType=TMP_InputField.ContentType.Password;passwordLoggedIn.ForceLabelUpdate();
             passwordNew.contentType=TMP_InputField.ContentType.Password;passwordNew.ForceLabelUpdate();
         }
+        
+        if(Input.GetKeyDown(KeyCode.Tab)){
+            if(username.isFocused){password.Select();return;}
+            else if(password.isFocused){username.Select();return;}
+            
+            if(passwordLoggedIn.isFocused){passwordNew.Select();return;}
+        }
+        if(Input.GetKeyDown("enter")||Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.KeypadEnter)){
+            //if(username.isFocused){password.Select();return;}
+            //else if(password.isFocused){Debug.Log("Pre");password.ActivateInputField();Debug.Log("Mid");password.Select();LogIn();Debug.Log("Post");return;}
+
+            //if(passwordLoggedIn.isFocused){passwordNew.Select();return;}
+            //else if(passwordNew.isFocused){passwordNew.ActivateInputField();passwordNew.Select();ChangePassHyperGamer();return;}
+
+            if(username.text!=""&&password.text!=""){LogIn();return;}
+            if(passwordLoggedIn.text!=""&&passwordNew.text!=""){ChangePassHyperGamer();return;}
+        }
+
+        if(GSceneManager.EscPressed()&&_inputsSelected){SelectVal(false);}
+        if(GSceneManager.EscPressed()&&!_inputsSelected){GSceneManager.instance.LoadSocialsScene();}
+        //if(GSceneManager.EscPressed()&&!InputsSelected()){GSceneManager.instance.LoadSocialsScene();}
     }
+    bool _inputsSelected;
+    public bool InputsSelected(){return username.isFocused||password.isFocused||passwordLoggedIn.isFocused||passwordNew.isFocused;}
+    public void SelectVal(bool val){if(val==true){_inputsSelected=true;}else{StartCoroutine(SelectValFalseI());}}
+    IEnumerator SelectValFalseI(){yield return new WaitForSecondsRealtime(0.02f);_inputsSelected=false;}
+
     public void Register(){
         if(username.text!=""&&password.text!=""){
             if(!_isDeveloperNick(username.text)||(_isDeveloperNick(username.text)&&password.text==gitignoreScript.developerPasswordHyperLogin)){
