@@ -20,6 +20,7 @@ public class DisplayLeaderboard : MonoBehaviour{
         txtRank=transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         txtScore=transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         if(currentUser)DisplayCurrentUserHighscore();
+        else{var bt=gameObject.AddComponent<Button>();bt.onClick.AddListener(()=>OpenScoreUsersData());}
     }
     void Update(){
         txtRank.text="#"+rank.ToString();
@@ -30,11 +31,14 @@ public class DisplayLeaderboard : MonoBehaviour{
         if(SceneManager.GetActiveScene().name!="ScoreSubmit"){
             if(SaveSerial.instance.hyperGamerLoginData.loggedIn){GSceneManager.instance.LoadScoreSubmitScene();}
             else{GSceneManager.instance.LoadLoginScene();}
-        }else{if(SaveSerial.instance.hyperGamerLoginData.loggedIn){GSceneManager.instance.LoadLeaderboardsScene();}
+        }else{if(SaveSerial.instance.hyperGamerLoginData.loggedIn){
+            if(score!=0){GameSession.instance.SetSelectedUsersDataName(SaveSerial.instance.hyperGamerLoginData.username);GSceneManager.instance.LoadScoreUsersDataScene();}
+            else{GSceneManager.instance.LoadLeaderboardsScene();}
+        }
             else{GSceneManager.instance.LoadLoginScene();}
-            
         }
     }
+    public void OpenScoreUsersData(){GameSession.instance.SetSelectedUsersDataName(username);GSceneManager.instance.LoadScoreUsersDataScene();}
     public async void DisplayCurrentUserHighscore(){
         if(currentUser){
             int currentUserRank=0;

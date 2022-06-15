@@ -2827,10 +2827,6 @@ MonoBehaviour:
   typeSelected: 0
   skinName: def
   overlayColor: {r: 1, g: 0, b: 0, a: 1}
-  overlayColorArr:
-  - 0
-  - 1
-  - 1
   trailName: def
   flaresName: def
   deathFxName: def
@@ -3455,10 +3451,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1110796801287457597, guid: 2187d17e87e167843a47ecaa776cb1b9,
-          type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SaveInventory
+      - m_Target: {fileID: 5594342582179611756}
+        m_TargetAssemblyTypeName: CustomizationInventory, Assembly-CSharp
+        m_MethodName: Back
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3467,20 +3462,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
-      - m_Target: {fileID: 7808446908510125222, guid: f0f9db98eefc6544cb033ccb81dab8ea,
-          type: 3}
-        m_TargetAssemblyTypeName: GSceneManager, Assembly-CSharp
-        m_MethodName: LoadStartMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!1 &3931574695443819041
 GameObject:
   m_ObjectHideFlags: 0
@@ -4456,7 +4438,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5386444580151253561}
   m_HandleRect: {fileID: 3097217383425078076}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -8186,7 +8168,7 @@ PrefabInstance:
     - target: {fileID: 6886882836849846690, guid: ef0827cb3a620194996d9ab0eca22edf,
         type: 3}
       propertyPath: m_Name
-      value: ShipUI_CustomizePreview Variant
+      value: ShipUI CustomizePreview
       objectReference: {fileID: 0}
     - target: {fileID: 7781484095966758722, guid: ef0827cb3a620194996d9ab0eca22edf,
         type: 3}

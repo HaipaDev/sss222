@@ -51,17 +51,17 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     #region//Achievs
     void CheckAllAchievs(){
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=100)
-        ||GameSession.instance.GetHighscoreByName("Arcade")>=100){CompleteAchiev("arcade_score-1");}
+        ||GameSession.instance.GetHighscoreByName("Arcade").score>=100){CompleteAchiev("arcade_score-1");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=1000)
-        ||GameSession.instance.GetHighscoreByName("Arcade")>=1000){CompleteAchiev("arcade_score-2");}
+        ||GameSession.instance.GetHighscoreByName("Arcade").score>=1000){CompleteAchiev("arcade_score-2");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=10000)
-        ||GameSession.instance.GetHighscoreByName("Arcade")>=10000){CompleteAchiev("arcade_score-3");}
+        ||GameSession.instance.GetHighscoreByName("Arcade").score>=10000){CompleteAchiev("arcade_score-3");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Hardcore")&&GameSession.instance.score>=666)
-        ||GameSession.instance.GetHighscoreByName("Hardcore")>=666){CompleteAchiev("hardcore_score-1");}
+        ||GameSession.instance.GetHighscoreByName("Hardcore").score>=666){CompleteAchiev("hardcore_score-1");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Classic")&&GameSession.instance.score>=2077)
-        ||GameSession.instance.GetHighscoreByName("Classic")>=2077){CompleteAchiev("classic_score-1");}
+        ||GameSession.instance.GetHighscoreByName("Classic").score>=2077){CompleteAchiev("classic_score-1");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Meteor")&&GameSession.instance.score>=150)
-        ||GameSession.instance.GetHighscoreByName("Meteor")>=150){CompleteAchiev("meteor_score-1");}
+        ||GameSession.instance.GetHighscoreByName("Meteor").score>=150){CompleteAchiev("meteor_score-1");}
 
         if(statsTotal.deaths>=100){CompleteAchiev("die-1");}
         if(statsTotal.killsComets>=1000){CompleteAchiev("comets_kills-1");}
@@ -142,11 +142,11 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
             //SteamUserStats.RequestCurrentStats();
             SteamUserStats.AddStat("deaths",1);
             var arcadeHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Arcade")];
-            SteamUserStats.SetStat("arcadeScore",arcadeHighscore);
+            SteamUserStats.SetStat("arcadeScore",arcadeHighscore.score);
             var hardcoreHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Hardcore")];
-            SteamUserStats.SetStat("hardcoreScore",hardcoreHighscore);
+            SteamUserStats.SetStat("hardcoreScore",hardcoreHighscore.score);
             var meteorHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Meteor")];
-            SteamUserStats.SetStat("meteorScore",meteorHighscore);
+            SteamUserStats.SetStat("meteorScore",meteorHighscore.score);
             var cometsDestroyed=statsTotal.killsComets;
             SteamUserStats.SetStat("cometsDestroyed",cometsDestroyed);
             var mechasDestroyed=statsTotal.killsMecha;

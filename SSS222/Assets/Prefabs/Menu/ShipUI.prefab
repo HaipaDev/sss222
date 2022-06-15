@@ -5412,7 +5412,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -254, y: -50}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2008651567620448321
@@ -5465,7 +5465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c1788bd5bbf194fb3ed37a0faf1b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followSelectedButton: 1
+  followSelectedButton: 0
   buttonsList: {fileID: 0}
   spacingY: -400
   speedFollowButton: 1000
@@ -5473,7 +5473,7 @@ MonoBehaviour:
   followMouseOnDrag: 1
   speedFollowMouse: 500
   distanceFollowMouse: 200
-  flaresPreview: 0
+  flaresPreview: 1
   flaresParent: {fileID: 7721885636717342927}
 --- !u!114 &4592694107940938764
 MonoBehaviour:

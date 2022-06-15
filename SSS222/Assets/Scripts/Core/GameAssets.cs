@@ -328,6 +328,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 			var psShape=ps.shape;if(multShape){psShape.scale*=mult;}
 
 			var psUI=go.AddComponent<UnityEngine.UI.Extensions.UIParticleSystem>();
+			psUI.raycastTarget=false;
 			var _tex=ps.GetComponent<Renderer>().material.GetTexture("_MainTex");
 			Material mat=new Material(Shader.Find("UI Extensions/Particles/Additive"));
 			/*Debug.Log(go.name+" | ColorMin: "+startColor.colorMin);

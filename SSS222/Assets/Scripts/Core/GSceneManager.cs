@@ -79,6 +79,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
     public void LoadSocialsScene(){SceneManager.LoadScene("Socials");}
     public void LoadLoginScene(){SceneManager.LoadScene("Login");}
     public void LoadLeaderboardsScene(){SceneManager.LoadScene("Leaderboards");}
+    public void LoadScoreUsersDataScene(){SceneManager.LoadScene("ScoreUsersData");}
     public void LoadAchievementsScene(){SceneManager.LoadScene("Achievements");}
     public void LoadStatsSocialScene(){SceneManager.LoadScene("StatsSocial");}
     public void LoadScoreSubmitScene(){SceneManager.LoadScene("ScoreSubmit");}

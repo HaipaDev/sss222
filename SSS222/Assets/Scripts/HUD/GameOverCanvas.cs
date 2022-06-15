@@ -18,7 +18,7 @@ public class GameOverCanvas : MonoBehaviour{
         //Replace colors
         var color1=scoreTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient;
         var color2=highscoreTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient;
-        if(GameSession.instance.score>=GameSession.instance.GetHighscoreCurrent()){
+        if(GameSession.instance.score>=GameSession.instance.GetHighscoreCurrent().score){
             scoreDescTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient=color2;
             scoreTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient=color2;
             highscoreDescTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient=color1;

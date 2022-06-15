@@ -56,6 +56,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public string gameVersion;
 	public float buildVersion;
     [SerializeField][ReadOnly] string _tempSandboxSaveName;
+    [SerializeField][ReadOnly] string _selectedUsersDataName;
     public bool isSteam=true;
     public bool steamAchievsStatsLeaderboards=true;
     public bool cheatmode;
@@ -118,6 +119,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public void SetTempSandboxSaveName(){if(SandboxCanvas.instance!=null)_tempSandboxSaveName=SandboxCanvas.instance.saveSelected;else Debug.LogWarning("No SandboxCanvas instance!");}
     public void ResetTempSandboxSaveName(){_tempSandboxSaveName="";}
     public string GetTempSandboxSaveName(){return _tempSandboxSaveName;}
+    public void SetSelectedUsersDataName(string str){_selectedUsersDataName=str;}
+    public void ResetSelectedUsersDataName(){_selectedUsersDataName="";}
+    public string GetSelectedUsersDataName(){return _selectedUsersDataName;}
     public void RandomizeWaveScoreMax(){
         if(GameRules.instance.waveSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.waveSpawnReqs;if(sr!=null){if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-1);}}
     }
@@ -295,7 +299,12 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public void SaveHighscore(){
         if(CheckGamemodeSelected("Adventure")){SaveAdventure();}
         if(gamemodeSelected>0&&(gamemodeSelected-1)<SaveSerial.instance.playerData.highscore.Length){
-            if(score>GetHighscoreCurrent()){SaveSerial.instance.playerData.highscore[GameSession.instance.gamemodeSelected-1]=score;Debug.Log("Highscore set for: "+GetCurrentGamemodeName());}
+            if(score>GetHighscoreCurrent().score){
+                SaveSerial.instance.playerData.highscore[GameSession.instance.gamemodeSelected-1]=new Highscore(){score=score,playtime=Mathf.Round(currentPlaytime),
+                version=gameVersion,build=(float)System.Math.Round(buildVersion,2),
+                date=DateTime.Now};
+                Debug.Log("Highscore set for: "+GetCurrentGamemodeName());
+            }
         }else if((gamemodeSelected-1)>=SaveSerial.instance.playerData.highscore.Length||gamemodeSelected<=0){Debug.LogWarning("Score not submittable for this gamemode");}
         StatsAchievsManager.instance.AddScoreTotal(score);
         StatsAchievsManager.instance.AddPlaytime(GetGameSessionTime());
@@ -377,13 +386,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         Debug.Log("Adventure data loaded in GameSession");
         }else{if(u==null){Debug.LogError("UpgradeMenu not present");}else if(s==null){Debug.LogError("SaveSerial not present");}else if(s.advD==null){Debug.LogError("Adventure Data null");}}
     }
-    public void SaveSettings(){SaveSerial.instance.SaveSettings();}
-    public void SaveInventory(){
-        SaveSerial.instance.playerData.skinName=CustomizationInventory.instance.skinName;
-        SaveSerial.instance.playerData.overlayColor[0]=CustomizationInventory.instance.overlayColorArr[0];
-        SaveSerial.instance.playerData.overlayColor[1]=CustomizationInventory.instance.overlayColorArr[1];
-        SaveSerial.instance.playerData.overlayColor[2]=CustomizationInventory.instance.overlayColorArr[2];
-    }
     public void DeleteAll(){DeleteStatsAchievs();ResetSettings();SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure();GSceneManager.instance.LoadStartMenu();}
     public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}
     public void ResetSettings(){
@@ -399,11 +401,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(Jukebox.instance!=null)Jukebox.instance.GetComponent<AudioSource>().pitch=1;
     }
     float settingsOpenTimer;
-    public void CloseSettings(bool goToPause){
-        if(SceneManager.GetActiveScene().name=="Options"){GSceneManager.instance.LoadStartMenu();}
-        else if(SceneManager.GetActiveScene().name=="Game"&&PauseMenu.GameIsPaused){if(FindObjectOfType<SettingsMenu>()!=null)FindObjectOfType<SettingsMenu>().Close();if(FindObjectOfType<PauseMenu>()!=null&&goToPause)FindObjectOfType<PauseMenu>().Pause();}
-    }
-
     public void SetAnalytics(){
         string _phasing="";string _sent="";
         if(Player.instance.GetComponent<PlayerCollider>()._LastHitPhasing()){_phasing=" (Phase)";}
@@ -459,13 +456,13 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         }
     }
     public void CheckCodes(string fkey, string nkey){gitignoreScript.instance.CheckCodes(fkey, nkey);}
-    public string FormatTime(float time){
+    public static string FormatTime(float time){
         int minutes=(int) time / 60;
         int seconds=(int) time - (60*minutes);
         //int milliseconds=(int) (1000 * (time - minutes * 60 - seconds));
         return string.Format("{0:00}:{1:00}"/*:{2:000}"*/, minutes, seconds/*, milliseconds*/ );
     }
-    public string FormatTimeWithHours(float time){
+    public static string FormatTimeWithHours(float time){
         int hours=(int) time / 3600;
         int minutes=(int) time / 60;
         int seconds=(int) time -(60*minutes);
@@ -511,8 +508,8 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
 
         
     //public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
-    public int GetHighscoreByName(string str){int i=0;if(SaveSerial.instance.playerData.highscore.Length>GetGamemodeID(str)){i=SaveSerial.instance.playerData.highscore[GetGamemodeID(str)];}return i;}
-    public int GetHighscoreCurrent(){int i=0;if(gamemodeSelected>0){if(SaveSerial.instance.playerData.highscore.Length>gamemodeSelected-1){i=SaveSerial.instance.playerData.highscore[gamemodeSelected-1];}}return i;}
+    public Highscore GetHighscoreByName(string str){if(SaveSerial.instance.playerData.highscore.Length>GetGamemodeID(str)){return SaveSerial.instance.playerData.highscore[GetGamemodeID(str)];}return null;}
+    public Highscore GetHighscoreCurrent(){if(gamemodeSelected>0){if(SaveSerial.instance.playerData.highscore.Length>gamemodeSelected-1){return SaveSerial.instance.playerData.highscore[gamemodeSelected-1];}}return null;}
     public void SetCheatmode(){cheatmode=!cheatmode;return;}
     public void ReAddSpawnReqsMono(){RemoveSpawnReqsMono();AddSpawnReqsMono();}
     public void AddSpawnReqsMono(){if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}}

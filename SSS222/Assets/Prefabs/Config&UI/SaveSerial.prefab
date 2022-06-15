@@ -56,12 +56,9 @@ MonoBehaviour:
     username: 
     password: 
   playerData:
-    highscore: 00000000000000000000000000000000
+    highscore: []
     skinName: def
-    overlayColor:
-    - 0
-    - 1
-    - 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
     trailName: def
     flaresName: def
     deathFxName: def

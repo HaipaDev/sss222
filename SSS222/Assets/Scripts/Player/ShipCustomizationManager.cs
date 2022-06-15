@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
 public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustomizationManager instance;
+    [HeaderAttribute("Variables")]
+    public bool otherUsersData;
     [HeaderAttribute("Properties")]
     public string skinName="def";
     [SceneObjectsOnly][SerializeField] public GameObject overlayObj;
@@ -29,7 +31,8 @@ public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustom
 
         spr=GetComponent<SpriteRenderer>();
         if(spr==null)img=GetComponent<Image>();
-        LoadValues();
+        if(!otherUsersData)LoadValues();
+        else{LoadValuesFromSelectedUsersData();}
         if(overlayObj!=null){
             overlayObj.transform.position=new Vector3(overlayObj.transform.position.x,overlayObj.transform.position.y,transform.root.position.z-0.01f);
             overlayObj.transform.localScale=Vector3.one;
@@ -110,9 +113,17 @@ public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustom
 
     void LoadValues(){
         skinName=SaveSerial.instance.playerData.skinName;
-        overlayColor=Color.HSVToRGB(SaveSerial.instance.playerData.overlayColor[0],SaveSerial.instance.playerData.overlayColor[1],SaveSerial.instance.playerData.overlayColor[2]);
+        overlayColor=SaveSerial.instance.playerData.overlayColor;
         trailName=SaveSerial.instance.playerData.trailName;
         flaresName=SaveSerial.instance.playerData.flaresName;
         deathFxName=SaveSerial.instance.playerData.deathFxName;
+    }
+    async void LoadValuesFromSelectedUsersData(){
+        string[] customizationData=await DBAccess.instance.GetUsersCustomizationData(GameSession.instance.GetSelectedUsersDataName());
+        skinName=customizationData[0];
+        overlayColor=Color.HSVToRGB(SaveSerial.instance.playerData.overlayColor[0],SaveSerial.instance.playerData.overlayColor[1],SaveSerial.instance.playerData.overlayColor[2]);
+        trailName=customizationData[1];
+        flaresName=customizationData[2];
+        deathFxName=customizationData[3];
     }
 }

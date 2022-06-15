@@ -27,7 +27,7 @@ public class ValueDisplay : MonoBehaviour{
             if(value=="score") _txt=gs.score.ToString();
             else if(value=="coins") _txt=gs.coins.ToString();
             else if(value=="cores") _txt=gs.cores.ToString();
-            else if(value.Contains("highscore")) _txt=gs.GetHighscoreCurrent().ToString();
+            else if(value=="highscore") _txt=gs.GetHighscoreCurrent().score.ToString();
             else if(value=="gameSpeed") _txt=gs.gameSpeed.ToString();
             else if(value=="gameVersion") _txt=gs.gameVersion;
             else if(value=="buildVersion") _txt=gs.buildVersion.ToString();

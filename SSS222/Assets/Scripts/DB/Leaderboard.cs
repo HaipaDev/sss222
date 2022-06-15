@@ -44,7 +44,7 @@ public class Leaderboard : MonoBehaviour{
     }
     public void OpenMainPanel(){CloseAllPanels();mainPanel.SetActive(true);}
     public void OpenGameModesPanel(){CloseAllPanels();gameModesPanel.SetActive(true);}
-    public void Back(){if(gameModesPanel.activeSelf){OpenMainPanel();}else{GSceneManager.instance.LoadSocialsScene();}}
+    public void Back(){if(gameModesPanel.activeSelf){OpenMainPanel();}else{GSceneManager.instance.LoadSocialsScene();GameSession.instance.ResetSelectedUsersDataName();}}
     public void CloseAllPanels(){
         mainPanel.SetActive(false);
         gameModesPanel.SetActive(false);

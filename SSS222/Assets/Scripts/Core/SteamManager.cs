@@ -39,7 +39,7 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
             //
         }
     }
-    void OnApplicationQuit(){SteamClient.Shutdown();}
+    /*[Sirenix.OdinInspector.Button("Shutdown Steam")]*/void OnApplicationQuit(){SteamClient.Shutdown();}
     public async void SubmitScore(string name,int score){
         Steamworks.Data.Leaderboard? leaderboard = await SteamUserStats.FindLeaderboardAsync(name);
         if(leaderboard.HasValue){

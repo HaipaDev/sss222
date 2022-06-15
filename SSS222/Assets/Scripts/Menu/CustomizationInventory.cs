@@ -32,7 +32,6 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [SerializeField] public CstmzType typeSelected=CstmzType.skin;
     [SerializeField] public string skinName="def";
     public Color overlayColor=Color.red;
-    public float[] overlayColorArr=new float[3]{0,1,1};
     [SerializeField] public string trailName="def";
     [SerializeField] public string flaresName="def";
     [SerializeField] public string deathFxName="def";
@@ -48,15 +47,12 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         skinName=SaveSerial.instance.playerData.skinName;
         SetCategory(GameAssets.instance.skins.Find(x=>x.name.Contains(GetSkinName(SaveSerial.instance.playerData.skinName))).category);
 
-        overlayColorArr[0] = SaveSerial.instance.playerData.overlayColor[0];
-        overlayColorArr[1] = SaveSerial.instance.playerData.overlayColor[1];
-        overlayColorArr[2] = SaveSerial.instance.playerData.overlayColor[2];
-        loaded=true;
-        
-        overlayColor = Color.HSVToRGB(overlayColorArr[0], overlayColorArr[1], overlayColorArr[2]);
-        Hslider.value = overlayColorArr[0];
-        Sslider.value = overlayColorArr[1];
-        Vslider.value = overlayColorArr[2];
+        float[] hsvArr=new float[3]{0,1,1};
+        overlayColor = SaveSerial.instance.playerData.overlayColor;
+        Color.RGBToHSV(overlayColor,out hsvArr[0],out hsvArr[1],out hsvArr[2]);
+        Hslider.value = hsvArr[0];
+        Sslider.value = hsvArr[1];
+        Vslider.value = hsvArr[2];
 
         SsliderIMG.material = Instantiate(gradientShader) as Material;
         VsliderIMG.material = SsliderIMG.material;
@@ -68,6 +64,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         deathFxName=SaveSerial.instance.playerData.deathFxName;
         musicName=SaveSerial.instance.playerData.musicName;
 
+        loaded=true;
         SetType(typeSelected);
         yield return new WaitForSecondsRealtime(0.02f);
         RecreateAllElements();
@@ -77,10 +74,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     //void OnDestroy(){DestroyImmediate(SsliderIMG.material);}
     //void OnDisable(){DestroyImmediate(SsliderIMG.material);}
     public void ValueChangeCheck(){
-        overlayColorArr[0]=Hslider.value;
-        overlayColorArr[1]=Sslider.value;
-        overlayColorArr[2]=Vslider.value;
-        overlayColor=Color.HSVToRGB(overlayColorArr[0],overlayColorArr[1],overlayColorArr[2]);
+        overlayColor=Color.HSVToRGB(Hslider.value,Sslider.value,Vslider.value);
 
         SsliderIMG.material.SetColor("_Color2",Color.HSVToRGB(Hslider.value,1,1));
         VsliderIMG.color = Color.HSVToRGB(Hslider.value, 1, 1);
@@ -88,9 +82,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     void Update(){
         if(loaded){
             SaveSerial.instance.playerData.skinName=skinName;
-            SaveSerial.instance.playerData.overlayColor[0]=overlayColorArr[0];
-            SaveSerial.instance.playerData.overlayColor[1]=overlayColorArr[1];
-            SaveSerial.instance.playerData.overlayColor[2]=overlayColorArr[2];
+            SaveSerial.instance.playerData.overlayColor=overlayColor;
             SaveSerial.instance.playerData.trailName=trailName;
             SaveSerial.instance.playerData.flaresName=flaresName;
             SaveSerial.instance.playerData.deathFxName=deathFxName;
@@ -98,7 +90,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         }
 
         ShipCustomizationManager.instance.skinName=skinName;
-        ShipCustomizationManager.instance.overlayColor=Color.HSVToRGB(overlayColorArr[0],overlayColorArr[1],overlayColorArr[2]);
+        ShipCustomizationManager.instance.overlayColor=overlayColor;
         ShipCustomizationManager.instance.trailName=trailName;
         ShipCustomizationManager.instance.flaresName=flaresName;
         ShipCustomizationManager.instance.deathFxName=deathFxName;
@@ -107,10 +99,11 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
 
         RefreshParticles();
 
-        if(GSceneManager.EscPressed()){
-            if(variantsPanel.activeSelf){CloseVariants();}
-            else{GSceneManager.instance.LoadStartMenu();}
-        }
+        if(GSceneManager.EscPressed()){Back();}
+    }
+    public void Back(){
+        if(variantsPanel.activeSelf){CloseVariants();}
+        else{DBAccess.instance.UpdateCustomizationData();GSceneManager.instance.LoadStartMenu();}
     }
 
     public void RecreateAllElements(){DeleteAllElements();CreateAllElements();HighlightSelectedElement();}

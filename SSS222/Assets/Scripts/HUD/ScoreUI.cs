@@ -8,6 +8,6 @@ public class ScoreUI : MonoBehaviour{
     }
     void Update(){
         if(GameSession.instance!=null)
-            if(GameSession.instance.score>GameSession.instance.GetHighscoreCurrent()){GetComponent<Animator>().SetTrigger("beaten");Destroy(this);}
+            if(GameSession.instance.score>GameSession.instance.GetHighscoreCurrent().score){GetComponent<Animator>().SetTrigger("beaten");Destroy(this);}
     }
 }

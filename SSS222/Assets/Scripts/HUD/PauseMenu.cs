@@ -24,9 +24,9 @@ public class PauseMenu : MonoBehaviour{
     void Update(){
         if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton7)){
             if(GameIsPaused){
-                if(pauseMenuUI.activeSelf)Resume();
-                if(optionsUI.transform.GetChild(0).gameObject.activeSelf){GameSession.instance.SaveSettings();GameSession.instance.CloseSettings(true);pauseMenuUI.SetActive(true);}
-                if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();PauseEmpty();}
+                if(pauseMenuUI.activeSelf){Resume();return;}
+                if(optionsUI.transform.GetChild(0).gameObject.activeSelf){SaveSerial.instance.SaveSettings();pauseMenuUI.SetActive(true);return;}
+                if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();PauseEmpty();return;}
             }else{
                 if(((Shop.instance!=null&&Shop.shopOpened!=true)||(Shop.instance==null))&&
                 ((UpgradeMenu.instance!=null&&UpgradeMenu.UpgradeMenuIsOpen!=true)||(UpgradeMenu.instance==null))&&!GameOverCanvas.instance.gameOver&&(unpausedTimer>=unpausedTimeReq||unpausedTimer==-1))Pause();
@@ -39,7 +39,7 @@ public class PauseMenu : MonoBehaviour{
     }
     public void Resume(){
         pauseMenuUI.SetActive(false);
-        if(optionsUI.transform.GetChild(0).gameObject.activeSelf){GameSession.instance.CloseSettings(false);}
+        if(optionsUI.transform.GetChild(0).gameObject.activeSelf){SettingsMenu.instance.Back();}
         //if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();}
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         GameSession.instance.gameSpeed=1;

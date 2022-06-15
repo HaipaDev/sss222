@@ -12,7 +12,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	void Awake(){if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
 	IEnumerator Start(){
 		yield return new WaitForSecondsRealtime(0.01f);
-		//playerData.highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()];
+		playerData.highscore=new Highscore[GameCreator.GetGamerulesetsPrefabsLength()];
+		for(int i=0;i<playerData.highscore.Length;i++){playerData.highscore[i]=new Highscore();}
 		//playerData.achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()];
 		statsData.statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()];
 		
@@ -98,9 +99,9 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public float buildFirstLoaded;
 	public float buildLastLoaded;
 	[System.Serializable]public class PlayerData{
-		public int[] highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()];
+		public Highscore[] highscore=new Highscore[GameCreator.GetGamerulesetsPrefabsLength()];
 		public string skinName="def";
-		public float[] overlayColor=new float[3]{0,1,1};
+		public Color overlayColor=Color.white;
 		public string trailName="def";
 		public string flaresName="def";
 		public string deathFxName="def";
@@ -121,7 +122,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 			SaveGame.Encode = dataEncode;
 			SaveGame.Serializer = new SaveGameJsonSerializer();
 			playerData = SaveGame.Load<PlayerData>(filename);
-			var hi=-1;foreach(int h in playerData.highscore){hi++;if(h!=0)playerData.highscore[hi]=h;}
+			var hi=-1;foreach(Highscore h in playerData.highscore){hi++;if(h.score!=0)playerData.highscore[hi]=h;}
 
 			File.Delete(Application.persistentDataPath+"/"+filename);
 			Debug.Log("Game Data (legacy) loaded and deleted");
@@ -140,7 +141,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		}else Debug.LogWarning("Game Data file not found in: "+_playerDataPath());
 	}
 	public void Delete(){
-		playerData=new PlayerData(){highscore=new int[GameCreator.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
+		playerData=new PlayerData(){highscore=new Highscore[GameCreator.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
 		GC.Collect();
 		if(ES3.FileExists(_playerDataPath())){
 			ES3.DeleteFile(_playerDataPath());
@@ -339,4 +340,13 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		}
 	}
 #endregion
+}
+
+[System.Serializable]
+public class Highscore{
+	public int score;
+	public float playtime;
+	public string version;
+	public float build;
+	public DateTime date;
 }

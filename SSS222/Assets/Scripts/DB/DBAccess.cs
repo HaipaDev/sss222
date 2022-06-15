@@ -50,17 +50,21 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
         //GetScoresFromDB();
     }
 
-    public async void SaveScoreToDB(string name, int score){
+    public async void SaveScoreToDB(string name, Highscore highscore){
         var scores=GetGamemodeCollection();
         var sameNameScore=await scores.FindAsync(e => e.name==name);
         //if(sameIDscore.ToList().Count>0){Debug.Log(id);}else{Debug.Log("Score with name "+name+" not found");}
         if(sameNameScore.ToList().Count>0){
             sameNameScore=await scores.FindAsync(e => e.name==name);
-            if(score==0){SetSubmitMessage("Score is equals 0!");}
-            else if(score<=sameNameScore.ToList()[0].score){SetSubmitMessage("Score is lower or equals to submitted");}
-            else{await scores.FindOneAndUpdateAsync(e=>e.name==name,Builders<Model_Score>.Update.Set(e=>e.score,score));SetSubmitMessage("Score overwritten!");}
-        }else{if(score!=0){
-            Model_Score document=new Model_Score { name=name, score=score, playtime=GameSession.instance.currentPlaytime, version=GameSession.instance.gameVersion, date=System.DateTime.Now };
+            if(highscore.score==0){SetSubmitMessage("Score is equals 0!");}
+            else if(highscore.score<=sameNameScore.ToList()[0].score){SetSubmitMessage("Score is lower or equals to submitted");}
+            else{await scores.FindOneAndUpdateAsync(e=>e.name==name,Builders<Model_Score>.Update.Set(e=>e.score,highscore.score));SetSubmitMessage("Score overwritten!");}
+        }else{if(highscore.score!=0){
+            Model_Score document=new Model_Score{name=name,score=highscore.score,
+            playtime=highscore.playtime,
+            version=highscore.version,build=highscore.build,
+            date=highscore.date
+            };
             await scores.InsertOneAsync(document);
             SetSubmitMessage("New score submitted!");
         }else{SetSubmitMessage("Score is equals 0!");}}
@@ -104,7 +108,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
             HyperGamer document=new HyperGamer{username=username,password=password,
                 dateRegister=System.DateTime.Now,dateLastLogin=System.DateTime.Now,
                 appRegistered=hyperLastLoginAppDisplay,appLastLogin=hyperLastLoginAppDisplay,
-                isSteam=GameSession.instance.isSteam};
+                isSteam=GameSession.instance.isSteam,/*steamID=Steamworks.SteamClient.SteamId,*/sss222_customizationData=customizationData(),sss222_overlayColors=overlayColors()};
             await hyperGamers.InsertOneAsync(document);
             string _pass=password;if(FindObjectOfType<Login>()!=null){if(!FindObjectOfType<Login>()._rememberPassword())_pass="";}
             SaveSerial.instance.SetLogin(username,_pass);SaveSerial.instance.SaveLogin();
@@ -123,12 +127,35 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
             loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
             if(collectionBiggerThan0&&loginUsername.ToList()[0].password==password){
                 loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
-                await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.dateLastLogin,System.DateTime.Now));
-                await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.appLastLogin,hyperLastLoginAppDisplay));
+                hyperGamers.FindOneAndUpdate(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.dateLastLogin,System.DateTime.Now));
+                hyperGamers.FindOneAndUpdate(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.appLastLogin,hyperLastLoginAppDisplay));
+                await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.sss222_customizationData,customizationData()));
+                await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.sss222_overlayColors,overlayColors()));
                 string _pass=password;if(FindObjectOfType<Login>()!=null){if(!FindObjectOfType<Login>()._rememberPassword())_pass="";}
                 SaveSerial.instance.SetLogin(username,_pass);SaveSerial.instance.SaveLogin();
             }
         }else{SetLoginMessage("Login not found");if(SaveSerial.instance.hyperGamerLoginData.loggedIn)SaveSerial.instance.LogOut();}
+    }
+    public string[] customizationData(){var pd=SaveSerial.instance.playerData;return new string[]{pd.skinName,pd.trailName,pd.flaresName,pd.deathFxName};}
+    public float[] overlayColors(){var pd=SaveSerial.instance.playerData;return new float[]{pd.overlayColor[0],pd.overlayColor[1],pd.overlayColor[2]};}
+    public async void UpdateCustomizationData(){
+        System.Threading.CancellationToken cancellationToken=System.Threading.CancellationToken.None;
+        var loginUsername=await hyperGamers.FindAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,null,cancellationToken);
+        if(loginUsername.ToList().Count>0){
+            loginUsername=await hyperGamers.FindAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,null,cancellationToken);
+            
+            await hyperGamers.FindOneAndUpdateAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,Builders<HyperGamer>.Update.Set(e=>e.sss222_customizationData,customizationData()));
+            await hyperGamers.FindOneAndUpdateAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,Builders<HyperGamer>.Update.Set(e=>e.sss222_overlayColors,overlayColors()));
+            SetLoggedInMessage("Customization Data updated");Debug.Log("Customization Data updated");
+        }else{SetLoggedInMessage("Login not found");if(SaveSerial.instance.hyperGamerLoginData.loggedIn)SaveSerial.instance.LogOut();}
+    }
+    public async Task<string[]> GetUsersCustomizationData(string username){
+        System.Threading.CancellationToken cancellationToken=System.Threading.CancellationToken.None;
+        var loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
+        if(loginUsername.ToList().Count>0){
+            loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
+            return loginUsername.First().sss222_customizationData;
+        }else{SetLoggedInMessage("User not found");return null;}
     }
     public async void ChangePassHyperGamer(string password,string newPass){
         System.Threading.CancellationToken cancellationToken=System.Threading.CancellationToken.None;
@@ -170,6 +197,7 @@ public class Model_Score {
     public int score { set; get; }
     public float playtime { set; get; }
     public string version { set; get; }
+    public float build { set; get; }
     public System.DateTime date { set; get; }
     
     //Possible Methods ...
@@ -183,6 +211,9 @@ public class HyperGamer {
     public string username {  set; get; }
     public string password { set; get; }
     public bool isSteam { set; get; }
+    //public Steamworks.SteamId steamID { set; get; }
+    public string[] sss222_customizationData { set; get; }
+    public float[] sss222_overlayColors { set; get; }
     public string appRegistered { set; get; }
     public string appLastLogin { set; get; }
     public System.DateTime dateLastLogin { set; get; }
