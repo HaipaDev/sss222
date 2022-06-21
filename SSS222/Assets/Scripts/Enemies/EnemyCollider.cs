@@ -35,6 +35,7 @@ public class EnemyCollider : MonoBehaviour{
                     }}
                 }
             }
+            if(Player.instance!=null){if(Player.instance._costOnHitMelee)Player.instance.meleeCostTimer=0;}
     }}}
     void OnTriggerStay2D(Collider2D other){  if(!other.CompareTag(tag)){if(other.GetComponent<Player>()==null&&other.GetComponent<Tag_Collectible>()==null&&other.GetComponent<Shredder>()==null){
         if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){var dmgPhaseFreq=other.GetComponent<Tag_DmgPhaseFreq>();if(dmgPhaseFreq.phaseTimer<=0){
@@ -59,6 +60,7 @@ public class EnemyCollider : MonoBehaviour{
                 }
             }
             dmgPhaseFreq.SetTimer();
+            if(Player.instance!=null){if(Player.instance._costOnPhaseMelee)Player.instance.meleeCostTimer=0;}
         }}
     }}}
     void OnTriggerExit2D(Collider2D other){
@@ -70,7 +72,7 @@ public class EnemyCollider : MonoBehaviour{
         int def=en.defense;int armorPenetr=armorPenetrVal;float defMulti=0.5f;
         if(!phase){if(!GameRules.instance.enemyDefenseHit){def=0;armorPenetr=0;}}
         else{if(!GameRules.instance.enemyDefensePhase||!en.defenseOnPhase){def=0;armorPenetr=0;}defMulti=0.2f;}
-        float totalDef=Mathf.Clamp((Mathf.Clamp((def-armorPenetr)*defMulti,0,999)),0,99999f);
+        float totalDef=Mathf.Clamp((Mathf.Clamp((def-armorPenetr)*defMulti,0.1f,999)),0,99999f);
         dmg=Mathf.Clamp(dmg-=totalDef,0f,999999f);
         if(def==-1){dmg=0;}
         if(def<-1){dmg/=Mathf.Abs(def);}

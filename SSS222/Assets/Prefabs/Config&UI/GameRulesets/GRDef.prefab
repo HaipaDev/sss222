@@ -921,11 +921,11 @@ MonoBehaviour:
     dmg: 7.77
     dmgBySize: 0
     dmgBySpeed: 0
-    armorPenetr: 3
+    armorPenetr: 2
     phase: 1
     dmgPhase: 2.33
     phaseFreqFirst: 0
-    phaseFreq: 0.02
+    phaseFreq: 0.022
     phaseCountLimit: 0
     dmgFx: 0
     dmgFxValues: []
@@ -938,16 +938,16 @@ MonoBehaviour:
     dmg: 15
     dmgBySize: 0
     dmgBySpeed: 0
-    armorPenetr: 3
+    armorPenetr: 4
     phase: 1
     dmgPhase: 1
     phaseFreqFirst: 0.01
-    phaseFreq: 0.05
+    phaseFreq: 0.01
     phaseCountLimit: 10
     dmgFx: 0
     dmgFxValues: []
-    sound: LSaberHit
-    soundPhase: .
+    sound: CPickHit
+    soundPhase: CStreamHit
     dispDmgCount: 0
     colliEvents: []
   - name: Phaser

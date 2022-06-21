@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 [CreateAssetMenu(menuName = "Weapon Config")]
 public class WeaponProperties:ScriptableObject{
@@ -27,8 +28,8 @@ public enum costType{energy,ammo,crystalAmmo,blackEnergy}
 [System.Serializable]public class costTypeProperties{public float cost;}
 [System.Serializable]public class costTypeEnergy:costTypeProperties{}
 [System.Serializable]public class costTypeAmmo:costTypeProperties{public int ammoSize=20;}
-[System.Serializable]public class costTypeCrystalAmmo:costTypeProperties{public float regularEnergyCost=0;public int crystalCost=1;public int crystalAmmoCrafted=20;}
-[System.Serializable]public class costTypeBlackEnergy:costTypeProperties{public float regularEnergyCost=0;}
+[System.Serializable]public class costTypeCrystalAmmo:costTypeProperties{public float regularEnergyCost=0;public int crystalCost=1;public int ammoCrafted=20;}
+[System.Serializable]public class costTypeBlackEnergy:costTypeProperties{public float regularEnergyCost=0;public float benergyCost=1;public int ammoCrafted=20;}
 [System.Serializable]public enum weaponType{bullet,melee}
 [System.Serializable]public class weaponTypeProperties{}
 [System.Serializable]public class weaponTypeBullet:weaponTypeProperties{
@@ -56,5 +57,9 @@ public enum costType{energy,ammo,crystalAmmo,blackEnergy}
 }
 [System.Serializable]public class weaponTypeMelee:weaponTypeProperties{
     public Vector2 offset=new Vector2(0,1);
-    public float costPeriod=0.15f;
+    [DisableIf("@this.costOnHit")]public float costPeriod=0.15f;
+    public bool costOnHit=false;
+    public bool costOnPhase=false;
+    public bool scaleCostWithShipSize=false;
+    public bool instaCraftAmmo=false;
 }

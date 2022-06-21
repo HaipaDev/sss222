@@ -168,6 +168,8 @@ public class Player : MonoBehaviour{    public static Player instance;
     bool dead;
     [HideInInspector]public int collidedId;
     [HideInInspector]public float collidedIdChangeTime;
+    public bool _costOnHitMelee;
+    public bool _costOnPhaseMelee;
     //public @InputMaster inputMaster;
 #endregion
 #endregion
@@ -685,8 +687,8 @@ public class Player : MonoBehaviour{    public static Player instance;
                     var _ammo=_curPwrup().ammo;
                     if((w.costType==costType.energy&&((energyOn&&energy>0)||(!energyOn)))
                     ||((w.costType==costType.ammo&&_ammo>0))
-                    ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(_ammo>0||GameSession.instance.coins>0))
-                    ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(GameSession.instance.xp>0))){
+                    ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcCA.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameSession.instance.coins>0))
+                    ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameSession.instance.xp>0))){
                         if((/*w.costType==costType.ammo&&*/!overheated)&&((w.costType==costType.energy&&!_hasStatus("electrc"))||w.costType!=costType.energy)){
                             weaponTypeBullet wp=null;
                             if(w.weaponType==weaponType.bullet){wp=(weaponTypeBullet)w.weaponTypeProperties;}
@@ -750,9 +752,9 @@ public class Player : MonoBehaviour{    public static Player instance;
                             if(wp.rightSide)RightSide();
                             if(wp.randomSide){if(UnityEngine.Random.Range(0,100)<50){LeftSide();}else{RightSide();}}
                             if(w.costType==costType.energy){AddSubEnergy(wc.cost,false);}
-                            if(w.costType==costType.ammo){if(_ammo>=wc.cost)AddSubAmmo(wc.cost,_curPwrupName(),false);else{AddSubAmmo(_ammo-wc.cost,_curPwrupName(),false);}}
-                            if(w.costType==costType.crystalAmmo){if(_ammo>=wcCA.cost)AddSubAmmo(wcCA.cost,_curPwrupName(),false);else{AddSubAmmo(wcCA.crystalAmmoCrafted,_curPwrupName(),true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
-                            if(w.costType==costType.blackEnergy){if(GameSession.instance.xp>=wc.cost){AddSubXP(wc.cost,false);}if(w.costType==costType.blackEnergy){AddSubEnergy(wcBE.regularEnergyCost);}}
+                            if(w.costType==costType.ammo){if(_ammo>=wc.cost||_ammo==-5)AddSubAmmo(wc.cost,_curPwrupName(),false);else{AddSubAmmo(_ammo-wc.cost,_curPwrupName(),false);}}
+                            if(w.costType==costType.crystalAmmo){if(_ammo>=wcCA.cost||_ammo==-5){AddSubAmmo(wcCA.cost,_curPwrupName(),false);}else{AddSubAmmo(wcCA.ammoCrafted,_curPwrupName(),true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
+                            if(w.costType==costType.blackEnergy){if(_ammo>=wc.cost||_ammo==-5){AddSubAmmo(wcBE.cost,_curPwrupName(),false);}else{AddSubAmmo(wcBE.ammoCrafted,_curPwrupName(),true,true);AddSubXP(wc.cost,false);}AddSubEnergy(wcBE.regularEnergyCost);}
                             if(w.ovheat!=0)Overheat(w.ovheat);
                             if(wp.recoilStrength!=0&&wp.recoilTime>0)Recoil(wp.recoilStrength,wp.recoilTime);
                             shootTimer=(wp.shootDelay/wp.tapDelayMulti)/shootMulti;
@@ -771,41 +773,60 @@ public class Player : MonoBehaviour{    public static Player instance;
         WeaponProperties w=null;
         if(!_isCurPowerupAnItem()){
             if(!_isPowerupEmptyCur()){if(GetWeaponPropertyCur()!=null){w=GetWeaponPropertyCur();}else{Debug.LogWarning(_curPwrupName()+" not added to WeaponProperties List");}}
-            if(w!=null&&w.weaponType==weaponType.melee&&((w.costType==costType.energy&&!_hasStatus("electrc"))||w.costType!=costType.energy)){
-                weaponTypeMelee wp=null;
-                if(w.weaponType==weaponType.melee){wp=(weaponTypeMelee)w.weaponTypeProperties;}
+            if(w!=null){
+            weaponTypeMelee wp=null;
+            if(w.weaponType==weaponType.melee){wp=(weaponTypeMelee)w.weaponTypeProperties;
                 costTypeProperties wc=null;
+                costTypeCrystalAmmo wcCA=null;
+                costTypeBlackEnergy wcBE=null;
                 if(w.costType==costType.energy){wc=(costTypeEnergy)w.costTypeProperties;}
-                //if(w.costType==costType.ammo){wc=(costTypeAmmo)w.costTypeProperties;}
+                if(w.costType==costType.ammo){wc=(costTypeAmmo)w.costTypeProperties;}
+                if(w.costType==costType.crystalAmmo){wc=(costTypeCrystalAmmo)w.costTypeProperties;wcCA=(costTypeCrystalAmmo)wc;}
+                if(w.costType==costType.blackEnergy){wc=(costTypeBlackEnergy)w.costTypeProperties;wcBE=(costTypeBlackEnergy)wc;}
                 GameObject asset=GameAssets.instance.Get(w.assetName);
-                //costTypeAmmo
-                //var _ammo=(costTypeAmmo)wc.ammo;
+                var _ammo=_curPwrup().ammo;
                 if(ComparePowerupStrCur(w.name)&&
                 (
-                    (w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)
-                    //||((w.costType==costType.ammo&&_ammo>0))
+                    (w.costType==costType.energy&&!_hasStatus("electrc")&&((energyOn&&energy>0)||(!energyOn)))
+                    ||((w.costType==costType.ammo&&_ammo>0))
+                    ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcCA.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameSession.instance.coins>0))
+                    ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameSession.instance.xp>0))
                 )
                 ){
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
                     if(go==null){go=Instantiate(asset,transform);go.transform.position=transform.position+new Vector3(wp.offset.x,wp.offset.y,0.01f);}
-                    if(meleeCostTimer>0){meleeCostTimer-=Time.deltaTime;}
-                    else if(meleeCostTimer<=0){meleeCostTimer=wp.costPeriod;
-                        if((w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){AddSubEnergy((float)System.Math.Round(wc.cost*shipScale,2),false);}}
-                        //else if(w.costType==costType.ammo&&energy)
+                    if((_ammo<=0&&_ammo!=-5)&&wp.instaCraftAmmo){meleeCostTimer=0;}
+                    if(!wp.costOnHit){
+                        _costOnHitMelee=false;
+                        if(meleeCostTimer>0){meleeCostTimer-=Time.deltaTime;}
+                    }else{_costOnHitMelee=true;}
+                    _costOnPhaseMelee=wp.costOnPhase;
+                    if(_costOnHitMelee||_costOnPhaseMelee){if(_ammo<=0&&_ammo!=-5){meleeCostTimer=0;}}
+
+                    if(meleeCostTimer<=0){meleeCostTimer=wp.costPeriod;
+                        if((w.costType==costType.energy&&energyOn&&energy>0)||(w.costType!=costType.energy||!energyOn)){var _cost=wc.cost;if(wp.scaleCostWithShipSize){_cost=(float)System.Math.Round(wc.cost*shipScale,2);}AddSubEnergy(_cost,false);}
+                        if(w.costType==costType.ammo){if(_ammo>=wc.cost||_ammo==-5)AddSubAmmo(wc.cost,_curPwrupName(),false);else{AddSubAmmo(_ammo-wc.cost,_curPwrupName(),false);}}
+                        if(w.costType==costType.crystalAmmo){if(_ammo>=wcCA.cost||_ammo==-5){AddSubAmmo(wcCA.cost,_curPwrupName(),false);}else{AddSubAmmo(wcCA.ammoCrafted,_curPwrupName(),true,true);AddSubCoins(wcCA.crystalCost,false,true);}AddSubEnergy(wcCA.regularEnergyCost);}
+                        if(w.costType==costType.blackEnergy){if(_ammo>=wcBE.cost||_ammo==-5){AddSubAmmo(wcBE.cost,_curPwrupName(),false);}else{AddSubAmmo(wcBE.ammoCrafted,_curPwrupName(),true,true);AddSubXP(wcBE.benergyCost,false);}AddSubEnergy(wcBE.regularEnergyCost);}
+                    }
                 }
 
                 //Hide when near Cargo
                 /*if(go!=null){if(FindObjectOfType<CargoShip>()!=null&&Vector2.Distance(go.transform.position,FindObjectOfType<CargoShip>().transform.position)<cargoDist){
                     go.SetActive(false);}else{go.SetActive(true);}
                 }*/
-            }
+            }else{_costOnHitMelee=false;_costOnPhaseMelee=false;}}
         }
     }
     void HideMeleeWeapons(){
         foreach(WeaponProperties ws in weaponProperties){
             if(ws.weaponType==weaponType.melee){
                 var wpt=(weaponTypeMelee)ws.weaponTypeProperties;
-                if(!ComparePowerupStrCur(ws.name)||((ws.costType==costType.energy&&_hasStatus("electr"))||ws.costType!=costType.energy)){
+                var _ammo=_curPwrup().ammo;
+                if(!ComparePowerupStrCur(ws.name)||(
+                    (ws.costType==costType.energy&&((energyOn&&energy<=0)||(!energyOn))||_hasStatus("electr")))
+                    ||(ws.costType!=costType.energy&&_ammo<=0&&_ammo!=-5)
+                ){
                     GameObject asset=GameAssets.instance.Get(ws.assetName);
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(ws.assetName)){Destroy(t.gameObject);}}
                 }
@@ -1230,8 +1251,10 @@ public class Player : MonoBehaviour{    public static Player instance;
             }if(emptyCount==0){powerups[powerupCurID]=new Powerup();powerups[powerupCurID]=val;}
         }else{powerups[powerupCurID]=val;}
         WeaponProperties w=null;if(GetWeaponProperty(val.name)!=null){w=GetWeaponProperty(val.name);}
-        if(w!=null&&w.duration>0&&weaponsLimited){powerups[powerupCurID].timer=w.duration;}
-            else if(w==null){Debug.LogWarning("WeaponProperty for "+val.name+" not defined");}
+        if(w!=null){
+            if(w.duration>0&&weaponsLimited){powerups[powerupCurID].timer=w.duration;}
+            if(w.costType!=costType.energy&&w.costType!=costType.ammo){powerups[powerupCurID].ammo=-4;}
+        }else{Debug.LogWarning("WeaponProperty for "+val.name+" not defined");}
     }}
     public void SetPowerupStr(string val){if(!ContainsPowerup(val)){
         if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
@@ -1249,8 +1272,10 @@ public class Player : MonoBehaviour{    public static Player instance;
             powerups[powerupCurID].name=val;
         }
         WeaponProperties w=null;if(GetWeaponProperty(val)!=null){w=GetWeaponProperty(val);}
-        if(w!=null&&w.duration>0&&weaponsLimited){powerups[powerupCurID].timer=w.duration;}
-            else if(w==null){Debug.LogWarning("WeaponProperty for "+val+" not defined");}
+        if(w!=null){
+            if(w.duration>0&&weaponsLimited){powerups[powerupCurID].timer=w.duration;}
+            if(w.costType!=costType.energy&&w.costType!=costType.ammo){powerups[powerupCurID].ammo=-4;}
+        }else{Debug.LogWarning("WeaponProperty for "+val+" not defined");}
     }}
 
     public void ReplacePowerupName(string str, string rep){if(GetPowerupStr(str)!=null){GetPowerupStr(str).name=rep;Debug.Log("Powerup "+str+" replaced with "+rep);}else{Debug.Log("Powerup "+str+" is null!");}}
@@ -1317,7 +1342,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         var v=(int)value;
         var pwrup=Array.Find(powerups,x=>x.name==name);
         if(pwrup!=null){
-            if(pwrup.ammo<0)pwrup.ammo=0;
+            if(pwrup.ammo<0&&pwrup.ammo!=-5)pwrup.ammo=0;
             if(!_hasStatus("inverter")||ignoreInvert){
                 if(add){pwrup.ammo+=v;AmmoPopUpHUD(v);}
                 else{if(pwrup.ammo>=v)pwrup.ammo-=v;AmmoPopUpHUD(-v);}

@@ -17,9 +17,9 @@ MonoBehaviour:
   weaponType: 1
   weaponTypeProperties:
     rid: 0
-  costType: 0
+  costType: 2
   costTypeProperties:
-    rid: 7402535139403890689
+    rid: 7268786091678498822
   ovheat: 0
   duration: 10
   references:
@@ -30,7 +30,14 @@ MonoBehaviour:
       data:
         offset: {x: 0, y: 1.15}
         costPeriod: 1
-    - rid: 7402535139403890689
-      type: {class: costTypeEnergy, ns: , asm: Assembly-CSharp}
+        costOnHit: 1
+        costOnPhase: 0
+        scaleCostWithShipSize: 0
+        instaCraftAmmo: 0
+    - rid: 7268786091678498822
+      type: {class: costTypeCrystalAmmo, ns: , asm: Assembly-CSharp}
       data:
         cost: 1
+        regularEnergyCost: 0
+        crystalCost: 2
+        ammoCrafted: 10

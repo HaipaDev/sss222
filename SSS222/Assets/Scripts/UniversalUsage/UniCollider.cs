@@ -45,10 +45,12 @@ public class UniCollider : MonoBehaviour{
                     dmgPhaseFreq.phaseFreq=dmgVal.phaseFreq;
                     dmgPhaseFreq.phaseCountLimit=dmgVal.phaseCountLimit;
                     dmgPhaseFreq.soundPhase=dmgVal.soundPhase;
-                    if(dmgVal.soundPhase=="-"){dmgPhaseFreq.soundPhase=dmgVal.sound;}
-                    else if(dmgVal.soundPhase=="."){dmgPhaseFreq.soundPhase="EnemyHit";}
+                    if(dmgPhaseFreq.soundPhase=="-"){dmgPhaseFreq.soundPhase=dmgVal.sound;}
+                    else if(dmgPhaseFreq.soundPhase=="."){dmgPhaseFreq.soundPhase="EnemyHit";}
+
+                    if(dmgVal.dmg!=0&&(dmgPhaseFreq.phaseCount<=dmgPhaseFreq.phaseCountLimit||dmgPhaseFreq.phaseCountLimit==0)){if(!String.IsNullOrEmpty(dmgPhaseFreq.soundPhase))AudioManager.instance.Play(dmgPhaseFreq.soundPhase);}
                 }
-                if(!triggerStay){if(!String.IsNullOrEmpty(dmgVal.sound))AudioManager.instance.Play(dmgVal.sound);}
+                if(!triggerStay&&dmgVal.dmg!=0){if(!String.IsNullOrEmpty(dmgVal.sound))AudioManager.instance.Play(dmgVal.sound);}
                 //else{other.GetComponent<Tag_DmgPhaseFreq>().SetTimer();}//well that doesnt work
             }}
         }
@@ -130,9 +132,7 @@ public class UniCollider : MonoBehaviour{
         int armorPenetr=value;
         if(value>0){}
         else if(value==-1){armorPenetr=defense;}
-        else if(value==-2){armorPenetr=defense/2;}
-        else if(value==-3){armorPenetr=defense/4;}
-        else if(value==-4){armorPenetr=defense/8;}
+        else if(value<=-2){armorPenetr=defense/Mathf.Abs(value);}
         return armorPenetr;
     }
 }

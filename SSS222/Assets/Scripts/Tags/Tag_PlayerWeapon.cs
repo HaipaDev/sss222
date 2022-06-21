@@ -7,6 +7,7 @@ public class Tag_PlayerWeapon:MonoBehaviour{
     [SerializeField] float opacity=0.3f;
     [SerializeField] public bool blockable;
     [SerializeField] public bool healing;
+    [SerializeField] public bool shreddable=true;
     [DisableInEditorMode] public float energy;
     [DisableInEditorMode] public bool charged;
     void Start(){

@@ -7,10 +7,10 @@ public class Shredder : MonoBehaviour{
         if(!other.gameObject.CompareTag("Enemy")&&!other.gameObject.CompareTag("Player")&&!other.gameObject.CompareTag("World")&&!other.gameObject.name.Contains("MagneticPulse")){
             if(other.GetComponent<Tag_PlayerWeapon>()!=null){
                 var en=other.GetComponent<Tag_PlayerWeapon>().energy;
-                if(other.GetComponent<Tag_DmgPhaseFreq>()!=null){en*=0.01f;}
+                if(UniCollider.GetDmgVal(other.gameObject.name).phase){en*=0.01f;}
                 spawnReqsMono.AddMissed(en);
-            }
-            Destroy(other.gameObject,0.02f);
+                if(other.GetComponent<Tag_PlayerWeapon>().shreddable)Destroy(other.gameObject,0.02f);
+            }else{Destroy(other.gameObject,0.02f);}
         }
     }
 }

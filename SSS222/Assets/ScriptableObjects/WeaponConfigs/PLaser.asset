@@ -16,15 +16,16 @@ MonoBehaviour:
   assetName: PLaser
   weaponType: 0
   weaponTypeProperties:
-    id: 0
+    rid: 0
   costType: 4
   costTypeProperties:
-    id: 1
+    rid: 1
   ovheat: 0.44
   duration: 10
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: weaponTypeBullet, ns: , asm: Assembly-CSharp}
       data:
         leftSide: 1
@@ -48,8 +49,10 @@ MonoBehaviour:
         recoilTime: 0
         flare: 1
         flareDur: 0.3
-    00000001:
+    - rid: 1
       type: {class: costTypeBlackEnergy, ns: , asm: Assembly-CSharp}
       data:
-        cost: 1
+        cost: 1.5
         regularEnergyCost: 4
+        benergyCost: 15
+        ammoCrafted: 6

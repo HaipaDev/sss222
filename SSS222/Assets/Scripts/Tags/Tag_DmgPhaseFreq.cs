@@ -12,6 +12,6 @@ public class Tag_DmgPhaseFreq:MonoBehaviour{
     public void Update(){   if(!GameSession.GlobalTimeIsPaused){
         if(phaseFreqFirst==0){firstDone=true;}
         if(phaseTimer>0){phaseTimer-=Time.deltaTime;}
-        else if(phaseTimer<=0&&phaseTimer!=-4){if(!String.IsNullOrEmpty(soundPhase)){AudioManager.instance.Play(soundPhase);}phaseTimer=-4;}
+        else if(phaseTimer<=0&&phaseTimer!=-4){phaseTimer=-4;}
     }}
 }

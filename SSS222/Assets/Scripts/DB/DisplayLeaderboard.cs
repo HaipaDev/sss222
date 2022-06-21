@@ -19,8 +19,6 @@ public class DisplayLeaderboard : MonoBehaviour{
     void Start(){
         txtRank=transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         txtScore=transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        if(currentUser)DisplayCurrentUserHighscore();
-        else{var bt=gameObject.AddComponent<Button>();bt.onClick.AddListener(()=>OpenScoreUsersData());}
     }
     void Update(){
         txtRank.text="#"+rank.ToString();
