@@ -144,7 +144,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     //public float stayingTimerTotal;
 
     Rigidbody2D rb;
-    PlayerSkills pskills;
+    PlayerModules pmodules;
     [HideInInspector]public Joystick joystick;
     //Settings settings;
     IEnumerator shootCoroutine;
@@ -178,7 +178,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
         
         rb=GetComponent<Rigidbody2D>();
-        pskills=GetComponent<PlayerSkills>();
+        pmodules=GetComponent<PlayerModules>();
         joystick=FindObjectOfType<VariableJoystick>();
         SetUpMoveBoundaries();
         dashTime=startDashTime;
@@ -190,18 +190,6 @@ public class Player : MonoBehaviour{    public static Player instance;
 
         yield return new WaitForSeconds(0.06f);
 
-        var u=UpgradeMenu.instance;
-        if(GameSession.instance.CheckGamemodeSelected("Adventure")){
-            if(u!=null){
-                healthMax+=(Mathf.Clamp(u.healthMax_UpgradesLvl-1,0,999)*(u.healthMax_UpgradesCountMax*u.healthMax_UpgradeAmnt))+(u.healthMax_UpgradeAmnt*u.healthMax_UpgradesCount);/*if(u.total_UpgradesLvl>0)*/health=healthMax;
-                energyMax+=(Mathf.Clamp(u.energyMax_UpgradesLvl-1,0,999)*(u.energyMax_UpgradesCountMax*u.energyMax_UpgradeAmnt))+(u.energyMax_UpgradeAmnt*u.energyMax_UpgradesCount);if(u.total_UpgradesLvl>0)energy=energyMax;
-            }else{Debug.LogError("UpgradeMenu not found");}
-        }else if(GameSession.instance.CheckGamemodeSelected("Hardcore")){
-            GetComponent<AudioSource>().playOnAwake=true;
-            GetComponent<AudioSource>().loop=true;
-            GetComponent<AudioSource>().enabled=true;
-            GetComponent<AudioSource>().Play();
-        }
         //inputMaster.Player.Shoot.performed += _ => Shoot();
         //if(!speeded&&!slowed){speedPrev=moveSpeedInit;}
     }
@@ -301,7 +289,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             HideMeleeWeapons();
             UpdateItems();
             QuickHeal();
-            if(GetComponent<PlayerSkills>()!=null){if(GetComponent<PlayerSkills>().timerTeleport==-4){Shoot();}}else{Shoot();}
+            if(GetComponent<PlayerModules>()!=null){if(GetComponent<PlayerModules>().timerTeleport==-4){Shoot();}}else{Shoot();}
             Statuses();
             CalculateDefenseSpeed();
             Regen();
@@ -634,7 +622,7 @@ public class Player : MonoBehaviour{    public static Player instance;
 
     private void Die(){if(health<=0&&!dead){
         Hide();
-        pskills.DeathSkills();
+        pmodules.DeathSkills();
         StatsAchievsManager.instance.AddDeaths();
         GameSession.instance.SetAnalytics();
         //Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
@@ -653,7 +641,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         GetComponent<SpriteRenderer>().enabled=false;
         GetComponent<Collider2D>().enabled=false;
         if(GetComponent<TrailVFX>()!=null)GetComponent<TrailVFX>().enabled=false;
-        if(GetComponent<PlayerSkills>()!=null)GetComponent<PlayerSkills>().enabled=false;
+        if(GetComponent<PlayerModules>()!=null)GetComponent<PlayerModules>().enabled=false;
         foreach(Transform c in transform){Destroy(c.gameObject);}
     }
     void DeathFX(){
@@ -1112,12 +1100,12 @@ public class Player : MonoBehaviour{    public static Player instance;
             Destroy(shadow.gameObject,shadowLength);
         }
     }
-    void Regen(){//Move to a universal modules script instead of PlayerSkills
+    void Regen(){//Move to a universal modules script instead of PlayerModules
         if(!GameSession.GlobalTimeIsPaused){
             hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax/4);
             enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax/4);
-            if(UpgradeMenu.instance.crMendEnabled&&hpAbsorpAmnt<=0){if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){HPAbsorp(crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}}
-            if(UpgradeMenu.instance.enDissEnabled&&enAbsorpAmnt<=0){if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){EnAbsorp(energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}}
+            if(pmodules._isModuleEquiped("Crystal Mending")&&hpAbsorpAmnt<=0){if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){HPAbsorp(crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}}
+            if(pmodules._isModuleEquiped("Energy Dissolution")&&enAbsorpAmnt<=0){if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){EnAbsorp(energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}}
             if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax&&!_hasStatus("noHeal")){HPAddSilent(hpRegenAmnt);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}}
             if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax&&!_hasStatus("infEnergy")&&!_hasStatus("electrc")){AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}}
         }

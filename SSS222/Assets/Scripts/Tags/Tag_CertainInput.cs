@@ -12,11 +12,11 @@ public class Tag_CertainInput : MonoBehaviour{
             foreach(MonoBehaviour c in GetComponentsInChildren<MonoBehaviour>()){if(c!=this){if(!disabled.Contains(c)){disabled.Add(c);}c.enabled=false;}}
         }else if(inputType==InputType.touch&&SaveSerial.instance.settingsData.inputType==InputType.touch){
             if(Player.instance!=null){
-                if(Player.instance.GetComponent<PlayerSkills>().timerTeleport!=-4){
+                if(Player.instance.GetComponent<PlayerModules>().timerTeleport!=-4){
                     foreach(MonoBehaviour c in GetComponents<MonoBehaviour>()){if(c!=this){if(!disabled.Contains(c)){disabled.Add(c);}c.enabled=false;}}
                     foreach(MonoBehaviour c in GetComponentsInChildren<MonoBehaviour>()){if(c!=this){if(!disabled.Contains(c)){disabled.Add(c);}c.enabled=false;}}
                 }
-                if(Player.instance.GetComponent<PlayerSkills>().timerTeleport==-4){foreach(MonoBehaviour c in disabled)if(c!=this){c.enabled=true;}}
+                if(Player.instance.GetComponent<PlayerModules>().timerTeleport==-4){foreach(MonoBehaviour c in disabled)if(c!=this){c.enabled=true;}}
             }else{foreach(MonoBehaviour c in disabled)if(c!=this){c.enabled=true;}}
         }
         else if(inputType==InputType.mouse&&SaveSerial.instance.settingsData.inputType!=InputType.mouse){

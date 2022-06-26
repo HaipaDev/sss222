@@ -326,14 +326,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             if(u!=null){
             if(ss.total_UpgradesLvl>=u.saveBarsFromLvl){ss.total_UpgradesCount=u.total_UpgradesCount;}
             ss.total_UpgradesLvl=u.total_UpgradesLvl;
-            ss.healthMax_UpgradesCount=u.healthMax_UpgradesCount;
-            ss.healthMax_UpgradesLvl=u.healthMax_UpgradesLvl;
-            ss.energyMax_UpgradesCount=u.energyMax_UpgradesCount;
-            ss.energyMax_UpgradesLvl=u.energyMax_UpgradesLvl;
-            ss.speed_UpgradesCount=u.speed_UpgradesCount;
-            ss.speed_UpgradesLvl=u.speed_UpgradesLvl;
-            ss.luck_UpgradesCount=u.luck_UpgradesCount;
-            ss.luck_UpgradesLvl=u.luck_UpgradesLvl;
             //
             ss.mPulse_upgraded=u.mPulse_upgraded;
             ss.teleport_upgraded=u.teleport_upgraded;
@@ -363,14 +355,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(u!=null&&s!=null&&s.advD!=null){
         u.total_UpgradesCount=ss.total_UpgradesCount;
         u.total_UpgradesLvl=ss.total_UpgradesLvl;
-        u.healthMax_UpgradesCount=ss.healthMax_UpgradesCount;
-        u.healthMax_UpgradesLvl=ss.healthMax_UpgradesLvl;
-        u.energyMax_UpgradesCount=ss.energyMax_UpgradesCount;
-        u.energyMax_UpgradesLvl=ss.energyMax_UpgradesLvl;
-        u.speed_UpgradesCount=ss.speed_UpgradesCount;
-        u.speed_UpgradesLvl=ss.speed_UpgradesLvl;
-        u.luck_UpgradesCount=ss.luck_UpgradesCount;
-        u.luck_UpgradesLvl=ss.luck_UpgradesLvl;
         //
         u.mPulse_upgraded=ss.mPulse_upgraded;
         u.teleport_upgraded=ss.teleport_upgraded;
@@ -437,22 +421,22 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
 
     void CalculateLuck(){
         if(luckMulti<2.5f){
-            enballDropMulti=1+(enballMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
-            coinDropMulti=1+(coinMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
-            coreDropMulti=1+(coreMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
-            rarePwrupMulti=1+(rareMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
-            legendPwrupMulti=1+(legendMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt));
+            enballDropMulti=1+(enballMultiAmnt*(luckMulti-1));
+            coinDropMulti=1+(coinMultiAmnt*(luckMulti-1));
+            coreDropMulti=1+(coreMultiAmnt*(luckMulti-1));
+            rarePwrupMulti=1+(rareMultiAmnt*(luckMulti-1));
+            legendPwrupMulti=1+(legendMultiAmnt*(luckMulti-1));
         }else{
             var enballMultiAmntS=0.003f;
             var coinMultiAmntS=0.004f;
             var coreMultiAmntS=0.002f;
             var rareMultiAmntS=0.0002f;
             var legendMultiAmntS=0.02f;
-            enballDropMulti=Mathf.Clamp(1+(enballMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+enballMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
-            coinDropMulti=Mathf.Clamp(1+(coinMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+coinMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
-            coreDropMulti=Mathf.Clamp(1+(coreMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,2)+coreMultiAmntS*((luckMulti-2)/UpgradeMenu.instance.luck_UpgradeAmnt);
-            rarePwrupMulti=Mathf.Clamp(1+(rareMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+rareMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
-            legendPwrupMulti=Mathf.Clamp(1+(legendMultiAmnt*((luckMulti-1)/UpgradeMenu.instance.luck_UpgradeAmnt)),0,3)+legendMultiAmntS*((luckMulti-3)/UpgradeMenu.instance.luck_UpgradeAmnt);
+            enballDropMulti=Mathf.Clamp(1+(enballMultiAmnt*(luckMulti-1)),0,3)+enballMultiAmntS*((luckMulti-3));
+            coinDropMulti=Mathf.Clamp(1+(coinMultiAmnt*(luckMulti-1)),0,3)+coinMultiAmntS*((luckMulti-3));
+            coreDropMulti=Mathf.Clamp(1+(coreMultiAmnt*(luckMulti-1)),0,2)+coreMultiAmntS*((luckMulti-2));
+            rarePwrupMulti=Mathf.Clamp(1+(rareMultiAmnt*(luckMulti-1)),0,3)+rareMultiAmntS*((luckMulti-3));
+            legendPwrupMulti=Mathf.Clamp(1+(legendMultiAmnt*(luckMulti-1)),0,3)+legendMultiAmntS*((luckMulti-3));
         }
     }
     public void CheckCodes(string fkey, string nkey){gitignoreScript.instance.CheckCodes(fkey, nkey);}

@@ -122,12 +122,6 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public float powerups_energyNeeded=25f;
     public float powerups_energyDupl=42f;
     public int coresCollectGain=1;
-[Header("Skills")]
-    public Skill[] skillsPlayer;
-    public float timeOverhaul=10;
-    public bool playerExhaustROF=true;
-    public int crystalMend_refillCost=2;
-    public float energyDiss_refillCost=3.3f;
 #endregion
 #region//Spawns - Waves, Disrupters, Powerups
 [Title("Spawns - Waves, Disrupters, Powerups", titleAlignment: TitleAlignments.Centered)]
@@ -204,46 +198,28 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public float upgradeMenuOpenGameSpeed=0;
     [ShowIf("@this.cfgName.Contains(\"Adventure\")")]public int saveBarsFromLvl=5;
     public int total_UpgradesCountMax=5;
-    public int other_UpgradesCountMax=10;
-    public float healthMax_UpgradeAmnt=5f;
-    public bool hpStat_enabled=true;
-    public int healthMax_UpgradeCost=1;
-    public int healthMax_UpgradesCountMax=5;
-    public bool energyStat_enabled=true;
-    public float energyMax_UpgradeAmnt=5f;
-    public int energyMax_UpgradeCost=1;
-    public int energyMax_UpgradesCountMax=4;
-    public bool speedStat_enabled=true;
-    public float speed_UpgradeAmnt=0.1f;
-    public int speed_UpgradeCost=1;
-    public int speed_UpgradesCountMax=5;
-    public bool luckStat_enabled=true;
-    public float luck_UpgradeAmnt=0.05f;
-    public int luck_UpgradeCost=1;
-    public int luck_UpgradesCountMax=5;
-    public int defaultPowerup_upgradeCost1=1;
-    public int defaultPowerup_upgradeCost2=1;
-    public int defaultPowerup_upgradeCost3=4;
-    //public int energyRefill_upgradeCost=2;
-    //public int energyRefill_upgradeCost2=3;
     public bool mPulse_enabled=true;
     public int mPulse_upgradeCost=3;
     public int mPulse_lvlReq=2;
-    public bool postMortem_enabled=true;
     public int postMortem_upgradeCost=0;
     public int postMortem_lvlReq=5;
-    public bool teleport_enabled=true;
     public int teleport_upgradeCost=2;
     public int teleport_lvlReq=3;
-    public bool overhaul_enabled=false;
     public int overhaul_upgradeCost=3;
     public int overhaul_lvlReq=3;
-    public bool crMend_enabled=true;
     public int crMend_upgradeCost=5;
     public int crMend_lvlReq=5;
-    public bool enDiss_enabled=true;
     public int enDiss_upgradeCost=4;
     public int enDiss_lvlReq=4;
+[Header("Skills")]
+    public List<SkillProperties> skillsPlayer;
+    public List<ModuleProperties> modulesPlayer;
+    public int playerModulesCapacity=4;
+    //public int playerSkillsCapacity=2;
+    public float timeOverhaul=10;
+    public bool playerExhaustROF=true;
+    public int crystalMend_refillCost=2;
+    public float energyDiss_refillCost=3.3f;
     //public int[] unlockableSkills;
 #endregion
 #endregion
@@ -600,6 +576,11 @@ public class HLaserSettings{
     public RuntimeAnimatorController hlaserAnimation;
 }
 
+[System.Serializable]public class ModuleProperties{
+    public string name;
+    public int lvlReq;
+    public int coreCost;
+}
 
 #endregion
 

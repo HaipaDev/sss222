@@ -196,17 +196,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 
 		public int total_UpgradesCount=0;
 		public int total_UpgradesLvl=0;
-		public int healthMax_UpgradesCount=0;
-		public int healthMax_UpgradesLvl=0;
-		public int energyMax_UpgradesCount=0;
-		public int energyMax_UpgradesLvl=0;
-		public int speed_UpgradesCount=0;
-		public int speed_UpgradesLvl=0;
-		public int luck_UpgradesCount=0;
-		public int luck_UpgradesLvl=0;
-		//
-		public int defaultPowerup_upgradeCount=0;
-		public int energyRefill_upgraded=0;
+		
 		public int mPulse_upgraded=0;
 		public int teleport_upgraded=0;
 		public int overhaul_upgraded=0;

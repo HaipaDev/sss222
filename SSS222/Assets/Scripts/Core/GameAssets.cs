@@ -366,6 +366,16 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	public static float Normalize(float val,float min,float max){return (val-min)/(max-min);}
 	public static float InvertNormalized(float val){return 1-val;}
 	public static float InvertNormalizedMin(float val,float min){return (1-val)*min;}
+
+	
+
+    public static void SetActiveAllChildren(Transform transform, bool value){
+        foreach (Transform child in transform){
+            child.gameObject.SetActive(value);
+ 
+            SetActiveAllChildren(child, value);
+        }
+    }
 #endregion
 }
 

@@ -192,21 +192,8 @@ MonoBehaviour:
   powerups_energyDupl: 42
   coresCollectGain: 1
   skillsPlayer:
-  - name: Magnetic Pulse
-    ID: 0
-    item: {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
-    enCost: 33
-    cooldown: 30
-  - name: Teleport
-    ID: 0
-    item: {fileID: 11400000, guid: d66606c472024f44e8f0f96cdfac0c12, type: 2}
-    enCost: 20
-    cooldown: 40
-  - name: Overhaul
-    ID: 0
-    item: {fileID: 11400000, guid: e134429416de4d7479afc43faf800246, type: 2}
-    enCost: 0
-    cooldown: 90
+  - {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
+  - {fileID: 11400000, guid: d66606c472024f44e8f0f96cdfac0c12, type: 2}
   timeOverhaul: 10
   playerExhaustROF: 1
   crystalMend_refillCost: 2
@@ -1571,26 +1558,6 @@ MonoBehaviour:
   upgradeMenuOpenGameSpeed: 0
   saveBarsFromLvl: 0
   total_UpgradesCountMax: 5
-  other_UpgradesCountMax: 10
-  healthMax_UpgradeAmnt: 5
-  hpStat_enabled: 1
-  healthMax_UpgradeCost: 1
-  healthMax_UpgradesCountMax: 5
-  energyStat_enabled: 1
-  energyMax_UpgradeAmnt: 5
-  energyMax_UpgradeCost: 1
-  energyMax_UpgradesCountMax: 4
-  speedStat_enabled: 1
-  speed_UpgradeAmnt: 0.1
-  speed_UpgradeCost: 1
-  speed_UpgradesCountMax: 6
-  luckStat_enabled: 1
-  luck_UpgradeAmnt: 0.05
-  luck_UpgradeCost: 1
-  luck_UpgradesCountMax: 5
-  defaultPowerup_upgradeCost1: 1
-  defaultPowerup_upgradeCost2: 1
-  defaultPowerup_upgradeCost3: 4
   mPulse_enabled: 1
   mPulse_upgradeCost: 3
   mPulse_lvlReq: 2

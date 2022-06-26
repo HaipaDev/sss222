@@ -54,12 +54,12 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="enRegen") if(p.enRegenEnabled==true){_txt=p.enRegenAmnt.ToString();}else{_txt="0";}
 
 
-            PlayerSkills pskills=p.GetComponent<PlayerSkills>();
-            if(pskills!=null){
-                if(value=="cooldownQ") _txt=System.Math.Round(pskills.cooldownQ,0).ToString();
-                else if(value=="cooldownE") _txt=System.Math.Round(pskills.cooldownE,0).ToString();
+            PlayerModules pmodules=p.GetComponent<PlayerModules>();
+            if(pmodules!=null){
+                if(value=="cooldownQ") _txt=System.Math.Round(pmodules.skillsSlots[0].cooldown,0).ToString();
+                else if(value=="cooldownE") _txt=System.Math.Round(pmodules.skillsSlots[1].cooldown,0).ToString();
                 else if(value=="timerTeleport"){
-                    if(FindObjectOfType<PlayerSkills>()!=null){_txt=System.Math.Round(pskills.timerTeleport,1).ToString();}else{Destroy(transform.parent.gameObject);}
+                    if(FindObjectOfType<PlayerModules>()!=null){_txt=System.Math.Round(pmodules.timerTeleport,1).ToString();}else{Destroy(transform.parent.gameObject);}
                     if(_txt=="-4"){var tempColor=txt.color;tempColor.a=0;txt.color=tempColor;}
                 }
             }
@@ -73,19 +73,7 @@ public class ValueDisplay : MonoBehaviour{
         if(UpgradeMenu.instance!=null){     var u=UpgradeMenu.instance;
             if(value=="lvl_ship") _txt="Ship Level: "+u.total_UpgradesLvl.ToString();
             else if(value=="lvlPopup") _txt="Lvl up! ("+u.total_UpgradesLvl.ToString()+")";
-
-            else if(value=="lvl_hp") _txt="Lvl. "+u.healthMax_UpgradesLvl.ToString();
-            else if(value=="lvl_energy") _txt="Lvl. "+u.energyMax_UpgradesLvl.ToString();
-            else if(value=="lvl_speed") _txt="Lvl. "+u.speed_UpgradesLvl.ToString();
-            else if(value=="lvl_luck") _txt="Lvl. "+u.luck_UpgradesLvl.ToString();
-
-            else if(value=="healthMax_upgradeCost") _txt=u.healthMax_UpgradeCost.ToString();
-            else if(value=="energyMax_upgradeCost") _txt=u.energyMax_UpgradeCost.ToString();
-            else if(value=="speed_upgradeCost") _txt=u.speed_UpgradeCost.ToString();
-            else if(value=="luck_upgradeCost") _txt=u.luck_UpgradeCost.ToString();
-            else if(value=="defaultPowerup_upgradeCost1") _txt=u.defaultPowerup_upgradeCost1.ToString();
-            else if(value=="defaultPowerup_upgradeCost2") _txt=u.defaultPowerup_upgradeCost2.ToString();
-            else if(value=="defaultPowerup_upgradeCost3") _txt=u.defaultPowerup_upgradeCost3.ToString();
+            
             //else if(value=="energyRefill_upgradeCost") _txt=u.energyRefill_upgradeCost.ToString();
             else if(value=="mPulse_upgradeCost") _txt=u.mPulse_upgradeCost.ToString();
             else if(value=="postMortem_upgradeCost") _txt=u.postMortem_upgradeCost.ToString();

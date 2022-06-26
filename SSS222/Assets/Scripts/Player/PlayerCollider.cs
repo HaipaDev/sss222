@@ -134,7 +134,7 @@ public class PlayerCollider : MonoBehaviour{
                     PwrupEnergyAdd();
                     player.Hack(13);
                     player.InfEnergy(13);
-                    player.GetComponent<PlayerSkills>().ResetSkillCooldowns();
+                    player.GetComponent<PlayerModules>().ResetSkillCooldowns();
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("matrixPwrup").name)){player.SetStatus("matrix",player.matrixTime);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("accelPwrup").name)){player.SetStatus("accel",player.accelTime);}

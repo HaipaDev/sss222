@@ -33,6 +33,6 @@ public class OnScreenButtons : MonoBehaviour{
         }else{UpgradeMenu.instance.Resume();}
     }
 
-    public void UseSkillQ(){if(FindObjectOfType<PlayerSkills>()!=null)FindObjectOfType<PlayerSkills>().UseSkills(1);}
-    public void UseSkillE(){if(FindObjectOfType<PlayerSkills>()!=null)FindObjectOfType<PlayerSkills>().UseSkills(2);}
+    public void UseSkillQ(){if(Player.instance!=null)Player.instance.GetComponent<PlayerModules>().UseSkills(1);}
+    public void UseSkillE(){if(Player.instance!=null)Player.instance.GetComponent<PlayerModules>().UseSkills(2);}
 }

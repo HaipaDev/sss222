@@ -8,15 +8,15 @@ public class EnableChildOnPlayer : MonoBehaviour{
     [SerializeField] public float valueReq=1;
     public float value;
     Image image;
-    PlayerSkills pskills;
+    PlayerModules pmodules;
     void Start(){
         image=GetComponent<Image>();
-        pskills=FindObjectOfType<PlayerSkills>();
+        pmodules=FindObjectOfType<PlayerModules>();
         //valueReq=
     }
 
     void Update(){
-        value=(float)pskills.GetType().GetField(valueName).GetValue(pskills);
+        value=(float)pmodules.GetType().GetField(valueName).GetValue(pmodules);
         if(value>=valueReq){
             SetActiveAllChildren(transform,true);
         }else{SetActiveAllChildren(transform,false);}

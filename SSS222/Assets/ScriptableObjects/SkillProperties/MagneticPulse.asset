@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21fab347b30673d498850dec5e9b780c, type: 3}
-  m_Name: 1Teleport
+  m_Name: MagneticPulse
   m_EditorClassIdentifier: 
-  skillName: Teleport
-  sprite: {fileID: 21300000, guid: 3540a37b856007c428851ab6e773fffc, type: 3}
-  ID: 1
-  costType: 0
+  skillName: Magnetic Pulse
+  sprite: {fileID: 21300000, guid: 75f232caa86094a4ca5b00c738dec7f1, type: 3}
+  ID: 0
+  costType: 4
   costTypeProperties:
     cost: 0
-  cooldown: 40
+  cooldown: 30
