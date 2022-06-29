@@ -7,8 +7,7 @@ using Sirenix.OdinInspector;
 public class ModuleProperties : ScriptableObject{
     [SerializeField] public string name = "";
     [TextArea][SerializeField] public string desc = "";
-    [SerializeField] public Color descGradient1 = Color.white;
-    [SerializeField] public Color descGradient2 = Color.white;
+    [SerializeField] public TMPro.VertexGradient descGradient;
     [DisableIf("@this.iconsGo!=null")][SerializeField] public Sprite sprite;
     [DisableIf("@this.sprite!=null")][AssetsOnly][SerializeField] public GameObject iconsGo;
 }

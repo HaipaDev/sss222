@@ -7713,7 +7713,7 @@ GameObject:
   - component: {fileID: 8679239392942118271}
   - component: {fileID: 1083368379794691712}
   m_Layer: 5
-  m_Name: Skills List_Content
+  m_Name: SkillSlots List_Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16350,7 +16350,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -14.379, y: 845.3002}
-  m_SizeDelta: {x: 949.16, y: 0}
+  m_SizeDelta: {x: 949.16, y: 784.962}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6663180618479052157
 CanvasRenderer:
@@ -16638,7 +16638,12 @@ MonoBehaviour:
   skillsList: {fileID: 1109317722389345964}
   backButton: {fileID: 915316370113210191}
   lvlbar: {fileID: 3062890652429657256}
-  prevGameSpeed: 1
+  moduleSkillElementPrefab: {fileID: 166784470436502556, guid: 6deca6778e2d91d41a4dde1912814659,
+    type: 3}
+  moduleSlotPrefab: {fileID: 3712538307994798449, guid: 9ddcba613c8984641a72826204ccf149,
+    type: 3}
+  skillSlotPrefab: {fileID: 302559054732291780, guid: 965f01b4a24cae5479b029ee991dc738,
+    type: 3}
   total_UpgradesCountMax: 5
   mPulse_upgradeCost: 3
   mPulse_lvlReq: 3
@@ -16809,9 +16814,9 @@ RectTransform:
   m_Father: {fileID: 2544460953841063313}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 486.083, y: -526.60547}
   m_SizeDelta: {x: 972.166, y: 217.737}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5525092550747915235
@@ -18630,9 +18635,9 @@ RectTransform:
   m_Father: {fileID: 728617077713755714}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 474.58, y: -591.2215}
   m_SizeDelta: {x: 949.16, y: 387.481}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5416222291035704181
@@ -18680,7 +18685,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3589474696624639885}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed7e1a29359d8a64798ee0137a2c474b, type: 3}
   m_Name: 
@@ -22350,7 +22355,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -24006,7 +24011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5451999036647300189
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24599,9 +24604,9 @@ RectTransform:
   m_Father: {fileID: 728617077713755714}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 474.58, y: -193.7405}
   m_SizeDelta: {x: 949.16, y: 387.481}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2372993635502721691
@@ -24649,7 +24654,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5784853488060556425}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed7e1a29359d8a64798ee0137a2c474b, type: 3}
   m_Name: 
@@ -25759,9 +25764,9 @@ RectTransform:
   m_Father: {fileID: 2544460953841063313}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 486.083, y: -108.8685}
   m_SizeDelta: {x: 972.166, y: 217.737}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &554187443265681963
@@ -33316,7 +33321,7 @@ GameObject:
   - component: {fileID: 1289860606794612137}
   - component: {fileID: 3194948978648691292}
   m_Layer: 5
-  m_Name: Modules List_Content
+  m_Name: ModuleSlots List_Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33344,7 +33349,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 32.539}
-  m_SizeDelta: {x: 0, y: -68.477}
+  m_SizeDelta: {x: -22.166016, y: -68.477}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1289860606794612137
 MonoBehaviour:
@@ -35171,7 +35176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6976654464125756608
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35968,7 +35973,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -1068.0668}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &734922871689458854
 MonoBehaviour:
@@ -36936,7 +36941,7 @@ PrefabInstance:
     - target: {fileID: 302559054732291780, guid: 965f01b4a24cae5479b029ee991dc738,
         type: 3}
       propertyPath: m_Name
-      value: Skill1
+      value: SkillSlot1
       objectReference: {fileID: 0}
     - target: {fileID: 1449447469859287286, guid: 965f01b4a24cae5479b029ee991dc738,
         type: 3}
@@ -37304,7 +37309,7 @@ PrefabInstance:
     - target: {fileID: 3712538307994798449, guid: 9ddcba613c8984641a72826204ccf149,
         type: 3}
       propertyPath: m_Name
-      value: Module3
+      value: ModuleSlot3
       objectReference: {fileID: 0}
     - target: {fileID: 9104482352357411333, guid: 9ddcba613c8984641a72826204ccf149,
         type: 3}
@@ -37840,7 +37845,7 @@ PrefabInstance:
     - target: {fileID: 3712538307994798449, guid: 9ddcba613c8984641a72826204ccf149,
         type: 3}
       propertyPath: m_Name
-      value: Module0
+      value: ModuleSlot0
       objectReference: {fileID: 0}
     - target: {fileID: 5117273149961691842, guid: 9ddcba613c8984641a72826204ccf149,
         type: 3}
@@ -38277,7 +38282,7 @@ PrefabInstance:
     - target: {fileID: 3712538307994798449, guid: 9ddcba613c8984641a72826204ccf149,
         type: 3}
       propertyPath: m_Name
-      value: Module1
+      value: ModuleSlot1
       objectReference: {fileID: 0}
     - target: {fileID: 9104482352357411333, guid: 9ddcba613c8984641a72826204ccf149,
         type: 3}
@@ -38402,7 +38407,7 @@ PrefabInstance:
     - target: {fileID: 302559054732291780, guid: 965f01b4a24cae5479b029ee991dc738,
         type: 3}
       propertyPath: m_Name
-      value: Skill0
+      value: SkillSlot0
       objectReference: {fileID: 0}
     - target: {fileID: 2808455123140899727, guid: 965f01b4a24cae5479b029ee991dc738,
         type: 3}
@@ -39958,7 +39963,7 @@ PrefabInstance:
     - target: {fileID: 3712538307994798449, guid: 9ddcba613c8984641a72826204ccf149,
         type: 3}
       propertyPath: m_Name
-      value: Module2
+      value: ModuleSlot2
       objectReference: {fileID: 0}
     - target: {fileID: 9104482352357411333, guid: 9ddcba613c8984641a72826204ccf149,
         type: 3}

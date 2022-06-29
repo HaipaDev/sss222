@@ -56,8 +56,7 @@ public class ValueDisplay : MonoBehaviour{
 
             PlayerModules pmodules=p.GetComponent<PlayerModules>();
             if(pmodules!=null){
-                if(value=="cooldownQ") _txt=System.Math.Round(pmodules.GetSkillFromID(0).cooldown,0).ToString();
-                else if(value=="cooldownE") _txt=System.Math.Round(pmodules.GetSkillFromID(1).cooldown,0).ToString();
+                if(value.Contains("cooldownSkill_")) _txt=System.Math.Round(pmodules.GetSkillFromID(int.Parse(value.Split('_')[1])).cooldown,0).ToString();
                 else if(value=="timerTeleport"){
                     if(FindObjectOfType<PlayerModules>()!=null){_txt=System.Math.Round(pmodules.timerTeleport,1).ToString();}else{Destroy(transform.parent.gameObject);}
                     if(_txt=="-4"){var tempColor=txt.color;tempColor.a=0;txt.color=tempColor;}

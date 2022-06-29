@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Sirenix.OdinInspector;
@@ -22,7 +23,9 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     [SceneObjectsOnly]public GameObject skillsList;
     [SceneObjectsOnly]public GameObject backButton;
     [SceneObjectsOnly]public XPBars lvlbar;
-    public float prevGameSpeed=1f;
+    [AssetsOnly]public GameObject moduleSkillElementPrefab;
+    [AssetsOnly]public GameObject moduleSlotPrefab;
+    [AssetsOnly]public GameObject skillSlotPrefab;
     [Header("Upgrade Values")]
     public int total_UpgradesCountMax=5;
     public int mPulse_upgradeCost=3;
@@ -46,12 +49,11 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     public int overhaul_upgraded;
     public int crMend_upgraded;
     public int enDiss_upgraded;
-    Player player;
     PlayerModules pmodules;
     IEnumerator co;
 
-    [SerializeField]int selectedModuleSlot=-1;
-    [SerializeField]int selectedSkillSlot=-1;
+    [DisableInEditorMode][SerializeField]int selectedModuleSlot=-1;
+    [DisableInEditorMode][SerializeField]int selectedSkillSlot=-1;
     int lvlID;
     int lvlcr;
     float startTimer=0.5f;
@@ -79,9 +81,10 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     }
     void Start(){
         instance=this;
-        player=Player.instance;
         pmodules=Player.instance.GetComponent<PlayerModules>();
         if(GameSession.instance.CheckGamemodeSelected("Adventure")){LvlEventsAdventure();}
+        SetupModulesAndSkills();
+
         Resume();
     }
     void Update(){
@@ -91,12 +94,14 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         }
         if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){Back();}
         LevelEverything();
+        //SetModulesAndSkillsPreviews();
     }
 
     public void Resume(){
         upgradeMenuUI.SetActive(false);
         upgradeMenu2UI.SetActive(false);
         lvltreeUI.SetActive(false);
+        BackToModulesSkillsInventory();
         GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
         UpgradeMenuIsOpen=false;
@@ -132,6 +137,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         invMenu.SetActive(false);
         statsMenu.SetActive(false);
         modulesSkillsPanel.SetActive(true);
+        SetModulesAndSkillsPreviews();
     }
     public void OpenLvlTree(){
         upgradeMenuUI.SetActive(false);
@@ -163,7 +169,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         modulesList.SetActive(false);
         skillsList.SetActive(false);
     }
-    public void BackToModulesSkillsInventory(){CloseAllModulesSkills();modulesSkillsInventory.SetActive(true);selectedModuleSlot=-1;selectedSkillSlot=-1;}
+    public void BackToModulesSkillsInventory(){CloseAllModulesSkills();modulesSkillsInventory.SetActive(true);selectedModuleSlot=-1;selectedSkillSlot=-1;SetModulesAndSkillsPreviews();}
     public void OpenModulesList(int id){selectedModuleSlot=id;CloseAllModulesSkills();modulesList.SetActive(true);}
     public void OpenSkillsList(int id){selectedSkillSlot=id;CloseAllModulesSkills();skillsList.SetActive(true);}
     public void SetModuleSlot(string name){
@@ -175,6 +181,148 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         if(pmodules._isSkillEquipped(name)){pmodules.ClearSkill(name);}
         pmodules.SetSkill(selectedSkillSlot,name);
         BackToModulesSkillsInventory();
+    }
+
+    void SetupModulesAndSkills(){
+        var modulesSkillsSlotsContainer=modulesSkillsInventory.transform.GetChild(0);
+        var modulesSlotsContainer=modulesSkillsSlotsContainer.transform.GetChild(0).GetChild(1);
+        var skillsSlotsContainer=modulesSkillsSlotsContainer.transform.GetChild(1).GetChild(1);
+        ///ModuleSlots
+        foreach(Transform t in modulesSlotsContainer){Destroy(t.gameObject);}
+        for(var i=0;i<GameRules.instance.playerModulesCapacity;i++){
+            var go=Instantiate(moduleSlotPrefab,modulesSlotsContainer);
+            go.name="ModuleSlot"+i;
+            var _i=i;go.GetComponent<Button>().onClick.AddListener(()=>OpenModulesList(_i));
+            //go.GetComponent<Button>().onClick.AddListener(()=>OpenModulesList(i));
+           // go.GetComponent<Button>().onClick.SetPersistentListenerState(0,);
+        }
+        //var _i=0;foreach(Transform t in modulesSlotsContainer){t.GetComponent<Button>().onClick.AddListener(()=>OpenModulesList(_i));Debug.Log(_i);_i++;}
+
+        ///SkillSlots
+        foreach(Transform t in skillsSlotsContainer){Destroy(t.gameObject);}
+        for(var i=0;i<2/*GameRules.instance.playerSkillsCapacity*/;i++){
+            var go=Instantiate(skillSlotPrefab,skillsSlotsContainer);
+            go.name="SkillSlot"+i;
+            var _i=i;go.GetComponent<Button>().onClick.AddListener(()=>OpenSkillsList(_i));
+            var _key="Q";if(i==1){_key="E";}
+            go.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text=_key;
+        }
+        //_i=0;foreach(Transform t in skillsSlotsContainer){t.GetComponent<Button>().onClick.AddListener(()=>OpenSkillsList(_i));_i++;}
+
+        ///Modules
+        var modulesContainer=modulesList.transform.GetChild(0);
+        foreach(Transform t in modulesContainer){Destroy(t.gameObject);}
+        var goModule0=Instantiate(moduleSkillElementPrefab,modulesContainer);
+        goModule0.name="Empty";
+        goModule0.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text="Empty";
+        goModule0.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text="";
+        goModule0.transform.GetChild(1).GetComponent<TextMeshProUGUI>().colorGradient=new VertexGradient(Color.white);
+        goModule0.transform.GetChild(2).GetComponent<Image>().sprite=moduleSlotPrefab.GetComponent<Image>().sprite;
+        foreach(Transform t in goModule0.transform.GetChild(2)){Destroy(t.gameObject);}
+        goModule0.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetModuleSlot(""));
+        Destroy(goModule0.transform.GetChild(3).GetChild(1).gameObject);
+        Destroy(goModule0.transform.GetChild(3).GetChild(0).gameObject);
+        Destroy(goModule0.transform.GetChild(4).gameObject);
+
+        foreach(ModulePropertiesGR m in GameRules.instance.modulesPlayer){
+            var go=Instantiate(moduleSkillElementPrefab,modulesContainer);
+            go.name=m.item.name;
+            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=m.item.name;
+            go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=m.item.desc;
+            go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().colorGradient=new VertexGradient(m.item.descGradient.topLeft,m.item.descGradient.topRight,m.item.descGradient.bottomLeft,m.item.descGradient.bottomRight);
+            go.transform.GetChild(2).GetComponent<Image>().sprite=moduleSlotPrefab.GetComponent<Image>().sprite;
+            if(m.item.sprite!=null){go.transform.GetChild(2).GetChild(0).GetComponent<Image>().sprite=m.item.sprite;}
+            else{
+                foreach(Transform t in go.transform.GetChild(2)){Destroy(t.gameObject);}
+                if(m.item.iconsGo!=null){Instantiate(m.item.iconsGo,go.transform.GetChild(2));}
+            }
+            go.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetModuleSlot(m.item.name));
+            go.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text=m.coreCost.ToString();
+            go.transform.GetChild(4).GetComponent<ShipLevelRequired>().value=m.lvlReq;
+        }
+
+        ///Skills
+        var skillsContainer=skillsList.transform.GetChild(0);
+        foreach(Transform t in skillsContainer){Destroy(t.gameObject);}
+        var goSkill0=Instantiate(moduleSkillElementPrefab,skillsContainer);
+        goSkill0.name="Empty";
+        goSkill0.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text="Empty";
+        goSkill0.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text="";
+        goSkill0.transform.GetChild(1).GetComponent<TextMeshProUGUI>().colorGradient=new VertexGradient(Color.white);
+        goSkill0.transform.GetChild(2).GetComponent<Image>().sprite=skillSlotPrefab.GetComponent<Image>().sprite;
+        foreach(Transform t in goSkill0.transform.GetChild(2)){Destroy(t.gameObject);}
+        goSkill0.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetSkillSlot(""));
+        Destroy(goSkill0.transform.GetChild(3).GetChild(1).gameObject);
+        Destroy(goSkill0.transform.GetChild(3).GetChild(0).gameObject);
+        Destroy(goSkill0.transform.GetChild(4).gameObject);
+
+        foreach(SkillPropertiesGR s in GameRules.instance.skillsPlayer){
+            var go=Instantiate(moduleSkillElementPrefab,skillsContainer);
+            go.name=s.item.name;
+            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=s.item.name;
+            go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=s.item.desc;
+            go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().colorGradient=new VertexGradient(s.item.descGradient.topLeft,s.item.descGradient.topRight,s.item.descGradient.bottomLeft,s.item.descGradient.bottomRight);
+            go.transform.GetChild(2).GetComponent<Image>().sprite=skillSlotPrefab.GetComponent<Image>().sprite;
+            if(s.item.sprite!=null){go.transform.GetChild(2).GetChild(0).GetComponent<Image>().sprite=s.item.sprite;}
+            else{
+                foreach(Transform t in go.transform.GetChild(2)){Destroy(t.gameObject);}
+                if(s.item.iconsGo!=null){Instantiate(s.item.iconsGo,go.transform.GetChild(2));}
+            }
+            go.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetSkillSlot(s.item.name));
+            go.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text=s.coreCost.ToString();
+            go.transform.GetChild(4).GetComponent<ShipLevelRequired>().value=s.lvlReq;
+        }
+    }
+
+    //void SetModulesAndSkillsPreviews(){StartCoroutine(SetModulesAndSkillsPreviewsI());}
+    //IEnumerator SetModulesAndSkillsPreviewsI(){
+    void SetModulesAndSkillsPreviews(){
+        //yield return new WaitForSecondsRealtime(0.05f);
+        var modulesSkillsSlotsContainer=modulesSkillsInventory.transform.GetChild(0);
+        var modulesSlotsContainer=modulesSkillsSlotsContainer.transform.GetChild(0).GetChild(1);
+        var skillsSlotsContainer=modulesSkillsSlotsContainer.transform.GetChild(1).GetChild(1);
+
+        for(var i=0;i<modulesSlotsContainer.childCount;i++){
+            var t=modulesSlotsContainer.GetChild(i);
+            if(pmodules.moduleSlots[i]!=""){
+                var m=pmodules.GetModuleProperties(pmodules.moduleSlots[i]);
+                if(t.GetComponent<Image>().material!=null)t.GetComponent<Image>().material=null;
+                if(m.item.sprite!=null){
+                    if(t.GetChild(0).childCount>0){foreach(Transform tt in t.GetChild(0))Destroy(tt.gameObject);}
+                    t.GetChild(0).GetComponent<Image>().enabled=true;
+                    t.GetChild(0).GetComponent<Image>().sprite=m.item.sprite;
+                }else{
+                    t.GetChild(0).GetComponent<Image>().enabled=false;
+                    if(t.GetChild(0).childCount>0){foreach(Transform tt in t.GetChild(0))Destroy(tt.gameObject);}
+                    if(m.item.iconsGo!=null)Instantiate(m.item.iconsGo,t.GetChild(0));
+                }
+            }else{
+                t.GetComponent<Image>().material=GameAssets.instance.GetMat("GrayedOut");
+                t.GetChild(0).GetComponent<Image>().enabled=false;
+                if(t.GetChild(0).childCount>0){foreach(Transform tt in t.GetChild(0))Destroy(tt.gameObject);}
+            }
+        }
+
+        for(var i=0;i<skillsSlotsContainer.childCount;i++){
+            var t=skillsSlotsContainer.GetChild(i);
+            if(pmodules.skillsSlots[i]!=""){
+                var s=pmodules.GetSkillProperties(pmodules.skillsSlots[i]);
+                if(t.GetComponent<Image>().material!=null)t.GetComponent<Image>().material=null;
+                if(s.item.sprite!=null){
+                    if(t.GetChild(0).childCount>0){foreach(Transform tt in t.GetChild(0))Destroy(tt.gameObject);}
+                    t.GetChild(0).GetComponent<Image>().enabled=true;
+                    t.GetChild(0).GetComponent<Image>().sprite=s.item.sprite;
+                }else{
+                    t.GetChild(0).GetComponent<Image>().enabled=false;
+                    if(t.GetChild(0).childCount>0){foreach(Transform tt in t.GetChild(0))Destroy(tt.gameObject);}
+                    if(s.item.iconsGo!=null)Instantiate(s.item.iconsGo,t.GetChild(0));
+                }
+            }else{
+                t.GetComponent<Image>().material=GameAssets.instance.GetMat("GrayedOut");
+                t.GetChild(0).GetComponent<Image>().enabled=false;
+                if(t.GetChild(0).childCount>0){foreach(Transform tt in t.GetChild(0))Destroy(tt.gameObject);}
+            }
+        }
     }
 
     public void UnlockSkillUni(int ID, ref int value,int number,int cost){
@@ -191,7 +339,6 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         if(ID==0){UnlockSkillUni(ID,ref mPulse_upgraded,2,postMortem_upgradeCost);}
         //if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,2,1);}
     }
-
     XPBars barr;
     void LevelEverything(){
         if(startTimer>0){startTimer-=Time.unscaledDeltaTime;}

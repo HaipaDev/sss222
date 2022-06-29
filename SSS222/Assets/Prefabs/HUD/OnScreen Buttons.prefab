@@ -602,9 +602,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5667438533769228324}
+  - component: {fileID: 4926171619288095340}
   - component: {fileID: 7192792640745658657}
   - component: {fileID: 7009432338533981220}
-  - component: {fileID: 4926171619288095340}
   m_Layer: 5
   m_Name: SkillEButton
   m_TagString: Untagged
@@ -634,6 +634,36 @@ RectTransform:
   m_AnchoredPosition: {x: -0.5, y: -1.26}
   m_SizeDelta: {x: 160.53088, y: 79.46463}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4926171619288095340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738227199516523254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.003921569}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &7192792640745658657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,36 +728,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1738227199516523254}
   m_CullTransparentMesh: 0
---- !u!114 &4926171619288095340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1738227199516523254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2319334021861142638
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,7 +815,6 @@ GameObject:
   - component: {fileID: 3240720620150640089}
   - component: {fileID: 4538471247501382295}
   - component: {fileID: 794906287898839512}
-  - component: {fileID: 7605245337770949104}
   m_Layer: 5
   m_Name: SkillIcon
   m_TagString: Untagged
@@ -881,20 +880,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7605245337770949104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2646464402225619134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 192dd84def644b84097a1ae90f321cec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 3645849979022812172}
-  ID: 0
 --- !u!1 &3505290174990457891
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,7 +973,6 @@ GameObject:
   - component: {fileID: 4091209613477588909}
   - component: {fileID: 170523158842112925}
   - component: {fileID: 8413324830530798786}
-  - component: {fileID: 5485143792016514385}
   m_Layer: 5
   m_Name: SkillIcon
   m_TagString: Untagged
@@ -1054,20 +1038,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5485143792016514385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3541955193304346147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 192dd84def644b84097a1ae90f321cec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 8394971088144500864}
-  ID: 0
 --- !u!1 &3645849979022812172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,7 +1090,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9411b513442c3346996bd9465d1ddeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: -1
+  ID: 1
+  iconImg: {fileID: 794906287898839512}
 --- !u!114 &7400861784902925972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1642,7 +1613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b49163d5326f942bba584de186f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: cooldownE
+  value: cooldownSkill_1
   onlyOnEnable: 0
   onValidate: 0
 --- !u!1 &5166189079869170004
@@ -1656,7 +1627,6 @@ GameObject:
   - component: {fileID: 2905568392048177254}
   - component: {fileID: 96123033708855927}
   - component: {fileID: 6685264912312550353}
-  - component: {fileID: 154082645284900795}
   m_Layer: 5
   m_Name: KeyE
   m_TagString: Untagged
@@ -1723,20 +1693,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5166189079869170004}
   m_CullTransparentMesh: 0
---- !u!114 &154082645284900795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5166189079869170004}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 600a4cbea75fb764f8d5edc4efb014d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ID: 0
-  on: 0
 --- !u!1 &5667832704262043052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1899,9 +1855,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5545081269186220794}
+  - component: {fileID: 2375806308165840977}
   - component: {fileID: 4724137908625428634}
   - component: {fileID: 4240462903431122115}
-  - component: {fileID: 2375806308165840977}
   m_Layer: 5
   m_Name: SkillQButton
   m_TagString: Untagged
@@ -1931,6 +1887,36 @@ RectTransform:
   m_AnchoredPosition: {x: -0.7, y: -0.94}
   m_SizeDelta: {x: 161.46442, y: 80.39801}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2375806308165840977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296385943962323806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.003921569}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &4724137908625428634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1995,36 +1981,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7296385943962323806}
   m_CullTransparentMesh: 0
---- !u!114 &2375806308165840977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7296385943962323806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7728758217062711411
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,7 +1992,6 @@ GameObject:
   - component: {fileID: 5189926817462816030}
   - component: {fileID: 4142067321288397671}
   - component: {fileID: 3219831964616948993}
-  - component: {fileID: 949867029715574917}
   m_Layer: 5
   m_Name: KeyQ
   m_TagString: Untagged
@@ -2103,20 +2058,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7728758217062711411}
   m_CullTransparentMesh: 0
---- !u!114 &949867029715574917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7728758217062711411}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 600a4cbea75fb764f8d5edc4efb014d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ID: 0
-  on: 0
 --- !u!1 &7885349374450291732
 GameObject:
   m_ObjectHideFlags: 0
@@ -2265,7 +2206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b49163d5326f942bba584de186f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: cooldownQ
+  value: cooldownSkill_0
   onlyOnEnable: 0
   onValidate: 0
 --- !u!1 &8112218807219443445
@@ -2396,7 +2337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9411b513442c3346996bd9465d1ddeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: -1
+  ID: 0
+  iconImg: {fileID: 8413324830530798786}
 --- !u!114 &6728949335746302054
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShipLevelRequired : MonoBehaviour{
-    //[SerializeField] 
-    TMPro.TextMeshProUGUI textObj;
+    TextMeshProUGUI textObj;
     [SerializeField] string valueName;
-    [SerializeField] int value;
+    [SerializeField] public int value;
     [SerializeField] string txt="LVL ";
     void Start(){
         var i=GameRules.instance;
         if(i!=null){
-            value=(int)UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance);
+            if(!System.String.IsNullOrEmpty(valueName))value=(int)UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance);
         }
 
-        textObj=this.gameObject.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
+        textObj=this.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         textObj.text=txt+value;
     }
     void Update(){

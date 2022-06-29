@@ -26,20 +26,20 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
 
 #region//Main
-    public GameObject Make(string obj, Vector2 pos){
-		GObject o=objects.Find(item => item.name == obj);
+    public GameObject Make(string str, Vector2 pos){
+		GObject o=objects.Find(x=>x.name==str);
 		if(o==null){
-			Debug.LogWarning("Object: " + obj + " not found!");
+			Debug.LogWarning("Object: " + str + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
         GameObject objref=Instantiate(gobj,pos,Quaternion.identity);
         return objref;
 	}
-    public GameObject MakeSpread(string obj, Vector2 pos, int amnt=3, float rangeX=0.5f, float rangeY=0.5f){
-		GObject o=objects.Find(item => item.name == obj);
+    public GameObject MakeSpread(string str, Vector2 pos, int amnt=3, float rangeX=0.5f, float rangeY=0.5f){
+		GObject o=objects.Find(x=>x.name==str);
 		if(o==null){
-			Debug.LogWarning("Object: " + obj + " not found!");
+			Debug.LogWarning("Object: " + str + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
@@ -52,10 +52,10 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
         return objref;
 	}
-    public GameObject VFX(string obj, Vector2 pos, float duration=0){
-		GObject o=vfx.Find(item => item.name == obj);
+    public GameObject VFX(string str, Vector2 pos, float duration=0){
+		GObject o=vfx.Find(x=>x.name==str);
 		if(o==null){
-			Debug.LogWarning("Object: " + obj + " not found!");
+			Debug.LogWarning("Object: " + str + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
@@ -66,19 +66,19 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 			return objref;
 		}else return null;
 	}
-    public GameObject Get(string obj,bool ignoreWarning=false){
-		GObject o=objects.Find(item => item.name == obj);
+    public GameObject Get(string str,bool ignoreWarning=false){
+		GObject o=objects.Find(x=>x.name==str);
 		if(o==null){
-			if(!String.IsNullOrEmpty(obj)&&!ignoreWarning)Debug.LogWarning("Object: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(str)&&!ignoreWarning)Debug.LogWarning("Object: " + str + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
         return gobj;
 	}
-	public Sprite GetObjSpr(string obj,bool ignoreWarning=false){
-		GObject o=objects.Find(item => item.name == obj);
+	public Sprite GetObjSpr(string str,bool ignoreWarning=false){
+		GObject o=objects.Find(x=>x.name==str);
 		if(o==null){
-			if(!String.IsNullOrEmpty(obj)&&!ignoreWarning)Debug.LogWarning("Object: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(str)&&!ignoreWarning)Debug.LogWarning("Object: " + str + " not found!");
 			return null;
 		}
 		Sprite spr=null;
@@ -86,54 +86,54 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		if(o.gobj.GetComponent<UnityEngine.UI.Image>()!=null)spr=o.gobj.GetComponent<UnityEngine.UI.Image>().sprite;
         return spr;
 	}
-	public GameObject GetVFX(string obj){
-		GObject o=vfx.Find(item => item.name == obj);
+	public GameObject GetVFX(string str){
+		GObject o=vfx.Find(x=>x.name==str);
 		if(o==null){
-			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("VFX: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(str))Debug.LogWarning("VFX: " + str + " not found!");
 			return null;
 		}
 		GameObject gobj=o.gobj;
 		return gobj;
         //if(SaveSerial.instance.settingsData.particles)return gobj; else return null;
 	}
-    public Sprite Spr(string spr,bool ignoreWarning=false){
-		GSprite gs=sprites.Find(item => item.name == spr);
+    public Sprite Spr(string str,bool ignoreWarning=false){
+		GSprite gs=sprites.Find(x=>x.name==str);
 		if(gs==null){
-			if(!String.IsNullOrEmpty(spr)&&!ignoreWarning)Debug.LogWarning("Sprite: " + spr + " not found!");
+			if(!String.IsNullOrEmpty(name)&&!ignoreWarning)Debug.LogWarning("Sprite: " + str + " not found!");
 			return null;
 		}
 		Sprite s=gs.spr;
         return s;
 	}
-    public Sprite SprAny(string spr){Sprite _spr;
-		_spr=Spr(spr,true);
-		if(_spr==null)_spr=GetObjSpr(spr,true);
-		if(_spr==null)Debug.LogWarning("Sprite not found in the library of sprites nor for the object by name: "+spr);
+    public Sprite SprAny(string str){Sprite _spr;
+		_spr=Spr(str,true);
+		if(_spr==null)_spr=GetObjSpr(str,true);
+		if(_spr==null)Debug.LogWarning("Sprite not found in the library of sprites nor for the object by name: "+str);
         return _spr;
 	}
-    public GameObject GetEnemyBullet(string obj){
-		GObject o=enemyBullets.Find(item => item.name == obj);
-		GameObject gobj=null;if(o!=null)gobj=o.gobj;
-		if(o==null){
-			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Enemy Bullet by name: " + obj + " not found! Trying to look for other objects");
-			gobj=Get(obj);
+    public GameObject GetEnemyBullet(string str){
+		GObject gobj=enemyBullets.Find(x=>x.name==str);
+		GameObject go=null;if(go!=null)go=gobj.gobj;
+		if(go==null){
+			if(!String.IsNullOrEmpty(str))Debug.LogWarning("Enemy Bullet by name: " + str + " not found! Trying to look for other objects");
+			go=Get(str);
 		}
-        return gobj;
+        return go;
 	}
 
-	public Material Mat(string mat){
-		GMaterial m=materials.Find(item => item.name == mat);
-		if(m==null){
+	public Material GetMat(string mat){
+		GMaterial gm=materials.Find(x=>x.name==mat);
+		if(gm==null){
 			if(!String.IsNullOrEmpty(mat))Debug.LogWarning("Material: " + mat + " not found!");
 			return null;
 		}
-		Material gm=m.mat;
-        return gm;
+		Material m=gm.mat;
+        return m;
 	}
 	public Material UpdateShaderMatProps(Material mat,ShaderMatProps shaderMatProps,bool isUI=false){	Material _mat=mat;
 		if(_mat!=null&&!_mat.shader.name.Contains("AllIn1SpriteShader")){
-        	if(!isUI){if(GameAssets.instance.Mat("AIOShaderMat")!=null)_mat=Instantiate(GameAssets.instance.Mat("AIOShaderMat"));}
-			else{if(GameAssets.instance.Mat("AIOShaderMat_UI")!=null)_mat=Instantiate(GameAssets.instance.Mat("AIOShaderMat_UI"));}
+        	if(!isUI){if(GameAssets.instance.GetMat("AIOShaderMat")!=null)_mat=Instantiate(GameAssets.instance.GetMat("AIOShaderMat"));}
+			else{if(GameAssets.instance.GetMat("AIOShaderMat_UI")!=null)_mat=Instantiate(GameAssets.instance.GetMat("AIOShaderMat_UI"));}
 		}
 		_mat.SetTexture("_MainTex",shaderMatProps.text);
 		_mat.SetFloat("_HsvShift",shaderMatProps.hue*360);
@@ -145,18 +145,18 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         _mat.SetFloat("_BlurHD",Convert.ToSingle(shaderMatProps.lowResBlur));
 		return _mat;
 	}
-	public PowerupItem GetPowerupItem(string obj){
-		PowerupItem o=powerupItems.Find(item => item.name == obj);
+	public PowerupItem GetPowerupItem(string str){
+		PowerupItem o=powerupItems.Find(x=>x.name==str);
 		if(o==null){
-			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Powerup by name: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(str))Debug.LogWarning("Powerup by name: " + str + " not found!");
 			return null;
 		}
         return o;
 	}
-	public PowerupItem GetPowerupItemByAsset(string obj){
-		PowerupItem o=powerupItems.Find(item => item.assetName == obj);
+	public PowerupItem GetPowerupItemByAsset(string str){
+		PowerupItem o=powerupItems.Find(x=>x.assetName==str);
 		if(o==null){
-			if(!String.IsNullOrEmpty(obj))Debug.LogWarning("Powerup by assetName: " + obj + " not found!");
+			if(!String.IsNullOrEmpty(str))Debug.LogWarning("Powerup by assetName: " + str + " not found!");
 			return null;
 		}
         return o;
@@ -165,7 +165,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 
 #region//Customizables
 	public CstmzSkin GetSkin(string str){
-		CstmzSkin s=skins.Find(item => item.name == str);
+		CstmzSkin s=skins.Find(x=>x.name==str);
         //Sprite gs=s.str;
 		//Sprite s=skins[i];
 		if(s==null){
@@ -175,7 +175,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return s;
 	}
 	public CstmzSkinVariant GetSkinVariant(string str,int id){
-		CstmzSkinVariant s=skins.Find(item => item.name == str).variants[id];
+		CstmzSkinVariant s=skins.Find(x=>x.name==str).variants[id];
 		if(s==null){
 			Debug.LogWarning("SkinVariant by id: " + id + " not found!");
 			return null;
@@ -183,8 +183,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return s;
 	}
 	public int GetSkinID(string str){
-		int i=skins.FindIndex(item => item.name == str);
-		if(skins.Find(item => item.name == str)==null){
+		int i=skins.FindIndex(x=>x.name==str);
+		if(skins.Find(x=>x.name==str)==null){
 			Debug.LogWarning("Skin: " + str + " not found!");
 			return 0;
 		}
@@ -198,7 +198,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
 
 	public CstmzTrail GetTrail(string str){
-		CstmzTrail s=trails.Find(item => item.name == str);
+		CstmzTrail s=trails.Find(x=>x.name==str);
 		if(s==null){
 			Debug.LogWarning("Trail: " + str + " not found!");
 			return null;
@@ -207,7 +207,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
 
 	public CstmzFlares GetFlares(string str){
-		CstmzFlares s=flares.Find(item => item.name == str);
+		CstmzFlares s=flares.Find(x=>x.name==str);
 		if(s==null){
 			Debug.LogWarning("Flares: " + str + " not found!");
 			return null;
@@ -215,7 +215,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return s;
 	}
 	public GameObject GetFlareFirst(string str){
-		CstmzFlares s=flares.Find(item => item.name == str);
+		CstmzFlares s=flares.Find(x=>x.name==str);
 		if(s==null){
 			Debug.LogWarning("Flares: " + str + " not found!");
 			return null;
@@ -223,7 +223,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return s.parts[0];
 	}
 	public GameObject GetFlareRandom(string str){
-		CstmzFlares s=flares.Find(item => item.name == str);
+		CstmzFlares s=flares.Find(x=>x.name==str);
 		GameObject go=s.parts[UnityEngine.Random.Range(0,s.parts.Length)];
 		if(s==null){
 			Debug.LogWarning("Flares: " + str + " not found!");
@@ -233,7 +233,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
 
 	public CstmzDeathFx GetDeathFx(string str){
-		CstmzDeathFx s=deathFxs.Find(item => item.name == str);
+		CstmzDeathFx s=deathFxs.Find(x=>x.name==str);
 		if(s==null){
 			Debug.LogWarning("DeathFx: " + str + " not found!");
 			return null;
@@ -242,7 +242,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
 
 	public CstmzMusic GetMusic(string str){
-		CstmzMusic s=musics.Find(item => item.name == str);
+		CstmzMusic s=musics.Find(x=>x.name==str);
 		if(s==null){
 			Debug.LogWarning("Music: " + str + " not found!");
 			return null;
@@ -260,11 +260,11 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	
 	public string GetDisplayName(string str,CstmzType cstmzType){
 		string ss=null;
-		if(cstmzType==CstmzType.skin){ss=skins.Find(item=>item.name==str).displayName;}
-		if(cstmzType==CstmzType.trail){ss=trails.Find(item=>item.name==str).displayName;}
-		if(cstmzType==CstmzType.flares){ss=flares.Find(item=>item.name==str).displayName;}
-		if(cstmzType==CstmzType.deathFx){ss=deathFxs.Find(item=>item.name==str).displayName;}
-		if(cstmzType==CstmzType.music){ss=musics.Find(item=>item.name==str).displayName;}
+		if(cstmzType==CstmzType.skin){ss=skins.Find(x=>x.name==str).displayName;}
+		if(cstmzType==CstmzType.trail){ss=trails.Find(x=>x.name==str).displayName;}
+		if(cstmzType==CstmzType.flares){ss=flares.Find(x=>x.name==str).displayName;}
+		if(cstmzType==CstmzType.deathFx){ss=deathFxs.Find(x=>x.name==str).displayName;}
+		if(cstmzType==CstmzType.music){ss=musics.Find(x=>x.name==str).displayName;}
 		if(ss==null){
 			Debug.LogWarning("DisplayName for: " + str + "of type("+cstmzType+") not found!");
 			return null;
@@ -279,8 +279,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}*/
 	/*public string GetArtist<T>(string str) where T:_ArtistInfo{_ArtistInfo t=new _ArtistInfo();T s=(T)t;
 		string ss=null;
-		if(s.GetType()==typeof(CstmzSkin)){ss=Array.Find(skins,item=>item.name==str).artist;}
-		if(s.GetType()==typeof(CstmzMusic)){ss=Array.Find(musics,item=>item.name==str).artist;}
+		if(s.GetType()==typeof(CstmzSkin)){ss=Array.Find(skins,x=>x.name==str).artist;}
+		if(s.GetType()==typeof(CstmzMusic)){ss=Array.Find(musics,x=>x.name==str).artist;}
 		if(ss==null){
 			Debug.LogWarning("Artist for: " + str + " not found!");
 			return null;
@@ -289,8 +289,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}*/
 	public string GetArtist(string str,CstmzType cstmzType){
 		string ss=null;
-		if(cstmzType==CstmzType.skin){ss=skins.Find(item=>item.name==str).artist;}
-		if(cstmzType==CstmzType.music){ss=musics.Find(item=>item.name==str).artist;}
+		if(cstmzType==CstmzType.skin){ss=skins.Find(x=>x.name==str).artist;}
+		if(cstmzType==CstmzType.music){ss=musics.Find(x=>x.name==str).artist;}
 		if(ss==null){
 			//Debug.LogWarning("Artist for: " + str + "of type("+cstmzType+") not found!");
 			return null;

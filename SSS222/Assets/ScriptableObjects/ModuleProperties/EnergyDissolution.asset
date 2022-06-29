@@ -16,7 +16,10 @@ MonoBehaviour:
   desc: 'GIVES YOU AUTOMATIC ENERGY ABSORPTION
 
     CRAFTED FROM YOUR BLACK ENERGY'
-  descGradient1: {r: 0.43137255, g: 0.15294118, b: 0.8784314, a: 1}
-  descGradient2: {r: 0.2, g: 0.7058824, b: 0.8666667, a: 1}
+  descGradient:
+    topLeft: {r: 0.43137255, g: 0.15294118, b: 0.8784314, a: 1}
+    topRight: {r: 0.43137258, g: 0.15294118, b: 0.87843144, a: 1}
+    bottomLeft: {r: 0.2, g: 0.7058824, b: 0.8666667, a: 1}
+    bottomRight: {r: 0.20000002, g: 0.7058824, b: 0.86666673, a: 1}
   sprite: {fileID: 0}
   iconsGo: {fileID: 2957245828022968796, guid: 07aa7e404b41c9e4388f6a3d895a5fe8, type: 3}
