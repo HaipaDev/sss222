@@ -211,11 +211,11 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public int crMend_lvlReq=5;
     public int enDiss_upgradeCost=4;
     public int enDiss_lvlReq=4;
-[Header("Skills")]
-    public List<SkillProperties> skillsPlayer;
-    public List<ModuleProperties> modulesPlayer;
+[Header("Modules & Skills")]
+    public List<ModulePropertiesGR> modulesPlayer;
+    public List<SkillPropertiesGR> skillsPlayer;
     public int playerModulesCapacity=4;
-    //public int playerSkillsCapacity=2;
+    //[ES3NonSerializable]public int playerSkillsCapacity=2;
     public float timeOverhaul=10;
     public bool playerExhaustROF=true;
     public int crystalMend_refillCost=2;
@@ -576,8 +576,18 @@ public class HLaserSettings{
     public RuntimeAnimatorController hlaserAnimation;
 }
 
-[System.Serializable]public class ModuleProperties{
-    public string name;
+[System.Serializable]public class ModulePropertiesGR{
+    public ModuleProperties item;
+    public costType costType;
+    public costTypeProperties costTypeProperties;
+    public int lvlReq;
+    public int coreCost;
+}
+[System.Serializable]public class SkillPropertiesGR{
+    public SkillProperties item;
+    public costType costType;
+    public costTypeProperties costTypeProperties;
+    public float cooldown;
     public int lvlReq;
     public int coreCost;
 }

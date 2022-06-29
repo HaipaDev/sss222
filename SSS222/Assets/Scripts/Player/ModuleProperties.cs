@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-[CreateAssetMenu(menuName = "Skill Properties")]
-public class SkillProperties : ScriptableObject{
+[CreateAssetMenu(menuName = "Module Properties")]
+public class ModuleProperties : ScriptableObject{
     [SerializeField] public string name = "";
     [TextArea][SerializeField] public string desc = "";
     [SerializeField] public Color descGradient1 = Color.white;

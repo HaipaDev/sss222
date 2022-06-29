@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21fab347b30673d498850dec5e9b780c, type: 3}
   m_Name: Overhaul
   m_EditorClassIdentifier: 
-  skillName: Overhaul
+  nfame: Overhaul
+  desc: UNLIMITED ENERGY FROM YOUR BLACK ENERGY LVL
+  descGradient1: {r: 0.7764706, g: 0.9019608, b: 0.9529412, a: 1}
+  descGradient2: {r: 0.5529412, g: 0.85882354, b: 0.59607846, a: 1}
   sprite: {fileID: 21300000, guid: db867b7e2dba31b42a87f692e549511a, type: 3}
-  ID: 2
-  costType: 0
-  costTypeProperties:
-    cost: 15
-  cooldown: 90
+  iconsGo: {fileID: 0}

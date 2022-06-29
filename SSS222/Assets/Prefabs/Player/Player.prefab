@@ -5246,11 +5246,8 @@ MonoBehaviour:
   timeTeleport: 3
   timeOverhaul: 10
   moduleSlots: []
-  skillsSlots:
-  - item: {fileID: 0}
-    cooldown: 0
-  - item: {fileID: 0}
-    cooldown: 0
+  skillsSlots: []
+  skillsList: []
   currentSkill: 
   timerTeleport: -4
   timerOverhaul: -4

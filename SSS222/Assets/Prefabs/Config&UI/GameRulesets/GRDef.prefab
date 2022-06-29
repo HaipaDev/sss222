@@ -191,13 +191,6 @@ MonoBehaviour:
   powerups_energyNeeded: 25
   powerups_energyDupl: 42
   coresCollectGain: 1
-  skillsPlayer:
-  - {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
-  - {fileID: 11400000, guid: d66606c472024f44e8f0f96cdfac0c12, type: 2}
-  timeOverhaul: 10
-  playerExhaustROF: 1
-  crystalMend_refillCost: 2
-  energyDiss_refillCost: 3.3
   waveSpawnReqsType: 1
   waveSpawnReqs:
     rid: 7402535244629278720
@@ -1561,21 +1554,49 @@ MonoBehaviour:
   mPulse_enabled: 1
   mPulse_upgradeCost: 3
   mPulse_lvlReq: 2
-  postMortem_enabled: 1
   postMortem_upgradeCost: 1
   postMortem_lvlReq: 5
-  teleport_enabled: 1
   teleport_upgradeCost: 2
   teleport_lvlReq: 3
-  overhaul_enabled: 0
   overhaul_upgradeCost: 3
   overhaul_lvlReq: 3
-  crMend_enabled: 1
   crMend_upgradeCost: 5
   crMend_lvlReq: 5
-  enDiss_enabled: 1
   enDiss_upgradeCost: 4
   enDiss_lvlReq: 4
+  modulesPlayer:
+  - item: {fileID: 11400000, guid: 06432481964c7e341b61c318577cbd27, type: 2}
+    costType: 0
+    costTypeProperties:
+      cost: 0
+    lvlReq: 5
+    coreCost: 5
+  - item: {fileID: 11400000, guid: 3477e1bf2eb61d840b325eafbec617d3, type: 2}
+    costType: 3
+    costTypeProperties:
+      cost: 0
+    lvlReq: 4
+    coreCost: 4
+  skillsPlayer:
+  - item: {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
+    costType: 0
+    costTypeProperties:
+      cost: 0
+    cooldown: 33
+    lvlReq: 2
+    coreCost: 3
+  - item: {fileID: 11400000, guid: d66606c472024f44e8f0f96cdfac0c12, type: 2}
+    costType: 3
+    costTypeProperties:
+      cost: 0
+    cooldown: 44
+    lvlReq: 4
+    coreCost: 4
+  playerModulesCapacity: 4
+  timeOverhaul: 10
+  playerExhaustROF: 1
+  crystalMend_refillCost: 2
+  energyDiss_refillCost: 3.3
   references:
     version: 2
     RefIds:

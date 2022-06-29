@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8449960242694226730}
   m_RootOrder: 0
@@ -165,6 +166,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8816225185830060631}
   m_RootOrder: 0
@@ -239,6 +241,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6598278030454926216}
   - {fileID: 2283813354089909564}
@@ -262,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4787ba75b4094904bbcb64675d26017f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueName: cooldownQ
+  valueName: cooldownSkill_0
   valueReq: 0.1
   value: 0
 --- !u!1 &1167915995616659185
@@ -293,6 +296,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5189926817462816030}
   m_RootOrder: 0
@@ -429,6 +433,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000135, y: 1.0000135, z: 1.0000135}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2948584600525588287}
   - {fileID: 4225545494744011091}
@@ -561,6 +566,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8343151416632303133}
   - {fileID: 2551393421845894552}
@@ -584,7 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4787ba75b4094904bbcb64675d26017f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueName: cooldownE
+  valueName: cooldownSkill_1
   valueReq: 0.1
   value: 0
 --- !u!1 &1738227199516523254
@@ -616,6 +622,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3240720620150640089}
   - {fileID: 2905568392048177254}
@@ -749,6 +756,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.72499996, y: 0.73749, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4787914384898419563}
   m_RootOrder: 0
@@ -825,6 +833,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.72499996, y: 0.725, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5667438533769228324}
   m_RootOrder: 0
@@ -886,7 +895,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 3645849979022812172}
   ID: 0
-  skills: []
 --- !u!1 &3505290174990457891
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,6 +923,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6084367011664607176}
   - {fileID: 4787914384898419563}
@@ -997,6 +1006,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.72499996, y: 0.725, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5545081269186220794}
   m_RootOrder: 0
@@ -1058,7 +1068,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 8394971088144500864}
   ID: 0
-  skills: []
 --- !u!1 &3645849979022812172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,6 +1096,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000135, y: 1.0000135, z: 1.0000135}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5667438533769228324}
   - {fileID: 5795640446445215201}
@@ -1110,11 +1120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9411b513442c3346996bd9465d1ddeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyBind: 2
-  skillsBinds: 
-  skills: []
-  buttons:
-  - {fileID: 5786494724400050081}
   ID: -1
 --- !u!114 &7400861784902925972
 MonoBehaviour:
@@ -1157,6 +1162,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.72499996, y: 0.73749, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7581292439726553681}
   m_Father: {fileID: 4787914384898419563}
@@ -1237,6 +1243,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8234782781946321891}
   m_Father: {fileID: 0}
@@ -1333,7 +1340,7 @@ MonoBehaviour:
   lvldUp: 0
 --- !u!95 &7200416156383966819
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1346,6 +1353,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -1378,6 +1386,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2905568392048177254}
   m_RootOrder: 0
@@ -1514,6 +1523,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5795640446445215201}
   m_RootOrder: 1
@@ -1633,7 +1643,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: cooldownE
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!1 &5166189079869170004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,6 +1674,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.29115003}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1050447019959855722}
   m_Father: {fileID: 5667438533769228324}
@@ -1724,9 +1736,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 0
-  key: 1
-  skills: []
-  skillsBinds: 
   on: 0
 --- !u!1 &5667832704262043052
 GameObject:
@@ -1756,6 +1765,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.72499996, y: 0.73749, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8129854259754755445}
   m_Father: {fileID: 6084367011664607176}
@@ -1832,6 +1842,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5795640446445215201}
   m_RootOrder: 0
@@ -1908,6 +1919,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4091209613477588909}
   - {fileID: 5189926817462816030}
@@ -2042,6 +2054,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.29115003}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2906932710428137290}
   m_Father: {fileID: 5545081269186220794}
@@ -2103,9 +2116,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 0
-  key: 1
-  skills: []
-  skillsBinds: 
   on: 0
 --- !u!1 &7885349374450291732
 GameObject:
@@ -2136,6 +2146,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8816225185830060631}
   m_RootOrder: 1
@@ -2255,7 +2266,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: cooldownQ
-  changeOnValidate: 0
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!1 &8112218807219443445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2284,6 +2296,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6084367011664607176}
   m_RootOrder: 0
@@ -2359,6 +2372,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000135, y: 1.0000135, z: 1.0000135}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5545081269186220794}
   - {fileID: 8816225185830060631}
@@ -2382,11 +2396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9411b513442c3346996bd9465d1ddeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyBind: 1
-  skillsBinds: 
-  skills: []
-  buttons:
-  - {fileID: 7261335574807999360}
   ID: -1
 --- !u!114 &6728949335746302054
 MonoBehaviour:
@@ -2431,6 +2440,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000135, y: 1.0000135, z: 1.0000135}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4382469564469698914}
   - {fileID: 8449960242694226730}
@@ -2577,6 +2587,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4225545494744011091}
   m_RootOrder: 0

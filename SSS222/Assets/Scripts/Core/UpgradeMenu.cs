@@ -89,10 +89,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             if(UpgradeMenuIsOpen){Resume();}
             else{if(PauseMenu.GameIsPaused!=true&&Shop.shopOpened!=true&&Player.instance!=null)if(!Player.instance._hasStatus("hacked"))Open();}
         }
-        if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){
-            if(upgradeMenu2UI.activeSelf||lvltreeUI.activeSelf){Back();Open();return;}
-            else if(!(upgradeMenu2UI.activeSelf && lvltreeUI.activeSelf)&&upgradeMenuUI.activeSelf){Resume();return;}
-        }
+        if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){Back();}
         LevelEverything();
     }
 
@@ -152,9 +149,13 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     }
     public void Back(){
         if(modulesList.activeSelf||skillsList.activeSelf){BackToModulesSkillsInventory();return;}
-        statsMenu.SetActive(false);modulesSkillsPanel.SetActive(false);
-        upgradeMenu2UI.SetActive(false);lvltreeUI.SetActive(false);
+        if(statsMenu.activeSelf||modulesSkillsPanel.activeSelf){Resume();
+            statsMenu.SetActive(false);modulesSkillsPanel.SetActive(false);
+            upgradeMenu2UI.SetActive(false);lvltreeUI.SetActive(false);
+            return;
+        }
         upgradeMenuUI.SetActive(true);
+        if(upgradeMenuUI.activeSelf){Resume();}
     }
 
     public void CloseAllModulesSkills(){
@@ -165,8 +166,16 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     public void BackToModulesSkillsInventory(){CloseAllModulesSkills();modulesSkillsInventory.SetActive(true);selectedModuleSlot=-1;selectedSkillSlot=-1;}
     public void OpenModulesList(int id){selectedModuleSlot=id;CloseAllModulesSkills();modulesList.SetActive(true);}
     public void OpenSkillsList(int id){selectedSkillSlot=id;CloseAllModulesSkills();skillsList.SetActive(true);}
-    public void SetModuleSlot(string name){pmodules.moduleSlots[selectedModuleSlot]=name;BackToModulesSkillsInventory();}
-    public void SetSkillSlot(string name){pmodules.SetSkillByID(selectedSkillSlot,pmodules.GetSkillProperties(name));BackToModulesSkillsInventory();}
+    public void SetModuleSlot(string name){
+        if(pmodules._isModuleEquipped(name)){pmodules.ClearModule(name);}
+        pmodules.SetModule(selectedModuleSlot,name);
+        BackToModulesSkillsInventory();
+    }
+    public void SetSkillSlot(string name){
+        if(pmodules._isSkillEquipped(name)){pmodules.ClearSkill(name);}
+        pmodules.SetSkill(selectedSkillSlot,name);
+        BackToModulesSkillsInventory();
+    }
 
     public void UnlockSkillUni(int ID, ref int value,int number,int cost){
         if(GameSession.instance.cores>=cost && value==number-1){

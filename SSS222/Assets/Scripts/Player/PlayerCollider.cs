@@ -16,7 +16,7 @@ public class PlayerCollider : MonoBehaviour{
     Player player;
     GameRules gr;
     void Start(){player=Player.instance;gr=GameRules.instance;}
-    void OnTriggerEnter2D(Collider2D other){    lastHp=player.health;
+    void OnTriggerEnter2D(Collider2D other){    lastHp=(float)System.Math.Round(player.health,2);
     if(!other.CompareTag(tag)&&(player.collidedId==GetInstanceID()||player.collidedIdChangeTime<=0)){
             float dmg=0;int armorPenetr=0;
             if(player.collidedIdChangeTime<=0){player.collidedId=GetInstanceID();player.collidedIdChangeTime=0.33f;}
@@ -85,7 +85,7 @@ public class PlayerCollider : MonoBehaviour{
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("inverterPwrup").name)){
                     if(player.energyOn){
-                        lastHitDmg=player.health;
+                        lastHitDmg=(float)System.Math.Round(player.health,2);
                         var tempHP=player.health; var tempEn=player.energy;
                         player.energy=tempHP; player.health=tempEn;
                     }
