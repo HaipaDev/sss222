@@ -1205,7 +1205,12 @@ PrefabInstance:
     - target: {fileID: 2776864075346926239, guid: 76a0a70d1c7004a468ba3c7a6ac20a57,
         type: 3}
       propertyPath: valueName
-      value: crMend_upgraded
+      value: moduleUnlocked_Crystal Mending
+      objectReference: {fileID: 0}
+    - target: {fileID: 2776864075346926239, guid: 76a0a70d1c7004a468ba3c7a6ac20a57,
+        type: 3}
+      propertyPath: upgradeMenu
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7863288345753981541, guid: 76a0a70d1c7004a468ba3c7a6ac20a57,
         type: 3}

@@ -11,6 +11,7 @@ public class XPFill : MonoBehaviour{
     [SerializeField] GameObject particlePrefab;
     public bool changed;
     public bool shop;
+    public bool upgradeMenu=true;
     [SerializeField] public string valueName;
     [SerializeField] public int valueReq;
     public int value;
@@ -33,9 +34,14 @@ public class XPFill : MonoBehaviour{
     }
 
     void Update(){
+        if(shop){value=Convert.ToInt32(Shop.instance.GetType().GetField(valueName).GetValue(Shop.instance));}
+        else if(upgradeMenu){value=Convert.ToInt32(UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance));}
+        else{
+            if(valueName.Contains("moduleUnlocked_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>().modulesUnlocked.Contains(valueName.Split('_')[1]));}
+            if(valueName.Contains("skillUnlocked_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>().skillsUnlocked.Contains(valueName.Split('_')[1]));}
+        }
+
         if(valueReq!=0){
-            if(shop!=true)value=(int)UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance);
-            else value=(int)Shop.instance.GetType().GetField(valueName).GetValue(Shop.instance);
             if(value>=valueReq){
                 if(changed==false){
                     img.sprite=fillSprite;
@@ -45,8 +51,6 @@ public class XPFill : MonoBehaviour{
                 }
             }else{img.sprite=emptySprite;changed=false;}
         }else{
-            if(shop!=true)value=Convert.ToInt32(UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance));
-            else value=Convert.ToInt32(Shop.instance.GetType().GetField(valueName).GetValue(Shop.instance));
             if(value==1){
                 if(changed==false){
                     img.sprite=fillSprite;

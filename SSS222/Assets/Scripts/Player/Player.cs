@@ -289,7 +289,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             HideMeleeWeapons();
             UpdateItems();
             QuickHeal();
-            if(GetComponent<PlayerModules>()!=null){if(GetComponent<PlayerModules>().timerTeleport==-4){Shoot();}}else{Shoot();}
+            if(pmodules!=null){if(pmodules.timerTeleport==-4){Shoot();}}else{Shoot();}
             Statuses();
             CalculateDefenseSpeed();
             Regen();
@@ -1100,12 +1100,10 @@ public class Player : MonoBehaviour{    public static Player instance;
             Destroy(shadow.gameObject,shadowLength);
         }
     }
-    void Regen(){//Move to a universal modules script instead of PlayerModules
+    void Regen(){
         if(!GameSession.GlobalTimeIsPaused){
             hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax/4);
             enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax/4);
-            if(pmodules._isModuleEquipped("Crystal Mending")&&hpAbsorpAmnt<=0){if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){HPAbsorp(crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}}
-            if(pmodules._isModuleEquipped("Energy Dissolution")&&enAbsorpAmnt<=0){if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){EnAbsorp(energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}}
             if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax&&!_hasStatus("noHeal")){HPAddSilent(hpRegenAmnt);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}}
             if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax&&!_hasStatus("infEnergy")&&!_hasStatus("electrc")){AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}}
         }

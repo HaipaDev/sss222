@@ -16,6 +16,8 @@ public class PlayerModules : MonoBehaviour{
     [SerializeField] public List<string> moduleSlots;
     [SerializeField] public List<string> skillsSlots=new List<string>(2);
     [SerializeField] public List<Skill> skillsList;
+    [SerializeField] public List<string> modulesUnlocked;
+    [SerializeField] public List<string> skillsUnlocked;
     [Header("Timers etc")]
     [DisableInEditorMode]public string currentSkill="";
     [DisableInEditorMode]public float timerTeleport=-4;
@@ -47,6 +49,7 @@ public class PlayerModules : MonoBehaviour{
     void Update(){
         UseSkills();
         SkillsUpdate();
+        Modules();
     }
 
     public void UseSkills(int key=0){     if(!GameSession.GlobalTimeIsPaused){
@@ -69,7 +72,7 @@ public class PlayerModules : MonoBehaviour{
         if(UpgradeMenu.instance.mPulse_upgraded==2)Skills(GetSkillProperties("Magnetic Pulse"));//PostMortem MagneticPulse
     }
     
-    #region//Skills
+    #region//Skills & Modules
     public void Skills(SkillPropertiesGR item){     if(item!=null){
         //var _item=GetSkillProperties(item.name);
         if(item.item.name!="Overhaul"){
@@ -102,7 +105,7 @@ public class PlayerModules : MonoBehaviour{
         }
     }}
 
-    public void SkillsUpdate(){
+    void SkillsUpdate(){
     if(!GameSession.GlobalTimeIsPaused){
         if(currentSkill!="Teleport"){
             if(timerUI!=null)SetActiveAllChildren(timerUI.transform,false);
@@ -131,14 +134,38 @@ public class PlayerModules : MonoBehaviour{
         }if((timerOverhaul<0&&timerOverhaul!=-4)&&Player.instance._hasStatus("infenergy")){timerOverhaul=timeOverhaul;}
         if(!Player.instance._hasStatus("infenergy")&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}
     }}
+
+    void Modules(){
+        if(_isModuleEquipped("Crystal Mending")&&Player.instance.hpAbsorpAmnt<=0){if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){Player.instance.HPAbsorp(Player.instance.crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}}
+        if(_isModuleEquipped("Energy Dissolution")&&Player.instance.enAbsorpAmnt<=0){if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){Player.instance.EnAbsorp(Player.instance.energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}}
+    }
     #endregion
 
+
+    public bool _isModuleUnlocked(string name){return modulesUnlocked.Contains(name);}
+    public bool UnlockModule(string name){if(GetModuleProperties(name)!=null){
+        if(!_isModuleUnlocked(name)){
+            if(GameSession.instance.cores>=GetModuleProperties(name).coreCost){
+                GameSession.instance.cores-=GetModuleProperties(name).coreCost;
+                modulesUnlocked.Add(name);return true;
+            }
+        }
+    }return false;}
     public bool _isModuleEquipped(string name){return moduleSlots.Contains(name);}
     public void SetModule(int id, string item){moduleSlots[id]=item;}
     public void ClearModule(string name){SetModule(moduleSlots.FindIndex(x=>x==name),"");}
     public void ReplaceModule(string name, string item){SetModule(moduleSlots.FindIndex(x=>x==name),item);}
     public ModulePropertiesGR GetModuleProperties(string name){var _target=GameRules.instance.modulesPlayer.Find(x=>x.item.name==name);if(_target!=null){return _target;}else{Debug.LogWarning("No ModuleProperties in GameRules by name: "+name);return null;}}
 
+    public bool _isSkillUnlocked(string name){return skillsUnlocked.Contains(name);}
+    public bool UnlockSkill(string name){if(GetSkillProperties(name)!=null){
+        if(!_isSkillUnlocked(name)){
+            if(GameSession.instance.cores>=GetSkillProperties(name).coreCost){
+                GameSession.instance.cores-=GetSkillProperties(name).coreCost;
+                skillsUnlocked.Add(name);return true;
+            }
+        }
+    }return false;}
     public bool _isSkillEquipped(string name){return skillsSlots.Contains(name);}
     public Skill GetSkill(string name){Skill _target=null;_target=skillsList.Find(x=>x.name==name);if(_target!=null){return _target;}else{return null;}}
     public Skill GetSkillFromID(int id){Skill _target=null;_target=skillsList.Find(x=>x.name==skillsSlots[id]);if(_target!=null){return _target;}else{return null;}}

@@ -826,7 +826,7 @@ Transform:
   - {fileID: 423324077}
   - {fileID: 577326435}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &528980280
 PrefabInstance:
@@ -1072,7 +1072,7 @@ PrefabInstance:
     - target: {fileID: 6991186604714513219, guid: 4289ef0e22d9d71408103d5a6ec1443d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 24
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6991186604714513219, guid: 4289ef0e22d9d71408103d5a6ec1443d,
         type: 3}
@@ -1753,7 +1753,7 @@ PrefabInstance:
     - target: {fileID: 861680964580927169, guid: 87069889979647f42a5fecbd8ee53976,
         type: 3}
       propertyPath: m_RootOrder
-      value: 26
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 861680964580927169, guid: 87069889979647f42a5fecbd8ee53976,
         type: 3}
@@ -2405,7 +2405,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1600173514
 PrefabInstance:
@@ -3972,6 +3972,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7426942306062516092, guid: 96d69890f517e4c48943f992c4f243a5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 22.51294
+      objectReference: {fileID: 0}
     - target: {fileID: 7616114917181658746, guid: 96d69890f517e4c48943f992c4f243a5,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -3996,6 +4001,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7682704757417088019, guid: 96d69890f517e4c48943f992c4f243a5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 22.51294
       objectReference: {fileID: 0}
     - target: {fileID: 7727158167911286069, guid: 96d69890f517e4c48943f992c4f243a5,
         type: 3}

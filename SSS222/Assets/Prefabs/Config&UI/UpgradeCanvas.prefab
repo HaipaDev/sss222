@@ -95,6 +95,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: hpRegen_UpgradesCount
   valueReq: 10
   value: 0
@@ -405,6 +406,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: hpRegen_UpgradesCount
   valueReq: 2
   value: 0
@@ -503,6 +505,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: hpRegen_UpgradesCount
   valueReq: 6
   value: 0
@@ -665,6 +668,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: hpRegen_UpgradesCount
   valueReq: 8
   value: 0
@@ -1102,6 +1106,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: hpRegen_UpgradesCount
   valueReq: 7
   value: 0
@@ -2426,6 +2431,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: hpRegen_UpgradesCount
   valueReq: 5
   value: 0
@@ -2964,6 +2970,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: hpRegen_UpgradesCount
   valueReq: 3
   value: 0
@@ -3346,6 +3353,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: hpRegen_UpgradesCount
   valueReq: 9
   value: 0
@@ -4855,6 +4863,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: hpRegen_UpgradesCount
   valueReq: 1
   value: 0
@@ -4953,6 +4962,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: hpRegen_UpgradesCount
   valueReq: 4
   value: 0
@@ -7874,6 +7884,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: speed_UpgradesCount
   valueReq: 2
   value: 0
@@ -8450,7 +8461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7669459091416879076
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10837,7 +10848,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 22.513}
+  m_AnchoredPosition: {x: 0, y: 22.51294}
   m_SizeDelta: {x: 0, y: -43.869}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8966168395071391328
@@ -11713,10 +11724,10 @@ RectTransform:
   m_Father: {fileID: 7669459091416879076}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00012207031, y: 0}
-  m_SizeDelta: {x: -117.65, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.373, y: 0}
+  m_SizeDelta: {x: 982.505, y: 1704}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3050215191847994656
 CanvasRenderer:
@@ -11960,6 +11971,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: speed_UpgradesCount
   valueReq: 1
   value: 0
@@ -12508,6 +12520,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: speed_UpgradesCount
   valueReq: 7
   value: 0
@@ -13404,6 +13417,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: speed_UpgradesCount
   valueReq: 5
   value: 0
@@ -13442,7 +13456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.7000122, y: -202}
+  m_AnchoredPosition: {x: 1.6999512, y: -202}
   m_SizeDelta: {x: 0, y: -139.85999}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6182389729964935065
@@ -14680,6 +14694,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: speed_UpgradesCount
   valueReq: 9
   value: 0
@@ -14778,6 +14793,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: speed_UpgradesCount
   valueReq: 4
   value: 0
@@ -18122,6 +18138,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: speed_UpgradesCount
   valueReq: 10
   value: 0
@@ -19317,6 +19334,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: speed_UpgradesCount
   valueReq: 3
   value: 0
@@ -19780,6 +19798,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: speed_UpgradesCount
   valueReq: 6
   value: 0
@@ -23090,7 +23109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.7000122, y: -202}
+  m_AnchoredPosition: {x: 1.6999512, y: -202}
   m_SizeDelta: {x: 0, y: -139.85999}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &949976557664700283
@@ -31678,6 +31697,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 0}
   changed: 0
   shop: 0
+  upgradeMenu: 1
   valueName: speed_UpgradesCount
   valueReq: 8
   value: 0
@@ -33641,7 +33661,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -15.3359375}
+  m_AnchoredPosition: {x: 0, y: -15.3359375}
   m_SizeDelta: {x: 0, y: -242.00488}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4529854291755625143
@@ -34527,7 +34547,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 22.513}
+  m_AnchoredPosition: {x: 0, y: 22.51294}
   m_SizeDelta: {x: 0, y: -43.869}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8067291797683341182
@@ -35973,7 +35993,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -1068.0668}
+  m_SizeDelta: {x: 0, y: -1068.526}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &734922871689458854
 MonoBehaviour:

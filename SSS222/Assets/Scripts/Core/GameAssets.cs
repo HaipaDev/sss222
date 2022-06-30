@@ -113,7 +113,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
     public GameObject GetEnemyBullet(string str){
 		GObject gobj=enemyBullets.Find(x=>x.name==str);
-		GameObject go=null;if(go!=null)go=gobj.gobj;
+		GameObject go=null;if(gobj!=null)go=gobj.gobj;
 		if(go==null){
 			if(!String.IsNullOrEmpty(str))Debug.LogWarning("Enemy Bullet by name: " + str + " not found! Trying to look for other objects");
 			go=Get(str);
@@ -298,6 +298,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return ss;
 	}
 	public static bool CaseInsStrCmpr(string str,string toComp){return str.IndexOf(toComp, StringComparison.OrdinalIgnoreCase) >= 0;}
+	public static int BoolToInt(bool b){int i=0;if(b==true){i=1;}return i;}
 #endregion
 
 #region//Public functions

@@ -155,12 +155,12 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     }
     public void Back(){
         if(modulesList.activeSelf||skillsList.activeSelf){BackToModulesSkillsInventory();return;}
-        if(statsMenu.activeSelf||modulesSkillsPanel.activeSelf){Resume();
+        if(statsMenu.activeSelf||modulesSkillsPanel.activeSelf){
             statsMenu.SetActive(false);modulesSkillsPanel.SetActive(false);
             upgradeMenu2UI.SetActive(false);lvltreeUI.SetActive(false);
+            upgradeMenuUI.SetActive(true);
             return;
         }
-        upgradeMenuUI.SetActive(true);
         if(upgradeMenuUI.activeSelf){Resume();}
     }
 
@@ -173,14 +173,24 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     public void OpenModulesList(int id){selectedModuleSlot=id;CloseAllModulesSkills();modulesList.SetActive(true);}
     public void OpenSkillsList(int id){selectedSkillSlot=id;CloseAllModulesSkills();skillsList.SetActive(true);}
     public void SetModuleSlot(string name){
-        if(pmodules._isModuleEquipped(name)){pmodules.ClearModule(name);}
-        pmodules.SetModule(selectedModuleSlot,name);
-        BackToModulesSkillsInventory();
+        if(pmodules._isModuleUnlocked(name)||name==""){
+            if(pmodules._isModuleEquipped(name)&&name!=""){pmodules.ClearModule(name);}
+            pmodules.SetModule(selectedModuleSlot,name);
+            BackToModulesSkillsInventory();
+        }else{
+            if(pmodules.UnlockModule(name)){AudioManager.instance.Play("Upgrade");}
+            else{AudioManager.instance.Play("Deny");}
+        }
     }
     public void SetSkillSlot(string name){
-        if(pmodules._isSkillEquipped(name)){pmodules.ClearSkill(name);}
-        pmodules.SetSkill(selectedSkillSlot,name);
-        BackToModulesSkillsInventory();
+        if(pmodules._isSkillUnlocked(name)||name==""){
+            if(pmodules._isSkillEquipped(name)&&name!=""){pmodules.ClearSkill(name);}
+            pmodules.SetSkill(selectedSkillSlot,name);
+            BackToModulesSkillsInventory();
+        }else{
+            if(pmodules.UnlockSkill(name)){AudioManager.instance.Play("Upgrade");}
+            else{AudioManager.instance.Play("Deny");}
+        }
     }
 
     void SetupModulesAndSkills(){
@@ -220,6 +230,8 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         goModule0.transform.GetChild(2).GetComponent<Image>().sprite=moduleSlotPrefab.GetComponent<Image>().sprite;
         foreach(Transform t in goModule0.transform.GetChild(2)){Destroy(t.gameObject);}
         goModule0.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetModuleSlot(""));
+        goModule0.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().valueName="";
+        goModule0.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().value=1;
         Destroy(goModule0.transform.GetChild(3).GetChild(1).gameObject);
         Destroy(goModule0.transform.GetChild(3).GetChild(0).gameObject);
         Destroy(goModule0.transform.GetChild(4).gameObject);
@@ -237,6 +249,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
                 if(m.item.iconsGo!=null){Instantiate(m.item.iconsGo,go.transform.GetChild(2));}
             }
             go.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetModuleSlot(m.item.name));
+            go.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().valueName="moduleUnlocked_"+m.item.name;
             go.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text=m.coreCost.ToString();
             go.transform.GetChild(4).GetComponent<ShipLevelRequired>().value=m.lvlReq;
         }
@@ -252,6 +265,8 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         goSkill0.transform.GetChild(2).GetComponent<Image>().sprite=skillSlotPrefab.GetComponent<Image>().sprite;
         foreach(Transform t in goSkill0.transform.GetChild(2)){Destroy(t.gameObject);}
         goSkill0.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetSkillSlot(""));
+        goSkill0.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().valueName="";
+        goSkill0.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().value=1;
         Destroy(goSkill0.transform.GetChild(3).GetChild(1).gameObject);
         Destroy(goSkill0.transform.GetChild(3).GetChild(0).gameObject);
         Destroy(goSkill0.transform.GetChild(4).gameObject);
@@ -269,6 +284,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
                 if(s.item.iconsGo!=null){Instantiate(s.item.iconsGo,go.transform.GetChild(2));}
             }
             go.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetSkillSlot(s.item.name));
+            go.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().valueName="skillUnlocked_"+s.item.name;
             go.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text=s.coreCost.ToString();
             go.transform.GetChild(4).GetComponent<ShipLevelRequired>().value=s.lvlReq;
         }
@@ -325,7 +341,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         }
     }
 
-    public void UnlockSkillUni(int ID, ref int value,int number,int cost){
+    /*public void UnlockSkillUni(int ID, ref int value,int number,int cost){
         if(GameSession.instance.cores>=cost && value==number-1){
             value=number;GameSession.instance.cores-=cost;GetComponent<AudioSource>().Play();
         }else{AudioManager.instance.Play("Deny");}
@@ -338,7 +354,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     public void UpgradeSkill(int ID){
         if(ID==0){UnlockSkillUni(ID,ref mPulse_upgraded,2,postMortem_upgradeCost);}
         //if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,2,1);}
-    }
+    }*/
     XPBars barr;
     void LevelEverything(){
         if(startTimer>0){startTimer-=Time.unscaledDeltaTime;}

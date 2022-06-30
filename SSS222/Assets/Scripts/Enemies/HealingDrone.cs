@@ -23,6 +23,7 @@ public class HealingDrone : MonoBehaviour{
         healPellet=GameAssets.instance.GetEnemyBullet(healPelletAssetName);
     }
     void Update(){
+        if(healPellet==null)healPellet=GameAssets.instance.GetEnemyBullet(healPelletAssetName);
         closestEnemy=FindClosestHealableEnemy();
         var shootHealBullets=ShootHealBullets();
         if(closestEnemy!=null||(GetComponent<Enemy>()!=null&&GetComponent<Enemy>().health<GetComponent<Enemy>().healthMax)){
