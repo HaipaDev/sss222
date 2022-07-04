@@ -83,6 +83,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public List<WeaponProperties> weaponProperties;
 [Header("State Defaults")]
     public List<StatusFx> statusesStart;
+    public float statusCapDefault=60f;
     public bool addToStatusTimer=true;
     public float flipTime = 7f;
     public float gcloverTime = 6f;
@@ -147,6 +148,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 [Title("Enemies", titleAlignment: TitleAlignments.Centered)]
     public bool enemyDefenseHit=true;
     public bool enemyDefensePhase=true;
+    public float enemyDefenseFloor=0.1f;
     [Searchable]public EnemyClass[] enemies;
     public CometSettings cometSettings;
     public EnCombatantSettings enCombatantSettings;
@@ -578,18 +580,20 @@ public class HLaserSettings{
 
 [System.Serializable]public class ModulePropertiesGR{
     public ModuleProperties item;
-    public costType costType;
-    public costTypeProperties costTypeProperties;
-    public int lvlReq;
-    public int coreCost;
+    //public costType costType;
+    //public costTypeProperties costTypeProperties;
+    public List<ModuleSkillLvlVals> lvlVals=new List<ModuleSkillLvlVals>(1);
 }
 [System.Serializable]public class SkillPropertiesGR{
     public SkillProperties item;
     public costType costType;
     public costTypeProperties costTypeProperties;
     public float cooldown;
-    public int lvlReq;
-    public int coreCost;
+    public List<ModuleSkillLvlVals> lvlVals=new List<ModuleSkillLvlVals>(1);
+}
+[System.Serializable]public class ModuleSkillLvlVals{
+    public int coreCost=1;
+    public int lvlReq=1;
 }
 
 #endregion

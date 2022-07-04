@@ -256,7 +256,16 @@ MonoBehaviour:
     achievData:
       name: 
       completed: 0
-  _achievsListCount: 7
+  - name: module
+    displayName: Hackerman
+    desc: Unlock your first Module
+    icon: {fileID: 21300000, guid: 892d6a26f309baf40ac2c40a53f2447d, type: 3}
+    iconInc: {fileID: 21300000, guid: 12668e1ef8ad3ec4c8857a04389d235f, type: 3}
+    epic: 0
+    hidden: 0
+    achievData:
+      name: 
+      completed: 0
   uncompletedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   completedColor: {r: 0.21568628, g: 1, b: 0.21568628, a: 1}
   epicUncompletedColor: {r: 0.6117647, g: 0.4745098, b: 0.7490196, a: 1}
@@ -281,6 +290,7 @@ MonoBehaviour:
   personalityCrisisTimer: 0
   personalityCrisisTimerOn: 0
   determinationTimeMax: 60
+  determinationHealth: 25
   determinationTimer: 0
   determinationTimerOn: 0
   uniquePowerups: []

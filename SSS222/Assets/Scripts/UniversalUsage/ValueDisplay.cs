@@ -54,13 +54,19 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="enRegen") if(p.enRegenEnabled==true){_txt=p.enRegenAmnt.ToString();}else{_txt="0";}
 
 
+            ///Player Modules
             PlayerModules pmodules=p.GetComponent<PlayerModules>();
             if(pmodules!=null){
-                if(value.Contains("cooldownSkill_")) _txt=System.Math.Round(pmodules.GetSkillFromID(int.Parse(value.Split('_')[1])).cooldown,0).ToString();
+                if(value.Contains("cooldownSkill_")){_txt=System.Math.Round(pmodules.GetSkillFromID(int.Parse(value.Split('_')[1])).cooldown,0).ToString();}
                 else if(value=="timerTeleport"){
                     if(FindObjectOfType<PlayerModules>()!=null){_txt=System.Math.Round(pmodules.timerTeleport,1).ToString();}else{Destroy(transform.parent.gameObject);}
                     if(_txt=="-4"){var tempColor=txt.color;tempColor.a=0;txt.color=tempColor;}
                 }
+                if(value.Contains("moduleEquippedSlot_")){var m=pmodules.moduleSlots.FindIndex(x=>x==value.Split('_')[1]);if(m!=-1){_txt="Slot: "+(m+1).ToString();}else _txt="Not-Eq";}
+                if(value.Contains("skillEquippedSlot_")){var s=pmodules.skillsSlots.FindIndex(x=>x==value.Split('_')[1]);if(s!=-1){_txt="Slot: "+(s+1).ToString();}else _txt="Not-Eq";}
+
+                if(value.Contains("moduleLvl_")){var m=pmodules.modulesList.Find(x=>x.name==value.Split('_')[1]);if(m!=null){_txt="Lvl "+m.lvl.ToString();}else _txt="";}
+                if(value.Contains("skillLvl_")){var s=pmodules.skillsList.Find(x=>x.name==value.Split('_')[1]);if(s!=null){_txt="Lvl "+s.lvl.ToString();}else _txt="";}
             }
         }
     #endregion
@@ -72,14 +78,6 @@ public class ValueDisplay : MonoBehaviour{
         if(UpgradeMenu.instance!=null){     var u=UpgradeMenu.instance;
             if(value=="lvl_ship") _txt="Ship Level: "+u.total_UpgradesLvl.ToString();
             else if(value=="lvlPopup") _txt="Lvl up! ("+u.total_UpgradesLvl.ToString()+")";
-            
-            //else if(value=="energyRefill_upgradeCost") _txt=u.energyRefill_upgradeCost.ToString();
-            else if(value=="mPulse_upgradeCost") _txt=u.mPulse_upgradeCost.ToString();
-            else if(value=="postMortem_upgradeCost") _txt=u.postMortem_upgradeCost.ToString();
-            else if(value=="teleport_upgradeCost") _txt=u.teleport_upgradeCost.ToString();
-            else if(value=="overhaul_upgradeCost") _txt=u.overhaul_upgradeCost.ToString();
-            else if(value=="crMend_upgradeCost") _txt=u.crMend_upgradeCost.ToString();
-            else if(value=="enDiss_upgradeCost") _txt=u.enDiss_upgradeCost.ToString();
         }
     #endregion
     #region//SaveSerial

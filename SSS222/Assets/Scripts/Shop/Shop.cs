@@ -95,7 +95,6 @@ public class Shop : MonoBehaviour{
     public void OpenShop(){
         purchased=false;
         shopMenuUI.SetActive(true);
-        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         //RandomizeShop();
         shopOpen=false;
         GameSession.instance.gameSpeed=GameRules.instance.shopOpenGameSpeed;
@@ -108,7 +107,6 @@ public class Shop : MonoBehaviour{
         subbed=false;
         if(purchasedNotTimes==2){RepChange(1,false);purchasedNotTimes=0;}
         shopMenuUI.SetActive(false);
-        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         shopOpened=false;
         GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;
     }

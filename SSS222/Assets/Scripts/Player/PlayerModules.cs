@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-[System.Serializable]public class Skill{
-    public string name;
-    [DisableInEditorMode]public float cooldown;
-}
 public class PlayerModules : MonoBehaviour{
     [Header("Settings")]
     public bool exhaustROF=true;
@@ -15,9 +11,8 @@ public class PlayerModules : MonoBehaviour{
     [Header("Slots")]
     [SerializeField] public List<string> moduleSlots;
     [SerializeField] public List<string> skillsSlots=new List<string>(2);
+    [SerializeField] public List<Module> modulesList;
     [SerializeField] public List<Skill> skillsList;
-    [SerializeField] public List<string> modulesUnlocked;
-    [SerializeField] public List<string> skillsUnlocked;
     [Header("Timers etc")]
     [DisableInEditorMode]public string currentSkill="";
     [DisableInEditorMode]public float timerTeleport=-4;
@@ -29,13 +24,11 @@ public class PlayerModules : MonoBehaviour{
         yield return new WaitForSecondsRealtime(0.15f);
         var i=GameRules.instance;
         if(i!=null){
-            //moduleSlots=new List<string>(i.playerModulesCapacity);
             for(var m=0;m<i.playerModulesCapacity;m++){moduleSlots.Add("");}
             for(var m=0;m<2;m++){skillsSlots.Add("");}
-            //skillsSlots=new Skill[i.playerSkillsCapacity];
             //for(var m=0;m<i.playerSkillsCapacity;m++){skillsSlots.Add("");}
-            //for(var s=0;s<skillsSlots.Capacity;s++){skillsSlots[s]=new Skill();}
-            foreach(SkillPropertiesGR sk in i.skillsPlayer){skillsList.Add(new Skill{name=sk.item.name});}
+            foreach(ModulePropertiesGR m in i.modulesPlayer){modulesList.Add(new Module{name=m.item.name});}
+            foreach(SkillPropertiesGR s in i.skillsPlayer){skillsList.Add(new Skill{name=s.item.name});}
             timeOverhaul=i.timeOverhaul;
             exhaustROF=i.playerExhaustROF;
         }
@@ -69,14 +62,14 @@ public class PlayerModules : MonoBehaviour{
         }
     }}
     public void DeathSkills(){
-        if(UpgradeMenu.instance.mPulse_upgraded==2)Skills(GetSkillProperties("Magnetic Pulse"));//PostMortem MagneticPulse
+        if(_isSkillLvl("Magnetic Pulse",2))Skills(GetSkillProperties("Magnetic Pulse"),true);//PostMortem MagneticPulse
     }
     
     #region//Skills & Modules
-    public void Skills(SkillPropertiesGR item){     if(item!=null){
+    public void Skills(SkillPropertiesGR item,bool ignoreCosts=false){     if(item!=null){
         //var _item=GetSkillProperties(item.name);
         if(item.item.name!="Overhaul"){
-            if(Player.instance.energy>0){
+            if(Player.instance.energy>0||ignoreCosts){
                 Player.instance.AddSubEnergy(item.costTypeProperties.cost,false);
                 if(item.item.name=="Magnetic Pulse"){
                     GameObject mPulse=GameAssets.instance.Make("MPulse",transform.position);
@@ -90,11 +83,11 @@ public class PlayerModules : MonoBehaviour{
                 }
             }else{AudioManager.instance.Play("Deny");}
         }else if(item.item.name=="Overhaul"){//Overhaul
-            if(GameSession.instance.xp>0){
+            if(GameSession.instance.xp>0||ignoreCosts){
                 if(Player.instance.energy<1){Player.instance.AddSubEnergy(20);}
                 var ratio=(GameSession.instance.xp/GameSession.instance.xpMax);
                 GameCanvas.instance.XPPopUpHUD(-GameSession.instance.xp);
-                Player.instance.InfEnergy(ratio*33);
+                Player.instance.InfEnergy(ratio*33,0);
                 Player.instance.Power(16,Mathf.Clamp(3f*ratio,1.1f,2.2f));
                 timerOverhaul=timeOverhaul;
                 GameSession.instance.xp=0;
@@ -142,34 +135,58 @@ public class PlayerModules : MonoBehaviour{
     #endregion
 
 
-    public bool _isModuleUnlocked(string name){return modulesUnlocked.Contains(name);}
+    public bool _isModuleUnlocked(string name){return modulesList.Find(x=>x.name==name&&x.lvl>=1)!=null;}
     public bool UnlockModule(string name){if(GetModuleProperties(name)!=null){
-        if(!_isModuleUnlocked(name)){
-            if(GameSession.instance.cores>=GetModuleProperties(name).coreCost){
-                GameSession.instance.cores-=GetModuleProperties(name).coreCost;
-                modulesUnlocked.Add(name);return true;
+        if(GetModuleNextLvlVals(name)!=null){
+            if(GameSession.instance.cores>=GetModuleNextLvlVals(name).coreCost&&UpgradeMenu.instance.total_UpgradesLvl>=GetModuleNextLvlVals(name).lvlReq){
+                GameSession.instance.cores-=GetModuleNextLvlVals(name).coreCost;
+                if(!_isModuleUnlocked(name)){GetModule(name).lvl=1;}
+                else{GetModule(name).lvl++;}
+                return true;
             }
         }
     }return false;}
     public bool _isModuleEquipped(string name){return moduleSlots.Contains(name);}
+    public bool _isModuleLvl(string name,int lvl){return modulesList.Find(x=>x.name==name).lvl>=lvl;}
+    public bool _isModuleMaxed(string name){return GetModuleNextLvlVals(name)==null;}
+    public Module GetModule(string name){Module _target=null;_target=modulesList.Find(x=>x.name==name);if(_target!=null){return _target;}else{return null;}}
+    public Module GetModuleFromID(int id){Module _target=null;_target=modulesList.Find(x=>x.name==moduleSlots[id]);if(_target!=null){return _target;}else{return null;}}
+    public ModulePropertiesGR GetModuleProperties(string name){var _target=GameRules.instance.modulesPlayer.Find(x=>x.item.name==name);if(_target!=null){return _target;}else{Debug.LogWarning("No ModuleProperties in GameRules by name: "+name);return null;}}
+    public ModuleSkillLvlVals GetModuleNextLvlVals(string name){
+        var mp=GetModuleProperties(name);
+        if(mp!=null){
+            var m=GetModule(name);
+            if(m!=null){if(m.lvl<mp.lvlVals.Capacity){return mp.lvlVals[m.lvl];}}
+        }return null;
+    }
     public void SetModule(int id, string item){moduleSlots[id]=item;}
     public void ClearModule(string name){SetModule(moduleSlots.FindIndex(x=>x==name),"");}
     public void ReplaceModule(string name, string item){SetModule(moduleSlots.FindIndex(x=>x==name),item);}
-    public ModulePropertiesGR GetModuleProperties(string name){var _target=GameRules.instance.modulesPlayer.Find(x=>x.item.name==name);if(_target!=null){return _target;}else{Debug.LogWarning("No ModuleProperties in GameRules by name: "+name);return null;}}
 
-    public bool _isSkillUnlocked(string name){return skillsUnlocked.Contains(name);}
+    public bool _isSkillUnlocked(string name){return skillsList.Find(x=>x.name==name&&x.lvl>=1)!=null;}
     public bool UnlockSkill(string name){if(GetSkillProperties(name)!=null){
-        if(!_isSkillUnlocked(name)){
-            if(GameSession.instance.cores>=GetSkillProperties(name).coreCost){
-                GameSession.instance.cores-=GetSkillProperties(name).coreCost;
-                skillsUnlocked.Add(name);return true;
+        if(GetSkillNextLvlVals(name)!=null){
+            if(GameSession.instance.cores>=GetSkillNextLvlVals(name).coreCost&&UpgradeMenu.instance.total_UpgradesLvl>=GetSkillNextLvlVals(name).lvlReq){
+                GameSession.instance.cores-=GetSkillNextLvlVals(name).coreCost;
+                if(!_isSkillUnlocked(name)){GetSkill(name).lvl=1;}
+                else{GetSkill(name).lvl++;}
+                return true;
             }
         }
     }return false;}
     public bool _isSkillEquipped(string name){return skillsSlots.Contains(name);}
+    public bool _isSkillLvl(string name,int lvl){return skillsList.Find(x=>x.name==name).lvl>=lvl;}
+    public bool _isSkillMaxed(string name){return GetSkillNextLvlVals(name)==null;}
     public Skill GetSkill(string name){Skill _target=null;_target=skillsList.Find(x=>x.name==name);if(_target!=null){return _target;}else{return null;}}
     public Skill GetSkillFromID(int id){Skill _target=null;_target=skillsList.Find(x=>x.name==skillsSlots[id]);if(_target!=null){return _target;}else{return null;}}
     public SkillPropertiesGR GetSkillProperties(string name){var _target=GameRules.instance.skillsPlayer.Find(x=>x.item.name==name);if(_target!=null){return _target;}else{Debug.LogWarning("No SkillProperties in GameRules by name: "+name);return null;}}
+    public ModuleSkillLvlVals GetSkillNextLvlVals(string name){
+        var sp=GetSkillProperties(name);
+        if(sp!=null){
+            var s=GetSkill(name);
+            if(s!=null){if(s.lvl<sp.lvlVals.Capacity){return sp.lvlVals[s.lvl];}}
+        }return null;
+    }
     public void SetSkill(int id, string item){skillsSlots[id]=item;}
     public void ReplaceSkill(string name, string item){SetSkill(skillsSlots.FindIndex(x=>x==name),item);}
     public void ClearSkill(string name){ReplaceSkill(name,"");}
@@ -182,4 +199,15 @@ public class PlayerModules : MonoBehaviour{
             SetActiveAllChildren(child, value);
         }
     }
+}
+
+
+[System.Serializable]public class Skill{
+    public string name;
+    [DisableInEditorMode]public int lvl;
+    [DisableInEditorMode]public float cooldown;
+}
+[System.Serializable]public class Module{
+    public string name;
+    [DisableInEditorMode]public int lvl;
 }

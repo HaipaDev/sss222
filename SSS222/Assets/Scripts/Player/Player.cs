@@ -812,7 +812,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                 var wpt=(weaponTypeMelee)ws.weaponTypeProperties;
                 var _ammo=_curPwrup().ammo;
                 if(!ComparePowerupStrCur(ws.name)||(
-                    (ws.costType==costType.energy&&((energyOn&&energy<=0)||(!energyOn))||_hasStatus("electr")))
+                    (ws.costType==costType.energy&&((energyOn&&energy<=0)||_hasStatus("electrc"))))
                     ||(ws.costType!=costType.energy&&_ammo<=0&&_ammo!=-5)
                 ){
                     GameObject asset=GameAssets.instance.Get(ws.assetName);
@@ -927,6 +927,8 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }}
             }
         }
+        if(!_hasStatus("onfire")){if(onFireCor!=null)StopCoroutine(onFireCor);onFireCor=null;}
+        if(!_hasStatus("decay")){if(decayCor!=null)StopCoroutine(decayCor);decayCor=null;}
 
         if(!GameSession.GlobalTimeIsPaused){
             if(_hasStatus("flip")){
@@ -1125,73 +1127,73 @@ public class Player : MonoBehaviour{    public static Player instance;
         rb.velocity=Vector2.zero;
     }}
     
-    public void OnFire(float duration,float strength=1){
-        //if(!_hasStatus("onfire"))StartCoroutine(OnFireI());
-        SetStatus("onfire",duration,strength);
-        StartCoroutine(OnFireI());
+    IEnumerator onFireCor;
+    public void OnFire(float duration,float timerCap=0,float strength=1){
+        SetStatus("onfire",duration,timerCap,strength);
+        if(onFireCor==null){onFireCor=OnFireI();StartCoroutine(onFireCor);}
     }
     IEnumerator OnFireI(){while(_hasStatus("onfire")){
         var dmg=onfireDmg*GetStatus("onfire").strength;
         GetComponent<PlayerCollider>().SetLastHit("Fire",dmg);
         Damage(dmg,dmgType.flame);
-        yield return new WaitForSeconds(onfireTickrate);///GetStatus("onfire").strength);
+        yield return new WaitForSeconds(onfireTickrate);//StartCoroutine(onFireCor);
     }yield break;}
-    public void Decay(float duration,float strength=1){
-        //if(!_hasStatus("decay"))StartCoroutine(DecayI());
-        SetStatus("decay",duration,strength);
-        StartCoroutine(DecayI());
+    IEnumerator decayCor;
+    public void Decay(float duration,float timerCap=0,float strength=1){
+        SetStatus("decay",duration,timerCap,strength);
+        if(decayCor==null){decayCor=DecayI();StartCoroutine(decayCor);}
     }
     IEnumerator DecayI(){while(_hasStatus("decay")){
         var dmg=decayDmg*GetStatus("decay").strength;
         GetComponent<PlayerCollider>().SetLastHit("Decay",dmg);
         Damage(dmg,dmgType.decay);
-        yield return new WaitForSeconds(decayTickrate);///GetStatus("decay").strength);
+        yield return new WaitForSeconds(decayTickrate);//StartCoroutine(decayCor);
     }yield break;}
-    public void Electrc(float duration){
-        SetStatus("electrc",duration);
+    public void Electrc(float duration,float timerCap=0){
+        SetStatus("electrc",duration,timerCap);
     }
-    public void Freeze(float duration){
-        SetStatus("frozen",duration);
+    public void Freeze(float duration,float timerCap=0){
+        SetStatus("frozen",duration,timerCap);
     }
-    public void Armor(float duration,/*int*/float strength=1){float _strgh=strength;
+    public void Armor(float duration,float timerCap,/*int*/float strength=1){float _strgh=strength;
         //if(strength!=1)_strgh=strength;
         //else _strgh=1.5f;
-        SetStatus("armored",duration,_strgh);
+        SetStatus("armored",duration,timerCap,_strgh);
     }
-    public void Fragile(float duration,/*int*/float strength=1){float _strgh=strength;
+    public void Fragile(float duration,float timerCap,/*int*/float strength=1){float _strgh=strength;
         //if(strength!=1)_strgh=strength;
         //else _strgh=1.5f;
-        SetStatus("fragile",duration,_strgh);
-    }public void Power(float duration,float strength=1){float _strgh=strength;
+        SetStatus("fragile",duration,timerCap,_strgh);
+    }public void Power(float duration,float timerCap=0,float strength=1){float _strgh=strength;
         if(strength!=1)_strgh=strength;
         else _strgh=1.5f;
-        SetStatus("power",duration,_strgh);
-    }public void Weaken(float duration,float strength=1){float _strgh=strength;
+        SetStatus("power",duration,timerCap,_strgh);
+    }public void Weaken(float duration,float timerCap=0,float strength=1){float _strgh=strength;
         if(strength!=1)_strgh=strength;
         else _strgh=1.5f;
-        SetStatus("weakns",duration,_strgh);
-    }public void Hack(float duration){
-        SetStatus("hacked",duration);
-    }public void Blind(float duration,float strength=1){float _strgh=strength;
+        SetStatus("weakns",duration,timerCap,_strgh);
+    }public void Hack(float duration,float timerCap=0){
+        SetStatus("hacked",duration,timerCap);
+    }public void Blind(float duration,float timerCap=0,float strength=1){float _strgh=strength;
         if(strength!=1)_strgh=strength;
         else _strgh=1.5f;
-        SetStatus("blind",duration,_strgh);
-    }public void Speed(float duration,float strength=1){float _strgh=strength;
+        SetStatus("blind",duration,timerCap,_strgh);
+    }public void Speed(float duration,float timerCap=0,float strength=1){float _strgh=strength;
         if(strength!=1)_strgh=strength;
         else _strgh=1.5f;
-        SetStatus("speed",duration,_strgh);
+        SetStatus("speed",duration,timerCap,_strgh);
         if(!_hasStatus("speed")){
             SetSpeedPrev();
         }
-    }public void Slow(float duration,float strength=1){float _strgh=strength;
+    }public void Slow(float duration,float timerCap=0,float strength=1){float _strgh=strength;
         if(strength!=1)_strgh=strength;
         else _strgh=1.5f;
-        SetStatus("slow",duration,_strgh);
+        SetStatus("slow",duration,timerCap,_strgh);
         if(!_hasStatus("slow")){
             SetSpeedPrev();
         }
-    }public void InfEnergy(float duration){
-        SetStatus("infEnergy",duration);
+    }public void InfEnergy(float duration,float timerCap=0){
+        SetStatus("infEnergy",duration,timerCap);
         infPrevEnergy=energy;
     }
 #endregion
@@ -1199,12 +1201,14 @@ public class Player : MonoBehaviour{    public static Player instance;
 #region//Other Functions
     public bool _hasStatus(string status){return statuses.Exists(x=>x.name==status);}
     public StatusFx GetStatus(string status){return statuses.Find(x=>x.name==status);}
-    public void SetStatus(string status,float time,float strength=1){
-        if(!_hasStatus(status)){statuses.Add(new StatusFx{name=status,timer=time,strength=strength});}
+    public void SetStatus(string status,float time,float timerCap=0,float strength=1){
+        var _status=GetStatus(status);
+        if(!_hasStatus(status)){statuses.Add(new StatusFx{name=status,timer=time,timerCap=timerCap,strength=strength});}
         else{
-            if(GetStatus(status).timer!=-5){
-                if(GameRules.instance.addToStatusTimer){GetStatus(status).timer+=time;}
-                if(GetStatus(status).strength<strength){ResetStatus(status,time,strength);}//GetStatus(status).strength=strength;}
+            if(_status.timer!=-5){
+                if(timerCap!=_status.timerCap){_status.timerCap=timerCap;}
+                if(GameRules.instance.addToStatusTimer){if(_status.timer<(_status.timerCap-time)||_status.timerCap<=0)_status.timer+=time;}
+                if(_status.strength<strength){ResetStatus(status,time,strength);}//_status.strength=strength;}
             }
         }
     }public void RemoveStatus(string status){statuses.RemoveAll(x=>x.name==status);}
@@ -1308,7 +1312,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(type==dmgType.normal){damaged=true;AudioManager.instance.Play("ShipHit");}
         if(type==dmgType.flame){flamed=true;AudioManager.instance.Play("Overheat");}
         if(type==dmgType.decay){if(dmg!=0&&health>dmg*2){var dmgTot=(float)System.Math.Round(dmg,2);health-=dmgTot;HpPopUpHUD(-dmgTot);damaged=true;AudioManager.instance.Play("Decay");}}
-        if(type==dmgType.electr){electricified=true;Electrc(electrTime);}//electricified=true;AudioManager.instance.Play("Electric");}
+        if(type==dmgType.electr){electricified=true;Electrc(electrTime,GameRules.instance.statusCapDefault);}//electricified=true;AudioManager.instance.Play("Electric");}
         if(type==dmgType.shadow){shadowed=true;AudioManager.instance.Play("ShadowHit");}
         if(type==dmgType.heal){healed=true;if(dmg!=0){health+=dmg;HpPopUpHUD(dmg);UniCollider.DMG_VFX(2,GetComponent<Collider2D>(),transform,-dmg);}}
         if(type==dmgType.healSilent){if(dmg!=0){health+=dmg;HpPopUpHUD(dmg);}}
@@ -1451,5 +1455,6 @@ void AmmoPopUpHUD(float amnt){GameCanvas.instance.AmmoPopupSwitch(amnt);}
 public class StatusFx{
     public string name;
     public float timer=0;
+    public float timerCap=0;
     public float strength=1;
 }

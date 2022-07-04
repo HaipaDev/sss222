@@ -148,6 +148,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 873e180e33e72a84a95efe650b9264be, type: 2}
   - {fileID: 11400000, guid: 777783c42d196d9418ae8c589b850bb7, type: 2}
   statusesStart: []
+  statusCapDefault: 60
   addToStatusTimer: 1
   flipTime: 7
   gcloverTime: 6
@@ -348,6 +349,7 @@ MonoBehaviour:
     powerupSpawnPosRange: {x: -3, y: 3}
   enemyDefenseHit: 1
   enemyDefensePhase: 1
+  enemyDefenseFloor: 0.1
   enemies:
   - name: Bat
     type: 0
@@ -1314,10 +1316,10 @@ MonoBehaviour:
     colliEvents: []
   - name: GoblinBt
     colliType: 3
-    dmg: 2
+    dmg: 2.5
     dmgBySize: 0
     dmgBySpeed: 0
-    armorPenetr: 0
+    armorPenetr: 1
     phase: 0
     dmgPhase: 2.5
     phaseFreqFirst: 0
@@ -1569,29 +1571,35 @@ MonoBehaviour:
     costType: 0
     costTypeProperties:
       cost: 0
-    lvlReq: 5
-    coreCost: 5
+    lvlVals:
+    - coreCost: 5
+      lvlReq: 5
   - item: {fileID: 11400000, guid: 3477e1bf2eb61d840b325eafbec617d3, type: 2}
     costType: 3
     costTypeProperties:
       cost: 0
-    lvlReq: 4
-    coreCost: 4
+    lvlVals:
+    - coreCost: 4
+      lvlReq: 4
   skillsPlayer:
   - item: {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
     costType: 0
     costTypeProperties:
       cost: 0
     cooldown: 33
-    lvlReq: 2
-    coreCost: 3
+    lvlVals:
+    - coreCost: 2
+      lvlReq: 3
+    - coreCost: 1
+      lvlReq: 4
   - item: {fileID: 11400000, guid: d66606c472024f44e8f0f96cdfac0c12, type: 2}
     costType: 3
     costTypeProperties:
       cost: 0
     cooldown: 44
-    lvlReq: 4
-    coreCost: 4
+    lvlVals:
+    - coreCost: 4
+      lvlReq: 4
   playerModulesCapacity: 4
   timeOverhaul: 10
   playerExhaustROF: 1

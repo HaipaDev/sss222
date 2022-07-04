@@ -44,16 +44,11 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     public int total_UpgradesCount;
     public int saveBarsFromLvl=5;
     public int total_UpgradesLvl=0;
-    public int mPulse_upgraded;
-    public int teleport_upgraded;
-    public int overhaul_upgraded;
-    public int crMend_upgraded;
-    public int enDiss_upgraded;
     PlayerModules pmodules;
     IEnumerator co;
 
-    [DisableInEditorMode][SerializeField]int selectedModuleSlot=-1;
-    [DisableInEditorMode][SerializeField]int selectedSkillSlot=-1;
+    [DisableInEditorMode][SerializeField]public int selectedModuleSlot=-1;
+    [DisableInEditorMode][SerializeField]public int selectedSkillSlot=-1;
     int lvlID;
     int lvlcr;
     float startTimer=0.5f;
@@ -65,18 +60,6 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     if(i!=null){
         saveBarsFromLvl=i.saveBarsFromLvl;
         total_UpgradesCountMax=i.total_UpgradesCountMax;
-        mPulse_upgradeCost=i.mPulse_upgradeCost;
-        mPulse_lvlReq=i.mPulse_lvlReq;
-        postMortem_upgradeCost=i.postMortem_upgradeCost;
-        postMortem_lvlReq=i.postMortem_lvlReq;
-        teleport_upgradeCost=i.teleport_upgradeCost;
-        teleport_lvlReq=i.teleport_lvlReq;
-        overhaul_upgradeCost=i.overhaul_upgradeCost;
-        overhaul_lvlReq=i.overhaul_lvlReq;
-        crMend_upgradeCost=i.crMend_upgradeCost;
-        crMend_lvlReq=i.crMend_lvlReq;
-        enDiss_upgradeCost=i.enDiss_upgradeCost;
-        enDiss_lvlReq=i.enDiss_lvlReq;
     }
     }
     void Start(){
@@ -102,13 +85,11 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         upgradeMenu2UI.SetActive(false);
         lvltreeUI.SetActive(false);
         BackToModulesSkillsInventory();
-        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
         UpgradeMenuIsOpen=false;
     }
     public void Open(){
         upgradeMenuUI.SetActive(true);
-        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
         /*if(GameRules.instance.upgradeMenuPause)*/GameSession.instance.gameSpeed=GameRules.instance.upgradeMenuOpenGameSpeed;
         //else{GameSession.instance.gameSpeed=GameRules.instance.upgradeMenuSlowdownSpeed;}
         UpgradeMenuIsOpen=true;
@@ -169,27 +150,33 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         modulesList.SetActive(false);
         skillsList.SetActive(false);
     }
-    public void BackToModulesSkillsInventory(){CloseAllModulesSkills();modulesSkillsInventory.SetActive(true);selectedModuleSlot=-1;selectedSkillSlot=-1;SetModulesAndSkillsPreviews();}
-    public void OpenModulesList(int id){selectedModuleSlot=id;CloseAllModulesSkills();modulesList.SetActive(true);}
-    public void OpenSkillsList(int id){selectedSkillSlot=id;CloseAllModulesSkills();skillsList.SetActive(true);}
+    public void BackToModulesSkillsInventory(){CloseAllModulesSkills();modulesSkillsInventory.SetActive(true);selectedModuleSlot=-1;selectedSkillSlot=-1;SetModulesAndSkillsPreviews();SetModulesAndSkillsLvlVals();}
+    public void OpenModulesList(int id){selectedModuleSlot=id;CloseAllModulesSkills();modulesList.SetActive(true);SetModulesAndSkillsLvlVals();}
+    public void OpenSkillsList(int id){selectedSkillSlot=id;CloseAllModulesSkills();skillsList.SetActive(true);SetModulesAndSkillsLvlVals();}
+
+    public void UnlockLvlModule(string name){
+        if(pmodules.UnlockModule(name)){AudioManager.instance.Play("Upgrade");SetModulesAndSkillsLvlVals();StatsAchievsManager.instance.ModuleUnlocked();}
+        else{AudioManager.instance.Play("Deny");}
+    }
     public void SetModuleSlot(string name){
         if(pmodules._isModuleUnlocked(name)||name==""){
             if(pmodules._isModuleEquipped(name)&&name!=""){pmodules.ClearModule(name);}
             pmodules.SetModule(selectedModuleSlot,name);
-            BackToModulesSkillsInventory();
-        }else{
-            if(pmodules.UnlockModule(name)){AudioManager.instance.Play("Upgrade");}
-            else{AudioManager.instance.Play("Deny");}
+            //if(name!=""){StatsAchievsManager.instance.ModuleUnlocked();}
+            //BackToModulesSkillsInventory();
         }
+    }
+
+    public void UnlockLvlSkill(string name){
+        if(pmodules.UnlockSkill(name)){AudioManager.instance.Play("Upgrade");SetModulesAndSkillsLvlVals();StatsAchievsManager.instance.ModuleUnlocked();}
+        else{AudioManager.instance.Play("Deny");}
     }
     public void SetSkillSlot(string name){
         if(pmodules._isSkillUnlocked(name)||name==""){
             if(pmodules._isSkillEquipped(name)&&name!=""){pmodules.ClearSkill(name);}
             pmodules.SetSkill(selectedSkillSlot,name);
-            BackToModulesSkillsInventory();
-        }else{
-            if(pmodules.UnlockSkill(name)){AudioManager.instance.Play("Upgrade");}
-            else{AudioManager.instance.Play("Deny");}
+            //if(name!=""){StatsAchievsManager.instance.ModuleUnlocked();}
+            //BackToModulesSkillsInventory();
         }
     }
 
@@ -229,12 +216,11 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         goModule0.transform.GetChild(1).GetComponent<TextMeshProUGUI>().colorGradient=new VertexGradient(Color.white);
         goModule0.transform.GetChild(2).GetComponent<Image>().sprite=moduleSlotPrefab.GetComponent<Image>().sprite;
         foreach(Transform t in goModule0.transform.GetChild(2)){Destroy(t.gameObject);}
-        goModule0.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetModuleSlot(""));
-        goModule0.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().valueName="";
-        goModule0.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().value=1;
-        Destroy(goModule0.transform.GetChild(3).GetChild(1).gameObject);
-        Destroy(goModule0.transform.GetChild(3).GetChild(0).gameObject);
+        goModule0.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(()=>SetModuleSlot(""));
+        goModule0.transform.GetChild(5).GetChild(1).GetChild(0).GetComponent<XPFill>().valueName="moduleEmptyThisSlot";
+        Destroy(goModule0.transform.GetChild(5).GetChild(0).gameObject);
         Destroy(goModule0.transform.GetChild(4).gameObject);
+        Destroy(goModule0.transform.GetChild(3).gameObject);
 
         foreach(ModulePropertiesGR m in GameRules.instance.modulesPlayer){
             var go=Instantiate(moduleSkillElementPrefab,modulesContainer);
@@ -248,10 +234,14 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
                 foreach(Transform t in go.transform.GetChild(2)){Destroy(t.gameObject);}
                 if(m.item.iconsGo!=null){Instantiate(m.item.iconsGo,go.transform.GetChild(2));}
             }
-            go.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetModuleSlot(m.item.name));
+            go.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>UnlockLvlModule(m.item.name));
             go.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().valueName="moduleUnlocked_"+m.item.name;
-            go.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text=m.coreCost.ToString();
-            go.transform.GetChild(4).GetComponent<ShipLevelRequired>().value=m.lvlReq;
+            go.transform.GetChild(3).GetChild(3).GetComponent<ValueDisplay>().value="moduleLvl_"+m.item.name;
+            //go.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text=m.coreCost.ToString();
+            //go.transform.GetChild(4).GetComponent<ShipLevelRequired>().value=m.lvlReq;
+            go.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(()=>SetModuleSlot(m.item.name));
+            go.transform.GetChild(5).GetChild(0).GetComponent<ValueDisplay>().value="moduleEquippedSlot_"+m.item.name;
+            go.transform.GetChild(5).GetChild(1).GetChild(0).GetComponent<XPFill>().valueName="moduleEquippedThisSlot_"+m.item.name;
         }
 
         ///Skills
@@ -264,12 +254,11 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         goSkill0.transform.GetChild(1).GetComponent<TextMeshProUGUI>().colorGradient=new VertexGradient(Color.white);
         goSkill0.transform.GetChild(2).GetComponent<Image>().sprite=skillSlotPrefab.GetComponent<Image>().sprite;
         foreach(Transform t in goSkill0.transform.GetChild(2)){Destroy(t.gameObject);}
-        goSkill0.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetSkillSlot(""));
-        goSkill0.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().valueName="";
-        goSkill0.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().value=1;
-        Destroy(goSkill0.transform.GetChild(3).GetChild(1).gameObject);
-        Destroy(goSkill0.transform.GetChild(3).GetChild(0).gameObject);
+        goSkill0.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(()=>SetSkillSlot(""));
+        goSkill0.transform.GetChild(5).GetChild(1).GetChild(0).GetComponent<XPFill>().valueName="skillEmptyThisSlot";
+        Destroy(goSkill0.transform.GetChild(5).GetChild(0).gameObject);
         Destroy(goSkill0.transform.GetChild(4).gameObject);
+        Destroy(goSkill0.transform.GetChild(3).gameObject);
 
         foreach(SkillPropertiesGR s in GameRules.instance.skillsPlayer){
             var go=Instantiate(moduleSkillElementPrefab,skillsContainer);
@@ -283,13 +272,42 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
                 foreach(Transform t in go.transform.GetChild(2)){Destroy(t.gameObject);}
                 if(s.item.iconsGo!=null){Instantiate(s.item.iconsGo,go.transform.GetChild(2));}
             }
-            go.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>SetSkillSlot(s.item.name));
+            go.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>UnlockLvlSkill(s.item.name));
             go.transform.GetChild(3).GetChild(2).GetChild(0).GetComponent<XPFill>().valueName="skillUnlocked_"+s.item.name;
-            go.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text=s.coreCost.ToString();
-            go.transform.GetChild(4).GetComponent<ShipLevelRequired>().value=s.lvlReq;
+            go.transform.GetChild(3).GetChild(3).GetComponent<ValueDisplay>().value="skillLvl_"+s.item.name;
+            //go.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text=s.coreCost.ToString();
+            //go.transform.GetChild(4).GetComponent<ShipLevelRequired>().value=s.lvlReq;
+            go.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(()=>SetSkillSlot(s.item.name));
+            go.transform.GetChild(5).GetChild(0).GetComponent<ValueDisplay>().value="skillEquippedSlot_"+s.item.name;
+            go.transform.GetChild(5).GetChild(1).GetChild(0).GetComponent<XPFill>().valueName="skillEquippedThisSlot_"+s.item.name;
+        }
+        SetModulesAndSkillsLvlVals_del();
+    }
+    void SetModulesAndSkillsLvlVals_del(){StartCoroutine(SetModulesAndSkillsLvlVals_delI());}
+    IEnumerator SetModulesAndSkillsLvlVals_delI(){yield return new WaitForSecondsRealtime(0.05f);SetModulesAndSkillsLvlVals();}
+    void SetModulesAndSkillsLvlVals(){
+        var modulesContainer=modulesList.transform.GetChild(0);
+        foreach(Transform t in modulesContainer){if(t.gameObject.name!="Empty"){SetValues(t);}}
+        var skillsContainer=skillsList.transform.GetChild(0);
+        foreach(Transform t in skillsContainer){if(t.gameObject.name!="Empty"){SetValues(t,true);}}
+
+        void SetValues(Transform t, bool skill=false){
+            string n="Module";if(skill)n="Skill";
+            var lvlVals=new ModuleSkillLvlVals();if(!skill){lvlVals=pmodules.GetModuleNextLvlVals(t.gameObject.name);}else{lvlVals=pmodules.GetSkillNextLvlVals(t.gameObject.name);}
+            if(lvlVals!=null){
+                t.GetChild(3).GetChild(0).GetComponent<Image>().enabled=true;
+                t.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text=lvlVals.coreCost.ToString();
+                t.GetChild(4).gameObject.GetComponent<ShipLevelRequired>().value=lvlVals.lvlReq;
+                t.GetChild(4).gameObject.GetComponent<ShipLevelRequired>().Switch(true);
+                //Debug.Log(n+": "+t.gameObject.name+" | Core Cost: "+lvlVals.coreCost+" | LvlReq: "+lvlVals.lvlReq);
+            }else{
+                t.GetChild(3).GetChild(0).GetComponent<Image>().enabled=false;
+                t.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text="";
+                t.GetChild(4).gameObject.GetComponent<ShipLevelRequired>().Switch(false);
+                //Debug.Log(n+" maxed: "+t.gameObject.name);
+            }
         }
     }
-
     //void SetModulesAndSkillsPreviews(){StartCoroutine(SetModulesAndSkillsPreviewsI());}
     //IEnumerator SetModulesAndSkillsPreviewsI(){
     void SetModulesAndSkillsPreviews(){
@@ -341,20 +359,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         }
     }
 
-    /*public void UnlockSkillUni(int ID, ref int value,int number,int cost){
-        if(GameSession.instance.cores>=cost && value==number-1){
-            value=number;GameSession.instance.cores-=cost;GetComponent<AudioSource>().Play();
-        }else{AudioManager.instance.Play("Deny");}
-    }
-    public void UnlockSkill(int ID){
-        if(ID==0){UnlockSkillUni(ID,ref mPulse_upgraded,1,mPulse_upgradeCost);}
-        if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,1,teleport_upgradeCost);}
-        if(ID==2){UnlockSkillUni(ID,ref overhaul_upgraded,1,overhaul_upgradeCost);}
-    }
-    public void UpgradeSkill(int ID){
-        if(ID==0){UnlockSkillUni(ID,ref mPulse_upgraded,2,postMortem_upgradeCost);}
-        //if(ID==1){UnlockSkillUni(ID,ref teleport_upgraded,2,1);}
-    }*/
+
     XPBars barr;
     void LevelEverything(){
         if(startTimer>0){startTimer-=Time.unscaledDeltaTime;}
@@ -397,7 +402,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
                 if(lvlbar.current==null)lvlbar.created=2;
                 if(barr==lvlbar){lvlbar.ID=lvlID;lvlbar.created=lvlcr;}
             }
-            if(total_UpgradesLvl>=postMortem_lvlReq&&mPulse_upgraded==1){mPulse_upgraded=2;}
+            //if(total_UpgradesLvl>=postMortem_lvlReq&&mPulse_upgraded==1){mPulse_upgraded=2;}
         }
     }
     void LastBar(int max,string name){

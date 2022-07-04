@@ -69,16 +69,16 @@ public class DisplayLeaderboard : MonoBehaviour{
             if(leaderboard.HasValue){
                 LeaderboardEntry[] scores=await leaderboard.Value.GetScoresAsync(100);
                 if(friends){scores=await leaderboard.Value.GetScoresFromFriendsAsync();}
-                if(scores.Length>0){
+                if(scores!=null){if(scores.Length>0){
                     for(var i=0;i<scores.Length;i++){if(scores[i].User.Name==SteamClient.Name){
                         currentUserRank=i;currentUserScore=scores[i].Score;}}
                     if(currentUserScore>0){
                         rank=currentUserRank+1;
                     }
-                }else{rank=0;}
+                }else{rank=0;}}else{rank=0;}
                 username=SteamClient.Name;
                 score=currentUserScore;
-            }
+            }else{username=SteamClient.Name;rank=0;score=0;}
         }
     }
 }

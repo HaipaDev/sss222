@@ -128,6 +128,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public void RandomizeShopScoreMax(){
         if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;if(sr!=null){if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-2);}}
     }
+    SpriteRenderer _blurImg;
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
         if(SceneManager.GetActiveScene().name=="Game"){
@@ -172,13 +173,16 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         
         //Restart with R or Space/Resume with Space
         if(SceneManager.GetActiveScene().name=="Game"){
-        if((GameOverCanvas.instance==null||GameOverCanvas.instance.gameOver==false)&&PauseMenu.GameIsPaused==false){restartTimer=-4;}
-        if(PauseMenu.GameIsPaused==true){if(restartTimer==-4)restartTimer=0.5f;}
-        if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true){if(restartTimer==-4)restartTimer=1f;}
-        else if(PauseMenu.GameIsPaused==true&&Input.GetKeyDown(KeyCode.Space)){FindObjectOfType<PauseMenu>().Resume();}
-        if(restartTimer>0)restartTimer-=Time.unscaledDeltaTime;
-        if(restartTimer<=0&&restartTimer!=-4){if(Input.GetKeyDown(KeyCode.R)||(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Space))){GSceneManager.instance.RestartGame();restartTimer=-4;}}
-        if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Escape)){GSceneManager.instance.LoadStartMenuGame();}
+            if(_blurImg==null)_blurImg=GameObject.Find("BlurImage").GetComponent<SpriteRenderer>();_blurImg.enabled=(PauseMenu.GameIsPaused||UpgradeMenu.UpgradeMenuIsOpen||Shop.shopOpened);
+            if((GameOverCanvas.instance==null||GameOverCanvas.instance.gameOver==false)&&PauseMenu.GameIsPaused==false){restartTimer=-4;}
+            if(PauseMenu.GameIsPaused==true){if(restartTimer==-4)restartTimer=0.5f;}
+            if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true){if(restartTimer==-4)restartTimer=1f;}
+            else if(PauseMenu.GameIsPaused==true&&Input.GetKeyDown(KeyCode.Space)){PauseMenu.instance.Resume();}
+            if(restartTimer>0)restartTimer-=Time.unscaledDeltaTime;
+            if(restartTimer<=0&&restartTimer!=-4){
+                if(Input.GetKeyDown(KeyCode.R)||(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Space))){GSceneManager.instance.RestartGame();restartTimer=-4;}
+                if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true&&Input.GetKeyDown(KeyCode.Escape)){GSceneManager.instance.LoadStartMenuGame();}
+            }
         }
 
         if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(Player.instance!=null&&Player.instance._hasStatus("inverter"))){
@@ -327,10 +331,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             if(ss.total_UpgradesLvl>=u.saveBarsFromLvl){ss.total_UpgradesCount=u.total_UpgradesCount;}
             ss.total_UpgradesLvl=u.total_UpgradesLvl;
             //
-            ss.mPulse_upgraded=u.mPulse_upgraded;
+            /*ss.mPulse_upgraded=u.mPulse_upgraded;
             ss.teleport_upgraded=u.teleport_upgraded;
             ss.crMend_upgraded=u.crMend_upgraded;
-            ss.enDiss_upgraded=u.enDiss_upgraded;
+            ss.enDiss_upgraded=u.enDiss_upgraded;*/
             yield return new WaitForSecondsRealtime(0.02f);
             Debug.Log("Adventure data saved in GameSession");
             yield return new WaitForSecondsRealtime(0.033f);
@@ -356,10 +360,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         u.total_UpgradesCount=ss.total_UpgradesCount;
         u.total_UpgradesLvl=ss.total_UpgradesLvl;
         //
-        u.mPulse_upgraded=ss.mPulse_upgraded;
+        /*u.mPulse_upgraded=ss.mPulse_upgraded;
         u.teleport_upgraded=ss.teleport_upgraded;
         u.crMend_upgraded=ss.crMend_upgraded;
-        u.enDiss_upgraded=ss.enDiss_upgraded;
+        u.enDiss_upgraded=ss.enDiss_upgraded;*/
 
         yield return new WaitForSeconds(0.1f);
         if(UpgradeMenu.instance!=null){

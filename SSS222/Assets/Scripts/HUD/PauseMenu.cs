@@ -40,7 +40,6 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         pauseMenuUI.SetActive(false);
         if(optionsUI.transform.GetChild(0).gameObject.activeSelf){SettingsMenu.instance.Back();}
         //if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();}
-        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=false;
         GameSession.instance.gameSpeed=1;
         //StartCoroutine(SpeedUp());
         GameIsPaused = false;
@@ -48,7 +47,7 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         //Debug.Log("Resuming pause");
     }
     public void PauseEmpty(){
-        GameObject.Find("BlurImage").GetComponent<SpriteRenderer>().enabled=true;
+        
         GameIsPaused = true;
         if(!GameRules.instance.instaPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
         else{GameSession.instance.gameSpeed=0;}

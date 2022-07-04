@@ -9,7 +9,7 @@ using Steamworks.Data;
 public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsManager instance;
     [Header("Achievements")]
     [Searchable]public List<Achievement> achievsList;
-    public int _achievsListCount;
+    //[DisableInEditorMode]public int _achievsListCount;
     public UnityEngine.Color uncompletedColor=UnityEngine.Color.gray;
     public UnityEngine.Color completedColor=new UnityEngine.Color(55/255, 255/255, 55/255);//basically green
     public UnityEngine.Color epicUncompletedColor=new UnityEngine.Color(79/255, 61/255, 97/255);//dark purple
@@ -111,6 +111,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public Achievement GetAchievByName(string str,bool ignoreWarning=false){var i=achievsList.Find(x=>x.name==str);if(i!=null){return i;}else{if(!ignoreWarning){Debug.LogWarning("No achiev by name: "+str);}return null;}}
     public void SaberBlocked(){CompleteAchiev("saberBlock");}
     public void CoreCollected(){CompleteAchiev("coreCollect");}
+    public void ModuleUnlocked(){CompleteAchiev("module");}
     public void DeepFried(){CompleteAchiev("deepFried");}
     public void Customized(){CompleteAchiev("customize");SetPersonalityCrisisTimer();AddPersonalityCrisisCount();}
     public void CustomizedAll(){CompleteAchiev("customize-all");}
@@ -217,7 +218,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
         achievsLoaded=true;
         Debug.Log("Loading achievs");
     }
-    public static int _AchievsListCount(){return StatsAchievsManager.instance._achievsListCount;}
+    //public static int _AchievsListCount(){return StatsAchievsManager.instance._achievsListCount;}
 
 
     public void SaveStats(){if(SaveSerial.instance!=null)if(SaveSerial.instance.statsData!=null){

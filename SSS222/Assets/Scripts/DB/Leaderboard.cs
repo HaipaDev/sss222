@@ -91,7 +91,7 @@ public class Leaderboard : MonoBehaviour{
             if(lb.HasValue){
                 if(steamGlobalCont!=null){
                     var globalScores = await lb.Value.GetScoresAsync(100);
-                    if(globalScores.Length>0){
+                    if(globalScores!=null){if(globalScores.Length>0){
                         if(steamGlobalCont.childCount>0){
                             for(var i=0;i<steamGlobalCont.childCount;i++){
                                 var go=steamGlobalCont.GetChild(i);
@@ -111,13 +111,13 @@ public class Leaderboard : MonoBehaviour{
                             go.GetComponent<DisplayLeaderboard>().username=globalScores[i].User.Name;
                             go.GetComponent<DisplayLeaderboard>().score=globalScores[i].Score;
                         }
-                    }
+                    }}
                     if(currentUserScoreSteamGlobal!=null){currentUserScoreSteamGlobal.DisplayCurrentUserHighscoreSteam();}
                 }
 
                 if(steamFriendsCont!=null){
                     var friendsScores = await lb.Value.GetScoresFromFriendsAsync();
-                    if(friendsScores.Length>0){
+                    if(friendsScores!=null){if(friendsScores.Length>0){
                         if(steamFriendsCont.childCount>0){
                             for(var i=0;i<steamFriendsCont.childCount;i++){
                                 var go=steamFriendsCont.GetChild(i);
@@ -137,9 +137,12 @@ public class Leaderboard : MonoBehaviour{
                             go.GetComponent<DisplayLeaderboard>().username=friendsScores[i].User.Name;
                             go.GetComponent<DisplayLeaderboard>().score=friendsScores[i].Score;
                         }
-                    }
+                    }}
                     if(currentUserScoreSteamFriends!=null){currentUserScoreSteamFriends.DisplayCurrentUserHighscoreSteam(true);}
                 }
+            }else{
+                if(currentUserScoreSteamGlobal!=null){currentUserScoreSteamGlobal.DisplayCurrentUserHighscoreSteam();}
+                if(currentUserScoreSteamFriends!=null){currentUserScoreSteamFriends.DisplayCurrentUserHighscoreSteam(true);}
             }
         }
     }

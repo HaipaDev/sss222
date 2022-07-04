@@ -81,7 +81,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("flipPwrup").name)) {
                     PwrupEnergyAdd();
                     if(player._hasStatus("flip")){PwrupEnergyAddDupl();}
-                    player.SetStatus("flip",player.flipTime); 
+                    player.SetStatus("flip",player.flipTime,GameRules.instance.statusCapDefault); 
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("inverterPwrup").name)){
                     if(player.energyOn){
@@ -94,16 +94,16 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("magnetPwrup").name)){
                     PwrupEnergyAdd();
                     if(player._hasStatus("magnet")){PwrupEnergyAddDupl();}
-                    player.SetStatus("magnet",player.magnetTime);
+                    player.SetStatus("magnet",player.magnetTime,GameRules.instance.statusCapDefault);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("scalerPwrup").name)){
                     PwrupEnergyAdd();
                     if(player._hasStatus("scaler")){PwrupEnergyAddDupl();}
-                    player.SetStatus("scaler",player.scalerTime);
+                    player.SetStatus("scaler",player.scalerTime,GameRules.instance.statusCapDefault);
                     player.shipScale=player.shipScaleDefault*player.scalerSizes[UnityEngine.Random.Range(0,player.scalerSizes.Length-1)];
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("gcloverPwrup").name)){
-                    player.SetStatus("gclover",player.gcloverTime);
+                    player.SetStatus("gclover",player.gcloverTime,GameRules.instance.statusCapDefault);
                     GameSession.instance.MultiplyScore(1.25f);
                     player.energy=player.energyMax;
                     GameAssets.instance.VFX("GCloverOutVFX", Vector2.zero,1f);
@@ -111,29 +111,29 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("shadowdashPwrup").name)){
                     PwrupEnergyAdd();
                     if(player._hasStatus("shadowdash")){PwrupEnergyAddDupl();}
-                    player.SetStatus("shadowdash",player.shadowTime);
+                    player.SetStatus("shadowdash",player.shadowTime,GameRules.instance.statusCapDefault);
                     player.shadowed=true;
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("shadowtracesPwrup").name)){
                     if(!player._hasStatus("shadowtracesPwrup")){player.SetSpeedPrev();player.moveSpeedCurrent*=player.shadowtracesSpeed;}
-                    player.SetStatus("shadowtraces",player.shadowTime);
+                    player.SetStatus("shadowtraces",player.shadowTime,GameRules.instance.statusCapDefault);
                     player.shadowed=true;
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("assassinPwrup").name)){
                     PwrupEnergyAdd();
-                    player.Speed(13,1.4f);
-                    player.Power(13,1.2f);
-                    player.Fragile(13,1.2f);
+                    player.Speed(13,GameRules.instance.statusCapDefault,1.4f);
+                    player.Power(13,GameRules.instance.statusCapDefault,1.2f);
+                    player.Fragile(13,GameRules.instance.statusCapDefault,1.2f);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("tankPwrup").name)){
                     PwrupEnergyAdd();
-                    player.Slow(13,1.4f);
-                    player.Armor(13,1.2f);
+                    player.Slow(13,GameRules.instance.statusCapDefault,1.4f);
+                    player.Armor(13,GameRules.instance.statusCapDefault,1.2f);
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("overwritePwrup").name)){
                     PwrupEnergyAdd();
-                    player.Hack(13);
-                    player.InfEnergy(13);
+                    player.Hack(13,GameRules.instance.statusCapDefault);
+                    player.InfEnergy(13,GameRules.instance.statusCapDefault);
                     player.GetComponent<PlayerModules>().ResetSkillCooldowns();
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("matrixPwrup").name)){player.SetStatus("matrix",player.matrixTime);}
@@ -154,19 +154,19 @@ public class PlayerCollider : MonoBehaviour{
                 if(w!=null){PowerupCollect(w.name);}
                 
                 //Other statuses
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("onfirePwrup").name)){player.OnFire(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("decayPwrup").name)){player.Decay(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("blindPwrup").name)){player.Blind(10,4);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("electrcPwrup").name)){player.Electrc(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("frozenPwrup").name)){player.Freeze(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("fragilePwrup").name)){player.Fragile(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("armoredPwrup").name)){player.Armor(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("powerPwrup").name)){player.Power(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("weaknsPwrup").name)){player.Weaken(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("hackedPwrup").name)){player.Hack(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("infEnergyPwrup").name)){player.InfEnergy(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("speedPwrup").name)){player.Speed(10);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("slowPwrup").name)){player.Slow(10);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("onfirePwrup").name)){player.OnFire(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("decayPwrup").name)){player.Decay(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("blindPwrup").name)){player.Blind(10,GameRules.instance.statusCapDefault,4);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("electrcPwrup").name)){player.Electrc(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("frozenPwrup").name)){player.Freeze(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("fragilePwrup").name)){player.Fragile(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("armoredPwrup").name)){player.Armor(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("powerPwrup").name)){player.Power(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("weaknsPwrup").name)){player.Weaken(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("hackedPwrup").name)){player.Hack(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("infEnergyPwrup").name)){player.InfEnergy(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("speedPwrup").name)){player.Speed(10,GameRules.instance.statusCapDefault);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("slowPwrup").name)){player.Slow(10,GameRules.instance.statusCapDefault);}
 
 
                 void HPAdd(float hp){player.HPAdd(hp);UniCollider.DMG_VFX(2,other,transform,-hp);}
@@ -252,19 +252,20 @@ public class PlayerCollider : MonoBehaviour{
                 if(dmgVal.dmgFx){
                     foreach(DmgFxValues fx in dmgVal.dmgFxValues){
                         if((!phase||(phase&&fx.onPhase))&&(fx.chance>=Random.Range(0f,100f))){
-                            if(fx.dmgFxType==dmgFxType.fire){player.OnFire(fx.length,fx.power);}
-                            if(fx.dmgFxType==dmgFxType.decay){player.Decay(fx.length,fx.power);}
-                            if(fx.dmgFxType==dmgFxType.electrc){player.Electrc(fx.length);}
-                            if(fx.dmgFxType==dmgFxType.freeze){player.Freeze(fx.length);}
-                            if(fx.dmgFxType==dmgFxType.armor){player.Armor(fx.length,fx.power);}
-                            if(fx.dmgFxType==dmgFxType.fragile){player.Fragile(fx.length,fx.power);}
-                            if(fx.dmgFxType==dmgFxType.power){player.Power(fx.length,fx.power);}
-                            if(fx.dmgFxType==dmgFxType.weak){player.Weaken(fx.length,fx.power);}
-                            if(fx.dmgFxType==dmgFxType.hack){player.Hack(fx.length);}
-                            if(fx.dmgFxType==dmgFxType.blind){player.Blind(fx.length,fx.power);}
-                            if(fx.dmgFxType==dmgFxType.speed){player.Speed(fx.length,fx.power);}
-                            if(fx.dmgFxType==dmgFxType.slow){player.Slow(fx.length,fx.power);}
-                            if(fx.dmgFxType==dmgFxType.infenergy){player.InfEnergy(fx.length);}
+                            var _timerCap=fx.length*2;
+                            if(fx.dmgFxType==dmgFxType.fire){player.OnFire(fx.length,_timerCap,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.decay){player.Decay(fx.length,_timerCap,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.electrc){player.Electrc(fx.length,_timerCap);}
+                            if(fx.dmgFxType==dmgFxType.freeze){player.Freeze(fx.length,_timerCap);}
+                            if(fx.dmgFxType==dmgFxType.armor){player.Armor(fx.length,_timerCap,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.fragile){player.Fragile(fx.length,_timerCap,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.power){player.Power(fx.length,_timerCap,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.weak){player.Weaken(fx.length,_timerCap,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.hack){player.Hack(fx.length,_timerCap);}
+                            if(fx.dmgFxType==dmgFxType.blind){player.Blind(fx.length,_timerCap,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.speed){player.Speed(fx.length,_timerCap,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.slow){player.Slow(fx.length,_timerCap,fx.power);}
+                            if(fx.dmgFxType==dmgFxType.infenergy){player.InfEnergy(fx.length,_timerCap);}
                         }
                     }
                 }

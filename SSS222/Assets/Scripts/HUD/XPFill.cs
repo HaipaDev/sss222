@@ -37,8 +37,19 @@ public class XPFill : MonoBehaviour{
         if(shop){value=Convert.ToInt32(Shop.instance.GetType().GetField(valueName).GetValue(Shop.instance));}
         else if(upgradeMenu){value=Convert.ToInt32(UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance));}
         else{
-            if(valueName.Contains("moduleUnlocked_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>().modulesUnlocked.Contains(valueName.Split('_')[1]));}
-            if(valueName.Contains("skillUnlocked_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>().skillsUnlocked.Contains(valueName.Split('_')[1]));}
+            if(valueName.Contains("moduleUnlocked_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>()._isModuleUnlocked(valueName.Split('_')[1]));}
+            if(valueName.Contains("skillUnlocked_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>()._isSkillUnlocked(valueName.Split('_')[1]));}
+
+            if(valueName.Contains("moduleMaxed")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>()._isModuleMaxed(valueName.Split('_')[1]));}
+            if(valueName.Contains("skillMaxed_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>()._isSkillMaxed(valueName.Split('_')[1]));}
+            
+            if(valueName.Contains("moduleEquipped_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped(valueName.Split('_')[1]));}
+            if(valueName.Contains("skillEquipped_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>()._isSkillEquipped(valueName.Split('_')[1]));}
+            
+            if(valueName.Contains("moduleEquippedThisSlot_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>().moduleSlots.FindIndex(x=>x==valueName.Split('_')[1])==UpgradeMenu.instance.selectedModuleSlot);}
+            if(valueName.Contains("skillEquippedThisSlot_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>().skillsSlots.FindIndex(x=>x==valueName.Split('_')[1])==UpgradeMenu.instance.selectedSkillSlot);}
+            if(valueName=="moduleEmptyThisSlot"){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>().moduleSlots[UpgradeMenu.instance.selectedModuleSlot]=="");}
+            if(valueName=="skillEmptyThisSlot"){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>().skillsSlots[UpgradeMenu.instance.selectedSkillSlot]=="");}
         }
 
         if(valueReq!=0){
