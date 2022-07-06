@@ -16,27 +16,29 @@ public class XPFill : MonoBehaviour{
     [SerializeField] public int valueReq;
     public int value;
     Image img;
-    //Shake shake;
+    PlayerModules pmodules;
     void Start(){
         img=GetComponent<Image>();
+        pmodules=Player.instance.GetComponent<PlayerModules>();
         if(replaceSprites){
             if(transform.root.gameObject.name.Contains("UpgradeCanvas")){
                 emptySprite=GameAssets.instance.Spr("upgradeEmpty");
                 fillSprite=GameAssets.instance.Spr("upgradeFill");
                 particlePrefab=GameAssets.instance.GetVFX("UpgradeVFX");
-                if(UpgradeMenu.instance.total_UpgradesLvl<UpgradeMenu.instance.saveBarsFromLvl){
+                if(pmodules.shipLvl<GameRules.instance.saveBarsFromLvl){
                     if(fillSprite!=GameAssets.instance.Spr("upgradeFill_des"))fillSprite=GameAssets.instance.Spr("upgradeFill_des");
                     if(particlePrefab!=GameAssets.instance.GetVFX("UpgradeVFX_des"))particlePrefab=GameAssets.instance.GetVFX("UpgradeVFX_des");
                 }
             }
         }
-        //shake = GameObject.FindObjectOfType<Shake>().GetComponent<Shake>();
     }
 
     void Update(){
         if(shop){value=Convert.ToInt32(Shop.instance.GetType().GetField(valueName).GetValue(Shop.instance));}
         else if(upgradeMenu){value=Convert.ToInt32(UpgradeMenu.instance.GetType().GetField(valueName).GetValue(UpgradeMenu.instance));}
         else{
+            if(valueName=="shipLvlFraction"){value=Player.instance.GetComponent<PlayerModules>().shipLvlFraction;}
+
             if(valueName.Contains("moduleUnlocked_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>()._isModuleUnlocked(valueName.Split('_')[1]));}
             if(valueName.Contains("skillUnlocked_")){valueReq=1;value=GameAssets.BoolToInt(Player.instance.GetComponent<PlayerModules>()._isSkillUnlocked(valueName.Split('_')[1]));}
 

@@ -67,6 +67,20 @@ public class ValueDisplay : MonoBehaviour{
 
                 if(value.Contains("moduleLvl_")){var m=pmodules.modulesList.Find(x=>x.name==value.Split('_')[1]);if(m!=null){_txt="Lvl "+m.lvl.ToString();}else _txt="";}
                 if(value.Contains("skillLvl_")){var s=pmodules.skillsList.Find(x=>x.name==value.Split('_')[1]);if(s!=null){_txt="Lvl "+s.lvl.ToString();}else _txt="";}
+
+                if(value=="lvl_ship"){_txt="Ship Level: "+pmodules.shipLvl.ToString();}
+                if(value=="lvlPopup"){
+                    _txt="Lvl up! ("+pmodules.shipLvl.ToString()+")";
+                    /*if(GameRules.instance.autoleveling){_txt="Lvl up! ("+pmodules.shipLvl.ToString()+")";}
+                    else{_txt="Lvl up available! (->"+(pmodules.shipLvl+1).ToString()+")<br> [L to LvlUp]";}*/
+                }
+                if(value=="celestPointPopup"){
+                    if(GameRules.instance.autoleveling){_txt="Celestial Point! ("+pmodules.shipLvlFraction.ToString()+"/"+pmodules.lvlFractionsMax.ToString()+")";}
+                    else{
+                        if(pmodules.shipLvlFraction+1<pmodules.lvlFractionsMax){_txt="Celestial Point available! ("+(pmodules.shipLvlFraction+1).ToString()+"/"+pmodules.lvlFractionsMax.ToString()+")<br> (L to climb)";}
+                        else{_txt="Lvl up available! ("+(pmodules.shipLvl+1).ToString()+")<br> (L to Lvlup)";}
+                    }
+                }
             }
         }
     #endregion
@@ -74,10 +88,6 @@ public class ValueDisplay : MonoBehaviour{
         if(Shop.instance!=null){    var sh=Shop.instance;
             if(value=="purchases") _txt="Reputation: "+sh.purchases.ToString();
             else if(value=="reputation") _txt="Reputation: "+sh.reputation.ToString();
-        }
-        if(UpgradeMenu.instance!=null){     var u=UpgradeMenu.instance;
-            if(value=="lvl_ship") _txt="Ship Level: "+u.total_UpgradesLvl.ToString();
-            else if(value=="lvlPopup") _txt="Lvl up! ("+u.total_UpgradesLvl.ToString()+")";
         }
     #endregion
     #region//SaveSerial

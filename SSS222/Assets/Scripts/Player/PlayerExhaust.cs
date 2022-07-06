@@ -9,12 +9,12 @@ public class PlayerExhaust : MonoBehaviour{
     }
     void Update(){
         if(GameRules.instance.levelingOn&&UpgradeMenu.instance!=null){
-                if(((UpgradeMenu.instance.total_UpgradesLvl<Player.instance.bflameDmgTillLvl||Player.instance.bflameDmgTillLvl==-4))
-                //||(UpgradeMenu.instance.total_UpgradesLvl>=Player.instance.bflameDmgTillLvl&&Player.instance.bflameDmgTillLvl>0))
+                if(((Player.instance.GetComponent<PlayerModules>().shipLvl<Player.instance.bflameDmgTillLvl||Player.instance.bflameDmgTillLvl==-5))
+                //||(Player.instance.GetComponent<PlayerModules>().shipLvl>=Player.instance.bflameDmgTillLvl&&Player.instance.bflameDmgTillLvl>0))
                 &&(!exhaustColliderObj.activeSelf)){
                     exhaustColliderObj.SetActive(true);
-                }else if(((UpgradeMenu.instance.total_UpgradesLvl>=Player.instance.bflameDmgTillLvl)||Player.instance.bflameDmgTillLvl==0)
-                //||(UpgradeMenu.instance.total_UpgradesLvl<=Player.instance.bflameDmgTillLvl))
+                }else if(((Player.instance.GetComponent<PlayerModules>().shipLvl>=Player.instance.bflameDmgTillLvl)||Player.instance.bflameDmgTillLvl==0)
+                //||(Player.instance.GetComponent<PlayerModules>().shipLvl<=Player.instance.bflameDmgTillLvl))
                 &&(exhaustColliderObj.activeSelf)){
                     exhaustColliderObj.SetActive(false);
                 }

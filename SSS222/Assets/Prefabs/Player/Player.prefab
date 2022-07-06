@@ -5245,8 +5245,13 @@ MonoBehaviour:
   exhaustROF: 1
   timeTeleport: 3
   timeOverhaul: 10
+  shipLvl: 0
+  shipLvlFraction: 0
+  shipLvlFractionsValues: []
+  lvlFractionsMax: 1
   moduleSlots: []
   skillsSlots: []
+  modulesList: []
   skillsList: []
   currentSkill: 
   timerTeleport: -4

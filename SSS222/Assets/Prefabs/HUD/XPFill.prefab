@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -88,11 +89,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de267c4f3b2d5948aafc4ab004d9e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  replaceSprites: 1
   emptySprite: {fileID: 21300000, guid: 4c46dbdc5a8b8534aa30fb618630e3e0, type: 3}
   fillSprite: {fileID: 21300000, guid: e655e164933729843b0dd9fa44a0860f, type: 3}
   particlePrefab: {fileID: 100000, guid: c2cf9899dba98ca4c969605b8668920c, type: 3}
   changed: 0
   shop: 0
-  valueName: total_UpgradesCount
+  upgradeMenu: 0
+  valueName: shipLvlFraction
   valueReq: 1
   value: 0

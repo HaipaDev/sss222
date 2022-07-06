@@ -305,6 +305,10 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 80ce7bb650e1ee74f9e503818fa3dfd7, type: 3}
   - name: AchievHidden
     spr: {fileID: 21300000, guid: 33dccb683b24bd848b8c218038ed2dd2, type: 3}
+  - name: regularXpBar
+    spr: {fileID: 21300000, guid: 1651dd3610a115245aee0c5dd2b2ab36, type: 3}
+  - name: overfilledXpBar
+    spr: {fileID: 21300000, guid: f70efd97b58a416499f335a6a1507a50, type: 3}
   materials:
   - name: AIOShaderMat
     mat: {fileID: 2100000, guid: 94bd4665afcd8b743921007cb09b25c0, type: 2}

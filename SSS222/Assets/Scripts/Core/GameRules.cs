@@ -26,6 +26,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool shopOn=true;
     public bool shopCargoOn=true;
     public bool levelingOn=true;
+    public bool autoleveling=true;
     public bool modulesOn=true;
     public bool statUpgOn=false;
     public bool iteminvOn=true;
@@ -55,6 +56,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public bool energyOnPlayer=true;
     public float energyPlayer=180;
     public float energyMaxPlayer=180;
+    public int hpAbsorpFractionCap=4;
+    public int enAbsorpFractionCap=4;
     public List<Powerup> powerupsStarting;//={new Powerup(name:"laser")};
     [Range(1,10)]public int powerupsCapacity=5;
     /*public int powerupsCapacityStarting=2;
@@ -185,6 +188,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #region//Leveling
 [Title("Leveling", titleAlignment: TitleAlignments.Centered)]
     public float xpMax=100f;
+    public float maxXpOvefillMult=1.5f;
     public float xp_wave=20f;
     public float xp_shop=3f;
     public float xp_powerup=1f;
@@ -199,7 +203,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 [Title("Upgrades", titleAlignment: TitleAlignments.Centered)]
     public float upgradeMenuOpenGameSpeed=0;
     [ShowIf("@this.cfgName.Contains(\"Adventure\")")]public int saveBarsFromLvl=5;
-    public int total_UpgradesCountMax=5;
+    public List<ShipLvlFractionsValues> shipLvlFractionsValues;
     public bool mPulse_enabled=true;
     public int mPulse_upgradeCost=3;
     public int mPulse_lvlReq=2;

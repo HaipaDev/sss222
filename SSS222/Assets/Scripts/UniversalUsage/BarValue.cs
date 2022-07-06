@@ -19,9 +19,14 @@ public class BarValue : MonoBehaviour{
     void ChangeBar(){
         if(valueName=="health"){if(Player.instance!=null){value=Player.instance.health;maxValue=Player.instance.healthMax;}else{if(GameRules.instance!=null){value=GameRules.instance.healthPlayer;maxValue=GameRules.instance.healthMaxPlayer;}}}
         if(valueName=="energy"){if(Player.instance!=null){value=Player.instance.energy;maxValue=Player.instance.energyMax;}else{if(GameRules.instance!=null){value=GameRules.instance.energyPlayer;maxValue=GameRules.instance.energyMaxPlayer;}}}
-        if(valueName=="hpAbsorp"){if(Player.instance!=null){value=Player.instance.hpAbsorpAmnt;maxValue=Player.instance.healthMax/4;}}
-        if(valueName=="enAbsorp"){if(Player.instance!=null){value=Player.instance.enAbsorpAmnt;maxValue=Player.instance.healthMax/4;}}
-        if(valueName=="xp"){if(GameSession.instance!=null){value=GameSession.instance.xp;maxValue=GameSession.instance.xpMax;}}
+        if(valueName=="hpAbsorp"){if(Player.instance!=null){value=Player.instance.hpAbsorpAmnt;maxValue=Player.instance.healthMax/GameRules.instance.hpAbsorpFractionCap;}}
+        if(valueName=="enAbsorp"){if(Player.instance!=null){value=Player.instance.enAbsorpAmnt;maxValue=Player.instance.energyMax/GameRules.instance.enAbsorpFractionCap;}}
+        if(valueName=="xp"){
+            if(GameSession.instance!=null){
+                if(GameSession.instance.xp>GameSession.instance.xpMax){value=GameSession.instance.xp;maxValue=GameSession.instance.xpMax*GameRules.instance.maxXpOvefillMult;GetComponent<Image>().sprite=GameAssets.instance.Spr("overfilledXpBar");}
+                else{value=GameSession.instance.xp;maxValue=GameSession.instance.xpMax;GetComponent<Image>().sprite=GameAssets.instance.Spr("regularXpBar");}
+            }
+        }
         if(valueName=="shopTimer"){if(Shop.instance!=null){value=Shop.instance.shopTimer;maxValue=Shop.instance.shopTimeMax;}}
 
         if(GameRules.instance!=null){

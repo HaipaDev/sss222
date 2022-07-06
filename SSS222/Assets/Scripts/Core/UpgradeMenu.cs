@@ -26,42 +26,14 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     [AssetsOnly]public GameObject moduleSkillElementPrefab;
     [AssetsOnly]public GameObject moduleSlotPrefab;
     [AssetsOnly]public GameObject skillSlotPrefab;
-    [Header("Upgrade Values")]
-    public int total_UpgradesCountMax=5;
-    public int mPulse_upgradeCost=3;
-    public int mPulse_lvlReq=2;
-    public int postMortem_upgradeCost=0;
-    public int postMortem_lvlReq=5;
-    public int teleport_upgradeCost=2;
-    public int teleport_lvlReq=3;
-    public int overhaul_upgradeCost=3;
-    public int overhaul_lvlReq=4;
-    public int crMend_upgradeCost=5;
-    public int crMend_lvlReq=5;
-    public int enDiss_upgradeCost=4;
-    public int enDiss_lvlReq=5;
-    [Header("Upgrade Counts")]
-    public int total_UpgradesCount;
-    public int saveBarsFromLvl=5;
-    public int total_UpgradesLvl=0;
-    PlayerModules pmodules;
-    IEnumerator co;
 
     [DisableInEditorMode][SerializeField]public int selectedModuleSlot=-1;
     [DisableInEditorMode][SerializeField]public int selectedSkillSlot=-1;
+    PlayerModules pmodules;
     int lvlID;
     int lvlcr;
     float startTimer=0.5f;
 
-    void Awake(){StartCoroutine(SetValues());}
-    IEnumerator SetValues(){
-    yield return new WaitForSeconds(0.07f);
-    var i=GameRules.instance;
-    if(i!=null){
-        saveBarsFromLvl=i.saveBarsFromLvl;
-        total_UpgradesCountMax=i.total_UpgradesCountMax;
-    }
-    }
     void Start(){
         instance=this;
         pmodules=Player.instance.GetComponent<PlayerModules>();
@@ -76,7 +48,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             else{if(PauseMenu.GameIsPaused!=true&&Shop.shopOpened!=true&&Player.instance!=null)if(!Player.instance._hasStatus("hacked"))Open();}
         }
         if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){Back();}
-        LevelEverything();
+        LevelBars();
         //SetModulesAndSkillsPreviews();
     }
 
@@ -136,7 +108,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     }
     public void Back(){
         if(modulesList.activeSelf||skillsList.activeSelf){BackToModulesSkillsInventory();return;}
-        if(statsMenu.activeSelf||modulesSkillsPanel.activeSelf){
+        if(statsMenu.activeSelf||modulesSkillsPanel.activeSelf||lvltreeUI.activeSelf){
             statsMenu.SetActive(false);modulesSkillsPanel.SetActive(false);
             upgradeMenu2UI.SetActive(false);lvltreeUI.SetActive(false);
             upgradeMenuUI.SetActive(true);
@@ -292,19 +264,16 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         foreach(Transform t in skillsContainer){if(t.gameObject.name!="Empty"){SetValues(t,true);}}
 
         void SetValues(Transform t, bool skill=false){
-            string n="Module";if(skill)n="Skill";
             var lvlVals=new ModuleSkillLvlVals();if(!skill){lvlVals=pmodules.GetModuleNextLvlVals(t.gameObject.name);}else{lvlVals=pmodules.GetSkillNextLvlVals(t.gameObject.name);}
             if(lvlVals!=null){
                 t.GetChild(3).GetChild(0).GetComponent<Image>().enabled=true;
                 t.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text=lvlVals.coreCost.ToString();
                 t.GetChild(4).gameObject.GetComponent<ShipLevelRequired>().value=lvlVals.lvlReq;
                 t.GetChild(4).gameObject.GetComponent<ShipLevelRequired>().Switch(true);
-                //Debug.Log(n+": "+t.gameObject.name+" | Core Cost: "+lvlVals.coreCost+" | LvlReq: "+lvlVals.lvlReq);
             }else{
                 t.GetChild(3).GetChild(0).GetComponent<Image>().enabled=false;
                 t.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text="";
                 t.GetChild(4).gameObject.GetComponent<ShipLevelRequired>().Switch(false);
-                //Debug.Log(n+" maxed: "+t.gameObject.name);
             }
         }
     }
@@ -361,44 +330,13 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
 
 
     XPBars barr;
-    void LevelEverything(){
+    void LevelBars(){
         if(startTimer>0){startTimer-=Time.unscaledDeltaTime;}
         if(startTimer<=0){
             if(GameRules.instance.levelingOn){
-                var on=false;
-                if(upgradeMenuUI.activeSelf==true)on=true;
-                if(total_UpgradesLvl==0){
-                    total_UpgradesCountMax=1;//1 for Lvl 0
-                    if(lvlbar.ID!=1){
-                        if(co==null&&on==true){ChangeLvlBar(1,ref lvlbar);}
-                        }
-                }else if(total_UpgradesLvl<=2 && total_UpgradesLvl>0){
-                    total_UpgradesCountMax=2;//2 for Lvl 1-2
-                    if(lvlbar.ID!=2){
-                        if(co==null&&on==true){ChangeLvlBar(2,ref lvlbar);}
-                        }
-                }else if(total_UpgradesLvl<5&&total_UpgradesLvl>2){
-                    total_UpgradesCountMax=total_UpgradesLvl;
-                    if(lvlbar.ID!=total_UpgradesLvl){
-                        if(co==null&&on==true){ChangeLvlBar(total_UpgradesLvl,ref lvlbar);}
-                        }
-                }else if(total_UpgradesLvl>=5&&total_UpgradesLvl<10){
-                    total_UpgradesCountMax=5;//5-9 is 5 XP
-                    if(lvlbar.ID!=5){
-                        if(co==null&&on==true){ChangeLvlBar(5,ref lvlbar);}
-                        }
-                }else if(total_UpgradesLvl>=10){
-                    total_UpgradesCountMax=10;//10 or above is 10 XP
-                    if(lvlbar.ID!=6){
-                        if(co==null&&on==true){ChangeLvlBar(6,ref lvlbar);}
-                        }
-                }
-                if(total_UpgradesCount>=total_UpgradesCountMax){
-                    LastBar(total_UpgradesCountMax,"total_UpgradesCount");total_UpgradesCount=Mathf.Clamp(total_UpgradesCount-total_UpgradesCountMax,0,99);
-                    LevelUp();
-                    total_UpgradesLvl++;
-                    UpgradeMenu.instance.LvlEvents();
-                    }
+                if(pmodules.lvlFractionsMax<10&&pmodules.lvlFractionsMax>0&&lvlbar.ID!=pmodules.lvlFractionsMax){if(upgradeMenuUI.activeSelf==true){ChangeLvlBar(pmodules.lvlFractionsMax,ref lvlbar);}}
+                else if(pmodules.lvlFractionsMax>=10&&lvlbar.ID!=6){if(upgradeMenuUI.activeSelf==true){ChangeLvlBar(6,ref lvlbar);}}
+
                 if(lvlbar.current==null)lvlbar.created=2;
                 if(barr==lvlbar){lvlbar.ID=lvlID;lvlbar.created=lvlcr;}
             }
@@ -406,40 +344,34 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         }
     }
     void LastBar(int max,string name){
-        foreach(XPFill obj in FindObjectsOfType<XPFill>()){
+        foreach(XPFill obj in GetComponentsInChildren<XPFill>()){
             if(obj.valueReq==max&&obj.valueName==name){obj.UpgradeParticles();}
         }
     }
-    void ChangeLvlBar(int ID, ref XPBars bar){
-        bar.ID=ID;
-        bar.Recreate();
-    }
-    void LevelUp(){
+    void ChangeLvlBar(int ID, ref XPBars bar){bar.Recreate(ID);}
+    public void LevelUp(){
+        LastBar(pmodules.lvlFractionsMax,"shipLvl");
         AudioManager.instance.Play("LvlUp2");
         FindObjectOfType<OnScreenButtons>().GetComponent<Animator>().SetTrigger("on");
+        var lvlPopup=GameAssets.instance.FindNotifUIByType(notifUI_type.lvlUp);
+        lvlPopup.GetComponent<ValueDisplay>().value="lvlPopup";
         FindObjectOfType<OnScreenButtons>().lvldUp=true;
     }
     public void LvlEvents(){
         if(GameRules.instance!=null){
         foreach(ListEvents le in GameRules.instance.lvlEvents){
             if(le.lvls.x==0&&le.lvls.y==0){le.events.Invoke();}
-            else{if(UpgradeMenu.instance.total_UpgradesLvl>=le.lvls.x&&UpgradeMenu.instance.total_UpgradesLvl<=le.lvls.y&&!le.skipRe){le.events.Invoke();}}
+            else{if(pmodules.shipLvl>=le.lvls.x&&pmodules.shipLvl<=le.lvls.y&&!le.skipRe){le.events.Invoke();}}
         }}
     }
     public void LvlEventsAdventure(){
         if(GameRules.instance!=null){
         foreach(ListEvents le in GameRules.instance.lvlEvents){
             if(le.lvls.x==0&&le.lvls.y==0){le.events.Invoke();}
-            else{if(UpgradeMenu.instance.total_UpgradesLvl>=le.lvls.x&&!le.skipRe){le.events.Invoke();}}
+            else{if(pmodules.shipLvl>=le.lvls.x&&!le.skipRe){le.events.Invoke();}}
         }}
     }
-    public void CheatCores(){
-        GameSession.instance.CheckCodes("Del","0");
-        GameSession.instance.CheckCodes("2","Y");
-        //GameSession.instance.CheckCodes("Del","9");
-    }public void CheatLevels(){
-        GameSession.instance.CheckCodes("Del","0");
-        GameSession.instance.CheckCodes("2","U");
-        //GameSession.instance.CheckCodes("Del","9");
-    }public void CheatXP(){GameSession.instance.xp=GameSession.instance.xpMax;}
+    public void CheatCores(){gitignoreScript.instance.CheatCores();}
+    public void CheatLevels(){gitignoreScript.instance.CheatLevels();}
+    public void CheatXP(){GameSession.instance.xp=GameSession.instance.xpMax;}
 }

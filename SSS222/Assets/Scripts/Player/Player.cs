@@ -1104,8 +1104,8 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
     void Regen(){
         if(!GameSession.GlobalTimeIsPaused){
-            hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax/4);
-            enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax/4);
+            hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax/GameRules.instance.hpAbsorpFractionCap);
+            enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax/GameRules.instance.enAbsorpFractionCap);
             if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax&&!_hasStatus("noHeal")){HPAddSilent(hpRegenAmnt);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}}
             if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax&&!_hasStatus("infEnergy")&&!_hasStatus("electrc")){AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}}
         }

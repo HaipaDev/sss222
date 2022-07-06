@@ -11001,9 +11001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueName: mPulse_lvlReq
   value: 0
-  txt: 'LVL '
 --- !u!1 &1204952545113872422
 GameObject:
   m_ObjectHideFlags: 0
@@ -16660,27 +16658,6 @@ MonoBehaviour:
     type: 3}
   skillSlotPrefab: {fileID: 302559054732291780, guid: 965f01b4a24cae5479b029ee991dc738,
     type: 3}
-  total_UpgradesCountMax: 5
-  mPulse_upgradeCost: 3
-  mPulse_lvlReq: 3
-  postMortem_upgradeCost: 1
-  postMortem_lvlReq: 5
-  teleport_upgradeCost: 2
-  teleport_lvlReq: 3
-  overhaul_upgradeCost: 3
-  overhaul_lvlReq: 4
-  crMend_upgradeCost: 5
-  crMend_lvlReq: 5
-  enDiss_upgradeCost: 4
-  enDiss_lvlReq: 5
-  total_UpgradesCount: 0
-  saveBarsFromLvl: 5
-  total_UpgradesLvl: 0
-  mPulse_upgraded: 0
-  teleport_upgraded: 0
-  overhaul_upgraded: 0
-  crMend_upgraded: 0
-  enDiss_upgraded: 0
   selectedModuleSlot: -1
   selectedSkillSlot: -1
 --- !u!82 &1831047942544736337
@@ -18799,9 +18776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueName: postMortem_lvlReq
   value: 0
-  txt: 'LVL '
 --- !u!1 &3675698155712569649
 GameObject:
   m_ObjectHideFlags: 0
@@ -19428,9 +19403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueName: teleport_lvlReq
   value: 0
-  txt: 'LVL '
 --- !u!1 &3932096395323865925
 GameObject:
   m_ObjectHideFlags: 0
@@ -19986,9 +19959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueName: crMend_lvlReq
   value: 0
-  txt: 'LVL '
 --- !u!1 &4074766233201097930
 GameObject:
   m_ObjectHideFlags: 0
@@ -22021,9 +21992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueName: enDiss_lvlReq
   value: 0
-  txt: 'LVL '
 --- !u!1 &4724311990884542166
 GameObject:
   m_ObjectHideFlags: 0
@@ -33003,7 +32972,7 @@ MonoBehaviour:
   - {fileID: 8144562277117598384, guid: 89446209cd4c74d45a7773fea567a338, type: 3}
   ID: 1
   IDmax: 6
-  valueName: total_UpgradesCount
+  valueName: shipLvlFraction
   shop: 0
   current: {fileID: 5483209257511503578}
   created: 3
@@ -35876,9 +35845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c967900b23c4134cbd4bafd87437acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueName: overhaul_lvlReq
   value: 0
-  txt: 'LVL '
 --- !u!1 &9161321062607791556
 GameObject:
   m_ObjectHideFlags: 0

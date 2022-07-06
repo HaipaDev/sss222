@@ -55,9 +55,9 @@ public class XPBars : MonoBehaviour{
             }
             created=3;
         }
-        if(current!=null&&!current.name.Contains(prefabs[ID-1].name))Recreate();
+        if(current!=null&&!current.name.Contains(prefabs[ID-1].name))Recreate(ID);
     }
-    public void Recreate(){StartCoroutine(RecreateI());}
+    public void Recreate(int id){ID=id;StartCoroutine(RecreateI());}
     IEnumerator RecreateI(){
         yield return new WaitForSecondsRealtime(0.005f);
         created=1;

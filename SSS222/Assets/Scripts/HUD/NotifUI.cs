@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NotifUI : MonoBehaviour{
-    [SerializeField]notifUI_type type;
+    [SerializeField]public notifUI_type type;
     void Update(){
         if(type==notifUI_type.shake){
             if(FindObjectOfType<LeechAttach>()!=null&&FindObjectOfType<LeechAttach>().attached==true){GetComponent<TMPro.TextMeshProUGUI>().enabled=true;}
@@ -20,6 +20,6 @@ public class NotifUI : MonoBehaviour{
         }
     }
 }
-enum notifUI_type{
+public enum notifUI_type{
     shake,dontShoot,lvlUp,noEnergy
 }

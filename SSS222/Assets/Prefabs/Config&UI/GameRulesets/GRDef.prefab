@@ -75,6 +75,7 @@ MonoBehaviour:
   shopOn: 1
   shopCargoOn: 1
   levelingOn: 1
+  autoleveling: 1
   modulesOn: 1
   statUpgOn: 0
   iteminvOn: 1
@@ -105,6 +106,8 @@ MonoBehaviour:
   energyOnPlayer: 1
   energyPlayer: 60
   energyMaxPlayer: 130
+  hpAbsorpFractionCap: 4
+  enAbsorpFractionCap: 4
   powerupsStarting:
   - name: laser
     ammo: -5
@@ -342,7 +345,12 @@ MonoBehaviour:
       rarity: 2
       dropChance: 0
       levelReq: 2
-    sum: 24.9
+    - name: 
+      lootItem: {fileID: 11400000, guid: fd59d5a61f20a394e98c9683441e0333, type: 2}
+      rarity: 1
+      dropChance: 2.4
+      levelReq: 2
+    sum: 27.3
     spawnReqsType: 5
     spawnReqs:
       rid: 2
@@ -1494,6 +1502,7 @@ MonoBehaviour:
   shopTimeLimit: 10
   shopOpenGameSpeed: 0
   xpMax: 100
+  maxXpOvefillMult: 1.5
   xp_wave: 20
   xp_shop: 3
   xp_powerup: 1
@@ -1550,9 +1559,25 @@ MonoBehaviour:
           m_CallState: 2
     lvls: {x: 1, y: 1}
     skipRe: 0
+  - name: 'Levels: 0-0'
+    events:
+      m_PersistentCalls:
+        m_Calls: []
+    lvls: {x: 0, y: 0}
+    skipRe: 0
   upgradeMenuOpenGameSpeed: 0
   saveBarsFromLvl: 0
-  total_UpgradesCountMax: 5
+  shipLvlFractionsValues:
+  - lvl: 2
+    fractions: 2
+  - lvl: 3
+    fractions: 3
+  - lvl: 4
+    fractions: 4
+  - lvl: 5
+    fractions: 5
+  - lvl: 10
+    fractions: 10
   mPulse_enabled: 1
   mPulse_upgradeCost: 3
   mPulse_lvlReq: 2
@@ -1568,16 +1593,10 @@ MonoBehaviour:
   enDiss_lvlReq: 4
   modulesPlayer:
   - item: {fileID: 11400000, guid: 06432481964c7e341b61c318577cbd27, type: 2}
-    costType: 0
-    costTypeProperties:
-      cost: 0
     lvlVals:
     - coreCost: 5
       lvlReq: 5
   - item: {fileID: 11400000, guid: 3477e1bf2eb61d840b325eafbec617d3, type: 2}
-    costType: 3
-    costTypeProperties:
-      cost: 0
     lvlVals:
     - coreCost: 4
       lvlReq: 4

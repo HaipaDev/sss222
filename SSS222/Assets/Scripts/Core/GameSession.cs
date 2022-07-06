@@ -129,6 +129,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;if(sr!=null){if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-2);}}
     }
     SpriteRenderer _blurImg;
+    bool _preLvlUp;
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
         if(SceneManager.GetActiveScene().name=="Game"){
@@ -139,26 +140,29 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(SceneManager.GetActiveScene().name=="Game"&&Player.instance!=null&&!GlobalTimeIsPaused){currentPlaytime+=Time.unscaledDeltaTime;}
         if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
         
-        xp=Mathf.Clamp(xp,0,xpMax);
+        if(GameRules.instance!=null)xp=Mathf.Clamp(xp,0,xpMax*GameRules.instance.maxXpOvefillMult);
         cores=Mathf.Clamp(cores,0,99999);
         coins=Mathf.Clamp(coins,0,99999);
         
         if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"){
-            //Open Shop
-            
-
             if(xpTotal<0)xpTotal=0;
             if(GameRules.instance.xpOn&&xp>=xpMax&&GameRules.instance.levelingOn){
-                //cores++;
-                if(GameRules.instance.coresOn){
-                    GameAssets.instance.Make("PowerCore",new Vector2(UnityEngine.Random.Range(-3.5f, 3.5f),7.4f));
-                    FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
+                if(!_preLvlUp){
+                    if(GameRules.instance.coresOn){GameAssets.instance.Make("PowerCore",new Vector2(UnityEngine.Random.Range(-3.5f, 3.5f),7.4f));}
+
+                    var lvlPopup=GameAssets.instance.FindNotifUIByType(notifUI_type.lvlUp);
+                    lvlPopup.GetComponent<ValueDisplay>().value="celestPointPopup";
+                    FindObjectOfType<OnScreenButtons>().GetComponent<Animator>().SetTrigger("on");
+                    FindObjectOfType<OnScreenButtons>().lvldUp=true;
+
+                    _preLvlUp=true;
                 }
-                //FindObjectOfType<UpgradeMenu>().total_UpgradesCount++;
-                xp=0;
-                //AudioManager.instance.Play("LvlUp");
-                AudioManager.instance.Play("LvlUp");
-                
+                if(GameRules.instance.autoleveling||(!GameRules.instance.autoleveling&&Input.GetKeyDown(KeyCode.L))){
+                    Player.instance.GetComponent<PlayerModules>().shipLvlFraction++;
+                    xp=xp-xpMax;
+                    AudioManager.instance.Play("LvlUp");
+                    _preLvlUp=false;
+                }
             }
 
             if(stayingTimeXP>GameRules.instance.stayingTimeReq){AddXP(GameRules.instance.xp_staying);stayingTimeXP=0f;}
@@ -328,10 +332,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             ss.coins=coins;
             ss.cores=cores;
             if(u!=null){
-            if(ss.total_UpgradesLvl>=u.saveBarsFromLvl){ss.total_UpgradesCount=u.total_UpgradesCount;}
-            ss.total_UpgradesLvl=u.total_UpgradesLvl;
-            //
-            /*ss.mPulse_upgraded=u.mPulse_upgraded;
+            /*if(ss.total_UpgradesLvl>=u.saveBarsFromLvl){ss.total_UpgradesCount=u.total_UpgradesCount;}
+            /ss.total_UpgradesLvl=u.total_UpgradesLvl;
+            
+            ss.mPulse_upgraded=u.mPulse_upgraded;
             ss.teleport_upgraded=u.teleport_upgraded;
             ss.crMend_upgraded=u.crMend_upgraded;
             ss.enDiss_upgraded=u.enDiss_upgraded;*/
@@ -357,17 +361,17 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         var s=SaveSerial.instance;
         var ss=SaveSerial.instance.advD;
         if(u!=null&&s!=null&&s.advD!=null){
-        u.total_UpgradesCount=ss.total_UpgradesCount;
+        /*u.total_UpgradesCount=ss.total_UpgradesCount;
         u.total_UpgradesLvl=ss.total_UpgradesLvl;
-        //
-        /*u.mPulse_upgraded=ss.mPulse_upgraded;
+        
+        u.mPulse_upgraded=ss.mPulse_upgraded;
         u.teleport_upgraded=ss.teleport_upgraded;
         u.crMend_upgraded=ss.crMend_upgraded;
         u.enDiss_upgraded=ss.enDiss_upgraded;*/
 
         yield return new WaitForSeconds(0.1f);
         if(UpgradeMenu.instance!=null){
-            for(var i=UpgradeMenu.instance.total_UpgradesLvl;i>0;i--){
+            for(var i=Player.instance.GetComponent<PlayerModules>().shipLvl;i>0;i--){
                 UpgradeMenu.instance.LvlEvents();
             }
         }

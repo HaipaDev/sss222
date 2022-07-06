@@ -161,6 +161,10 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
         return o;
 	}
+	public NotifUI FindNotifUIByType(notifUI_type type){
+		List<NotifUI> list=new List<NotifUI>();foreach(NotifUI n in FindObjectsOfType<NotifUI>()){list.Add(n);}
+        return list.Find(x=>x.type==type);
+	}
 #endregion
 
 #region//Customizables
