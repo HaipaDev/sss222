@@ -22,21 +22,18 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		if(String.IsNullOrEmpty(playerData.flaresName)||GameAssets.instance.GetFlares(playerData.flaresName)==null){playerData.flaresName="def";}
 		if(String.IsNullOrEmpty(playerData.deathFxName)||GameAssets.instance.GetDeathFx(playerData.deathFxName)==null){playerData.deathFxName="def";}
 		if(String.IsNullOrEmpty(playerData.musicName)||GameAssets.instance.GetMusic(playerData.musicName)==null){playerData.musicName=CstmzMusic._cstmzMusicDef;}
+
+		/*settingsData.masterVolume=Mathf.Clamp(settingsData.masterVolume,0,2);
+		settingsData.soundVolume=Mathf.Clamp(settingsData.soundVolume,0,2);
+		settingsData.ambienceVolume=Mathf.Clamp(settingsData.ambienceVolume,0,2);
+		settingsData.musicVolume=Mathf.Clamp(settingsData.musicVolume,0,2);*/
 	}
 	[SerializeField] string filenameLogin = "hyperGamerLogin";
-	bool loginEncode=false;
 	[SerializeField] string filename = "playerData";
-	bool dataEncode=false;
-	//bool dataEncodeValues=true;
 	[SerializeField] string filenameStats = "statsData";
-	bool statsEncode=false;
-	//bool statsEncodeValues=true;
 	[SerializeField] string filenameAdventure = "adventureData";
-	bool adventureEncode=false;
-	//bool adventureEncodeValues=true;
 	[SerializeField] string filenameSettings = "gameSettings";
-	bool settingsEncode=false;
-	public int maxRegisteredHyperGamers=3;
+	public static int maxRegisteredHyperGamers=3;
 
 #region//HyperGamerLogin
 	public HyperGamerLoginData hyperGamerLoginData=new HyperGamerLoginData();
@@ -68,12 +65,11 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 	public void LoadLogin(){
 		if(File.Exists(Application.persistentDataPath+"/"+filenameLogin)){//Legacy loading
-			SaveGame.Encode = loginEncode;
-			SaveGame.Serializer = new SaveGameJsonSerializer();
+			SaveGame.Encode=false;SaveGame.Serializer=new SaveGameJsonSerializer();
 			hyperGamerLoginData = SaveGame.Load<HyperGamerLoginData>(filenameLogin);
 
 			File.Delete(Application.persistentDataPath+"/"+filenameLogin);
-			Debug.Log("Login (legacy) loaded and deleted");
+			Debug.Log("Login (legacy) loaded and replaced");
 			AutoLogin();
 			SaveLogin();
 		}
@@ -119,13 +115,12 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 	public void Load(){
 		if(File.Exists(Application.persistentDataPath+"/"+filename)){//Legacy loading
-			SaveGame.Encode = dataEncode;
-			SaveGame.Serializer = new SaveGameJsonSerializer();
+			SaveGame.Encode=false;SaveGame.Serializer=new SaveGameJsonSerializer();
 			playerData = SaveGame.Load<PlayerData>(filename);
 			var hi=-1;foreach(Highscore h in playerData.highscore){hi++;if(h.score!=0)playerData.highscore[hi]=h;}
 
 			File.Delete(Application.persistentDataPath+"/"+filename);
-			Debug.Log("Game Data (legacy) loaded and deleted");
+			Debug.Log("Game Data (legacy) loaded and replaced");
 			Save();
 		}
 		if(ES3.FileExists(_playerDataPath())){
@@ -165,12 +160,11 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 	public void LoadStats(){
 		if(File.Exists(Application.persistentDataPath+"/"+filenameStats)){//Legacy loading
-			SaveGame.Encode = statsEncode;
-			SaveGame.Serializer = new SaveGameJsonSerializer();
+			SaveGame.Encode=false;SaveGame.Serializer=new SaveGameJsonSerializer();
 			statsData = SaveGame.Load<StatsData>(filenameStats);
 
 			File.Delete(Application.persistentDataPath+"/"+filenameStats);
-			Debug.Log("Stats Data (legacy) loaded and deleted");
+			Debug.Log("Stats Data (legacy) loaded and replaced");
 			SaveStats();
 		}
 		if(ES3.FileExists(_statsDataPath())){
@@ -212,12 +206,11 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 	public void LoadAdventure(){
 		if(File.Exists(Application.persistentDataPath+"/"+filenameAdventure)){//Legacy loading
-			SaveGame.Encode = adventureEncode;
-			SaveGame.Serializer = new SaveGameJsonSerializer();
+			SaveGame.Encode=false;SaveGame.Serializer=new SaveGameJsonSerializer();
 			advD = SaveGame.Load<AdventureData>(filenameAdventure);
 
 			File.Delete(Application.persistentDataPath+"/"+filenameAdventure);
-			Debug.Log("Adventure Data (legacy) loaded and deleted");
+			Debug.Log("Adventure Data (legacy) loaded and replaced");
 			SaveAdventure();
 		}
 		if(ES3.FileExists(_advDataPath())){
@@ -303,17 +296,15 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 	public void LoadSettings(){
 		if(File.Exists(Application.persistentDataPath+"/"+filenameSettings+".cfg")){//Legacy loading
-			SettingsData data = new SettingsData();
-			SaveGame.Encode = settingsEncode;
-			SaveGame.Serializer = new SaveGameJsonSerializer();
+			SaveGame.Encode=false;SaveGame.Serializer=new SaveGameJsonSerializer();
 			settingsData = SaveGame.Load<SettingsData>(filenameSettings+".cfg");
 			
 			File.Delete(Application.persistentDataPath+"/"+filenameSettings+".cfg");
-			Debug.Log("Settings (legacy) loaded and deleted");
-			SaveSerial.instance.settingsData.masterVolume=GameAssets.Normalize(SaveSerial.instance.settingsData.masterVolume,-50,15);
-			SaveSerial.instance.settingsData.soundVolume=GameAssets.Normalize(SaveSerial.instance.settingsData.soundVolume,-50,15);
-			SaveSerial.instance.settingsData.ambienceVolume=GameAssets.Normalize(SaveSerial.instance.settingsData.ambienceVolume,-50,15);
-			SaveSerial.instance.settingsData.musicVolume=GameAssets.Normalize(SaveSerial.instance.settingsData.musicVolume,-50,15);
+			Debug.Log("Settings (legacy) loaded and replaced");
+			settingsData.masterVolume=(float)System.Math.Round(GameAssets.Normalize(settingsData.masterVolume,-50,15),2);
+			settingsData.soundVolume=(float)System.Math.Round(GameAssets.Normalize(settingsData.soundVolume,-50,15),2);
+			settingsData.ambienceVolume=(float)System.Math.Round(GameAssets.Normalize(settingsData.ambienceVolume,-50,15),2);
+			settingsData.musicVolume=(float)System.Math.Round(GameAssets.Normalize(settingsData.musicVolume,-50,15),2);
 			SaveSettings();
 		}
 		if(ES3.FileExists(_settingsDataPath())){

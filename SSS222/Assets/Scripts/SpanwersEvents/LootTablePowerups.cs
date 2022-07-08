@@ -31,7 +31,7 @@ public class LootTablePowerups : MonoBehaviour{
         //SumUpAfter();
     }
     void Update(){
-        if(Player.instance!=null)currentLvl=Player.instance.GetComponent<PlayerModules>().shipLvl;
+        if(Player.instance!=null)if(GameRules.instance.modulesOn)currentLvl=Player.instance.GetComponent<PlayerModules>().shipLvl;
         SumUp();
         SumUpAfter();
     }

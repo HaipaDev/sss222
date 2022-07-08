@@ -58,7 +58,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     [SerializeField][ReadOnly] string _tempSandboxSaveName;
     [SerializeField][ReadOnly] string _selectedUsersDataName;
     public bool isSteam=true;
-    public bool steamAchievsStatsLeaderboards=true;
+    [HideIf("@this.isSteam==false")]public bool steamAchievsStatsLeaderboards=true;
     public bool cheatmode;
     public bool dmgPopups=true;
     public bool analyticsOn=true;

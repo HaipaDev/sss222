@@ -95,7 +95,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         SetBuiltInPresetsButtons();
     }
     void Update(){
-        CheckESC();
+        if(GSceneManager.EscPressed()){Back();}
         SetPowerups();
         GameSession.instance.defaultGameSpeed=GameRules.instance.defaultGameSpeed;
     }
@@ -111,7 +111,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                     else if(enemySpritesLibPanel.activeSelf){OpenEnemySpritePanel();}
             else if(collectiblesMainPanel.activeSelf){OpenDefaultPanel();}
                 else if(basicCollectiblesPanel.activeSelf||powerupsPanel.activeSelf){OpenCollectiblesPanel();}
-        else{GSceneManager.instance.LoadGameModeChooseScene();GameSession.instance.defaultGameSpeed=1;}
+        else{
+            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="InfoGameMode"){FindObjectOfType<ModeInfoManager>().SetActivePanel(0);}
+            else{GSceneManager.instance.LoadGameModeChooseScene();GameSession.instance.defaultGameSpeed=1;}
+        }
     }
     public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}
     public void OpenPresetAppearancePanel(){CloseAllPanels();presetAppearancePanel.SetActive(true);presetAppearanceMainPanel.SetActive(true);SetPresetIconPreviewsSprite();
@@ -840,8 +843,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }}
     }
 
-
-    void CheckESC(){if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Joystick1Button1))Back();}
     void SetPowerups(){
         if(powerupInventory!=null){
             for(var i=0;i<GameRules.instance.powerupsCapacity;i++){
@@ -904,5 +905,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         yield return new WaitForSecondsRealtime(1f);
         savePopup.gameObject.SetActive(false);
     }
+    public GameObject _powerupInventoryGameObject(){return powerupInventory;}
 #endregion
 }

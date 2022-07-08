@@ -6482,6 +6482,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShipUI MainMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 1990628774797538680, guid: 20d87fe7ebb2cc84ba6205f0761a0820,
+        type: 3}
+      propertyPath: buttonsList
+      value: 
+      objectReference: {fileID: 5810708904779283751}
+    - target: {fileID: 1990628774797538680, guid: 20d87fe7ebb2cc84ba6205f0761a0820,
+        type: 3}
+      propertyPath: flaresPreview
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2555019166247560950, guid: 20d87fe7ebb2cc84ba6205f0761a0820,
         type: 3}
       propertyPath: m_Pivot.x

@@ -25,7 +25,7 @@ public class LootTableWaves : MonoBehaviour{
     
     void OnValidate(){SumUp();}
     private void Update() {
-        if(Player.instance!=null)currentLvl=Player.instance.GetComponent<PlayerModules>().shipLvl;
+        if(Player.instance!=null)if(GameRules.instance.modulesOn)currentLvl=Player.instance.GetComponent<PlayerModules>().shipLvl;
         else currentLvl=-4;
         SumUp();
         SumUpAfter();

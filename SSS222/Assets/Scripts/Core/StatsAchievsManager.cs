@@ -30,14 +30,14 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public float determinationHealth=25;
     public float determinationTimer;
     public bool determinationTimerOn=false;
-    public List<string> uniquePowerups;
+    public List<string> uniquePowerups=new List<string>();
     [Header("Other")]
     public bool achievsLoaded;
     public bool statsLoaded;
     public bool statsTotalSummed;
 
     void Awake(){if(StatsAchievsManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
-    void Start(){SetStatsList();}
+    void Start(){SetStatsList();}//uniquePowerups=new List<string>();}
     void SetStatsList(){foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){statsGamemodesList.Add(new StatsGamemode(){gmName=gr.cfgName});}statsGamemodesList.Add(new StatsGamemode(){gmName="Sandbox Mode"});}
     void Update(){
         if(!achievsLoaded)LoadAchievs();
@@ -168,8 +168,8 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public void AddPlaytime(int i){var s=GetStatsForCurrentGamemode();if(s!=null){s.playtime+=i;ClearStatsTotal();if(i>s.longestSession){s.longestSession=i;}}}
     public void AddDeaths(){var s=GetStatsForCurrentGamemode();if(s!=null){s.deaths++;ClearStatsTotal();}}
     public void AddPowerups(string name){
-        if(!uniquePowerups.Contains(name)){string _name=name;if(name.Contains("(Clone)")){_name=name.Split("(")[0];}
-            uniquePowerups.Add(name);SteamUserStats.AddStat("uniquePowerups",1);SteamUserStats.StoreStats();}
+        if(uniquePowerups!=null){if(!uniquePowerups.Contains(name)){string _name=name;if(name.Contains("(Clone)")){_name=name.Split("(")[0];}
+            uniquePowerups.Add(name);if(GameSession.instance.steamAchievsStatsLeaderboards){SteamUserStats.AddStat("uniquePowerups",1);SteamUserStats.StoreStats();}}}//else{uniquePowerups=new List<string>();AddPowerups(name);}
         var s=GetStatsForCurrentGamemode();if(s!=null){s.powerups++;ClearStatsTotal();}
     }
     public void AddKills(string name,enemyType type){

@@ -115,7 +115,12 @@ PrefabInstance:
     - target: {fileID: 8372861476689930743, guid: 33b13d5c324265444a994a7b4c39d52c,
         type: 3}
       propertyPath: m_Name
-      value: ShipUI
+      value: ShipUI MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8685612909260543129, guid: 33b13d5c324265444a994a7b4c39d52c,
+        type: 3}
+      propertyPath: followSelectedButton
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33b13d5c324265444a994a7b4c39d52c, type: 3}

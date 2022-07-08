@@ -102,8 +102,8 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
         loginUsername=await hyperGamers.FindAsync(e=>e.username==username);
         if(collectionBiggerThan0&&loginUsername.ToList()[0].username==username){
             SetLoginMessage("You cant register an account that already exists");
-        }else if(SaveSerial.instance.hyperGamerLoginData.registeredCount>=SaveSerial.instance.maxRegisteredHyperGamers){
-            SetLoginMessage("You cant register more than 3 accounts per device");
+        }else if(SaveSerial.instance.hyperGamerLoginData.registeredCount>=SaveSerial.maxRegisteredHyperGamers){
+            SetLoginMessage("You cant register more than "+SaveSerial.maxRegisteredHyperGamers+" accounts per device");
         }else{
             HyperGamer document=new HyperGamer{username=username,password=password,
                 dateRegister=System.DateTime.Now,dateLastLogin=System.DateTime.Now,
