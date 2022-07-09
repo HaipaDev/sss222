@@ -12,223 +12,219 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #region//Global values
 [Title("Preset Settings", titleAlignment: TitleAlignments.Centered)]
     [ES3NonSerializable]public string cfgName;
-    [MultiLineProperty]public string cfgDesc;
-    public string cfgIconAssetName;
-    [InfoBox("Place a special GameObject with multiple icons here:")][AssetsOnly,ES3NonSerializable]public GameObject cfgIconsGo;
-    public ShaderMatProps cfgIconShaderMatProps;
-    public ShaderMatProps bgMaterial;
+    ///*[ShowIf("@this._isAdventureSubZone]*/[ShowIf("@this.cfgName.Contains(\"Adventure\")")][ES3NonSerializable]public int adventureZoneID;
+    [ShowIf("@this.cfgName.Contains(\"Adventure\")")][DisableIf("@this._isAdventureBossZone||this._isAdventureTravelZone")][ES3NonSerializable]public bool _isAdventureSubZone;
+    [ShowIf("@this._isAdventureSubZone&&this._isAdventureBossZone==false")][ES3NonSerializable]public bool _isAdventureTravelZone;
+    [ShowIf("@this._isAdventureSubZone&&this._isAdventureTravelZone==false")][ES3NonSerializable]public bool _isAdventureBossZone;
+    [HideIf("@this._isAdventureSubZone")][MultiLineProperty]public string cfgDesc;
+    [HideIf("@this._isAdventureSubZone&&this._isAdventureBossZone==false")]public string cfgIconAssetName;
+    [HideIf("@this._isAdventureSubZone&&this._isAdventureBossZone==false")][InfoBox("Place a special GameObject with multiple icons here:")][AssetsOnly,ES3NonSerializable]public GameObject cfgIconsGo;
+    [HideIf("@this._isAdventureSubZone")]public ShaderMatProps cfgIconShaderMatProps;
+    [HideIf("@this._isAdventureTravelZone")]public ShaderMatProps bgMaterial;
 [Title("Global", titleAlignment: TitleAlignments.Centered)]
-    [Range(0.1f,10f)]public float defaultGameSpeed=1f;
-    public scoreDisplay scoreDisplay=scoreDisplay.score;
-    public bool crystalsOn=true;
-    public bool xpOn=true;
-    public bool coresOn=true;
-    public bool shopOn=true;
-    public bool shopCargoOn=true;
-    public bool levelingOn=true;
-    public bool autoleveling=true;
-    public bool modulesOn=true;
-    public bool statUpgOn=false;
-    public bool iteminvOn=true;
-    public bool barrierOn=false;
+    //[HideIfGroup("Global",Condition="_isAdventureZone")]
+    [FoldoutGroup("Global",false,VisibleIf="@this._isAdventureSubZone==false")][Range(0.1f,10f)]public float defaultGameSpeed=1f;
+    [FoldoutGroup("Global")]public scoreDisplay scoreDisplay=scoreDisplay.score;
+    [FoldoutGroup("Global")]public bool crystalsOn=true;
+    [FoldoutGroup("Global")]public bool xpOn=true;
+    [FoldoutGroup("Global")]public bool coresOn=true;
+    [FoldoutGroup("Global")]public bool shopOn=true;
+    [FoldoutGroup("Global")]public bool shopCargoOn=true;
+    [FoldoutGroup("Global")]public bool levelingOn=true;
+    [FoldoutGroup("Global")]public bool autoleveling=true;
+    [FoldoutGroup("Global")]public bool modulesOn=true;
+    [FoldoutGroup("Global")]public bool statUpgOn=false;
+    [FoldoutGroup("Global")]public bool iteminvOn=true;
+    [FoldoutGroup("Global")]public bool barrierOn=false;
 
-    public bool instaPause=true;
-    public bool musicSlowdownOnPause=true;
-    public bool musicSlowdownOnPaceChange=true;
+    [FoldoutGroup("Global")]public bool instaPause=true;
+    [FoldoutGroup("Global")]public bool musicSlowdownOnPause=true;
+    [FoldoutGroup("Global")]public bool musicSlowdownOnPaceChange=true;
     //public float upgradeMenuOpenGameSpeed=0;
     //public float shopOpenGameSpeed=0;
 
-    public float scoreMulti=1;
-    public float luckMulti=1;
+    [FoldoutGroup("Global")]public float scoreMulti=1;
+    [FoldoutGroup("Global")]public float luckMulti=1;
 #endregion
 #region//Player
 [Title("Player", titleAlignment: TitleAlignments.Centered)]
-    public Vector2 startingPosPlayer=new Vector2(0.36f,-6.24f);
-    public bool autoShootPlayer=false;
-    public bool moveX=true;
-    public bool moveY=true;
-    public Vector2 playfieldPadding=new Vector2(-0.125f,0.45f);
-    public float moveSpeedPlayer=5f;
-    public ShaderMatProps playerShaderMatProps;
-    public float healthPlayer=150;
-    public float healthMaxPlayer=150;
-    public int defensePlayer=0;
-    public bool energyOnPlayer=true;
-    public float energyPlayer=180;
-    public float energyMaxPlayer=180;
-    public int hpAbsorpFractionCap=4;
-    public int enAbsorpFractionCap=4;
-    public List<Powerup> powerupsStarting;//={new Powerup(name:"laser")};
-    [Range(1,10)]public int powerupsCapacity=5;
+    [FoldoutGroup("Player",false,VisibleIf="@this._isAdventureSubZone==false")]public Vector2 startingPosPlayer=new Vector2(0.36f,-6.24f);
+    [FoldoutGroup("Player")]public bool autoShootPlayer=false;
+    [FoldoutGroup("Player")]public bool moveX=true;
+    [FoldoutGroup("Player")]public bool moveY=true;
+    [FoldoutGroup("Player")]public Vector2 playfieldPadding=new Vector2(-0.125f,0.45f);
+    [FoldoutGroup("Player")]public float moveSpeedPlayer=5f;
+    [FoldoutGroup("Player")]public ShaderMatProps playerShaderMatProps;
+    [FoldoutGroup("Player")]public float healthPlayer=150;
+    [FoldoutGroup("Player")]public float healthMaxPlayer=150;
+    [FoldoutGroup("Player")]public int defensePlayer=0;
+    [FoldoutGroup("Player")]public bool energyOnPlayer=true;
+    [FoldoutGroup("Player")]public float energyPlayer=180;
+    [FoldoutGroup("Player")]public float energyMaxPlayer=180;
+    [FoldoutGroup("Player")]public int hpAbsorpFractionCap=4;
+    [FoldoutGroup("Player")]public int enAbsorpFractionCap=4;
+    [FoldoutGroup("Player")]public List<Powerup> powerupsStarting;//={new Powerup(name:"laser")};
+    [FoldoutGroup("Player")][Range(1,10)]public int powerupsCapacity=5;
     /*public int powerupsCapacityStarting=2;
     public int powerupsCapacityMax=5;*/
-    public string powerupDefault;
-    public bool displayCurrentPowerup=true;
-    public bool weaponsLimited;
-    public bool losePwrupOutOfEn;
-    public bool losePwrupOutOfAmmo;
-    public bool slottablePowerupItems=true;
-    public PowerupItemSettings[] powerupItemSettings;//={new Powerup(name:"medkit",max="5")};
+    [FoldoutGroup("Player")]public string powerupDefault;
+    [FoldoutGroup("Player")]public bool displayCurrentPowerup=true;
+    [FoldoutGroup("Player")]public bool weaponsLimited;
+    [FoldoutGroup("Player")]public bool losePwrupOutOfEn;
+    [FoldoutGroup("Player")]public bool losePwrupOutOfAmmo;
+    [FoldoutGroup("Player")]public bool slottablePowerupItems=true;
+    [FoldoutGroup("Player")]public PowerupItemSettings[] powerupItemSettings;//={new Powerup(name:"medkit",max="5")};
     //public float armorMultiPlayer=1f;
-    public float dmgMultiPlayer=1f;
-    public float shootMultiPlayer=1f;
-    public float shipScaleDefault=0.89f;
-    public bool bulletResize;
-    public int bflameDmgTillLvl=1;
-    public bool overheatOnPlayer=true;
-    public bool overheatShaderIdentif=true;
-    public float overheatTimerMax = 8.66f;
-    public float overheatCooldown = 0.65f;
-    public float overheatedTime=3;
-    public bool recoilOnPlayer=true;
-    public float critChancePlayer=4f;
-    public bool playerWeaponsFade=true;
-    public List<WeaponProperties> weaponProperties;
+    [FoldoutGroup("Player")]public float dmgMultiPlayer=1f;
+    [FoldoutGroup("Player")]public float shootMultiPlayer=1f;
+    [FoldoutGroup("Player")]public float shipScaleDefault=0.89f;
+    [FoldoutGroup("Player")]public bool bulletResize;
+    [FoldoutGroup("Player")]public int bflameDmgTillLvl=1;
+    [FoldoutGroup("Player")]public bool overheatOnPlayer=true;
+    [FoldoutGroup("Player")]public bool overheatShaderIdentif=true;
+    [FoldoutGroup("Player")]public float overheatTimerMax = 8.66f;
+    [FoldoutGroup("Player")]public float overheatCooldown = 0.65f;
+    [FoldoutGroup("Player")]public float overheatedTime=3;
+    [FoldoutGroup("Player")]public bool recoilOnPlayer=true;
+    [FoldoutGroup("Player")]public float critChancePlayer=4f;
+    [FoldoutGroup("Player")]public bool playerWeaponsFade=true;
+    [FoldoutGroup("Player")]public List<WeaponProperties> weaponProperties;
 [Header("State Defaults")]
-    public List<StatusFx> statusesStart;
-    public float statusCapDefault=60f;
-    public bool addToStatusTimer=true;
-    public float flipTime = 7f;
-    public float gcloverTime = 6f;
-    public float shadowTime = 10f;
-    public float shadowLength=0.33f;
-    public float shadowtracesSpeed=1.3f;
-    public float shadowCost=5f;
-    public float dashSpeed=10f;
-    public float startDashTime=0.2f;
-    public float inverterTimeMax=10f;
-    public float magnetTime=15f;
-    public float scalerTime=15f;
-    public float[] scalerSizes={0.45f,0.75f,1.2f,1.5f,1.75f,2f,2.5f};
+    [FoldoutGroup("Player")]public List<StatusFx> statusesStart;
+    [FoldoutGroup("Player")]public float statusCapDefault=60f;
+    [FoldoutGroup("Player")]public bool addToStatusTimer=true;
+    [FoldoutGroup("Player")]public float flipTime = 7f;
+    [FoldoutGroup("Player")]public float gcloverTime = 6f;
+    [FoldoutGroup("Player")]public float shadowTime = 10f;
+    [FoldoutGroup("Player")]public float shadowLength=0.33f;
+    [FoldoutGroup("Player")]public float shadowtracesSpeed=1.3f;
+    [FoldoutGroup("Player")]public float shadowCost=5f;
+    [FoldoutGroup("Player")]public float dashSpeed=10f;
+    [FoldoutGroup("Player")]public float startDashTime=0.2f;
+    [FoldoutGroup("Player")]public float inverterTimeMax=10f;
+    [FoldoutGroup("Player")]public float magnetTime=15f;
+    [FoldoutGroup("Player")]public float scalerTime=15f;
+    [FoldoutGroup("Player")]public float[] scalerSizes={0.45f,0.75f,1.2f,1.5f,1.75f,2f,2.5f};
     //public float shipScaleMin=0.45f;
     //public float shipScaleMax=2.5f;
-    public float matrixTime=7f;
-    public float pmultiTime=24f;
-    public float accelTime=7f;
-    public float onfireTickrate = 0.38f;
-    public float onfireDmg = 1f;
-    public float decayTickrate = 0.5f;
-    public float decayDmg = 0.5f;
-    public float fuelDrainAmnt=0.1f;
-    public float fuelDrainFreq=0.5f;
+    [FoldoutGroup("Player")]public float matrixTime=7f;
+    [FoldoutGroup("Player")]public float accelTime=7f;
+    [FoldoutGroup("Player")]public float onfireTickrate = 0.38f;
+    [FoldoutGroup("Player")]public float onfireDmg = 1f;
+    [FoldoutGroup("Player")]public float decayTickrate = 0.5f;
+    [FoldoutGroup("Player")]public float decayDmg = 0.5f;
+    [FoldoutGroup("Player")]public float fuelDrainAmnt=0.1f;
+    [FoldoutGroup("Player")]public float fuelDrainFreq=0.5f;
 [Header("Collectibles")]//Collectibles
-    public float energyBall_energyGain=6f;
-    public float battery_energyGain=11f;
-    public float benergyBallGain=1;
-    public float benergyVialGain=5;
-    public int crystalGain=2;
-    public int crystalBigGain=6;
-    public float medkit_energyGain=26f;
-    public float medkit_hpGain=25f;
-    public float lunarGel_hpGain=10f;
-    public bool lunarGel_absorp=true;
-    public float powerups_energyGain=36f;
-    public float powerups_energyNeeded=25f;
-    public float powerups_energyDupl=42f;
-    public int coresCollectGain=1;
+    [FoldoutGroup("Player")]public float energyBall_energyGain=6f;
+    [FoldoutGroup("Player")]public float battery_energyGain=11f;
+    [FoldoutGroup("Player")]public float benergyBallGain=1;
+    [FoldoutGroup("Player")]public float benergyVialGain=5;
+    [FoldoutGroup("Player")]public int crystalGain=2;
+    [FoldoutGroup("Player")]public int crystalBigGain=6;
+    [FoldoutGroup("Player")]public float medkit_energyGain=26f;
+    [FoldoutGroup("Player")]public float medkit_hpGain=25f;
+    [FoldoutGroup("Player")]public float lunarGel_hpGain=10f;
+    [FoldoutGroup("Player")]public bool lunarGel_absorp=true;
+    [FoldoutGroup("Player")]public float powerups_energyGain=36f;
+    [FoldoutGroup("Player")]public float powerups_energyNeeded=25f;
+    [FoldoutGroup("Player")]public float powerups_energyDupl=42f;
+    [FoldoutGroup("Player")]public int coresCollectGain=1;
 #endregion
 #region//Spawns - Waves, Disrupters, Powerups
 [Title("Spawns - Waves, Disrupters, Powerups", titleAlignment: TitleAlignments.Centered)]
-[Header("Waves")]
-    [OnValueChanged("VaildateWaveSpawnReqs")][SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
+//[Header("Waves")]
+    [FoldoutGroup("Spawns",false,VisibleIf="@this._isAdventureBossZone==false")][OnValueChanged("VaildateWaveSpawnReqs")][SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
     #region//VaildateWaveSpawn
-    [Button("VaildateWaveSpawnReqs")][ContextMenu("VaildateWaveSpawnReqs")]void VaildateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
+    [FoldoutGroup("Spawns")][Button("VaildateWaveSpawnReqs")][ContextMenu("VaildateWaveSpawnReqs")]void VaildateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
     #endregion
-    [SerializeReference]public spawnReqs waveSpawnReqs=new spawnScore();
-    [Searchable]public List<LootTableEntryWaves> waveList;
-    [ReadOnly]public float wavesWeightsSumTotal;
-    public int startingWave=0;
-    public bool startingWaveRandom=false;
-    public bool uniqueWaves=true;
+    [FoldoutGroup("Spawns")][SerializeReference]public spawnReqs waveSpawnReqs=new spawnScore();
+    [FoldoutGroup("Spawns")][Searchable]public List<LootTableEntryWaves> waveList;
+    [FoldoutGroup("Spawns")][ReadOnly]public float wavesWeightsSumTotal;
+    [FoldoutGroup("Spawns")]public int startingWave=0;
+    [FoldoutGroup("Spawns")]public bool startingWaveRandom=false;
+    [FoldoutGroup("Spawns")]public bool uniqueWaves=true;
 [Header("Disrupters")]
-    [Searchable]public List<DisrupterConfig> disrupterList;
+    [FoldoutGroup("Spawns")][Searchable]public List<DisrupterConfig> disrupterList;
 [Header("Powerups")]
-    [Searchable]public List<PowerupsSpawnerGR> powerupSpawners;
+    [FoldoutGroup("Spawns")][Searchable]public List<PowerupsSpawnerGR> powerupSpawners;
     #region//VaildatePowerupsSpawn
-    [Button("VaildatePowerupsSpawnReqs")][ContextMenu("VaildatePowerupsSpawnReqs")]void VaildatePowerupsSpawnReqs(){foreach(PowerupsSpawnerGR p in powerupSpawners){
+    [FoldoutGroup("Spawns")][Button("VaildatePowerupsSpawnReqs")][ContextMenu("VaildatePowerupsSpawnReqs")]void VaildatePowerupsSpawnReqs(){foreach(PowerupsSpawnerGR p in powerupSpawners){
         spawnReqsMono.Validate(ref p.spawnReqs, ref p.spawnReqsType);}}
     #endregion
+[Title("Boss", titleAlignment: TitleAlignments.Centered)]
+    [BoxGroup("Boss Info",false,VisibleIf="@this._isAdventureBossZone")]public EnemyClass bossIdkXD;
 [Title("Enemies", titleAlignment: TitleAlignments.Centered)]
-    public bool enemyDefenseHit=true;
-    public bool enemyDefensePhase=true;
-    public float enemyDefenseFloor=0.1f;
-    [Searchable]public EnemyClass[] enemies;
-    public CometSettings cometSettings;
-    public EnCombatantSettings enCombatantSettings;
-    public EnShipSettings enShipSettings;
-    public MechaLeechSettings mechaLeechSettings;
-    public HealingDroneSettings healingDroneSettings;
-    public VortexWheelSettings vortexWheelSettings;
-    public GlareDevilSettings glareDevilSettings;
-    public GoblinBossSettings goblinBossSettings;
-    public HLaserSettings vlaserSettings;
-    public HLaserSettings hlaserSettings;
+    [FoldoutGroup("Enemies",false,VisibleIf="@this._isAdventureSubZone==false")]public bool enemyDefenseHit=true;
+    [FoldoutGroup("Enemies")]public bool enemyDefensePhase=true;
+    [FoldoutGroup("Enemies")]public float enemyDefenseFloor=0.1f;
+    [FoldoutGroup("Enemies")][Searchable]public EnemyClass[] enemies;
+    [FoldoutGroup("Enemies")]public CometSettings cometSettings;
+    [FoldoutGroup("Enemies")]public EnCombatantSettings enCombatantSettings;
+    [FoldoutGroup("Enemies")]public EnShipSettings enShipSettings;
+    [FoldoutGroup("Enemies")]public MechaLeechSettings mechaLeechSettings;
+    [FoldoutGroup("Enemies")]public HealingDroneSettings healingDroneSettings;
+    [FoldoutGroup("Enemies")]public VortexWheelSettings vortexWheelSettings;
+    [FoldoutGroup("Enemies")]public GlareDevilSettings glareDevilSettings;
+    [FoldoutGroup("Enemies")]public GoblinBossSettings goblinBossSettings;
+    [FoldoutGroup("Enemies")]public HLaserSettings vlaserSettings;
+    [FoldoutGroup("Enemies")]public HLaserSettings hlaserSettings;
 #endregion
 #region//Damage Values
 [Title("DMG Values", titleAlignment: TitleAlignments.Centered)]
-    [Searchable]public List<DamageValues> dmgValues;
+    [FoldoutGroup("DMG Values",false,VisibleIf="@this._isAdventureSubZone==false")][Searchable]public List<DamageValues> dmgValues;
 #endregion
 #region//Shop
-[Title("Shop", titleAlignment: TitleAlignments.Centered)]
-    [OnValueChanged("VaildateShopSpawnReqs")]public spawnReqsType shopSpawnReqsType=spawnReqsType.score;
-    [Button("VaildateShopSpawnReqs")][ContextMenu("VaildateShopSpawnReqs")]void VaildateShopSpawnReqs(){spawnReqsMono.Validate(ref shopSpawnReqs, ref shopSpawnReqsType);}
-    [SerializeReference]public spawnReqs shopSpawnReqs=new spawnScore();
-    public List<LootTableEntryShop> shopList;
-    public float cargoSpeed=2;
-    public float cargoHealth=44;
-    [SerializeField] public int[] repMinusCargoHit=new int[2]{1,3};
-    [SerializeField] public int repMinusCargoKill=7;
-    public bool repEnabled=true;
-    public const int repLength=4;
-    public int[] reputationThresh=new int[repLength];
-    public bool shopTimeLimitEnabled=true;
-    public float shopTimeLimit=10;
-    public float shopOpenGameSpeed=0;
+[Title("Trading", titleAlignment: TitleAlignments.Centered)]
+    [FoldoutGroup("Trading",false,VisibleIf="@this._isAdventureSubZone==false")][OnValueChanged("VaildateShopSpawnReqs")]public spawnReqsType shopSpawnReqsType=spawnReqsType.score;
+    [FoldoutGroup("Trading")][Button("VaildateShopSpawnReqs")][ContextMenu("VaildateShopSpawnReqs")]void VaildateShopSpawnReqs(){spawnReqsMono.Validate(ref shopSpawnReqs, ref shopSpawnReqsType);}
+    [FoldoutGroup("Trading")][SerializeReference]public spawnReqs shopSpawnReqs=new spawnScore();
+    [FoldoutGroup("Trading")]public List<LootTableEntryShop> shopList;
+    [FoldoutGroup("Trading")]public float cargoSpeed=2;
+    [FoldoutGroup("Trading")]public float cargoHealth=44;
+    [FoldoutGroup("Trading")][SerializeField] public int[] repMinusCargoHit=new int[2]{1,3};
+    [FoldoutGroup("Trading")][SerializeField] public int repMinusCargoKill=7;
+    [FoldoutGroup("Trading")]public bool repEnabled=true;
+    [FoldoutGroup("Trading")]public const int repLength=4;
+    [FoldoutGroup("Trading")]public int[] reputationThresh=new int[repLength];
+    [FoldoutGroup("Trading")]public bool shopTimeLimitEnabled=true;
+    [FoldoutGroup("Trading")]public float shopTimeLimit=10;
+    [FoldoutGroup("Trading")]public float shopOpenGameSpeed=0;
 #endregion
 #region//Leveling
 [Title("Leveling", titleAlignment: TitleAlignments.Centered)]
-    public float xpMax=100f;
-    public float maxXpOvefillMult=1.5f;
-    public float xp_wave=20f;
-    public float xp_shop=3f;
-    public float xp_powerup=1f;
-    public float xp_flying=7f;
-    public float flyingTimeReq=25f;
-    public float xp_staying=-2f;
-    public float stayingTimeReq=4f;
+    [FoldoutGroup("Leveling",false,VisibleIf="@this._isAdventureSubZone==false")]public float xpMax=100f;
+    [FoldoutGroup("Leveling")]public float maxXpOvefillMult=1.5f;
+    [FoldoutGroup("Leveling")]public float xp_wave=20f;
+    [FoldoutGroup("Leveling")]public float xp_shop=3f;
+    [FoldoutGroup("Leveling")]public float xp_powerup=1f;
+    [FoldoutGroup("Leveling")]public float xp_flying=7f;
+    [FoldoutGroup("Leveling")]public float flyingTimeReq=25f;
+    [FoldoutGroup("Leveling")]public float xp_staying=-2f;
+    [FoldoutGroup("Leveling")]public float stayingTimeReq=4f;
+    [FoldoutGroup("Leveling")]public List<ShipLvlFractionsValues> shipLvlFractionsValues;
+    [FoldoutGroup("Leveling")][ShowIf("@this.cfgName.Contains(\"Adventure\")")]public int saveBarsFromLvl=5;
 [Header("Changes per level")]
-    public List<ListEvents> lvlEvents;
+    [FoldoutGroup("Leveling")]public List<ListEvents> lvlEvents;
 #endregion
-#region//Upgrades
-[Title("Upgrades", titleAlignment: TitleAlignments.Centered)]
-    public float upgradeMenuOpenGameSpeed=0;
-    [ShowIf("@this.cfgName.Contains(\"Adventure\")")]public int saveBarsFromLvl=5;
-    public List<ShipLvlFractionsValues> shipLvlFractionsValues;
-    public bool mPulse_enabled=true;
-    public int mPulse_upgradeCost=3;
-    public int mPulse_lvlReq=2;
-    public int postMortem_upgradeCost=0;
-    public int postMortem_lvlReq=5;
-    public int teleport_upgradeCost=2;
-    public int teleport_lvlReq=3;
-    public int overhaul_upgradeCost=3;
-    public int overhaul_lvlReq=3;
-    public int crMend_upgradeCost=5;
-    public int crMend_lvlReq=5;
-    public int enDiss_upgradeCost=4;
-    public int enDiss_lvlReq=4;
-[Header("Modules & Skills")]
-    public List<ModulePropertiesGR> modulesPlayer;
-    public List<SkillPropertiesGR> skillsPlayer;
-    public int playerModulesCapacity=4;
+#region//Inventory, UpgradeMenu
+[Title("Inventory, UpgradeMenu", titleAlignment: TitleAlignments.Centered)]
+    [FoldoutGroup("Inventory",VisibleIf="@this._isAdventureSubZone==false")]public float upgradeMenuOpenGameSpeed=0;
+#endregion
+#region//Modules & Skills
+[Title("Modules & Skills", titleAlignment: TitleAlignments.Centered)]
+    [FoldoutGroup("Modules",false,VisibleIf="@this._isAdventureSubZone==false")]public List<ModulePropertiesGR> modulesPlayer;
+    [FoldoutGroup("Modules")]public List<SkillPropertiesGR> skillsPlayer;
+    [FoldoutGroup("Modules")]public int playerModulesCapacity=4;
     //[ES3NonSerializable]public int playerSkillsCapacity=2;
-    public float timeOverhaul=10;
-    public bool playerExhaustROF=true;
-    public int crystalMend_refillCost=2;
-    public float energyDiss_refillCost=3.3f;
+    [FoldoutGroup("Modules")]public float timeOverhaul=10;
+    [FoldoutGroup("Modules")]public bool playerExhaustROF=true;
+    [FoldoutGroup("Modules")]public int crystalMend_refillCost=2;
+    [FoldoutGroup("Modules")]public float energyDiss_refillCost=3.3f;
     //public int[] unlockableSkills;
 #endregion
 #endregion
+
 #region//Voids
     void Awake(){if(GameRules.instance!=null&&this!=GameRules.instance){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
     IEnumerator Start(){

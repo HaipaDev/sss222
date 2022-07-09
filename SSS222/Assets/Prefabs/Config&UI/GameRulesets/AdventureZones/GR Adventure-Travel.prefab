@@ -20,7 +20,7 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: cfgName
-      value: Adventure Mode - Zone 1
+      value: Adventure Mode - Travel Zone
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -95,7 +95,7 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: _isAdventureZone
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -149,6 +149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: _isAdventureSubZone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: lvlEvents.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -156,6 +161,11 @@ PrefabInstance:
         type: 3}
       propertyPath: laserSpeedChangePerLv
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: _isAdventureTravelZone
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -941,7 +951,7 @@ PrefabInstance:
     - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: m_Name
-      value: GR AdventureZ1
+      value: GR Adventure-Travel
       objectReference: {fileID: 0}
     - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

@@ -56,11 +56,11 @@ MonoBehaviour:
     type: 3}
   audioManagerPrefab: {fileID: 2010752312624517974, guid: 0c9cb9ae722d0a244a77d03aa7b1265e,
     type: 3}
-  steamManagerPrefab: {fileID: 842307546877681212, guid: e5c6d792354abb04da0e29a7277de7e9,
-    type: 3}
   dbaccessPrefab: {fileID: 2775582550042001946, guid: ca4542256346b924c890e7f816fa79a2,
     type: 3}
   discordPresencePrefab: {fileID: 1207543391218706, guid: 6765f9da738e023499d7110035d6a3f9,
+    type: 3}
+  steamManagerPrefab: {fileID: 842307546877681212, guid: e5c6d792354abb04da0e29a7277de7e9,
     type: 3}
   statsAchievsManagerPrefab: {fileID: 4991868348631804664, guid: 5b6c7a177998ca643a0a83d3c32c8f4f,
     type: 3}
@@ -72,3 +72,6 @@ MonoBehaviour:
   _gamerulesetsPrefabsLength: 4
   adventureZonesPrefabs:
   - {fileID: 795444042786618691, guid: 21ed49c71098da84eb580e4f6efd92c9, type: 3}
+  - {fileID: 795444042786618691, guid: 7f8fc0279695cc94c9e74748c2dbe41e, type: 3}
+  adventureTravelZonePrefab: {fileID: 795444042786618691, guid: 524415b940edf3345b7e74625d6552b9,
+    type: 3}

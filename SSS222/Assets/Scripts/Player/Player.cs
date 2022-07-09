@@ -92,7 +92,6 @@ public class Player : MonoBehaviour{    public static Player instance;
     //[SerializeField] public float shipScaleMin=0.45f;
     //[SerializeField] public float shipScaleMax=2.5f;
     [SerializeField] public float matrixTime=7f;
-    [SerializeField] public float pmultiTime=24f;
     [SerializeField] public float accelTime=7f;
     [SerializeField] public float noHealTime=14f;
     [SerializeField] public float lifeStealTime=13f;
@@ -242,7 +241,6 @@ public class Player : MonoBehaviour{    public static Player instance;
         scalerTime=i.scalerTime;
         scalerSizes=i.scalerSizes;
         matrixTime=i.matrixTime;
-        pmultiTime=i.pmultiTime;
         accelTime=i.accelTime;
         onfireTickrate=i.onfireTickrate;
         onfireDmg=i.onfireDmg;
@@ -625,7 +623,6 @@ public class Player : MonoBehaviour{    public static Player instance;
         pmodules.DeathSkills();
         StatsAchievsManager.instance.AddDeaths();
         GameSession.instance.SetAnalytics();
-        //Debug.Log("GameTime: "+GameSession.instance.GetGameSessionTime());
 
         if(GameSession.instance.CheckGamemodeSelected("Adventure")){GameSession.instance.DieAdventure();}
 

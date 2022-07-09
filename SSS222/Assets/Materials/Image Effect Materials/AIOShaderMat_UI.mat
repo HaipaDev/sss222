@@ -2,14 +2,21 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AIOShaderMat_UI
   m_Shader: {fileID: 4800000, guid: a53f4bb29f3644b43b5075c6dcfecb32, type: 3}
-  m_ShaderKeywords: BLURISHD_ON BLUR_ON HSV_ON NEGATIVE_ON PIXELATE_ON _BLURHD_ON
+  m_ValidKeywords:
+  - BLURISHD_ON
+  - BLUR_ON
+  - HSV_ON
+  - NEGATIVE_ON
+  - PIXELATE_ON
+  m_InvalidKeywords:
+  - _BLURHD_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -102,6 +109,7 @@ Material:
     - _DistortAmount: 0.5
     - _DistortTexXSpeed: 5
     - _DistortTexYSpeed: 5
+    - _EditorDrawers: 6
     - _FadeAmount: -0.1
     - _FadeBurnGlow: 2
     - _FadeBurnTransition: 0.075
@@ -116,6 +124,7 @@ Material:
     - _GlitchAmount: 3
     - _GlitchSize: 1
     - _Glow: 10
+    - _GlowGlobal: 1
     - _GlowTexUsed: 0
     - _GradBlend: 1
     - _GradBoostX: 1.2
@@ -175,7 +184,7 @@ Material:
     - _OverlayBlend: 1
     - _OverlayGlow: 1
     - _PinchUvAmount: 0.35
-    - _PixelateSize: 32
+    - _PixelateSize: 4
     - _PosterizeGamma: 0.75
     - _PosterizeNumColors: 8
     - _PosterizeOutline: 0

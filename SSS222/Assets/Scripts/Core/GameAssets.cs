@@ -121,13 +121,14 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return go;
 	}
 
-	public Material GetMat(string mat){
+	public Material GetMat(string mat,bool instantiate=false){
 		GMaterial gm=materials.Find(x=>x.name==mat);
 		if(gm==null){
 			if(!String.IsNullOrEmpty(mat))Debug.LogWarning("Material: " + mat + " not found!");
 			return null;
 		}
 		Material m=gm.mat;
+		if(instantiate){m=Instantiate(m);}
         return m;
 	}
 	public Material UpdateShaderMatProps(Material mat,ShaderMatProps shaderMatProps,bool isUI=false){	Material _mat=mat;

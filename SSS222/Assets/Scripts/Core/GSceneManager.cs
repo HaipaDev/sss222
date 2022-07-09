@@ -61,7 +61,9 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameRules.instance.EnterGameScene();
     }
     public void LoadAdventureZone(int i){
-        GameSession.instance.SetGamemodeSelected(-i);
+        Destroy(GameRules.instance);
+        Instantiate(GameCreator.instance.adventureZonesPrefabs[i-1]);
+        GameSession.instance.SetGamemodeSelected(-1);
         SceneManager.LoadScene("Game");
         GameSession.instance.gameSpeed=1f;
         GameSession.instance.LoadAdventurePost();
