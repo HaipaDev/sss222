@@ -201,7 +201,7 @@ public class Enemy : MonoBehaviour{
         }
         if(GetComponent<Goblin>()!=null){GetComponent<Goblin>().DropPowerup(true);if(GetComponent<Goblin>().bossForm){GetComponent<Goblin>().GoblinBossDrop();}}
         
-        if(explode){AudioManager.instance.Play("Explosion");GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject,0.01f);}
+        if(explode){AudioManager.instance.Play("Explosion");GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject);}
         Shake.instance.CamShake(2,1);
     }}
     void OnDestroy(){

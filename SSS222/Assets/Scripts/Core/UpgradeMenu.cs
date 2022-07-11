@@ -15,6 +15,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     [SceneObjectsOnly]public GameObject lvltreeUI;
     [SceneObjectsOnly]public GameObject lvltreeUI1;
     [SceneObjectsOnly]public GameObject lvltreeUI2;
+    [SceneObjectsOnly]public GameObject zoneMap;
     [SceneObjectsOnly]public GameObject invMenu;
     [SceneObjectsOnly]public GameObject statsMenu;
     [SceneObjectsOnly]public GameObject modulesSkillsPanel;
@@ -47,6 +48,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             if(UpgradeMenuIsOpen){Resume();}
             else{if(PauseMenu.GameIsPaused!=true&&Shop.shopOpened!=true&&Player.instance!=null)if(!Player.instance._hasStatus("hacked"))Open();}
         }
+        if(Input.GetKeyDown(KeyCode.M)&&GameSession.instance.CheckGamemodeSelected("Adventure")){if(!UpgradeMenuIsOpen){Open();OpenZoneMap();}}
         if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){Back();}
         LevelBars();
         //SetModulesAndSkillsPreviews();
@@ -56,6 +58,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         upgradeMenuUI.SetActive(false);
         upgradeMenu2UI.SetActive(false);
         lvltreeUI.SetActive(false);
+        zoneMap.SetActive(false);
         BackToModulesSkillsInventory();
         GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
         UpgradeMenuIsOpen=false;
@@ -70,9 +73,9 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
 
     IEnumerator ForceLayoutUpdate(){
         yield return new WaitForSecondsRealtime(0.02f);
-        GameObject.Find("Container-Buttons").GetComponent<Image>().enabled=false;
+        upgradeMenuUI.transform.GetComponentInChildren<VerticalLayoutGroup>().GetComponent<Image>().enabled=false;
         yield return new WaitForSecondsRealtime(0.02f);
-        GameObject.Find("Container-Buttons").GetComponent<Image>().enabled=true;//force update layout
+        upgradeMenuUI.transform.GetComponentInChildren<VerticalLayoutGroup>().GetComponent<Image>().enabled=true;//force update layout
     }
 
     
@@ -92,6 +95,10 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         modulesSkillsPanel.SetActive(true);
         SetModulesAndSkillsPreviews();
     }
+    public void OpenZoneMap(){
+        upgradeMenuUI.SetActive(false);
+        zoneMap.SetActive(true);
+    }
     public void OpenLvlTree(){
         upgradeMenuUI.SetActive(false);
         lvltreeUI.SetActive(true);
@@ -108,9 +115,9 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     }
     public void Back(){
         if(modulesList.activeSelf||skillsList.activeSelf){BackToModulesSkillsInventory();return;}
-        if(statsMenu.activeSelf||modulesSkillsPanel.activeSelf||lvltreeUI.activeSelf){
+        if(statsMenu.activeSelf||modulesSkillsPanel.activeSelf||lvltreeUI.activeSelf||zoneMap.activeSelf){
             statsMenu.SetActive(false);modulesSkillsPanel.SetActive(false);
-            upgradeMenu2UI.SetActive(false);lvltreeUI.SetActive(false);
+            upgradeMenu2UI.SetActive(false);lvltreeUI.SetActive(false);zoneMap.SetActive(false);
             upgradeMenuUI.SetActive(true);
             return;
         }
@@ -152,6 +159,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         }
     }
 
+    bool _modulesSetup;
     void SetupModulesAndSkills(){
         var modulesSkillsSlotsContainer=modulesSkillsInventory.transform.GetChild(0);
         var modulesSlotsContainer=modulesSkillsSlotsContainer.transform.GetChild(0).GetChild(1);
@@ -253,11 +261,12 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             go.transform.GetChild(5).GetChild(0).GetComponent<ValueDisplay>().value="skillEquippedSlot_"+s.item.name;
             go.transform.GetChild(5).GetChild(1).GetChild(0).GetComponent<XPFill>().valueName="skillEquippedThisSlot_"+s.item.name;
         }
+        _modulesSetup=true;
         SetModulesAndSkillsLvlVals_del();
     }
     void SetModulesAndSkillsLvlVals_del(){StartCoroutine(SetModulesAndSkillsLvlVals_delI());}
     IEnumerator SetModulesAndSkillsLvlVals_delI(){yield return new WaitForSecondsRealtime(0.05f);SetModulesAndSkillsLvlVals();}
-    void SetModulesAndSkillsLvlVals(){
+    void SetModulesAndSkillsLvlVals(){if(_modulesSetup){
         var modulesContainer=modulesList.transform.GetChild(0);
         foreach(Transform t in modulesContainer){if(t.gameObject.name!="Empty"){SetValues(t);}}
         var skillsContainer=skillsList.transform.GetChild(0);
@@ -276,7 +285,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
                 t.GetChild(4).gameObject.GetComponent<ShipLevelRequired>().Switch(false);
             }
         }
-    }
+    }}
     //void SetModulesAndSkillsPreviews(){StartCoroutine(SetModulesAndSkillsPreviewsI());}
     //IEnumerator SetModulesAndSkillsPreviewsI(){
     void SetModulesAndSkillsPreviews(){

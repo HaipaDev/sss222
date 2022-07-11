@@ -15,12 +15,14 @@ public class SkillButtons : MonoBehaviour{
 
     void Update(){
         if(pmodules!=null){
-            if(pmodules.skillsSlots!=null){
-                if(ID>=0&&ID<pmodules.skillsSlots.Capacity){
-                    if(pmodules.skillsSlots[ID]!=""){GameAssets.SetActiveAllChildren(transform,true);iconImg.sprite=pmodules.GetSkillProperties(pmodules.skillsSlots[ID]).item.sprite;}
-                    else{GameAssets.SetActiveAllChildren(transform,false);}
+            if(pmodules.skillsSlots!=null){if(pmodules.skillsSlots.Capacity>0){
+                if(ID>=0&&pmodules.skillsSlots.Capacity>ID){
+                if(pmodules.skillsSlots[ID]!=null){
+                        if(pmodules.skillsSlots[ID]!=""){GameAssets.SetActiveAllChildren(transform,true);iconImg.sprite=pmodules.GetSkillProperties(pmodules.skillsSlots[ID]).item.sprite;}
+                        else{GameAssets.SetActiveAllChildren(transform,false);}
+                    }else{GameAssets.SetActiveAllChildren(transform,false);}
                 }else{GameAssets.SetActiveAllChildren(transform,false);}
-            }
+            }}
         }
     }
 }

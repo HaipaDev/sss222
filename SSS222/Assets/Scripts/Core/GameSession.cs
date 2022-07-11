@@ -63,6 +63,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public bool dmgPopups=true;
     public bool analyticsOn=true;
     public int gamemodeSelected=1;
+    [HideIf("@this.gamemodeSelected!=-1")]public int zoneSelected=0;
     public const int gameModeMaxID=4;
     [SerializeField]float restartTimer=-4;
     
@@ -107,8 +108,14 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     }}
     
     public void EnterGameScene(){
-        ReAddSpawnReqsMono();
+        //Debug.Log("PRE: "+PauseMenu.GameIsPaused+" | "+UpgradeMenu.UpgradeMenuIsOpen+" | "+GameSession.GlobalTimeIsPaused);
+        StartCoroutine(ForceUnpauseI());
+        /*if(PauseMenu.instance!=null){PauseMenu.instance.Resume();}
+        if(UpgradeMenu.instance!=null){UpgradeMenu.instance.Resume();}
+        Debug.Log("POST: "+PauseMenu.GameIsPaused+" | "+UpgradeMenu.UpgradeMenuIsOpen);*/
+
         if(GameRules.instance.cfgName.Contains("Sandbox Mode"))SetTempSandboxSaveName();
+        ReAddSpawnReqsMono();
         StartCoroutine(SetGameRulesValues());
         RandomizeWaveScoreMax();
         RandomizeShopScoreMax();
@@ -116,6 +123,21 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(SaveSerial.instance.settingsData.playfieldRot==PlaneDir.horiz){FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,90);FindObjectOfType<Camera>().orthographicSize=horizCameraSize;}
         else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=vertCameraSize;}
     }
+    IEnumerator ForceUnpauseI(){
+        //Debug.Log("Started coroutine for ForceUnpauseI");
+        yield return new WaitForSecondsRealtime(0.1f);
+        if(PauseMenu.instance!=null){PauseMenu.instance.Resume();}
+        if(UpgradeMenu.instance!=null){UpgradeMenu.instance.Resume();}
+        if(Shop.instance!=null){Shop.instance.Resume();}
+        //Debug.Log("POST: "+PauseMenu.GameIsPaused+" | "+UpgradeMenu.UpgradeMenuIsOpen+" | "+GameSession.GlobalTimeIsPaused);
+    }
+    /*void ForceUnpause(){
+        if(PauseMenu.instance!=null){PauseMenu.instance.Resume();}
+        if(UpgradeMenu.instance!=null){UpgradeMenu.instance.Resume();}
+        if(Shop.instance!=null){Shop.instance.Resume();}
+        Debug.Log("POST: "+PauseMenu.GameIsPaused+" | "+UpgradeMenu.UpgradeMenuIsOpen+" | "+GameSession.GlobalTimeIsPaused);
+        _forceUnpause=false;Debug.Log("Forced unpause");
+    }*/
     public void SetTempSandboxSaveName(){if(SandboxCanvas.instance!=null)_tempSandboxSaveName=SandboxCanvas.instance.saveSelected;else Debug.LogWarning("No SandboxCanvas instance!");}
     public void ResetTempSandboxSaveName(){_tempSandboxSaveName="";}
     public string GetTempSandboxSaveName(){return _tempSandboxSaveName;}
@@ -130,6 +152,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     }
     SpriteRenderer _blurImg;
     bool _preLvlUp;
+    //bool _forceUnpause;
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
         if(SceneManager.GetActiveScene().name=="Game"){
@@ -189,7 +212,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             }
         }
 
-        if((PauseMenu.GameIsPaused==true||Shop.shopOpened==true||UpgradeMenu.UpgradeMenuIsOpen==true)&&(Player.instance!=null&&Player.instance._hasStatus("inverter"))){
+        if((PauseMenu.GameIsPaused||Shop.shopOpened||UpgradeMenu.UpgradeMenuIsOpen)&&(Player.instance!=null&&Player.instance._hasStatus("inverter"))){
             foreach(AudioSource sound in FindObjectsOfType<AudioSource>()){
                 if(sound!=null){
                     GameObject snd=sound.gameObject;
@@ -261,6 +284,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
 
         if(UpgradeMenu.instance!=null)CalculateLuck();
         CheckCodes(".",".");
+
+        if(gamemodeSelected!=-1){zoneSelected=-1;}
+        else{if(zoneSelected==-1){zoneSelected=0;GameRules.instance.ReplaceAdventureZoneInfo(GameCreator.instance.adventureZonesPrefabs[zoneSelected]);}}
+        //if(_forceUnpause){ForceUnpause();}
     }
 
     public void AddToScore(int scoreValue){
@@ -466,18 +493,18 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
 
     public void SetGamemodeSelected(int i){gamemodeSelected=i;}
     public void SetGamemodeSelectedStr(string name){int i=0;
-        if(!name.Contains("Sandbox Mode")){
+        if(name.Contains("Sandbox"))gamemodeSelected=0;
+        else if(name.Contains("Adventure"))gamemodeSelected=-1;
+        else{
             i=Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))+1;
-            if(i==0){i=Array.FindIndex(GameCreator.instance.adventureZonesPrefabs,e=>e.cfgName.Contains(name));}
-            if(i!=0){gamemodeSelected=i;}
+            if(i>0){gamemodeSelected=i;}
             else{Debug.LogWarning("Cant find GameMode by name: "+name);}
-        }else{gamemodeSelected=0;}
+        }
     }
     public bool CheckGamemodeSelected(string name){
         return (
             (gamemodeSelected>0&&gamemodeSelected==Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name))+1)
-            ||(gamemodeSelected<0&&Mathf.Abs(gamemodeSelected)+1==Array.FindIndex(GameCreator.instance.adventureZonesPrefabs,e=>e.cfgName.Contains(name)))
-            ||(gamemodeSelected==0&&GameRules.instance.cfgName.Contains(name))
+            ||((gamemodeSelected<=0)&&GameRules.instance.cfgName.Contains(name))
         );}
     public int GetGamemodeID(string name){return Array.FindIndex(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
     public GameRules GetGameRules(string name){return Array.Find(GameCreator.instance.gamerulesetsPrefabs,e=>e.cfgName.Contains(name));}
@@ -488,12 +515,12 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public GameRules GetGameRulesCurrent(){
         GameRules gr=null;
         if(gamemodeSelected>0){gr=GameCreator.instance.gamerulesetsPrefabs[gamemodeSelected-1];}
-        else if(gamemodeSelected<0){gr=GameCreator.instance.adventureZonesPrefabs[Mathf.Abs(gamemodeSelected)-1];}
+        //else if(gamemodeSelected<0){gr=GameCreator.instance.adventureZonesPrefabs[Mathf.Abs(gamemodeSelected)-1];}
         return gr;
     }
     public string GetCurrentGamemodeName(){
         string n="";if(gamemodeSelected>0&&gamemodeSelected<GameCreator.instance.gamerulesetsPrefabs.Length+1){n=GameCreator.instance.gamerulesetsPrefabs[gamemodeSelected-1].cfgName;}
-        else if(gamemodeSelected<0&&Mathf.Abs(gamemodeSelected)<GameCreator.instance.adventureZonesPrefabs.Length){n=GameCreator.instance.adventureZonesPrefabs[Mathf.Abs(gamemodeSelected)].cfgName;}
+        else if(gamemodeSelected==-1){n="Adventure Mode";}
         else if(gamemodeSelected==0){n="Sandbox Mode";}
         return n;}
     public bool _isSandboxMode(){return (SceneManager.GetActiveScene().name.Contains("Sandbox")||(SceneManager.GetActiveScene().name=="Game"&&GetCurrentGamemodeName().Contains("Sandbox")));}

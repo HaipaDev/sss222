@@ -20,7 +20,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [HideIf("@this._isAdventureSubZone&&this._isAdventureBossZone==false")]public string cfgIconAssetName;
     [HideIf("@this._isAdventureSubZone&&this._isAdventureBossZone==false")][InfoBox("Place a special GameObject with multiple icons here:")][AssetsOnly,ES3NonSerializable]public GameObject cfgIconsGo;
     [HideIf("@this._isAdventureSubZone")]public ShaderMatProps cfgIconShaderMatProps;
-    [HideIf("@this._isAdventureTravelZone")]public ShaderMatProps bgMaterial;
+    [HideIf("@this._isAdventureTravelZone||this.cfgName.Contains(\"Adventure\")&&this._isAdventureSubZone==false")]public ShaderMatProps bgMaterial;
 [Title("Global", titleAlignment: TitleAlignments.Centered)]
     //[HideIfGroup("Global",Condition="_isAdventureZone")]
     [FoldoutGroup("Global",false,VisibleIf="@this._isAdventureSubZone==false")][Range(0.1f,10f)]public float defaultGameSpeed=1f;
@@ -134,7 +134,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #region//Spawns - Waves, Disrupters, Powerups
 [Title("Spawns - Waves, Disrupters, Powerups", titleAlignment: TitleAlignments.Centered)]
 //[Header("Waves")]
-    [FoldoutGroup("Spawns",false,VisibleIf="@this._isAdventureBossZone==false")][OnValueChanged("VaildateWaveSpawnReqs")][SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
+    [FoldoutGroup("Spawns",false,VisibleIf="@this.cfgName.Contains(\"Adventure\")==false||(this._isAdventureSubZone&&this._isAdventureBossZone==false)")][OnValueChanged("VaildateWaveSpawnReqs")][SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
     #region//VaildateWaveSpawn
     [FoldoutGroup("Spawns")][Button("VaildateWaveSpawnReqs")][ContextMenu("VaildateWaveSpawnReqs")]void VaildateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
     #endregion
@@ -226,6 +226,21 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #endregion
 
 #region//Voids
+    //public void ReplaceGameRules(GameRules gr){Destroy(this,0.01f);var _gr=gameObject.AddComponent<GameRules>();_gr=gr;}
+    public void ReplaceAdventureZoneInfo(GameRules gr){
+        //Main
+        bgMaterial=gr.bgMaterial;
+
+        //Spawns
+        waveSpawnReqs=gr.waveSpawnReqs;
+        waveList=gr.waveList;
+        wavesWeightsSumTotal=gr.wavesWeightsSumTotal;
+        startingWave=gr.startingWave;
+        startingWaveRandom=gr.startingWaveRandom;
+        uniqueWaves=gr.uniqueWaves;
+        disrupterList=gr.disrupterList;
+        powerupSpawners=gr.powerupSpawners;
+    }
     void Awake(){if(GameRules.instance!=null&&this!=GameRules.instance){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
     IEnumerator Start(){
         if(gameObject.name.Contains("(Clone)")){gameObject.name.Replace("(Clone)","");}
@@ -233,7 +248,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         yield return new WaitForSecondsRealtime(0.05f);
         if(!GameSession.instance.CheckGamemodeSelected(cfgName)){
             GameSession.instance.SetGamemodeSelectedStr(cfgName);}
-        yield return new WaitForSecondsRealtime(0.02f);    
+        yield return new WaitForSecondsRealtime(0.02f);
         if(SceneManager.GetActiveScene().name=="Game")EnterGameScene();
 
         SumUpWavesWeightsTotal();
