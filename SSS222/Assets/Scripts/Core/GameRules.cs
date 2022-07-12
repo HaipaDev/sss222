@@ -8,12 +8,14 @@ using UnityEngine.EventSystems;
 using Sirenix.OdinInspector;
 
 public class GameRules : MonoBehaviour{     public static GameRules instance;
+    public bool _isAdventure(){return this.cfgName.Contains("Adventure");}
+    public bool _isAdventureNotSubZone(){return this.cfgName.Contains("Adventure")&&!_isAdventureSubZone;}
 #region//Values
 #region//Global values
 [Title("Preset Settings", titleAlignment: TitleAlignments.Centered)]
     [ES3NonSerializable]public string cfgName;
     ///*[ShowIf("@this._isAdventureSubZone]*/[ShowIf("@this.cfgName.Contains(\"Adventure\")")][ES3NonSerializable]public int adventureZoneID;
-    [ShowIf("@this.cfgName.Contains(\"Adventure\")")][DisableIf("@this._isAdventureBossZone||this._isAdventureTravelZone")][ES3NonSerializable]public bool _isAdventureSubZone;
+    [ShowIf("@this._isAdventure()")][DisableIf("@this._isAdventureBossZone||this._isAdventureTravelZone")][ES3NonSerializable]public bool _isAdventureSubZone;
     [ShowIf("@this._isAdventureSubZone&&this._isAdventureBossZone==false")][ES3NonSerializable]public bool _isAdventureTravelZone;
     [ShowIf("@this._isAdventureSubZone&&this._isAdventureTravelZone==false")][ES3NonSerializable]public bool _isAdventureBossZone;
     [HideIf("@this._isAdventureSubZone")][MultiLineProperty]public string cfgDesc;
@@ -23,28 +25,30 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [HideIf("@this._isAdventureTravelZone||this.cfgName.Contains(\"Adventure\")&&this._isAdventureSubZone==false")]public ShaderMatProps bgMaterial;
 [Title("Global", titleAlignment: TitleAlignments.Centered)]
     //[HideIfGroup("Global",Condition="_isAdventureZone")]
-    [FoldoutGroup("Global",false,VisibleIf="@this._isAdventureSubZone==false")][Range(0.1f,10f)]public float defaultGameSpeed=1f;
-    [FoldoutGroup("Global")]public scoreDisplay scoreDisplay=scoreDisplay.score;
-    [FoldoutGroup("Global")]public bool crystalsOn=true;
-    [FoldoutGroup("Global")]public bool xpOn=true;
-    [FoldoutGroup("Global")]public bool coresOn=true;
-    [FoldoutGroup("Global")]public bool shopOn=true;
-    [FoldoutGroup("Global")]public bool shopCargoOn=true;
-    [FoldoutGroup("Global")]public bool levelingOn=true;
-    [FoldoutGroup("Global")]public bool autoleveling=true;
-    [FoldoutGroup("Global")]public bool modulesOn=true;
-    [FoldoutGroup("Global")]public bool statUpgOn=false;
-    [FoldoutGroup("Global")]public bool iteminvOn=true;
-    [FoldoutGroup("Global")]public bool barrierOn=false;
+    [HideIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global",false)][Range(0.1f,10f)]public float defaultGameSpeed=1f;
+    [HideIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global")]public scoreDisplay scoreDisplay=scoreDisplay.score;
+    [HideIf("@this._isAdventureTravelZone==false")][FoldoutGroup("Global")][ES3NonSerializable]public float travelTimeToDistanceRatio=1;
+    [HideIf("@this._isAdventureTravelZone==false")][FoldoutGroup("Global")][ES3NonSerializable]public float travelTimeToAddOnDeath=0;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool crystalsOn=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool xpOn=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool coresOn=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool shopOn=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool shopCargoOn=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool levelingOn=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool autoleveling=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool modulesOn=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool statUpgOn=false;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool iteminvOn=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool barrierOn=false;
 
-    [FoldoutGroup("Global")]public bool instaPause=true;
-    [FoldoutGroup("Global")]public bool musicSlowdownOnPause=true;
-    [FoldoutGroup("Global")]public bool musicSlowdownOnPaceChange=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool instaPause=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool musicSlowdownOnPause=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool musicSlowdownOnPaceChange=true;
     //public float upgradeMenuOpenGameSpeed=0;
     //public float shopOpenGameSpeed=0;
 
-    [FoldoutGroup("Global")]public float scoreMulti=1;
-    [FoldoutGroup("Global")]public float luckMulti=1;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public float scoreMulti=1;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public float luckMulti=1;
 #endregion
 #region//Player
 [Title("Player", titleAlignment: TitleAlignments.Centered)]
@@ -134,7 +138,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #region//Spawns - Waves, Disrupters, Powerups
 [Title("Spawns - Waves, Disrupters, Powerups", titleAlignment: TitleAlignments.Centered)]
 //[Header("Waves")]
-    [FoldoutGroup("Spawns",false,VisibleIf="@this.cfgName.Contains(\"Adventure\")==false||(this._isAdventureSubZone&&this._isAdventureBossZone==false)")][OnValueChanged("VaildateWaveSpawnReqs")][SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
+    [FoldoutGroup("Spawns",false,VisibleIf="@this._isAdventure()==false||(this._isAdventureSubZone&&this._isAdventureBossZone==false)")][OnValueChanged("VaildateWaveSpawnReqs")][SerializeField]public spawnReqsType waveSpawnReqsType=spawnReqsType.score;
     #region//VaildateWaveSpawn
     [FoldoutGroup("Spawns")][Button("VaildateWaveSpawnReqs")][ContextMenu("VaildateWaveSpawnReqs")]void VaildateWaveSpawnReqs(){spawnReqsMono.Validate(ref waveSpawnReqs, ref waveSpawnReqsType);}
     #endregion
@@ -153,7 +157,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         spawnReqsMono.Validate(ref p.spawnReqs, ref p.spawnReqsType);}}
     #endregion
 [Title("Boss", titleAlignment: TitleAlignments.Centered)]
-    [BoxGroup("Boss Info",false,VisibleIf="@this._isAdventureBossZone")]public EnemyClass bossIdkXD;
+    [BoxGroup("Boss Info",false,VisibleIf="@this._isAdventureBossZone")]public EnemyClass bossInfo;
 [Title("Enemies", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Enemies",false,VisibleIf="@this._isAdventureSubZone==false")]public bool enemyDefenseHit=true;
     [FoldoutGroup("Enemies")]public bool enemyDefensePhase=true;
@@ -203,7 +207,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [FoldoutGroup("Leveling")]public float xp_staying=-2f;
     [FoldoutGroup("Leveling")]public float stayingTimeReq=4f;
     [FoldoutGroup("Leveling")]public List<ShipLvlFractionsValues> shipLvlFractionsValues;
-    [FoldoutGroup("Leveling")][ShowIf("@this.cfgName.Contains(\"Adventure\")")]public int saveBarsFromLvl=5;
+    [FoldoutGroup("Leveling")][ShowIf("@this._isAdventure()")]public int saveBarsFromLvl=5;
 [Header("Changes per level")]
     [FoldoutGroup("Leveling")]public List<ListEvents> lvlEvents;
 #endregion
@@ -227,19 +231,33 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 
 #region//Voids
     //public void ReplaceGameRules(GameRules gr){Destroy(this,0.01f);var _gr=gameObject.AddComponent<GameRules>();_gr=gr;}
-    public void ReplaceAdventureZoneInfo(GameRules gr){
-        //Main
+    public void ReplaceAdventureZoneInfo(GameRules gr, bool boss=false){
+        //Global
         bgMaterial=gr.bgMaterial;
+        defaultGameSpeed=gr.defaultGameSpeed;
+        scoreDisplay=gr.scoreDisplay;
+        _isAdventureSubZone=gr._isAdventureSubZone;
+        _isAdventureTravelZone=gr._isAdventureTravelZone;
+        _isAdventureBossZone=gr._isAdventureBossZone;
 
-        //Spawns
-        waveSpawnReqs=gr.waveSpawnReqs;
-        waveList=gr.waveList;
-        wavesWeightsSumTotal=gr.wavesWeightsSumTotal;
-        startingWave=gr.startingWave;
-        startingWaveRandom=gr.startingWaveRandom;
-        uniqueWaves=gr.uniqueWaves;
-        disrupterList=gr.disrupterList;
-        powerupSpawners=gr.powerupSpawners;
+        if(!boss){
+            //Spawns
+            waveSpawnReqs=gr.waveSpawnReqs;
+            waveList=gr.waveList;
+            startingWave=gr.startingWave;
+            startingWaveRandom=gr.startingWaveRandom;
+            uniqueWaves=gr.uniqueWaves;
+            disrupterList=gr.disrupterList;
+            powerupSpawners=gr.powerupSpawners;
+        }else{
+            //clear Spawns
+            waveSpawnReqs=new spawnReqs{timer=-5};
+            waveList=null;
+            disrupterList=null;
+            powerupSpawners=null;
+            //Boss info
+            bossInfo=gr.bossInfo;
+        }
     }
     void Awake(){if(GameRules.instance!=null&&this!=GameRules.instance){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
     IEnumerator Start(){
@@ -503,7 +521,7 @@ public class EnemyClass{
     public bool killOnDash = true;
 [Header("Drops & Points")]
     public bool giveScore = true;
-    public Vector2 scoreValue=new Vector2(1,10);
+    [ShowIf("@this.giveScore")]public Vector2 scoreValue=new Vector2(1,10);
     public float xpAmnt = 0f;
     public float xpChance = 100f;
     public List<LootTableEntryDrops> drops;
@@ -613,4 +631,14 @@ public class HLaserSettings{
 
 #endregion
 
-public enum scoreDisplay{score,sessionTime}
+
+[System.Serializable]
+public class AdventureZoneData{
+    public bool enabled=true;
+    public GameRules gameRules;
+    [EnableIf("enabled")]public Vector2 pos;
+    [EnableIf("enabled")]public int lvlReq;
+    [EnableIf("enabled")]public bool isBoss;
+}
+
+public enum scoreDisplay{score,sessionTime,timeLeft}

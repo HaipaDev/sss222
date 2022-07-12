@@ -48,7 +48,7 @@ MonoBehaviour:
   _isAdventureSubZone: 0
   _isAdventureTravelZone: 0
   _isAdventureBossZone: 0
-  cfgDesc: 
+  cfgDesc: CAMPAIGN LIKE ADVENTURE
   cfgIconAssetName: 
   cfgIconsGo: {fileID: 0}
   cfgIconShaderMatProps:
@@ -71,6 +71,7 @@ MonoBehaviour:
     lowResBlur: 1
   defaultGameSpeed: 1
   scoreDisplay: 0
+  travelTimeToDistanceRatio: 1
   crystalsOn: 1
   xpOn: 1
   coresOn: 1
@@ -344,7 +345,7 @@ MonoBehaviour:
     spawnReqs:
       rid: 2
     powerupSpawnPosRange: {x: -3, y: 3}
-  bossIdkXD:
+  bossInfo:
     name: 
     type: 0
     size: {x: 1, y: 1}

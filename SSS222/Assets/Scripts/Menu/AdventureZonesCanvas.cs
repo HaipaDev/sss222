@@ -6,29 +6,32 @@ using TMPro;
 using Sirenix.OdinInspector;
 
 public class AdventureZonesCanvas : MonoBehaviour{
-    [ChildGameObjectsOnly][SerializeField] GameObject zoneIconChildObject;
+    [ChildGameObjectsOnly][SerializeField] GameObject zoneButtonChildObject;
     [ChildGameObjectsOnly][SerializeField] Transform listContent;
-    [SerializeField] List<AdventureZoneData> zonesList;
+    [SerializeField] float regularZoneSize=1.7f;
+    [SerializeField] float bossZoneSize=2.5f;
     void Start(){
-        //zoneIconChildObject.GetComponent<Button>().onClick.AddListener(()=>GSceneManager.instance.LoadAdventureZone(0));
-        //zoneIconChildObject.GetComponent<RectTransform>().anchoredPosition=zonesList[0].pos;
-
-        for(var i=0;i<zonesList.Capacity;i++){
+        for(var i=0;i<GameCreator.instance.adventureZones.Capacity;i++){if(GameCreator.instance.adventureZones[i].enabled){
             var _i=i;
-            var go=Instantiate(zoneIconChildObject,listContent);
+            var go=Instantiate(zoneButtonChildObject,listContent);
             go.name="Zone_"+(i+1);
-            go.GetComponent<RectTransform>().anchoredPosition=zonesList[i].pos;
+            go.GetComponent<RectTransform>().anchoredPosition=GameCreator.instance.adventureZones[i].pos;
             go.GetComponent<Button>().onClick.AddListener(()=>GSceneManager.instance.LoadAdventureZone(_i));
-            var mat=GameAssets.instance.UpdateShaderMatProps(GameAssets.instance.GetMat("AIOShaderMat_UI",true),GameCreator.instance.adventureZonesPrefabs[i].bgMaterial,true);
+
+            var mat=GameAssets.instance.UpdateShaderMatProps(GameAssets.instance.GetMat("AIOShaderMat_UI",true),GameCreator.instance.adventureZones[i].gameRules.bgMaterial,true);
             go.transform.GetChild(1).GetComponent<Image>().material=null;go.transform.GetChild(1).GetComponent<Image>().material=mat;//refresh it
             go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=(i+1).ToString();
-        }
-        Destroy(zoneIconChildObject);
-    }
-}
 
-[System.Serializable]
-public class AdventureZoneData{
-    public Vector2 pos;
-    public bool isBoss;
+            if(GameCreator.instance.adventureZones[i].isBoss){
+                go.transform.localScale=new Vector2(bossZoneSize,bossZoneSize);
+                if(GameCreator.instance.adventureZones[i].gameRules.cfgIconsGo!=null){
+                    Destroy(go.transform.GetChild(3).GetComponent<Image>());
+                    Instantiate(GameCreator.instance.adventureZones[i].gameRules.cfgIconsGo,go.transform.GetChild(3));
+                }else{if(GameCreator.instance.adventureZones[i].gameRules.cfgIconAssetName!=""){go.transform.GetChild(3).GetComponent<Image>().sprite=GameAssets.instance.SprAny(GameCreator.instance.adventureZones[i].gameRules.cfgIconAssetName);}}
+                Destroy(go.transform.GetChild(2).gameObject);
+            }else{go.transform.localScale=new Vector2(regularZoneSize,regularZoneSize);Destroy(go.transform.GetChild(3).gameObject);}
+        }}
+        Destroy(zoneButtonChildObject);
+    }
+    public void Back(){if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Game"){UpgradeMenu.instance.Back();}else{GSceneManager.instance.LoadGameModeChooseScene();}}
 }

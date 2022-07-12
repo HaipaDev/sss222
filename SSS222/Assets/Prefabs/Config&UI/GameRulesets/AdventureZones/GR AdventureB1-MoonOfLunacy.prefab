@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4805688238363692020
+--- !u!1001 &7223390215606015300
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 660924726827842043, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: m_Name
-      value: GR AdventureZ1
+      value: GR AdventureB1-MoonOfLunacy
       objectReference: {fileID: 0}
     - target: {fileID: 1009991384784034327, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -70,12 +70,63 @@ PrefabInstance:
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: cfgName
-      value: Adventure Mode - Zone 1
+      value: Adventure Mode - Boss 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.spr
+      value: 
+      objectReference: {fileID: 21300000, guid: 83a11dbcdb4e2bc45bba9a5b6663bd12,
+        type: 3}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.name
+      value: Moon of Lunacy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bgMaterial.hue
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossIdkXD.name
+      value: Moon of Lunacy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossIdkXD.type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.xpAmnt
+      value: 66
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: bgMaterial.value
-      value: 0.5
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: cfgIconAssetName
+      value: Bat
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.giveScore
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.healthMax
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -84,28 +135,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bgMaterial.negative
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossIdkXD.giveScore
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossIdkXD.healthMax
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.killOnDash
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: waveList.Array.size
-      value: 5
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: _isAdventureBossZone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossIdkXD.killOnDash
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.healthStart
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: wavesWeightsSumTotal
-      value: 32.3
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: bgMaterial.saturation
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
-      propertyPath: disrupterList.Array.size
-      value: 3
+      propertyPath: bossIdkXD.healthStart
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.scoreValue.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.scoreValue.y
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossIdkXD.scoreValue.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossIdkXD.scoreValue.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: managedReferences[2].kills
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -126,54 +232,61 @@ PrefabInstance:
         type: 3}
       propertyPath: disrupterList.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 6c71f72b3df0c8241a69f571269f4e96,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: disrupterList.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 6c71f72b3df0c8241a69f571269f4e96,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: disrupterList.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: 469591656e933a1479b0a101085ab211,
-        type: 2}
-    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
-        type: 3}
-      propertyPath: waveList.Array.data[0].name
-      value: Comets Flyby
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
-      propertyPath: waveList.Array.data[1].name
-      value: Comet Storm
-      objectReference: {fileID: 0}
-    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
-        type: 3}
-      propertyPath: waveList.Array.data[2].name
-      value: Bat Flyby
-      objectReference: {fileID: 0}
-    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
-        type: 3}
-      propertyPath: waveList.Array.data[3].name
-      value: Bats V
-      objectReference: {fileID: 0}
-    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
-        type: 3}
-      propertyPath: waveList.Array.data[4].name
-      value: Bats Flyby
-      objectReference: {fileID: 0}
-    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
-        type: 3}
-      propertyPath: waveList.Array.data[5].name
+      propertyPath: disrupterList.Array.data[6]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: waveList.Array.data[0].name
+      value: Comet Storm
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[1].name
+      value: Bats Flyby
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[2].name
+      value: Bats V
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[3].name
+      value: Violet Mercenary
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[4].name
+      value: Violet Combatant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[5].name
+      value: Bats Clutter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: waveList.Array.data[6].name
-      value: StingerFlingers
+      value: Stinger Flingers
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[7].name
+      value: Comets Flyby
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -182,31 +295,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
-      propertyPath: waveList.Array.data[2].lootItem
+      propertyPath: waveList.Array.data[0].lootItem
       value: 
-      objectReference: {fileID: 11400000, guid: 7ff674ba09f3c2d4a95c751103079f54,
+      objectReference: {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf,
         type: 2}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
-      propertyPath: waveList.Array.data[4].levelReq
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
-        type: 3}
-      propertyPath: waveList.Array.data[4].lootItem
+      propertyPath: waveList.Array.data[1].lootItem
       value: 
       objectReference: {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc,
         type: 2}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
-      propertyPath: waveList.Array.data[5].levelReq
+      propertyPath: waveList.Array.data[2].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289,
+        type: 2}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[3].levelReq
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[3].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a,
+        type: 2}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[4].levelReq
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[4].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d,
+        type: 2}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[5].levelReq
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: waveList.Array.data[5].lootItem
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 2145a8982afb67c4bbfa60857b9f71f9,
+        type: 2}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: waveList.Array.data[6].levelReq
@@ -220,48 +357,74 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: waveList.Array.data[7].levelReq
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[7].lootItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b,
+        type: 2}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: waveList.Array.data[0].dropChance
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: waveList.Array.data[1].dropChance
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: waveList.Array.data[2].dropChance
-      value: 8.5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: waveList.Array.data[3].dropChance
-      value: 7.3
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: waveList.Array.data[4].dropChance
-      value: 4.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: waveList.Array.data[5].dropChance
-      value: 0
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[6].dropChance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: waveList.Array.data[7].dropChance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: managedReferences[7268785640884928513].timer
+      value: 11.184198
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: managedReferences[7402535153654038538].timer
-      value: 9.361694
+      value: 7.9292493
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: managedReferences[7402535244629278720].score
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: managedReferences[7402535244629278720].scoreNeeded
-      value: 25
+      value: 27
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ed435af9cf40c9489efd9ad88a6e37e, type: 3}

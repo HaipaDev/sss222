@@ -185,6 +185,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1876557319712579721, guid: 78babce7c97672d44a7c04792c1820d6,
+        type: 3}
+      propertyPath: adventureZonesPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1876557319712579722, guid: 78babce7c97672d44a7c04792c1820d6,
         type: 3}
       propertyPath: m_Name

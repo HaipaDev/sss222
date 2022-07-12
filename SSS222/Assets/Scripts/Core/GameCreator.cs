@@ -26,8 +26,8 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
     //[SerializeField] int gamerulesetsID;
     [AssetsOnly][SerializeField] public GameRules[] gamerulesetsPrefabs;
     [ReadOnly][SerializeField] public int _gamerulesetsPrefabsLength;
-    [AssetsOnly][SerializeField] public GameRules adventureGamerules;
-    [AssetsOnly][SerializeField] public GameRules[] adventureZonesPrefabs;
+    [AssetsOnly][SerializeField] public GameRules adventureGamerulesPrefab;
+    [AssetsOnly][SerializeField] public List<AdventureZoneData> adventureZones;
     [AssetsOnly][SerializeField] public GameRules adventureTravelZonePrefab;
     private void Awake(){
         instance=this;
@@ -55,7 +55,7 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
         
         if(FindObjectOfType<GameRules>()==null&&GameSession.instance.gamemodeSelected>0&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){
             Instantiate(GameSession.instance.GetGameRulesCurrent());}
-        if(FindObjectOfType<GameRules>()==null&&GameSession.instance.gamemodeSelected==-1){Instantiate(adventureGamerules);GameRules.instance.ReplaceAdventureZoneInfo(adventureZonesPrefabs[GameSession.instance.zoneSelected]);}
+        if(FindObjectOfType<GameRules>()==null&&GameSession.instance.gamemodeSelected==-1){Instantiate(adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(adventureZones[GameSession.instance.zoneSelected].gameRules);}
         if(FindObjectOfType<GameRules>()==null&&SceneManager.GetActiveScene().name=="SandboxMode"){
             GameRules gr=Instantiate(gamerulesetsPrefabs[0]);gr.gameObject.name="GRSandbox";gr.cfgName="Sandbox Mode";gr.cfgDesc="New Sandbox Mode Savefile!";gr.cfgIconsGo=null;gr.cfgIconAssetName="questionMark";}
 

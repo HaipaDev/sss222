@@ -116,6 +116,7 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="scoreDisplay"){if(GameSession.instance!=null){
                     if(gr.scoreDisplay==scoreDisplay.score)_txt=GameSession.instance.score.ToString();
                     else if(gr.scoreDisplay==scoreDisplay.sessionTime)_txt=GameSession.instance.GetGameSessionTimeFormat().ToString();
+                    else if(gr.scoreDisplay==scoreDisplay.timeLeft)_txt=GameSession.instance.GetGameTimeLeftFormat().ToString();
                 }
             }
             else if(value=="gameSpeedGR") _txt=gr.defaultGameSpeed.ToString();

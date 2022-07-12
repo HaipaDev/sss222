@@ -81,7 +81,9 @@ MonoBehaviour:
   dmgPopups: 1
   analyticsOn: 1
   gamemodeSelected: 1
-  zoneSelected: 0
+  zoneSelected: -1
+  zoneToTravelTo: -1
+  gameTimeLeft: -4
   restartTimer: -4
   currentPlaytime: 0
   presenceTimer: 0

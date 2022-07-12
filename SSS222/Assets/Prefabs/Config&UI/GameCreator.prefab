@@ -70,10 +70,26 @@ MonoBehaviour:
   - {fileID: 795444042786618691, guid: 56916aa798e5e764c83974976c01e729, type: 3}
   - {fileID: 2350735508918303471, guid: eb870523f348c2e4fad6b2786bc46518, type: 3}
   _gamerulesetsPrefabsLength: 4
-  adventureGamerules: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+  adventureGamerulesPrefab: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
     type: 3}
-  adventureZonesPrefabs:
-  - {fileID: 8240063421489526749, guid: 70ac4426afb864a468ccdcacdfcb9bfb, type: 3}
-  - {fileID: 6112808402236795245, guid: 5ff8e0c2770350d489b2eabcc3ccd2ae, type: 3}
+  adventureZones:
+  - enabled: 1
+    gameRules: {fileID: 8240063421489526749, guid: 70ac4426afb864a468ccdcacdfcb9bfb,
+      type: 3}
+    pos: {x: -255, y: -710}
+    lvlReq: 0
+    isBoss: 0
+  - enabled: 1
+    gameRules: {fileID: 6112808402236795245, guid: 5ff8e0c2770350d489b2eabcc3ccd2ae,
+      type: 3}
+    pos: {x: -80, y: -595}
+    lvlReq: 1
+    isBoss: 0
+  - enabled: 1
+    gameRules: {fileID: 6112808402236795245, guid: 4f452742670a63d48b5048f4aa48964e,
+      type: 3}
+    pos: {x: 125, y: -350}
+    lvlReq: 2
+    isBoss: 1
   adventureTravelZonePrefab: {fileID: 2397423240486137200, guid: e904f02a3dfa8f34eaeeda6bba374d65,
     type: 3}

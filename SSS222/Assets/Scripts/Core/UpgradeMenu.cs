@@ -121,6 +121,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             upgradeMenuUI.SetActive(true);
             return;
         }
+        StartCoroutine(ForceLayoutUpdate());
         if(upgradeMenuUI.activeSelf){Resume();}
     }
 
@@ -366,14 +367,18 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         lvlPopup.GetComponent<ValueDisplay>().value="lvlPopup";
         FindObjectOfType<OnScreenButtons>().lvldUp=true;
     }
-    public void LvlEvents(){
+    public void LvlEvents(){StartCoroutine(LvlEventsI());}
+    IEnumerator LvlEventsI(){
+        yield return new WaitForSecondsRealtime(0.2f);
         if(GameRules.instance!=null){
         foreach(ListEvents le in GameRules.instance.lvlEvents){
             if(le.lvls.x==0&&le.lvls.y==0){le.events.Invoke();}
             else{if(pmodules.shipLvl>=le.lvls.x&&pmodules.shipLvl<=le.lvls.y&&!le.skipRe){le.events.Invoke();}}
         }}
     }
-    public void LvlEventsAdventure(){
+    public void LvlEventsAdventure(){StartCoroutine(LvlEventsAdventureI());}
+    IEnumerator LvlEventsAdventureI(){
+        yield return new WaitForSecondsRealtime(0.2f);
         if(GameRules.instance!=null){
         foreach(ListEvents le in GameRules.instance.lvlEvents){
             if(le.lvls.x==0&&le.lvls.y==0){le.events.Invoke();}
