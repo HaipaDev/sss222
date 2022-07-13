@@ -43,7 +43,7 @@ public class BGManager : MonoBehaviour{
         if(SceneManager.GetActiveScene().name=="Game"&&GameSession.instance.zoneToTravelTo!=-1){
             var curMat=GameCreator.instance.adventureZones[GameSession.instance.zoneSelected].gameRules.bgMaterial;
             var targMat=GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].gameRules.bgMaterial;
-            var vel=0f;var smoothTime=GameAssets.Normalize(GameSession.instance.gameTimeLeft,0,GameSession.instance.CalcZoneTravelTime())/10;
+            var vel=0f;var smoothTime=GameSession.instance.NormalizedZoneTravelTimeLeft()/10;
                 //(GameSession.instance.CalcZoneTravelTime()/2);
                 //Mathf.Round(GameSession.instance.gameTimeLeft)/100;
             if(Time.deltaTime>0){_deltaTime=Time.deltaTime;}var maxSpeed=Mathf.Infinity;

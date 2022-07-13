@@ -349,6 +349,11 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 			psUI.material=mat;
 		}
 	}
+	public static Quaternion QuatRotateTowards(Vector3 target, Vector3 curPos, float rotModif){
+		Vector3 vectorToTarget = target - curPos;
+		float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - rotModif;
+		return Quaternion.AngleAxis(angle, Vector3.forward);
+	}
 	public static bool _isColorDark(Color color){bool b=false;float H,S,V;Color.RGBToHSV(color,out H,out S,out V);if(V<=0.3f){b=true;}return b;}
 	public void MakeParticleLooping(ParticleSystem ps){var psMain=ps.main;psMain.loop=true;psMain.stopAction=ParticleSystemStopAction.None;}
 

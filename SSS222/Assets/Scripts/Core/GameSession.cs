@@ -312,11 +312,15 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 else{gameTimeLeft=-4;}
                 if(gameTimeLeft<=0&&gameTimeLeft!=-4){zoneSelected=-1;GSceneManager.instance.LoadAdventureZone(zoneToTravelTo);}
             }
+        }else if(SceneManager.GetActiveScene().name=="AdventureZones"){
+            gamemodeSelected=-1;
+            //if(zoneSelected==-1){zoneSelected=0;}
         }
     }
     public float CalcZoneTravelTime(){
         return (Vector2.Distance(GameCreator.instance.adventureZones[zoneSelected].pos,GameCreator.instance.adventureZones[zoneToTravelTo].pos)*GameCreator.instance.adventureTravelZonePrefab.travelTimeToDistanceRatio);
     }
+    public float NormalizedZoneTravelTimeLeft(){return GameAssets.Normalize(GameSession.instance.gameTimeLeft,0,GameSession.instance.CalcZoneTravelTime());}
 
     public void AddToScore(int scoreValue){
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);

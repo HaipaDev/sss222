@@ -27,8 +27,8 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
     [AssetsOnly][SerializeField] public GameRules[] gamerulesetsPrefabs;
     [ReadOnly][SerializeField] public int _gamerulesetsPrefabsLength;
     [AssetsOnly][SerializeField] public GameRules adventureGamerulesPrefab;
-    [AssetsOnly][SerializeField] public List<AdventureZoneData> adventureZones;
     [AssetsOnly][SerializeField] public GameRules adventureTravelZonePrefab;
+    [AssetsOnly][SerializeField] public List<AdventureZoneData> adventureZones;
     private void Awake(){
         instance=this;
         if(SceneManager.GetActiveScene().name=="Loading")LoadPre();

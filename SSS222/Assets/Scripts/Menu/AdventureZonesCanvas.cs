@@ -8,6 +8,7 @@ using Sirenix.OdinInspector;
 public class AdventureZonesCanvas : MonoBehaviour{
     [ChildGameObjectsOnly][SerializeField] GameObject zoneButtonChildObject;
     [ChildGameObjectsOnly][SerializeField] Transform listContent;
+    [ChildGameObjectsOnly][SerializeField] ShipUI shipUI;
     [SerializeField] float regularZoneSize=1.7f;
     [SerializeField] float bossZoneSize=2.5f;
     void Start(){
@@ -16,11 +17,12 @@ public class AdventureZonesCanvas : MonoBehaviour{
             var go=Instantiate(zoneButtonChildObject,listContent);
             go.name="Zone_"+(i+1);
             go.GetComponent<RectTransform>().anchoredPosition=GameCreator.instance.adventureZones[i].pos;
-            go.GetComponent<Button>().onClick.AddListener(()=>GSceneManager.instance.LoadAdventureZone(_i));
+            go.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(()=>GSceneManager.instance.LoadAdventureZone(_i));
 
             var mat=GameAssets.instance.UpdateShaderMatProps(GameAssets.instance.GetMat("AIOShaderMat_UI",true),GameCreator.instance.adventureZones[i].gameRules.bgMaterial,true);
             go.transform.GetChild(1).GetComponent<Image>().material=null;go.transform.GetChild(1).GetComponent<Image>().material=mat;//refresh it
             go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=(i+1).ToString();
+            go.transform.GetChild(4).GetComponent<ShipLevelRequired>().value=GameCreator.instance.adventureZones[i].lvlReq;
 
             if(GameCreator.instance.adventureZones[i].isBoss){
                 go.transform.localScale=new Vector2(bossZoneSize,bossZoneSize);
@@ -32,6 +34,7 @@ public class AdventureZonesCanvas : MonoBehaviour{
             }else{go.transform.localScale=new Vector2(regularZoneSize,regularZoneSize);Destroy(go.transform.GetChild(3).gameObject);}
         }}
         Destroy(zoneButtonChildObject);
+        shipUI.transform.SetAsLastSibling();
     }
     public void Back(){if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Game"){UpgradeMenu.instance.Back();}else{GSceneManager.instance.LoadGameModeChooseScene();}}
 }
