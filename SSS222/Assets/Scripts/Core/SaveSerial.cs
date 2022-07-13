@@ -187,15 +187,25 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	[System.Serializable]public class AdventureData{
 		public int coins=0;
 		public int cores=0;
-
-		public int total_UpgradesCount=0;
-		public int total_UpgradesLvl=0;
+		public float xp=0;
+		public int zoneSelected=0;
+		public int zoneToTravelTo=-1;
+		public float travelTimeLeft=-4;
 		
-		public int mPulse_upgraded=0;
-		public int teleport_upgraded=0;
-		public int overhaul_upgraded=0;
-		public int crMend_upgraded=0;
-		public int enDiss_upgraded=0;
+		public float health=0;
+		public float hpAbsorpAmnt=0;
+		public float energy=0;
+		public float enAbsorpAmnt=0;
+		public Powerup[] powerups;
+		public int powerupCurID=0;
+		public List<StatusFx> statuses=new List<StatusFx>();
+
+		public int shipLvl=0;
+		public int shipLvlFraction=0;
+		public List<string> moduleSlots=new List<string>();
+		public List<string> skillsSlots=new List<string>(2);
+		public List<Module> modulesList=new List<Module>();
+		public List<Skill> skillsList=new List<Skill>();
 	}
 
 	public string _advDataPath(){return Application.persistentDataPath+"/"+filenameAdventure+".hyper";}

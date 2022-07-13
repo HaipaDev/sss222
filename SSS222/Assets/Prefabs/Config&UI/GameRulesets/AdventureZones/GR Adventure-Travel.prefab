@@ -125,7 +125,7 @@ PrefabInstance:
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: disrupterList.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -186,7 +186,7 @@ PrefabInstance:
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: managedReferences[7402535153654038538].timer
-      value: 8.374051
+      value: 9.896987
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -207,6 +207,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[2486198368087572575].time.y
       value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: managedReferences[7402535153654038538].repeat
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -242,6 +247,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[2486198368087572575].timeEnabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: managedReferences[7402535153654038538].timeEnabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}

@@ -47,7 +47,6 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         //Debug.Log("Resuming pause");
     }
     public void PauseEmpty(){
-        
         GameIsPaused = true;
         if(!GameRules.instance.instaPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
         else{GameSession.instance.gameSpeed=0;}

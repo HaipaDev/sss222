@@ -15,7 +15,7 @@ public class PlayerModules : MonoBehaviour{
     [SerializeField] public int lvlFractionsMax=1;
     [Header("Modules & Skills Slots & List")]
     [SerializeField] public List<string> moduleSlots;
-    [SerializeField] public List<string> skillsSlots=new List<string>(2);
+    [SerializeField] public List<string> skillsSlots;
     [SerializeField] public List<Module> modulesList;
     [SerializeField] public List<Skill> skillsList;
     [Header("Timers etc")]
@@ -32,11 +32,11 @@ public class PlayerModules : MonoBehaviour{
             //shipLvlFractionsValues=i.shipLvlFractionsValues;
             if(i.shipLvlFractionsValues.Find(x=>x.lvl==0)==null){shipLvlFractionsValues.Add(new ShipLvlFractionsValues{lvl=0,fractions=1});}
             foreach(ShipLvlFractionsValues s in i.shipLvlFractionsValues){shipLvlFractionsValues.Add(s);}
-            for(var m=0;m<i.playerModulesCapacity;m++){moduleSlots.Add("");}
-            for(var m=0;m<2;m++){skillsSlots.Add("");}
+            if(moduleSlots.Capacity==0)for(var m=0;m<i.playerModulesCapacity;m++){moduleSlots.Add("");}
+            if(skillsSlots.Capacity==0)for(var m=0;m<2;m++){skillsSlots.Add("");}
             //for(var m=0;m<i.playerSkillsCapacity;m++){skillsSlots.Add("");}
-            foreach(ModulePropertiesGR m in i.modulesPlayer){modulesList.Add(new Module{name=m.item.name});}
-            foreach(SkillPropertiesGR s in i.skillsPlayer){skillsList.Add(new Skill{name=s.item.name});}
+            if(modulesList.Capacity==0)foreach(ModulePropertiesGR m in i.modulesPlayer){modulesList.Add(new Module{name=m.item.name});}
+            if(skillsList.Capacity==0)foreach(SkillPropertiesGR s in i.skillsPlayer){skillsList.Add(new Skill{name=s.item.name});}
             timeOverhaul=i.timeOverhaul;
             exhaustROF=i.playerExhaustROF;
         }

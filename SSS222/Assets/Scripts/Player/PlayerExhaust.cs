@@ -8,7 +8,7 @@ public class PlayerExhaust : MonoBehaviour{
         //exhaustColliderObj.transform.localPosition=GetComponent<TrailVFX>().trailVFX.transform.localPosition;
     }
     void Update(){
-        if(GameRules.instance.levelingOn&&UpgradeMenu.instance!=null){
+        if(GameRules.instance.levelingOn&&Player.instance!=null){
                 if(((Player.instance.GetComponent<PlayerModules>().shipLvl<Player.instance.bflameDmgTillLvl||Player.instance.bflameDmgTillLvl==-5))
                 //||(Player.instance.GetComponent<PlayerModules>().shipLvl>=Player.instance.bflameDmgTillLvl&&Player.instance.bflameDmgTillLvl>0))
                 &&(!exhaustColliderObj.activeSelf)){
@@ -18,7 +18,7 @@ public class PlayerExhaust : MonoBehaviour{
                 &&(exhaustColliderObj.activeSelf)){
                     exhaustColliderObj.SetActive(false);
                 }
-        }
+        }else if(Player.instance==null){DestroyExhaust();}
     }
     public void DestroyExhaust(){Destroy(exhaustColliderObj);Destroy(this);}
 }

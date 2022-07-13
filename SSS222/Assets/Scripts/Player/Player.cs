@@ -194,7 +194,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
     IEnumerator SetGameRuleValues(){
     statuses=new List<StatusFx>();
-    yield return new WaitForSecondsRealtime(0.07f);
+    yield return new WaitForSecondsRealtime(0.02f);
     //Set values
     var i=GameRules.instance;
     if(i!=null){
@@ -631,7 +631,7 @@ public class Player : MonoBehaviour{    public static Player instance;
 
         foreach(Tag_DestroyPlayerDead go in FindObjectsOfType<Tag_DestroyPlayerDead>()){Destroy(go.gameObject);}
         
-        Destroy(gameObject);
+        Destroy(gameObject,0.05f);
         dead=true;
     }}
     private void Hide(){

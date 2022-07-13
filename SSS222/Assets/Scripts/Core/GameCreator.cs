@@ -55,7 +55,7 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
         
         if(FindObjectOfType<GameRules>()==null&&GameSession.instance.gamemodeSelected>0&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){
             Instantiate(GameSession.instance.GetGameRulesCurrent());}
-        if(FindObjectOfType<GameRules>()==null&&GameSession.instance.gamemodeSelected==-1){Instantiate(adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(adventureZones[GameSession.instance.zoneSelected].gameRules);}
+        if(FindObjectOfType<GameRules>()==null&&GameSession.instance.gamemodeSelected==-1&&SceneManager.GetActiveScene().name=="Game"){Instantiate(adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(adventureZones[GameSession.instance.zoneSelected].gameRules);}
         if(FindObjectOfType<GameRules>()==null&&SceneManager.GetActiveScene().name=="SandboxMode"){
             GameRules gr=Instantiate(gamerulesetsPrefabs[0]);gr.gameObject.name="GRSandbox";gr.cfgName="Sandbox Mode";gr.cfgDesc="New Sandbox Mode Savefile!";gr.cfgIconsGo=null;gr.cfgIconAssetName="questionMark";}
 
