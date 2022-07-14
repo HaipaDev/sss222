@@ -185,12 +185,15 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 #region //Adventure Data
 	public AdventureData advD=new AdventureData();
 	[System.Serializable]public class AdventureData{
-		public int coins=0;
 		public int cores=0;
 		public float xp=0;
 		public int zoneSelected=0;
 		public int zoneToTravelTo=-1;
 		public float travelTimeLeft=-4;
+
+		public int holo_crystalsStored=0;
+		public int holo_timeAt=0;
+		public float holo_posX=0;
 		
 		public float health=0;
 		public float hpAbsorpAmnt=0;

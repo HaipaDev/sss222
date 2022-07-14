@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4546529352650547392}
   - component: {fileID: 153409864}
   - component: {fileID: -9117117712606669741}
+  - component: {fileID: 1235336526340426043}
   m_Layer: 8
   m_Name: ShadowDashes
   m_TagString: Untagged
@@ -29,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.36, y: -6.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -53,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e9a6f16fda45498408c671f4a3173029, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -75,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}
-  m_Color: {r: 0.121546865, g: 0.055224285, b: 0.16037738, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -118,3 +120,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62701495458e06c479e37ae0b740eee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1235336526340426043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4546529352650547393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af19e2be1b7d9904d93dcf143a11004a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  otherUsersData: 0
+  skinName: def
+  overlayObj: {fileID: 0}
+  overlayColor: {r: 1, g: 0, b: 0, a: 1}
+  trailName: def
+  trailObj: {fileID: 0}
+  flaresName: def
+  deathFxName: def

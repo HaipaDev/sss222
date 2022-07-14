@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -3365304752130786154}
   m_Layer: 0
   m_Name: EnergyBall
-  m_TagString: Powerups
+  m_TagString: Collectibles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,6 +34,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -201,10 +202,11 @@ MonoBehaviour:
   assetName: GlowAuto
   materialClone: 1
   color: {r: 0.3019608, g: 0.9176471, b: 0.91372555, a: 1}
-  size: 0
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
   maxParticles: 0
   offset: {x: 0, y: 0}
+  alignToDirection: 0
 --- !u!114 &-3365304752130786154
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,8 +14,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	[AssetsOnly,Searchable]public List<GObject> vfx;
 	[AssetsOnly,Searchable]public List<GSprite> sprites;
 	[AssetsOnly,Searchable]public List<GMaterial> materials;
-	[AssetsOnly,Searchable]public List<PowerupItem> powerupItems;
-	[AssetsOnly,Searchable]public List<GObject> enemyBullets;
+	[AssetsOnly,Searchable][DisableInEditorMode]public List<PowerupItem> powerupItems;
+	[AssetsOnly,Searchable][DisableInEditorMode]public List<GObject> enemyBullets;
 	[Header("Customization")]
 	[AssetsOnly,Searchable]public List<CstmzSkin> skins;
 	[AssetsOnly,Searchable]public List<CstmzTrail> trails;
@@ -349,7 +349,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 			psUI.material=mat;
 		}
 	}
-	public static Quaternion QuatRotateTowards(Vector3 target, Vector3 curPos, float rotModif){
+	public static Quaternion QuatRotateTowards(Vector3 target, Vector3 curPos, float rotModif=90){
 		Vector3 vectorToTarget = target - curPos;
 		float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - rotModif;
 		return Quaternion.AngleAxis(angle, Vector3.forward);
@@ -376,7 +376,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	//public static float DeltaPercentMinMax(float cur,float max){return (cur-max)/100;}
 	public static float Normalize(float val,float min,float max){return (val-min)/(max-min);}
 	public static float InvertNormalized(float val){return 1-val;}
-	public static float InvertNormalizedMin(float val,float min){return (1-val)*min;}
+	public static float InvertNormalizedAbs(float val){return Mathf.Abs(InvertNormalized(val));}
+	public static float InvertNormalizedMin(float val,float min){return InvertNormalized(val)*min;}
 
 	
 

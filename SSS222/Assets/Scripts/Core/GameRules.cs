@@ -29,6 +29,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [HideIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global")]public scoreDisplay scoreDisplay=scoreDisplay.score;
     [HideIf("@this._isAdventureTravelZone==false")][FoldoutGroup("Global")][ES3NonSerializable]public float travelTimeToDistanceRatio=1;
     [HideIf("@this._isAdventureTravelZone==false")][FoldoutGroup("Global")][ES3NonSerializable]public float travelTimeToAddOnDeath=0;
+    [HideIf("@this._isAdventureTravelZone==false")][FoldoutGroup("Global")][ES3NonSerializable]public float holodeathCrystalsRatio=1;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool crystalsOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool xpOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool coresOn=true;

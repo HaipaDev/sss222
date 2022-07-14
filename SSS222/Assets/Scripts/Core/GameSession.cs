@@ -393,11 +393,16 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     zoneToTravelTo=-1;//var _zoneBack=zoneSelected;zoneSelected=-1;LoadAdventureZone(_zoneBack);
                 }else{gameTimeLeft+=GameCreator.instance.adventureTravelZonePrefab.travelTimeToAddOnDeath;}
             }
-            ss.coins=coins;
             ss.cores=cores;
             ss.zoneSelected=zoneSelected;
             ss.zoneToTravelTo=zoneToTravelTo;
             if(zoneToTravelTo!=-1){ss.travelTimeLeft=gameTimeLeft;}else{ss.travelTimeLeft=-4;}
+            if(FindObjectOfType<PlayerHolobody>()!=null){
+                var phb=FindObjectOfType<PlayerHolobody>();
+                ss.holo_crystalsStored=phb.crystalsStored;
+                ss.holo_posX=phb.transform.position.x;
+                ss.holo_timeAt=Mathf.RoundToInt(currentPlaytime);
+            }
             if(p!=null){
                 if(p.health>0){
                     ss.xp=xp;
@@ -439,7 +444,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public void LoadAdventurePre(){
         SaveSerial.instance.LoadAdventure();
         var ss=SaveSerial.instance.advD;
-        coins=ss.coins;
         cores=ss.cores;
         zoneSelected=ss.zoneSelected;
         zoneToTravelTo=ss.zoneToTravelTo;
@@ -454,6 +458,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         var s=SaveSerial.instance;
         var ss=SaveSerial.instance.advD;
         if(p!=null&&s!=null&&s.advD!=null){
+            if(ss.holo_timeAt>0){
+                var phb=CreatePlayerHoloBody(new Vector2(ss.holo_posX,7.6f));
+                phb.SetTime(ss.holo_timeAt);
+            }
             if(ss.health>0){xp=ss.xp;p.health=ss.health;}else{xp=0;p.health=GameRules.instance.healthPlayer;}
             p.hpAbsorpAmnt=ss.hpAbsorpAmnt;
             p.energy=ss.energy;
@@ -531,10 +539,18 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public void DieAdventure(){
         //coins/=2;
         //cores/=3;
-        //CreatePlayerHoloBody();
+        CreatePlayerHoloBody(Player.instance.transform.position,true,false);
         SaveAdventure();
     }
-    //public void CreatePlayerHoloBody(){}
+    public PlayerHolobody CreatePlayerHoloBody(Vector2 pos,bool show=false,bool collectible=false){
+        if(FindObjectOfType<PlayerHolobody>()==null&&coins>0){
+            var go=GameAssets.instance.Make("PlayerHolobody",pos);
+            var phb=go.GetComponent<PlayerHolobody>();
+            phb.crystalsStored=Mathf.RoundToInt(coins*GameRules.instance.holodeathCrystalsRatio);
+            phb.Switch(show,collectible);
+            return phb;
+        }else{return null;}
+    }
 
     void CalculateLuck(){
         if(luckMulti<2.5f){

@@ -66,11 +66,11 @@ public class ShipUI : MonoBehaviour{
                         //_pos=(GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos-GameCreator.instance.adventureZones[_zoneId].pos)*(GameSession.instance.NormalizedZoneTravelTimeLeft());
                         //var ab=(GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos-GameCreator.instance.adventureZones[_zoneId].pos);
                         //_pos=GameCreator.instance.adventureZones[_zoneId].pos+(GameSession.instance.NormalizedZoneTravelTimeLeft()*ab.normalized);
-                        _pos=Vector3.Lerp(GameCreator.instance.adventureZones[_zoneId].pos, GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos, Mathf.Abs(1-GameSession.instance.NormalizedZoneTravelTimeLeft()));
+                        _pos=Vector3.Lerp(GameCreator.instance.adventureZones[_zoneId].pos, GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos, GameAssets.InvertNormalizedAbs(GameSession.instance.NormalizedZoneTravelTimeLeft()));
                     }
                     rt.anchoredPosition=_pos;
                     if(rotateTowardsTravelDest){
-                        transform.rotation = GameAssets.QuatRotateTowards(GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos, rt.anchoredPosition, 90);//Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 60);
+                        transform.rotation=GameAssets.QuatRotateTowards(GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos, rt.anchoredPosition, 90);//Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 60);
                     }
                 }
             }

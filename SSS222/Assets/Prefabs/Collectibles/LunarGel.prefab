@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1529301144}
   m_Layer: 0
   m_Name: LunarGel
-  m_TagString: Powerups
+  m_TagString: Collectibles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,6 +33,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -210,7 +211,8 @@ MonoBehaviour:
   assetName: GlowAuto
   materialClone: 1
   color: {r: 0.37647063, g: 0.94117653, b: 0.654902, a: 1}
-  size: 0
+  size: {x: 0, y: 0}
   emissionSpeed: 7.63
   maxParticles: 0
   offset: {x: 0, y: 0}
+  alignToDirection: 0
