@@ -27,16 +27,19 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     //[HideIfGroup("Global",Condition="_isAdventureZone")]
     [HideIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global",false)][Range(0.1f,10f)]public float defaultGameSpeed=1f;
     [HideIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global")]public scoreDisplay scoreDisplay=scoreDisplay.score;
-    [HideIf("@this._isAdventureTravelZone==false")][FoldoutGroup("Global")][ES3NonSerializable]public float travelTimeToDistanceRatio=1;
-    [HideIf("@this._isAdventureTravelZone==false")][FoldoutGroup("Global")][ES3NonSerializable]public float travelTimeToAddOnDeath=0;
-    [HideIf("@this._isAdventureTravelZone==false")][FoldoutGroup("Global")][ES3NonSerializable]public float holodeathCrystalsRatio=1;
+    [ShowIf(nameof(scoreDisplay), scoreDisplay.sessionTimeAsDistance)][FoldoutGroup("Global")]public int secondToDistanceRatio=100;
+    [ShowIf("@this._isAdventureTravelZone")][FoldoutGroup("Global")][ES3NonSerializable]public float travelTimeToDistanceRatio=1;
+    [ShowIf("@this._isAdventureTravelZone")][FoldoutGroup("Global")][ES3NonSerializable]public float travelTimeToAddOnDeath=0;
+    [ShowIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global")][ES3NonSerializable]public float holodeathCrystalsRatio=1;
+    [ShowIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global")][ES3NonSerializable]public float holodeathTimeRatio=1;
+    [ShowIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global")][ES3NonSerializable]public float holobodyHeal=15;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool crystalsOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool xpOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool coresOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool shopOn=true;
-    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool shopCargoOn=true;
-    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool levelingOn=true;
-    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool autoleveling=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")][DisableIf("@this.shopOn==false")]public bool shopCargoOn=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")][DisableIf("@this.xpOn==false")]public bool levelingOn=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")][DisableIf("@this.levelingOn==false||this.xpOn==false")]public bool autoleveling=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool modulesOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool statUpgOn=false;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool iteminvOn=true;
@@ -642,4 +645,4 @@ public class AdventureZoneData{
     [EnableIf("enabled")]public bool isBoss;
 }
 
-public enum scoreDisplay{score,sessionTime,timeLeft}
+public enum scoreDisplay{score,sessionTime,timeLeft,bossHealth,sessionTimeAsDistance}

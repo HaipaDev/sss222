@@ -57,7 +57,7 @@ public class PlayerCollider : MonoBehaviour{
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)){player.AddSubCores(gr.coresCollectGain);StatsAchievsManager.instance.CoreCollected();}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestBall").name)){player.AddSubXP(gr.benergyBallGain);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("CelestVial").name)){player.AddSubXP(gr.benergyVialGain);}
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("PlayerHolobody").name)){player.AddSubCoins(other.GetComponent<PlayerHolobody>().crystalsStored,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("PlayerHolobody").name)){player.AddSubCoins(other.GetComponent<PlayerHolobody>().crystalsStored,true);HPAdd(GameRules.instance.holobodyHeal);}
                 if(other.GetComponent<Tag_Collectible>().isPowerup){//if((!other.gameObject.name.Contains(enBallName)) && (!other.gameObject.name.Contains(CoinName)) && (!other.gameObject.name.Contains(powercoreName))){
                     spawnReqsMono.AddPwrups(other.gameObject.name);
                     if(!GameSession.instance._isSandboxMode())StatsAchievsManager.instance.AddPowerups(other.gameObject.name);

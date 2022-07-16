@@ -6,6 +6,7 @@ using TMPro;
 
 public class GameOverCanvas : MonoBehaviour{
     public static GameOverCanvas instance;
+    [SerializeField] TextMeshProUGUI restartButtonTxt;
     [SerializeField] TextMeshProUGUI scoreDescTxt;
     [SerializeField] TextMeshProUGUI scoreTxt;
     [SerializeField] TextMeshProUGUI highscoreDescTxt;
@@ -15,6 +16,7 @@ public class GameOverCanvas : MonoBehaviour{
     public void OpenGameOverCanvas(bool open=true){
         gameOver=open;
         transform.GetChild(0).gameObject.SetActive(open);
+        if(GameSession.instance.gamemodeSelected==-1){restartButtonTxt.text="Respawn";}
         
         //Replace colors
         if(scoreTxt!=null&&highscoreTxt!=null){

@@ -32,11 +32,22 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="gameVersion") _txt=gs.gameVersion;
             else if(value=="buildVersion") _txt=gs.buildVersion.ToString();
             else if(value=="buildVersion-Menu") _txt="build "+gs.buildVersion.ToString();
-            else if(value=="timePlayed") _txt=gs.GetGameSessionTimeFormat();
+            else if(value=="timePlayed"){
+                if(gs.gamemodeSelected!=-1){_txt=gs.GetGameSessionTimeFormat();}
+                else{_txt=(Mathf.RoundToInt(gs.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";}
+            }else if(value=="timePlayed_txt"){
+                if(gs.gamemodeSelected!=-1){_txt="Time Played :";}
+                else{_txt="Distance traveled :";}
+            }
             else if(value=="scoreMulti") _txt=gs.scoreMulti.ToString();
             else if(value=="luck") _txt=gs.luckMulti.ToString();
 
             else if(value=="cfgNameCurrent")_txt=gs.GetGameRulesCurrent().cfgName;
+            else if(value=="adventureDeath")if(FindObjectOfType<PlayerHolobody>()!=null){
+                var phb=FindObjectOfType<PlayerHolobody>();
+                if(phb.GetTimeLeft()!=-4){_txt="Your Crystals are still lost at "+(SaveSerial.instance.advD.holo_timeAt*GameRules.instance.secondToDistanceRatio).ToString()+"m";}
+                else{_txt="Your Crystals have been lost at "+(Mathf.RoundToInt(gs.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";}
+            }else{_txt="";}
         }
     #endregion
     #region//Player
@@ -82,6 +93,10 @@ public class ValueDisplay : MonoBehaviour{
                     }
                 }
             }
+            ///Other player related
+            if(value=="holodeath_popup"&&FindObjectOfType<PlayerHolobody>()!=null){
+                _txt="Distance to Hologram: "+FindObjectOfType<PlayerHolobody>().GetDistanceLeft()+"m";
+            }
         }
     #endregion
     #region//Shop & UpgradeMenu
@@ -117,6 +132,8 @@ public class ValueDisplay : MonoBehaviour{
                     if(gr.scoreDisplay==scoreDisplay.score)_txt=GameSession.instance.score.ToString();
                     else if(gr.scoreDisplay==scoreDisplay.sessionTime)_txt=GameSession.instance.GetGameSessionTimeFormat().ToString();
                     else if(gr.scoreDisplay==scoreDisplay.timeLeft)_txt=GameSession.instance.GetGameTimeLeftFormat().ToString();
+                    else if(gr.scoreDisplay==scoreDisplay.bossHealth)_txt=FindObjectOfType<Enemy>().health.ToString()+"/"+FindObjectOfType<Enemy>().healthMax;
+                    else if(gr.scoreDisplay==scoreDisplay.sessionTimeAsDistance)_txt=(Mathf.RoundToInt(GameSession.instance.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";
                 }
             }
             else if(value=="gameSpeedGR") _txt=gr.defaultGameSpeed.ToString();

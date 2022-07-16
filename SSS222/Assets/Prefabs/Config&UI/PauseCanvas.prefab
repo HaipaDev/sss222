@@ -654,6 +654,7 @@ GameObject:
   - component: {fileID: 2392736167581752879}
   - component: {fileID: 2392736167581752878}
   - component: {fileID: 5638187264129721863}
+  - component: {fileID: 5641484536045501858}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -790,6 +791,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0.5
+--- !u!114 &5641484536045501858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2392736167581752848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6fdfd702052f94e9434cc97eebcd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverse: 0
+  gamemodeName: Adventure
 --- !u!1 &4592563660269941027
 GameObject:
   m_ObjectHideFlags: 0

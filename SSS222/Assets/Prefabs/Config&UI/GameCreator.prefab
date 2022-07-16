@@ -72,6 +72,8 @@ MonoBehaviour:
   _gamerulesetsPrefabsLength: 4
   adventureGamerulesPrefab: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
     type: 3}
+  adventureTravelZonePrefab: {fileID: 2397423240486137200, guid: e904f02a3dfa8f34eaeeda6bba374d65,
+    type: 3}
   adventureZones:
   - enabled: 1
     gameRules: {fileID: 8240063421489526749, guid: 70ac4426afb864a468ccdcacdfcb9bfb,
@@ -91,5 +93,3 @@ MonoBehaviour:
     pos: {x: 125, y: -350}
     lvlReq: 3
     isBoss: 1
-  adventureTravelZonePrefab: {fileID: 2397423240486137200, guid: e904f02a3dfa8f34eaeeda6bba374d65,
-    type: 3}

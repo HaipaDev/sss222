@@ -70,8 +70,12 @@ MonoBehaviour:
     blur: 0
     lowResBlur: 1
   defaultGameSpeed: 1
-  scoreDisplay: 0
+  scoreDisplay: 4
+  secondToDistanceRatio: 100
   travelTimeToDistanceRatio: 1
+  travelTimeToAddOnDeath: 0
+  holodeathCrystalsRatio: 1
+  holodeathTimeRatio: 1
   crystalsOn: 1
   xpOn: 1
   coresOn: 1

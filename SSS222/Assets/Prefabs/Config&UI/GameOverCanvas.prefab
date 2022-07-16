@@ -202,8 +202,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.27996826, y: 10}
-  m_SizeDelta: {x: 588.56, y: 108.36}
+  m_AnchoredPosition: {x: -0.28, y: -2.848}
+  m_SizeDelta: {x: 779.448, y: 134.056}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &432586327671956201
 CanvasRenderer:
@@ -261,15 +261,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 120
+  m_fontSize: 120.35
   m_fontSizeBase: 120
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 150
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -98.05638, y: 9.360969, z: -87.56595, w: -1.1357654}
+  m_margin: {x: 10, y: 0, z: 10, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -545,8 +545,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.27996826, y: 9.999964}
-  m_SizeDelta: {x: 588.56, y: 108.36}
+  m_AnchoredPosition: {x: -0.28, y: -1.012}
+  m_SizeDelta: {x: 794.132, y: 134.056}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &432586328101456381
 CanvasRenderer:
@@ -604,15 +604,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 120
+  m_fontSize: 134.05
   m_fontSizeBase: 120
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 150
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -640,7 +640,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -91.69663, y: 9.360969, z: -84.386086, w: -1.1357654}
+  m_margin: {x: 10, y: 0, z: 10, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -863,6 +863,7 @@ GameObject:
   - component: {fileID: 671183684722161848}
   - component: {fileID: 5597816420283111533}
   - component: {fileID: 4449328800068086991}
+  - component: {fileID: 5573402879229252343}
   m_Layer: 5
   m_Name: LostTxtDesc
   m_TagString: Untagged
@@ -918,9 +919,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Lost 33% of cores
-
-    and 50% of crystals'
+  m_text: Your Crystals have been lost at 1000m
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a08a4866d54094b853c1b628fdbdd1, type: 2}
   m_sharedMaterial: {fileID: 7516542502403631768, guid: 45a08a4866d54094b853c1b628fdbdd1,
@@ -948,7 +947,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 83.85
+  m_fontSize: 86.75
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -990,6 +989,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5573402879229252343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833199040813889929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b49163d5326f942bba584de186f439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: adventureDeath
+  onlyOnEnable: 0
+  onValidate: 0
 --- !u!1 &2044199700624404123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,6 +1118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25f400863162f1428a56afca7f456af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  restartButtonTxt: {fileID: 432586327671956202}
   scoreDescTxt: {fileID: 6608614100819003030}
   scoreTxt: {fileID: 3808819049946900144}
   highscoreDescTxt: {fileID: 6608614101296596296}
@@ -1610,6 +1625,7 @@ GameObject:
   - component: {fileID: 478152112235968968}
   - component: {fileID: 3653896409647955235}
   - component: {fileID: 6506354967945919206}
+  - component: {fileID: 4185701521982993644}
   m_Layer: 5
   m_Name: PlaytimeTxt
   m_TagString: Untagged
@@ -1634,8 +1650,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 532.00006}
-  m_SizeDelta: {x: 689.5825, y: 89}
+  m_AnchoredPosition: {x: 0, y: 583.18524}
+  m_SizeDelta: {x: 689.583, y: 191.371}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3653896409647955235
 CanvasRenderer:
@@ -1665,7 +1681,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'TIME PLAYED :'
+  m_text: 'Time Played :'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a08a4866d54094b853c1b628fdbdd1, type: 2}
   m_sharedMaterial: {fileID: 7516542502403631768, guid: 45a08a4866d54094b853c1b628fdbdd1,
@@ -1701,7 +1717,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: -12
   m_wordSpacing: 0
@@ -1735,6 +1751,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4185701521982993644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5848042067856816882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b49163d5326f942bba584de186f439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: timePlayed_txt
+  onlyOnEnable: 1
+  onValidate: 0
 --- !u!1 &7503667156785292984
 GameObject:
   m_ObjectHideFlags: 0

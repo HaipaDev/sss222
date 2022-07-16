@@ -71,6 +71,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             else{ReloadScene();}
             //yield return new WaitForSecondsRealtime(0.1f);GameSession.instance.LoadAdventurePre();GameSession.instance.LoadAdventurePost();
         }else{ReloadScene();}
+        GameSession.instance.ResetAfterAdventure();
         GameSession.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }

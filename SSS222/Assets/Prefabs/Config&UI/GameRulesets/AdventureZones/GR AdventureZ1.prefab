@@ -74,6 +74,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: scoreDisplay
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: bgMaterial.value
       value: 0.5
       objectReference: {fileID: 0}
@@ -105,7 +110,7 @@ PrefabInstance:
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: managedReferences[2].kills
-      value: 7
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -251,12 +256,12 @@ PrefabInstance:
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: managedReferences[7402535153654038538].timer
-      value: 9.361694
+      value: 6.1382413
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: managedReferences[7402535244629278720].score
-      value: 0
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
