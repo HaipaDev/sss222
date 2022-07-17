@@ -12,7 +12,8 @@ public class PlayerModules : MonoBehaviour{
     [SerializeField] public int shipLvl=0;
     [SerializeField] public int shipLvlFraction;
     [SerializeField] public List<ShipLvlFractionsValues> shipLvlFractionsValues;
-    [SerializeField] public int lvlFractionsMax=1;
+    [DisableInEditorMode][SerializeField] public bool autoAscend=true;
+    [DisableInEditorMode][SerializeField] public int lvlFractionsMax=1;
     [Header("Modules & Skills Slots & List")]
     [SerializeField] public List<string> moduleSlots;
     [SerializeField] public List<string> skillsSlots;
@@ -57,18 +58,22 @@ public class PlayerModules : MonoBehaviour{
 
     void ShipLevel(){
         if(GameRules.instance.levelingOn){
-            if(shipLvlFraction>=lvlFractionsMax){shipLvl++;shipLvlFraction=0;UpgradeMenu.instance.LevelUp();UpgradeMenu.instance.LvlEvents();return;}
-            for(var i=0;i<shipLvlFractionsValues.Capacity;i++){
-                if(i<shipLvlFractionsValues.Capacity-1){
+            if(shipLvlFraction>=lvlFractionsMax){shipLvl++;shipLvlFraction=0;UpgradeMenu.instance.LevelUp();UpgradeMenu.instance.LvlEvents();if(FindObjectOfType<CelestialPoints>()!=null){FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();}return;}
+            for(var i=0;i<shipLvlFractionsValues.Count;i++){Debug.Log(i+" | Capacity: "+shipLvlFractionsValues.Count);
+                if(i==shipLvlFractionsValues.Count-1){lvlFractionsMax=shipLvlFractionsValues[i].fractions;return;}
+                else{
                     if(shipLvl>=shipLvlFractionsValues[i].lvl&&shipLvl<shipLvlFractionsValues[i+1].lvl){
                         //Debug.Log("Lvl: "+shipLvl+" | LvlThis: "+shipLvlFractionsValues[i].lvl+" | LvlAbove: "+shipLvlFractionsValues[i+1].lvl+" | FractionsMax: "+shipLvlFractionsValues[i].fractions);
                         lvlFractionsMax=shipLvlFractionsValues[i].fractions;return;
                     }
-                }else{lvlFractionsMax=shipLvlFractionsValues[i].fractions;return;}
+                }
             }
-            //for(var i=0;i<shipLvlFractionsValues.Capacity-1;i++){if(shipLvl<shipLvlFractionsValues[i].lvl){lvlFractionsMax=shipLvlFractionsValues[i++].fractions;return;}}
-            //shipLvlFraction=Mathf.Clamp(shipLvlFraction-lvlFractionsMax,0,99);
         }
+    }
+
+    public void Ascend(){
+        shipLvlFraction++;
+        GameSession.instance.Ascend();
     }
     
     #region//Skills & Modules
@@ -215,6 +220,8 @@ public class PlayerModules : MonoBehaviour{
     public void SetSkill(int id, string item){skillsSlots[id]=item;}
     public void ReplaceSkill(string name, string item){SetSkill(skillsSlots.FindIndex(x=>x==name),item);}
     public void ClearSkill(string name){ReplaceSkill(name,"");}
+
+    public bool _isAutoAscend(){return autoAscend||GameRules.instance.forceAutoAscend;}
 
     public void ResetSkillCooldowns(){for(var i=0;i<skillsSlots.Capacity;i++){skillsList[i].cooldown=0;}}
 

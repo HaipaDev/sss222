@@ -39,7 +39,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool shopOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")][DisableIf("@this.shopOn==false")]public bool shopCargoOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")][DisableIf("@this.xpOn==false")]public bool levelingOn=true;
-    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")][DisableIf("@this.levelingOn==false||this.xpOn==false")]public bool autoleveling=true;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")][DisableIf("@this.levelingOn==false||this.xpOn==false")]public bool forceAutoAscend=false;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool modulesOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool statUpgOn=false;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool iteminvOn=true;
@@ -202,7 +202,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #region//Leveling
 [Title("Leveling", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Leveling",false,VisibleIf="@this._isAdventureSubZone==false")]public float xpMax=100f;
-    [FoldoutGroup("Leveling")]public float maxXpOvefillMult=1.5f;
+    [FoldoutGroup("Leveling")]public float xpMaxOvefillMult=1.5f;
     [FoldoutGroup("Leveling")]public float xp_wave=20f;
     [FoldoutGroup("Leveling")]public float xp_shop=3f;
     [FoldoutGroup("Leveling")]public float xp_powerup=1f;

@@ -86,7 +86,7 @@ public class ValueDisplay : MonoBehaviour{
                     else{_txt="Lvl up available! (->"+(pmodules.shipLvl+1).ToString()+")<br> [L to LvlUp]";}*/
                 }
                 if(value=="celestPointPopup"){
-                    if(GameRules.instance.autoleveling){_txt="Celestial Point! ("+pmodules.shipLvlFraction.ToString()+"/"+pmodules.lvlFractionsMax.ToString()+")";}
+                    if(Player.instance.GetComponent<PlayerModules>()._isAutoAscend()){_txt="Celestial Point! ("+pmodules.shipLvlFraction.ToString()+"/"+pmodules.lvlFractionsMax.ToString()+")";}
                     else{
                         if(pmodules.shipLvlFraction+1<pmodules.lvlFractionsMax){_txt="Celestial Point available! ("+(pmodules.shipLvlFraction+1).ToString()+"/"+pmodules.lvlFractionsMax.ToString()+")<br> (L to climb)";}
                         else{_txt="Lvl up available! ("+(pmodules.shipLvl+1).ToString()+")<br> (L to Lvlup)";}

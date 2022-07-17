@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cfgName: Arcade Mode
+  _isAdventureSubZone: 0
+  _isAdventureTravelZone: 0
+  _isAdventureBossZone: 0
   cfgDesc: Fast-paced quick matches for the best highscore
   cfgIconAssetName: 
   cfgIconsGo: {fileID: 4397622923898560575, guid: 0f34633e901e35f4cbdd5ac661e33652,
@@ -69,13 +72,19 @@ MonoBehaviour:
     lowResBlur: 1
   defaultGameSpeed: 1
   scoreDisplay: 0
+  secondToDistanceRatio: 100
+  travelTimeToDistanceRatio: 1
+  travelTimeToAddOnDeath: 0
+  holodeathCrystalsRatio: 1
+  holodeathTimeRatio: 1
+  holobodyHeal: 15
   crystalsOn: 1
   xpOn: 1
   coresOn: 1
   shopOn: 1
   shopCargoOn: 1
   levelingOn: 1
-  autoleveling: 1
+  forceAutoAscend: 0
   modulesOn: 1
   statUpgOn: 0
   iteminvOn: 1
@@ -173,7 +182,6 @@ MonoBehaviour:
   - 2
   - 2.5
   matrixTime: 7
-  pmultiTime: 24
   accelTime: 7
   onfireTickrate: 0.38
   onfireDmg: 1
@@ -355,6 +363,38 @@ MonoBehaviour:
     spawnReqs:
       rid: 2
     powerupSpawnPosRange: {x: -3, y: 3}
+  bossInfo:
+    name: 
+    type: 0
+    size: {x: 1, y: 1}
+    spr: {fileID: 0}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 25
+    healthMax: 25
+    defense: 0
+    healthBySize: 0
+    shooting: 0
+    shootTime: {x: 1.75, y: 2.8}
+    bulletAssetName: 
+    bulletSpeed: 8
+    DBullets: 0
+    bulletDist: 0.35
+    randomizeWaveDeath: 0
+    flyOff: 0
+    killOnDash: 1
+    giveScore: 1
+    scoreValue: {x: 1, y: 10}
+    xpAmnt: 0
+    xpChance: 100
+    drops: []
   enemyDefenseHit: 1
   enemyDefensePhase: 1
   enemyDefenseFloor: 0.1
@@ -1502,7 +1542,7 @@ MonoBehaviour:
   shopTimeLimit: 10
   shopOpenGameSpeed: 0
   xpMax: 100
-  maxXpOvefillMult: 1.5
+  xpMaxOvefillMult: 1.5
   xp_wave: 20
   xp_shop: 3
   xp_powerup: 1
@@ -1510,6 +1550,18 @@ MonoBehaviour:
   flyingTimeReq: 10
   xp_staying: 2
   stayingTimeReq: 15
+  shipLvlFractionsValues:
+  - lvl: 2
+    fractions: 2
+  - lvl: 3
+    fractions: 3
+  - lvl: 4
+    fractions: 4
+  - lvl: 5
+    fractions: 5
+  - lvl: 10
+    fractions: 10
+  saveBarsFromLvl: 0
   lvlEvents:
   - name: 'Levels: 0-0'
     events:
@@ -1566,31 +1618,6 @@ MonoBehaviour:
     lvls: {x: 0, y: 0}
     skipRe: 0
   upgradeMenuOpenGameSpeed: 0
-  saveBarsFromLvl: 0
-  shipLvlFractionsValues:
-  - lvl: 2
-    fractions: 2
-  - lvl: 3
-    fractions: 3
-  - lvl: 4
-    fractions: 4
-  - lvl: 5
-    fractions: 5
-  - lvl: 10
-    fractions: 10
-  mPulse_enabled: 1
-  mPulse_upgradeCost: 3
-  mPulse_lvlReq: 2
-  postMortem_upgradeCost: 1
-  postMortem_lvlReq: 5
-  teleport_upgradeCost: 2
-  teleport_lvlReq: 3
-  overhaul_upgradeCost: 3
-  overhaul_lvlReq: 3
-  crMend_upgradeCost: 5
-  crMend_lvlReq: 5
-  enDiss_upgradeCost: 4
-  enDiss_lvlReq: 4
   modulesPlayer:
   - item: {fileID: 11400000, guid: 06432481964c7e341b61c318577cbd27, type: 2}
     lvlVals:

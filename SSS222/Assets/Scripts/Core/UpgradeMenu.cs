@@ -10,20 +10,21 @@ using Sirenix.OdinInspector;
 
 public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instance;
     public static bool UpgradeMenuIsOpen=false;
-    [SceneObjectsOnly]public GameObject upgradeMenuUI;
-    [SceneObjectsOnly]public GameObject upgradeMenu2UI;
-    [SceneObjectsOnly]public GameObject lvltreeUI;
-    [SceneObjectsOnly]public GameObject lvltreeUI1;
-    [SceneObjectsOnly]public GameObject lvltreeUI2;
-    [SceneObjectsOnly]public GameObject zoneMap;
-    [SceneObjectsOnly]public GameObject invMenu;
-    [SceneObjectsOnly]public GameObject statsMenu;
-    [SceneObjectsOnly]public GameObject modulesSkillsPanel;
-    [SceneObjectsOnly]public GameObject modulesSkillsInventory;
-    [SceneObjectsOnly]public GameObject modulesList;
-    [SceneObjectsOnly]public GameObject skillsList;
-    [SceneObjectsOnly]public GameObject backButton;
-    [SceneObjectsOnly]public XPBars lvlbar;
+    [ChildGameObjectsOnly]public GameObject upgradeMenuUI;
+    [ChildGameObjectsOnly]public GameObject upgradeMenu2UI;
+    [ChildGameObjectsOnly]public GameObject lvltreeUI;
+    [ChildGameObjectsOnly]public GameObject lvltreeUI1;
+    [ChildGameObjectsOnly]public GameObject lvltreeUI2;
+    [ChildGameObjectsOnly]public GameObject zoneMap;
+    [ChildGameObjectsOnly]public GameObject invMenu;
+    [ChildGameObjectsOnly]public GameObject statsMenu;
+    [ChildGameObjectsOnly]public GameObject modulesSkillsPanel;
+    [ChildGameObjectsOnly]public GameObject modulesSkillsInventory;
+    [ChildGameObjectsOnly]public GameObject modulesList;
+    [ChildGameObjectsOnly]public GameObject skillsList;
+    [ChildGameObjectsOnly]public Toggle autoascendToggle;
+    [ChildGameObjectsOnly]public GameObject backButton;
+    [ChildGameObjectsOnly]public XPBars lvlbar;
     [AssetsOnly]public GameObject moduleSkillElementPrefab;
     [AssetsOnly]public GameObject moduleSlotPrefab;
     [AssetsOnly]public GameObject skillSlotPrefab;
@@ -40,6 +41,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         pmodules=Player.instance.GetComponent<PlayerModules>();
         if(GameSession.instance.CheckGamemodeSelected("Adventure")){LvlEventsAdventure();}
         SetupModulesAndSkills();
+        if(GameRules.instance.forceAutoAscend)Destroy(autoascendToggle.gameObject);
 
         Resume();
     }
@@ -64,6 +66,8 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         UpgradeMenuIsOpen=false;
     }
     public void Open(){
+        if(autoascendToggle!=null)autoascendToggle.isOn=Player.instance.GetComponent<PlayerModules>().autoAscend;
+        if(FindObjectOfType<CelestialPoints>()!=null)FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();
         upgradeMenuUI.SetActive(true);
         /*if(GameRules.instance.upgradeMenuPause)*/GameSession.instance.gameSpeed=GameRules.instance.upgradeMenuOpenGameSpeed;
         //else{GameSession.instance.gameSpeed=GameRules.instance.upgradeMenuSlowdownSpeed;}
@@ -338,7 +342,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         }
     }
 
-
+    public void SetAutoascend(bool isOn){Player.instance.GetComponent<PlayerModules>().autoAscend=isOn;}
     XPBars barr;
     void LevelBars(){
         if(startTimer>0){startTimer-=Time.unscaledDeltaTime;}

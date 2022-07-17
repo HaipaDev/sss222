@@ -170,7 +170,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         }
         if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
         
-        if(GameRules.instance!=null)xp=Mathf.Clamp(xp,0,xpMax*GameRules.instance.maxXpOvefillMult);
+        /*if(GameRules.instance!=null&&Player.instance!=null)
+        if(Player.instance.GetComponent<PlayerModules>()!=null){if(Player.instance.GetComponent<PlayerModules>()._hasModule("Dark Surge))xp=Mathf.Clamp(xp,0,xpMax);*GameRules.instance.xpMaxOvefillMult);}
+        else */xp=Mathf.Clamp(xp,0,xpMax);
         cores=Mathf.Clamp(cores,0,9999);
         coins=Mathf.Clamp(coins,0,9999);
         
@@ -184,14 +186,13 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     lvlPopup.GetComponent<ValueDisplay>().value="celestPointPopup";
                     FindObjectOfType<OnScreenButtons>().GetComponent<Animator>().SetTrigger("on");
                     FindObjectOfType<OnScreenButtons>().lvldUp=true;
+                    if(FindObjectOfType<CelestialPoints>()!=null)FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();
 
                     _preLvlUp=true;
                 }
-                if(GameRules.instance.autoleveling||(!GameRules.instance.autoleveling&&Input.GetKeyDown(KeyCode.L))){
-                    Player.instance.GetComponent<PlayerModules>().shipLvlFraction++;
-                    xp=xp-xpMax;
-                    AudioManager.instance.Play("LvlUp");
-                    _preLvlUp=false;
+                if(Player.instance.GetComponent<PlayerModules>()._isAutoAscend()||(!Player.instance.GetComponent<PlayerModules>()._isAutoAscend()&&Input.GetKeyDown(KeyCode.L))){
+                    Player.instance.GetComponent<PlayerModules>().Ascend();
+                    Ascend();
                 }
             }
 
@@ -336,6 +337,12 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         GameAssets.instance.MakeSpread("CelestBall",pos,amnt,rangeX,rangeY);
         if(xpAmnt-amnt!=0)GameSession.instance.AddXP(xpAmnt-amnt);
     }
+    public void Ascend(){
+        xp=xp-xpMax;
+        AudioManager.instance.Play("LvlUp");
+        _preLvlUp=false;
+        if(FindObjectOfType<CelestialPoints>()!=null)FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();
+    }
     public void AddEnemyCount(){
         enemiesCount++;
         spawnReqsMono.AddKills();
@@ -429,6 +436,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 if(pm!=null){
                     ss.shipLvl=pm.shipLvl;
                     ss.shipLvlFraction=pm.shipLvlFraction;
+                    ss.autoAscend=pm.autoAscend;
                     ss.moduleSlots=pm.moduleSlots;
                     ss.skillsSlots=pm.skillsSlots;
                     ss.modulesList=pm.modulesList;
@@ -475,6 +483,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             if(pm!=null){
                 pm.shipLvl=ss.shipLvl;
                 pm.shipLvlFraction=ss.shipLvlFraction;
+                pm.autoAscend=ss.autoAscend;
                 pm.moduleSlots=ss.moduleSlots;
                 pm.skillsSlots=ss.skillsSlots;
                 pm.modulesList=ss.modulesList;

@@ -23,7 +23,7 @@ public class BarValue : MonoBehaviour{
         if(valueName=="enAbsorp"){if(Player.instance!=null){value=Player.instance.enAbsorpAmnt;maxValue=Player.instance.energyMax/GameRules.instance.enAbsorpFractionCap;}}
         if(valueName=="xp"){
             if(GameSession.instance!=null){
-                if(GameSession.instance.xp>GameSession.instance.xpMax){value=GameSession.instance.xp;maxValue=GameSession.instance.xpMax*GameRules.instance.maxXpOvefillMult;GetComponent<Image>().sprite=GameAssets.instance.Spr("overfilledXpBar");}
+                if(GameSession.instance.xp>GameSession.instance.xpMax){value=GameSession.instance.xp;maxValue=GameSession.instance.xpMax*GameRules.instance.xpMaxOvefillMult;GetComponent<Image>().sprite=GameAssets.instance.Spr("overfilledXpBar");}
                 else{value=GameSession.instance.xp;maxValue=GameSession.instance.xpMax;GetComponent<Image>().sprite=GameAssets.instance.Spr("regularXpBar");}
             }
         }

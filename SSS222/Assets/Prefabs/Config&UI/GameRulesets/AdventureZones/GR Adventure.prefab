@@ -76,13 +76,14 @@ MonoBehaviour:
   travelTimeToAddOnDeath: 0
   holodeathCrystalsRatio: 1
   holodeathTimeRatio: 1
+  holobodyHeal: 15
   crystalsOn: 1
   xpOn: 1
   coresOn: 1
   shopOn: 1
   shopCargoOn: 1
   levelingOn: 1
-  autoleveling: 1
+  forceAutoAscend: 0
   modulesOn: 1
   statUpgOn: 0
   iteminvOn: 1
@@ -1528,7 +1529,7 @@ MonoBehaviour:
   shopTimeLimit: 10
   shopOpenGameSpeed: 0
   xpMax: 100
-  maxXpOvefillMult: 1.5
+  xpMaxOvefillMult: 1.5
   xp_wave: 20
   xp_shop: 3
   xp_powerup: 1
