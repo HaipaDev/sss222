@@ -170,9 +170,13 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         }
         if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
         
-        /*if(GameRules.instance!=null&&Player.instance!=null)
-        if(Player.instance.GetComponent<PlayerModules>()!=null){if(Player.instance.GetComponent<PlayerModules>()._hasModule("Dark Surge))xp=Mathf.Clamp(xp,0,xpMax);*GameRules.instance.xpMaxOvefillMult);}
-        else */xp=Mathf.Clamp(xp,0,xpMax);
+        var _maxXpOverflow=false;
+        if(GameRules.instance!=null&&Player.instance!=null)if(Player.instance.GetComponent<PlayerModules>()!=null){
+            if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("Dark Surge")){_maxXpOverflow=true;}
+            else _maxXpOverflow=false;
+        }
+        if(_maxXpOverflow){xp=Mathf.Clamp(xp,0,xpMax*GameRules.instance.xpMaxOvefillMult);}
+        else{xp=Mathf.Clamp(xp,0,xpMax);}
         cores=Mathf.Clamp(cores,0,9999);
         coins=Mathf.Clamp(coins,0,9999);
         
@@ -190,9 +194,11 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
 
                     _preLvlUp=true;
                 }
-                if(Player.instance.GetComponent<PlayerModules>()._isAutoAscend()||(!Player.instance.GetComponent<PlayerModules>()._isAutoAscend()&&Input.GetKeyDown(KeyCode.L))){
-                    Player.instance.GetComponent<PlayerModules>().Ascend();
-                    Ascend();
+                if(Player.instance!=null){
+                    if(Player.instance.GetComponent<PlayerModules>()._isAutoAscend()||(!Player.instance.GetComponent<PlayerModules>()._isAutoAscend()&&Input.GetKeyDown(KeyCode.L))){
+                        Player.instance.GetComponent<PlayerModules>().Ascend();
+                        Ascend();
+                    }
                 }
             }
 

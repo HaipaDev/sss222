@@ -76,7 +76,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
         else{personalityCrisisTimerOn=false;personalityCrisisTimer=0;personalityCrisisCount=0;}
         if(personalityCrisisCount>=personalityCrisisCountMax){CompleteAchiev("customize-crisis");}
 
-        if(determinationTimerOn&&!GameSession.GlobalTimeIsPaused&&determinationTimer<determinationTimeMax){determinationTimer+=Time.unscaledDeltaTime;}
+        if(determinationTimerOn&&!GameSession.GlobalTimeIsPaused&&determinationTimer<determinationTimeMax){determinationTimer+=Time.deltaTime;}
         else if(Player.instance!=null&&determinationTimer>=determinationTimeMax){CompleteAchiev("determination");StopDeterminationTimer();}
         if(Player.instance==null||UnityEngine.SceneManagement.SceneManager.GetActiveScene().name!="Game"){StopDeterminationTimer();}
 

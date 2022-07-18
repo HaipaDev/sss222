@@ -1839,7 +1839,7 @@ PrefabInstance:
     - target: {fileID: 2531504637027084995, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2596765366526495023, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -2058,6 +2058,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GR MeteorMadness
+      objectReference: {fileID: 0}
+    - target: {fileID: 1826424120309645117, guid: eb870523f348c2e4fad6b2786bc46518,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2193505177097166033, guid: eb870523f348c2e4fad6b2786bc46518,
         type: 3}
@@ -3284,7 +3289,7 @@ PrefabInstance:
     - target: {fileID: 660924726827842043, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1009991384784034327, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}

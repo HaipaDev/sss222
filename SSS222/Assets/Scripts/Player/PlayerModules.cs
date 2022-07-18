@@ -5,9 +5,9 @@ using Sirenix.OdinInspector;
 
 public class PlayerModules : MonoBehaviour{
     [Header("Settings")]
-    public bool exhaustROF=true;
     public float timeTeleport=3f;
     public float timeOverhaul=10f;
+    public GameObject exhaustColliderObj;
     [Header("Level Values")]
     [SerializeField] public int shipLvl=0;
     [SerializeField] public int shipLvlFraction;
@@ -33,15 +33,13 @@ public class PlayerModules : MonoBehaviour{
             //shipLvlFractionsValues=i.shipLvlFractionsValues;
             if(i.shipLvlFractionsValues.Find(x=>x.lvl==0)==null){shipLvlFractionsValues.Add(new ShipLvlFractionsValues{lvl=0,fractions=1});}
             foreach(ShipLvlFractionsValues s in i.shipLvlFractionsValues){shipLvlFractionsValues.Add(s);}
-            if(moduleSlots.Capacity==0)for(var m=0;m<i.playerModulesCapacity;m++){moduleSlots.Add("");}
-            if(skillsSlots.Capacity==0)for(var m=0;m<2;m++){skillsSlots.Add("");}
+            if(moduleSlots.Capacity==0){for(var m=0;m<i.playerModulesCapacity;m++){moduleSlots.Add("");}}
+            if(skillsSlots.Capacity==0){for(var m=0;m<2;m++){skillsSlots.Add("");}}
             //for(var m=0;m<i.playerSkillsCapacity;m++){skillsSlots.Add("");}
-            if(modulesList.Capacity==0)foreach(ModulePropertiesGR m in i.modulesPlayer){modulesList.Add(new Module{name=m.item.name});}
-            if(skillsList.Capacity==0)foreach(SkillPropertiesGR s in i.skillsPlayer){skillsList.Add(new Skill{name=s.item.name});}
+            if(modulesList.Capacity==0){var _id=0;foreach(ModulePropertiesGR m in i.modulesPlayer){if(m.equipped&&_id<moduleSlots.Count){SetModule(_id,m.item.name);}modulesList.Add(new Module{name=m.item.name,lvl=m.unlockedLvl});}_id++;}
+            if(skillsList.Capacity==0){var _id=0;foreach(SkillPropertiesGR s in i.skillsPlayer){if(s.equipped&&_id<skillsSlots.Count){SetSkill(_id,s.item.name);}skillsList.Add(new Skill{name=s.item.name,lvl=s.unlockedLvl});}_id++;}
             timeOverhaul=i.timeOverhaul;
-            exhaustROF=i.playerExhaustROF;
         }
-        if(!exhaustROF){GetComponent<PlayerExhaust>().DestroyExhaust();}
         if(GameRules.instance.modulesOn!=true){Destroy(this);}
     }
     void Start(){
@@ -54,12 +52,13 @@ public class PlayerModules : MonoBehaviour{
         CheckSkillButton();
         SkillsUpdate();
         ModulesUpdate();
+        CheckExpired();
     }
 
     void ShipLevel(){
         if(GameRules.instance.levelingOn){
             if(shipLvlFraction>=lvlFractionsMax){shipLvl++;shipLvlFraction=0;UpgradeMenu.instance.LevelUp();UpgradeMenu.instance.LvlEvents();if(FindObjectOfType<CelestialPoints>()!=null){FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();}return;}
-            for(var i=0;i<shipLvlFractionsValues.Count;i++){Debug.Log(i+" | Capacity: "+shipLvlFractionsValues.Count);
+            for(var i=0;i<shipLvlFractionsValues.Count;i++){
                 if(i==shipLvlFractionsValues.Count-1){lvlFractionsMax=shipLvlFractionsValues[i].fractions;return;}
                 else{
                     if(shipLvl>=shipLvlFractionsValues[i].lvl&&shipLvl<shipLvlFractionsValues[i+1].lvl){
@@ -159,11 +158,28 @@ public class PlayerModules : MonoBehaviour{
     }}
 
     void ModulesUpdate(){
-        if(_isModuleEquipped("Crystal Mending")&&Player.instance.hpAbsorpAmnt<=0){if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){Player.instance.HPAbsorp(Player.instance.crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}}
-        if(_isModuleEquipped("Energy Dissolution")&&Player.instance.enAbsorpAmnt<=0){if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){Player.instance.EnAbsorp(Player.instance.energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}}
+        SwitchExhaust(_isModuleEquipped("Ring of Fire"));
+        if(_isModuleEquipped("Crystal Mending")&&Player.instance.hpAbsorpAmnt<=0){
+            if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){Player.instance.HPAbsorp(Player.instance.crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}
+        }
+        if(_isModuleEquipped("Energy Dissolution")&&Player.instance.enAbsorpAmnt<=0){
+            if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){Player.instance.EnAbsorp(Player.instance.energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}
+        }
+        if(_isModuleEquipped("Dark Surge")){
+            if(GameSession.instance.xp>=GameSession.instance.xpMax){
+                var dif=(GameSession.instance.xpMax*GameRules.instance.xpMaxOvefillMult)-GameSession.instance.xp;
+                if(dif<=25&&!Player.instance._hasStatus("speed")){Player.instance.Speed(5,5,1.2f);if(Player.instance._hasStatus("slow")){Player.instance.RemoveStatus("slow");}}
+                if(dif<=15&&!Player.instance._hasStatus("armored")){Player.instance.Armor(5,5,2);if(Player.instance._hasStatus("fragile")){Player.instance.RemoveStatus("fragile");}}
+                if(dif==0&&!Player.instance._hasStatus("power")){Player.instance.Power(5,5,1.15f);if(Player.instance._hasStatus("weakns")){Player.instance.RemoveStatus("weakns");}}
+            }
+        }
+    }
+    void CheckExpired(){
+        foreach(ModulePropertiesGR m in GameRules.instance.modulesPlayer){if(shipLvl>=m.lvlExpire&&m.lvlExpire!=0)if(_isModuleEquipped(m.item.name))ClearModule(m.item.name);}
+        foreach(SkillPropertiesGR s in GameRules.instance.skillsPlayer){if(shipLvl>=s.lvlExpire&&s.lvlExpire!=0)if(_isSkillEquipped(s.item.name))ClearSkill(s.item.name);}
     }
     #endregion
-    public bool _canUnlockModuleSkill(string name){return GameSession.instance.cores>=GetModuleNextLvlVals(name).coreCost&&(shipLvl>=GetModuleNextLvlVals(name).lvlReq||!GameRules.instance.levelingOn);}
+    public bool _canUnlockModuleSkill(string name){return GameSession.instance.cores>=GetModuleNextLvlVals(name).coreCost&&GetModuleNextLvlVals(name).coreCost>=0&&(shipLvl>=GetModuleNextLvlVals(name).lvlReq||!GameRules.instance.levelingOn);}
 
     public bool _isModuleUnlocked(string name){return modulesList.Find(x=>x.name==name&&x.lvl>=1)!=null;}
     public bool UnlockModule(string name){if(GetModuleProperties(name)!=null){
@@ -225,6 +241,7 @@ public class PlayerModules : MonoBehaviour{
 
     public void ResetSkillCooldowns(){for(var i=0;i<skillsSlots.Capacity;i++){skillsList[i].cooldown=0;}}
 
+    public void SwitchExhaust(bool on=false){exhaustColliderObj.SetActive(on);}
     private void SetActiveAllChildren(Transform transform, bool value){
         foreach (Transform child in transform){
             child.gameObject.SetActive(value);

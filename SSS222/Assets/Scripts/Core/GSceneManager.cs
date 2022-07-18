@@ -158,6 +158,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameSession.
     }*/
     public void RestartApp(){
+        if(Jukebox.instance!=null)Destroy(Jukebox.instance.gameObject);
         SceneManager.LoadScene("Loading");
         GameSession.instance.speedChanged=false;
         GameSession.instance.gameSpeed=1f;

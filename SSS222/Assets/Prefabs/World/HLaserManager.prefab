@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2139968285200127873}
   m_RootOrder: 0
@@ -184,6 +185,7 @@ GameObject:
   - component: {fileID: 4583750446306744267}
   - component: {fileID: 1202101258664957383}
   - component: {fileID: 5521660195632992673}
+  - component: {fileID: -5610172020980343996}
   m_Layer: 9
   m_Name: HLaserManager
   m_TagString: World
@@ -201,6 +203,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2139968285200127873}
   - {fileID: 7566170767713013070}
@@ -278,6 +281,23 @@ MonoBehaviour:
   timerStay: 1
   stage: 0
   timer: -4
+--- !u!114 &-5610172020980343996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2323431598858436006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  off: 1
+  waveConfig: {fileID: 0}
+  waypointsL: []
+  waypointIndex: 0
+  enemyIndex: 0
 --- !u!1 &7566170767713013075
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +330,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0.23, y: 0, z: -0.01}
   m_LocalScale: {x: 0.3, y: 0.4, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4583750446306744267}
   m_RootOrder: 1
@@ -416,7 +437,7 @@ BoxCollider2D:
   m_EdgeRadius: 0
 --- !u!95 &7566170767713013072
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -429,6 +450,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -571,6 +593,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 303689199667791804}
   m_Father: {fileID: 4583750446306744267}

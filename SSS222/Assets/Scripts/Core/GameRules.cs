@@ -87,7 +87,6 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [FoldoutGroup("Player")]public float shootMultiPlayer=1f;
     [FoldoutGroup("Player")]public float shipScaleDefault=0.89f;
     [FoldoutGroup("Player")]public bool bulletResize;
-    [FoldoutGroup("Player")]public int bflameDmgTillLvl=1;
     [FoldoutGroup("Player")]public bool overheatOnPlayer=true;
     [FoldoutGroup("Player")]public bool overheatShaderIdentif=true;
     [FoldoutGroup("Player")]public float overheatTimerMax = 8.66f;
@@ -620,6 +619,11 @@ public class HLaserSettings{
     //public costType costType;
     //public costTypeProperties costTypeProperties;
     public List<ModuleSkillLvlVals> lvlVals=new List<ModuleSkillLvlVals>(1);
+    [ValidateInput("@this.lvlValsContainsHigherThanLvlExpire()==false||lvlExpire==0","lvlExpire cant be lower or equals any of the lvlReqs")]public int lvlExpire=0;
+    bool lvlValsContainsHigherThanLvlExpire(){return lvlVals.FindIndex(x=>x.lvlReq>=lvlExpire)!=-1;}
+    [ValidateInput("@this.lessLvlValsThanUnlockedLvl()==false&&unlockedLvl>=0","unlockedLvl cant be higher than the amount of lvlVals")]public int unlockedLvl=0;
+    bool lessLvlValsThanUnlockedLvl(){return lvlVals.Count<unlockedLvl;}
+    [DisableIf("@this.unlockedLvl<=0")]public bool equipped=false;
 }
 [System.Serializable]public class SkillPropertiesGR{
     public SkillProperties item;
@@ -627,6 +631,11 @@ public class HLaserSettings{
     public costTypeProperties costTypeProperties;
     public float cooldown;
     public List<ModuleSkillLvlVals> lvlVals=new List<ModuleSkillLvlVals>(1);
+    [ValidateInput("@this.lvlValsContainsHigherThanLvlExpire()==false||lvlExpire==0","lvlExpire cant be lower or equals any of the lvlReqs")]public int lvlExpire=0;
+    bool lvlValsContainsHigherThanLvlExpire(){return lvlVals.FindIndex(x=>x.lvlReq>=lvlExpire)!=-1;}
+    [ValidateInput("@this.lessLvlValsThanUnlockedLvl()==false&&unlockedLvl>=0","unlockedLvl cant be higher than the amount of lvlVals")]public int unlockedLvl=0;
+    bool lessLvlValsThanUnlockedLvl(){return lvlVals.Count<unlockedLvl;}
+    [DisableIf("@this.unlockedLvl<=0")]public bool equipped=false;
 }
 [System.Serializable]public class ModuleSkillLvlVals{
     public int coreCost=1;

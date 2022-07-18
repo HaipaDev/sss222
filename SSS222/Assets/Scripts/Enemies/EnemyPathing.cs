@@ -14,7 +14,7 @@ public class EnemyPathing : MonoBehaviour{
     Rigidbody2D rb;
     Vector2 velPaused;
     //bool CheckWavesPath(wavePathType wavePathType){if(waveConfig.wavePathType==wavePathType){return true;}else{return false;}}
-    void Start(){
+    void Start(){if(!off){
         rb=GetComponent<Rigidbody2D>();
         if(waveConfig!=null){
             if(waveConfig.wavePathType==wavePathType.startToEnd){
@@ -52,10 +52,10 @@ public class EnemyPathing : MonoBehaviour{
             else{transform.position=waypointsS[waypointIndex].transform.position;}
             }
         }else{Debug.LogWarning(gameObject.name+" WaveConfig not found.");}
-    }
+    }}
     
     void Update(){  if(!GameSession.GlobalTimeIsPaused){
-        Move();
+        if(!off)Move();
     }}
     public void SetWaveConfig(WaveConfig waveConfig){this.waveConfig = waveConfig;}
     void Move(){    if(waveConfig!=null){

@@ -74,7 +74,7 @@ public class Goblin : MonoBehaviour{
 
     void OnTriggerEnter2D(Collider2D other){
         if(bossForm!=true){
-            if(other.CompareTag("Powerups")&&(!other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name))){
+            if(other.CompareTag("Collectibles")&&(!other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name))){
                 AudioManager.instance.Play("GoblinSteal");
                 powerups.Add(other.gameObject);
                 other.gameObject.SetActive(false);

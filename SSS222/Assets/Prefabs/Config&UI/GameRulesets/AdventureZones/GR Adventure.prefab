@@ -1714,14 +1714,34 @@ MonoBehaviour:
     skipRe: 0
   upgradeMenuOpenGameSpeed: 0
   modulesPlayer:
-  - item: {fileID: 11400000, guid: 06432481964c7e341b61c318577cbd27, type: 2}
+  - item: {fileID: 11400000, guid: 60df2a6b2fa6b62469800a4f428eba29, type: 2}
     lvlVals:
-    - coreCost: 5
-      lvlReq: 5
+    - coreCost: 0
+      lvlReq: 0
+    lvlExpire: 3
+    unlockedLvl: 1
+    equipped: 1
   - item: {fileID: 11400000, guid: 3477e1bf2eb61d840b325eafbec617d3, type: 2}
     lvlVals:
-    - coreCost: 4
+    - coreCost: 6
       lvlReq: 4
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
+  - item: {fileID: 11400000, guid: 06432481964c7e341b61c318577cbd27, type: 2}
+    lvlVals:
+    - coreCost: 7
+      lvlReq: 5
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
+  - item: {fileID: 11400000, guid: b89f01f979edbbf4f921653b41dd72d5, type: 2}
+    lvlVals:
+    - coreCost: 9
+      lvlReq: 7
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
   skillsPlayer:
   - item: {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
     costType: 0
@@ -1729,18 +1749,24 @@ MonoBehaviour:
       cost: 0
     cooldown: 33
     lvlVals:
-    - coreCost: 2
+    - coreCost: 3
       lvlReq: 3
-    - coreCost: 1
+    - coreCost: 3
       lvlReq: 4
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
   - item: {fileID: 11400000, guid: d66606c472024f44e8f0f96cdfac0c12, type: 2}
-    costType: 3
+    costType: 0
     costTypeProperties:
       cost: 0
     cooldown: 44
     lvlVals:
     - coreCost: 4
-      lvlReq: 4
+      lvlReq: 2
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
   playerModulesCapacity: 4
   timeOverhaul: 10
   playerExhaustROF: 1

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d440e0d9ff2d84fbf832a0730e4e38, type: 3}
+  m_Name: DarkSurge
+  m_EditorClassIdentifier: 
+  name: Dark Surge
+  desc: EVERY OUNCE OF DARKNESS OVERFLOWING MAKES YOU STRONGER
+  descGradient:
+    topLeft: {r: 0.43137255, g: 0.15294118, b: 0.8784314, a: 1}
+    topRight: {r: 0.43137258, g: 0.15294118, b: 0.87843144, a: 1}
+    bottomLeft: {r: 0.5572807, g: 0.19999999, b: 0.8666667, a: 1}
+    bottomRight: {r: 0.56078434, g: 0.2, b: 0.86666673, a: 1}
+  sprite: {fileID: 0}
+  iconsGo: {fileID: 2957245828022968796, guid: 6ced7c6be06693343bb6aa51c5363b40, type: 3}

@@ -23,6 +23,7 @@ public class HLaser : MonoBehaviour{
         }
         
         DisableAllChildren();
+        transform.GetChild(0).GetComponent<Canvas>().worldCamera=GameObject.Find("UICamera").GetComponent<Camera>();
         transform.GetChild(stage).gameObject.SetActive(true);
         if(stage==0){timer=timerWarn;}
     }

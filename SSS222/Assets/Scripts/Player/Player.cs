@@ -70,7 +70,6 @@ public class Player : MonoBehaviour{    public static Player instance;
     public float shootMulti=1f;
     [SerializeField] public float shipScaleDefault=0.89f;
     [SerializeField] public bool bulletResize;
-    [SerializeField] public int bflameDmgTillLvl=1;
 #endregion
 #region//Statuses
     [Header("Statuses")]
@@ -223,7 +222,6 @@ public class Player : MonoBehaviour{    public static Player instance;
         shootMultiInit=i.shootMultiPlayer;
         shipScaleDefault=i.shipScaleDefault;
         bulletResize=i.bulletResize;
-        bflameDmgTillLvl=i.bflameDmgTillLvl;
         overheatOn=i.overheatOnPlayer;
         recoilOn=i.recoilOnPlayer;
         critChance=i.critChancePlayer;
