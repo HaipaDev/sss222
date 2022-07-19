@@ -556,7 +556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 34a8a3c952a1c974ebee8e490b9fb57e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -894,10 +894,10 @@ MonoBehaviour:
   - {fileID: 4742626144565657758}
   startIMG: {fileID: 3922210797785796778}
   startSprites:
-  - {fileID: 21300000, guid: 1cec2dfbeed086048a255b2c1b27cda1, type: 3}
-  - {fileID: 21300000, guid: 522fcc387808dbc4080b38772c780d89, type: 3}
-  - {fileID: 21300000, guid: 0485d11ac41a7be4eaff5c7005f8b0ff, type: 3}
-  - {fileID: 21300000, guid: 51b11fd2c41e8ea48a91325b31da6661, type: 3}
+  - {fileID: 21300000, guid: 04d206741f379fe48a2d6fadc4b5c8fc, type: 3}
+  - {fileID: 21300000, guid: 43f0e196ff722e74c8732fd3bab227a0, type: 3}
+  - {fileID: 21300000, guid: 53c78d23f62b0744aa81226eb834d357, type: 3}
+  - {fileID: 21300000, guid: 110f4bc1b20570e4c9dfb7860dd7c1ae, type: 3}
   sandboxPanel: {fileID: 3808928330148104487, guid: 38ff9ea9ce1e8014a9eb0aff48d70966,
     type: 3}
 --- !u!1 &3296154241970860464
@@ -1900,7 +1900,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -34.199894}
-  m_SizeDelta: {x: 754.79095, y: 1483.9015}
+  m_SizeDelta: {x: 800, y: 1400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3922210797785796779
 CanvasRenderer:
@@ -1930,7 +1930,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1cec2dfbeed086048a255b2c1b27cda1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 04d206741f379fe48a2d6fadc4b5c8fc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5070,7 +5070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 34a8a3c952a1c974ebee8e490b9fb57e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -8205,7 +8205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 34a8a3c952a1c974ebee8e490b9fb57e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}

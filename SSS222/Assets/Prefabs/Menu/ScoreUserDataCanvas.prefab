@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 34a8a3c952a1c974ebee8e490b9fb57e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1257,6 +1257,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSteamDisplay: 0
+  shipUI: {fileID: 7491576363424004709}
+  steamPfp: {fileID: 3126498400419688892}
   titleText: {fileID: 6317412170228500741}
   usernameText: {fileID: 4129326703250330953}
   rankText: {fileID: 7905668431961197885}
@@ -1264,8 +1266,6 @@ MonoBehaviour:
   playtimeText: {fileID: 4286939671722100717}
   versionBuildText: {fileID: 8316652297769210136}
   dateAchievedText: {fileID: 7583433247436471874}
-  shipUI: {fileID: 7491576363424004709}
-  steamPfp: {fileID: 3126498400419688892}
 --- !u!1 &6088801601368632844
 GameObject:
   m_ObjectHideFlags: 0
