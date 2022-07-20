@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 
 public class Goblin : MonoBehaviour{
     [SerializeField] Sprite bossSprite;
+    [SerializeField] string transformVfxAssetName="DarkEnergy";
     [SerializeField] float bossHealth;
     [SerializeField] public List<LootTableEntryDrops> bossDrops;
     [ReadOnly]public List<float> dropValues;
@@ -25,6 +26,7 @@ public class Goblin : MonoBehaviour{
         var i=GameRules.instance;if(i!=null){
             var e=i.goblinBossSettings;
             bossSprite=e.goblinBossSprite;
+            transformVfxAssetName=e.transformVfxAssetName;
             bossHealth=e.goblinbossHealth;
             bossDrops=e.goblinBossDrops;
         }
@@ -98,6 +100,7 @@ public class Goblin : MonoBehaviour{
         bossForm=true;
         GetComponent<Follow>().enabled=false;
         if(GetComponent<TrailVFX>().trailObj!=null){Destroy(GetComponent<TrailVFX>().trailObj);}GetComponent<TrailVFX>().enabled=false;
+        GameAssets.instance.VFX(transformVfxAssetName,transform.position);
         confused=false;Destroy(transform.GetChild(0).gameObject);
         Enemy en=GetComponent<Enemy>();
         en.spr=bossSprite;

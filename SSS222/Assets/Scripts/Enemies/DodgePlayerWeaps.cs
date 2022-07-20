@@ -49,7 +49,7 @@ public class DodgePlayerWeaps : MonoBehaviour{
 
         Dodge();
 
-        if(GetComponent<EnemyPathing>().waypointIndex>0){var clamp=true;if(clamp==true)ClampPosition();}
+        if(GetComponent<PointPathing>().waypointIndex>0){var clamp=true;if(clamp==true)ClampPosition();}
     }
 
     void Dodge(){

@@ -134,7 +134,6 @@ MonoBehaviour:
   shootMultiPlayer: 1
   shipScaleDefault: 0.89
   bulletResize: 1
-  bflameDmgTillLvl: 2
   overheatOnPlayer: 1
   overheatShaderIdentif: 1
   overheatTimerMax: 8.66
@@ -1528,7 +1527,7 @@ MonoBehaviour:
   shopTimeLimitEnabled: 1
   shopTimeLimit: 10
   shopOpenGameSpeed: 0
-  xpMax: 100
+  xpMax: 115
   xpMaxOvefillMult: 1.5
   xp_wave: 20
   xp_shop: 3
@@ -1538,17 +1537,24 @@ MonoBehaviour:
   xp_staying: 2
   stayingTimeReq: 15
   shipLvlFractionsValues:
-  - lvl: 2
-    fractions: 2
   - lvl: 3
-    fractions: 3
-  - lvl: 4
-    fractions: 4
+    fractions: 2
   - lvl: 5
+    fractions: 3
+  - lvl: 6
+    fractions: 4
+  - lvl: 8
     fractions: 5
   - lvl: 10
+    fractions: 6
+  - lvl: 14
+    fractions: 7
+  - lvl: 17
+    fractions: 8
+  - lvl: 19
+    fractions: 9
+  - lvl: 20
     fractions: 10
-  saveBarsFromLvl: 5
   lvlEvents:
   - name: 'Levels: 0-0'
     events:

@@ -592,6 +592,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: enemies.Array.data[5].name
+      value: Goblin Thief
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: enemies.Array.data[7].name
       value: Leech
       objectReference: {fileID: 0}
@@ -1699,6 +1704,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: managedReferences[7402535153654038535].specialId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: managedReferences[7402535153654038532].bothNeeded
       value: 0
       objectReference: {fileID: 0}
@@ -1716,6 +1726,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[7402535153654038535].bothNeeded
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: managedReferences[7268785640884928513].scoreNeeded
+      value: 273
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -1746,6 +1761,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[7402535153654038535].timeEnabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: managedReferences[7402535244629278720].scoreNeeded
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -1796,6 +1816,16 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[7402535153654038534].scoreMaxSetRange.y
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: managedReferences[7402535244629278720].scoreMaxSetRange.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: managedReferences[7402535244629278720].scoreMaxSetRange.y
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

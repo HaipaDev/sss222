@@ -253,7 +253,7 @@ public class PlayerModules : MonoBehaviour{
 
 [System.Serializable]public class ShipLvlFractionsValues{
     public int lvl=1;
-    [Range(0,10)]public int fractions=1;
+    [Range(1,10)]public int fractions=1;
 }
 [System.Serializable]public class Skill{
     public string name;

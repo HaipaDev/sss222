@@ -25,10 +25,10 @@ public class XPFill : MonoBehaviour{
                 emptySprite=GameAssets.instance.Spr("upgradeEmpty");
                 fillSprite=GameAssets.instance.Spr("upgradeFill");
                 particlePrefab=GameAssets.instance.GetVFX("UpgradeVFX");
-                if(pmodules.shipLvl<GameRules.instance.saveBarsFromLvl){
+                /*if(pmodules.shipLvl<GameRules.instance.saveBarsFromLvl){
                     if(fillSprite!=GameAssets.instance.Spr("upgradeFill_des"))fillSprite=GameAssets.instance.Spr("upgradeFill_des");
                     if(particlePrefab!=GameAssets.instance.GetVFX("UpgradeVFX_des"))particlePrefab=GameAssets.instance.GetVFX("UpgradeVFX_des");
-                }
+                }*/
             }
         }
     }

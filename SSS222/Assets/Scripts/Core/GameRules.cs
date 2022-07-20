@@ -210,7 +210,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [FoldoutGroup("Leveling")]public float xp_staying=-2f;
     [FoldoutGroup("Leveling")]public float stayingTimeReq=4f;
     [FoldoutGroup("Leveling")]public List<ShipLvlFractionsValues> shipLvlFractionsValues;
-    [FoldoutGroup("Leveling")][ShowIf("@this._isAdventure()")]public int saveBarsFromLvl=5;
+    //[FoldoutGroup("Leveling")][ShowIf("@this._isAdventure()")]public int savePointsFromLvl=5;
 [Header("Changes per level")]
     [FoldoutGroup("Leveling")]public List<ListEvents> lvlEvents;
 #endregion
@@ -602,6 +602,7 @@ public class GlareDevilSettings{
 [System.Serializable]
 public class GoblinBossSettings{
     public Sprite goblinBossSprite;
+    public string transformVfxAssetName="DarkEnergy";
     public float goblinbossHealth=50f;
     public List<LootTableEntryDrops> goblinBossDrops;
 }

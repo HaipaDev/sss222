@@ -8,7 +8,7 @@ public class GlareDevil : MonoBehaviour{
     [SerializeField]Vector2 efxBlind=new Vector2(4,4);
 
     float timerBlind=-4;
-    EnemyPathing path;
+    PointPathing path;
 
     void Awake(){
         var i=GameRules.instance;
@@ -19,7 +19,7 @@ public class GlareDevil : MonoBehaviour{
             efxBlind=e.efxBlind;
         }
         timerBlind=timerBlindMax;
-        path=GetComponent<EnemyPathing>();
+        path=GetComponent<PointPathing>();
     }
     void Update(){  if(!GameSession.GlobalTimeIsPaused){
         if(path.waypointIndex==path.waypointsL.Count-1){GetComponent<SpriteRenderer>().flipX=false;transform.GetChild(0).position=new Vector3(transform.position.x+(-GetComponent<Glow>().offset.x),transform.position.y+GetComponent<Glow>().offset.y,0.01f);}

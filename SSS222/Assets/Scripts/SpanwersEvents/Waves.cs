@@ -103,9 +103,9 @@ public class Waves : MonoBehaviour{
                     waveConfig.GetEnemyPrefab(),
                     waveConfig.GetWaypointsStart()[enCount].position,
                     Quaternion.identity);
-                if(go.GetComponent<EnemyPathing>()==null){go.AddComponent<EnemyPathing>();}
-                go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                go.GetComponent<EnemyPathing>().enemyIndex=enCount;
+                if(go.GetComponent<PointPathing>()==null){go.AddComponent<PointPathing>();}
+                go.GetComponent<PointPathing>().SetWaveConfig(waveConfig);
+                go.GetComponent<PointPathing>().enemyIndex=enCount;
                 go.AddComponent<Tag_WaveEnemy>();
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
@@ -119,9 +119,9 @@ public class Waves : MonoBehaviour{
                     waveConfig.GetEnemyPrefab(),
                     pos,
                     Quaternion.identity);
-                if(go.GetComponent<EnemyPathing>()==null){go.AddComponent<EnemyPathing>();}
-                go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                // go.GetComponent<EnemyPathing>().enemyIndex=enCount;
+                if(go.GetComponent<PointPathing>()==null){go.AddComponent<PointPathing>();}
+                go.GetComponent<PointPathing>().SetWaveConfig(waveConfig);
+                // go.GetComponent<PointPathing>().enemyIndex=enCount;
                 go.AddComponent<Tag_WaveEnemy>();
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
@@ -134,9 +134,9 @@ public class Waves : MonoBehaviour{
                     waveConfig.GetEnemyPrefab(),
                     waveConfig.GetWaypointsRandomPath(RpathIndex)[0].position,
                     Quaternion.identity);
-                if(go.GetComponent<EnemyPathing>()==null){go.AddComponent<EnemyPathing>();}
-                go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                go.GetComponent<EnemyPathing>().enemyIndex=RpathIndex;
+                if(go.GetComponent<PointPathing>()==null){go.AddComponent<PointPathing>();}
+                go.GetComponent<PointPathing>().SetWaveConfig(waveConfig);
+                go.GetComponent<PointPathing>().enemyIndex=RpathIndex;
                 go.AddComponent<Tag_WaveEnemy>();
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
@@ -154,10 +154,10 @@ public class Waves : MonoBehaviour{
                     waveConfig.GetEnemyPrefab(),
                     pos,
                     Quaternion.identity);
-                if(go.GetComponent<EnemyPathing>()==null){go.AddComponent<EnemyPathing>();}
-                go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                go.GetComponent<EnemyPathing>().waypointIndex=Random.Range(0,waypoints.Count);
-                //go.GetComponent<EnemyPathing>().waypointIndex=enCount;
+                if(go.GetComponent<PointPathing>()==null){go.AddComponent<PointPathing>();}
+                go.GetComponent<PointPathing>().SetWaveConfig(waveConfig);
+                go.GetComponent<PointPathing>().waypointIndex=Random.Range(0,waypoints.Count);
+                //go.GetComponent<PointPathing>().waypointIndex=enCount;
                 go.AddComponent<Tag_WaveEnemy>();
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
@@ -170,8 +170,8 @@ public class Waves : MonoBehaviour{
                         waveConfig.GetEnemyPrefab(),
                         waveConfig.GetShipPlaceCoords(waveConfig),
                     Quaternion.identity);
-                if(go.GetComponent<EnemyPathing>()==null){go.AddComponent<EnemyPathing>();}
-                go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                if(go.GetComponent<PointPathing>()==null){go.AddComponent<PointPathing>();}
+                go.GetComponent<PointPathing>().SetWaveConfig(waveConfig);
                 go.AddComponent<Tag_WaveEnemy>();
                     yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
                 }
@@ -183,9 +183,9 @@ public class Waves : MonoBehaviour{
                     waveConfig.GetEnemyPrefab(),
                     waveConfig.GetWaypointsSingle()[enCount].position,
                     Quaternion.identity);
-                if(go.GetComponent<EnemyPathing>()==null){go.AddComponent<EnemyPathing>();}
-                go.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-                go.GetComponent<EnemyPathing>().enemyIndex=enCount;
+                if(go.GetComponent<PointPathing>()==null){go.AddComponent<PointPathing>();}
+                go.GetComponent<PointPathing>().SetWaveConfig(waveConfig);
+                go.GetComponent<PointPathing>().enemyIndex=enCount;
                 go.AddComponent<Tag_WaveEnemy>();
                 yield return new WaitForSeconds(waveConfig.GetTimeSpawn());
             }
