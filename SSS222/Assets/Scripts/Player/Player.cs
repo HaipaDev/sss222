@@ -404,26 +404,26 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
     }
     
-    private void MovePlayer(){
+    void MovePlayer(){
         var deltaX=0f;
         var deltaY=0f;
         if(Input.GetButtonDown("Horizontal")){
             float timeSinceLastClick=Time.time-lastClickTime;
-            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || (dashDir<-1||dashDir>1))){dashDir=(int)Input.GetAxisRaw("Horizontal")*2;DClick(dashDir);deltaX=Input.GetAxis("Horizontal")*Time.deltaTime*moveSpeedCurrent*moveDir;}
-            else{deltaX=Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeedCurrent*moveDir;}
+            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || (dashDir<-1||dashDir>1))){dashDir=(int)Input.GetAxisRaw("Horizontal")*2;DClick(dashDir);deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
+            else{deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
             lastClickTime=Time.time;}
         if(Input.GetButtonDown("Vertical")){
             float timeSinceLastClick=Time.time-lastClickTime;
-            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || ((dashDir<0&&dashDir>-2) || (dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical");DClick(dashDir);deltaY=Input.GetAxis("Vertical")*Time.deltaTime*moveSpeedCurrent*moveDir;}
-            else{deltaY=Input.GetAxis("Vertical")*Time.deltaTime*moveSpeedCurrent*moveDir;}
+            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || ((dashDir<0&&dashDir>-2) || (dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical");DClick(dashDir);deltaY=Input.GetAxis("Vertical")*moveDir*Time.deltaTime*moveSpeedCurrent;}
+            else{deltaY=(Input.GetAxis("Vertical")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
             lastClickTime=Time.time;}
 
         if(inputType==InputType.touch){
-            deltaX=joystick.Horizontal*Time.deltaTime*moveSpeedCurrent*moveDir;
-            deltaY=joystick.Vertical*Time.deltaTime*moveSpeedCurrent*moveDir;
+            deltaX=joystick.Horizontal*(Time.deltaTime*moveSpeedCurrent);
+            deltaY=joystick.Vertical*(Time.deltaTime*moveSpeedCurrent);
         }else{
-            deltaX=Input.GetAxis("Horizontal")*Time.deltaTime*moveSpeedCurrent*moveDir;
-            deltaY=Input.GetAxis("Vertical")*Time.deltaTime*moveSpeedCurrent*moveDir;
+            deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);
+            deltaY=(Input.GetAxis("Vertical")*moveDir)*(Time.deltaTime*moveSpeedCurrent);
         }
 
         var newXpos=transform.position.x;
@@ -432,10 +432,9 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(moveX==true)newXpos=Mathf.Clamp(newXpos,xRange.x,xRange.y)+deltaX;
         if(moveY==true)newYpos=Mathf.Clamp(newYpos,yRange.x,yRange.y)+deltaY;
         transform.position=new Vector2(newXpos,newYpos);
-        
     }
 
-    private void MoveWithMouse(){
+    void MoveWithMouse(){
         mouseDir=mousePos-(Vector2)transform.position;
         mousePos.x=Mathf.Clamp(mousePos.x,xRange.x,xRange.y);
         mousePos.y=Mathf.Clamp(mousePos.y,yRange.x,yRange.y);
