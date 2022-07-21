@@ -1,27 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class VortexWheel : MonoBehaviour{
     [Header("Properties")]
     [SerializeField] public float startTimer=3f;
-    [SerializeField] public float timeToDieMin=8f;
-    [SerializeField] public float timeToDieMax=13f;
+    [SerializeField] public Vector2 timeToDieSet=new Vector2(4f,6f);
     [SerializeField] public float chargeMultip=0.8f;
     [SerializeField] public float chargeMultipS=1.3f;
     [SerializeField] Sprite[] sprites;
     [Header("Values")]
     Tag_PlayerWeapon[] WeapsArr;
     KdTree<Tag_PlayerWeapon> Weaps;
-    public float timer=-4;
+    [DisableInEditorMode][SerializeField]float timeToDie;
+    [DisableInEditorMode]public float timer=-4;
     
-    float timeToDie;
+    
     Sprite spr;
     void Awake(){
         var i=GameRules.instance;
         if(i!=null){
             var e=i.vortexWheelSettings;
             startTimer=e.startTimer;
+            timeToDieSet=e.timeToDieSet;
             chargeMultip=e.chargeMultip;
             chargeMultipS=e.chargeMultipS;
         }
@@ -29,7 +31,7 @@ public class VortexWheel : MonoBehaviour{
     }
     void Start(){
         spr=GetComponent<SpriteRenderer>().sprite;
-        timeToDie=UnityEngine.Random.Range(timeToDieMin,timeToDieMax);
+        timeToDie=UnityEngine.Random.Range(timeToDieSet.x,timeToDieSet.y)+3;
         if(timer==-4){timer=startTimer;}
     }
 

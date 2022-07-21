@@ -133,7 +133,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     [SerializeField]public Vector2 mousePos;
     [HideInInspector]public Vector2 mouseDir;
     [SerializeField]public float dist;
-    [HideInInspector]public Vector2 velocity;
+    [HideInInspector]public Vector2 vel;
     public float shipScale=1f;
     float hPressedTime;
     float vPressedTime;
@@ -312,7 +312,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             }
             if(shootTimer>0)shootTimer-=Time.deltaTime;
             if(shadowInstTimer>0)shadowInstTimer-=Time.deltaTime;
-            velocity=rb.velocity;
+            rb.velocity=vel;
             if(!moving){spawnReqsMono.AddStayingTime(Time.deltaTime);GameSession.instance.stayingTimeXP+=Time.deltaTime;/*stayingTimerTotal+=Time.deltaTime;*/timerHpRegen+=Time.deltaTime;}
             if(moving){spawnReqsMono.AddMovingTime(Time.deltaTime);GameSession.instance.movingTimeXP+=Time.deltaTime;//timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;
                 if(_hasStatus("fuel")){
@@ -405,33 +405,41 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
     
     void MovePlayer(){
-        var deltaX=0f;
-        var deltaY=0f;
+        var deltaX=0f;var axisX=(Input.GetAxis("Horizontal")*moveDir);
+        var deltaY=0f;var axisY=(Input.GetAxis("Vertical")*moveDir);
         if(Input.GetButtonDown("Horizontal")){
             float timeSinceLastClick=Time.time-lastClickTime;
-            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || (dashDir<-1||dashDir>1))){dashDir=(int)Input.GetAxisRaw("Horizontal")*2;DClick(dashDir);deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
-            else{deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
-            lastClickTime=Time.time;}
+            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || (dashDir<-1||dashDir>1))){dashDir=(int)Input.GetAxisRaw("Horizontal")*2;DClick(dashDir);}//deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
+            //else{deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
+            lastClickTime=Time.time;
+        }
         if(Input.GetButtonDown("Vertical")){
             float timeSinceLastClick=Time.time-lastClickTime;
-            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || ((dashDir<0&&dashDir>-2) || (dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical");DClick(dashDir);deltaY=Input.GetAxis("Vertical")*moveDir*Time.deltaTime*moveSpeedCurrent;}
-            else{deltaY=(Input.GetAxis("Vertical")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
-            lastClickTime=Time.time;}
+            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || ((dashDir<0&&dashDir>-2) || (dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical");DClick(dashDir);}//deltaY=Input.GetAxis("Vertical")*moveDir*Time.deltaTime*moveSpeedCurrent;}
+            //else{deltaY=(Input.GetAxis("Vertical")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
+            lastClickTime=Time.time;
+        }
+        
 
         if(inputType==InputType.touch){
             deltaX=joystick.Horizontal*(Time.deltaTime*moveSpeedCurrent);
             deltaY=joystick.Vertical*(Time.deltaTime*moveSpeedCurrent);
         }else{
-            deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);
-            deltaY=(Input.GetAxis("Vertical")*moveDir)*(Time.deltaTime*moveSpeedCurrent);
+            if(Input.GetButton("Horizontal"))deltaX=axisX*(Time.deltaTime*moveSpeedCurrent);
+            if(Input.GetButton("Vertical"))deltaY=axisY*(Time.deltaTime*moveSpeedCurrent);
+
+            if(Input.GetButtonUp("Horizontal")){deltaX-=(axisX*(Time.deltaTime*moveSpeedCurrent))/100;}//deltaX=0;}
+            if(Input.GetButtonUp("Vertical")){deltaY-=(axisY*(Time.deltaTime*moveSpeedCurrent))/100;}//deltaY=0;}
         }
+        
 
         var newXpos=transform.position.x;
         var newYpos=transform.position.y;
 
         if(moveX==true)newXpos=Mathf.Clamp(newXpos,xRange.x,xRange.y)+deltaX;
         if(moveY==true)newYpos=Mathf.Clamp(newYpos,yRange.x,yRange.y)+deltaY;
-        transform.position=new Vector2(newXpos,newYpos);
+        var newPos=new Vector2(newXpos,newYpos);transform.position=newPos;
+        //Debug.Log("deltaX: "+deltaX+" | deltaY: "+deltaY+" | newPos: "+newPos);
     }
 
     void MoveWithMouse(){
@@ -462,8 +470,7 @@ public class Player : MonoBehaviour{    public static Player instance;
 
         if(moveX)newXpos=Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
         if(moveY)newYpos=Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
-
-        transform.position=new Vector2(newXpos,newYpos);
+        var newPos=new Vector2(newXpos,newYpos);transform.position=newPos;
     }
     public Vector2 dragStartPos=Vector2.zero;
     float dragStopTimer;
@@ -524,7 +531,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(!GameSession.GlobalTimeIsPaused){
             if(inputType!=InputType.touch&&inputType!=InputType.drag){
                 if(!autoShoot){
-                    if(Input.GetButtonDown("Fire1")){
+                    if(Input.GetButtonDown("Fire1")||Input.GetKeyDown(KeyCode.Z)){
                         if(!SaveSerial.instance.settingsData.dtapMouseShoot){
                             UseItemCurrent();
                             if(shootCoroutine!=null){return;}
@@ -536,7 +543,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                             else{lastClickShootTime=Time.time;}
                         }
                         
-                    }if(!Input.GetButton("Fire1")||shootTimer<-1f){
+                    }if((!Input.GetButton("Fire1")&&!Input.GetKey(KeyCode.Z))||shootTimer<-1f){
                         if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                         shootCoroutine=null;
                         if(moving==true)timerEnRegen+=Time.deltaTime;
@@ -549,13 +556,13 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }
             }else if(inputType==InputType.drag){
                 if(!autoShoot){
-                    if(Input.GetButtonDown("Fire1")){
+                    if(Input.GetButtonDown("Fire1")||Input.GetKeyDown(KeyCode.Z)){
                         UseItemCurrent();
                         float timeSinceLastClick=Time.time-lastClickShootTime;
                         if(shootCoroutine!=null){return;}
                         else if(timeSinceLastClick<=DCLICK_TIME&&shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                         else{lastClickShootTime=Time.time;}
-                    }if(!Input.GetButton("Fire1")||shootTimer<-1f){
+                    }if((!Input.GetButton("Fire1")&&!Input.GetKey(KeyCode.Z))||shootTimer<-1f){
                         if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                         shootCoroutine=null;
                         if(moving==true)timerEnRegen+=Time.deltaTime;
@@ -597,10 +604,10 @@ public class Player : MonoBehaviour{    public static Player instance;
                 if(!moveX&&moveY)tpPos=new Vector2(transform.position.x,mousePos.y);
                 dashed=true;
             }else if(inputType==InputType.keyboard){
-                if(dir<0&&dir>-2){rb.velocity=Vector2.down*dashSpeed*moveDir;}
-                if(dir>0&&dir<2){rb.velocity=Vector2.up*dashSpeed*moveDir;}
-                if(dir<-1){rb.velocity=Vector2.left*dashSpeed*moveDir;}
-                if(dir>1){rb.velocity=Vector2.right*dashSpeed*moveDir;}
+                if(dir<0&&dir>-2){vel=Vector2.down*dashSpeed*moveDir;}
+                if(dir>0&&dir<2){vel=Vector2.up*dashSpeed*moveDir;}
+                if(dir<-1){vel=Vector2.left*dashSpeed*moveDir;}
+                if(dir>1){vel=Vector2.right*dashSpeed*moveDir;}
                 dashDir=0;
             }else if(inputType==InputType.touch){
                 dashed=true;
@@ -610,8 +617,8 @@ public class Player : MonoBehaviour{    public static Player instance;
             shadowed=true;
             AudioManager.instance.Play("Shadowdash");
             dashTime=startDashTime;
-            //else{ rb.velocity = Vector2.zero; }
-        }//else { dashTime = startDashTime; rb.velocity = Vector2.zero; }
+            //else{ vel = Vector2.zero; }
+        }//else { dashTime = startDashTime; vel = Vector2.zero; }
         
     }
 
@@ -939,12 +946,12 @@ public class Player : MonoBehaviour{    public static Player instance;
                 if(GetStatus("shadowdash").timer>0){GetStatus("shadowdash").timer-=Time.deltaTime;}
                 else{AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();RemoveStatus("shadowdash");}
 
-                if(dashTime<=0&&dashTime!=-4){rb.velocity=Vector2.zero;dashing=false;dashTime=-4;}
+                if(dashTime<=0&&dashTime!=-4){vel=Vector2.zero;dashing=false;dashTime=-4;}
                 else{if(!GameSession.GlobalTimeIsPaused)dashTime-=Time.deltaTime;}
                 if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}
                 if(energyOn&&energy<=0){RemoveStatus("shadowdash");}
                 Shadow();if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==true)GetComponent<TrailVFX>().enabled=false;}
-            }else{dashing=false;dashTime=-4;if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==false)GetComponent<TrailVFX>().enabled=true;}}
+            }else{vel=Vector2.zero;dashing=false;dashTime=-4;if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==false)GetComponent<TrailVFX>().enabled=true;}}
             if(_hasStatus("shadowtraces")){
                 if(GetStatus("shadowtraces").timer>0){GetStatus("shadowtraces").timer-=Time.deltaTime;}
                 else{AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();RemoveStatus("shadowtraces");}
@@ -1017,7 +1024,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(!GameSession.GlobalTimeIsPausedNotSlowed){
             if(_hasStatus("matrix")&&!_hasStatus("accel")){
                 CountdownStatusTimer("matrix",unscaledTime:true);
-                //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
+                //if((vel.x<0.7 && vel.x>-0.7) || (vel.y<0.7 && vel.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if((inputType==InputType.mouse || inputType==InputType.drag) && dist<1){
                     GameSession.instance.gameSpeed=dist;
@@ -1036,7 +1043,7 @@ public class Player : MonoBehaviour{    public static Player instance;
 
             if(_hasStatus("accel")&&!_hasStatus("matrix")){
                 CountdownStatusTimer("accel",unscaledTime:true);
-                //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
+                //if((vel.x<0.7 && vel.x>-0.7) || (vel.y<0.7 && vel.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if((inputType==InputType.mouse || inputType==InputType.drag) && dist>0.35){
                     GameSession.instance.gameSpeed=dist+(1-0.35f);
@@ -1056,7 +1063,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             if(_hasStatus("matrix")&&_hasStatus("accel")){
                 CountdownStatusTimer("matrix",unscaledTime:true);
                 CountdownStatusTimer("accel",unscaledTime:true);
-                //if((rb.velocity.x<0.7 && rb.velocity.x>-0.7) || (rb.velocity.y<0.7 && rb.velocity.y>-0.7)){
+                //if((vel.x<0.7 && vel.x>-0.7) || (vel.y<0.7 && vel.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(inputType==InputType.mouse || inputType==InputType.drag){
                     GameSession.instance.gameSpeed=dist;
@@ -1116,9 +1123,9 @@ public class Player : MonoBehaviour{    public static Player instance;
     IEnumerator RecoilI(float strength,float time){     if(!GameSession.GlobalTimeIsPaused){
         Shake.instance.CamShake(0.1f,1/(time*4));
         if(SaveSerial.instance.settingsData.vibrations)Vibrator.Vibrate(2);
-        rb.velocity = Vector2.down*strength;
+        vel = Vector2.down*strength;
         yield return new WaitForSeconds(time);
-        rb.velocity=Vector2.zero;
+        vel=Vector2.zero;
     }}
     
     IEnumerator onFireCor;

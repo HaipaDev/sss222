@@ -94,6 +94,647 @@ MonoBehaviour:
   musicSlowdownOnPaceChange: 1
   scoreMulti: 1
   luckMulti: 1
+  dmgValues:
+  - name: Shadowdash
+    colliType: 0
+    dmg: 20
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues:
+    - dmgFxType: 0
+      length: 1
+      power: 1
+      onPhase: 0
+      chance: 100
+    sound: EnemyHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Laser
+    colliType: 1
+    dmg: 5
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues:
+    - dmgFxType: 0
+      length: 1
+      power: 1
+      onPhase: 0
+      chance: 100
+    sound: EnemyHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: MLaser
+    colliType: 1
+    dmg: 0.33
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: MLaserHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: LSaber
+    colliType: 1
+    dmg: 7.77
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 2
+    phase: 1
+    dmgPhase: 2.33
+    phaseFreqFirst: 0
+    phaseFreq: 0.022
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: LSaberHit
+    soundPhase: .
+    dispDmgCount: 0
+    colliEvents: []
+  - name: CPick
+    colliType: 1
+    dmg: 15
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 4
+    phase: 1
+    dmgPhase: 1
+    phaseFreqFirst: 0.01
+    phaseFreq: 0.01
+    phaseCountLimit: 10
+    dmgFx: 0
+    dmgFxValues: []
+    sound: CPickHit
+    soundPhase: CStreamHit
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Phaser
+    colliType: 1
+    dmg: 0.5
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 3
+    phase: 1
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.05
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: PhaserHit
+    soundPhase: '-'
+    dispDmgCount: 0
+    colliEvents: []
+  - name: HRocket
+    colliType: 1
+    dmg: 13.5
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 3
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: HRocketHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents:
+    - onPhase: 0
+      vfx: ExplosionSmall
+      vfxPos: {x: 0, y: -0.5}
+      dmgPlayer: 0
+      dmgPlayerType: 1
+      healBeamPlayer: 0
+      assetMake: 
+      assetPos: {x: 0, y: 0}
+  - name: QRocket
+    colliType: 1
+    dmg: 14.5
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 4
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: QRocketHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents:
+    - onPhase: 0
+      vfx: ExplosionSmall
+      vfxPos: {x: 0, y: -0.5}
+      dmgPlayer: 0
+      dmgPlayerType: 1
+      healBeamPlayer: 0
+      assetMake: 
+      assetPos: {x: 0, y: 0}
+  - name: PRocket
+    colliType: 1
+    dmg: 0
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: PRocketHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Plasma
+    colliType: 1
+    dmg: 1
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 1
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: PlasmaExplosion
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: CBullet
+    colliType: 1
+    dmg: 2
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 1
+    phase: 1
+    dmgPhase: 1
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: CStreamHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents:
+    - onPhase: 0
+      vfx: 
+      vfxPos: {x: 0, y: 0}
+      dmgPlayer: 0
+      dmgPlayerType: 1
+      healBeamPlayer: -6
+      assetMake: 
+      assetPos: {x: 0, y: 0}
+  - name: PLaser
+    colliType: 1
+    dmg: 6.78
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 5
+    phase: 0
+    dmgPhase: 2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: PLaserHit
+    soundPhase: 
+    dispDmgCount: 1
+    colliEvents: []
+  - name: GloomyScythe
+    colliType: 1
+    dmg: 40.5
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 10
+    phase: 1
+    dmgPhase: 10
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: EnemyHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents:
+    - onPhase: 0
+      vfx: 
+      vfxPos: {x: 0, y: 0}
+      dmgPlayer: 0.1
+      dmgPlayerType: 1
+      healBeamPlayer: 0
+      assetMake: 
+      assetPos: {x: 0, y: 0}
+  - name: ShadowBT
+    colliType: 1
+    dmg: 40.5
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 1
+    dmgPhase: 10
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: EnemyHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: MPulse
+    colliType: 1
+    dmg: 111
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 5
+    phase: 1
+    dmgPhase: 0
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: MLaserHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: PlayerExhaustROF
+    colliType: 1
+    dmg: 0
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: -2
+    phase: 1
+    dmgPhase: 1
+    phaseFreqFirst: 0
+    phaseFreq: 0.04
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues: []
+    sound: Overheat
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Zone
+    colliType: 5
+    dmg: 0
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: -1
+    phase: 1
+    dmgPhase: 2
+    phaseFreqFirst: 0.33
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues:
+    - dmgFxType: 8
+      length: 2
+      power: 1
+      onPhase: 1
+      chance: 75
+    sound: MLaserHit
+    soundPhase: '-'
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Trail-LunarComet
+    colliType: 4
+    dmg: 0
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 1
+    dmgPhase: -0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Comet
+    colliType: 2
+    dmg: 7.6
+    dmgBySize: 1
+    dmgBySpeed: 1
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Bat
+    colliType: 2
+    dmg: 23
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Soundwave
+    colliType: 3
+    dmg: 16.5
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: SoundwaveHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: EnShip
+    colliType: 2
+    dmg: 60
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: EnBt
+    colliType: 3
+    dmg: 24.5
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 0.2
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues:
+    - dmgFxType: 8
+      length: 2
+      power: 1
+      onPhase: 0
+      chance: 50
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: EnSaber
+    colliType: 3
+    dmg: 3
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 1
+    dmgPhase: 2.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Goblin
+    colliType: 2
+    dmg: 16
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 2.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: GoblinBt
+    colliType: 3
+    dmg: 2.5
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 1
+    phase: 0
+    dmgPhase: 2.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues:
+    - dmgFxType: 5
+      length: 6
+      power: 0.8
+      onPhase: 0
+      chance: 75
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: HDrone
+    colliType: 2
+    dmg: 75
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 2.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Vortex
+    colliType: 2
+    dmg: 70
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 2.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Leech
+    colliType: 2
+    dmg: 0
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 1
+    dmgPhase: 4
+    phaseFreqFirst: 0.8
+    phaseFreq: 0.4
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: LeechBite
+    soundPhase: '-'
+    dispDmgCount: 0
+    colliEvents: []
+  - name: VLaser
+    colliType: 4
+    dmg: 90
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 1
+    dmgPhase: 75
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: HLaser
+    colliType: 4
+    dmg: 16
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 1
+    dmgPhase: 14
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: Stinger
+    colliType: 2
+    dmg: 33.3
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 14
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 1
+    dmgFxValues:
+    - dmgFxType: 7
+      length: 10
+      power: 1
+      onPhase: 0
+      chance: 66
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: GlareDevil
+    colliType: 2
+    dmg: 9.9
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 0
+    phase: 0
+    dmgPhase: 14
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 0
+    dmgFx: 0
+    dmgFxValues: []
+    sound: 
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: LSpike
+    colliType: 1
+    dmg: 7
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 1
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 3
+    dmgFx: 0
+    dmgFxValues: []
+    sound: EnemyHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
   startingPosPlayer: {x: 0, y: -6.24}
   autoShootPlayer: 0
   moveX: 1
@@ -854,8 +1495,7 @@ MonoBehaviour:
     dodgeTime: 0.5
   vortexWheelSettings:
     startTimer: 3
-    timeToDieMin: 8
-    timeToDieMax: 13
+    timeToDieSet: {x: 4, y: 6}
     chargeMultip: 0.8
     chargeMultipS: 1.3
     projectile: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2,
@@ -884,647 +1524,6 @@ MonoBehaviour:
     timerStay: 1
     chargingAnimation: {fileID: 9100000, guid: e934db25d7e0e1f46b62468ae3d791cc, type: 2}
     hlaserAnimation: {fileID: 9100000, guid: a1f3b8815cf17fa4d882ceb6a891db8d, type: 2}
-  dmgValues:
-  - name: Shadowdash
-    colliType: 0
-    dmg: 20
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 0.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues:
-    - dmgFxType: 0
-      length: 1
-      power: 1
-      onPhase: 0
-      chance: 100
-    sound: EnemyHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Laser
-    colliType: 1
-    dmg: 5
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 0.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues:
-    - dmgFxType: 0
-      length: 1
-      power: 1
-      onPhase: 0
-      chance: 100
-    sound: EnemyHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: MLaser
-    colliType: 1
-    dmg: 0.33
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 0.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: MLaserHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: LSaber
-    colliType: 1
-    dmg: 7.77
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 2
-    phase: 1
-    dmgPhase: 2.33
-    phaseFreqFirst: 0
-    phaseFreq: 0.022
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: LSaberHit
-    soundPhase: .
-    dispDmgCount: 0
-    colliEvents: []
-  - name: CPick
-    colliType: 1
-    dmg: 15
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 4
-    phase: 1
-    dmgPhase: 1
-    phaseFreqFirst: 0.01
-    phaseFreq: 0.01
-    phaseCountLimit: 10
-    dmgFx: 0
-    dmgFxValues: []
-    sound: CPickHit
-    soundPhase: CStreamHit
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Phaser
-    colliType: 1
-    dmg: 0.5
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 3
-    phase: 1
-    dmgPhase: 0.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.05
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: PhaserHit
-    soundPhase: '-'
-    dispDmgCount: 0
-    colliEvents: []
-  - name: HRocket
-    colliType: 1
-    dmg: 13.5
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 3
-    phase: 0
-    dmgPhase: 0.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: HRocketHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents:
-    - onPhase: 0
-      vfx: ExplosionSmall
-      vfxPos: {x: 0, y: -0.5}
-      dmgPlayer: 0
-      dmgPlayerType: 1
-      healBeamPlayer: 0
-      assetMake: 
-      assetPos: {x: 0, y: 0}
-  - name: QRocket
-    colliType: 1
-    dmg: 14.5
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 4
-    phase: 0
-    dmgPhase: 0.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: QRocketHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents:
-    - onPhase: 0
-      vfx: ExplosionSmall
-      vfxPos: {x: 0, y: -0.5}
-      dmgPlayer: 0
-      dmgPlayerType: 1
-      healBeamPlayer: 0
-      assetMake: 
-      assetPos: {x: 0, y: 0}
-  - name: PRocket
-    colliType: 1
-    dmg: 0
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 0.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: PRocketHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Plasma
-    colliType: 1
-    dmg: 1
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 1
-    dmgPhase: 0.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: PlasmaExplosion
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: CBullet
-    colliType: 1
-    dmg: 2
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 1
-    phase: 1
-    dmgPhase: 1
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: CStreamHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents:
-    - onPhase: 0
-      vfx: 
-      vfxPos: {x: 0, y: 0}
-      dmgPlayer: 0
-      dmgPlayerType: 1
-      healBeamPlayer: -6
-      assetMake: 
-      assetPos: {x: 0, y: 0}
-  - name: PLaser
-    colliType: 1
-    dmg: 6.78
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 5
-    phase: 0
-    dmgPhase: 2
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: PLaserHit
-    soundPhase: 
-    dispDmgCount: 1
-    colliEvents: []
-  - name: GloomyScythe
-    colliType: 1
-    dmg: 40.5
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 10
-    phase: 1
-    dmgPhase: 10
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: EnemyHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents:
-    - onPhase: 0
-      vfx: 
-      vfxPos: {x: 0, y: 0}
-      dmgPlayer: 0.1
-      dmgPlayerType: 1
-      healBeamPlayer: 0
-      assetMake: 
-      assetPos: {x: 0, y: 0}
-  - name: ShadowBT
-    colliType: 1
-    dmg: 40.5
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 1
-    dmgPhase: 10
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: EnemyHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: MPulse
-    colliType: 1
-    dmg: 111
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 5
-    phase: 1
-    dmgPhase: 0
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: MLaserHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: PlayerExhaustROF
-    colliType: 1
-    dmg: 0
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: -2
-    phase: 1
-    dmgPhase: 1
-    phaseFreqFirst: 0
-    phaseFreq: 0.04
-    phaseCountLimit: 0
-    dmgFx: 1
-    dmgFxValues: []
-    sound: Overheat
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Zone
-    colliType: 5
-    dmg: 0
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: -1
-    phase: 1
-    dmgPhase: 2
-    phaseFreqFirst: 0.33
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 1
-    dmgFxValues:
-    - dmgFxType: 8
-      length: 2
-      power: 1
-      onPhase: 1
-      chance: 75
-    sound: MLaserHit
-    soundPhase: '-'
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Trail-LunarComet
-    colliType: 4
-    dmg: 0
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 1
-    dmgPhase: -0.2
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Comet
-    colliType: 2
-    dmg: 10
-    dmgBySize: 1
-    dmgBySpeed: 1
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 0.2
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Bat
-    colliType: 2
-    dmg: 23
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 0.2
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Soundwave
-    colliType: 3
-    dmg: 16.5
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 0.2
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: SoundwaveHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: EnShip
-    colliType: 2
-    dmg: 60
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 0.2
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: EnBt
-    colliType: 3
-    dmg: 24.5
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 0.2
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 1
-    dmgFxValues:
-    - dmgFxType: 8
-      length: 2
-      power: 1
-      onPhase: 0
-      chance: 50
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: EnSaber
-    colliType: 3
-    dmg: 3
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 1
-    dmgPhase: 2.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Goblin
-    colliType: 2
-    dmg: 16
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 2.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: GoblinBt
-    colliType: 3
-    dmg: 2.5
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 1
-    phase: 0
-    dmgPhase: 2.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 1
-    dmgFxValues:
-    - dmgFxType: 5
-      length: 6
-      power: 0.8
-      onPhase: 0
-      chance: 75
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: HDrone
-    colliType: 2
-    dmg: 75
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 2.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Vortex
-    colliType: 2
-    dmg: 70
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 2.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 1
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Leech
-    colliType: 2
-    dmg: 0
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 1
-    dmgPhase: 4
-    phaseFreqFirst: 0.8
-    phaseFreq: 0.4
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: LeechBite
-    soundPhase: '-'
-    dispDmgCount: 0
-    colliEvents: []
-  - name: VLaser
-    colliType: 4
-    dmg: 90
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 1
-    dmgPhase: 75
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: HLaser
-    colliType: 4
-    dmg: 16
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 1
-    dmgPhase: 14
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: Stinger
-    colliType: 2
-    dmg: 33.3
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 14
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 1
-    dmgFxValues:
-    - dmgFxType: 7
-      length: 10
-      power: 1
-      onPhase: 0
-      chance: 66
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: GlareDevil
-    colliType: 2
-    dmg: 9.9
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 0
-    phase: 0
-    dmgPhase: 14
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 0
-    dmgFx: 0
-    dmgFxValues: []
-    sound: 
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
-  - name: LSpike
-    colliType: 1
-    dmg: 7
-    dmgBySize: 0
-    dmgBySpeed: 0
-    armorPenetr: 1
-    phase: 0
-    dmgPhase: 0.5
-    phaseFreqFirst: 0
-    phaseFreq: 0.33
-    phaseCountLimit: 3
-    dmgFx: 0
-    dmgFxValues: []
-    sound: EnemyHit
-    soundPhase: 
-    dispDmgCount: 0
-    colliEvents: []
   shopSpawnReqsType: 1
   shopSpawnReqs:
     rid: 7268785640884928513
@@ -1642,7 +1641,7 @@ MonoBehaviour:
     equipped: 0
   - item: {fileID: 11400000, guid: 06432481964c7e341b61c318577cbd27, type: 2}
     lvlVals:
-    - coreCost: -1
+    - coreCost: 5
       lvlReq: 4
     lvlExpire: 0
     unlockedLvl: 0

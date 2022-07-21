@@ -35,6 +35,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -224,8 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTimer: 3
-  timeToDieMin: 8
-  timeToDieMax: 13
+  timeToDieSet: {x: 4, y: 6}
   chargeMultip: 0.8
   chargeMultipS: 1.7
   sprites:
@@ -237,6 +237,7 @@ MonoBehaviour:
   - {fileID: -4664237303355470495, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
   - {fileID: 8177744278797253353, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
   - {fileID: 2384622420488753761, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
+  timeToDie: 0
   timer: -4
 --- !u!114 &1173182280
 MonoBehaviour:

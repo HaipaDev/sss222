@@ -134,7 +134,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     public void OpenSkillsList(int id){selectedSkillSlot=id;CloseAllModulesSkills();skillsList.SetActive(true);SetModulesAndSkillsLvlVals();}
 
     public void UnlockLvlModule(string name){
-        if(pmodules.UnlockModule(name)){AudioManager.instance.Play("Upgrade");SetModulesAndSkillsLvlVals();StatsAchievsManager.instance.ModuleUnlocked();}
+        if(pmodules.UnlockModule(name)){AudioManager.instance.Play("Upgrade");SetModulesAndSkillsLvlVals();StatsAchievsManager.instance.ModuleUnlocked();if(pmodules.moduleSlots[selectedModuleSlot]==""){SetModuleSlot(name);}}//pmodules.SetModule(selectedModuleSlot,name);}}
         else{AudioManager.instance.Play("Deny");}
     }
     public void SetModuleSlot(string name){
@@ -142,20 +142,18 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             if(pmodules._isModuleEquipped(name)&&name!=""){pmodules.ClearModule(name);}
             pmodules.SetModule(selectedModuleSlot,name);
             if(name=="Dark Surge"){SetAutoascend(false);}
-            //if(name!=""){StatsAchievsManager.instance.ModuleUnlocked();}
             //BackToModulesSkillsInventory();
         }
     }
 
     public void UnlockLvlSkill(string name){
-        if(pmodules.UnlockSkill(name)){AudioManager.instance.Play("Upgrade");SetModulesAndSkillsLvlVals();StatsAchievsManager.instance.ModuleUnlocked();}
+        if(pmodules.UnlockSkill(name)){AudioManager.instance.Play("Upgrade");SetModulesAndSkillsLvlVals();StatsAchievsManager.instance.ModuleUnlocked();if(pmodules.skillsSlots[selectedSkillSlot]==""){SetSkillSlot(name);}}//pmodules.SetSkill(selectedSkillSlot,name);}}
         else{AudioManager.instance.Play("Deny");}
     }
     public void SetSkillSlot(string name){
         if(pmodules._isSkillUnlocked(name)||name==""){
             if(pmodules._isSkillEquipped(name)&&name!=""){pmodules.ClearSkill(name);}
             pmodules.SetSkill(selectedSkillSlot,name);
-            //if(name!=""){StatsAchievsManager.instance.ModuleUnlocked();}
             //BackToModulesSkillsInventory();
         }
     }

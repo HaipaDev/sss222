@@ -54,6 +54,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public float scoreMulti=1;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public float luckMulti=1;
 #endregion
+    [HideIf("_isAdventureSubZone")][Searchable]public List<DamageValues> dmgValues;
 #region//Player
 [Title("Player", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Player",false,VisibleIf="@this._isAdventureSubZone==false")]public Vector2 startingPosPlayer=new Vector2(0.36f,-6.24f);
@@ -176,10 +177,6 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [FoldoutGroup("Enemies")]public GoblinBossSettings goblinBossSettings;
     [FoldoutGroup("Enemies")]public HLaserSettings vlaserSettings;
     [FoldoutGroup("Enemies")]public HLaserSettings hlaserSettings;
-#endregion
-#region//Damage Values
-[Title("DMG Values", titleAlignment: TitleAlignments.Centered)]
-    [FoldoutGroup("DMG Values",false,VisibleIf="@this._isAdventureSubZone==false")][Searchable]public List<DamageValues> dmgValues;
 #endregion
 #region//Shop
 [Title("Trading", titleAlignment: TitleAlignments.Centered)]
@@ -582,8 +579,7 @@ public class HealingDroneSettings{
 [System.Serializable]
 public class VortexWheelSettings{
     public float startTimer=3f;
-    public float timeToDieMin=8f;
-    public float timeToDieMax=13f;
+    public Vector2 timeToDieSet=new Vector2(4f,6f);
     public float chargeMultip=0.8f;
     public float chargeMultipS=1.3f;
     Sprite[] sprites;
