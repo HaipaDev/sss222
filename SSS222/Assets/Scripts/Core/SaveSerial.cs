@@ -187,6 +187,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	[System.Serializable]public class AdventureData{
 		public int cores=0;
 		public float xp=0;
+		public bool _coreSpawnedPreAscend=false;
 		public int zoneSelected=0;
 		public int zoneToTravelTo=-1;
 		public float travelTimeLeft=-4;

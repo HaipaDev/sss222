@@ -5,9 +5,11 @@ using UnityEngine.UI;
 using TMPro;
 using Sirenix.OdinInspector;
 
-public class GameCanvas : MonoBehaviour{
-    public static GameCanvas instance;
+public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
     float popupSumTime=0.25f;
+    [ChildGameObjectsOnly][SerializeField] List<RectTransform> rescale16by9;
+    [SerializeField] List<RectTransformAndPos> rescaleAndMove16by9;
+    [SerializeField] List<RectTransformAndPos> onlyMove16by9;
     [SceneObjectsOnly][SerializeField] GameObject hpPopup;
     [DisableInEditorMode][SerializeField] float hpCount;
     [DisableInEditorMode][SerializeField] float hpTimer;
@@ -36,6 +38,22 @@ public class GameCanvas : MonoBehaviour{
     [DisableInEditorMode][SerializeField] float ammoCount;
     [DisableInEditorMode][SerializeField] float ammoTimer;
     void Awake(){if(GameCanvas.instance!=null){Destroy(gameObject);}else{instance=this;}}
+    void Start(){
+        if(Camera.main.aspect>=1.33){
+            foreach(RectTransform t in rescale16by9){
+                t.localScale=new Vector2(2,2);
+                t.anchoredPosition=new Vector2(t.anchoredPosition.x*2,t.anchoredPosition.y*2);
+            }
+            foreach(RectTransformAndPos rt in rescaleAndMove16by9){
+                rt.trans.anchorMin=new Vector2(0,1);rt.trans.anchorMax=new Vector2(0,1);
+                rt.trans.localScale=new Vector2(2,2);
+                rt.trans.anchoredPosition=new Vector2(rt.pos.x,rt.pos.y);
+            }
+            foreach(RectTransformAndPos rt in onlyMove16by9){
+                rt.trans.anchoredPosition=new Vector2(rt.pos.x,rt.pos.y);
+            }
+        }
+    }
     void Update(){
         if(SaveSerial.instance!=null)if(popupSumTime!=SaveSerial.instance.settingsData.popupSumTime){popupSumTime=SaveSerial.instance.settingsData.popupSumTime;}
 

@@ -17,6 +17,8 @@ public class LeechAttach : MonoBehaviour{
 
     Follow follow;
     Rigidbody2D rb;
+    bool _quickTimeEvent;
+
     void Awake(){
     //Set Values
     var i=GameRules.instance;
@@ -34,6 +36,7 @@ public class LeechAttach : MonoBehaviour{
     }
 
     void Update(){
+        if(Player.instance!=null){if(SaveSerial.instance.settingsData.inputType==InputType.keyboard){_quickTimeEvent=true;}else{_quickTimeEvent=false;}}
         if(follow.targetObj!=null){
             dist=Vector2.Distance(follow.targetPos,follow.selfPos);
             if(dist<catch_distance&&detached==false){
@@ -43,21 +46,37 @@ public class LeechAttach : MonoBehaviour{
                 }
             }else{attached=false;}
 
-            if(attached==true){
-                if(count<count_max){
-                    if(follow.selfPos.x>follow.targetPos.x+shake_distance){
-                        if(stage==0)stage=1;
-                    }
-                    else if(follow.selfPos.x<follow.targetPos.x-shake_distance){
-                        if (stage==1)stage=2;
-                    }
+            if(!_quickTimeEvent){
+                if(attached==true){
+                    if(count<count_max){
+                        if(follow.selfPos.x>follow.targetPos.x+shake_distance){
+                            if(stage==0)stage=1;
+                        }
+                        else if(follow.selfPos.x<follow.targetPos.x-shake_distance){
+                            if (stage==1)stage=2;
+                        }
 
-                    if(stage==2){
-                        count+=1;
-                        stage=0;
+                        if(stage==2){
+                            count+=1;
+                            stage=0;
+                        }
+                    }else{
+                        if(follow.selfPos.x<follow.targetPos.x-shake_distance){
+                            rb.velocity=new Vector2(fallSpeed,-fallSpeed);
+                            follow.enabled=false;
+                            detached=true;
+                            attached=false;
+                        }
                     }
-                }else{
-                    if(follow.selfPos.x<follow.targetPos.x-shake_distance){
+                }
+            }else{
+                if(attached==true){
+                    if(count<count_max){
+                        if(stage==0&&Input.GetAxis("Horizontal")>0){count++;stage++;}
+                        if(stage==1&&Input.GetAxis("Horizontal")<0){stage++;}
+                        if(stage==2&&Input.GetAxis("Horizontal")>0){count++;stage++;}
+                        if(stage==3&&Input.GetAxis("Horizontal")<0){count++;stage=0;}
+                    }else{
                         rb.velocity=new Vector2(fallSpeed,-fallSpeed);
                         follow.enabled=false;
                         detached=true;

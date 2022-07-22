@@ -430,6 +430,16 @@ public class SimpleAnim{
 	public Sprite spr;
 	public float delay;
 }
+[System.Serializable]
+public class TransformAndPos{
+	public Transform trans;
+	public Vector2 pos;
+}
+[System.Serializable]
+public class RectTransformAndPos{
+	public RectTransform trans;
+	public Vector2 pos;
+}
 
 public enum CstmzRarity{def,common,rare,epic,legend}
 public enum CstmzCategory{special,shop,reOne,twoPiece}

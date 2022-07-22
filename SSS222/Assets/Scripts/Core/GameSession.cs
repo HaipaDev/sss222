@@ -153,7 +153,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;if(sr!=null){if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-2);}}
     }
     SpriteRenderer _blurImg;
-    bool _preLvlUp;
+    bool _coreSpawnedPreAscend;
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
         if(SceneManager.GetActiveScene().name=="Game"){
@@ -183,7 +183,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"){
             if(xpTotal<0)xpTotal=0;
             if(GameRules.instance.xpOn&&xp>=xpMax&&GameRules.instance.levelingOn){
-                if(!_preLvlUp){
+                if(!_coreSpawnedPreAscend){
                     if(GameRules.instance.coresOn){GameAssets.instance.Make("PowerCore",new Vector2(UnityEngine.Random.Range(-3.5f, 3.5f),7.4f));}
 
                     var lvlPopup=GameAssets.instance.FindNotifUIByType(notifUI_type.lvlUp);
@@ -192,7 +192,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     FindObjectOfType<OnScreenButtons>().lvldUp=true;
                     if(FindObjectOfType<CelestialPoints>()!=null)FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();
 
-                    _preLvlUp=true;
+                    _coreSpawnedPreAscend=true;
                 }
                 if(Player.instance!=null){
                     if(Player.instance.GetComponent<PlayerModules>()._isAutoAscend()||(!Player.instance.GetComponent<PlayerModules>()._isAutoAscend()&&Input.GetKeyDown(KeyCode.L))){
@@ -346,7 +346,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public void Ascend(){
         xp=xp-xpMax;
         AudioManager.instance.Play("LvlUp");
-        _preLvlUp=false;
+        _coreSpawnedPreAscend=false;
         if(FindObjectOfType<CelestialPoints>()!=null)FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();
     }
     public void AddEnemyCount(){
@@ -420,6 +420,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             if(p!=null){
                 if(p.health>0){
                     ss.xp=xp;
+                    ss._coreSpawnedPreAscend=_coreSpawnedPreAscend;
                     ss.health=p.health;
                     ss.hpAbsorpAmnt=p.hpAbsorpAmnt;
                     ss.energy=p.energy;
@@ -429,6 +430,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     ss.statuses=p.statuses;
                 }else{
                     ss.xp=0;
+                    ss._coreSpawnedPreAscend=false;
                     ss.health=GameRules.instance.healthPlayer;
                     ss.hpAbsorpAmnt=0;
                     ss.energy=GameRules.instance.energyPlayer;
@@ -477,7 +479,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 var phb=CreatePlayerHoloBody(new Vector2(ss.holo_posX,7.6f));
                 phb.SetTime(ss.holo_timeAt);
             }
-            if(ss.health>0){xp=ss.xp;p.health=ss.health;}else{xp=0;p.health=GameRules.instance.healthPlayer;}
+            if(ss.health>0){p.health=ss.health;xp=ss.xp;_coreSpawnedPreAscend=ss._coreSpawnedPreAscend;}else{p.health=GameRules.instance.healthPlayer;xp=0;_coreSpawnedPreAscend=false;}
             p.hpAbsorpAmnt=ss.hpAbsorpAmnt;
             p.energy=ss.energy;
             p.enAbsorpAmnt=ss.enAbsorpAmnt;
