@@ -303,7 +303,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
         return ss;
 	}
 	public static bool CaseInsStrCmpr(string str,string toComp){return str.IndexOf(toComp, StringComparison.OrdinalIgnoreCase) >= 0;}
-	public static int BoolToInt(bool b){int i=0;if(b==true){i=1;}return i;}
+	public static int BoolToInt(bool b){if(b){return 1;}else{return 0;}}
 #endregion
 
 #region//Public functions
@@ -428,8 +428,10 @@ public class ShaderMatProps{
 [System.Serializable]
 public class SimpleAnim{
 	public Sprite spr;
-	public float delay;
+	public float delay=0.02f;
 }
+[System.Serializable]
+public class ListOfSimpleAnims{public List<SimpleAnim> anim;}
 [System.Serializable]
 public class TransformAndPos{
 	public Transform trans;

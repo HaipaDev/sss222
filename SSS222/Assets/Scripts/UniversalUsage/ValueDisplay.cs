@@ -132,8 +132,16 @@ public class ValueDisplay : MonoBehaviour{
                     if(gr.scoreDisplay==scoreDisplay.score)_txt=GameSession.instance.score.ToString();
                     else if(gr.scoreDisplay==scoreDisplay.sessionTime)_txt=GameSession.instance.GetGameSessionTimeFormat().ToString();
                     else if(gr.scoreDisplay==scoreDisplay.timeLeft)_txt=GameSession.instance.GetGameTimeLeftFormat().ToString();
-                    else if(gr.scoreDisplay==scoreDisplay.bossHealth)_txt=FindObjectOfType<Enemy>().health.ToString()+"/"+FindObjectOfType<Enemy>().healthMax;
                     else if(gr.scoreDisplay==scoreDisplay.sessionTimeAsDistance)_txt=(Mathf.RoundToInt(GameSession.instance.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";
+                    
+                    else if(gr.scoreDisplay==scoreDisplay.bossHealth){
+                        if(FindObjectOfType<BossAI>()!=null){
+                            var hp=FindObjectOfType<BossAI>().GetComponent<Enemy>().health;
+                            var hpmax=FindObjectOfType<BossAI>().GetComponent<Enemy>().healthMax;
+                            if(hp>=10){hp=Mathf.RoundToInt(hp);}else{hp=(float)System.Math.Round(hp,2);}
+                            _txt=hp.ToString()+"/"+hpmax;
+                        }else{_txt="0";}
+                    }
                 }
             }
             else if(value=="gameSpeedGR") _txt=gr.defaultGameSpeed.ToString();

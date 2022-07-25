@@ -76,7 +76,7 @@ PrefabInstance:
         type: 3}
       propertyPath: bossInfo.spr
       value: 
-      objectReference: {fileID: 21300000, guid: 83a11dbcdb4e2bc45bba9a5b6663bd12,
+      objectReference: {fileID: 21300000, guid: 5a93596a45b906341b20063f565382c9,
         type: 3}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -111,7 +111,7 @@ PrefabInstance:
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: bossInfo.xpAmnt
-      value: 66
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -120,8 +120,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.defense
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: cfgIconAssetName
-      value: Bat
+      value: MoonOfLunacy-1
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -131,7 +136,7 @@ PrefabInstance:
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: bossInfo.healthMax
-      value: 250
+      value: 456
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -152,6 +157,11 @@ PrefabInstance:
         type: 3}
       propertyPath: bossIdkXD.healthMax
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.destroyOut
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -176,7 +186,7 @@ PrefabInstance:
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: bossInfo.healthStart
-      value: 250
+      value: 456
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -295,6 +305,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: managedReferences[2].bothNeeded
       value: 0
       objectReference: {fileID: 0}
@@ -373,6 +388,11 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.phaseSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: waveList.Array.data[0].dropChance
       value: 7
       objectReference: {fileID: 0}
@@ -413,6 +433,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].defense
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].defense
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: managedReferences[7268785640884928513].timer
       value: 11.184198
       objectReference: {fileID: 0}
@@ -428,8 +478,102 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].anims.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].anims.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: managedReferences[7402535244629278720].scoreNeeded
       value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phaseSprites.Array.data[0].anim.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phaseSprites.Array.data[1].anim.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].sprMatProps.value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].sprMatProps.value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].sprMatProps.pixelate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].sprMatProps.pixelate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].sprMatProps.saturation
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].sprMatProps.saturation
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].anims.Array.data[0].spr
+      value: 
+      objectReference: {fileID: 21300000, guid: 5a93596a45b906341b20063f565382c9,
+        type: 3}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].anims.Array.data[0].spr
+      value: 
+      objectReference: {fileID: 21300000, guid: cc617dcc8b2ee894b87f23cb991edacf,
+        type: 3}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phaseSprites.Array.data[0].anim.Array.data[0].spr
+      value: 
+      objectReference: {fileID: 21300000, guid: 5a93596a45b906341b20063f565382c9,
+        type: 3}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phaseSprites.Array.data[1].anim.Array.data[0].spr
+      value: 
+      objectReference: {fileID: 21300000, guid: cc617dcc8b2ee894b87f23cb991edacf,
+        type: 3}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].anims.Array.data[0].delay
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].anims.Array.data[0].delay
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phaseSprites.Array.data[0].anim.Array.data[0].delay
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phaseSprites.Array.data[1].anim.Array.data[0].delay
+      value: 0.02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ed435af9cf40c9489efd9ad88a6e37e, type: 3}

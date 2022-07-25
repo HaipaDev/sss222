@@ -11,6 +11,7 @@ public class VortexWheel : MonoBehaviour{
     [SerializeField] public float chargeMultipS=1.3f;
     [SerializeField] Sprite[] sprites;
     [Header("Values")]
+    Enemy en;
     Tag_PlayerWeapon[] WeapsArr;
     KdTree<Tag_PlayerWeapon> Weaps;
     [DisableInEditorMode][SerializeField]float timeToDie;
@@ -19,6 +20,7 @@ public class VortexWheel : MonoBehaviour{
     
     Sprite spr;
     void Awake(){
+        en=GetComponent<Enemy>();
         var i=GameRules.instance;
         if(i!=null){
             var e=i.vortexWheelSettings;
@@ -27,10 +29,9 @@ public class VortexWheel : MonoBehaviour{
             chargeMultip=e.chargeMultip;
             chargeMultipS=e.chargeMultipS;
         }
-        GetComponent<Enemy>().shooting=false;
+        en.shooting=false;
     }
     void Start(){
-        spr=GetComponent<SpriteRenderer>().sprite;
         timeToDie=UnityEngine.Random.Range(timeToDieSet.x,timeToDieSet.y)+3;
         if(timer==-4){timer=startTimer;}
     }
@@ -39,7 +40,6 @@ public class VortexWheel : MonoBehaviour{
         if(!GameSession.GlobalTimeIsPaused){
             Weaps=FindAllLaserWeapons();
             Discharge();
-            GetComponent<SpriteRenderer>().sprite=spr;
         }
     }
     public KdTree<Tag_PlayerWeapon> FindAllLaserWeapons(){
@@ -64,26 +64,26 @@ public class VortexWheel : MonoBehaviour{
         if(timer>timeToDie){StartCoroutine(Die());}
         
         if(timer<=0 && timer>-4){StartCoroutine(Shoot());}
-        if(timer<=1 && timer>0)spr=sprites[4];
-        if(timer>=1 && timer<1.5)spr=sprites[3];
-        if(timer>=1.5 && timer<2)spr=sprites[2];
-        if(timer>=2.5 && timer<3)spr=sprites[1];
-        if(timer>=3 || timer==-4)spr=sprites[0];
+        if(timer<=1 && timer>0)en.spr=sprites[4];
+        if(timer>=1 && timer<1.5)en.spr=sprites[3];
+        if(timer>=1.5 && timer<2)en.spr=sprites[2];
+        if(timer>=2.5 && timer<3)en.spr=sprites[1];
+        if(timer>=3 || timer==-4)en.spr=sprites[0];
     }
 
     IEnumerator Die(){
         timer=-5;
         GetComponent<CircleCollider2D>().enabled=false;
-        spr=sprites[7];
+        en.spr=sprites[7];
         AudioManager.instance.Play("VortexDie");
         yield return new WaitForSeconds(1.65f);
         if(GetComponent<ParticleDelay>()!=null)GetComponent<ParticleDelay>().on=true;
-        var enemy=GetComponent<Enemy>();enemy.health=-1;enemy.Die();
+        en.health=-1;en.Die();
     }
 
     IEnumerator Shoot(){
         timer=-5;
-        spr=sprites[5];
+        en.spr=sprites[5];
         AudioManager.instance.Play("VortexCharge");
         var angle=0;
         //if(angle<360)angle+=15;
@@ -95,7 +95,7 @@ public class VortexWheel : MonoBehaviour{
         yield return new WaitForSeconds(0.33f);
         GetComponent<LaunchRadialBullets>().Shoot();
         yield return new WaitForSeconds(0.33f);
-        spr=sprites[6];
+        en.spr=sprites[6];
         yield return new WaitForSeconds(0.66f);
         timer=startTimer;
     }

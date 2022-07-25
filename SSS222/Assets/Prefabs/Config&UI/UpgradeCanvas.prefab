@@ -5493,6 +5493,7 @@ GameObject:
   - component: {fileID: 428314473533081504}
   - component: {fileID: 4358077195725851753}
   - component: {fileID: 4081557207714984526}
+  - component: {fileID: 219254092989952504}
   m_Layer: 5
   m_Name: GalaxyMapButton
   m_TagString: Untagged
@@ -5643,6 +5644,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reverse: 1
   gamemodeName: Adventure
+--- !u!114 &219254092989952504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37886912674473965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8c503f9ab278f4ea057cfb98b11629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valueName: isBossZone
+  valueSet: 1
+  below: 0
+  disableComponents: 0
+  disableChildren: 0
+  disableChildrenComponents: 1
+  value: 0
+  timeToCheckForPresence: 3
+  timerToCheckForPresence: 0
+  delay: 0
 --- !u!1 &40273142815222445
 GameObject:
   m_ObjectHideFlags: 0

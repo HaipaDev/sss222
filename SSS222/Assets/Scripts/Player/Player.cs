@@ -187,6 +187,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         bgSprite=GameObject.Find("BG ColorM").GetComponent<Renderer>();
 
         yield return new WaitForSeconds(0.06f);
+        if(FindObjectOfType<BossAI>()!=null)shipScaleDefault=GameRules.instance.shipScaleBoss;
 
         //inputMaster.Player.Shoot.performed += _ => Shoot();
         //if(!speeded&&!slowed){speedPrev=moveSpeedInit;}

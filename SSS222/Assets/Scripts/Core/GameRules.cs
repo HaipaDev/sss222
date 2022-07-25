@@ -161,7 +161,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         spawnReqsMono.Validate(ref p.spawnReqs, ref p.spawnReqsType);}}
     #endregion
 [Title("Boss", titleAlignment: TitleAlignments.Centered)]
-    [BoxGroup("Boss Info",false,VisibleIf="@this._isAdventureBossZone")]public EnemyClass bossInfo;
+    [BoxGroup("Boss Info",false,VisibleIf="@this._isAdventureBossZone")]public BossClass bossInfo;
+    [BoxGroup("Boss Info")]public float shipScaleBoss=0.66f;
 [Title("Enemies", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Enemies",false,VisibleIf="@this._isAdventureSubZone==false")]public bool enemyDefenseHit=true;
     [FoldoutGroup("Enemies")]public bool enemyDefensePhase=true;
@@ -257,6 +258,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             powerupSpawners=null;
             //Boss info
             bossInfo=gr.bossInfo;
+            shipScaleBoss=gr.shipScaleBoss;
+            if(bossInfo.name!=""){GameAssets.instance.Make(bossInfo.name,Vector2.zero);}
         }
     }
     void Awake(){if(GameRules.instance!=null&&this!=GameRules.instance){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
@@ -319,6 +322,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
                 ps[i].powerupSpawnPosRange=powerupSpawners[i].powerupSpawnPosRange;
             }}
         }
+
+        if(bossInfo.name!=""&&FindObjectOfType<BossAI>()==null){GameAssets.instance.Make(bossInfo.name,Vector2.zero);}
     }
     [NonSerialized][ES3NonSerializable]Player p;
     void Update(){
@@ -326,6 +331,11 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         if(!(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode"||SceneManager.GetActiveScene().name=="AdventureZones"||SceneManager.GetActiveScene().name=="SandboxMode")){
             Destroy(gameObject);}
         CapToMaxValues();
+        if(FindObjectOfType<BossAI>()!=null){if(scoreDisplay!=scoreDisplay.bossHealth){scoreDisplay=scoreDisplay.bossHealth;}
+            foreach(Waves w in FindObjectsOfType<Waves>())Destroy(w.gameObject);
+            foreach(DisruptersSpawner ds in FindObjectsOfType<DisruptersSpawner>())Destroy(ds.gameObject);
+            foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())Destroy(ps.gameObject);
+        }
     }
     void OnValidate(){
         foreach(ListEvents le in lvlEvents){le.name="Levels: "+le.lvls.x+"-"+le.lvls.y;}
@@ -519,12 +529,33 @@ public class EnemyClass{
     public bool randomizeWaveDeath = false;
     public bool flyOff = false;
     public bool killOnDash = true;
+    public bool destroyOut = true;
 [Header("Drops & Points")]
     public bool giveScore = true;
     [ShowIf("@this.giveScore")]public Vector2 scoreValue=new Vector2(1,10);
-    public float xpAmnt = 0f;
+    public float xpChance = 100f;
+    [EnableIf("@this.xpChance>0")]public float xpAmnt = 0f;
+    [EnableIf("@this.xpChance>0")]public bool accumulateXp = true;
+    public List<LootTableEntryDrops> drops;
+}
+[System.Serializable]
+public class BossClass{
+    public string name;
+    public enemyType type;
+    public float healthStart=25;
+    public float healthMax=25;
+[Header("Drops")]
+    public float xpAmnt = 100f;
     public float xpChance = 100f;
     public List<LootTableEntryDrops> drops;
+    public List<BossPhaseInfo> phasesInfo;
+}
+[System.Serializable]
+public class BossPhaseInfo{
+    public int defense;
+    public Vector2 size=Vector2.one;
+    public ShaderMatProps sprMatProps;
+    public List<SimpleAnim> anims;
 }
 [System.Serializable]
 public class CometSettings{

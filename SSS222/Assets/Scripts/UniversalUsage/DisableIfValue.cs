@@ -7,25 +7,26 @@ using Sirenix.OdinInspector;
 
 public class DisableIfValue : MonoBehaviour{
     [SerializeField] string valueName;
-    [SerializeField] float valueSet;
+    [SerializeField] float valueSet=1;
     [SerializeField] bool below;
     [SerializeField] bool disableComponents=true;
     [SerializeField] bool disableChildren=false;
     [ShowIf("disableChildren")][SerializeField] bool disableChildrenComponents=true;
     [ReadOnly][SerializeField] float value;
     [SerializeField] float timeToCheckForPresence=3;
-    [ReadOnly][SerializeField] float timerToCheckForPresence;
-    [ReadOnly][SerializeField] float delay;
+    [DisableInEditorMode][SerializeField] float timerToCheckForPresence;
+    [DisableInEditorMode][SerializeField] float delay;
     void Start(){timerToCheckForPresence=timeToCheckForPresence;delay=0.15f;}
     void Update(){
         if(timerToCheckForPresence>0){timerToCheckForPresence-=Time.deltaTime;}
-        if(delay>0){delay-=Time.deltaTime;}
+        if(delay>0){delay-=Time.unscaledDeltaTime;}
         if(delay<=0){
             if(valueName=="holodeath_popup"){
                 if(FindObjectOfType<PlayerHolobody>()!=null&&Player.instance!=null){
                     value=FindObjectOfType<PlayerHolobody>().GetTimeLeft();
                 }else{DisableIfNotPresent();}
             }
+            else if(valueName=="isBossZone"){value=GameAssets.BoolToInt(FindObjectOfType<BossAI>()!=null);}
 
             void DisableIfNotPresent(){if(timerToCheckForPresence<=0){Disable();}}
             if(!below){if(value>=valueSet){Disable();}}

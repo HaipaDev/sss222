@@ -93,783 +93,6 @@ MonoBehaviour:
   musicSlowdownOnPaceChange: 1
   scoreMulti: 1
   luckMulti: 1
-  startingPosPlayer: {x: 0, y: -6.24}
-  autoShootPlayer: 0
-  moveX: 1
-  moveY: 1
-  playfieldPadding: {x: 0.1, y: 0.45}
-  moveSpeedPlayer: 5
-  playerShaderMatProps:
-    text: {fileID: 0}
-    hue: 0
-    saturation: 0.5
-    value: 0.5
-    negative: 0
-    pixelate: 1
-    blur: 0
-    lowResBlur: 1
-  healthPlayer: 75
-  healthMaxPlayer: 75
-  defensePlayer: 2
-  energyOnPlayer: 1
-  energyPlayer: 100
-  energyMaxPlayer: 130
-  hpAbsorpFractionCap: 4
-  enAbsorpFractionCap: 4
-  powerupsStarting:
-  - name: laser
-    ammo: -5
-    timer: -4
-  powerupsCapacity: 5
-  powerupDefault: 
-  displayCurrentPowerup: 1
-  weaponsLimited: 0
-  losePwrupOutOfEn: 0
-  losePwrupOutOfAmmo: 0
-  slottablePowerupItems: 1
-  powerupItemSettings:
-  - name: medkit
-    max: 5
-  dmgMultiPlayer: 1
-  shootMultiPlayer: 1
-  shipScaleDefault: 0.89
-  bulletResize: 1
-  overheatOnPlayer: 1
-  overheatShaderIdentif: 1
-  overheatTimerMax: 8.66
-  overheatCooldown: 0.65
-  overheatedTime: 3
-  recoilOnPlayer: 1
-  critChancePlayer: 4
-  playerWeaponsFade: 1
-  weaponProperties:
-  - {fileID: 11400000, guid: c2cd77c9677e9534d8469763df8aeeb3, type: 2}
-  - {fileID: 11400000, guid: 282b02d64fc493b40905744ad32dcccd, type: 2}
-  statusesStart: []
-  statusCapDefault: 60
-  addToStatusTimer: 1
-  flipTime: 7
-  gcloverTime: 6
-  shadowTime: 10
-  shadowLength: 0.33
-  shadowtracesSpeed: 1.3
-  shadowCost: 5
-  dashSpeed: 10
-  startDashTime: 0.2
-  inverterTimeMax: 10
-  magnetTime: 15
-  scalerTime: 15
-  scalerSizes:
-  - 0.45
-  - 0.75
-  - 1.2
-  - 1.5
-  - 1.75
-  - 2
-  - 2.5
-  matrixTime: 7
-  accelTime: 7
-  onfireTickrate: 0.38
-  onfireDmg: 1
-  decayTickrate: 0.5
-  decayDmg: 0.5
-  fuelDrainAmnt: 0.1
-  fuelDrainFreq: 0.5
-  energyBall_energyGain: 6
-  battery_energyGain: 11
-  benergyBallGain: 1
-  benergyVialGain: 5
-  crystalGain: 2
-  crystalBigGain: 6
-  medkit_energyGain: 26
-  medkit_hpGain: 25
-  lunarGel_hpGain: 10
-  lunarGel_absorp: 1
-  powerups_energyGain: 36
-  powerups_energyNeeded: 25
-  powerups_energyDupl: 42
-  coresCollectGain: 1
-  waveSpawnReqsType: 1
-  waveSpawnReqs:
-    rid: 7402535244629278720
-  waveList:
-  - name: CometsFlyby
-    lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
-    dropChance: 8.5
-    levelReq: 0
-  - name: CometStorm
-    lootItem: {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf, type: 2}
-    dropChance: 7
-    levelReq: 0
-  - name: BatsFlyby
-    lootItem: {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc, type: 2}
-    dropChance: 9
-    levelReq: 0
-  - name: BatV
-    lootItem: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
-    dropChance: 8
-    levelReq: 0
-  - name: EnemyShip
-    lootItem: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
-    dropChance: 6.5
-    levelReq: 0
-  - name: EnemyCombatant
-    lootItem: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d, type: 2}
-    dropChance: 1.5
-    levelReq: 3
-  - name: BatsCluster
-    lootItem: {fileID: 11400000, guid: 2145a8982afb67c4bbfa60857b9f71f9, type: 2}
-    dropChance: 2
-    levelReq: 1
-  - name: StingerFlingers
-    lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
-    dropChance: 2
-    levelReq: 2
-  wavesWeightsSumTotal: 44.5
-  startingWave: 0
-  startingWaveRandom: 0
-  uniqueWaves: 1
-  disrupterList:
-  - {fileID: 11400000, guid: d8cbfd252c72e9847ada870cb8473d68, type: 2}
-  - {fileID: 11400000, guid: 133689dcd684fa44daef7e473024c5e0, type: 2}
-  - {fileID: 11400000, guid: 6db7c70ec3192fd46977ac51bb337b0c, type: 2}
-  - {fileID: 11400000, guid: 9dfa2d8ad71e65644915a3c3e7ff9649, type: 2}
-  - {fileID: 11400000, guid: 794b89b153a6d9c4493292ea975209f5, type: 2}
-  - {fileID: 11400000, guid: 6c71f72b3df0c8241a69f571269f4e96, type: 2}
-  - {fileID: 11400000, guid: 469591656e933a1479b0a101085ab211, type: 2}
-  powerupSpawners:
-  - name: Status
-    sprAssetName: accelPwrup
-    powerupList:
-    - name: 
-      lootItem: {fileID: 11400000, guid: d1939f2a5efe96042842032862cdf62e, type: 2}
-      rarity: 0
-      dropChance: 3.5
-      levelReq: 0
-    - name: 
-      lootItem: {fileID: 11400000, guid: 8ee29e2bede3b904bb2b52557eb0f6b9, type: 2}
-      rarity: 0
-      dropChance: 2.4
-      levelReq: 1
-    - name: 
-      lootItem: {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
-      rarity: 0
-      dropChance: 6
-      levelReq: 0
-    - name: 
-      lootItem: {fileID: 11400000, guid: f6a560a419dccd647bb79ae520e69ddf, type: 2}
-      rarity: 2
-      dropChance: 0
-      levelReq: 4
-    - name: 
-      lootItem: {fileID: 11400000, guid: 836e8441bd1a4e1468be0e689364fb14, type: 2}
-      rarity: 0
-      dropChance: 6
-      levelReq: 0
-    - name: 
-      lootItem: {fileID: 11400000, guid: 6878a416f2285834c9af2732b5242ce0, type: 2}
-      rarity: 1
-      dropChance: 5
-      levelReq: 2
-    - name: 
-      lootItem: {fileID: 11400000, guid: 9000ede4635f82647a1cd13010567e48, type: 2}
-      rarity: 0
-      dropChance: 4
-      levelReq: 1
-    - name: 
-      lootItem: {fileID: 11400000, guid: c9d54cc47e5cf20499998336988ca3ff, type: 2}
-      rarity: 0
-      dropChance: 6
-      levelReq: 1
-    - name: 
-      lootItem: {fileID: 11400000, guid: 9b409de821cfef24e850bac7ad821f16, type: 2}
-      rarity: 0
-      dropChance: 3
-      levelReq: 4
-    sum: 35.9
-    spawnReqsType: 0
-    spawnReqs:
-      rid: 7402535153654038538
-    powerupSpawnPosRange: {x: -3, y: 3}
-  - name: Weapons
-    sprAssetName: laser3Pwrup
-    powerupList:
-    - name: 
-      lootItem: {fileID: 11400000, guid: 1368b36bec2ccca4e97ab92bed99ea99, type: 2}
-      rarity: 0
-      dropChance: 4
-      levelReq: 1
-    - name: 
-      lootItem: {fileID: 11400000, guid: 6682bf37c4b0a37459f807e12dd59d27, type: 2}
-      rarity: 1
-      dropChance: 3.15
-      levelReq: 2
-    - name: 
-      lootItem: {fileID: 11400000, guid: 58529076849c1924e91e0633da503bfc, type: 2}
-      rarity: 0
-      dropChance: 5
-      levelReq: 0
-    - name: 
-      lootItem: {fileID: 11400000, guid: e2b5a8667474ac54a8705649fcad7ee5, type: 2}
-      rarity: 1
-      dropChance: 2
-      levelReq: 0
-    - name: 
-      lootItem: {fileID: 11400000, guid: f75229abe571c5f4780d84f66fa08b5b, type: 2}
-      rarity: 0
-      dropChance: 3
-      levelReq: 3
-    - name: 
-      lootItem: {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
-      rarity: 0
-      dropChance: 3
-      levelReq: 1
-    - name: 
-      lootItem: {fileID: 11400000, guid: 9a4e80f1fa79ea547a89f82e21045b39, type: 2}
-      rarity: 1
-      dropChance: 1.75
-      levelReq: 4
-    - name: 
-      lootItem: {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
-      rarity: 0
-      dropChance: 3
-      levelReq: 5
-    - name: 
-      lootItem: {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
-      rarity: 2
-      dropChance: 0
-      levelReq: 4
-    - name: 
-      lootItem: {fileID: 11400000, guid: fd59d5a61f20a394e98c9683441e0333, type: 2}
-      rarity: 1
-      dropChance: 2.4
-      levelReq: 2
-    sum: 27.3
-    spawnReqsType: 5
-    spawnReqs:
-      rid: 2
-    powerupSpawnPosRange: {x: -3, y: 3}
-  bossInfo:
-    name: 
-    type: 0
-    size: {x: 1, y: 1}
-    spr: {fileID: 0}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 25
-    healthMax: 25
-    defense: 0
-    healthBySize: 0
-    shooting: 0
-    shootTime: {x: 1.75, y: 2.8}
-    bulletAssetName: 
-    bulletSpeed: 8
-    DBullets: 0
-    bulletDist: 0.35
-    randomizeWaveDeath: 0
-    flyOff: 0
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 1, y: 10}
-    xpAmnt: 0
-    xpChance: 100
-    drops: []
-  enemyDefenseHit: 1
-  enemyDefensePhase: 1
-  enemyDefenseFloor: 0.1
-  enemies:
-  - name: Bat
-    type: 0
-    size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 40
-    healthMax: 40
-    defense: 0
-    healthBySize: 0
-    shooting: 1
-    shootTime: {x: 1.75, y: 2.8}
-    bulletAssetName: Soundwave
-    bulletSpeed: 5
-    DBullets: 0
-    bulletDist: 0
-    randomizeWaveDeath: 0
-    flyOff: 0
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 4, y: 9}
-    xpAmnt: 0
-    xpChance: 100
-    drops:
-    - name: EnBall
-      ammount: {x: 1, y: 3}
-      dropChance: 30
-    - name: Coin
-      ammount: {x: 0, y: 0}
-      dropChance: 0
-    - name: PowerCore
-      ammount: {x: 0, y: 0}
-      dropChance: 0
-  - name: Comet
-    type: 2
-    size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 15
-    healthMax: 15
-    defense: 0
-    healthBySize: 0
-    shooting: 0
-    shootTime: {x: 1.75, y: 2.8}
-    bulletAssetName: 
-    bulletSpeed: 0
-    DBullets: 0
-    bulletDist: 0
-    randomizeWaveDeath: 0
-    flyOff: 0
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 1, y: 10}
-    xpAmnt: 0
-    xpChance: 100
-    drops:
-    - name: EnBall
-      ammount: {x: 1, y: 1}
-      dropChance: 15
-    - name: Coin
-      ammount: {x: 1, y: 2}
-      dropChance: 0.5
-    - name: PowerCore
-      ammount: {x: 0, y: 0}
-      dropChance: 0
-  - name: Enemy Combatant
-    type: 1
-    size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 60
-    healthMax: 60
-    defense: 4
-    healthBySize: 0
-    shooting: 0
-    shootTime: {x: 1.75, y: 2.8}
-    bulletAssetName: 
-    bulletSpeed: 0
-    DBullets: 0
-    bulletDist: 0
-    randomizeWaveDeath: 1
-    flyOff: 1
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 11, y: 15}
-    xpAmnt: 1
-    xpChance: 100
-    drops:
-    - name: EnBall
-      ammount: {x: 3, y: 3}
-      dropChance: 30
-    - name: Coin
-      ammount: {x: 1, y: 2}
-      dropChance: 10
-    - name: PowerCore
-      ammount: {x: 1, y: 1}
-      dropChance: 25
-  - name: Enemy Ship
-    type: 1
-    size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 60
-    healthMax: 60
-    defense: 4
-    healthBySize: 0
-    shooting: 1
-    shootTime: {x: 0.64, y: 0.94}
-    bulletAssetName: EnemyLaser
-    bulletSpeed: 8
-    DBullets: 1
-    bulletDist: 0.35
-    randomizeWaveDeath: 1
-    flyOff: 1
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 13, y: 17}
-    xpAmnt: 1
-    xpChance: 100
-    drops:
-    - name: EnBall
-      ammount: {x: 3, y: 3}
-      dropChance: 30
-    - name: Coin
-      ammount: {x: 1, y: 2}
-      dropChance: 10
-    - name: PowerCore
-      ammount: {x: 1, y: 1}
-      dropChance: 25
-    - name: PLaserPwrup
-      ammount: {x: 1, y: 1}
-      dropChance: 0.1
-  - name: Glare Devil
-    type: 0
-    size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 33
-    healthMax: 33
-    defense: 0
-    healthBySize: 0
-    shooting: 0
-    shootTime: {x: 1.75, y: 2.8}
-    bulletAssetName: 
-    bulletSpeed: 0
-    DBullets: 0
-    bulletDist: 0
-    randomizeWaveDeath: 0
-    flyOff: 0
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 13, y: 13}
-    xpAmnt: 4
-    xpChance: 60
-    drops:
-    - name: EnBall
-      ammount: {x: 3, y: 3}
-      dropChance: 35
-    - name: Coin
-      ammount: {x: 3, y: 6}
-      dropChance: 2
-    - name: PowerCore
-      ammount: {x: 1, y: 1}
-      dropChance: 1
-  - name: Goblin Thief
-    type: 0
-    size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 16
-    healthMax: 16
-    defense: 0
-    healthBySize: 0
-    shooting: 1
-    shootTime: {x: 1.8, y: 2.2}
-    bulletAssetName: GoblinBT
-    bulletSpeed: 4
-    DBullets: 1
-    bulletDist: 0.1
-    randomizeWaveDeath: 0
-    flyOff: 0
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 17, y: 19}
-    xpAmnt: 2
-    xpChance: 100
-    drops:
-    - name: EnBall
-      ammount: {x: 1, y: 1}
-      dropChance: 30
-    - name: Coin
-      ammount: {x: 1, y: 4}
-      dropChance: 3
-    - name: PowerCore
-      ammount: {x: 1, y: 1}
-      dropChance: 10
-  - name: Healing Drone
-    type: 1
-    size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 77
-    healthMax: 77
-    defense: 3
-    healthBySize: 0
-    shooting: 1
-    shootTime: {x: 0.2, y: 0.2}
-    bulletAssetName: 
-    bulletSpeed: 0
-    DBullets: 0
-    bulletDist: 0
-    randomizeWaveDeath: 0
-    flyOff: 0
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 20, y: 20}
-    xpAmnt: 2.5
-    xpChance: 100
-    drops:
-    - name: EnBall
-      ammount: {x: 2, y: 4}
-      dropChance: 10
-    - name: Coin
-      ammount: {x: 12, y: 24}
-      dropChance: 20
-    - name: PowerCore
-      ammount: {x: 1, y: 1}
-      dropChance: 15
-    - name: MicroMedkit
-      ammount: {x: 1, y: 2}
-      dropChance: 50
-  - name: Leech
-    type: 1
-    size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 26
-    healthMax: 26
-    defense: 2
-    healthBySize: 0
-    shooting: 0
-    shootTime: {x: 1.75, y: 2.8}
-    bulletAssetName: 
-    bulletSpeed: 0
-    DBullets: 0
-    bulletDist: 0
-    randomizeWaveDeath: 0
-    flyOff: 0
-    killOnDash: 0
-    giveScore: 1
-    scoreValue: {x: 25, y: 30}
-    xpAmnt: 13
-    xpChance: 100
-    drops:
-    - name: EnBall
-      ammount: {x: 3, y: 4}
-      dropChance: 50
-    - name: Coin
-      ammount: {x: 0, y: 0}
-      dropChance: 0
-    - name: PowerCore
-      ammount: {x: 1, y: 2}
-      dropChance: 2
-  - name: Stinger
-    type: 0
-    size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 17
-    healthMax: 17
-    defense: 1
-    healthBySize: 0
-    shooting: 0
-    shootTime: {x: 1.75, y: 2.8}
-    bulletAssetName: 
-    bulletSpeed: 0
-    DBullets: 0
-    bulletDist: 0
-    randomizeWaveDeath: 0
-    flyOff: 0
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 5, y: 12}
-    xpAmnt: 1.5
-    xpChance: 100
-    drops:
-    - name: EnBall
-      ammount: {x: 2, y: 2}
-      dropChance: 25
-    - name: Coin
-      ammount: {x: 0, y: 0}
-      dropChance: 0
-    - name: PowerCore
-      ammount: {x: 1, y: 2}
-      dropChance: 0.5
-  - name: Vortex Wheel
-    type: 1
-    size: {x: 1, y: 1}
-    spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
-    healthStart: 66
-    healthMax: 66
-    defense: 5
-    healthBySize: 0
-    shooting: 1
-    shootTime: {x: 1.75, y: 2.8}
-    bulletAssetName: StickBomb
-    bulletSpeed: 8
-    DBullets: 0
-    bulletDist: 0
-    randomizeWaveDeath: 0
-    flyOff: 0
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 33, y: 36}
-    xpAmnt: 5
-    xpChance: 100
-    drops:
-    - name: EnBall
-      ammount: {x: 5, y: 8}
-      dropChance: 100
-    - name: Coin
-      ammount: {x: 0, y: 0}
-      dropChance: 0
-    - name: PowerCore
-      ammount: {x: 1, y: 2}
-      dropChance: 30
-  cometSettings:
-    sizes: {x: 0.4, y: 1.4}
-    scoreBySize: 0
-    scoreSizes: []
-    sprites:
-    - {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
-    - {fileID: 21300000, guid: a96cf92567942b24da6085ec658da836, type: 3}
-    - {fileID: 21300000, guid: c8b78c577bddf8241b2e4e08235ef51d, type: 3}
-    - {fileID: 21300000, guid: c6e185be8e4515c41927fc135dc00be7, type: 3}
-    - {fileID: 21300000, guid: 2634062faf6b61048a41b04b5bd131ed, type: 3}
-    sizeMultLunar: {x: 0.88, y: 1.55}
-    lunarCometChance: 10
-    lunarHealthMulti: 2.5
-    lunarSpeedMulti: 0.415
-    lunarScore: {x: 5, y: 10}
-    lunarDrops:
-    - name: Coin
-      ammount: {x: 6, y: 12}
-      dropChance: 101
-    spritesLunar:
-    - {fileID: 21300000, guid: 8f5604571a603dc4ca74f76f5a8c070e, type: 3}
-    - {fileID: 21300000, guid: 4ca5f58d98a9d514e98f96344392f882, type: 3}
-    lunarPart: TrailLunar
-  enCombatantSettings:
-    speedFollowX: 3.5
-    speedFollowY: 4
-    vspeed: 0.1
-    distY: 1.3
-    distX: 0.3
-    distYPlayer: 1.5
-    saberPrefab: {fileID: 4755926375889011706, guid: fa37e96c01257824c9c337b429cc5496,
-      type: 3}
-  enShipSettings:
-    speedFollow: 3.75
-    vspeed: 2
-    distY: 1.3
-  mechaLeechSettings:
-    catch_distance: 1.5
-    shake_distance: 0.05
-    count_max: 3
-    fallSpeed: 6
-  healingDroneSettings:
-    healPelletAssetName: HealPellet
-    shootFrequency: 0.2
-    speedBullet: 4
-    distMin: 1.6
-    dodgeSpeed: 2
-    dodgeTime: 0.5
-  vortexWheelSettings:
-    startTimer: 3
-    timeToDieMin: 8
-    timeToDieMax: 13
-    chargeMultip: 0.8
-    chargeMultipS: 1.3
-    projectile: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2,
-      type: 3}
-    numberOfProjectiles: 12
-    radius: 5
-    moveSpeed: 5
-  glareDevilSettings:
-    radiusBlind: 3
-    timerBlindMax: 3.3
-    efxBlind: {x: 4, y: 4}
-  goblinBossSettings:
-    goblinBossSprite: {fileID: 21300000, guid: 39a25c8b6bd02054f89bc66720513032, type: 3}
-    goblinbossHealth: 50
-    goblinBossDrops: []
-  vlaserSettings:
-    timerWarn: 0.8
-    timerCharging: 1
-    timerStay: 3.3
-    chargingAnimation: {fileID: 9100000, guid: e934db25d7e0e1f46b62468ae3d791cc, type: 2}
-    hlaserAnimation: {fileID: 9100000, guid: a1f3b8815cf17fa4d882ceb6a891db8d, type: 2}
-  hlaserSettings:
-    timerWarn: 0.1
-    timerCharging: 0.3
-    timerStay: 1
-    chargingAnimation: {fileID: 9100000, guid: e934db25d7e0e1f46b62468ae3d791cc, type: 2}
-    hlaserAnimation: {fileID: 9100000, guid: a1f3b8815cf17fa4d882ceb6a891db8d, type: 2}
   dmgValues:
   - name: Shadowdash
     colliType: 0
@@ -1511,6 +734,781 @@ MonoBehaviour:
     soundPhase: 
     dispDmgCount: 0
     colliEvents: []
+  startingPosPlayer: {x: 0, y: -6.24}
+  autoShootPlayer: 0
+  moveX: 1
+  moveY: 1
+  playfieldPadding: {x: 0.1, y: 0.45}
+  moveSpeedPlayer: 5
+  playerShaderMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
+  healthPlayer: 75
+  healthMaxPlayer: 75
+  defensePlayer: 2
+  energyOnPlayer: 1
+  energyPlayer: 100
+  energyMaxPlayer: 130
+  hpAbsorpFractionCap: 4
+  enAbsorpFractionCap: 4
+  powerupsStarting:
+  - name: laser
+    ammo: -5
+    timer: -4
+  powerupsCapacity: 5
+  powerupDefault: 
+  displayCurrentPowerup: 1
+  weaponsLimited: 0
+  losePwrupOutOfEn: 0
+  losePwrupOutOfAmmo: 0
+  slottablePowerupItems: 1
+  powerupItemSettings:
+  - name: medkit
+    max: 5
+  dmgMultiPlayer: 1
+  shootMultiPlayer: 1
+  shipScaleDefault: 0.89
+  bulletResize: 1
+  overheatOnPlayer: 1
+  overheatShaderIdentif: 1
+  overheatTimerMax: 8.66
+  overheatCooldown: 0.65
+  overheatedTime: 3
+  recoilOnPlayer: 1
+  critChancePlayer: 4
+  playerWeaponsFade: 1
+  weaponProperties:
+  - {fileID: 11400000, guid: c2cd77c9677e9534d8469763df8aeeb3, type: 2}
+  - {fileID: 11400000, guid: 282b02d64fc493b40905744ad32dcccd, type: 2}
+  statusesStart: []
+  statusCapDefault: 60
+  addToStatusTimer: 1
+  flipTime: 7
+  gcloverTime: 6
+  shadowTime: 10
+  shadowLength: 0.33
+  shadowtracesSpeed: 1.3
+  shadowCost: 5
+  dashSpeed: 10
+  startDashTime: 0.2
+  inverterTimeMax: 10
+  magnetTime: 15
+  scalerTime: 15
+  scalerSizes:
+  - 0.45
+  - 0.75
+  - 1.2
+  - 1.5
+  - 1.75
+  - 2
+  - 2.5
+  matrixTime: 7
+  accelTime: 7
+  onfireTickrate: 0.38
+  onfireDmg: 1
+  decayTickrate: 0.5
+  decayDmg: 0.5
+  fuelDrainAmnt: 0.1
+  fuelDrainFreq: 0.5
+  energyBall_energyGain: 6
+  battery_energyGain: 11
+  benergyBallGain: 1
+  benergyVialGain: 5
+  crystalGain: 2
+  crystalBigGain: 6
+  medkit_energyGain: 26
+  medkit_hpGain: 25
+  lunarGel_hpGain: 10
+  lunarGel_absorp: 1
+  powerups_energyGain: 36
+  powerups_energyNeeded: 25
+  powerups_energyDupl: 42
+  coresCollectGain: 1
+  waveSpawnReqsType: 1
+  waveSpawnReqs:
+    rid: 7402535244629278720
+  waveList:
+  - name: CometsFlyby
+    lootItem: {fileID: 11400000, guid: 0c3579707cffcce47bc53dee8a55fe8b, type: 2}
+    dropChance: 8.5
+    levelReq: 0
+  - name: CometStorm
+    lootItem: {fileID: 11400000, guid: 0d70fe92e947e2f46af2136a614a43bf, type: 2}
+    dropChance: 7
+    levelReq: 0
+  - name: BatsFlyby
+    lootItem: {fileID: 11400000, guid: 44ca7e4e0a2986746b1f24763e69cebc, type: 2}
+    dropChance: 9
+    levelReq: 0
+  - name: BatV
+    lootItem: {fileID: 11400000, guid: 4c7be50801564f741a3eeb31b7ee2289, type: 2}
+    dropChance: 8
+    levelReq: 0
+  - name: EnemyShip
+    lootItem: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
+    dropChance: 6.5
+    levelReq: 0
+  - name: EnemyCombatant
+    lootItem: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d, type: 2}
+    dropChance: 1.5
+    levelReq: 3
+  - name: BatsCluster
+    lootItem: {fileID: 11400000, guid: 2145a8982afb67c4bbfa60857b9f71f9, type: 2}
+    dropChance: 2
+    levelReq: 1
+  - name: StingerFlingers
+    lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
+    dropChance: 2
+    levelReq: 2
+  wavesWeightsSumTotal: 44.5
+  startingWave: 0
+  startingWaveRandom: 0
+  uniqueWaves: 1
+  disrupterList:
+  - {fileID: 11400000, guid: d8cbfd252c72e9847ada870cb8473d68, type: 2}
+  - {fileID: 11400000, guid: 133689dcd684fa44daef7e473024c5e0, type: 2}
+  - {fileID: 11400000, guid: 6db7c70ec3192fd46977ac51bb337b0c, type: 2}
+  - {fileID: 11400000, guid: 9dfa2d8ad71e65644915a3c3e7ff9649, type: 2}
+  - {fileID: 11400000, guid: 794b89b153a6d9c4493292ea975209f5, type: 2}
+  - {fileID: 11400000, guid: 6c71f72b3df0c8241a69f571269f4e96, type: 2}
+  - {fileID: 11400000, guid: 469591656e933a1479b0a101085ab211, type: 2}
+  powerupSpawners:
+  - name: Status
+    sprAssetName: accelPwrup
+    powerupList:
+    - name: 
+      lootItem: {fileID: 11400000, guid: d1939f2a5efe96042842032862cdf62e, type: 2}
+      rarity: 0
+      dropChance: 3.5
+      levelReq: 0
+    - name: 
+      lootItem: {fileID: 11400000, guid: 8ee29e2bede3b904bb2b52557eb0f6b9, type: 2}
+      rarity: 0
+      dropChance: 2.4
+      levelReq: 1
+    - name: 
+      lootItem: {fileID: 11400000, guid: f362bbc887dca7d438d971528c8ff640, type: 2}
+      rarity: 0
+      dropChance: 6
+      levelReq: 0
+    - name: 
+      lootItem: {fileID: 11400000, guid: f6a560a419dccd647bb79ae520e69ddf, type: 2}
+      rarity: 2
+      dropChance: 0
+      levelReq: 4
+    - name: 
+      lootItem: {fileID: 11400000, guid: 836e8441bd1a4e1468be0e689364fb14, type: 2}
+      rarity: 0
+      dropChance: 6
+      levelReq: 0
+    - name: 
+      lootItem: {fileID: 11400000, guid: 6878a416f2285834c9af2732b5242ce0, type: 2}
+      rarity: 1
+      dropChance: 5
+      levelReq: 2
+    - name: 
+      lootItem: {fileID: 11400000, guid: 9000ede4635f82647a1cd13010567e48, type: 2}
+      rarity: 0
+      dropChance: 4
+      levelReq: 1
+    - name: 
+      lootItem: {fileID: 11400000, guid: c9d54cc47e5cf20499998336988ca3ff, type: 2}
+      rarity: 0
+      dropChance: 6
+      levelReq: 1
+    - name: 
+      lootItem: {fileID: 11400000, guid: 9b409de821cfef24e850bac7ad821f16, type: 2}
+      rarity: 0
+      dropChance: 3
+      levelReq: 4
+    sum: 35.9
+    spawnReqsType: 0
+    spawnReqs:
+      rid: 7402535153654038538
+    powerupSpawnPosRange: {x: -3, y: 3}
+  - name: Weapons
+    sprAssetName: laser3Pwrup
+    powerupList:
+    - name: 
+      lootItem: {fileID: 11400000, guid: 1368b36bec2ccca4e97ab92bed99ea99, type: 2}
+      rarity: 0
+      dropChance: 4
+      levelReq: 1
+    - name: 
+      lootItem: {fileID: 11400000, guid: 6682bf37c4b0a37459f807e12dd59d27, type: 2}
+      rarity: 1
+      dropChance: 3.15
+      levelReq: 2
+    - name: 
+      lootItem: {fileID: 11400000, guid: 58529076849c1924e91e0633da503bfc, type: 2}
+      rarity: 0
+      dropChance: 5
+      levelReq: 0
+    - name: 
+      lootItem: {fileID: 11400000, guid: e2b5a8667474ac54a8705649fcad7ee5, type: 2}
+      rarity: 1
+      dropChance: 2
+      levelReq: 0
+    - name: 
+      lootItem: {fileID: 11400000, guid: f75229abe571c5f4780d84f66fa08b5b, type: 2}
+      rarity: 0
+      dropChance: 3
+      levelReq: 3
+    - name: 
+      lootItem: {fileID: 11400000, guid: f1c46e518b8070d41926735f61f93aa6, type: 2}
+      rarity: 0
+      dropChance: 3
+      levelReq: 1
+    - name: 
+      lootItem: {fileID: 11400000, guid: 9a4e80f1fa79ea547a89f82e21045b39, type: 2}
+      rarity: 1
+      dropChance: 1.75
+      levelReq: 4
+    - name: 
+      lootItem: {fileID: 11400000, guid: a2939e70ffbcdae419212cdbc1397d9a, type: 2}
+      rarity: 0
+      dropChance: 3
+      levelReq: 5
+    - name: 
+      lootItem: {fileID: 11400000, guid: 72065ee50a9758446aea351da4678eb6, type: 2}
+      rarity: 2
+      dropChance: 0
+      levelReq: 4
+    - name: 
+      lootItem: {fileID: 11400000, guid: fd59d5a61f20a394e98c9683441e0333, type: 2}
+      rarity: 1
+      dropChance: 2.4
+      levelReq: 2
+    sum: 27.3
+    spawnReqsType: 5
+    spawnReqs:
+      rid: 2
+    powerupSpawnPosRange: {x: -3, y: 3}
+  bossInfo:
+    name: 
+    type: 0
+    healthStart: 25
+    healthMax: 25
+    xpAmnt: 0
+    xpChance: 100
+    drops: []
+    phasesInfo: []
+  shipScaleBoss: 0.66
+  enemyDefenseHit: 1
+  enemyDefensePhase: 1
+  enemyDefenseFloor: 0.1
+  enemies:
+  - name: Bat
+    type: 0
+    size: {x: 1, y: 1}
+    spr: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 40
+    healthMax: 40
+    defense: 0
+    healthBySize: 0
+    shooting: 1
+    shootTime: {x: 1.75, y: 2.8}
+    bulletAssetName: Soundwave
+    bulletSpeed: 5
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    killOnDash: 1
+    destroyOut: 1
+    giveScore: 1
+    scoreValue: {x: 4, y: 9}
+    xpChance: 100
+    xpAmnt: 0
+    accumulateXp: 1
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 3}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 0, y: 0}
+      dropChance: 0
+    - name: PowerCore
+      ammount: {x: 0, y: 0}
+      dropChance: 0
+  - name: Comet
+    type: 2
+    size: {x: 1, y: 1}
+    spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 15
+    healthMax: 15
+    defense: 0
+    healthBySize: 0
+    shooting: 0
+    shootTime: {x: 1.75, y: 2.8}
+    bulletAssetName: 
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    killOnDash: 1
+    destroyOut: 1
+    giveScore: 1
+    scoreValue: {x: 1, y: 10}
+    xpChance: 100
+    xpAmnt: 0
+    accumulateXp: 1
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 15
+    - name: Coin
+      ammount: {x: 1, y: 2}
+      dropChance: 0.5
+    - name: PowerCore
+      ammount: {x: 0, y: 0}
+      dropChance: 0
+  - name: Enemy Combatant
+    type: 1
+    size: {x: 1, y: 1}
+    spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 60
+    healthMax: 60
+    defense: 4
+    healthBySize: 0
+    shooting: 0
+    shootTime: {x: 1.75, y: 2.8}
+    bulletAssetName: 
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 1
+    flyOff: 1
+    killOnDash: 1
+    destroyOut: 1
+    giveScore: 1
+    scoreValue: {x: 11, y: 15}
+    xpChance: 100
+    xpAmnt: 1
+    accumulateXp: 1
+    drops:
+    - name: EnBall
+      ammount: {x: 3, y: 3}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 2}
+      dropChance: 10
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 25
+  - name: Enemy Ship
+    type: 1
+    size: {x: 1, y: 1}
+    spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 60
+    healthMax: 60
+    defense: 4
+    healthBySize: 0
+    shooting: 1
+    shootTime: {x: 0.64, y: 0.94}
+    bulletAssetName: EnemyLaser
+    bulletSpeed: 8
+    DBullets: 1
+    bulletDist: 0.35
+    randomizeWaveDeath: 1
+    flyOff: 1
+    killOnDash: 1
+    destroyOut: 1
+    giveScore: 1
+    scoreValue: {x: 13, y: 17}
+    xpChance: 100
+    xpAmnt: 1
+    accumulateXp: 1
+    drops:
+    - name: EnBall
+      ammount: {x: 3, y: 3}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 2}
+      dropChance: 10
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 25
+    - name: PLaserPwrup
+      ammount: {x: 1, y: 1}
+      dropChance: 0.1
+  - name: Glare Devil
+    type: 0
+    size: {x: 1, y: 1}
+    spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 33
+    healthMax: 33
+    defense: 0
+    healthBySize: 0
+    shooting: 0
+    shootTime: {x: 1.75, y: 2.8}
+    bulletAssetName: 
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    killOnDash: 1
+    destroyOut: 1
+    giveScore: 1
+    scoreValue: {x: 13, y: 13}
+    xpChance: 60
+    xpAmnt: 4
+    accumulateXp: 1
+    drops:
+    - name: EnBall
+      ammount: {x: 3, y: 3}
+      dropChance: 35
+    - name: Coin
+      ammount: {x: 3, y: 6}
+      dropChance: 2
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 1
+  - name: Goblin Thief
+    type: 0
+    size: {x: 1, y: 1}
+    spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 16
+    healthMax: 16
+    defense: 0
+    healthBySize: 0
+    shooting: 1
+    shootTime: {x: 1.8, y: 2.2}
+    bulletAssetName: GoblinBT
+    bulletSpeed: 4
+    DBullets: 1
+    bulletDist: 0.1
+    randomizeWaveDeath: 0
+    flyOff: 0
+    killOnDash: 1
+    destroyOut: 1
+    giveScore: 1
+    scoreValue: {x: 17, y: 19}
+    xpChance: 100
+    xpAmnt: 2
+    accumulateXp: 1
+    drops:
+    - name: EnBall
+      ammount: {x: 1, y: 1}
+      dropChance: 30
+    - name: Coin
+      ammount: {x: 1, y: 4}
+      dropChance: 3
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 10
+  - name: Healing Drone
+    type: 1
+    size: {x: 1, y: 1}
+    spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 77
+    healthMax: 77
+    defense: 3
+    healthBySize: 0
+    shooting: 1
+    shootTime: {x: 0.2, y: 0.2}
+    bulletAssetName: 
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    killOnDash: 1
+    destroyOut: 1
+    giveScore: 1
+    scoreValue: {x: 20, y: 20}
+    xpChance: 100
+    xpAmnt: 2.5
+    accumulateXp: 1
+    drops:
+    - name: EnBall
+      ammount: {x: 2, y: 4}
+      dropChance: 10
+    - name: Coin
+      ammount: {x: 12, y: 24}
+      dropChance: 20
+    - name: PowerCore
+      ammount: {x: 1, y: 1}
+      dropChance: 15
+    - name: MicroMedkit
+      ammount: {x: 1, y: 2}
+      dropChance: 50
+  - name: Leech
+    type: 1
+    size: {x: 1, y: 1}
+    spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 26
+    healthMax: 26
+    defense: 2
+    healthBySize: 0
+    shooting: 0
+    shootTime: {x: 1.75, y: 2.8}
+    bulletAssetName: 
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    killOnDash: 0
+    destroyOut: 1
+    giveScore: 1
+    scoreValue: {x: 25, y: 30}
+    xpChance: 100
+    xpAmnt: 13
+    accumulateXp: 1
+    drops:
+    - name: EnBall
+      ammount: {x: 3, y: 4}
+      dropChance: 50
+    - name: Coin
+      ammount: {x: 0, y: 0}
+      dropChance: 0
+    - name: PowerCore
+      ammount: {x: 1, y: 2}
+      dropChance: 2
+  - name: Stinger
+    type: 0
+    size: {x: 1, y: 1}
+    spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 17
+    healthMax: 17
+    defense: 1
+    healthBySize: 0
+    shooting: 0
+    shootTime: {x: 1.75, y: 2.8}
+    bulletAssetName: 
+    bulletSpeed: 0
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    killOnDash: 1
+    destroyOut: 1
+    giveScore: 1
+    scoreValue: {x: 5, y: 12}
+    xpChance: 100
+    xpAmnt: 1.5
+    accumulateXp: 1
+    drops:
+    - name: EnBall
+      ammount: {x: 2, y: 2}
+      dropChance: 25
+    - name: Coin
+      ammount: {x: 0, y: 0}
+      dropChance: 0
+    - name: PowerCore
+      ammount: {x: 1, y: 2}
+      dropChance: 0.5
+  - name: Vortex Wheel
+    type: 1
+    size: {x: 1, y: 1}
+    spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
+    sprMatProps:
+      text: {fileID: 0}
+      hue: 0
+      saturation: 0.5
+      value: 0.5
+      negative: 0
+      pixelate: 1
+      blur: 0
+      lowResBlur: 1
+    healthStart: 66
+    healthMax: 66
+    defense: 5
+    healthBySize: 0
+    shooting: 1
+    shootTime: {x: 1.75, y: 2.8}
+    bulletAssetName: StickBomb
+    bulletSpeed: 8
+    DBullets: 0
+    bulletDist: 0
+    randomizeWaveDeath: 0
+    flyOff: 0
+    killOnDash: 1
+    destroyOut: 1
+    giveScore: 1
+    scoreValue: {x: 33, y: 36}
+    xpChance: 100
+    xpAmnt: 5
+    accumulateXp: 1
+    drops:
+    - name: EnBall
+      ammount: {x: 5, y: 8}
+      dropChance: 100
+    - name: Coin
+      ammount: {x: 0, y: 0}
+      dropChance: 0
+    - name: PowerCore
+      ammount: {x: 1, y: 2}
+      dropChance: 30
+  cometSettings:
+    sizes: {x: 0.4, y: 1.4}
+    scoreBySize: 0
+    scoreSizes: []
+    sprites:
+    - {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
+    - {fileID: 21300000, guid: a96cf92567942b24da6085ec658da836, type: 3}
+    - {fileID: 21300000, guid: c8b78c577bddf8241b2e4e08235ef51d, type: 3}
+    - {fileID: 21300000, guid: c6e185be8e4515c41927fc135dc00be7, type: 3}
+    - {fileID: 21300000, guid: 2634062faf6b61048a41b04b5bd131ed, type: 3}
+    sizeMultLunar: {x: 0.88, y: 1.55}
+    lunarCometChance: 10
+    lunarHealthMulti: 2.5
+    lunarSpeedMulti: 0.415
+    lunarScore: {x: 5, y: 10}
+    lunarDrops:
+    - name: Coin
+      ammount: {x: 6, y: 12}
+      dropChance: 101
+    spritesLunar:
+    - {fileID: 21300000, guid: 8f5604571a603dc4ca74f76f5a8c070e, type: 3}
+    - {fileID: 21300000, guid: 4ca5f58d98a9d514e98f96344392f882, type: 3}
+    lunarPart: TrailLunar
+  enCombatantSettings:
+    speedFollowX: 3.5
+    speedFollowY: 4
+    vspeed: 0.1
+    distY: 1.3
+    distX: 0.3
+    distYPlayer: 1.5
+    saberPrefab: {fileID: 4755926375889011706, guid: fa37e96c01257824c9c337b429cc5496,
+      type: 3}
+  enShipSettings:
+    speedFollow: 3.75
+    vspeed: 2
+    distY: 1.3
+  mechaLeechSettings:
+    catch_distance: 1.5
+    shake_distance: 0.05
+    count_max: 3
+    fallSpeed: 6
+  healingDroneSettings:
+    healPelletAssetName: HealPellet
+    shootFrequency: 0.2
+    speedBullet: 4
+    distMin: 1.6
+    dodgeSpeed: 2
+    dodgeTime: 0.5
+  vortexWheelSettings:
+    startTimer: 3
+    timeToDieSet: {x: 4, y: 6}
+    chargeMultip: 0.8
+    chargeMultipS: 1.3
+    projectile: {fileID: 6041420664094412071, guid: 51ec5f52aad602142ad450c34afb75a2,
+      type: 3}
+    numberOfProjectiles: 12
+    radius: 5
+    moveSpeed: 5
+  glareDevilSettings:
+    radiusBlind: 3
+    timerBlindMax: 3.3
+    efxBlind: {x: 4, y: 4}
+  goblinBossSettings:
+    goblinBossSprite: {fileID: 21300000, guid: 39a25c8b6bd02054f89bc66720513032, type: 3}
+    transformVfxAssetName: DarkEnergy
+    goblinbossHealth: 50
+    goblinBossDrops: []
+  vlaserSettings:
+    timerWarn: 0.8
+    timerCharging: 1
+    timerStay: 3.3
+    chargingAnimation: {fileID: 9100000, guid: e934db25d7e0e1f46b62468ae3d791cc, type: 2}
+    hlaserAnimation: {fileID: 9100000, guid: a1f3b8815cf17fa4d882ceb6a891db8d, type: 2}
+  hlaserSettings:
+    timerWarn: 0.1
+    timerCharging: 0.3
+    timerStay: 1
+    chargingAnimation: {fileID: 9100000, guid: e934db25d7e0e1f46b62468ae3d791cc, type: 2}
+    hlaserAnimation: {fileID: 9100000, guid: a1f3b8815cf17fa4d882ceb6a891db8d, type: 2}
   shopSpawnReqsType: 1
   shopSpawnReqs:
     rid: 7268785640884928513

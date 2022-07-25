@@ -46,7 +46,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             if(UpgradeMenuIsOpen){Resume();}
             else{if(PauseMenu.GameIsPaused!=true&&Shop.shopOpened!=true&&Player.instance!=null)if(!Player.instance._hasStatus("hacked"))Open();}
         }
-        if(Input.GetKeyDown(KeyCode.M)&&GameSession.instance.CheckGamemodeSelected("Adventure")){if(!UpgradeMenuIsOpen){Open();OpenZoneMap();}}
+        if(Input.GetKeyDown(KeyCode.M)&&GameSession.instance.CheckGamemodeSelected("Adventure")&&FindObjectOfType<BossAI>()==null){if(!UpgradeMenuIsOpen){Open();OpenZoneMap();}}
         if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){Back();}
         //SetModulesAndSkillsPreviews();
     }
@@ -95,8 +95,10 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         SetModulesAndSkillsPreviews();
     }
     public void OpenZoneMap(){
-        upgradeMenuUI.SetActive(false);
-        zoneMap.SetActive(true);
+        if(FindObjectOfType<BossAI>()==null){
+            upgradeMenuUI.SetActive(false);
+            zoneMap.SetActive(true);
+        }
     }
     public void OpenLvlTree(){
         upgradeMenuUI.SetActive(false);

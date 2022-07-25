@@ -239,6 +239,8 @@ MonoBehaviour:
     gobj: {fileID: 5313808222654050488, guid: acfea3b466fab1649a7cb23d01c3f3fe, type: 3}
   - name: PlayerHolobody
     gobj: {fileID: 4546529352650547393, guid: aae7ce6f2d61acf47b9277be4a6212ee, type: 3}
+  - name: Moon of Lunacy
+    gobj: {fileID: 0}
   vfx:
   - name: Explosion
     gobj: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
@@ -313,6 +315,10 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 1651dd3610a115245aee0c5dd2b2ab36, type: 3}
   - name: overfilledXpBar
     spr: {fileID: 21300000, guid: f70efd97b58a416499f335a6a1507a50, type: 3}
+  - name: MoonOfLunacy-1
+    spr: {fileID: 21300000, guid: 5a93596a45b906341b20063f565382c9, type: 3}
+  - name: MoonOfLunacy-2
+    spr: {fileID: 21300000, guid: cc617dcc8b2ee894b87f23cb991edacf, type: 3}
   materials:
   - name: AIOShaderMat
     mat: {fileID: 2100000, guid: 94bd4665afcd8b743921007cb09b25c0, type: 2}

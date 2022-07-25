@@ -23,28 +23,29 @@ public class Enemy : MonoBehaviour{
     [SerializeField] public string bulletAssetName;
     [SerializeField] public Vector2 shootTime=new Vector2(1.75f,2.8f);
     [ReadOnly] public float shootTimer;
-    [SerializeField] float bulletSpeed=8f;
-    [SerializeField] bool DBullets=false;
-    [SerializeField] float bulletDist=0.35f;
-    [SerializeField] bool randomizeWaveDeath=false;
-    [SerializeField] bool flyOff=false;
+    [SerializeField] public float bulletSpeed=8f;
+    [SerializeField] public bool DBullets=false;
+    [SerializeField] public float bulletDist=0.35f;
+    [SerializeField] public bool randomizeWaveDeath=false;
+    [SerializeField] public bool flyOff=false;
     [SerializeField] public bool killOnDash=true;
     [Header("Drops & Points")]
     [SerializeField] public bool giveScore=true;
-    [SerializeField] Vector2 scoreValue=new Vector2(1,10);
-    [SerializeField] float xpAmnt=0f;
-    [SerializeField] float xpChance=100f;
+    [ShowIf("giveScore")][SerializeField] public Vector2 scoreValue=new Vector2(1,10);
+    [SerializeField] public float xpChance=100f;
+    [EnableIf("@this.xpChance>0")][SerializeField] public float xpAmnt=0f;
+    [EnableIf("@this.xpChance>0")][SerializeField] public bool accumulateXp=true;
     [SerializeField] public List<LootTableEntryDrops> drops;
-    public List<float> dropValues;
+    [ReadOnly]public List<float> dropValues;
 
     [Header("Others")]
     [SerializeField] public bool destroyOut=true;
-    public bool yeeted=false;
-    public bool dmgCounted;
-    public float dmgCount;
+    [ReadOnly]public bool yeeted=false;
+    [ReadOnly]public bool dmgCounted;
+    [ReadOnly]public float dmgCount;
     GameObject dmgCountPopup;
 
-    public GameObject bullet;
+    [ReadOnly]public GameObject bullet;
     Rigidbody2D rb;
     SpriteRenderer sprRender;
 
@@ -80,11 +81,13 @@ public class Enemy : MonoBehaviour{
             randomizeWaveDeath=e.randomizeWaveDeath;
             flyOff=e.flyOff;
             killOnDash=e.killOnDash;
+            destroyOut=e.destroyOut;
             
             giveScore=e.giveScore;
             scoreValue=e.scoreValue;
-            xpAmnt=e.xpAmnt;
             xpChance=e.xpChance;
+            xpAmnt=e.xpAmnt;
+            accumulateXp=e.accumulateXp;
             drops=e.drops;
         }
         if(GetComponent<Goblin>()!=null||GetComponent<VortexWheel>()!=null/*||GetComponent<HealingDrone>()!=null*/)shooting=false;
@@ -124,7 +127,7 @@ public class Enemy : MonoBehaviour{
 
         if((Vector2)transform.localScale!=size)transform.localScale=size;
         if(sizeAvg!=(size.x+size.y)/2)sizeAvg=(size.x+size.y)/2;
-        if(sprRender.sprite!=spr&&GetComponent<VortexWheel>()==null)sprRender.sprite=spr;
+        if(sprRender.sprite!=spr)sprRender.sprite=spr;
         if(sprMatProps!=null){sprRender.material=GameAssets.instance.UpdateShaderMatProps(sprRender.material,sprMatProps);}
     }
     
@@ -176,11 +179,15 @@ public class Enemy : MonoBehaviour{
         }
         if(giveScore==true)GameSession.instance.AddToScore(score);
         if(GameRules.instance.xpOn)if(xpAmnt!=0&&xpChance>=Random.Range(0f,100f)){
-            if(xpAmnt/5>=1){for(var i=0;i<(int)(xpAmnt/5);i++){GameAssets.instance.Make("CelestVial",transform.position);}}
-            GameSession.instance.DropXP(xpAmnt%5,transform.position);
+            if(accumulateXp){
+                if(xpAmnt/5>=1){for(var i=0;i<(int)(xpAmnt/5);i++){GameAssets.instance.Make("CelestVial",transform.position);}}
+                GameSession.instance.DropXP(xpAmnt%5,transform.position);
+            }else{GameSession.instance.DropXP(xpAmnt,transform.position);}
         }
         else{GameSession.instance.AddXP(xpAmnt);}
         giveScore=false;
+
+        if(GameSession.instance.zoneToTravelTo!=-1){GameSession.instance.gameTimeLeft-=3f;}
 
 
         List<LootTableEntryDrops> ld=drops;
