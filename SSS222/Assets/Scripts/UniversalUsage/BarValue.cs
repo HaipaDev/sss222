@@ -8,8 +8,8 @@ using Sirenix.OdinInspector;
 public class BarValue : MonoBehaviour{
     [SerializeField] barType barType=barType.Fill;
     [SerializeField] string valueName;
-    [SerializeField] float value;
-    [SerializeField] float maxValue;
+    [ReadOnly][SerializeField] float value;
+    [ReadOnly][SerializeField] float maxValue;
     [DisableInPlayMode][SerializeField] bool onlyOnEnable=false;
     [HideInPlayMode][SerializeField] bool onValidate=false;
     void Start(){if(onlyOnEnable)ChangeBar();}
@@ -37,6 +37,7 @@ public class BarValue : MonoBehaviour{
                 if(valueName=="healthEnemySB"){value=_en.healthStart;maxValue=_en.healthMax;}
             }
         }
+        if(valueName=="bossHP"){if(FindObjectOfType<BossAI>()!=null){value=FindObjectOfType<BossAI>().GetComponent<Enemy>().health;maxValue=FindObjectOfType<BossAI>().GetComponent<Enemy>().healthMax;}}
 
         if(barType==barType.HorizontalR){transform.localScale=new Vector2(value/maxValue,transform.localScale.y);}
         if(barType==barType.HorizontalL){transform.localScale=new Vector2(value/maxValue,transform.localScale.y);/*new Vector2(-(value/maxValue),transform.localScale.y);*/}

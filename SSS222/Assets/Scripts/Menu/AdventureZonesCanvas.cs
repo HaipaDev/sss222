@@ -15,13 +15,13 @@ public class AdventureZonesCanvas : MonoBehaviour{
         for(var i=0;i<GameCreator.instance.adventureZones.Capacity;i++){if(GameCreator.instance.adventureZones[i].enabled){
             var _i=i;
             var go=Instantiate(zoneButtonChildObject,listContent);
-            go.name="Zone_"+(i+1);
+            go.name="Zone_"+GameCreator.instance.adventureZones[i].name;
             go.GetComponent<RectTransform>().anchoredPosition=GameCreator.instance.adventureZones[i].pos;
             go.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(()=>GSceneManager.instance.LoadAdventureZone(_i));
 
             var mat=GameAssets.instance.UpdateShaderMatProps(GameAssets.instance.GetMat("AIOShaderMat_UI",true),GameCreator.instance.adventureZones[i].gameRules.bgMaterial,true);
             go.transform.GetChild(1).GetComponent<Image>().material=null;go.transform.GetChild(1).GetComponent<Image>().material=mat;//refresh it
-            go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=(i+1).ToString();
+            go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=GameCreator.instance.adventureZones[i].name;
             go.transform.GetChild(4).GetComponent<ShipLevelRequired>().value=GameCreator.instance.adventureZones[i].lvlReq;
 
             if(GameCreator.instance.adventureZones[i].isBoss){

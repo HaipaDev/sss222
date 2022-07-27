@@ -192,7 +192,10 @@ public class Enemy : MonoBehaviour{
         }
         else{GameSession.instance.AddXP(xpAmnt);}
         giveScore=false;
-        if(GameSession.instance.zoneToTravelTo!=-1){GameSession.instance.gameTimeLeft-=GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime;}
+        if(GameSession.instance.zoneToTravelTo!=-1){
+            GameSession.instance.gameTimeLeft-=GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime;
+            if(GameRules.instance.scoreDisplay==scoreDisplay.timeLeft)GameCanvas.instance.ScorePopupSwitch(-GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime);
+        }
 
 
         List<LootTableEntryDrops> ld=drops;

@@ -264,11 +264,11 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             //if(_isAdventureBossZone){GameAssets.instance.Make(bossInfo.name,Vector2.zero);Debug.Log("Spawned: "+bossInfo.name);}
             //if(gr.bossInfo.name!=""){GameAssets.instance.Make(gr.bossInfo.name,Vector2.zero);Debug.Log("Spawned: "+gr.bossInfo.name);}
         }
-        Debug.Log("Replaced GameRules");
     }
     void Awake(){if(GameRules.instance!=null&&this!=GameRules.instance){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
     IEnumerator Start(){
         if(gameObject.name.Contains("(Clone)")){gameObject.name.Replace("(Clone)","");}
+        if(_isAdventure()){GameSession.instance.gamemodeSelected=-1;}
         //Set gameModeSelected if artificially turned on gamemode etc
         yield return new WaitForSecondsRealtime(0.05f);
         if(!GameSession.instance.CheckGamemodeSelected(cfgName)){
@@ -281,15 +281,12 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         SumUpAllPowerupSpawnersWeightsTotal();
     }
     IEnumerator enterGameCor;
-    public void EnterGameScene(){Debug.Log("Entering GameScene");if(enterGameCor==null){enterGameCor=EnterGameSceneI();StartCoroutine(EnterGameSceneI());}else{Debug.Log("Stopping EnterGameSceneI");StopCoroutine(enterGameCor);enterGameCor=null;EnterGameScene();}}
+    public void EnterGameScene(){if(enterGameCor==null){enterGameCor=EnterGameSceneI();StartCoroutine(EnterGameSceneI());}else{StopCoroutine(enterGameCor);enterGameCor=null;EnterGameScene();}}
     IEnumerator EnterGameSceneI(){
-        Debug.Log("Entering GameScene COROUTINE");
         yield return new WaitForSeconds(0.02f);
         StartCoroutine(CreateSpawners());
         yield return new WaitForSeconds(1f);
-        Debug.Log("About to Spawn Boss");
         if(_isAdventureBossZone&&FindObjectOfType<BossAI>()==null){GameAssets.instance.Make(bossInfo.name,bossInfo.spawnPos);Debug.Log("Spawned: "+bossInfo.name);}
-        Debug.Log("Entered GameScene.");
         enterGameCor=null;
     }
     IEnumerator CreateSpawners(){
@@ -703,6 +700,7 @@ public class HLaserSettings{
 [System.Serializable]
 public class AdventureZoneData{
     public bool enabled=true;
+    public string name="1";
     public GameRules gameRules;
     [EnableIf("enabled")]public Vector2 pos;
     [EnableIf("enabled")]public int lvlReq;

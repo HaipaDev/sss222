@@ -283,10 +283,16 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 }else{//Adventure
                     if(zoneToTravelTo!=-1){//Traveling
                         presenceDetails=_prefixDetails+"Time left: "+GetGameTimeLeftFormat()+_suffixDetails;
-                        presenceStatus=_prefixStatus+"Traveling to Zone "+(zoneToTravelTo+1)+nickInfo+_suffixStatus;
+                        presenceStatus=_prefixStatus+"Traveling to Zone "+GameCreator.instance.adventureZones[zoneToTravelTo].name+nickInfo+_suffixStatus;
                     }else{
-                        presenceDetails=_prefixDetails+"Score: "+score+" | "+"Game Time: "+GetGameSessionTimeFormat()+_suffixDetails;
-                        presenceStatus=_prefixStatus+"Adventure Zone "+(zoneSelected+1)+nickInfo+_suffixStatus;
+                        if(FindObjectOfType<BossAI>()==null){
+                            presenceDetails=_prefixDetails+"Score: "+score+" | "+"Game Time: "+GetGameSessionTimeFormat()+_suffixDetails;
+                            presenceStatus=_prefixStatus+"Adventure Zone "+GameCreator.instance.adventureZones[zoneSelected].name+nickInfo+_suffixStatus;
+                        }else{
+                            var b=FindObjectOfType<BossAI>();var be=b.GetComponent<Enemy>();
+                            presenceDetails=_prefixDetails+"Health: "+be.health+"/"+be.healthMax+_suffixDetails;
+                            presenceStatus=_prefixStatus+"Fighting "+be.name+nickInfo+_suffixStatus;
+                        }
                     }
                 }
             }
@@ -334,7 +340,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);
         spawnReqsMono.AddScore(Mathf.RoundToInt(scoreValue*scoreMulti));
         //if(GameRules.instance.shopOn)spawnReqs.AddScore(Mathf.RoundToInt(scoreValue*scoreMulti),-2);
-        GameCanvas.instance.ScorePopupSwitch(scoreValue*scoreMulti);
+        if(GameRules.instance.scoreDisplay!=scoreDisplay.timeLeft&&GameRules.instance.scoreDisplay!=scoreDisplay.bossHealth)GameCanvas.instance.ScorePopupSwitch(scoreValue*scoreMulti);
     }
     public void AddToScoreNoEV(int scoreValue){score+=scoreValue;GameCanvas.instance.ScorePopupSwitch(scoreValue);}
     public void MultiplyScore(float multipl){score=Mathf.RoundToInt(score*multipl);}

@@ -76,18 +76,21 @@ MonoBehaviour:
     type: 3}
   adventureZones:
   - enabled: 1
+    name: 1
     gameRules: {fileID: 8240063421489526749, guid: 70ac4426afb864a468ccdcacdfcb9bfb,
       type: 3}
     pos: {x: -255, y: -710}
     lvlReq: 0
     isBoss: 0
   - enabled: 1
+    name: 2
     gameRules: {fileID: 6112808402236795245, guid: 5ff8e0c2770350d489b2eabcc3ccd2ae,
       type: 3}
     pos: {x: -80, y: -595}
     lvlReq: 2
     isBoss: 0
   - enabled: 1
+    name: Boss 1
     gameRules: {fileID: 6112808402236795245, guid: 4f452742670a63d48b5048f4aa48964e,
       type: 3}
     pos: {x: 125, y: -350}

@@ -2482,11 +2482,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   valueName: holodeath_popup
   valueSet: 1
-  below: 1
-  disableComponents: 1
-  disableChildren: 1
-  disableChildrenComponents: 0
   value: 0
+  below: 1
+  enable: 0
+  revertAfterChanged: 0
+  components: 1
+  children: 0
+  childrenComponents: 1
   timeToCheckForPresence: 3
   timerToCheckForPresence: 0
   delay: 0
@@ -2818,7 +2820,6 @@ MonoBehaviour:
   - {fileID: 7898855328462501139}
   - {fileID: 432487846047178028}
   - {fileID: 4764429935589315794}
-  - {fileID: 1035728729264728904}
   rescaleAndMove16by9:
   - trans: {fileID: 2521916808574491117}
     pos: {x: 410, y: -395}
@@ -4166,6 +4167,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3005449179855630362}
   - {fileID: 793435523232416354}
   - {fileID: 2725955543157628764}
   m_Father: {fileID: 2614155989906725886}
@@ -5171,12 +5173,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3963267613138260097}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.289917, y: 9.669128}
-  m_SizeDelta: {x: 214.14, y: 60.7}
+  m_AnchoredPosition: {x: -0.841, y: 9.669128}
+  m_SizeDelta: {x: 215.823, y: 60.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4545639297612023433
 CanvasRenderer:
@@ -5233,7 +5235,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.9
+  m_fontSize: 54.7
   m_fontSizeBase: 66
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5269,7 +5271,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0.01730013, y: 0, z: -0.6592854, w: 0.78584}
+  m_margin: {x: 0, y: 5, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5835,6 +5837,143 @@ MonoBehaviour:
   xx: 0
   yy: 0
   targetObj: {fileID: 0}
+--- !u!1 &8386168893282298890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3005449179855630362}
+  - component: {fileID: 8831928916700513834}
+  - component: {fileID: 7232683439803175861}
+  - component: {fileID: 1725423474664566071}
+  - component: {fileID: 5804326034089174617}
+  - component: {fileID: 5140106103445433379}
+  m_Layer: 5
+  m_Name: BossHP-StripFill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3005449179855630362
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8386168893282298890}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99998957, y: 0.99998957, z: 0.99998957}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3963267613138260097}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -141.5, y: -0}
+  m_SizeDelta: {x: 250, y: 105}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8831928916700513834
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8386168893282298890}
+  m_CullTransparentMesh: 0
+--- !u!114 &7232683439803175861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8386168893282298890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: cb4654039c42b394a9544cc9b5a1fe3c, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 1
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1725423474664566071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8386168893282298890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9061ab9e259ddeb4889f0b7d41126ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barType: 4
+  valueName: bossHP
+  value: 0
+  maxValue: 0
+  onlyOnEnable: 0
+  onValidate: 0
+--- !u!114 &5804326034089174617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8386168893282298890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0724842366b6ea4eaeab0d5c14d8f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  overwriteSav: 0
+  animVal: 0
+  alphaVal: 0
+--- !u!114 &5140106103445433379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8386168893282298890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8c503f9ab278f4ea057cfb98b11629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valueName: isBossZone
+  valueSet: 1
+  value: 0
+  below: 0
+  enable: 1
+  revertAfterChanged: 1
+  components: 1
+  children: 0
+  childrenComponents: 1
+  timeToCheckForPresence: 3
+  timerToCheckForPresence: 0
+  delay: 0
 --- !u!1 &8684379468643623505
 GameObject:
   m_ObjectHideFlags: 0
@@ -8250,7 +8389,7 @@ PrefabInstance:
     - target: {fileID: 5605292846734648068, guid: 8e894285177aba14fae52134ce043023,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5605292846734648068, guid: 8e894285177aba14fae52134ce043023,
         type: 3}

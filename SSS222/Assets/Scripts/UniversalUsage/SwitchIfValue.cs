@@ -5,14 +5,16 @@ using UnityEngine.UI;
 using TMPro;
 using Sirenix.OdinInspector;
 
-public class DisableIfValue : MonoBehaviour{
+public class SwitchIfValue : MonoBehaviour{
     [SerializeField] string valueName;
     [SerializeField] float valueSet=1;
-    [SerializeField] bool below;
-    [SerializeField] bool disableComponents=true;
-    [SerializeField] bool disableChildren=false;
-    [ShowIf("disableChildren")][SerializeField] bool disableChildrenComponents=true;
     [ReadOnly][SerializeField] float value;
+    [SerializeField] bool below;
+    [SerializeField] bool enable=false;
+    [SerializeField] bool revertAfterChanged=true;
+    [SerializeField] bool components=true;
+    [SerializeField] bool children=false;
+    [ShowIf("children")][SerializeField] bool childrenComponents=true;
     [SerializeField] float timeToCheckForPresence=3;
     [DisableInEditorMode][SerializeField] float timerToCheckForPresence;
     [DisableInEditorMode][SerializeField] float delay;
@@ -28,18 +30,19 @@ public class DisableIfValue : MonoBehaviour{
             }
             else if(valueName=="isBossZone"){value=GameAssets.BoolToInt(FindObjectOfType<BossAI>()!=null);}
 
-            void DisableIfNotPresent(){if(timerToCheckForPresence<=0){Disable();}}
-            if(!below){if(value>=valueSet){Disable();}}
-            else{if(value<=valueSet){Disable();}}
+            void DisableIfNotPresent(){if(timerToCheckForPresence<=0){Switch(enable);}}
+            if(!below){if(value>=valueSet){Switch(enable);}else{if(revertAfterChanged)Switch(!enable);}}
+            else{if(value<=valueSet){Switch(enable);}else{if(revertAfterChanged)Switch(!enable);}}
         }
     }
-    void Disable(){
-        if(disableComponents){
-            foreach(MonoBehaviour c in GetComponents<MonoBehaviour>()){if(c!=this)c.enabled=false;}
+    void Switch(bool on=false){
+        if(components){
+            foreach(MonoBehaviour c in GetComponents<MonoBehaviour>()){if(c!=this)c.enabled=on;}
         }
-        if(disableChildren){
-            if(disableChildrenComponents){foreach(MonoBehaviour c in GetComponentsInChildren<MonoBehaviour>()){c.enabled=false;}}
-            else{foreach(Transform t in transform){t.gameObject.SetActive(false);}}
-        }else{gameObject.SetActive(false);}
+        if(children){
+            if(childrenComponents){foreach(MonoBehaviour c in GetComponentsInChildren<MonoBehaviour>()){c.enabled=on;}}
+            else{foreach(Transform t in transform){t.gameObject.SetActive(on);}}
+        }
+        if(!components&&!children){gameObject.SetActive(on);}
     }
 }
