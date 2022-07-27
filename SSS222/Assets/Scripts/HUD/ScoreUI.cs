@@ -11,7 +11,7 @@ public class ScoreUI : MonoBehaviour{
         if(_delay<=0){scalePre=transform.localScale;
             if(GameSession.instance!=null){
                 if(GameSession.instance.gamemodeSelected<=0){Destroy(this);}
-                if(GameSession.instance.score>GameSession.instance.GetHighscoreCurrent().score){GetComponent<Animator>().SetTrigger("beaten");Destroy(this);}
+                else if(GameSession.instance.score>GameSession.instance.GetHighscoreCurrent().score){GetComponent<Animator>().SetTrigger("beaten");Destroy(this);}
             }
             transform.localScale=scale*scalePre;
         }

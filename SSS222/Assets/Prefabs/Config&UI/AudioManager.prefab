@@ -624,3 +624,30 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: MoonOfLunacy-Spawn
+    clip: {fileID: 8300000, guid: d470987f543aa494da0f0c41011f9903, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: MoonOfLunacy-Phase2
+    clip: {fileID: 8300000, guid: b5734d885d54f5943a2cfc0c452aaa46, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: MoonOfLunacy-Death
+    clip: {fileID: 8300000, guid: 52dfb3c61bb928342a26c4c9ab1f1e9a, type: 3}
+    volume: 1
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

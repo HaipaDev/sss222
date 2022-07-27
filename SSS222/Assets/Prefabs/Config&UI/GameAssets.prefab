@@ -240,10 +240,14 @@ MonoBehaviour:
   - name: PlayerHolobody
     gobj: {fileID: 4546529352650547393, guid: aae7ce6f2d61acf47b9277be4a6212ee, type: 3}
   - name: Moon of Lunacy
-    gobj: {fileID: 0}
+    gobj: {fileID: 6432250634095115783, guid: 40724440f430c444b96f81b8fc3498fb, type: 3}
   vfx:
   - name: Explosion
     gobj: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
+  - name: ExplosionBig
+    gobj: {fileID: 100000, guid: d9a020262862e2c44b9025f96830d8c1, type: 3}
+  - name: ExplosionsLong
+    gobj: {fileID: 100000, guid: 9a4b368e4c74ca54f8af48d94f8b74bf, type: 3}
   - name: FlareHit
     gobj: {fileID: 100000, guid: 02b557984fb915149870f0d9dc10b070, type: 3}
   - name: FlareShoot
@@ -292,6 +296,10 @@ MonoBehaviour:
     gobj: {fileID: 100000, guid: fd3813f35d961b340bc6f97d38400a8c, type: 3}
   - name: DarkEnergy
     gobj: {fileID: 100000, guid: 885af563391203b418209c96382a0395, type: 3}
+  - name: MoonOfLunacy-Spawn
+    gobj: {fileID: 100000, guid: e5eb2464876dccd45befd5a1bddcd68c, type: 3}
+  - name: MoonOfLunacy-Phase2
+    gobj: {fileID: 3591891385913239443, guid: 3b20fb85e98e7494bb4b15bd4cc51908, type: 3}
   sprites:
   - name: nullPwrup
     spr: {fileID: 21300000, guid: 03862ac5e476ec14abf1da303946fd8b, type: 3}

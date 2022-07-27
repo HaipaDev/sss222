@@ -57,6 +57,7 @@ public class Enemy : MonoBehaviour{
             else{if(transform.GetChild(0)!=null)transform.GetChild(0).GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;}
         }
         StartCoroutine(SetValues());
+        if(GetComponent<BossAI>()!=null&&GameRules.instance.bossInfo.scaleUpOnSpawn){size=Vector2.zero;}
     }
     IEnumerator SetValues(){
         //drops=(LootTableDrops)gameObject.AddComponent(typeof(LootTableDrops));
@@ -92,19 +93,21 @@ public class Enemy : MonoBehaviour{
         }
         if(GetComponent<Goblin>()!=null||GetComponent<VortexWheel>()!=null/*||GetComponent<HealingDrone>()!=null*/)shooting=false;
         if(GetComponent<HealingDrone>()!=null){if(!GetComponent<HealingDrone>().enabled)GetComponent<HealingDrone>().enabled=true;}
-
+    
             yield return new WaitForSeconds(0.04f);
-            for(var d=0;d<drops.Count;d++){dropValues.Add(drops[d].dropChance);}
-            dropValues[0]*=GameSession.instance.enballDropMulti;
-            dropValues[1]*=GameSession.instance.coinDropMulti;
-            dropValues[2]*=GameSession.instance.coreDropMulti;
+            if(drops!=null){
+                for(var d=0;d<drops.Count;d++){dropValues.Add(drops[d].dropChance);}
+                dropValues[0]*=GameSession.instance.enballDropMulti;
+                dropValues[1]*=GameSession.instance.coinDropMulti;
+                dropValues[2]*=GameSession.instance.coreDropMulti;
 
-            for(var d=0;d<dropValues.Count;d++){
-                if(Random.Range(1,101)<=dropValues[d]&&dropValues[d]!=0){dropValues[d]=101;}
+                for(var d=0;d<dropValues.Count;d++){
+                    if(Random.Range(1,101)<=dropValues[d]&&dropValues[d]!=0){dropValues[d]=101;}
+                }
+                if(!GameRules.instance.energyOnPlayer)dropValues[0]=0;
+                if(!GameRules.instance.crystalsOn)dropValues[1]=0;
+                if(!GameRules.instance.coresOn)dropValues[2]=0;
             }
-            if(!GameRules.instance.energyOnPlayer)dropValues[0]=0;
-            if(!GameRules.instance.crystalsOn)dropValues[1]=0;
-            if(!GameRules.instance.coresOn)dropValues[2]=0;
         }
 
         bullet=GameAssets.instance.GetEnemyBullet(bulletAssetName);
@@ -162,22 +165,25 @@ public class Enemy : MonoBehaviour{
             rb.velocity=new Vector2(0,3f);
         }
     }
-    public void Die(bool explode=true){if(health<=0&&health!=-1000){
-        GameSession.instance.AddEnemyCount();
-        StatsAchievsManager.instance.AddKills(Name,type);
-        int score=Random.Range((int)scoreValue.x,(int)scoreValue.y+1);
-        if(GetComponent<CometRandomProperties>()!=null){
-            var comet=GetComponent<CometRandomProperties>();
-            if(comet.scoreBySize){
-                for(var i=0;i<comet.scoreSizes.Length&&(comet.size>comet.scoreSizes[i].size&&(i+1<comet.scoreSizes.Length&&comet.size<comet.scoreSizes[i+1].size));i++){score=comet.scoreSizes[i].score;}
+    bool dead;
+    public void Die(bool explode=true){if(health<=0&&health!=-1000){if(!dead){
+        if(GetComponent<BossAI>()==null){
+            GameSession.instance.AddEnemyCount();
+            StatsAchievsManager.instance.AddKills(Name,type);
+            int score=Random.Range((int)scoreValue.x,(int)scoreValue.y+1);
+            if(GetComponent<CometRandomProperties>()!=null){
+                var comet=GetComponent<CometRandomProperties>();
+                if(comet.scoreBySize){
+                    for(var i=0;i<comet.scoreSizes.Length&&(comet.size>comet.scoreSizes[i].size&&(i+1<comet.scoreSizes.Length&&comet.size<comet.scoreSizes[i+1].size));i++){score=comet.scoreSizes[i].score;}
+                }
+                if(comet.isLunar){
+                    var lunarScore=comet.LunarScore();
+                    if(lunarScore!=-1)score=lunarScore;
+                    comet.LunarDrop();
+                }
             }
-            if(comet.isLunar){
-                var lunarScore=comet.LunarScore();
-                if(lunarScore!=-1)score=lunarScore;
-                comet.LunarDrop();
-            }
+            if(giveScore==true)GameSession.instance.AddToScore(score);
         }
-        if(giveScore==true)GameSession.instance.AddToScore(score);
         if(GameRules.instance.xpOn)if(xpAmnt!=0&&xpChance>=Random.Range(0f,100f)){
             if(accumulateXp){
                 if(xpAmnt/5>=1){for(var i=0;i<(int)(xpAmnt/5);i++){GameAssets.instance.Make("CelestVial",transform.position);}}
@@ -186,8 +192,7 @@ public class Enemy : MonoBehaviour{
         }
         else{GameSession.instance.AddXP(xpAmnt);}
         giveScore=false;
-
-        if(GameSession.instance.zoneToTravelTo!=-1){GameSession.instance.gameTimeLeft-=3f;}
+        if(GameSession.instance.zoneToTravelTo!=-1){GameSession.instance.gameTimeLeft-=GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime;}
 
 
         List<LootTableEntryDrops> ld=drops;
@@ -206,11 +211,15 @@ public class Enemy : MonoBehaviour{
                 }
             }}}
         }
-        if(GetComponent<Goblin>()!=null){GetComponent<Goblin>().DropPowerup(true);if(GetComponent<Goblin>().bossForm){GetComponent<Goblin>().GoblinBossDrop();}}
-        
-        if(explode){AudioManager.instance.Play("Explosion");GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject);}
-        Shake.instance.CamShake(2,1);
-    }}
+        if(GetComponent<BossAI>()==null){
+            if(GetComponent<Goblin>()!=null){GetComponent<Goblin>().DropPowerup(true);if(GetComponent<Goblin>().bossForm){GetComponent<Goblin>().GoblinBossDrop();}}
+            
+            if(explode){AudioManager.instance.Play("Explosion");GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject);}
+            Shake.instance.CamShake(2,1);
+        }
+        if(GetComponent<BossAI>()!=null){GetComponent<BossAI>().Die();}
+        dead=true;
+    }}}
     void OnDestroy(){
         if(GetComponent<Goblin>()!=null)GetComponent<Goblin>().DropPowerup(false);
         if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);

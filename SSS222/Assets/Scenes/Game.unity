@@ -831,7 +831,7 @@ Transform:
   - {fileID: 423324077}
   - {fileID: 577326435}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &528980280
 PrefabInstance:
@@ -1297,7 +1297,7 @@ PrefabInstance:
     - target: {fileID: 5024049173945341391, guid: 722f061f56b4e8645b992438eb1d6dd5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8565809542268954524, guid: 722f061f56b4e8645b992438eb1d6dd5,
         type: 3}
@@ -2121,75 +2121,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb870523f348c2e4fad6b2786bc46518, type: 3}
---- !u!1001 &1421389786
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6432250634095115783, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_Name
-      value: Moon of Lunacy
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.19829166
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.820004
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486393133135032724, guid: 40724440f430c444b96f81b8fc3498fb,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 40724440f430c444b96f81b8fc3498fb, type: 3}
 --- !u!1001 &1456472841
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4303,7 +4234,7 @@ PrefabInstance:
     - target: {fileID: 6644735265139863176, guid: db6f21db03d81e24fa8a1e4230da0599,
         type: 3}
       propertyPath: m_RootOrder
-      value: 23
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 6644735265139863176, guid: db6f21db03d81e24fa8a1e4230da0599,
         type: 3}

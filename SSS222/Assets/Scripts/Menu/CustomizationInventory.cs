@@ -392,5 +392,5 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     }
     public void SetDeathFx(string str){deathFxName=str;HighlightSelectedElement();HighlightSelectedType();}
     public CstmzMusic GetMusic(string str){return GameAssets.instance.GetMusic(str);}
-    public void SetMusic(string str){musicName=str;HighlightSelectedElement();HighlightSelectedType();}
+    public void SetMusic(string str){musicName=str;Jukebox.instance.SetMusicToCstmzMusic();HighlightSelectedElement();HighlightSelectedType();}
 }

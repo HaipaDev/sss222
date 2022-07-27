@@ -272,6 +272,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public float ambienceVolume=-0.55f;
 		public float musicVolume=0.66f;
 		public bool windDownMusic=true;
+		public bool bossVolumeTurnUp=true;
 		
 		
 		public PlaneDir playfieldRot=PlaneDir.vert;
@@ -282,6 +283,15 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool dmgPopups=true;
 		public bool particles=true;		
 		public bool screenflash=true;
+		
+		public bool upscaleHUD=true;
+		public bool playerWeaponsFade=true;
+		public float hudVis_graphics=0.9f;
+		public float hudVis_text=1f;
+		public float hudVis_barFill=1f;
+		public float hudVis_absorpFill=0.5f;
+		public float hudVis_popups=0.9f;
+		public float hudVis_notif=1f;
 
 		public float popupSumTime=0.25f;
 		public bool hpPopupsSum;
@@ -293,14 +303,6 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool coinPopupsSum;
 		public bool corePopupsSum;
 		public bool scorePopupsSum;
-		
-		public bool playerWeaponsFade=true;
-		public float hudVis_graphics=0.9f;
-		public float hudVis_text=1f;
-		public float hudVis_barFill=1f;
-		public float hudVis_absorpFill=0.5f;
-		public float hudVis_popups=0.9f;
-		public float hudVis_notif=1f;
 	}
 	
 	public string _settingsDataPath(){return Application.persistentDataPath+"/"+filenameSettings+".json";}

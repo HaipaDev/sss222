@@ -74,6 +74,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public float currentPlaytime=0;
     public float presenceTimer=0;
     public bool presenceTimeSet=false;
+    public float _preBossMusicVolume;
     //[SerializeField] InputMaster inputMaster;
     [Range(0,2)]public static int maskMode=1;
 

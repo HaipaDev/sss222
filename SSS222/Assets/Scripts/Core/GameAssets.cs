@@ -32,23 +32,21 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 			Debug.LogWarning("Object: " + str + " not found!");
 			return null;
 		}
-		GameObject gobj=o.gobj;
-        GameObject objref=Instantiate(gobj,pos,Quaternion.identity);
+        GameObject objref=Instantiate(o.gobj,pos,Quaternion.identity);
         return objref;
 	}
-    public GameObject MakeSpread(string str, Vector2 pos, int amnt=3, float rangeX=0.5f, float rangeY=0.5f){
+    public GameObject MakeSpread(string str, Vector2 pos, int amnt, float rangeX=0.5f, float rangeY=0.5f){
 		GObject o=objects.Find(x=>x.name==str);
 		if(o==null){
 			Debug.LogWarning("Object: " + str + " not found!");
 			return null;
 		}
-		GameObject gobj=o.gobj;
-		GameObject objref=Instantiate(gobj,pos,Quaternion.identity);
+		GameObject objref=Instantiate(o.gobj,pos,Quaternion.identity);
 		for(var i=1;i<amnt-1;i++){
-		var rndmX=UnityEngine.Random.Range(-rangeX,rangeX);
-		var rndmY=UnityEngine.Random.Range(-rangeY,rangeY);
-		var poss=pos+new Vector2(rndmX,rndmY);
-        Instantiate(gobj,poss,Quaternion.identity);
+		var rndX=UnityEngine.Random.Range(-rangeX,rangeX);
+		var rndY=UnityEngine.Random.Range(-rangeY,rangeY);
+		var poss=pos+new Vector2(rndX,rndY);
+        Instantiate(o.gobj,poss,Quaternion.identity);
 		}
         return objref;
 	}
@@ -431,7 +429,10 @@ public class SimpleAnim{
 	public float delay=0.02f;
 }
 [System.Serializable]
-public class ListOfSimpleAnims{public List<SimpleAnim> anim;}
+public class ListOfSimpleAnims{
+	public string name;
+	public List<SimpleAnim> anim;
+}
 [System.Serializable]
 public class TransformAndPos{
 	public Transform trans;

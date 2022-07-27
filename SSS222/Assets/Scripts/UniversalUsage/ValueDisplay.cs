@@ -136,7 +136,7 @@ public class ValueDisplay : MonoBehaviour{
                     
                     else if(gr.scoreDisplay==scoreDisplay.bossHealth){
                         if(FindObjectOfType<BossAI>()!=null){
-                            var hp=FindObjectOfType<BossAI>().GetComponent<Enemy>().health;
+                            var hp=Mathf.Clamp(FindObjectOfType<BossAI>().GetComponent<Enemy>().health,0,99999f);
                             var hpmax=FindObjectOfType<BossAI>().GetComponent<Enemy>().healthMax;
                             if(hp>=10){hp=Mathf.RoundToInt(hp);}else{hp=(float)System.Math.Round(hp,2);}
                             _txt=hp.ToString()+"/"+hpmax;

@@ -12,12 +12,13 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     [SerializeField]float lowerPitchLimit=0.1f;
     [SerializeField]float upperPitchLimit=2f;
     [HideInInspector]public bool inverted=false;
+    AudioClip currentMusic;
     void Awake(){
         if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
     }
+    void Start(){SetMusicToCstmzMusic();}
     void Update(){
-        var currentMusic=GameAssets.instance.GetMusic(SaveSerial.instance.playerData.musicName);
-        if(GetComponent<AudioSource>().clip!=currentMusic.track){GetComponent<AudioSource>().clip=currentMusic.track;GetComponent<AudioSource>().Play();}
+        if(GetComponent<AudioSource>().clip!=currentMusic){GetComponent<AudioSource>().clip=currentMusic;GetComponent<AudioSource>().Play();}
 
         if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"&&SaveSerial.instance.settingsData.windDownMusic){
             float _curMusicSpeed=GetComponent<AudioSource>().pitch;
@@ -34,5 +35,13 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
             int _mult=1;if(inverted){_mult=-1;}else{_mult=1;}
             GetComponent<AudioSource>().pitch=_curMusicSpeed*_mult;//*(inverted?  1 : 0);
         }else{GetComponent<AudioSource>().pitch=1;}
+    }
+    public void SetMusic(AudioClip clip){currentMusic=clip;}
+    public void SetMusicToCstmzMusic(){SetMusic(GameAssets.instance.GetMusic(SaveSerial.instance.playerData.musicName).track);}
+    public void PauseFor(float delay){StartCoroutine(PauseForI(delay));}
+    IEnumerator PauseForI(float delay){
+        GetComponent<AudioSource>().Pause();
+        yield return new WaitForSeconds(delay);
+        GetComponent<AudioSource>().UnPause();
     }
 }

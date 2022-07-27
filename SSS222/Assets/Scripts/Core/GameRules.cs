@@ -30,6 +30,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [ShowIf(nameof(scoreDisplay), scoreDisplay.sessionTimeAsDistance)][FoldoutGroup("Global")]public int secondToDistanceRatio=100;
     [ShowIf("@this._isAdventureTravelZone")][FoldoutGroup("Global")][ES3NonSerializable]public float travelTimeToDistanceRatio=1;
     [ShowIf("@this._isAdventureTravelZone")][FoldoutGroup("Global")][ES3NonSerializable]public float travelTimeToAddOnDeath=0;
+    [ShowIf("@this._isAdventureTravelZone")][FoldoutGroup("Global")][ES3NonSerializable]public float killSubTravelTime=3;
     [ShowIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global")][ES3NonSerializable]public float holodeathCrystalsRatio=1;
     [ShowIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global")][ES3NonSerializable]public float holodeathTimeRatio=1;
     [ShowIf("@this._isAdventureNotSubZone()")][FoldoutGroup("Global")][ES3NonSerializable]public float holobodyHeal=15;
@@ -250,6 +251,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             uniqueWaves=gr.uniqueWaves;
             disrupterList=gr.disrupterList;
             powerupSpawners=gr.powerupSpawners;
+            bossInfo=null;
         }else{
             //clear Spawns
             waveSpawnReqs=new spawnReqs{timer=-5};
@@ -259,8 +261,10 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             //Boss info
             bossInfo=gr.bossInfo;
             shipScaleBoss=gr.shipScaleBoss;
-            if(bossInfo.name!=""){GameAssets.instance.Make(bossInfo.name,Vector2.zero);}
+            //if(_isAdventureBossZone){GameAssets.instance.Make(bossInfo.name,Vector2.zero);Debug.Log("Spawned: "+bossInfo.name);}
+            //if(gr.bossInfo.name!=""){GameAssets.instance.Make(gr.bossInfo.name,Vector2.zero);Debug.Log("Spawned: "+gr.bossInfo.name);}
         }
+        Debug.Log("Replaced GameRules");
     }
     void Awake(){if(GameRules.instance!=null&&this!=GameRules.instance){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
     IEnumerator Start(){
@@ -268,23 +272,29 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         //Set gameModeSelected if artificially turned on gamemode etc
         yield return new WaitForSecondsRealtime(0.05f);
         if(!GameSession.instance.CheckGamemodeSelected(cfgName)){
-            GameSession.instance.SetGamemodeSelectedStr(cfgName);}
+            GameSession.instance.SetGamemodeSelectedStr(cfgName);
+            if(SceneManager.GetActiveScene().name=="Game")EnterGameScene();
+        }
         yield return new WaitForSecondsRealtime(0.02f);
-        if(SceneManager.GetActiveScene().name=="Game")EnterGameScene();
 
         SumUpWavesWeightsTotal();
         SumUpAllPowerupSpawnersWeightsTotal();
     }
-    public void EnterGameScene(){StartCoroutine(EnterGameSceneI());}
+    IEnumerator enterGameCor;
+    public void EnterGameScene(){Debug.Log("Entering GameScene");if(enterGameCor==null){enterGameCor=EnterGameSceneI();StartCoroutine(EnterGameSceneI());}else{Debug.Log("Stopping EnterGameSceneI");StopCoroutine(enterGameCor);enterGameCor=null;EnterGameScene();}}
     IEnumerator EnterGameSceneI(){
-        yield return new WaitForSecondsRealtime(0.02f);
+        Debug.Log("Entering GameScene COROUTINE");
+        yield return new WaitForSeconds(0.02f);
         StartCoroutine(CreateSpawners());
-        SumUpWavesWeightsTotal();
-        SumUpAllPowerupSpawnersWeightsTotal();
+        yield return new WaitForSeconds(1f);
+        Debug.Log("About to Spawn Boss");
+        if(_isAdventureBossZone&&FindObjectOfType<BossAI>()==null){GameAssets.instance.Make(bossInfo.name,bossInfo.spawnPos);Debug.Log("Spawned: "+bossInfo.name);}
+        Debug.Log("Entered GameScene.");
+        enterGameCor=null;
     }
     IEnumerator CreateSpawners(){
         //Set/Create WaveSpawner
-        if(waveList.Count>0){
+        if(waveList!=null){if(waveList.Count>0){
             Waves ws;
             if(FindObjectOfType<Waves>()==null){
                 ws=Instantiate(GameAssets.instance.waveSpawnerPrefab).GetComponent<Waves>();
@@ -295,10 +305,11 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             ws.GetComponent<LootTableWaves>().itemList=waveList;
             ws.startingWaveRandom=startingWaveRandom;
             ws.uniqueWaves=uniqueWaves;
-        }
+            SumUpWavesWeightsTotal();
+        }}
 
         //Set/Create DisruptersSpawner
-        if(disrupterList.Count>0){
+        if(disrupterList!=null){if(disrupterList.Count>0){
             DisruptersSpawner ds;
             if(FindObjectOfType<DisruptersSpawner>()==null){
                 ds=Instantiate(GameAssets.instance.disrupterSpawnerPrefab).GetComponent<DisruptersSpawner>();
@@ -306,10 +317,10 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             }else{ds=FindObjectOfType<DisruptersSpawner>();}
             yield return new WaitForSecondsRealtime(0.005f);
             ds.disruptersList=disrupterList;
-        }
+        }}
         
         //Set/Create PowerupSpawners
-        if(powerupSpawners.Count>0){
+        if(powerupSpawners!=null){if(powerupSpawners.Count>0){
             List<PowerupsSpawner> ps=new List<PowerupsSpawner>();
             if(FindObjectsOfType<PowerupsSpawner>()!=null){
                 foreach(PowerupsSpawner ps1 in FindObjectsOfType<PowerupsSpawner>()){ps.Add(ps1);}
@@ -321,9 +332,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
                 ps[i].spawnReqs=powerupSpawners[i].spawnReqs;
                 ps[i].powerupSpawnPosRange=powerupSpawners[i].powerupSpawnPosRange;
             }}
-        }
-
-        if(bossInfo.name!=""&&FindObjectOfType<BossAI>()==null){GameAssets.instance.Make(bossInfo.name,Vector2.zero);}
+            SumUpAllPowerupSpawnersWeightsTotal();
+        }}
     }
     [NonSerialized][ES3NonSerializable]Player p;
     void Update(){
@@ -377,10 +387,10 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     }
     public void SumUpWavesWeightsTotal(){
         wavesWeightsSumTotal=0;
-        foreach(LootTableEntryWaves w in waveList){wavesWeightsSumTotal+=w.dropChance;}
+        if(waveList!=null)foreach(LootTableEntryWaves w in waveList){wavesWeightsSumTotal+=w.dropChance;}
     }
     public void SumUpAllPowerupSpawnersWeightsTotal(){
-        foreach(PowerupsSpawnerGR ps in powerupSpawners){ps.SumUpPowerupsWeightsTotal();}
+        if(powerupSpawners!=null)foreach(PowerupsSpawnerGR ps in powerupSpawners){ps.SumUpPowerupsWeightsTotal();}
     }
     #region//Custom Events
     public void MultiplyhealthMax(float amnt){p.healthMax*=amnt;}
@@ -544,7 +554,18 @@ public class BossClass{
     public enemyType type;
     public float healthStart=25;
     public float healthMax=25;
-[Header("Drops")]
+
+    public Vector2 spawnPos;
+    public bool scaleUpOnSpawn=true;
+    public AudioClip ost;
+    public float deathLength=3f;
+    public string preDeathAudio="Explosion";
+    public string preDeathVFX="Explosion";
+    public string deathAudio="Explosion";
+    public string deathVFX="Explosion";
+    public float deathShakeStrength=4f;
+    public float deathShakeSpeed=0.3f;
+[Header("Drops & PhaseInfo")]
     public float xpAmnt = 100f;
     public float xpChance = 100f;
     public List<LootTableEntryDrops> drops;
@@ -556,6 +577,12 @@ public class BossPhaseInfo{
     public Vector2 size=Vector2.one;
     public ShaderMatProps sprMatProps;
     public List<SimpleAnim> anims;
+[Header("Transformation")]
+    public float delay=1f;
+    public string audioAsset;
+    public string vfxAsset;
+    public float camShakeStrength=2f;
+    public float camShakeSpeed=0.2f;
 }
 [System.Serializable]
 public class CometSettings{
