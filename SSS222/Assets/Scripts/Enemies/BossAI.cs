@@ -89,9 +89,9 @@ public class BossAI : MonoBehaviour{
         en.defense=-1;
         GetComponent<PointPathing>().enabled=false;
         AudioManager.instance.Play(phasesInfo[p].audioAsset);
-        Jukebox.instance.PauseFor(phasesInfo[p].delay);
+        if(Jukebox.instance!=null)Jukebox.instance.PauseFor(phasesInfo[p].delay);
         yield return new WaitForSeconds(phasesInfo[p].delay);
-        if(p==0){Jukebox.instance.SetMusic(GameRules.instance.bossInfo.ost);if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameSession.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}}
+        if(p==0){if(Jukebox.instance==null){Instantiate(GameCreator.instance.GetJukeboxPrefab());}if(Jukebox.instance!=null)Jukebox.instance.SetMusic(GameRules.instance.bossInfo.ost,true);if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameSession.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}}
         GameAssets.instance.VFX(phasesInfo[p].vfxAsset,transform.position,3f);
         Shake.instance.CamShake(phasesInfo[p].camShakeStrength,phasesInfo[p].camShakeSpeed);
         GetComponent<PointPathing>().enabled=true;

@@ -28,8 +28,15 @@ public class AdventureZonesCanvas : MonoBehaviour{
                 go.transform.localScale=new Vector2(bossZoneSize,bossZoneSize);
                 if(GameCreator.instance.adventureZones[i].gameRules.cfgIconsGo!=null){
                     Destroy(go.transform.GetChild(3).GetComponent<Image>());
-                    Instantiate(GameCreator.instance.adventureZones[i].gameRules.cfgIconsGo,go.transform.GetChild(3));
-                }else{if(GameCreator.instance.adventureZones[i].gameRules.cfgIconAssetName!=""){go.transform.GetChild(3).GetComponent<Image>().sprite=GameAssets.instance.SprAny(GameCreator.instance.adventureZones[i].gameRules.cfgIconAssetName);}}
+                    var icons=Instantiate(GameCreator.instance.adventureZones[i].gameRules.cfgIconsGo,go.transform.GetChild(3));
+                    if(GameCreator.instance.adventureZones[i].bossBlackOutImg){foreach(Image img in icons.transform){var lvreq=img.gameObject.AddComponent<ShipLevelRequired>();lvreq.adventureData=true;lvreq.blackOutImg=true;lvreq.value=GameCreator.instance.adventureZones[i].lvlReq;}}
+                }else{
+                    if(GameCreator.instance.adventureZones[i].gameRules.cfgIconAssetName!=""){
+                        var img=go.transform.GetChild(3).GetComponent<Image>();
+                        go.transform.GetChild(3).GetComponent<Image>().sprite=GameAssets.instance.SprAny(GameCreator.instance.adventureZones[i].gameRules.cfgIconAssetName);
+                        if(GameCreator.instance.adventureZones[i].bossBlackOutImg){var lvreq=img.gameObject.AddComponent<ShipLevelRequired>();lvreq.adventureData=true;lvreq.blackOutImg=true;lvreq.value=GameCreator.instance.adventureZones[i].lvlReq;}
+                    }
+                }
                 Destroy(go.transform.GetChild(2).gameObject);
             }else{go.transform.localScale=new Vector2(regularZoneSize,regularZoneSize);Destroy(go.transform.GetChild(3).gameObject);}
         }}

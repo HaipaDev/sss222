@@ -5254,7 +5254,7 @@ MonoBehaviour:
   mousePos: {x: 0, y: 0}
   mouseDir: {x: 0, y: 0}
   dist: 0
-  velocity: {x: 0, y: 0}
+  vel: {x: 0, y: 0}
   shipScale: 0.95
   mPressedTime: 0
   joystick: {fileID: 0}
@@ -5299,7 +5299,7 @@ MonoBehaviour:
   shipLvlFraction: 0
   shipLvlFractionsValues: []
   autoAscend: 1
-  lvlFractionsMax: 1
+  lvlFractionsMax: 0
   moduleSlots: []
   skillsSlots: []
   modulesList: []

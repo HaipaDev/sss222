@@ -16,7 +16,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     void Awake(){
         if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
     }
-    void Start(){SetMusicToCstmzMusic();}
+    void Start(){if(currentMusic==null)SetMusicToCstmzMusic();}
     void Update(){
         if(GetComponent<AudioSource>().clip!=currentMusic){GetComponent<AudioSource>().clip=currentMusic;GetComponent<AudioSource>().Play();}
 
@@ -36,8 +36,8 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
             GetComponent<AudioSource>().pitch=_curMusicSpeed*_mult;//*(inverted?  1 : 0);
         }else{GetComponent<AudioSource>().pitch=1;}
     }
-    public void SetMusic(AudioClip clip){currentMusic=clip;}
-    public void SetMusicToCstmzMusic(){SetMusic(GameAssets.instance.GetMusic(SaveSerial.instance.playerData.musicName).track);}
+    public void SetMusic(AudioClip clip,bool force=false){if(currentMusic!=clip||force)currentMusic=clip;}
+    public void SetMusicToCstmzMusic(bool force=false){SetMusic(GameAssets.instance.GetMusic(SaveSerial.instance.playerData.musicName).track,force);}
     public void PauseFor(float delay){StartCoroutine(PauseForI(delay));}
     IEnumerator PauseForI(float delay){
         GetComponent<AudioSource>().Pause();

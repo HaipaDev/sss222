@@ -6,13 +6,14 @@ using TMPro;
 
 public class ShipLevelRequired : MonoBehaviour{
     [SerializeField] public int value;
+    [SerializeField] public bool blackOutImg;
     [SerializeField] public bool expire;
     [SerializeField] public bool adventureData;
     
     GameObject textObj;
     PlayerModules pmodules;
     void Start(){
-        textObj=transform.GetChild(0).gameObject;
+        if(transform.childCount>0)textObj=transform.GetChild(0).gameObject;
         if(Player.instance!=null)pmodules=Player.instance.GetComponent<PlayerModules>();
         if(expire){Switch();}else{Switch(true);}
     }
@@ -25,7 +26,12 @@ public class ShipLevelRequired : MonoBehaviour{
         if(adventureData){if(SaveSerial.instance.advD.shipLvl>=value){if(!expire){Switch();}else{Switch(true);}}}
     }
     public void Switch(bool on=false){
-        GetComponent<Image>().enabled=on;
-        if(textObj!=null)textObj.GetComponent<TextMeshProUGUI>().enabled=on;
+        if(!blackOutImg){
+            GetComponent<Image>().enabled=on;
+            if(textObj!=null)textObj.GetComponent<TextMeshProUGUI>().enabled=on;
+        }else{
+            if(on)GetComponent<Image>().color=Color.black;
+            else GetComponent<Image>().color=Color.white;
+        }
     }
 }

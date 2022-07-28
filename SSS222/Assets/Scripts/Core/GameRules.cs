@@ -268,7 +268,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     void Awake(){if(GameRules.instance!=null&&this!=GameRules.instance){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
     IEnumerator Start(){
         if(gameObject.name.Contains("(Clone)")){gameObject.name.Replace("(Clone)","");}
-        if(_isAdventure()){GameSession.instance.gamemodeSelected=-1;}
+        if(_isAdventure()){GameSession.instance.gamemodeSelected=-1;if(GameSession.instance.zoneSelected==-1)GameSession.instance.zoneSelected=0;}
         //Set gameModeSelected if artificially turned on gamemode etc
         yield return new WaitForSecondsRealtime(0.05f);
         if(!GameSession.instance.CheckGamemodeSelected(cfgName)){
@@ -705,6 +705,7 @@ public class AdventureZoneData{
     [EnableIf("enabled")]public Vector2 pos;
     [EnableIf("enabled")]public int lvlReq;
     [EnableIf("enabled")]public bool isBoss;
+    [EnableIf("enabled")][ShowIf("isBoss")]public bool bossBlackOutImg=true;
 }
 
 public enum scoreDisplay{score,sessionTime,timeLeft,bossHealth,sessionTimeAsDistance}

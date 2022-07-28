@@ -56,6 +56,8 @@ MonoBehaviour:
     type: 3}
   audioManagerPrefab: {fileID: 2010752312624517974, guid: 0c9cb9ae722d0a244a77d03aa7b1265e,
     type: 3}
+  jukeboxPrefab: {fileID: 5024049173945341391, guid: 722f061f56b4e8645b992438eb1d6dd5,
+    type: 3}
   dbaccessPrefab: {fileID: 2775582550042001946, guid: ca4542256346b924c890e7f816fa79a2,
     type: 3}
   discordPresencePrefab: {fileID: 1207543391218706, guid: 6765f9da738e023499d7110035d6a3f9,
@@ -82,6 +84,7 @@ MonoBehaviour:
     pos: {x: -255, y: -710}
     lvlReq: 0
     isBoss: 0
+    bossBlackOutImg: 1
   - enabled: 1
     name: 2
     gameRules: {fileID: 6112808402236795245, guid: 5ff8e0c2770350d489b2eabcc3ccd2ae,
@@ -89,6 +92,7 @@ MonoBehaviour:
     pos: {x: -80, y: -595}
     lvlReq: 2
     isBoss: 0
+    bossBlackOutImg: 1
   - enabled: 1
     name: Boss 1
     gameRules: {fileID: 6112808402236795245, guid: 4f452742670a63d48b5048f4aa48964e,
@@ -96,3 +100,4 @@ MonoBehaviour:
     pos: {x: 125, y: -350}
     lvlReq: 3
     isBoss: 1
+    bossBlackOutImg: 1

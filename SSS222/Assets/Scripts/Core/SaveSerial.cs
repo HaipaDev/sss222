@@ -195,6 +195,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public int holo_crystalsStored=0;
 		public int holo_timeAt=0;
 		public float holo_posX=0;
+		public float holo_zoneSelected=0;
 		
 		public float health=0;
 		public float hpAbsorpAmnt=0;

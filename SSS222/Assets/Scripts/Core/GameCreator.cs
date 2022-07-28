@@ -16,6 +16,7 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
     [Header("Assets managers")]
     [AssetsOnly][SerializeField] GameObject gameAssetsPrefab;
     [AssetsOnly][SerializeField] GameObject audioManagerPrefab;
+    [AssetsOnly][SerializeField] GameObject jukeboxPrefab;
     
     [Header("Networking, Advancements etc")]
     [AssetsOnly][SerializeField] GameObject dbaccessPrefab;
@@ -29,7 +30,7 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
     [AssetsOnly][SerializeField] public GameRules adventureGamerulesPrefab;
     [AssetsOnly][SerializeField] public GameRules adventureTravelZonePrefab;
     [AssetsOnly][SerializeField] public List<AdventureZoneData> adventureZones;
-    private void Awake(){
+    void Awake(){
         instance=this;
         if(SceneManager.GetActiveScene().name=="Loading")LoadPre();
         else Load();
@@ -61,9 +62,11 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
 
         if(FindObjectOfType<PostProcessVolume>()!=null&& FindObjectOfType<SaveSerial>().settingsData.pprocessing!=true){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
         if(FindObjectOfType<EventSystem>()!=null){if(FindObjectOfType<EventSystem>().GetComponent<UIInputSystem>()==null)FindObjectOfType<EventSystem>().gameObject.AddComponent<UIInputSystem>();}
+        if(FindObjectOfType<Jukebox>()==null&&SceneManager.GetActiveScene().name=="Menu"){Instantiate(jukeboxPrefab);}
         //yield return new WaitForSeconds(0.5f);
         //Destroy(gameObject);
     }
 
     public static int GetGamerulesetsPrefabsLength(){return GameCreator.instance._gamerulesetsPrefabsLength;}
+    public GameObject GetJukeboxPrefab(){return jukeboxPrefab;}
 }

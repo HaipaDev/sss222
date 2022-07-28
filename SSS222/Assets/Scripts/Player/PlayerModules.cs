@@ -13,7 +13,7 @@ public class PlayerModules : MonoBehaviour{
     [SerializeField] public int shipLvlFraction;
     [SerializeField] public List<ShipLvlFractionsValues> shipLvlFractionsValues;
     [DisableInEditorMode][SerializeField] public bool autoAscend=true;
-    [DisableInEditorMode][SerializeField] public int lvlFractionsMax=1;
+    [DisableInEditorMode][SerializeField] public int lvlFractionsMax=0;
     [Header("Modules & Skills Slots & List")]
     [SerializeField] public List<string> moduleSlots;
     [SerializeField] public List<string> skillsSlots;
@@ -42,9 +42,10 @@ public class PlayerModules : MonoBehaviour{
         }
         if(GameRules.instance.modulesOn!=true){Destroy(this);}
     }
-    void Start(){
-        if(shipLvlFractionsValues.Capacity>0)lvlFractionsMax=shipLvlFractionsValues[0].fractions;
+    IEnumerator Start(){
         timerUI=GameObject.Find("SkillTimer_par");
+        yield return new WaitForSeconds(0.2f);
+        if(shipLvlFractionsValues.Capacity>0&&shipLvl==0)lvlFractionsMax=shipLvlFractionsValues[0].fractions;
     }
 
     void Update(){
@@ -57,7 +58,7 @@ public class PlayerModules : MonoBehaviour{
 
     void ShipLevel(){
         if(GameRules.instance.levelingOn){
-            if(shipLvlFraction>=lvlFractionsMax){shipLvl++;shipLvlFraction=0;UpgradeMenu.instance.LevelUp();UpgradeMenu.instance.LvlEvents();if(FindObjectOfType<CelestialPoints>()!=null){FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();}return;}
+            if(shipLvlFraction>=lvlFractionsMax&&lvlFractionsMax!=0){shipLvl++;shipLvlFraction=0;UpgradeMenu.instance.LevelUp();UpgradeMenu.instance.LvlEvents();if(FindObjectOfType<CelestialPoints>()!=null){FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();}return;}
             for(var i=0;i<shipLvlFractionsValues.Count;i++){
                 if(i==shipLvlFractionsValues.Count-1){lvlFractionsMax=shipLvlFractionsValues[i].fractions;return;}
                 else{

@@ -26,7 +26,7 @@ public class Loader : MonoBehaviour{
         audioMixer.SetFloat("MasterVolume", SaveSerial.instance.settingsData.masterVolume);
         audioMixer.SetFloat("SoundVolume", SaveSerial.instance.settingsData.soundVolume);
         audioMixer.SetFloat("MusicVolume", SaveSerial.instance.settingsData.musicVolume);
-        Jukebox.instance.SetMusicToCstmzMusic();
+        //Jukebox.instance.SetMusicToCstmzMusic();
     }
     public void ForceLoad(){
         if(loaded)GSceneManager.instance.LoadStartMenuLoader();

@@ -40,7 +40,7 @@ public class SwitchIfValue : MonoBehaviour{
             foreach(MonoBehaviour c in GetComponents<MonoBehaviour>()){if(c!=this)c.enabled=on;}
         }
         if(children){
-            if(childrenComponents){foreach(MonoBehaviour c in GetComponentsInChildren<MonoBehaviour>()){c.enabled=on;}}
+            if(childrenComponents){foreach(MonoBehaviour c in GetComponentsInChildren<MonoBehaviour>(true)){if(c!=this)c.enabled=on;}}
             else{foreach(Transform t in transform){t.gameObject.SetActive(on);}}
         }
         if(!components&&!children){gameObject.SetActive(on);}

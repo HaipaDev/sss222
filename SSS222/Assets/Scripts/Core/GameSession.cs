@@ -196,9 +196,11 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     _coreSpawnedPreAscend=true;
                 }
                 if(Player.instance!=null){
-                    if(Player.instance.GetComponent<PlayerModules>()._isAutoAscend()||(!Player.instance.GetComponent<PlayerModules>()._isAutoAscend()&&Input.GetKeyDown(KeyCode.L))){
-                        Player.instance.GetComponent<PlayerModules>().Ascend();
-                        Ascend();
+                    if(Player.instance.GetComponent<PlayerModules>()!=null){
+                        if(Player.instance.GetComponent<PlayerModules>()._isAutoAscend()||(!Player.instance.GetComponent<PlayerModules>()._isAutoAscend()&&Input.GetKeyDown(KeyCode.L))){
+                            Player.instance.GetComponent<PlayerModules>().Ascend();
+                            Ascend();
+                        }
                     }
                 }
             }
@@ -286,7 +288,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                         presenceStatus=_prefixStatus+"Traveling to Zone "+GameCreator.instance.adventureZones[zoneToTravelTo].name+nickInfo+_suffixStatus;
                     }else{
                         if(FindObjectOfType<BossAI>()==null){
-                            presenceDetails=_prefixDetails+"Score: "+score+" | "+"Game Time: "+GetGameSessionTimeFormat()+_suffixDetails;
+                            var shipLvl="0";
+                            if(FindObjectOfType<PlayerModules>()!=null){var pm=FindObjectOfType<PlayerModules>();shipLvl=pm.shipLvl.ToString()+" ("+pm.shipLvlFraction+"/"+pm.lvlFractionsMax+")";}
+                            else{var advD=SaveSerial.instance.advD;shipLvl=advD.shipLvl.ToString();}
+                            presenceDetails=_prefixDetails+"Lvl: "+shipLvl+" | "+"Game Time: "+GetGameSessionTimeFormat()+_suffixDetails;
                             presenceStatus=_prefixStatus+"Adventure Zone "+GameCreator.instance.adventureZones[zoneSelected].name+nickInfo+_suffixStatus;
                         }else{
                             var b=FindObjectOfType<BossAI>();var be=b.GetComponent<Enemy>();
@@ -482,7 +487,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         var s=SaveSerial.instance;
         var ss=SaveSerial.instance.advD;
         if(p!=null&&s!=null&&s.advD!=null){
-            if(ss.holo_timeAt>0){
+            if(ss.holo_timeAt>0&&ss.holo_zoneSelected==zoneSelected&&zoneToTravelTo==-1){
                 var phb=CreatePlayerHoloBody(new Vector2(ss.holo_posX,7.6f));
                 phb.SetTime(ss.holo_timeAt);
             }
@@ -564,7 +569,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public void DieAdventure(){
         //coins/=2;
         //cores/=3;
-        if(coins>0)CreatePlayerHoloBody(Player.instance.transform.position,true,false,true);
+        if(coins>0&&!GameCreator.instance.adventureZones[zoneSelected].isBoss&&zoneToTravelTo==-1)CreatePlayerHoloBody(Player.instance.transform.position,true,false,true);
         SaveAdventure();
     }
     public PlayerHolobody CreatePlayerHoloBody(Vector2 pos,bool show=false,bool collectible=false,bool force=false){
