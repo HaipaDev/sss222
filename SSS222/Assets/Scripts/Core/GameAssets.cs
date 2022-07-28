@@ -15,6 +15,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	[AssetsOnly,Searchable]public List<GSprite> sprites;
 	[AssetsOnly,Searchable]public List<GMaterial> materials;
 	[AssetsOnly,Searchable][DisableInEditorMode]public List<PowerupItem> powerupItems;
+	[AssetsOnly,Searchable][DisableInEditorMode]public List<WaveConfig> waveConfigs;
 	[AssetsOnly,Searchable][DisableInEditorMode]public List<GObject> enemyBullets;
 	[Header("Customization")]
 	[AssetsOnly,Searchable]public List<CstmzSkin> skins;
@@ -24,6 +25,12 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	[AssetsOnly,Searchable]public List<CstmzMusic> musics;
     
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
+	void Start(){
+		var waveConfigsArr=Resources.LoadAll("ScriptableObjects/WaveConfigs", typeof(WaveConfig));
+		foreach(UnityEngine.Object o in waveConfigsArr){waveConfigs.Add((WaveConfig)o);}
+		var powerupItemsArr=Resources.LoadAll("ScriptableObjects/PowerupItems", typeof(PowerupItem));
+		foreach(UnityEngine.Object o in powerupItemsArr){powerupItems.Add((PowerupItem)o);}
+	}
 
 #region//Main
     public GameObject Make(string str, Vector2 pos){
@@ -156,6 +163,14 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		PowerupItem o=powerupItems.Find(x=>x.assetName==str);
 		if(o==null){
 			if(!String.IsNullOrEmpty(str))Debug.LogWarning("Powerup by assetName: " + str + " not found!");
+			return null;
+		}
+        return o;
+	}
+	public WaveConfig GetWaveConfig(string str){
+		WaveConfig o=waveConfigs.Find(x=>x.name==str);
+		if(o==null){
+			if(!String.IsNullOrEmpty(str))Debug.LogWarning("WaveConfig by name: " + str + " not found!");
 			return null;
 		}
         return o;
@@ -392,7 +407,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 [System.Serializable]
 public class GObject{
 	public string name;
-	public GameObject gobj;
+	[AssetsOnly]public GameObject gobj;
 }
 [System.Serializable]
 public class GSprite{

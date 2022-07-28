@@ -339,9 +339,9 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             Destroy(gameObject);}
         CapToMaxValues();
         if(FindObjectOfType<BossAI>()!=null){if(scoreDisplay!=scoreDisplay.bossHealth){scoreDisplay=scoreDisplay.bossHealth;}
-            foreach(Waves w in FindObjectsOfType<Waves>())Destroy(w.gameObject);
+            /*foreach(Waves w in FindObjectsOfType<Waves>())Destroy(w.gameObject);
             foreach(DisruptersSpawner ds in FindObjectsOfType<DisruptersSpawner>())Destroy(ds.gameObject);
-            foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())Destroy(ps.gameObject);
+            foreach(PowerupsSpawner ps in FindObjectsOfType<PowerupsSpawner>())Destroy(ps.gameObject);*/
         }
     }
     void OnValidate(){

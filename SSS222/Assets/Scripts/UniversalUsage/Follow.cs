@@ -16,12 +16,12 @@ public class Follow : MonoBehaviour{
     [SerializeField] public float vspeed=2.4f;
     [SerializeField] public float hspeed=0f;
     [HeaderAttribute("Rotation")]
-    [SerializeField] bool rotateTowards=false;
+    [SerializeField] public bool rotateTowards=false;
     [SerializeField] float speedRotate=15f;
-    [SerializeField] float angleAdj=-90f;
+    [SerializeField] public float angleAdj=-90f;
     [HeaderAttribute("Other")]
-    [SerializeField] bool followAfterOOR;
-    [SerializeField] bool dirYYUp=false;
+    [SerializeField] public bool followAfterOOR;
+    [SerializeField] public bool dirYYUp=false;
     [SerializeField] float OOR_YY=1.5f;
     [SerializeField] bool followClosestEnemy=false;
     Rigidbody2D rb;

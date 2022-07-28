@@ -567,8 +567,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     }
 
     public void DieAdventure(){
-        //coins/=2;
-        //cores/=3;
         if(coins>0&&!GameCreator.instance.adventureZones[zoneSelected].isBoss&&zoneToTravelTo==-1)CreatePlayerHoloBody(Player.instance.transform.position,true,false,true);
         SaveAdventure();
     }

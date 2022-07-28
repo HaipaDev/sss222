@@ -72,7 +72,7 @@ public class Waves : MonoBehaviour{
             if(currentWave==null&&lootTable.itemList.Count>0)currentWave=lootTable.itemList[startingWave].lootItem;
             if(timeSpawns>0){timeSpawns-=Time.deltaTime;}
             else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
-            else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){StartCoroutine(SpawnAllEnemiesInWave(currentWave));timeSpawns=currentWave.timeSpawnWave;}
+            else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){SpawnAllEnemiesInCurrentWave();timeSpawns=currentWave.timeSpawnWave;}
             
 
             //Check if no Enemies for some time, force a wave spawn
@@ -94,7 +94,9 @@ public class Waves : MonoBehaviour{
     }
 
     #region//SpawnAllEnemiesInWave
-    public IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig){
+    public void SpawnAllEnemiesInWave(WaveConfig waveConfig){StartCoroutine(SpawnAllEnemiesInWaveI(waveConfig));}
+    public void SpawnAllEnemiesInCurrentWave(){SpawnAllEnemiesInWave(currentWave);}
+    IEnumerator SpawnAllEnemiesInWaveI(WaveConfig waveConfig){
         spawnReqsMono.AddWaveCounts(waveConfig);
     switch(waveConfig.wavePathType){
         case wavePathType.startToEnd:

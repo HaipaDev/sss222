@@ -34,10 +34,10 @@ public class DisruptersSpawner : MonoBehaviour{
     IEnumerator AddRep(float time){yield return new WaitForSeconds(time);rep++;}
     [Button("Spawn CurrentCfg")][ContextMenu("Spawn CurrentCfg")]public void SpawnWaveCallCurrent(){
         if(currentCfg==null){currentCfg=disruptersList[(int)Random.Range(0,disruptersList.Count)];}
-        StartCoroutine(SpawnWave(currentCfg));}
-    IEnumerator SpawnWave(DisrupterConfig dc){
+        SpawnWave(currentCfg);}
+    void SpawnWave(DisrupterConfig dc){
         currentCfg=dc;
-        yield return StartCoroutine(FindObjectOfType<Waves>().SpawnAllEnemiesInWave(dc.waveConfig));
+        FindObjectOfType<Waves>().SpawnAllEnemiesInWave(dc.waveConfig);
     }
     //void OnDestroy(){DestroyAll();}
     public void DestroyAll(){foreach(DisrupterConfig dc in disruptersList){Destroy(dc);}disruptersList.Clear();}
