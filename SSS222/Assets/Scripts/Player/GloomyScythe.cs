@@ -11,12 +11,12 @@ public class GloomyScythe : MonoBehaviour{
     [SerializeField] AudioClip scytheFlySFX;
     public float vSpeedMax=9;
     Rigidbody2D rb;
-    void Start()
-    {
+    void Start(){
         rb=GetComponent<Rigidbody2D>();
         //savedSpeed=rb.velocity;
         rb.velocity=Vector2.zero;
         waitTimer=waitTime;
+        if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=false;
     }
     void Update()
     {
@@ -29,6 +29,6 @@ public class GloomyScythe : MonoBehaviour{
         if(vSpeed<vSpeedMax){vSpeed+=0.5f;}
 
         if(waitTimer>0){waitTimer-=Time.deltaTime;}
-        if(waitTimer<=0 && waitTimer>-4){rb.velocity = new Vector2(0,vSpeed);waitTimer=-4;AudioSource.PlayClipAtPoint(scytheFlySFX,transform.position);}
+        if(waitTimer<=0&&waitTimer!=-4){rb.velocity=new Vector2(0,vSpeed);waitTimer=-4;AudioSource.PlayClipAtPoint(scytheFlySFX,transform.position);if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=true;}
     }
 }

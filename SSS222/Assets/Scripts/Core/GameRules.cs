@@ -252,6 +252,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             disrupterList=gr.disrupterList;
             powerupSpawners=gr.powerupSpawners;
             bossInfo=null;
+            //Some info changed by bosses
+            cometSettings=gr.cometSettings;
         }else{
             //clear Spawns
             waveSpawnReqs=new spawnReqs{timer=-5};

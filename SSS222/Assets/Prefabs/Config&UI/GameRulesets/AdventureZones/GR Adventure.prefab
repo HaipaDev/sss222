@@ -74,6 +74,7 @@ MonoBehaviour:
   secondToDistanceRatio: 100
   travelTimeToDistanceRatio: 1
   travelTimeToAddOnDeath: 0
+  killSubTravelTime: 3
   holodeathCrystalsRatio: 1
   holodeathTimeRatio: 1
   holobodyHeal: 15
@@ -734,6 +735,62 @@ MonoBehaviour:
     soundPhase: 
     dispDmgCount: 0
     colliEvents: []
+  - name: Moon of Lunacy - Spin
+    colliType: 2
+    dmg: 0
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 2
+    phase: 1
+    dmgPhase: 3.7
+    phaseFreqFirst: 0.4
+    phaseFreq: 0.1
+    phaseCountLimit: 15
+    dmgFx: 0
+    dmgFxValues: []
+    sound: EnemyHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: LunarPulse
+    colliType: 3
+    dmg: 10
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 2
+    phase: 0
+    dmgPhase: 4
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 3
+    dmgFx: 0
+    dmgFxValues: []
+    sound: EnemyHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: LunarSickle
+    colliType: 3
+    dmg: 6.6
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 1
+    phase: 0
+    dmgPhase: 4
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 3
+    dmgFx: 1
+    dmgFxValues:
+    - dmgFxType: 3
+      length: 2
+      power: 1
+      onPhase: 0
+      chance: 66
+    sound: EnemyHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
   startingPosPlayer: {x: 0, y: -6.24}
   autoShootPlayer: 0
   moveX: 1
@@ -995,6 +1052,16 @@ MonoBehaviour:
     type: 0
     healthStart: 25
     healthMax: 25
+    spawnPos: {x: 0, y: 0}
+    scaleUpOnSpawn: 1
+    ost: {fileID: 0}
+    deathLength: 3
+    preDeathAudio: Explosion
+    preDeathVFX: Explosion
+    deathAudio: Explosion
+    deathVFX: Explosion
+    deathShakeStrength: 4
+    deathShakeSpeed: 0.3
     xpAmnt: 0
     xpChance: 100
     drops: []
