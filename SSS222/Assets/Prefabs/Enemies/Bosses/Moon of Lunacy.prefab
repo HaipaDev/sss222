@@ -187,8 +187,9 @@ MonoBehaviour:
   killOnDash: 1
   giveScore: 0
   scoreValue: {x: 1, y: 10}
-  xpAmnt: 100
   xpChance: 100
+  xpAmnt: 100
+  accumulateXp: 1
   drops: []
   dropValues: []
   destroyOut: 0
@@ -221,3 +222,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c73e252f08e85e448035445c7d058c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  phasesInfo: []
+  phase: 0
+  _molP1_attack1Time: 4.5
+  _molP1_attack1Timer: -4
+  _molP1_attack1Count: 0
+  _molP1_attack1CountFor2: 3
+  _molP1_attack1CountFor2Range: {x: 3, y: 4}
+  _molP1_attack2Time: 1.5
+  _molP1_attack2Timer: -4
+  _molP1_attack2SubTime1: 0.5
+  _molP1_attack2SubTime1Limit: 1.5
+  _molP1_attack2DistanceForForce: 2.7
+  _molP2_attack1Time: 5
+  _molP2_attack1Timer: -4
+  _molP2_attack1Count: 0
+  _molP2_attack1CountFor2: 3
+  _molP2_attack1CountFor2Range: {x: 2, y: 4}
+  _molP2_attack2Time: 2.5
+  _molP2_attack2Timer: -4
+  _molP2_attack2SubTime1: 0.5
+  _molP2_attack2SubTime1Limit: 3.5
+  _molP2_attack2FollowSpeed: 2.5
+  _molP2_attack2Duration: 5
+  _molP2_attack2DurationTimer: -4
+  _molDistToPlayer: 0

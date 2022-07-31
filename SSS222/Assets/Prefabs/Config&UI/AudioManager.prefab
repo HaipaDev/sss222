@@ -651,3 +651,21 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: Spin
+    clip: {fileID: 8300000, guid: 7901bc790a198b848ba6953e168c5424, type: 3}
+    volume: 0.8
+    volumeVariance: 0.05
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: SpinLoop
+    clip: {fileID: 8300000, guid: 7901bc790a198b848ba6953e168c5424, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 1
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

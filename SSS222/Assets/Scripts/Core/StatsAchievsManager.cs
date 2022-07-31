@@ -115,6 +115,9 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public void DeepFried(){CompleteAchiev("deepFried");}
     public void Customized(){CompleteAchiev("customize");SetPersonalityCrisisTimer();AddPersonalityCrisisCount();}
     public void CustomizedAll(){CompleteAchiev("customize-all");}
+    public void BossDefeated(string name){switch(name){
+        case "Moon of Lunacy":CompleteAchiev("boss1");break;
+    }}
 
     [Button]public void ClearSteamAchievs(){foreach(Steamworks.Data.Achievement sa in SteamUserStats.Achievements){sa.Clear();}}
     #endregion

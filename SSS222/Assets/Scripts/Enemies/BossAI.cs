@@ -77,7 +77,7 @@ public class BossAI : MonoBehaviour{
         else{if(anim!=null)StopCoroutine(anim);anim=null;iAnim=0;}
     }*/
     
-    bool CheckName(string name){return en.name.Contains(name);}
+    bool CheckName(string name){return GetComponent<Enemy>().name.Contains(name);}
     void SetBossSpecificVars(){
         if(_isMOL()){
             if(phase==0){
@@ -86,15 +86,16 @@ public class BossAI : MonoBehaviour{
                 _molP1_attack1CountFor2=Mathf.RoundToInt(Random.Range((float)_molP1_attack1CountFor2Range.x,(float)_molP1_attack1CountFor2Range.y));
                 GameRules.instance.cometSettings.lunarCometChance=1;
             }else if(phase==1){
-                _molP2_attack1Timer=_molP2_attack1Time;
+                _molP2_attack1Timer=_molP2_attack1Time/2;
                 _molP2_attack1Count=0;
                 _molP2_attack1CountFor2=Mathf.RoundToInt(Random.Range((float)_molP2_attack1CountFor2Range.x,(float)_molP2_attack1CountFor2Range.y));
             }
         }
     }
 
-
-    bool _isMOL(){return CheckName("Moon of Lunacy");}
+#region ///Moon of Lunacy
+bool _isMOL(){return CheckName("Moon of Lunacy");}
+[Header("Phase1")]
     [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack1Time=4.5f;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack1Timer=-4;
     [ShowIf("@this._isMOL()")][SerializeField]int _molP1_attack1Count;
@@ -104,7 +105,8 @@ public class BossAI : MonoBehaviour{
     [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack2Timer=-4;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack2SubTime1=0.5f;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack2SubTime1Limit=1.5f;
-
+    [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack2DistanceForForce=2.7f;
+[Header("Phase2")]
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack1Time=5f;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack1Timer=-4;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack1Count;
@@ -117,6 +119,7 @@ public class BossAI : MonoBehaviour{
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack2FollowSpeed=2.5f;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack2Duration=5;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack2DurationTimer=-4;
+    [ShowIf("@this._isMOL()")][ReadOnly][SerializeField]float _molDistToPlayer;
     void MoonOfLunacyAI(){
         if(phase==0){
             if(_molP1_attack1Timer>0)_molP1_attack1Timer-=Time.deltaTime;
@@ -140,6 +143,7 @@ public class BossAI : MonoBehaviour{
                 _molP1_attack1Timer=_molP1_attack1Time;
                 _molP1_attack2Timer=-4;
             }
+            if(Player.instance!=null){_molDistToPlayer=Vector2.Distance(transform.position,Player.instance.transform.position);if(_molDistToPlayer<=_molP1_attack2DistanceForForce&&_molP1_attack2Timer==-4){_molP1_attack2Timer=1f;_molP1_attack1Timer=-4;}}
 
             if(en.health<=en.healthMax/2){ChangePhase(1);}
         }else if(phase==1){
@@ -170,21 +174,33 @@ public class BossAI : MonoBehaviour{
                 _molP2_attack2DurationTimer=_molP2_attack2Duration;
                 _molP2_attack2Timer=-4;
                 en.name="Moon of Lunacy - Spin";
+                //AudioManager.instance.Play("SpinLoop");
             }
-            if(_molP2_attack2DurationTimer>0){_molP2_attack2DurationTimer-=Time.deltaTime;var rotSpeed=_molP2_attack2FollowSpeed*360*Time.deltaTime;transform.Rotate(new Vector3(0,0,rotSpeed));}
+            if(_molP2_attack2DurationTimer>0){_molP2_attack2DurationTimer-=Time.deltaTime;var rotSpeed=_molP2_attack2FollowSpeed*360*Time.deltaTime;AudioManager.instance.Play("Spin");transform.Rotate(new Vector3(0,0,rotSpeed));}
             else if(_molP2_attack2DurationTimer!=-4){//Stop Attack 2
                 if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=false;
                 GetComponent<PointPathing>().enabled=true;
                 if(_molP2_attack1Time>_molP2_attack2SubTime1Limit)_molP2_attack1Time-=_molP2_attack2SubTime1;
                 _molP2_attack1Timer=_molP2_attack1Time;
-                _molP2_attack2DurationTimer=-4;
                 transform.rotation=Quaternion.identity;
                 en.name="Moon of Lunacy";
+                //AudioManager.instance.StopPlaying("SpinLoop");
+                _molP2_attack2DurationTimer=-4;
             }
-
-            if(en.health<=0){foreach(GloomyScythe gs in FindObjectsOfType<GloomyScythe>()){if(gs.gameObject.name.Contains("LunarSickle")){Destroy(gs.gameObject);}}}
+        }
+        if(en.health<=0){
+            _molP2_attack2DurationTimer=-4;
+            if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=false;
+            GetComponent<PointPathing>().enabled=false;
+            en.name="Moon of Lunacy";
+            foreach(GloomyScythe gs in FindObjectsOfType<GloomyScythe>()){if(gs.gameObject.name.Contains("LunarSickle")){Destroy(gs.gameObject);}}
+            //AudioManager.instance.StopPlaying("SpinLoop");
+            StatsAchievsManager.instance.BossDefeated("Moon of Lunacy");
         }
     }
+#endregion
+
+
     IEnumerator _phaseCor;
     public void ChangePhase(int p){if(phasesInfo.Count>p){if(_phaseCor==null){_phaseCor=ChangePhaseI(p);StartCoroutine(_phaseCor);}}else{Debug.LogError("Cant change to phase: "+p);}}
     public IEnumerator ChangePhaseI(int p){
