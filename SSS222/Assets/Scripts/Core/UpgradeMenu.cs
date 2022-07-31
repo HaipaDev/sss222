@@ -99,7 +99,10 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             upgradeMenuUI.SetActive(false);
             zoneMap.SetActive(true);
         }
+        zoneMap.GetComponent<AdventureZonesCanvas>().Setup();
     }
+    public void OpenZoneMapPostBoss(){StartCoroutine(OpenZoneMapPostBossI());}
+    IEnumerator OpenZoneMapPostBossI(){yield return new WaitForSeconds(3f);Open();OpenZoneMap();}
     public void OpenLvlTree(){
         upgradeMenuUI.SetActive(false);
         lvltreeUI.SetActive(true);

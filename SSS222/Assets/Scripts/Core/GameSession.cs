@@ -413,6 +413,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         var ss=SaveSerial.instance.advD;
         if(s==null){Debug.LogError("SaveSerial not present");}
         if(ss!=null){
+            ss.buildLastLoaded=buildVersion;
             if(zoneToTravelTo!=-1&&p!=null&&p.health<=0){//Die during travel
                 if(GameCreator.instance.adventureTravelZonePrefab.travelTimeToAddOnDeath==0){
                     zoneToTravelTo=-1;//var _zoneBack=zoneSelected;zoneSelected=-1;LoadAdventureZone(_zoneBack);

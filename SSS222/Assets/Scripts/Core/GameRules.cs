@@ -288,7 +288,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         yield return new WaitForSeconds(0.02f);
         StartCoroutine(CreateSpawners());
         yield return new WaitForSeconds(1f);
-        if(_isAdventureBossZone&&FindObjectOfType<BossAI>()==null){GameAssets.instance.Make(bossInfo.name,bossInfo.spawnPos);Debug.Log("Spawned: "+bossInfo.name);}
+        if(_isAdventureBossZone&&FindObjectOfType<BossAI>()==null&&!SaveSerial.instance.advD.defeatedBosses.Contains(bossInfo.name)){GameAssets.instance.Make(bossInfo.name,bossInfo.spawnPos);Debug.Log("Spawned: "+bossInfo.name);}
         enterGameCor=null;
     }
     IEnumerator CreateSpawners(){
