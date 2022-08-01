@@ -16,7 +16,7 @@ public class SpecificUI_Destroy : MonoBehaviour{
         else if(type==specifiUI_type.shop&&!GameRules.instance.shopOn)Destroy(gameObject);
         else if(type==specifiUI_type.modules&&!GameRules.instance.modulesOn)Destroy(gameObject);
         else if(type==specifiUI_type.statUpgs&&!GameRules.instance.statUpgOn)Destroy(gameObject);
-        else if(type==specifiUI_type.inventory&&!GameRules.instance.iteminvOn)Destroy(gameObject);
+        else if(type==specifiUI_type.inventory/*&&!GameRules.instance.iteminvOn*/)Destroy(gameObject);
         else if(type==specifiUI_type.leveling&&!GameRules.instance.levelingOn)Destroy(gameObject);
         else if(type==specifiUI_type.cores&&!GameRules.instance.coresOn)Destroy(gameObject);
         yield return new WaitForSeconds(0.1f);

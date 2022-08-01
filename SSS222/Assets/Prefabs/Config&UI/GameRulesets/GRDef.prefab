@@ -75,6 +75,7 @@ MonoBehaviour:
   secondToDistanceRatio: 100
   travelTimeToDistanceRatio: 1
   travelTimeToAddOnDeath: 0
+  killSubTravelTime: 3
   holodeathCrystalsRatio: 1
   holodeathTimeRatio: 1
   holobodyHeal: 15
@@ -86,8 +87,8 @@ MonoBehaviour:
   levelingOn: 1
   forceAutoAscend: 0
   modulesOn: 1
-  statUpgOn: 0
-  iteminvOn: 1
+  statUpgOn: 1
+  iteminvOn: 0
   barrierOn: 0
   instaPause: 0
   musicSlowdownOnPause: 1
@@ -867,10 +868,6 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 8094ae644caa46e47816e03e73745f1a, type: 2}
     dropChance: 6.5
     levelReq: 0
-  - name: EnemyCombatant
-    lootItem: {fileID: 11400000, guid: 2273f34bcf4ca6947a6ebdc90707724d, type: 2}
-    dropChance: 1.5
-    levelReq: 3
   - name: BatsCluster
     lootItem: {fileID: 11400000, guid: 2145a8982afb67c4bbfa60857b9f71f9, type: 2}
     dropChance: 2
@@ -879,7 +876,7 @@ MonoBehaviour:
     lootItem: {fileID: 11400000, guid: 0ec69aa8680ad3e43b0bfb8aa3111c5a, type: 2}
     dropChance: 2
     levelReq: 2
-  wavesWeightsSumTotal: 44.5
+  wavesWeightsSumTotal: 43
   startingWave: 0
   startingWaveRandom: 0
   uniqueWaves: 1
@@ -1006,35 +1003,24 @@ MonoBehaviour:
   bossInfo:
     name: 
     type: 0
-    size: {x: 1, y: 1}
-    spr: {fileID: 0}
-    sprMatProps:
-      text: {fileID: 0}
-      hue: 0
-      saturation: 0.5
-      value: 0.5
-      negative: 0
-      pixelate: 1
-      blur: 0
-      lowResBlur: 1
     healthStart: 25
     healthMax: 25
-    defense: 0
-    healthBySize: 0
-    shooting: 0
-    shootTime: {x: 1.75, y: 2.8}
-    bulletAssetName: 
-    bulletSpeed: 8
-    DBullets: 0
-    bulletDist: 0.35
-    randomizeWaveDeath: 0
-    flyOff: 0
-    killOnDash: 1
-    giveScore: 1
-    scoreValue: {x: 1, y: 10}
+    spawnPos: {x: 0, y: 0}
+    scaleUpOnSpawn: 1
+    ost: {fileID: 0}
+    pauseOstOnPhaseChange: 1
+    deathLength: 3
+    preDeathAudio: Explosion
+    preDeathVFX: Explosion
+    deathAudio: Explosion
+    deathVFX: Explosion
+    deathShakeStrength: 4
+    deathShakeSpeed: 0.3
     xpAmnt: 0
     xpChance: 100
     drops: []
+    phasesInfo: []
+  shipScaleBoss: 0.66
   enemyDefenseHit: 1
   enemyDefensePhase: 1
   enemyDefenseFloor: 0.1
@@ -1065,10 +1051,12 @@ MonoBehaviour:
     randomizeWaveDeath: 0
     flyOff: 0
     killOnDash: 1
+    destroyOut: 1
     giveScore: 1
     scoreValue: {x: 4, y: 9}
-    xpAmnt: 0
     xpChance: 100
+    xpAmnt: 0
+    accumulateXp: 1
     drops:
     - name: EnBall
       ammount: {x: 1, y: 3}
@@ -1105,10 +1093,12 @@ MonoBehaviour:
     randomizeWaveDeath: 0
     flyOff: 0
     killOnDash: 1
+    destroyOut: 1
     giveScore: 1
     scoreValue: {x: 1, y: 10}
-    xpAmnt: 0
     xpChance: 100
+    xpAmnt: 0
+    accumulateXp: 1
     drops:
     - name: EnBall
       ammount: {x: 1, y: 1}
@@ -1145,10 +1135,12 @@ MonoBehaviour:
     randomizeWaveDeath: 1
     flyOff: 1
     killOnDash: 1
+    destroyOut: 1
     giveScore: 1
     scoreValue: {x: 11, y: 15}
-    xpAmnt: 1
     xpChance: 100
+    xpAmnt: 1
+    accumulateXp: 1
     drops:
     - name: EnBall
       ammount: {x: 3, y: 3}
@@ -1185,10 +1177,12 @@ MonoBehaviour:
     randomizeWaveDeath: 1
     flyOff: 1
     killOnDash: 1
+    destroyOut: 1
     giveScore: 1
     scoreValue: {x: 13, y: 17}
-    xpAmnt: 1
     xpChance: 100
+    xpAmnt: 1
+    accumulateXp: 1
     drops:
     - name: EnBall
       ammount: {x: 3, y: 3}
@@ -1228,10 +1222,12 @@ MonoBehaviour:
     randomizeWaveDeath: 0
     flyOff: 0
     killOnDash: 1
+    destroyOut: 1
     giveScore: 1
     scoreValue: {x: 13, y: 13}
-    xpAmnt: 4
     xpChance: 60
+    xpAmnt: 4
+    accumulateXp: 1
     drops:
     - name: EnBall
       ammount: {x: 3, y: 3}
@@ -1268,10 +1264,12 @@ MonoBehaviour:
     randomizeWaveDeath: 0
     flyOff: 0
     killOnDash: 1
+    destroyOut: 1
     giveScore: 1
     scoreValue: {x: 17, y: 19}
-    xpAmnt: 2
     xpChance: 100
+    xpAmnt: 2
+    accumulateXp: 1
     drops:
     - name: EnBall
       ammount: {x: 1, y: 1}
@@ -1308,10 +1306,12 @@ MonoBehaviour:
     randomizeWaveDeath: 0
     flyOff: 0
     killOnDash: 1
+    destroyOut: 1
     giveScore: 1
     scoreValue: {x: 20, y: 20}
-    xpAmnt: 2.5
     xpChance: 100
+    xpAmnt: 2.5
+    accumulateXp: 1
     drops:
     - name: EnBall
       ammount: {x: 2, y: 4}
@@ -1351,10 +1351,12 @@ MonoBehaviour:
     randomizeWaveDeath: 0
     flyOff: 0
     killOnDash: 0
+    destroyOut: 1
     giveScore: 1
     scoreValue: {x: 25, y: 30}
-    xpAmnt: 13
     xpChance: 100
+    xpAmnt: 13
+    accumulateXp: 1
     drops:
     - name: EnBall
       ammount: {x: 3, y: 4}
@@ -1391,10 +1393,12 @@ MonoBehaviour:
     randomizeWaveDeath: 0
     flyOff: 0
     killOnDash: 1
+    destroyOut: 1
     giveScore: 1
     scoreValue: {x: 5, y: 12}
-    xpAmnt: 1.5
     xpChance: 100
+    xpAmnt: 1.5
+    accumulateXp: 1
     drops:
     - name: EnBall
       ammount: {x: 2, y: 2}
@@ -1431,10 +1435,12 @@ MonoBehaviour:
     randomizeWaveDeath: 0
     flyOff: 0
     killOnDash: 1
+    destroyOut: 1
     giveScore: 1
     scoreValue: {x: 33, y: 36}
-    xpAmnt: 5
     xpChance: 100
+    xpAmnt: 5
+    accumulateXp: 1
     drops:
     - name: EnBall
       ammount: {x: 5, y: 8}

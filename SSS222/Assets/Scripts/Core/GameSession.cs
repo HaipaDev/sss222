@@ -75,6 +75,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public float presenceTimer=0;
     public bool presenceTimeSet=false;
     public float _preBossMusicVolume;
+    public bool _adventureLoading;
+    public bool _lvlEventsLoading;
+    bool _coreSpawnedPreAscend;
     //[SerializeField] InputMaster inputMaster;
     [Range(0,2)]public static int maskMode=1;
 
@@ -104,7 +107,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         luckMulti=i.luckMulti;
         xpMax=i.xpMax;
 
-        if(GameRules.instance.modulesOn||GameRules.instance.statUpgOn||GameRules.instance.iteminvOn){anyUpgradesOn=true;}else{anyUpgradesOn=false;}
+        if(GameRules.instance.modulesOn||GameRules.instance.statUpgOn/*||GameRules.instance.iteminvOn*/){anyUpgradesOn=true;}else{anyUpgradesOn=false;}
 
         RandomizeWaveScoreMax();
         RandomizeShopScoreMax();
@@ -154,7 +157,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;if(sr!=null){if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-2);}}
     }
     SpriteRenderer _blurImg;
-    bool _coreSpawnedPreAscend;
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
         if(SceneManager.GetActiveScene().name=="Game"){
@@ -423,6 +425,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             ss.zoneSelected=zoneSelected;
             ss.zoneToTravelTo=zoneToTravelTo;
             if(zoneToTravelTo!=-1){ss.travelTimeLeft=gameTimeLeft;}else{ss.travelTimeLeft=-4;}
+            //ss.gameSessionTime=currentPlaytime;
             if(FindObjectOfType<PlayerHolobody>()!=null){
                 var phb=FindObjectOfType<PlayerHolobody>();
                 ss.holo_crystalsStored=phb.crystalsStored;
@@ -434,6 +437,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 if(p.health>0){
                     ss.xp=xp;
                     ss._coreSpawnedPreAscend=_coreSpawnedPreAscend;
+                    ss.healthStart=p.healthStart;
                     ss.health=p.health;
                     ss.hpAbsorpAmnt=p.hpAbsorpAmnt;
                     ss.energy=p.energy;
@@ -442,15 +446,16 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     ss.powerupCurID=p.powerupCurID;
                     ss.statuses=p.statuses;
                 }else{
+                    //ss.gameSessionTime=0;
                     ss.xp=0;
                     ss._coreSpawnedPreAscend=false;
-                    ss.health=GameRules.instance.healthPlayer;
+                    ss.health=0;
                     ss.hpAbsorpAmnt=0;
                     ss.energy=GameRules.instance.energyPlayer;
                     ss.enAbsorpAmnt=0;
                     //ss.powerups=GameRules.instance.powerupsStarting;
-                    ss.powerups=p.powerups;
-                    ss.powerupCurID=p.powerupCurID;
+                    ss.powerups=new Powerup[1];
+                    ss.powerupCurID=0;
                     ss.statuses=new List<StatusFx>();
                 }
                 var pm=p.GetComponent<PlayerModules>();
@@ -478,11 +483,13 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         zoneSelected=ss.zoneSelected;
         zoneToTravelTo=ss.zoneToTravelTo;
         gameTimeLeft=ss.travelTimeLeft;
+        //currentPlaytime=ss.gameSessionTime;
         Debug.Log("Adventure preloaded");
     }
     public void LoadAdventurePost(){StartCoroutine(LoadAdventureI());}
     IEnumerator LoadAdventureI(){
         //First load from SaveSerial
+        _adventureLoading=true;
         yield return new WaitForSecondsRealtime(0.04f);
         var p=Player.instance;
         var s=SaveSerial.instance;
@@ -492,7 +499,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 var phb=CreatePlayerHoloBody(new Vector2(ss.holo_posX,7.6f));
                 phb.SetTime(ss.holo_timeAt);
             }
-            if(ss.health>0){p.health=ss.health;xp=ss.xp;_coreSpawnedPreAscend=ss._coreSpawnedPreAscend;}else{p.health=GameRules.instance.healthPlayer;xp=0;_coreSpawnedPreAscend=false;}
+            if(ss.health>0){p.health=ss.health;xp=ss.xp;_coreSpawnedPreAscend=ss._coreSpawnedPreAscend;}else{p.health=ss.healthStart;xp=0;_coreSpawnedPreAscend=false;}//currentPlaytime=0;}
             p.hpAbsorpAmnt=ss.hpAbsorpAmnt;
             p.energy=ss.energy;
             p.enAbsorpAmnt=ss.enAbsorpAmnt;
@@ -510,20 +517,25 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 pm.modulesList=ss.modulesList;
                 pm.skillsList=ss.skillsList;
             }else{Debug.LogError("PlayerModules not present");}
-        yield return new WaitForSeconds(0.1f);
-        if(UpgradeMenu.instance!=null){
-            for(var i=Player.instance.GetComponent<PlayerModules>().shipLvl;i>0;i--){
-                UpgradeMenu.instance.LvlEvents();
+            yield return new WaitForSeconds(0.1f);
+            if(UpgradeMenu.instance!=null){
+                //for(var i=Player.instance.GetComponent<PlayerModules>().shipLvl;i>0;i--){
+                    //if(ss.health>0){
+                    _lvlEventsLoading=true;
+                    UpgradeMenu.instance.LvlEventsAdventure();
+                    //}else{UpgradeMenu.instance.LvlEvents();}
+                //}
             }
-        }
-        Debug.Log("Adventure data loaded in GameSession");
+            Debug.Log("Adventure data loaded in GameSession");
         }else{
             if(p==null){Debug.LogError("Player.instance not present");}
             else if(s==null){Debug.LogError("SaveSerial not present");}
             else if(s.advD==null){Debug.LogError("Adventure Data null");}
         }
+        //currentPlaytime=ss.gameSessionTime;
+        _adventureLoading=false;
     }
-    public void DeleteAll(){DeleteStatsAchievs();ResetSettings();SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure();GSceneManager.instance.LoadStartMenu();}
+    public void DeleteAll(){DeleteStatsAchievs();ResetSettings();SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure();GSceneManager.instance.LoadStartMenu();gamemodeSelected=0;}
     public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}
     public void ResetSettings(){
         SaveSerial.instance.ResetSettings();

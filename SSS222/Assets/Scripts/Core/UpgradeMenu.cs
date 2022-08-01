@@ -35,7 +35,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     void Start(){
         instance=this;
         pmodules=Player.instance.GetComponent<PlayerModules>();
-        if(GameSession.instance.CheckGamemodeSelected("Adventure")){LvlEventsAdventure();}
+        //if(GameSession.instance.CheckGamemodeSelected("Adventure")){LvlEventsAdventure();}
         SetupModulesAndSkills();
         if(GameRules.instance.forceAutoAscend)Destroy(autoascendToggle.gameObject);
 
@@ -369,7 +369,8 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         lvlPopup.GetComponent<ValueDisplay>().value="lvlPopup";
         FindObjectOfType<OnScreenButtons>().lvldUp=true;
     }
-    public void LvlEvents(){StartCoroutine(LvlEventsI());}
+    IEnumerator _lvlEvCor;
+    public void LvlEvents(){if(_lvlEvCor==null){_lvlEvCor=LvlEventsI();StartCoroutine(_lvlEvCor);}}
     IEnumerator LvlEventsI(){
         yield return new WaitForSecondsRealtime(0.2f);
         if(GameRules.instance!=null){
@@ -377,15 +378,19 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             if(le.lvls.x==0&&le.lvls.y==0){le.events.Invoke();}
             else{if(pmodules.shipLvl>=le.lvls.x&&pmodules.shipLvl<=le.lvls.y&&!le.skipRe){le.events.Invoke();}}
         }}
+        _lvlEvCor=null;
     }
-    public void LvlEventsAdventure(){StartCoroutine(LvlEventsAdventureI());}
+    public void LvlEventsAdventure(){if(_lvlEvCor==null){_lvlEvCor=LvlEventsAdventureI();StartCoroutine(_lvlEvCor);}}
     IEnumerator LvlEventsAdventureI(){
         yield return new WaitForSecondsRealtime(0.2f);
         if(GameRules.instance!=null){
         foreach(ListEvents le in GameRules.instance.lvlEvents){
-            if(le.lvls.x==0&&le.lvls.y==0){le.events.Invoke();}
+            if(le.lvls.x==0&&le.lvls.y==0){for(var i=0;i<pmodules.shipLvl;i++)le.events.Invoke();}
             else{if(pmodules.shipLvl>=le.lvls.x&&!le.skipRe){le.events.Invoke();}}
         }}
+        GameSession.instance._lvlEventsLoading=false;
+        Debug.Log("LvlEvents Loaded");
+        _lvlEvCor=null;
     }
     public void CheatCores(){gitignoreScript.instance.CheatCores();}
     public void CheatLevels(){gitignoreScript.instance.CheatLevels();}

@@ -25,7 +25,7 @@ public class ToggleValue : MonoBehaviour{
             case("xpOn"):_b=gr.xpOn;break;
             case("shopOn"):_b=gr.shopOn;break;
             case("shopCargoOn"):_b=gr.shopCargoOn;break;
-            case("iteminvOn"):_b=gr.iteminvOn;break;
+            //case("iteminvOn"):_b=gr.iteminvOn;break;
             case("statUpgOn"):_b=gr.statUpgOn;break;
             case("modulesOn"):_b=gr.modulesOn;break;
             case("levelingOn"):_b=gr.levelingOn;break;

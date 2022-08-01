@@ -43,7 +43,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")][DisableIf("@this.levelingOn==false||this.xpOn==false")]public bool forceAutoAscend=false;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool modulesOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool statUpgOn=false;
-    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool iteminvOn=true;
+    //[HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool iteminvOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool barrierOn=false;
 
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool instaPause=true;
@@ -400,6 +400,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public void LaserShootSpeed(float amnt){if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=amnt;}}
     public void MLaserBulletAmnt(int amnt){if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=amnt;}}
     public void ChangeMaxXP(int amnt){GameSession.instance.xpMax=amnt;}
+    public void MaxHPAdd(int amnt){Player.instance.healthMax+=amnt;Player.instance.healthStart+=amnt/2;if(!GameSession.instance._lvlEventsLoading)Player.instance.health+=amnt;}
     #endregion
 #endregion
 #region//Return functions
@@ -557,6 +558,7 @@ public class BossClass{
     public Vector2 spawnPos;
     public bool scaleUpOnSpawn=true;
     public AudioClip ost;
+    public bool pauseOstOnPhaseChange=true;
     public float deathLength=3f;
     public string preDeathAudio="Explosion";
     public string preDeathVFX="Explosion";

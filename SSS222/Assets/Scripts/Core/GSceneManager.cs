@@ -87,10 +87,10 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameSession.instance.SetGamemodeSelected(-1);
         bool boss=GameCreator.instance.adventureZones[i].isBoss;
         if((GameSession.instance.zoneToTravelTo==-1&&GameSession.instance.zoneSelected!=i&&GameSession.instance.zoneSelected!=-1)||(_force)){//Travel
-            if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(GameCreator.instance.adventureTravelZonePrefab,false);}
-            else{Instantiate(GameCreator.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(GameCreator.instance.adventureTravelZonePrefab,false);}
             GameSession.instance.zoneToTravelTo=i;
             if(Player.instance!=null)GameSession.instance.SaveAdventure();
+            if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(GameCreator.instance.adventureTravelZonePrefab,false);}
+            else{Instantiate(GameCreator.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(GameCreator.instance.adventureTravelZonePrefab,false);}
             StartCoroutine(ResetStuffAndLoadGameScene());
             yield return new WaitForSecondsRealtime(0.2f);
             GameSession.instance.EnterGameScene();

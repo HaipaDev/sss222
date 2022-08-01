@@ -192,6 +192,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public int zoneSelected=0;
 		public int zoneToTravelTo=-1;
 		public float travelTimeLeft=-4;
+		//public float gameSessionTime;
 		public List<string> defeatedBosses;
 		public List<string> lockedZones;
 
@@ -201,6 +202,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public float holo_zoneSelected=0;
 		
 		public float health=0;
+		public float healthStart=0;
 		public float hpAbsorpAmnt=0;
 		public float energy=0;
 		public float enAbsorpAmnt=0;

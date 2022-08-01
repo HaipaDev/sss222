@@ -12,43 +12,45 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [SerializeField] int panelActive=0;
     [SerializeField] GameObject[] panels;
     [Header("Game")]
-    [SceneObjectsOnly][SerializeField]GameObject steeringToggle;
-    [SceneObjectsOnly][SerializeField]GameObject vibrationsToggle;
-    [SceneObjectsOnly][SerializeField]GameObject horizPlayfieldToggle;
-    [SceneObjectsOnly][SerializeField]GameObject dtapMouseShootToggle;
-    [SceneObjectsOnly][SerializeField]GameObject lefthandToggle;
-    [SceneObjectsOnly][SerializeField]GameObject scbuttonsToggle;
-    [SceneObjectsOnly][SerializeField]GameObject discordRPCToggle;
-    [SceneObjectsOnly][SerializeField]GameObject autoselectNewItemToggle;
-    [SceneObjectsOnly][SerializeField]GameObject alwaysReplaceCurrentSlotToggle;
-    [SceneObjectsOnly][SerializeField]GameObject autoUseMedkitsIfLowToggle;
-    [SceneObjectsOnly][SerializeField]GameObject allowSelectingEmptySlotsToggle;
-    [SceneObjectsOnly][SerializeField]GameObject allowScrollingEmptySlotsToggle;
-    [SceneObjectsOnly][SerializeField]GameObject cheatToggle;
+    [SceneObjectsOnly][SerializeField]GameObject steeringButton;
+    [SceneObjectsOnly][SerializeField]Toggle vibrationsToggle;
+    [SceneObjectsOnly][SerializeField]Toggle horizPlayfieldToggle;
+    [SceneObjectsOnly][SerializeField]Toggle dtapMouseShootToggle;
+    [SceneObjectsOnly][SerializeField]Toggle lefthandToggle;
+    [SceneObjectsOnly][SerializeField]Toggle scbuttonsToggle;
+    [SceneObjectsOnly][SerializeField]Toggle discordRPCToggle;
+    [SceneObjectsOnly][SerializeField]Toggle autoselectNewItemToggle;
+    [SceneObjectsOnly][SerializeField]Toggle alwaysReplaceCurrentSlotToggle;
+    [SceneObjectsOnly][SerializeField]Toggle autoUseMedkitsIfLowToggle;
+    [SceneObjectsOnly][SerializeField]Toggle allowSelectingEmptySlotsToggle;
+    [SceneObjectsOnly][SerializeField]Toggle allowScrollingEmptySlotsToggle;
+    [SceneObjectsOnly][SerializeField]Toggle cheatToggle;
     [Header("Sound")]
     public AudioMixer audioMixer;
-    [SceneObjectsOnly][SerializeField]GameObject masterSlider;
-    [SceneObjectsOnly][SerializeField]GameObject soundSlider;
-    [SceneObjectsOnly][SerializeField]GameObject ambienceSlider;
-    [SceneObjectsOnly][SerializeField]GameObject musicSlider;
-    [SceneObjectsOnly][SerializeField]GameObject musicWinddownToggle;
+    [SceneObjectsOnly][SerializeField]Slider masterSlider;
+    [SceneObjectsOnly][SerializeField]Slider soundSlider;
+    [SceneObjectsOnly][SerializeField]Slider ambienceSlider;
+    [SceneObjectsOnly][SerializeField]Slider musicSlider;
+    [SceneObjectsOnly][SerializeField]Toggle musicWinddownToggle;
+    [SceneObjectsOnly][SerializeField]Toggle turnUpBossMusicToggle;
     
     [Header("Graphics")]
-    [SceneObjectsOnly][SerializeField]GameObject qualityDropdopwn;
-    [SceneObjectsOnly][SerializeField]GameObject fullscreenToggle;
-    [SceneObjectsOnly][SerializeField]GameObject pprocessingToggle;
-    [SceneObjectsOnly][SerializeField]GameObject screenshakeToggle;
-    [SceneObjectsOnly][SerializeField]GameObject dmgPopupsToggle;
-    [SceneObjectsOnly][SerializeField]GameObject particlesToggle;
-    [SceneObjectsOnly][SerializeField]GameObject screenflashToggle;
-    [SceneObjectsOnly][SerializeField]GameObject playerWeaponsFadeToggle;
+    [SceneObjectsOnly][SerializeField]Dropdown qualityDropdopwn;
+    [SceneObjectsOnly][SerializeField]Toggle fullscreenToggle;
+    [SceneObjectsOnly][SerializeField]Toggle pprocessingToggle;
+    [SceneObjectsOnly][SerializeField]Toggle screenshakeToggle;
+    [SceneObjectsOnly][SerializeField]Toggle dmgPopupsToggle;
+    [SceneObjectsOnly][SerializeField]Toggle particlesToggle;
+    [SceneObjectsOnly][SerializeField]Toggle screenflashToggle;
+    [SceneObjectsOnly][SerializeField]Toggle playerWeaponsFadeToggle;
 
-    [SceneObjectsOnly][SerializeField]GameObject hudVis_graphicsSlider;
-    [SceneObjectsOnly][SerializeField]GameObject hudVis_textSlider;
-    [SceneObjectsOnly][SerializeField]GameObject hudVis_barsSlider;
-    [SceneObjectsOnly][SerializeField]GameObject hudVis_absorpSlider;
-    [SceneObjectsOnly][SerializeField]GameObject hudVis_popupsSlider;
-    [SceneObjectsOnly][SerializeField]GameObject hudVis_notifsSlider;
+    [SceneObjectsOnly][SerializeField]Toggle hudUpscaleToggle;
+    [SceneObjectsOnly][SerializeField]Slider hudVis_graphicsSlider;
+    [SceneObjectsOnly][SerializeField]Slider hudVis_textSlider;
+    [SceneObjectsOnly][SerializeField]Slider hudVis_barsSlider;
+    [SceneObjectsOnly][SerializeField]Slider hudVis_absorpSlider;
+    [SceneObjectsOnly][SerializeField]Slider hudVis_popupsSlider;
+    [SceneObjectsOnly][SerializeField]Slider hudVis_notifsSlider;
 
     [AssetsOnly][SerializeField]GameObject pprocessingPrefab;
     [SceneObjectsOnly]public PostProcessVolume postProcessVolume;
@@ -56,45 +58,47 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     void Start(){
         instance=this;if(SaveSerial.instance!=null)settingsData=SaveSerial.instance.settingsData;
 
-        scbuttonsToggle.GetComponent<Toggle>().isOn=settingsData.scbuttons;
-        dtapMouseShootToggle.GetComponent<Toggle>().isOn=settingsData.dtapMouseShoot;
-        lefthandToggle.GetComponent<Toggle>().isOn=settingsData.lefthand;
-        vibrationsToggle.GetComponent<Toggle>().isOn=settingsData.vibrations;
-        discordRPCToggle.GetComponent<Toggle>().isOn=settingsData.discordRPC;
-        autoselectNewItemToggle.GetComponent<Toggle>().isOn=settingsData.autoselectNewItem;
-        alwaysReplaceCurrentSlotToggle.GetComponent<Toggle>().isOn=settingsData.alwaysReplaceCurrentSlot;
-        autoUseMedkitsIfLowToggle.GetComponent<Toggle>().isOn=settingsData.autoUseMedkitsIfLow;
-        allowSelectingEmptySlotsToggle.GetComponent<Toggle>().isOn=settingsData.allowSelectingEmptySlots;
-        allowScrollingEmptySlotsToggle.GetComponent<Toggle>().isOn=settingsData.allowScrollingEmptySlots;
-        cheatToggle.GetComponent<Toggle>().isOn=GameSession.instance.cheatmode;
-        bool h=false;if(settingsData.playfieldRot==PlaneDir.horiz){h=true;}horizPlayfieldToggle.GetComponent<Toggle>().isOn=h;
+        scbuttonsToggle.isOn=settingsData.scbuttons;
+        dtapMouseShootToggle.isOn=settingsData.dtapMouseShoot;
+        lefthandToggle.isOn=settingsData.lefthand;
+        vibrationsToggle.isOn=settingsData.vibrations;
+        discordRPCToggle.isOn=settingsData.discordRPC;
+        autoselectNewItemToggle.isOn=settingsData.autoselectNewItem;
+        alwaysReplaceCurrentSlotToggle.isOn=settingsData.alwaysReplaceCurrentSlot;
+        autoUseMedkitsIfLowToggle.isOn=settingsData.autoUseMedkitsIfLow;
+        allowSelectingEmptySlotsToggle.isOn=settingsData.allowSelectingEmptySlots;
+        allowScrollingEmptySlotsToggle.isOn=settingsData.allowScrollingEmptySlots;
+        cheatToggle.isOn=GameSession.instance.cheatmode;
+        bool h=false;if(settingsData.playfieldRot==PlaneDir.horiz){h=true;}horizPlayfieldToggle.isOn=h;
 
-        foreach(Transform t in steeringToggle.transform.GetChild(0)){t.gameObject.SetActive(false);}
-        steeringToggle.transform.GetChild(0).GetChild((int)settingsData.inputType).gameObject.SetActive(true);
-
-
-        masterSlider.GetComponent<Slider>().value=settingsData.masterVolume;
-        soundSlider.GetComponent<Slider>().value=settingsData.soundVolume;
-        ambienceSlider.GetComponent<Slider>().value=settingsData.ambienceVolume;
-        musicSlider.GetComponent<Slider>().value=settingsData.musicVolume;
-        musicWinddownToggle.GetComponent<Toggle>().isOn=settingsData.windDownMusic;
+        foreach(Transform t in steeringButton.transform.GetChild(0)){t.gameObject.SetActive(false);}
+        steeringButton.transform.GetChild(0).GetChild((int)settingsData.inputType).gameObject.SetActive(true);
 
 
-        qualityDropdopwn.GetComponent<Dropdown>().value=settingsData.quality;
-        fullscreenToggle.GetComponent<Toggle>().isOn=settingsData.fullscreen;
-        pprocessingToggle.GetComponent<Toggle>().isOn=settingsData.pprocessing;
-        screenshakeToggle.GetComponent<Toggle>().isOn=settingsData.screenshake;
-        dmgPopupsToggle.GetComponent<Toggle>().isOn=settingsData.dmgPopups;
-        particlesToggle.GetComponent<Toggle>().isOn=settingsData.particles;
-        screenflashToggle.GetComponent<Toggle>().isOn=settingsData.screenflash;
-        playerWeaponsFadeToggle.GetComponent<Toggle>().isOn=settingsData.playerWeaponsFade;
+        masterSlider.value=settingsData.masterVolume;
+        soundSlider.value=settingsData.soundVolume;
+        ambienceSlider.value=settingsData.ambienceVolume;
+        musicSlider.value=settingsData.musicVolume;
+        musicWinddownToggle.isOn=settingsData.windDownMusic;
+        turnUpBossMusicToggle.isOn=settingsData.bossVolumeTurnUp;
 
-        hudVis_graphicsSlider.GetComponent<Slider>().value=settingsData.hudVis_graphics;
-        hudVis_textSlider.GetComponent<Slider>().value=settingsData.hudVis_text;
-        hudVis_barsSlider.GetComponent<Slider>().value=settingsData.hudVis_barFill;
-        hudVis_absorpSlider.GetComponent<Slider>().value=settingsData.hudVis_absorpFill;
-        hudVis_popupsSlider.GetComponent<Slider>().value=settingsData.hudVis_popups;
-        hudVis_notifsSlider.GetComponent<Slider>().value=settingsData.hudVis_notif;
+
+        qualityDropdopwn.value=settingsData.quality;
+        fullscreenToggle.isOn=settingsData.fullscreen;
+        pprocessingToggle.isOn=settingsData.pprocessing;
+        screenshakeToggle.isOn=settingsData.screenshake;
+        dmgPopupsToggle.isOn=settingsData.dmgPopups;
+        particlesToggle.isOn=settingsData.particles;
+        screenflashToggle.isOn=settingsData.screenflash;
+        playerWeaponsFadeToggle.isOn=settingsData.playerWeaponsFade;
+
+        hudUpscaleToggle.isOn=settingsData.upscaleHUD;
+        hudVis_graphicsSlider.value=settingsData.hudVis_graphics;
+        hudVis_textSlider.value=settingsData.hudVis_text;
+        hudVis_barsSlider.value=settingsData.hudVis_barFill;
+        hudVis_absorpSlider.value=settingsData.hudVis_absorpFill;
+        hudVis_popupsSlider.value=settingsData.hudVis_popups;
+        hudVis_notifsSlider.value=settingsData.hudVis_notif;
         if(SceneManager.GetActiveScene().name=="Options")OpenSettings();
         SetPanelActive(0);
     }
@@ -128,23 +132,23 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     public void SetDiscordRPC(bool isOn){settingsData.discordRPC=isOn;}
     public void SetAutoselectNewItem(bool isOn){settingsData.autoselectNewItem=isOn;
         if(isOn){
-            if(settingsData.alwaysReplaceCurrentSlot){settingsData.alwaysReplaceCurrentSlot=false;alwaysReplaceCurrentSlotToggle.GetComponent<Toggle>().isOn=false;}
+            if(settingsData.alwaysReplaceCurrentSlot){settingsData.alwaysReplaceCurrentSlot=false;alwaysReplaceCurrentSlotToggle.isOn=false;}
         }
     }
     public void SetAlwaysReplaceCurrentSlot(bool isOn){settingsData.alwaysReplaceCurrentSlot=isOn;
         if(isOn){
-            if(settingsData.autoselectNewItem){settingsData.autoselectNewItem=false;autoselectNewItemToggle.GetComponent<Toggle>().isOn=false;}
+            if(settingsData.autoselectNewItem){settingsData.autoselectNewItem=false;autoselectNewItemToggle.isOn=false;}
         }
     }   
     public void SetAutouseMedkitsIfLow(bool isOn){settingsData.autoUseMedkitsIfLow=isOn;}
     public void SetAllowSelectingEmptySlots(bool isOn){settingsData.allowSelectingEmptySlots=isOn;
         if(isOn){
-            if(settingsData.allowScrollingEmptySlots&&settingsData.alwaysReplaceCurrentSlot){settingsData.alwaysReplaceCurrentSlot=false;alwaysReplaceCurrentSlotToggle.GetComponent<Toggle>().isOn=false;}
+            if(settingsData.allowScrollingEmptySlots&&settingsData.alwaysReplaceCurrentSlot){settingsData.alwaysReplaceCurrentSlot=false;alwaysReplaceCurrentSlotToggle.isOn=false;}
         }
     }
     public void SetAllowScrollingEmptySlots(bool isOn){settingsData.allowScrollingEmptySlots=isOn;
         if(isOn){
-            if(settingsData.allowSelectingEmptySlots&&settingsData.alwaysReplaceCurrentSlot){settingsData.alwaysReplaceCurrentSlot=false;alwaysReplaceCurrentSlotToggle.GetComponent<Toggle>().isOn=false;}
+            if(settingsData.allowSelectingEmptySlots&&settingsData.alwaysReplaceCurrentSlot){settingsData.alwaysReplaceCurrentSlot=false;alwaysReplaceCurrentSlotToggle.isOn=false;}
         }
     }
     public void SetPlayfieldRot(bool horiz){
@@ -201,6 +205,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     public void SetAmbienceVolume(float val){settingsData.ambienceVolume=(float)System.Math.Round(val,2);if(val>1.15f)StatsAchievsManager.instance.DeepFried();}
     public void SetMusicVolume(float val){settingsData.musicVolume=(float)System.Math.Round(val,2);if(val>1.15f)StatsAchievsManager.instance.DeepFried();}
     public void SetMusicWinddown(bool isOn){settingsData.windDownMusic=isOn;}
+    public void SetMusicBossTurnUp(bool isOn){settingsData.bossVolumeTurnUp=isOn;}
     #endregion
 
 
@@ -211,21 +216,21 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         if(qualityIndex<=1){
             settingsData.pprocessing=false;
             settingsData.dmgPopups=false;
-            pprocessingToggle.GetComponent<Toggle>().isOn=false;
-            dmgPopupsToggle.GetComponent<Toggle>().isOn=false;
+            pprocessingToggle.isOn=false;
+            dmgPopupsToggle.isOn=false;
         }if(qualityIndex==0){
             settingsData.screenshake=false;
             settingsData.particles=false;
             settingsData.screenflash=false;
-            screenshakeToggle.GetComponent<Toggle>().isOn=false;
-            particlesToggle.GetComponent<Toggle>().isOn=false;
-            screenflashToggle.GetComponent<Toggle>().isOn=false;
+            screenshakeToggle.isOn=false;
+            particlesToggle.isOn=false;
+            screenflashToggle.isOn=false;
         }if(qualityIndex>1){
             settingsData.particles=true;
-            particlesToggle.GetComponent<Toggle>().isOn=true;
+            particlesToggle.isOn=true;
         }if(qualityIndex>4){
             settingsData.pprocessing=true;
-            pprocessingToggle.GetComponent<Toggle>().isOn=true;
+            pprocessingToggle.isOn=true;
         }
     }
     public void SetScreenshake(bool isOn){settingsData.screenshake=isOn;}
@@ -246,6 +251,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         if(isOn==false&&FindObjectOfType<PostProcessVolume>()!=null){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
     }
 
+    public void SetHudUpscale(bool val){settingsData.upscaleHUD=val;}
     public void SetHudVis_Graphics(float val){settingsData.hudVis_graphics=val;}
     public void SetHudVis_Text(float val){settingsData.hudVis_text=val;}
     public void SetHudVis_BarFill(float val){settingsData.hudVis_barFill=val;}

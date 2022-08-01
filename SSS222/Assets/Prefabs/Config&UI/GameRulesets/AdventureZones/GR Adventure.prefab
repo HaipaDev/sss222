@@ -86,8 +86,8 @@ MonoBehaviour:
   levelingOn: 1
   forceAutoAscend: 0
   modulesOn: 1
-  statUpgOn: 0
-  iteminvOn: 1
+  statUpgOn: 1
+  iteminvOn: 0
   barrierOn: 0
   instaPause: 0
   musicSlowdownOnPause: 1
@@ -1055,6 +1055,7 @@ MonoBehaviour:
     spawnPos: {x: 0, y: 0}
     scaleUpOnSpawn: 1
     ost: {fileID: 0}
+    pauseOstOnPhaseChange: 1
     deathLength: 3
     preDeathAudio: Explosion
     preDeathVFX: Explosion
@@ -1627,161 +1628,17 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 3525102429318315049}
           m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: ShootMultiAdd
-          m_Mode: 4
+          m_MethodName: MaxHPAdd
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
+            m_IntArgument: 5
             m_FloatArgument: 0.01
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 3525102429318315049}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: ArmorMultiAdd
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0.005
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
     lvls: {x: 0, y: 0}
-    skipRe: 0
-  - name: 'Levels: 1-1'
-    events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3525102429318315049}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: LaserShootSpeed
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0.3
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3525102429318315049}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: MLaserBulletAmnt
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3525102429318315049}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: ChangeMaxXP
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 100
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 1
-    lvls: {x: 1, y: 1}
-    skipRe: 0
-  - name: 'Levels: 2-2'
-    events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3525102429318315049}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: LaserShootSpeed
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0.26
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3525102429318315049}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: MLaserBulletAmnt
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 7
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3525102429318315049}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: ChangeMaxXP
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 200
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    lvls: {x: 2, y: 2}
-    skipRe: 0
-  - name: 'Levels: 3-3'
-    events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3525102429318315049}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: ChangeMaxXP
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 300
-            m_FloatArgument: 0.22
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    lvls: {x: 3, y: 3}
-    skipRe: 0
-  - name: 'Levels: 4-4'
-    events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3525102429318315049}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: LaserShootSpeed
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 300
-            m_FloatArgument: 0.22
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3525102429318315049}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: MLaserBulletAmnt
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 10
-            m_FloatArgument: 0.22
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    lvls: {x: 4, y: 4}
     skipRe: 0
   upgradeMenuOpenGameSpeed: 0
   modulesPlayer:

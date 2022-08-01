@@ -208,7 +208,7 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
         GetComponent<PointPathing>().enabled=false;
         if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=false;
         AudioManager.instance.Play(phasesInfo[p].audioAsset);
-        if(Jukebox.instance!=null)Jukebox.instance.PauseFor(phasesInfo[p].delay);
+        if(Jukebox.instance!=null&&GameRules.instance.bossInfo.pauseOstOnPhaseChange)Jukebox.instance.PauseFor(phasesInfo[p].delay);
         yield return new WaitForSeconds(phasesInfo[p].delay);
         if(p==0){if(Jukebox.instance==null){Instantiate(GameCreator.instance.GetJukeboxPrefab());}if(Jukebox.instance!=null)Jukebox.instance.SetMusic(GameRules.instance.bossInfo.ost,true);if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameSession.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}}
         GameAssets.instance.VFX(phasesInfo[p].vfxAsset,transform.position,3f);
