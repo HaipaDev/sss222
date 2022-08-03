@@ -454,7 +454,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     ss.energy=GameRules.instance.energyPlayer;
                     ss.enAbsorpAmnt=0;
                     //ss.powerups=GameRules.instance.powerupsStarting;
-                    ss.powerups=new Powerup[1];
+                    ss.powerups=new List<Powerup>();
                     ss.powerupCurID=0;
                     ss.statuses=new List<StatusFx>();
                 }
@@ -467,6 +467,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     ss.skillsSlots=pm.skillsSlots;
                     ss.modulesList=pm.modulesList;
                     ss.skillsList=pm.skillsList;
+
+                    ss.bodyUpgraded=pm.bodyUpgraded;
+                    ss.engineUpgraded=pm.engineUpgraded;
+                    ss.blastersUpgraded=pm.blastersUpgraded;
                 }else{Debug.LogError("PlayerModules not present");}
             yield return new WaitForSecondsRealtime(0.02f);
             Debug.Log("Adventure data saved in GameSession");
@@ -516,6 +520,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 pm.skillsSlots=ss.skillsSlots;
                 pm.modulesList=ss.modulesList;
                 pm.skillsList=ss.skillsList;
+
+                pm.bodyUpgraded=ss.bodyUpgraded;
+                pm.engineUpgraded=ss.engineUpgraded;
+                pm.blastersUpgraded=ss.blastersUpgraded;
             }else{Debug.LogError("PlayerModules not present");}
             yield return new WaitForSeconds(0.1f);
             if(UpgradeMenu.instance!=null){

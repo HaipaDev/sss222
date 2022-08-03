@@ -7,9 +7,9 @@ public class PowerupInventory : MonoBehaviour{
     [AssetsOnly][SerializeField]GameObject elementPrefab;
     void Start(){SetCapacity();}
     public void SetCapacity(){
-        if(GameRules.instance.powerupsCapacity==1){Destroy(gameObject);}
-        var _iMax=transform.GetChild(0).childCount;
-        for(var i=0;i<_iMax;i++){Destroy(transform.GetChild(0).GetChild(i).gameObject);}
-        for(var i=0;i<GameRules.instance.powerupsCapacity;i++){var go=Instantiate(elementPrefab,transform.GetChild(0));go.GetComponent<PowerupDisplay>().number=i;}
+        if(Player.instance.powerups.Count==1){transform.GetChild(0).gameObject.SetActive(false);}
+        else{transform.GetChild(0).gameObject.SetActive(true);}
+        foreach(Transform t in transform.GetChild(0)){Destroy(t.gameObject);}
+        for(var i=0;i<Player.instance.powerups.Count;i++){var go=Instantiate(elementPrefab,transform.GetChild(0));go.GetComponent<PowerupDisplay>().number=i;}
     }
 }

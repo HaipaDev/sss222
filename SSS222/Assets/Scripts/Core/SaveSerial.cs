@@ -206,7 +206,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public float hpAbsorpAmnt=0;
 		public float energy=0;
 		public float enAbsorpAmnt=0;
-		public Powerup[] powerups;
+		public List<Powerup> powerups;
 		public int powerupCurID=0;
 		public List<StatusFx> statuses=new List<StatusFx>();
 
@@ -217,6 +217,10 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public List<string> skillsSlots=new List<string>(2);
 		public List<Module> modulesList=new List<Module>();
 		public List<Skill> skillsList=new List<Skill>();
+
+		public int bodyUpgraded;
+		public int engineUpgraded;
+		public int blastersUpgraded;
 	}
 
 	public string _advDataPath(){return Application.persistentDataPath+"/"+filenameAdventure+".hyper";}

@@ -85,8 +85,8 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     }
     public void OpenStats(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
         invMenu.SetActive(false);
-        statsMenu.SetActive(false);
-        modulesSkillsPanel.SetActive(true);
+        statsMenu.SetActive(true);
+        modulesSkillsPanel.SetActive(false);
     }
     public void OpenModules(){upgradeMenu2UI.SetActive(true);upgradeMenuUI.SetActive(false);
         invMenu.SetActive(false);
@@ -360,6 +360,10 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             }
         }
     }
+
+    public void UpgradeBody(){Player.instance.GetComponent<PlayerModules>().bodyUpgraded++;}
+    public void UpgradeEngine(){Player.instance.GetComponent<PlayerModules>().engineUpgraded++;}
+    public void UpgradeBlasters(){Player.instance.GetComponent<PlayerModules>().blastersUpgraded++;}
 
     public void SetAutoascend(bool isOn){Player.instance.GetComponent<PlayerModules>().autoAscend=isOn;autoascendToggle.isOn=isOn;}
     public void LevelUp(){

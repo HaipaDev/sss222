@@ -5148,7 +5148,7 @@ MonoBehaviour:
   inputType: 0
   autoShoot: 0
   moveSpeedInit: 5
-  moveSpeed: 5
+  moveSpeedBase: 0
   moveSpeedCurrent: 0
   shaderMatProps:
     text: {fileID: 0}
@@ -5160,13 +5160,16 @@ MonoBehaviour:
     blur: 0
     lowResBlur: 1
   health: 150
+  healthStart: 0
   healthMax: 150
   defenseInit: 0
-  defenseModifBase: 0
+  defenseBase: 0
   defense: 0
   energyOn: 1
   energy: 180
   energyMax: 120
+  powerupsCapacityInit: 5
+  powerupsCapacity: 1
   powerups: []
   powerupCurID: 0
   powerupDefault: laser
@@ -5183,6 +5186,8 @@ MonoBehaviour:
   overheatedTime: 3
   overheatedTimer: -4
   recoilOn: 1
+  critChanceInit: 4
+  critChanceBase: 0
   critChance: 4
   enRegenEnabled: 0
   enAbsorpAmnt: 0
@@ -5198,8 +5203,10 @@ MonoBehaviour:
   freqHpRegen: 1
   hpRegenAmnt: 0.5
   dmgMultiInit: 1
-  shootMultiInit: 1
+  dmgMultiBase: 1
   dmgMulti: 1
+  shootMultiInit: 1
+  shootMultiBase: 1
   shootMulti: 1
   shipScaleDefault: 0.95
   bulletResize: 0
@@ -5304,6 +5311,9 @@ MonoBehaviour:
   skillsSlots: []
   modulesList: []
   skillsList: []
+  bodyUpgraded: 0
+  engineUpgraded: 0
+  blastersUpgraded: 0
   currentSkill: 
   timerTeleport: -4
   timerOverhaul: -4

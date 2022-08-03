@@ -60,9 +60,12 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="energyOffMax") _txt=Mathf.RoundToInt(p.energy).ToString()+"/"+p.energyMax.ToString();
             else if(value=="max_hp") _txt=p.healthMax.ToString();
             else if(value=="max_energy") _txt=p.energyMax.ToString();
-            else if(value=="speed") _txt=(p.moveSpeed).ToString();
+            else if(value=="speedBase") _txt=(p.moveSpeedBase).ToString();
             else if(value=="hpRegen") if(p.hpRegenEnabled==true){_txt=p.hpRegenAmnt.ToString();}else{_txt="0";}
             else if(value=="enRegen") if(p.enRegenEnabled==true){_txt=p.enRegenAmnt.ToString();}else{_txt="0";}
+            else if(value=="defenseBase") _txt=(p.defenseBase).ToString();
+            else if(value=="shootSpeedBase") _txt=(p.shootMultiBase).ToString();
+            else if(value=="critChanceBase") _txt=(p.critChanceBase).ToString()+"%";
 
 
             ///Player Modules
@@ -92,6 +95,10 @@ public class ValueDisplay : MonoBehaviour{
                         else{_txt="Lvl up available! ("+(pmodules.shipLvl+1).ToString()+")<br> (L to Lvlup)";}
                     }
                 }
+
+                if(value=="bodyUpgraded"){_txt="Lvl "+pmodules.bodyUpgraded.ToString();}
+                if(value=="engineUpgraded"){_txt="Lvl "+pmodules.engineUpgraded.ToString();}
+                if(value=="blastersUpgraded"){_txt="Lvl "+pmodules.blastersUpgraded.ToString();}
             }
             ///Other player related
             if(value=="holodeath_popup"&&FindObjectOfType<PlayerHolobody>()!=null){
@@ -172,7 +179,6 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="energyStartingPlayerGR") _txt=gr.energyPlayer.ToString();
             else if(value=="energyMaxPlayerGR") _txt=gr.energyMaxPlayer.ToString();
             else if(value=="speedPlayerGR") _txt=gr.moveSpeedPlayer.ToString();
-
             else if(value=="powerupsCapacity") _txt=gr.powerupsCapacity.ToString();
 
             else if(value=="energyGain_EnergyBallGR") _txt=gr.energyBall_energyGain.ToString();
@@ -186,6 +192,29 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="absorpGain_LunarGelGR") _txt=gr.lunarGel_hpGain.ToString();
             else if(value=="energyGain_PowerupGR") _txt=gr.powerups_energyGain.ToString();
             else if(value=="energyNeeded_PowerupGR") _txt=gr.powerups_energyNeeded.ToString();
+
+            else if(value=="bodyUpgrade_price") _txt=gr.bodyUpgrade_price.ToString();
+            else if(value=="engineUpgrade_price") _txt=gr.engineUpgrade_price.ToString();
+            else if(value=="blastersUpgrade_price") _txt=gr.blastersUpgrade_price.ToString();
+
+            else if(value=="bodyUpgrade_changes"){
+                _txt=
+                "+ "+gr.bodyUpgrade_defense.ToString()+" DEFENSE"+"<br>"+
+                "+ "+gr.bodyUpgrade_powerupCapacity.ToString()+" POWERUP SLOTS"
+                ;
+            }
+            else if(value=="engineUpgrade_changes"){
+                _txt=
+                "+ "+gr.engineUpgrade_moveSpeed.ToString()+" MOVE SPEED"+"<br>"+
+                "+ "+gr.engineUpgrade_energyMax.ToString()+" ENERGY CAPACITY"
+                ;
+            }
+            else if(value=="blastersUpgrade_changes"){
+                _txt=
+                "+ "+gr.blastersUpgrade_shootMulti.ToString()+" SHOOT SPEED"+"<br>"+
+                "+ "+gr.blastersUpgrade_critChance.ToString()+"% CRIT CHANCE"
+                ;
+            }
 
             //Sandbox Speciffic
             if(SandboxCanvas.instance!=null){   var sb=SandboxCanvas.instance;

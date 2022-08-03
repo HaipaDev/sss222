@@ -4,27 +4,32 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 public class PlayerModules : MonoBehaviour{
-    [Header("Settings")]
+[Header("Settings")]
     public float timeTeleport=3f;
     public float timeOverhaul=10f;
     public GameObject exhaustColliderObj;
-    [Header("Level Values")]
+[Header("Level Values")]
     [SerializeField] public int shipLvl=0;
     [SerializeField] public int shipLvlFraction;
     [SerializeField] public List<ShipLvlFractionsValues> shipLvlFractionsValues;
     [DisableInEditorMode][SerializeField] public bool autoAscend=true;
     [DisableInEditorMode][SerializeField] public int lvlFractionsMax=0;
-    [Header("Modules & Skills Slots & List")]
+[Header("Modules & Skills Slots & List")]
     [SerializeField] public List<string> moduleSlots;
     [SerializeField] public List<string> skillsSlots;
     [SerializeField] public List<Module> modulesList;
     [SerializeField] public List<Skill> skillsList;
-    [Header("Timers etc")]
+[Header("Stats")]
+    public int bodyUpgraded=0;
+    public int engineUpgraded=0;
+    public int blastersUpgraded=0;
+[Header("Timers etc")]
     [DisableInEditorMode]public string currentSkill="";
     [DisableInEditorMode]public float timerTeleport=-4;
     [DisableInEditorMode]public float timerOverhaul=-4;
 
     GameObject timerUI;
+    Player player;
     void Awake(){StartCoroutine(SetValues());}
     IEnumerator SetValues(){
         yield return new WaitForSecondsRealtime(0.15f);
@@ -43,6 +48,7 @@ public class PlayerModules : MonoBehaviour{
         if(GameRules.instance.modulesOn!=true){Destroy(this);}
     }
     IEnumerator Start(){
+        player=GetComponent<Player>();
         timerUI=GameObject.Find("SkillTimer_par");
         yield return new WaitForSeconds(0.2f);
         if(shipLvlFractionsValues.Capacity>0&&shipLvl==0)lvlFractionsMax=shipLvlFractionsValues[0].fractions;
@@ -54,6 +60,7 @@ public class PlayerModules : MonoBehaviour{
         SkillsUpdate();
         ModulesUpdate();
         CheckExpired();
+        CalculateStats();
     }
 
     void ShipLevel(){
@@ -237,13 +244,22 @@ public class PlayerModules : MonoBehaviour{
     public void SetSkill(int id, string item){skillsSlots[id]=item;}
     public void ReplaceSkill(string name, string item){SetSkill(skillsSlots.FindIndex(x=>x==name),item);}
     public void ClearSkill(string name){ReplaceSkill(name,"");}
-
     public bool _isAutoAscend(){return autoAscend||GameRules.instance.forceAutoAscend;}
-
     public void ResetSkillCooldowns(){for(var i=0;i<skillsSlots.Capacity;i++){skillsList[i].cooldown=0;}}
 
+    void CalculateStats(){
+        player.defenseBase=player.defenseInit+(bodyUpgraded*GameRules.instance.bodyUpgrade_defense);
+        player.powerupsCapacity=Mathf.Clamp(player.powerupsCapacityInit+(bodyUpgraded*GameRules.instance.bodyUpgrade_powerupCapacity),0,10);
+        
+        player.moveSpeedBase=player.moveSpeedInit+(engineUpgraded*GameRules.instance.engineUpgrade_moveSpeed);
+        player.energyMax=GameRules.instance.energyMaxPlayer+(engineUpgraded*GameRules.instance.engineUpgrade_energyMax);
+        
+        player.shootMultiBase=player.shootMultiInit+(blastersUpgraded*GameRules.instance.blastersUpgrade_shootMulti);
+        player.critChanceBase=player.critChanceInit+(blastersUpgraded*GameRules.instance.blastersUpgrade_critChance);
+    }
+
     public void SwitchExhaust(bool on=false){exhaustColliderObj.SetActive(on);}
-    private void SetActiveAllChildren(Transform transform, bool value){
+    void SetActiveAllChildren(Transform transform, bool value){
         foreach (Transform child in transform){
             child.gameObject.SetActive(value);
             SetActiveAllChildren(child, value);

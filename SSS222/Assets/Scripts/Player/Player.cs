@@ -13,25 +13,27 @@ using Sirenix.OdinInspector;
 public class Player : MonoBehaviour{    public static Player instance;
 #region Vars
 #region//Basic Player Values
-    [Header("Player")]
+[Header("Player")]
     [SerializeField] public bool moveX = true;
     [SerializeField] public bool moveY = true;
     [SerializeField] InputType inputType = InputType.mouse;
     [SerializeField] public bool autoShoot = false;
-    [SerializeField] public float moveSpeedInit = 5f;
-    [DisableInEditorMode]public float moveSpeed = 5f;//A variable for later modifications like Upgrades
+    [DisableInPlayMode] public float moveSpeedInit = 5f;
+    [DisableInEditorMode]public float moveSpeedBase;
     [DisableInEditorMode]public float moveSpeedCurrent;
     [SerializeField]public ShaderMatProps shaderMatProps;
     [SerializeField]public float health = 100f;
     [HideInEditorMode][SerializeField]public float healthStart;
     [SerializeField] public float healthMax = 100f;
-    [SerializeField] public int defenseInit = 0;
-    [SerializeField] public int defenseModifBase = 0;
-    [DisableInEditorMode]public int defense = 0;
+    [DisableInPlayMode] public int defenseInit = 0;
+    [DisableInEditorMode] public int defenseBase = 0;
+    [DisableInEditorMode] public int defense = 0;
     [SerializeField] public bool energyOn = true;
     [DisableInEditorMode]public float energy = 120f;
     [SerializeField] public float energyMax = 120f;
-    [SerializeField] public Powerup[] powerups;
+    [Range(1,10)][DisableInPlayMode] public int powerupsCapacityInit=5;
+    [Range(1,10)][DisableInEditorMode] public int powerupsCapacity;
+    [SerializeField] public List<Powerup> powerups;
     [SerializeField] public int powerupCurID=0;
     [SerializeField] public string powerupDefault="laser";
     [SerializeField] public bool weaponsLimited=false;
@@ -47,7 +49,9 @@ public class Player : MonoBehaviour{    public static Player instance;
     [SerializeField] public float overheatedTime=3;
     [DisableInEditorMode]public float overheatedTimer;
     [SerializeField] public bool recoilOn=true;
-    [SerializeField] public float critChance=4f;
+    [DisableInPlayMode] public float critChanceInit=4f;
+    [DisableInEditorMode] public float critChanceBase;
+    [DisableInEditorMode] public float critChance;
 
     public bool enRegenEnabled;
     public float enAbsorpAmnt;
@@ -62,18 +66,17 @@ public class Player : MonoBehaviour{    public static Player instance;
     [DisableInEditorMode]public float timerHpRegen;
     [SerializeField] public float freqHpRegen=2f;
     [SerializeField] public float hpRegenAmnt=0.5f;
-    //[SerializeField] public float hpForRegen=0f;
-    //[SerializeField] public float armorMultiInit=1f;
-    [SerializeField] public float dmgMultiInit=1f;
-    [SerializeField] public float shootMultiInit=1f;
-    //public float armorMulti=1f;
-    public float dmgMulti=1f;
-    public float shootMulti=1f;
+    [DisableInPlayMode] public float dmgMultiInit=1f;
+    [DisableInEditorMode] public float dmgMultiBase=1f;
+    [DisableInEditorMode] public float dmgMulti=1f;
+    [DisableInPlayMode] public float shootMultiInit=1f;
+    [DisableInEditorMode] public float shootMultiBase=1f;
+    [DisableInEditorMode] public float shootMulti=1f;
     [SerializeField] public float shipScaleDefault=0.89f;
     [SerializeField] public bool bulletResize;
 #endregion
 #region//Statuses
-    [Header("Statuses")]
+[Header("Statuses")]
     [SerializeField] public List<StatusFx> statuses=new List<StatusFx>();
     public float dashTime;
     public float infPrevEnergy;
@@ -107,11 +110,11 @@ public class Player : MonoBehaviour{    public static Player instance;
 #endregion
 
 #region//Weapon Properties / Energy Costs etc
-    [Header("Weapon Properties / Energy Costs etc")]
+[Header("Weapon Properties / Energy Costs etc")]
     [SerializeField] public List<WeaponProperties> weaponProperties;
 #endregion
 #region //Other
-    [Header("Others")]
+[Header("Others")]
     Renderer bgSprite;
     const float flareShootYY = 0.2f;
     int moveDir = 1;
@@ -214,20 +217,21 @@ public class Player : MonoBehaviour{    public static Player instance;
         energyMax=i.energyMaxPlayer;
         fuelDrainAmnt=i.fuelDrainAmnt;
         fuelDrainFreq=i.fuelDrainFreq;
-        powerups=new Powerup[i.powerupsCapacity];
-        for(var p=0;p<i.powerupsCapacity;p++){powerups[p]=new Powerup();}
-        for(var p=0;p<i.powerupsCapacity&&p<i.powerupsStarting.Count;p++){powerups[p]=i.powerupsStarting[p];}
+        powerupsCapacityInit=i.powerupsCapacity;
+        powerupsCapacity=powerupsCapacityInit;
+        //powerups=new List<Powerup>(powerupsCapacity);
+        for(var p=0;p<powerupsCapacity;p++){powerups.Add(new Powerup());}
+        for(var p=0;p<powerupsCapacity&&p<i.powerupsStarting.Count;p++){powerups[p]=i.powerupsStarting[p];}
         powerupDefault=i.powerupDefault;
         weaponsLimited=i.weaponsLimited;
         losePwrupOutOfEn=i.losePwrupOutOfEn;losePwrupOutOfAmmo=i.losePwrupOutOfAmmo;
-        //armorMultiInit=i.armorMultiPlayer;
         dmgMultiInit=i.dmgMultiPlayer;
         shootMultiInit=i.shootMultiPlayer;
         shipScaleDefault=i.shipScaleDefault;
         bulletResize=i.bulletResize;
         overheatOn=i.overheatOnPlayer;
         recoilOn=i.recoilOnPlayer;
-        critChance=i.critChancePlayer;
+        critChanceInit=i.critChancePlayer;
         ///State Defaults
         foreach(StatusFx st in i.statusesStart){statuses.Add(st);}
         flipTime=i.flipTime;
@@ -267,16 +271,17 @@ public class Player : MonoBehaviour{    public static Player instance;
 
         yield return new WaitForSecondsRealtime(0.06f);
         
-        moveSpeed=moveSpeedInit;
-        moveSpeedCurrent=moveSpeed;
-        speedPrev[0]=moveSpeed;
-        defenseModifBase=defenseInit;
-        shootMulti=shootMultiInit;
-        //armorMulti=armorMultiInit;
-        dmgMulti=dmgMultiInit;
+        moveSpeedBase=moveSpeedInit;
+        moveSpeedCurrent=moveSpeedBase;
+        speedPrev[0]=moveSpeedBase;
+        defenseBase=defenseInit;
+        shootMultiBase=shootMultiInit;
+        dmgMultiBase=dmgMultiInit;
+        critChanceBase=critChanceInit;
     }
 
-    void Update(){ 
+    void Update(){
+        SetPowerupsCapacity();
         if(!GameSession.GlobalTimeIsPaused){
             SetInputType(SaveSerial.instance.settingsData.inputType);
             HandleInput(false);
@@ -294,6 +299,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             Regen();
             Die();
             CountTimeMovementPressed();
+            //SetPowerupsCapacity();
             SelectItemSlot();
             Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
             Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
@@ -352,7 +358,7 @@ public class Player : MonoBehaviour{    public static Player instance;
 
             if(weaponsLimited){if(_curPwrup().timer>0){_curPwrup().timer-=Time.deltaTime;}
             if(_curPwrup().timer<=0&&_curPwrup().timer!=-4){_curPwrup().timer=-4;
-                if(powerups.Length>1){ClearCurrentPowerup();SelectAnyNotEmptyPowerup();}else{ResetPowerupDef();}
+                if(powerups.Capacity>1){ClearCurrentPowerup();SelectAnyNotEmptyPowerup();}else{ResetPowerupDef();}
                 if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}
             }
 
@@ -871,30 +877,30 @@ public class Player : MonoBehaviour{    public static Player instance;
     void SelectItemSlot(){   if(!PauseMenu.GameIsPaused&&!_hasStatus("hacked")){
             if(Input.GetAxis("Mouse ScrollWheel")>0f||Input.GetKeyDown(KeyCode.JoystickButton5)||Input.GetKeyDown(KeyCode.Equals)){
                 int i=0;
-                if(powerupCurID<powerups.Length-1){for(i=powerupCurID+1;i<powerups.Length-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up: "+i);*/break;}}}
-                else{for(i=0;i<powerups.Length-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up(Last): "+i);*/break;}}}
+                if(powerupCurID<powerups.Capacity-1){for(i=powerupCurID+1;i<powerups.Capacity-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up: "+i);*/break;}}}
+                else{for(i=0;i<powerups.Capacity-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up(Last): "+i);*/break;}}}
                 if(_isPowerupSlotScrollable(i)){powerupCurID=i;return;}
             }
             else if(Input.GetAxis("Mouse ScrollWheel")<0f||Input.GetKeyDown(KeyCode.JoystickButton4)||Input.GetKeyDown(KeyCode.Minus)){
                 int i=0;
                 if(powerupCurID>0){for(i=powerupCurID-1;i>0;i--){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Down: "+i);*/break;}}}
-                else{for(i=powerups.Length-1;i>0;i--){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Down(First): "+i);*/break;}}}
+                else{for(i=powerups.Capacity-1;i>0;i--){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Down(First): "+i);*/break;}}}
                 if(_isPowerupSlotScrollable(i)){powerupCurID=i;return;}
             }
             
             bool _isReplaced=false;
             int _key1=49;
-            for(int i=0,_key=_key1;i<9&&i<powerups.Length;i++,_key++){
+            for(int i=0,_key=_key1;i<10&&i<powerups.Capacity;i++,_key++){
                 if(_key>57)_key=48;//for the '0' key
                 if(Input.GetKey((KeyCode)_key)){ReplacePowerupsSlots(i);}
                 if(Input.GetKeyUp((KeyCode)_key)&&!_isReplaced){SelectPowerup(i);}
                 if(Input.GetKeyUp((KeyCode)_key)&&_isReplaced){_isReplaced=false;}
             }
             
-            if(Input.GetKeyUp(KeyCode.Backslash)){if(powerups.Length>1)DropCurrentPowerup();}
-            void SelectPowerup(int _i){if(powerups.Length>_i&&_isPowerupSlotSelectable(_i)){powerupCurID=_i;}}
+            if(Input.GetKeyUp(KeyCode.Backslash)){if(powerups.Capacity>1)DropCurrentPowerup();}
+            void SelectPowerup(int _i){if(powerups.Capacity>_i+1&&_isPowerupSlotSelectable(_i)){powerupCurID=_i;}}
             void ReplacePowerupsSlots(int id){
-                for(int i=0,_key=_key1;i<9&&i<powerups.Length;i++,_key++){
+                for(int i=0,_key=_key1;i<9&&i<powerups.Capacity;i++,_key++){
                     if(_key>57)_key=48;//for the '0' key
                     if(Input.GetKeyDown((KeyCode)_key)){
                         if(_key==48)_key=57;//bring it back after checking
@@ -941,7 +947,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             }else{moveDir=1;}
 
             if(_hasStatus("gclover")){
-                CountdownStatusTimer("scaler","GCloverOff");
+                CountdownStatusTimer("gclover","GCloverOff");
                 health=healthMax;
             }
 
@@ -1014,8 +1020,10 @@ public class Player : MonoBehaviour{    public static Player instance;
 
             //CalculateDefenseSpeed();
             
-            if(_hasStatus("power")&&!_hasStatus("weak")){dmgMulti=dmgMultiInit*GetStatus("power").strength;}else if(!_hasStatus("power")&&_hasStatus("weak")){dmgMulti=dmgMultiInit/GetStatus("weak").strength;}
-            if(!_hasStatus("power")&&!_hasStatus("weak")){dmgMulti=dmgMultiInit;}if(_hasStatus("power")&&_hasStatus("weak")){dmgMulti=(dmgMultiInit/GetStatus("weak").strength)*GetStatus("power").strength;}
+            shootMulti=shootMultiBase;
+            critChance=critChanceBase;
+            if(_hasStatus("power")&&!_hasStatus("weak")){dmgMulti=dmgMultiBase*GetStatus("power").strength;}else if(!_hasStatus("power")&&_hasStatus("weak")){dmgMulti=dmgMultiBase/GetStatus("weak").strength;}
+            if(!_hasStatus("power")&&!_hasStatus("weak")){dmgMulti=dmgMultiBase;}if(_hasStatus("power")&&_hasStatus("weak")){dmgMulti=(dmgMultiBase/GetStatus("weak").strength)*GetStatus("power").strength;}
             if(_hasStatus("onfire")){if(_hasStatus("frozen")){RemoveStatus("frozen");/*Damage(1,dmgType.silent);*/}}
             if(_hasStatus("infEnergy")){energy=infPrevEnergy;if(GetStatus("infEnergy").timer>0){GetStatus("infEnergy").timer-=Time.deltaTime;}else{RemoveStatus("infEnergy");}}
 
@@ -1087,14 +1095,15 @@ public class Player : MonoBehaviour{    public static Player instance;
         #endregion
     }
     void CalculateDefenseSpeed(){
-        if(_hasStatus("armored")&&!_hasStatus("fragile")){if(defenseInit==1){defenseModifBase=2;}else{defenseModifBase=Mathf.RoundToInt(defenseInit*GetStatus("armored").strength+0.5f);}}
-        if(!_hasStatus("armored")&&_hasStatus("fragile")){if(defenseInit==1){defenseModifBase=0;}else{defenseModifBase=Mathf.RoundToInt(defenseInit/GetStatus("fragile").strength+1);}}
-        if(_hasStatus("armored")&&_hasStatus("fragile")||!_hasStatus("armored")&&!_hasStatus("fragile")){defenseModifBase=defenseInit;}
-        defense=defenseModifBase;
+        if(_hasStatus("armored")&&!_hasStatus("fragile")){if(defenseBase==1){defense=2;}else{defense=Mathf.RoundToInt(defenseBase*GetStatus("armored").strength+0.5f);}}
+        if(!_hasStatus("armored")&&_hasStatus("fragile")){if(defenseBase==1){defense=0;}else{defense=Mathf.RoundToInt(defenseBase/GetStatus("fragile").strength+1);}}
+        if(_hasStatus("armored")&&_hasStatus("fragile")||!_hasStatus("armored")&&!_hasStatus("fragile")){defense=defenseBase;}
 
         if(_hasStatus("speed")&&!_hasStatus("slow")){moveSpeedCurrent=speedPrev[speedPrev.Count-1]*GetStatus("speed").strength;}else if(!_hasStatus("speed")&&_hasStatus("slow")){moveSpeedCurrent=speedPrev[speedPrev.Count-1]/GetStatus("slow").strength;}
-        else if(_hasStatus("speed")&&_hasStatus("slow")){if(speedPrev.Count>1)moveSpeedCurrent=speedPrev[speedPrev.Count-2]/GetStatus("slow").strength*GetStatus("speed").strength;
-        else moveSpeedCurrent=speedPrev[speedPrev.Count-1]/GetStatus("slow").strength*GetStatus("speed").strength;}
+        else if(_hasStatus("speed")&&_hasStatus("slow")){
+            if(speedPrev.Count>1)moveSpeedCurrent=speedPrev[speedPrev.Count-2]/GetStatus("slow").strength*GetStatus("speed").strength;
+            else moveSpeedCurrent=speedPrev[speedPrev.Count-1]/GetStatus("slow").strength*GetStatus("speed").strength;
+        }else if(!_hasStatus("speed")&&!_hasStatus("slow")){moveSpeedCurrent=moveSpeedBase;}
     }
     
     void Shadow(){
@@ -1226,17 +1235,17 @@ public class Player : MonoBehaviour{    public static Player instance;
     public bool _isPowerupEmpty(Powerup powerup){return (powerup==null||(powerup!=null&&String.IsNullOrEmpty(powerup.name)));}
     public bool _isPowerupEmptyID(int id){return (powerups[id]==null||(powerups[id]!=null&&String.IsNullOrEmpty(powerups[id].name)));}
     public bool _isPowerupEmptyCur(){return _isPowerupEmptyID(powerupCurID);}
-    public Powerup GetPowerup(int id){Powerup pwrup=null;if(id<powerups.Length){
+    public Powerup GetPowerup(int id){Powerup pwrup=null;if(id<powerups.Capacity){
         pwrup=powerups[id];}return pwrup;}
     public Powerup GetPowerupStr(string str){Powerup pwrup=null;
-        pwrup=Array.Find(powerups,x=>x.name==str);return pwrup;}
-    public Powerup _curPwrup(){Powerup pwrup=null;if(powerups.Length>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
-    public string _curPwrupName(){string str="";if(powerups.Length>powerupCurID){if(_curPwrup()!=null)str=_curPwrup().name;}return str;}
+        pwrup=powerups.Find(x=>x.name==str);return pwrup;}
+    public Powerup _curPwrup(){Powerup pwrup=null;if(powerups.Capacity>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
+    public string _curPwrupName(){string str="";if(powerups.Capacity>powerupCurID){if(_curPwrup()!=null)str=_curPwrup().name;}return str;}
     public bool _isCurPowerupAnItem(){if(!_isPowerupEmptyCur())return _curPwrupName().Contains("item");else return false;}
-    public bool ContainsPowerup(string str){bool b=false;if(Array.Exists(powerups,x=>x.name==str)){b=true;}return b;}
+    public bool ContainsPowerup(string str){bool b=false;if(powerups.Exists(x=>x.name==str)){b=true;}return b;}
     public void SetPowerup(Powerup val){if(!ContainsPowerup(val.name)){
         if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
-            for(var i=0;i<powerups.Length;i++){
+            for(var i=0;i<powerups.Capacity;i++){
                 if(_isPowerupEmpty(powerups[i])){emptyCount++;
                     powerups[i]=val;
                     if(SaveSerial.instance.settingsData.autoselectNewItem){powerupCurID=i;}
@@ -1252,7 +1261,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     }}
     public void SetPowerupStr(string val){if(!ContainsPowerup(val)){
         if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
-            for(var i=0;i<powerups.Length;i++){
+            for(var i=0;i<powerups.Capacity;i++){
                 if(_isPowerupEmpty(powerups[i])){emptyCount++;
                     powerups[i]=new Powerup();
                     powerups[i].name=val;
@@ -1274,13 +1283,13 @@ public class Player : MonoBehaviour{    public static Player instance;
 
     public void ReplacePowerupName(string str, string rep){if(GetPowerupStr(str)!=null){GetPowerupStr(str).name=rep;Debug.Log("Powerup "+str+" replaced with "+rep);}else{Debug.Log("Powerup "+str+" is null!");}}
 
-    public void ClearPowerup(string name){powerups[Array.FindIndex(powerups,x=>x.name==name)]=new Powerup();}
+    public void ClearPowerup(string name){powerups[powerups.FindIndex(x=>x.name==name)]=new Powerup();}
     public void ClearCurrentPowerup(){powerups[powerupCurID]=new Powerup();}
     public void ResetPowerupDef(){powerups[powerupCurID]=new Powerup();powerups[powerupCurID].name=powerupDefault;}
     public void SelectAnyNotEmptyPowerup(){
         int i=-1;
-        i=Array.FindIndex(powerups,x=>x.name==powerupDefault);//prefer the default
-        if(i==-1){Array.FindIndex(powerups,x=>!String.IsNullOrEmpty(x.name));}
+        i=powerups.FindIndex(x=>x.name==powerupDefault);//prefer the default
+        if(i==-1){powerups.FindIndex(x=>!String.IsNullOrEmpty(x.name));}
         if(i==-1){i=0;}
         powerupCurID=i;
     }
@@ -1304,6 +1313,14 @@ public class Player : MonoBehaviour{    public static Player instance;
     public bool ComparePowerupStrCur(string comp){bool b=false;
         if(_curPwrupName()==comp){b=true;}
         return b;
+    }
+    void SetPowerupsCapacity(){
+        if(powerups.Count!=powerupsCapacity){
+            Debug.Log("PowerupsCapacity: "+powerupsCapacity+" | powerups.Count: "+powerups.Count+" | Dif: "+(powerups.Count-powerupsCapacity).ToString());
+            for(var i=powerups.Count-1;i>powerupsCapacity-1;i--){powerups.RemoveAt(i);FindObjectOfType<PowerupInventory>().SetCapacity();}
+            for(var i=powerups.Count;i<powerupsCapacity;i++){powerups.Add(new Powerup());FindObjectOfType<PowerupInventory>().SetCapacity();}
+            //for(var i=0;i<powerups.Capacity-powerupsCapacity;i++){powerups.Add(new Powerup());FindObjectOfType<PowerupInventory>().SetCapacity();}
+        }
     }
 
     public void HPAdd(float hp){Damage(hp,dmgType.heal);}
@@ -1334,7 +1351,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
     public void AddSubAmmo(float value,string name, bool add=false,bool ignoreInvert=false){
         var v=(int)value;
-        var pwrup=Array.Find(powerups,x=>x.name==name);
+        var pwrup=powerups.Find(x=>x.name==name);
         if(pwrup!=null){
             if(pwrup.ammo<0&&pwrup.ammo!=-5)pwrup.ammo=0;
             if(!_hasStatus("inverter")||ignoreInvert){
@@ -1424,13 +1441,13 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
 
     public void SetSpeedPrev(){
-        //if(speedPrev.Count==1&&speedPrev[0]==moveSpeed){speedPrev[0]=moveSpeedCurrent;}
+        //if(speedPrev.Count==1&&speedPrev[0]==moveSpeedBase){speedPrev[0]=moveSpeedCurrent;}
         //else{speedPrev.Add(moveSpeedCurrent);}
-        if(moveSpeedCurrent!=moveSpeed){speedPrev.Add(moveSpeedCurrent);}
+        if(moveSpeedCurrent!=moveSpeedBase){speedPrev.Add(moveSpeedCurrent);}
     }
     public void RevertToSpeedPrev(){
         if(speedPrev.Count>1){moveSpeedCurrent=speedPrev[speedPrev.Count-1];speedPrev.Remove(speedPrev[speedPrev.Count-1]);}
-        else{moveSpeedCurrent=moveSpeed;speedPrev[0]=moveSpeed;}
+        else{moveSpeedCurrent=moveSpeedBase;speedPrev[0]=moveSpeedBase;}
     }
 
     public Enemy FindClosestEnemy(){

@@ -15,9 +15,9 @@ public class PowerupDisplay : MonoBehaviour{
     [SerializeField] Color highlightTimerColor=new Color(40/255,25/255,250/255,60/255);
     [Header("Values")]
     public int number=0;
-    public string pwrup;
-    public int ammo;
-    public float timer;
+    [ReadOnly]public string pwrup;
+    [ReadOnly]public int ammo;
+    [ReadOnly]public float timer;
     public bool displayTimerTxt=false;
 
     Image img;
@@ -28,9 +28,9 @@ public class PowerupDisplay : MonoBehaviour{
         if(GameRules.instance!=null){pwrup="";img.sprite=GameAssets.instance.Spr("nullPwrup");}
     }
     void Update(){
-        if(Player.instance!=null){if(number<Player.instance.powerups.Length){
+        if(Player.instance!=null){if(number<Player.instance.powerups.Capacity){
             var _id=number;
-            if(number==-1&&Player.instance.powerups.Length==1)_id=0;
+            if(number==-1&&Player.instance.powerups.Capacity==1)_id=0;
             if(_id>=0){
                 if(Player.instance.GetPowerup(_id)!=null){pwrup=Player.instance.GetPowerup(_id).name;}
             }else{pwrup=Player.instance._curPwrupName();if(!GameRules.instance.displayCurrentPowerup){Destroy(gameObject);}}

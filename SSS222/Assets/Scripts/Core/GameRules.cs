@@ -213,21 +213,28 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 [Header("Changes per level")]
     [FoldoutGroup("Leveling")]public List<ListEvents> lvlEvents;
 #endregion
-#region//Inventory, UpgradeMenu
-[Title("Inventory, UpgradeMenu", titleAlignment: TitleAlignments.Centered)]
-    [FoldoutGroup("Inventory",VisibleIf="@this._isAdventureSubZone==false")]public float upgradeMenuOpenGameSpeed=0;
-#endregion
-#region//Modules & Skills
-[Title("Modules & Skills", titleAlignment: TitleAlignments.Centered)]
-    [FoldoutGroup("Modules",false,VisibleIf="@this._isAdventureSubZone==false")]public List<ModulePropertiesGR> modulesPlayer;
-    [FoldoutGroup("Modules")]public List<SkillPropertiesGR> skillsPlayer;
-    [FoldoutGroup("Modules")]public int playerModulesCapacity=4;
+#region//Modules, Skills & Stats
+[Title("Modules, Skills & Stats", titleAlignment: TitleAlignments.Centered)]
+    [FoldoutGroup("Modules, Skills & Stats",false,VisibleIf="@this._isAdventureSubZone==false")]public List<ModulePropertiesGR> modulesPlayer;
+    [FoldoutGroup("Modules, Skills & Stats")]public List<SkillPropertiesGR> skillsPlayer;
+    [FoldoutGroup("Modules, Skills & Stats")]public int playerModulesCapacity=4;
     //[ES3NonSerializable]public int playerSkillsCapacity=2;
-    [FoldoutGroup("Modules")]public float timeOverhaul=10;
-    [FoldoutGroup("Modules")]public bool playerExhaustROF=true;
-    [FoldoutGroup("Modules")]public int crystalMend_refillCost=2;
-    [FoldoutGroup("Modules")]public float energyDiss_refillCost=3.3f;
+    [FoldoutGroup("Modules, Skills & Stats")]public float timeOverhaul=10;
+    [FoldoutGroup("Modules, Skills & Stats")]public bool playerExhaustROF=true;
+    [FoldoutGroup("Modules, Skills & Stats")]public int crystalMend_refillCost=2;
+    [FoldoutGroup("Modules, Skills & Stats")]public float energyDiss_refillCost=3.3f;
     //public int[] unlockableSkills;
+    [FoldoutGroup("Modules, Skills & Stats")]public int bodyUpgrade_price=2;
+    [FoldoutGroup("Modules, Skills & Stats")]public int engineUpgrade_price=1;
+    [FoldoutGroup("Modules, Skills & Stats")]public int blastersUpgrade_price=1;
+    [FoldoutGroup("Modules, Skills & Stats")]public int bodyUpgrade_defense=1;
+    [FoldoutGroup("Modules, Skills & Stats")]public int bodyUpgrade_powerupCapacity=1;
+    [FoldoutGroup("Modules, Skills & Stats")]public float engineUpgrade_moveSpeed=0.25f;
+    [FoldoutGroup("Modules, Skills & Stats")]public float engineUpgrade_energyMax=10f;
+    [FoldoutGroup("Modules, Skills & Stats")]public float blastersUpgrade_shootMulti=0.05f;
+    [FoldoutGroup("Modules, Skills & Stats")]public float blastersUpgrade_critChance=0.2f;
+
+    [FoldoutGroup("Modules, Skills & Stats")]public float upgradeMenuOpenGameSpeed=0;
 #endregion
 #endregion
 
@@ -400,7 +407,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public void LaserShootSpeed(float amnt){if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=amnt;}}
     public void MLaserBulletAmnt(int amnt){if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=amnt;}}
     public void ChangeMaxXP(int amnt){GameSession.instance.xpMax=amnt;}
-    public void MaxHPAdd(int amnt){Player.instance.healthMax+=amnt;Player.instance.healthStart+=amnt/2;if(!GameSession.instance._lvlEventsLoading)Player.instance.health+=amnt;}
+    public void MaxHPAdd(float amnt){Player.instance.healthMax+=amnt;Player.instance.healthStart+=amnt/2f;if(!GameSession.instance._lvlEventsLoading)Player.instance.health+=amnt;}
     #endregion
 #endregion
 #region//Return functions

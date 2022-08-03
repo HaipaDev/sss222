@@ -87,7 +87,6 @@ MonoBehaviour:
   forceAutoAscend: 0
   modulesOn: 1
   statUpgOn: 1
-  iteminvOn: 0
   barrierOn: 0
   instaPause: 0
   musicSlowdownOnPause: 1
@@ -796,7 +795,7 @@ MonoBehaviour:
   moveX: 1
   moveY: 1
   playfieldPadding: {x: 0.1, y: 0.45}
-  moveSpeedPlayer: 5
+  moveSpeedPlayer: 5.5
   playerShaderMatProps:
     text: {fileID: 0}
     hue: 0
@@ -808,7 +807,7 @@ MonoBehaviour:
     lowResBlur: 1
   healthPlayer: 75
   healthMaxPlayer: 75
-  defensePlayer: 2
+  defensePlayer: 1
   energyOnPlayer: 1
   energyPlayer: 100
   energyMaxPlayer: 130
@@ -818,7 +817,7 @@ MonoBehaviour:
   - name: laser
     ammo: -5
     timer: -4
-  powerupsCapacity: 5
+  powerupsCapacity: 2
   powerupDefault: 
   displayCurrentPowerup: 1
   weaponsLimited: 0
@@ -838,7 +837,7 @@ MonoBehaviour:
   overheatCooldown: 0.65
   overheatedTime: 3
   recoilOnPlayer: 1
-  critChancePlayer: 4
+  critChancePlayer: 0
   playerWeaponsFade: 1
   weaponProperties:
   - {fileID: 11400000, guid: c2cd77c9677e9534d8469763df8aeeb3, type: 2}
@@ -1640,7 +1639,6 @@ MonoBehaviour:
           m_CallState: 2
     lvls: {x: 0, y: 0}
     skipRe: 0
-  upgradeMenuOpenGameSpeed: 0
   modulesPlayer:
   - item: {fileID: 11400000, guid: 60df2a6b2fa6b62469800a4f428eba29, type: 2}
     lvlVals:
@@ -1700,6 +1698,16 @@ MonoBehaviour:
   playerExhaustROF: 1
   crystalMend_refillCost: 2
   energyDiss_refillCost: 3.3
+  upgradeMenuOpenGameSpeed: 0
+  bodyUpgrade_price: 2
+  engineUpgrade_price: 1
+  blastersUpgrade_price: 1
+  bodyUpgrade_defense: 1
+  bodyUpgrade_powerupCapacity: 1
+  engineUpgrade_moveSpeed: 0.25
+  engineUpgrade_energyMax: 10
+  blastersUpgrade_shootMulti: 0.05
+  blastersUpgrade_critChance: 0.2
   references:
     version: 2
     RefIds:
