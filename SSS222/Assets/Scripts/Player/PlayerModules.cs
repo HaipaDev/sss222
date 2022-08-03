@@ -20,6 +20,7 @@ public class PlayerModules : MonoBehaviour{
     [SerializeField] public List<Module> modulesList;
     [SerializeField] public List<Skill> skillsList;
 [Header("Stats")]
+    public int accumulatedCelestPoints=0;
     public int bodyUpgraded=0;
     public int engineUpgraded=0;
     public int blastersUpgraded=0;
@@ -80,6 +81,7 @@ public class PlayerModules : MonoBehaviour{
 
     public void Ascend(){
         shipLvlFraction++;
+        if(!GameSession.instance.CheckGamemodeSelected("Adventure")){if(shipLvl>=GameRules.instance.accumulateCelestPointsFromLvl)accumulatedCelestPoints++;}
         GameSession.instance.Ascend();
     }
     

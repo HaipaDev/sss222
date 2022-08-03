@@ -148,7 +148,7 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
             }
             if(Player.instance!=null){_molDistToPlayer=Vector2.Distance(transform.position,Player.instance.transform.position);if(_molDistToPlayer<=_molP1_attack2DistanceForForce&&_molP1_attack2Timer==-4){_molP1_attack2Timer=1f;_molP1_attack1Timer=-4;}}
 
-            if(en.health<=en.healthMax/2){ChangePhase(1);}
+            if(en.health<=en.healthMax/2){en.health=Mathf.FloorToInt(en.healthMax/2);ChangePhase(1);}
         }else if(phase==1){
             if(_molP2_attack1Timer>0)_molP2_attack1Timer-=Time.deltaTime;
             else if(_molP2_attack1Timer!=-4){//Attack 1

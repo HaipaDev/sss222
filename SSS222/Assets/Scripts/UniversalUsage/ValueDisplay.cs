@@ -96,6 +96,10 @@ public class ValueDisplay : MonoBehaviour{
                     }
                 }
 
+                if(value=="accumulatedCelestPoints"){
+                    if(!GameSession.instance.CheckGamemodeSelected("Adventure")){_txt=pmodules.accumulatedCelestPoints.ToString();}
+                    else{_txt=pmodules.shipLvlFraction.ToString();}
+                }
                 if(value=="bodyUpgraded"){_txt="Lvl "+pmodules.bodyUpgraded.ToString();}
                 if(value=="engineUpgraded"){_txt="Lvl "+pmodules.engineUpgraded.ToString();}
                 if(value=="blastersUpgraded"){_txt="Lvl "+pmodules.blastersUpgraded.ToString();}

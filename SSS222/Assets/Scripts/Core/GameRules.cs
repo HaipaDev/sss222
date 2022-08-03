@@ -224,6 +224,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [FoldoutGroup("Modules, Skills & Stats")]public int crystalMend_refillCost=2;
     [FoldoutGroup("Modules, Skills & Stats")]public float energyDiss_refillCost=3.3f;
     //public int[] unlockableSkills;
+    [FoldoutGroup("Modules, Skills & Stats")][HideIf("@this._isAdventure()")]public int accumulateCelestPointsFromLvl=2;
     [FoldoutGroup("Modules, Skills & Stats")]public int bodyUpgrade_price=2;
     [FoldoutGroup("Modules, Skills & Stats")]public int engineUpgrade_price=1;
     [FoldoutGroup("Modules, Skills & Stats")]public int blastersUpgrade_price=1;
