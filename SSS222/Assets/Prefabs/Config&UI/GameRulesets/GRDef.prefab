@@ -752,7 +752,7 @@ MonoBehaviour:
     lowResBlur: 1
   healthPlayer: 120
   healthMaxPlayer: 120
-  defensePlayer: 1
+  defensePlayer: 2
   energyOnPlayer: 1
   energyPlayer: 60
   energyMaxPlayer: 130
@@ -1573,61 +1573,7 @@ MonoBehaviour:
     fractions: 9
   - lvl: 20
     fractions: 10
-  lvlEvents:
-  - name: 'Levels: 0-0'
-    events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1938246018583424785}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: ShootMultiAdd
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0.02
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1938246018583424785}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: ArmorMultiAdd
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0.01
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    lvls: {x: 0, y: 0}
-    skipRe: 0
-  - name: 'Levels: 1-1'
-    events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1938246018583424785}
-          m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
-          m_MethodName: MultiplyMaxEnergy
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 1.5
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    lvls: {x: 1, y: 1}
-    skipRe: 0
-  - name: 'Levels: 0-0'
-    events:
-      m_PersistentCalls:
-        m_Calls: []
-    lvls: {x: 0, y: 0}
-    skipRe: 0
+  lvlEvents: []
   modulesPlayer:
   - item: {fileID: 11400000, guid: 60df2a6b2fa6b62469800a4f428eba29, type: 2}
     lvlVals:

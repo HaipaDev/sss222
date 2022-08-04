@@ -277,6 +277,8 @@ public class Player : MonoBehaviour{    public static Player instance;
         shootMultiBase=shootMultiInit;
         dmgMultiBase=dmgMultiInit;
         critChanceBase=critChanceInit;
+
+        FindObjectOfType<PowerupInventory>().SetCapacity();
     }
 
     void Update(){
@@ -876,30 +878,30 @@ public class Player : MonoBehaviour{    public static Player instance;
     void SelectItemSlot(){   if(!PauseMenu.GameIsPaused&&!_hasStatus("hacked")){
             if(Input.GetAxis("Mouse ScrollWheel")>0f||Input.GetKeyDown(KeyCode.JoystickButton5)||Input.GetKeyDown(KeyCode.Equals)){
                 int i=0;
-                if(powerupCurID<powerups.Capacity-1){for(i=powerupCurID+1;i<powerups.Capacity-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up: "+i);*/break;}}}
-                else{for(i=0;i<powerups.Capacity-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up(Last): "+i);*/break;}}}
+                if(powerupCurID<powerups.Count-1){for(i=powerupCurID+1;i<powerups.Count-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up: "+i);*/break;}}}
+                else{for(i=0;i<powerups.Count-1;i++){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Up(Last): "+i);*/break;}}}
                 if(_isPowerupSlotScrollable(i)){powerupCurID=i;return;}
             }
             else if(Input.GetAxis("Mouse ScrollWheel")<0f||Input.GetKeyDown(KeyCode.JoystickButton4)||Input.GetKeyDown(KeyCode.Minus)){
                 int i=0;
                 if(powerupCurID>0){for(i=powerupCurID-1;i>0;i--){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Down: "+i);*/break;}}}
-                else{for(i=powerups.Capacity-1;i>0;i--){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Down(First): "+i);*/break;}}}
+                else{for(i=powerups.Count-1;i>0;i--){if(_isPowerupSlotScrollable(i)){/*Debug.Log("Down(First): "+i);*/break;}}}
                 if(_isPowerupSlotScrollable(i)){powerupCurID=i;return;}
             }
             
             bool _isReplaced=false;
             int _key1=49;
-            for(int i=0,_key=_key1;i<10&&i<powerups.Capacity;i++,_key++){
+            for(int i=0,_key=_key1;i<10&&i<powerups.Count;i++,_key++){
                 if(_key>57)_key=48;//for the '0' key
                 if(Input.GetKey((KeyCode)_key)){ReplacePowerupsSlots(i);}
                 if(Input.GetKeyUp((KeyCode)_key)&&!_isReplaced){SelectPowerup(i);}
                 if(Input.GetKeyUp((KeyCode)_key)&&_isReplaced){_isReplaced=false;}
             }
             
-            if(Input.GetKeyUp(KeyCode.Backslash)){if(powerups.Capacity>1)DropCurrentPowerup();}
-            void SelectPowerup(int _i){if(powerups.Capacity>_i+1&&_isPowerupSlotSelectable(_i)){powerupCurID=_i;}}
+            if(Input.GetKeyUp(KeyCode.Backslash)){if(powerups.Count>1)DropCurrentPowerup();}
+            void SelectPowerup(int _i){if(powerups.Count>_i&&_isPowerupSlotSelectable(_i)){powerupCurID=_i;}}
             void ReplacePowerupsSlots(int id){
-                for(int i=0,_key=_key1;i<9&&i<powerups.Capacity;i++,_key++){
+                for(int i=0,_key=_key1;i<9&&i<powerups.Count;i++,_key++){
                     if(_key>57)_key=48;//for the '0' key
                     if(Input.GetKeyDown((KeyCode)_key)){
                         if(_key==48)_key=57;//bring it back after checking
@@ -1234,17 +1236,17 @@ public class Player : MonoBehaviour{    public static Player instance;
     public bool _isPowerupEmpty(Powerup powerup){return (powerup==null||(powerup!=null&&String.IsNullOrEmpty(powerup.name)));}
     public bool _isPowerupEmptyID(int id){return (powerups[id]==null||(powerups[id]!=null&&String.IsNullOrEmpty(powerups[id].name)));}
     public bool _isPowerupEmptyCur(){return _isPowerupEmptyID(powerupCurID);}
-    public Powerup GetPowerup(int id){Powerup pwrup=null;if(id<powerups.Capacity){
+    public Powerup GetPowerup(int id){Powerup pwrup=null;if(id<powerups.Count){
         pwrup=powerups[id];}return pwrup;}
     public Powerup GetPowerupStr(string str){Powerup pwrup=null;
         pwrup=powerups.Find(x=>x.name==str);return pwrup;}
-    public Powerup _curPwrup(){Powerup pwrup=null;if(powerups.Capacity>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
-    public string _curPwrupName(){string str="";if(powerups.Capacity>powerupCurID){if(_curPwrup()!=null)str=_curPwrup().name;}return str;}
+    public Powerup _curPwrup(){Powerup pwrup=null;if(powerups.Count>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
+    public string _curPwrupName(){string str="";if(powerups.Count>powerupCurID){if(_curPwrup()!=null)str=_curPwrup().name;}return str;}
     public bool _isCurPowerupAnItem(){if(!_isPowerupEmptyCur())return _curPwrupName().Contains("item");else return false;}
     public bool ContainsPowerup(string str){bool b=false;if(powerups.Exists(x=>x.name==str)){b=true;}return b;}
     public void SetPowerup(Powerup val){if(!ContainsPowerup(val.name)){
         if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
-            for(var i=0;i<powerups.Capacity;i++){
+            for(var i=0;i<powerups.Count;i++){
                 if(_isPowerupEmpty(powerups[i])){emptyCount++;
                     powerups[i]=val;
                     if(SaveSerial.instance.settingsData.autoselectNewItem){powerupCurID=i;}
@@ -1260,7 +1262,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     }}
     public void SetPowerupStr(string val){if(!ContainsPowerup(val)){
         if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
-            for(var i=0;i<powerups.Capacity;i++){
+            for(var i=0;i<powerups.Count;i++){
                 if(_isPowerupEmpty(powerups[i])){emptyCount++;
                     powerups[i]=new Powerup();
                     powerups[i].name=val;

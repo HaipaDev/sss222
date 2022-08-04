@@ -40,11 +40,11 @@ public class PlayerModules : MonoBehaviour{
             //shipLvlFractionsValues=i.shipLvlFractionsValues;
             if(i.shipLvlFractionsValues.Find(x=>x.lvl==0)==null){shipLvlFractionsValues.Add(new ShipLvlFractionsValues{lvl=0,fractions=1});}
             foreach(ShipLvlFractionsValues s in i.shipLvlFractionsValues){shipLvlFractionsValues.Add(s);}
-            if(moduleSlots.Capacity==0){for(var m=0;m<i.playerModulesCapacity;m++){moduleSlots.Add("");}}
-            if(skillsSlots.Capacity==0){for(var m=0;m<2;m++){skillsSlots.Add("");}}
+            if(moduleSlots.Count==0){for(var m=0;m<i.playerModulesCapacity;m++){moduleSlots.Add("");}}
+            if(skillsSlots.Count==0){for(var m=0;m<2;m++){skillsSlots.Add("");}}
             //for(var m=0;m<i.playerSkillsCapacity;m++){skillsSlots.Add("");}
-            if(modulesList.Capacity==0){var _id=0;foreach(ModulePropertiesGR m in i.modulesPlayer){if(m.equipped&&_id<moduleSlots.Count){SetModule(_id,m.item.name);}modulesList.Add(new Module{name=m.item.name,lvl=m.unlockedLvl});}_id++;}
-            if(skillsList.Capacity==0){var _id=0;foreach(SkillPropertiesGR s in i.skillsPlayer){if(s.equipped&&_id<skillsSlots.Count){SetSkill(_id,s.item.name);}skillsList.Add(new Skill{name=s.item.name,lvl=s.unlockedLvl});}_id++;}
+            if(modulesList.Count==0){var _id=0;foreach(ModulePropertiesGR m in i.modulesPlayer){if(m.equipped&&_id<moduleSlots.Count){SetModule(_id,m.item.name);}modulesList.Add(new Module{name=m.item.name,lvl=m.unlockedLvl});}_id++;}
+            if(skillsList.Count==0){var _id=0;foreach(SkillPropertiesGR s in i.skillsPlayer){if(s.equipped&&_id<skillsSlots.Count){SetSkill(_id,s.item.name);}skillsList.Add(new Skill{name=s.item.name,lvl=s.unlockedLvl});}_id++;}
             timeOverhaul=i.timeOverhaul;
         }
         if(GameRules.instance.modulesOn!=true){Destroy(this);}

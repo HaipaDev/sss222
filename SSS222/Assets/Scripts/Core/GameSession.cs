@@ -498,15 +498,18 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         yield return new WaitForSecondsRealtime(0.04f);
         var p=Player.instance;
         var s=SaveSerial.instance;
-        var ss=SaveSerial.instance.advD;
-        if(p!=null&&s!=null&&s.advD!=null){
+        var ss=s.advD;
+        if(p!=null&&s!=null&&ss!=null){
             if(ss.holo_timeAt>0&&ss.holo_zoneSelected==zoneSelected&&zoneToTravelTo==-1){
                 var phb=CreatePlayerHoloBody(new Vector2(ss.holo_posX,7.6f));
                 phb.SetTime(ss.holo_timeAt);
             }
-            if(ss.health>0){p.health=ss.health;xp=ss.xp;_coreSpawnedPreAscend=ss._coreSpawnedPreAscend;}else{p.health=ss.healthStart;xp=0;_coreSpawnedPreAscend=false;}//currentPlaytime=0;}
-            p.hpAbsorpAmnt=ss.hpAbsorpAmnt;
             p.energy=ss.energy;
+            if(ss.health>0){p.health=ss.health;xp=ss.xp;_coreSpawnedPreAscend=ss._coreSpawnedPreAscend;}
+            else{xp=0;_coreSpawnedPreAscend=false;
+                if(ss.healthStart>0){p.health=ss.healthStart;}else{p.health=GameRules.instance.healthPlayer;ss.healthStart=p.health;p.energy=GameRules.instance.energyPlayer;ss.energy=p.energy;}
+            }//currentPlaytime=0;}
+            p.hpAbsorpAmnt=ss.hpAbsorpAmnt;
             p.enAbsorpAmnt=ss.enAbsorpAmnt;
             p.powerups=ss.powerups;
             p.powerupCurID=ss.powerupCurID;

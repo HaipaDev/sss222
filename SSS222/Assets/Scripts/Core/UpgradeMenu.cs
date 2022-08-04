@@ -45,10 +45,12 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     void Update(){
         if(Input.GetKeyDown(KeyCode.F)||Input.GetKeyDown(KeyCode.JoystickButton3)){
             if(UpgradeMenuIsOpen){Resume();}
-            else{if(PauseMenu.GameIsPaused!=true&&Shop.shopOpened!=true&&Player.instance!=null)if(!Player.instance._hasStatus("hacked"))Open();}
+            else{
+                if(_isOpenable()){Open();}
+            }
         }
-        if(Input.GetKeyDown(KeyCode.M)&&GameSession.instance.CheckGamemodeSelected("Adventure")&&FindObjectOfType<BossAI>()==null){if(!UpgradeMenuIsOpen){Open();OpenZoneMap();}}
-        if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){Back();}
+        if(Input.GetKeyDown(KeyCode.M)&&GameSession.instance.CheckGamemodeSelected("Adventure")&&FindObjectOfType<BossAI>()==null&&Player.instance!=null){if(!Player.instance._hasStatus("hacked"))Open();OpenZoneMap();}
+        if(UpgradeMenuIsOpen&&GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){Back();}
         //SetModulesAndSkillsPreviews();
     }
 
@@ -57,9 +59,13 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         upgradeMenu2UI.SetActive(false);
         lvltreeUI.SetActive(false);
         zoneMap.SetActive(false);
-        BackToModulesSkillsInventory();
+        //BackToModulesSkillsInventory();
         GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
         UpgradeMenuIsOpen=false;
+    }
+    public bool _isOpenable(){return
+        (!PauseMenu.GameIsPaused&&!Shop.shopOpened&&(Player.instance!=null&&!Player.instance._hasStatus("hacked")))
+        &&(FindObjectOfType<BossAI>()==null||(FindObjectOfType<BossAI>()!=null&&FindObjectOfType<BossAI>().GetComponent<Enemy>().health>0));
     }
     public void Open(){
         if(autoascendToggle!=null)autoascendToggle.isOn=pmodules.autoAscend;

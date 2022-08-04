@@ -16,7 +16,7 @@ public class BossAI : MonoBehaviour{
 
         en.name=b.name;
         en.type=b.type;
-        en.health=b.healthStart;en.healthMax=b.healthMax;
+        if(b.scaleUpOnSpawn){en.health=1f;}else{en.health=b.healthStart;}en.healthMax=b.healthMax;
         en.defense=phasesInfo[0].defense;
         en.sprMatProps=phasesInfo[0].sprMatProps;
         en.shooting=false;
@@ -41,7 +41,11 @@ public class BossAI : MonoBehaviour{
     void Update(){
         if(!GameSession.GlobalTimeIsPaused){
             if(phase==-1&&GameRules.instance.bossInfo.scaleUpOnSpawn){
-                var scaleUpSpeed=phasesInfo[0].delay/10f*Time.deltaTime;if(Vector2.Distance(en.size,phasesInfo[0].size)>scaleUpSpeed){en.spr=phasesInfo[0].anims[0].spr;en.size+=new Vector2(scaleUpSpeed,scaleUpSpeed);}
+                var scaleUpSpeed=phasesInfo[0].delay/10f*Time.deltaTime;
+                if(Vector2.Distance(en.size,phasesInfo[0].size)>scaleUpSpeed){
+                    en.spr=phasesInfo[0].anims[0].spr;en.size+=new Vector2(scaleUpSpeed,scaleUpSpeed);
+                    if(en.health<=GameRules.instance.bossInfo.healthStart){en.health+=en.healthMax*scaleUpSpeed;}
+                }
             }
             if(phase>=0){
                 en.defense=phasesInfo[phase].defense;
@@ -225,7 +229,10 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
         AudioManager.instance.Play(phasesInfo[p].audioAsset);
         if(Jukebox.instance!=null&&GameRules.instance.bossInfo.pauseOstOnPhaseChange)Jukebox.instance.PauseFor(phasesInfo[p].delay);
         yield return new WaitForSeconds(phasesInfo[p].delay);
-        if(p==0){if(Jukebox.instance==null){Instantiate(GameCreator.instance.GetJukeboxPrefab());}if(Jukebox.instance!=null)Jukebox.instance.SetMusic(GameRules.instance.bossInfo.ost,true);if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameSession.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}}
+        if(p==0){
+            if(Jukebox.instance==null){Instantiate(GameCreator.instance.GetJukeboxPrefab());}if(Jukebox.instance!=null)Jukebox.instance.SetMusic(GameRules.instance.bossInfo.ost,true);if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameSession.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}
+            en.health=GameRules.instance.bossInfo.healthStart;
+        }
         GameAssets.instance.VFX(phasesInfo[p].vfxAsset,transform.position,3f);
         Shake.instance.CamShake(phasesInfo[p].camShakeStrength,phasesInfo[p].camShakeSpeed);
         GetComponent<PointPathing>().enabled=true;

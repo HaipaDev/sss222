@@ -22,14 +22,12 @@ public class OnScreenButtons : MonoBehaviour{
     }
     public void Pause(){
         if(PauseMenu.GameIsPaused!=true){
-            if(Shop.shopOpened!=true&&UpgradeMenu.UpgradeMenuIsOpen!=true){PauseMenu.instance.pauseMenuUI.SetActive(true);
-            PauseMenu.instance.Pause();}
+            if(PauseMenu.instance._isPausable()){PauseMenu.instance.Pause();}
         }else{PauseMenu.instance.Resume();}
     }
     public void OpenUpgrade(){
         if(UpgradeMenu.UpgradeMenuIsOpen!=true){
-            if(PauseMenu.GameIsPaused!=true&&Shop.shopOpened!=true&&Player.instance!=null){UpgradeMenu.instance.upgradeMenuUI.SetActive(true);
-            UpgradeMenu.instance.Open();}
+            if(UpgradeMenu.instance._isOpenable()){UpgradeMenu.instance.Open();}
         }else{UpgradeMenu.instance.Resume();}
     }
 

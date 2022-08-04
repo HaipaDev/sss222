@@ -13,9 +13,8 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
     float unpausedTimeReq=0.3f;
     IEnumerator slowDownCo;
     //Shop shop;
-    IEnumerator Start(){
+    void Start(){
         instance=this;
-        yield return new WaitForSeconds(0.05f);
         Resume();
         if(GameRules.instance.instaPause)unpausedTimeReq=0;
         //shop=FindObjectOfType<Shop>();
@@ -27,8 +26,7 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
                 if(optionsUI.transform.GetChild(0).gameObject.activeSelf){SaveSerial.instance.SaveSettings();pauseMenuUI.SetActive(true);return;}
                 if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();PauseEmpty();return;}
             }else{
-                if(((Shop.instance!=null&&Shop.shopOpened!=true)||(Shop.instance==null))&&
-                ((UpgradeMenu.instance!=null&&UpgradeMenu.UpgradeMenuIsOpen!=true)||(UpgradeMenu.instance==null))&&!GameOverCanvas.instance.gameOver&&(unpausedTimer>=unpausedTimeReq||unpausedTimer==-1))Pause();
+                if(_isPausable()){Pause();}
             }
         }//if(Input.GetKeyDown(KeyCode.R)){//in GameSession}
         if(!GameIsPaused){
@@ -52,6 +50,12 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         else{GameSession.instance.gameSpeed=0;}
         unpausedTimer=-1;
         //Debug.Log("Pausing");
+    }
+    public bool _isPausable(){return
+        ((Shop.instance!=null&&!Shop.shopOpened)||(Shop.instance==null))&&
+        ((UpgradeMenu.instance!=null&&!UpgradeMenu.UpgradeMenuIsOpen)||(UpgradeMenu.instance==null))
+        &&!GameOverCanvas.instance.gameOver&&(unpausedTimer>=unpausedTimeReq||unpausedTimer==-1)
+        &&(FindObjectOfType<BossAI>()==null||(FindObjectOfType<BossAI>()!=null&&FindObjectOfType<BossAI>().GetComponent<Enemy>().health>0));
     }
     public void Pause(){
         prevGameSpeed = GameSession.instance.gameSpeed;
