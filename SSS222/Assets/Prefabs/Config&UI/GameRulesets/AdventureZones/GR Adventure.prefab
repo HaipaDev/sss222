@@ -48,7 +48,7 @@ MonoBehaviour:
   _isAdventureSubZone: 0
   _isAdventureTravelZone: 0
   _isAdventureBossZone: 0
-  cfgDesc: CAMPAIGN LIKE ADVENTURE
+  cfgDesc: CAMPAIGN LIKE LONG TERM GAMEPLAY - ZONES, BOSSES TO CONQUER
   cfgIconAssetName: 
   cfgIconsGo: {fileID: 0}
   cfgIconShaderMatProps:
@@ -1628,12 +1628,12 @@ MonoBehaviour:
         - m_Target: {fileID: 3525102429318315049}
           m_TargetAssemblyTypeName: GameRules, Assembly-CSharp
           m_MethodName: MaxHPAdd
-          m_Mode: 3
+          m_Mode: 4
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0.01
+            m_IntArgument: 0
+            m_FloatArgument: 5
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
@@ -1698,16 +1698,18 @@ MonoBehaviour:
   playerExhaustROF: 1
   crystalMend_refillCost: 2
   energyDiss_refillCost: 3.3
-  upgradeMenuOpenGameSpeed: 0
+  accumulateCelestPointsFromLvl: 2
   bodyUpgrade_price: 2
   engineUpgrade_price: 1
   blastersUpgrade_price: 1
   bodyUpgrade_defense: 1
   bodyUpgrade_powerupCapacity: 1
   engineUpgrade_moveSpeed: 0.25
-  engineUpgrade_energyMax: 10
+  engineUpgrade_energyRegen: 0.5
+  engineUpgrade_energyRegenFreqMinus: 0.075
   blastersUpgrade_shootMulti: 0.05
   blastersUpgrade_critChance: 0.2
+  upgradeMenuOpenGameSpeed: 0
   references:
     version: 2
     RefIds:

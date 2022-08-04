@@ -257,7 +257,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1655681407431101748}
   m_HandleRect: {fileID: 3423031437775258471}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -900,7 +900,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "WIP - \nCUSTOM\nSHARABLE\nGAMEMODES"
+  m_text: "WIP - \nSHARABLE GAMEMODE CREATOR TOOL"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a08a4866d54094b853c1b628fdbdd1, type: 2}
   m_sharedMaterial: {fileID: 7516542502403631768, guid: 45a08a4866d54094b853c1b628fdbdd1,
@@ -1862,7 +1862,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "WIP - \nZones, Overhauled Trading with Items, Space Pirates and Enforcers"
+  m_text: CAMPAIGN LIKE LONG TERM GAMEPLAY - ZONES, BOSSES TO CONQUER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a08a4866d54094b853c1b628fdbdd1, type: 2}
   m_sharedMaterial: {fileID: 7516542502403631768, guid: 45a08a4866d54094b853c1b628fdbdd1,
@@ -1872,8 +1872,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4290690798
-  m_fontColor: {r: 0.9339623, g: 0.7445265, b: 0.7445265, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 2
   m_fontColorGradient:
@@ -1890,7 +1890,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.25
+  m_fontSize: 49.05
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1

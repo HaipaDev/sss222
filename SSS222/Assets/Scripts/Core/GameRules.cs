@@ -231,7 +231,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [FoldoutGroup("Modules, Skills & Stats")]public int bodyUpgrade_defense=1;
     [FoldoutGroup("Modules, Skills & Stats")]public int bodyUpgrade_powerupCapacity=1;
     [FoldoutGroup("Modules, Skills & Stats")]public float engineUpgrade_moveSpeed=0.25f;
-    [FoldoutGroup("Modules, Skills & Stats")]public float engineUpgrade_energyMax=10f;
+    [FoldoutGroup("Modules, Skills & Stats")]public float engineUpgrade_energyRegen=0.5f;
+    [FoldoutGroup("Modules, Skills & Stats")]public float engineUpgrade_energyRegenFreqMinus=0.075f;
     [FoldoutGroup("Modules, Skills & Stats")]public float blastersUpgrade_shootMulti=0.05f;
     [FoldoutGroup("Modules, Skills & Stats")]public float blastersUpgrade_critChance=0.2f;
 
@@ -408,7 +409,14 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public void LaserShootSpeed(float amnt){if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=amnt;}}
     public void MLaserBulletAmnt(int amnt){if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=amnt;}}
     public void ChangeMaxXP(int amnt){GameSession.instance.xpMax=amnt;}
-    public void MaxHPAdd(float amnt){Player.instance.healthMax+=amnt;Player.instance.healthStart+=amnt/2f;if(!GameSession.instance._lvlEventsLoading)Player.instance.health+=amnt;}
+    public void MaxHPAdd(float amnt){
+        Player.instance.healthMax+=amnt;
+        if(GameRules.instance._isAdventure())Player.instance.healthStart+=(amnt/2f);//SaveSerial.instance.advD.healthStart+=(amnt/2f);
+        if(!GameSession.instance._lvlEventsLoading)Player.instance.health+=amnt;
+    }
+    public void UpgradeBody(){Player.instance.GetComponent<PlayerModules>().bodyUpgraded++;}
+    public void UpgradeEngine(){Player.instance.GetComponent<PlayerModules>().engineUpgraded++;}
+    public void UpgradeBlasters(){Player.instance.GetComponent<PlayerModules>().blastersUpgraded++;}
     #endregion
 #endregion
 #region//Return functions

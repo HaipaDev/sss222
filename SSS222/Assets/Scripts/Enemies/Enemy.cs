@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour{
     [ReadOnly]public bool yeeted=false;
     [ReadOnly]public bool dmgCounted;
     [ReadOnly]public float dmgCount;
+    [ReadOnly]public bool _dmgHeals;
     GameObject dmgCountPopup;
 
     [ReadOnly]public GameObject bullet;

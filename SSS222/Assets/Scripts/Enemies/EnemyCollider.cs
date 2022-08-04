@@ -22,7 +22,9 @@ public class EnemyCollider : MonoBehaviour{
                 if(dmgVal.colliType==colliTypes.playerWeapons||dmgVal.colliType==colliTypes.player){
                     if(Player.instance!=null){dmg*=Player.instance.dmgMulti;if(Random.Range(0,100)<=Player.instance.critChance&&Player.instance.critChance>0)crit=true;}}
                 if(dmg!=0){
-                    if(dmg>0)dmg=CalculateDmg(dmgVal,dmg,armorPenetr,crit,false);
+                    if(!en._dmgHeals){if(dmg>0)dmg=CalculateDmg(dmgVal,dmg,armorPenetr,crit,false);}
+                    else{dmg*=-1;}
+
                     en.Damage(dmg);
                     if(crit){UniCollider.DMG_VFX(0,other,transform,dmg,crit);}
                     else UniCollider.DMG_VFX(0,other,transform,dmg);

@@ -209,7 +209,6 @@ public class Player : MonoBehaviour{    public static Player instance;
         autoShoot=i.autoShootPlayer;
         shaderMatProps=i.playerShaderMatProps;
         health=i.healthPlayer;
-        healthStart=i.healthPlayer;
         healthMax=i.healthMaxPlayer;
         defenseInit=i.defensePlayer;
         energyOn=i.energyOnPlayer;

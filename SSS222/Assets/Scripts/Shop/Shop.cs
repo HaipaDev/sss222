@@ -61,7 +61,7 @@ public class Shop : MonoBehaviour{
         if(shopSpawnReqsType!=GameRules.instance.shopSpawnReqsType)shopSpawnReqsType=GameRules.instance.shopSpawnReqsType;
         spawnReqs x=shopSpawnReqs;
         spawnReqsType xt=shopSpawnReqsType;
-        spawnReqsMono.instance.CheckSpawns(x,xt,this,"CallOpenShop");
+        if(GameSession.instance.ZoneNotBossNorTravel())spawnReqsMono.instance.CheckSpawns(x,xt,this,"CallOpenShop");
     }
     IEnumerator CallOpenShop(){
         //do{//Make it wait for your money to spawn lmao

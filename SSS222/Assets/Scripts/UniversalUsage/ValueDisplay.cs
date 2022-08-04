@@ -208,10 +208,30 @@ public class ValueDisplay : MonoBehaviour{
                 ;
             }
             else if(value=="engineUpgrade_changes"){
-                _txt=
-                "+ "+gr.engineUpgrade_moveSpeed.ToString()+" MOVE SPEED"+"<br>"+
-                "+ "+gr.engineUpgrade_energyMax.ToString()+" ENERGY CAPACITY"
-                ;
+                if(GameRules.instance._isAdventure()){
+                    if(Player.instance.GetComponent<PlayerModules>().engineUpgraded<1){
+                        _txt=
+                        "+ "+gr.engineUpgrade_moveSpeed.ToString()+" MOVE SPEED"+"<br>"+
+                        "+ "+gr.engineUpgrade_energyRegen.ToString()+" ENERGY REGEN"
+                        ;
+                    }else{
+                        _txt=
+                        "+ "+gr.engineUpgrade_moveSpeed.ToString()+" MOVE SPEED"+"<br>"+
+                        "- "+gr.engineUpgrade_energyRegenFreqMinus.ToString()+" ENERGY REGEN FREQUENCY"
+                        ;
+                    }
+                }else{
+                    if(Player.instance.GetComponent<PlayerModules>().engineUpgraded<1){
+                        _txt=
+                        "+ "+gr.engineUpgrade_moveSpeed.ToString()+" MOVE SPEED"+"<br>";
+                        ;
+                    }else{
+                        _txt=
+                        "+ "+gr.engineUpgrade_moveSpeed.ToString()+" MOVE SPEED"+"<br>"+
+                        "- "+gr.engineUpgrade_energyRegenFreqMinus.ToString()+" ENERGY REGEN FREQUENCY"
+                        ;
+                    }
+                }
             }
             else if(value=="blastersUpgrade_changes"){
                 _txt=

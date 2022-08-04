@@ -345,7 +345,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
 
     public void AddToScore(int scoreValue){
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);
-        spawnReqsMono.AddScore(Mathf.RoundToInt(scoreValue*scoreMulti));
+        if(ZoneNotBossNorTravel())spawnReqsMono.AddScore(Mathf.RoundToInt(scoreValue*scoreMulti));
         //if(GameRules.instance.shopOn)spawnReqs.AddScore(Mathf.RoundToInt(scoreValue*scoreMulti),-2);
         if(GameRules.instance.scoreDisplay!=scoreDisplay.timeLeft&&GameRules.instance.scoreDisplay!=scoreDisplay.bossHealth)GameCanvas.instance.ScorePopupSwitch(scoreValue*scoreMulti);
     }
@@ -463,6 +463,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     ss.shipLvl=pm.shipLvl;
                     ss.shipLvlFraction=pm.shipLvlFraction;
                     ss.autoAscend=pm.autoAscend;
+                    ss.autoLvl=pm.autoLvl;
                     ss.moduleSlots=pm.moduleSlots;
                     ss.skillsSlots=pm.skillsSlots;
                     ss.modulesList=pm.modulesList;
@@ -516,6 +517,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 pm.shipLvl=ss.shipLvl;
                 pm.shipLvlFraction=ss.shipLvlFraction;
                 pm.autoAscend=ss.autoAscend;
+                pm.autoLvl=ss.autoLvl;
                 pm.moduleSlots=ss.moduleSlots;
                 pm.skillsSlots=ss.skillsSlots;
                 pm.modulesList=ss.modulesList;
@@ -587,8 +589,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         Debug.Log("Full Report"+_sent+": "+FullReport());
     }
 
+    public bool ZoneNotBossNorTravel(){return !GameRules.instance._isAdventureBossZone&&zoneToTravelTo==-1;}
     public void DieAdventure(){
-        if(coins>0&&!GameCreator.instance.adventureZones[zoneSelected].isBoss&&zoneToTravelTo==-1)CreatePlayerHoloBody(Player.instance.transform.position,true,false,true);
+        if(coins>0&&ZoneNotBossNorTravel())CreatePlayerHoloBody(Player.instance.transform.position,true,false,true);
         SaveAdventure();
     }
     public PlayerHolobody CreatePlayerHoloBody(Vector2 pos,bool show=false,bool collectible=false,bool force=false){

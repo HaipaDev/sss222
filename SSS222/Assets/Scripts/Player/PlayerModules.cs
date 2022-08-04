@@ -13,6 +13,7 @@ public class PlayerModules : MonoBehaviour{
     [SerializeField] public int shipLvlFraction;
     [SerializeField] public List<ShipLvlFractionsValues> shipLvlFractionsValues;
     [DisableInEditorMode][SerializeField] public bool autoAscend=true;
+    [DisableInEditorMode][SerializeField] public bool autoLvl=true;
     [DisableInEditorMode][SerializeField] public int lvlFractionsMax=0;
 [Header("Modules & Skills Slots & List")]
     [SerializeField] public List<string> moduleSlots;
@@ -53,6 +54,7 @@ public class PlayerModules : MonoBehaviour{
         timerUI=GameObject.Find("SkillTimer_par");
         yield return new WaitForSeconds(0.2f);
         if(shipLvlFractionsValues.Capacity>0&&shipLvl==0)lvlFractionsMax=shipLvlFractionsValues[0].fractions;
+        if(!GameSession.instance.CheckGamemodeSelected("Adventure")){autoLvl=true;}
     }
 
     void Update(){
@@ -66,7 +68,7 @@ public class PlayerModules : MonoBehaviour{
 
     void ShipLevel(){
         if(GameRules.instance.levelingOn){
-            if(shipLvlFraction>=lvlFractionsMax&&lvlFractionsMax!=0){shipLvl++;shipLvlFraction=0;UpgradeMenu.instance.LevelUp();UpgradeMenu.instance.LvlEvents();if(FindObjectOfType<CelestialPoints>()!=null){FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();}return;}
+            if(_isLvlUpable()&&_isAutoLvl()){LevelUp();return;}
             for(var i=0;i<shipLvlFractionsValues.Count;i++){
                 if(i==shipLvlFractionsValues.Count-1){lvlFractionsMax=shipLvlFractionsValues[i].fractions;return;}
                 else{
@@ -80,10 +82,18 @@ public class PlayerModules : MonoBehaviour{
     }
 
     public void Ascend(){
-        shipLvlFraction++;
-        if(!GameSession.instance.CheckGamemodeSelected("Adventure")){if(shipLvl>=GameRules.instance.accumulateCelestPointsFromLvl)accumulatedCelestPoints++;}
-        GameSession.instance.Ascend();
+        if(!_isLvlUpable()){
+            shipLvlFraction++;
+            if(!GameSession.instance.CheckGamemodeSelected("Adventure")){if(shipLvl>=GameRules.instance.accumulateCelestPointsFromLvl)accumulatedCelestPoints++;}
+            GameSession.instance.Ascend();
+        }
     }
+    public void LevelUp(){
+        shipLvl++;shipLvlFraction=0;
+        UpgradeMenu.instance.LevelUp();UpgradeMenu.instance.LvlEvents();
+        if(FindObjectOfType<CelestialPoints>()!=null){FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();}
+    }
+    public bool _isLvlUpable(){return shipLvlFraction>=lvlFractionsMax&&lvlFractionsMax!=0;}
     
     #region//Skills & Modules
     public void CheckSkillButton(int key=0){     if(!GameSession.GlobalTimeIsPaused){
@@ -247,14 +257,23 @@ public class PlayerModules : MonoBehaviour{
     public void ReplaceSkill(string name, string item){SetSkill(skillsSlots.FindIndex(x=>x==name),item);}
     public void ClearSkill(string name){ReplaceSkill(name,"");}
     public bool _isAutoAscend(){return autoAscend||GameRules.instance.forceAutoAscend;}
+    public bool _isAutoLvl(){return autoLvl;}//||GameRules.instance.forceAutoAscend;}
     public void ResetSkillCooldowns(){for(var i=0;i<skillsSlots.Capacity;i++){skillsList[i].cooldown=0;}}
 
     void CalculateStats(){
         player.defenseBase=player.defenseInit+(bodyUpgraded*GameRules.instance.bodyUpgrade_defense);
         player.powerupsCapacity=Mathf.Clamp(player.powerupsCapacityInit+(bodyUpgraded*GameRules.instance.bodyUpgrade_powerupCapacity),0,10);
         
-        player.moveSpeedBase=player.moveSpeedInit+(engineUpgraded*GameRules.instance.engineUpgrade_moveSpeed);
-        player.energyMax=GameRules.instance.energyMaxPlayer+(engineUpgraded*GameRules.instance.engineUpgrade_energyMax);
+        if(GameRules.instance._isAdventure()){
+            player.moveSpeedBase=player.moveSpeedInit+(engineUpgraded*GameRules.instance.engineUpgrade_moveSpeed);
+            if(player.enAbsorpAmnt==0&&engineUpgraded>=1)player.enAbsorpAmnt=(1*GameRules.instance.engineUpgrade_energyRegen);
+            if(engineUpgraded>1)player.freqEnRegen=1f-((engineUpgraded-1)*GameRules.instance.engineUpgrade_energyRegenFreqMinus);
+            //else{player.enAbsorpAmnt=1;}
+            //player.energyMax=GameRules.instance.energyMaxPlayer+(engineUpgraded*GameRules.instance.engineUpgrade_energyMax);
+        }else{
+            player.moveSpeedBase=player.moveSpeedInit+(engineUpgraded*GameRules.instance.engineUpgrade_moveSpeed);
+            if(engineUpgraded>1)player.freqEnRegen=1f-((engineUpgraded-1)*GameRules.instance.engineUpgrade_energyRegenFreqMinus);
+        }
         
         player.shootMultiBase=player.shootMultiInit+(blastersUpgraded*GameRules.instance.blastersUpgrade_shootMulti);
         player.critChanceBase=player.critChanceInit+(blastersUpgraded*GameRules.instance.blastersUpgrade_critChance);

@@ -213,6 +213,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public int shipLvl=0;
 		public int shipLvlFraction=0;
 		public bool autoAscend;
+		public bool autoLvl;
 		public List<string> moduleSlots=new List<string>();
 		public List<string> skillsSlots=new List<string>(2);
 		public List<Module> modulesList=new List<Module>();

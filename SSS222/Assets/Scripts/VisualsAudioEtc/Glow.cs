@@ -6,7 +6,7 @@ public class Glow : MonoBehaviour{
     [SerializeField] string assetName="GlowAuto";
     [SerializeField] bool materialClone=true;
     [SerializeField] public Color color=Color.white;
-    [SerializeField] Vector2 size=Vector2.zero;
+    [SerializeField] public Vector2 size=Vector2.zero;
     [SerializeField] float emissionSpeed=0f;
     [SerializeField] int maxParticles=0;
     [SerializeField] public Vector2 offset;
@@ -14,7 +14,9 @@ public class Glow : MonoBehaviour{
     
     ParticleSystem ps;
     Material mat;
-    void Start(){
+    void Start(){MakeParticle();}
+    void OnEnable(){MakeParticle();}
+    public void MakeParticle(){
         GameObject go=Instantiate(GameAssets.instance.GetVFX(assetName),transform);
         go.transform.localPosition=offset;
 

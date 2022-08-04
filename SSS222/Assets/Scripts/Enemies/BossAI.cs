@@ -39,18 +39,20 @@ public class BossAI : MonoBehaviour{
         SetBossSpecificVars();
     }
     void Update(){
-        if(phase==-1&&GameRules.instance.bossInfo.scaleUpOnSpawn){
-            var scaleUpSpeed=phasesInfo[0].delay/10f*Time.deltaTime;if(Vector2.Distance(en.size,phasesInfo[0].size)>scaleUpSpeed){en.spr=phasesInfo[0].anims[0].spr;en.size+=new Vector2(scaleUpSpeed,scaleUpSpeed);}
-        }
-        if(phase>=0){
-            en.defense=phasesInfo[phase].defense;
-            en.size=phasesInfo[phase].size;
-            en.sprMatProps=phasesInfo[phase].sprMatProps;
+        if(!GameSession.GlobalTimeIsPaused){
+            if(phase==-1&&GameRules.instance.bossInfo.scaleUpOnSpawn){
+                var scaleUpSpeed=phasesInfo[0].delay/10f*Time.deltaTime;if(Vector2.Distance(en.size,phasesInfo[0].size)>scaleUpSpeed){en.spr=phasesInfo[0].anims[0].spr;en.size+=new Vector2(scaleUpSpeed,scaleUpSpeed);}
+            }
+            if(phase>=0){
+                en.defense=phasesInfo[phase].defense;
+                en.size=phasesInfo[phase].size;
+                en.sprMatProps=phasesInfo[phase].sprMatProps;
 
-            en.spr=phasesInfo[phase].anims[0].spr;//Animate later
-        }
+                en.spr=phasesInfo[phase].anims[0].spr;//Animate later
+            }
 
-        if(_isMOL()){MoonOfLunacyAI();}
+            if(_isMOL()){MoonOfLunacyAI();}
+        }
     }
     public void Die(){StartCoroutine(DieI());}
     IEnumerator DieI(){
@@ -95,7 +97,7 @@ public class BossAI : MonoBehaviour{
             }
         }
     }
-
+bool _preAttackVFXSpawned;
 #region ///Moon of Lunacy
 bool _isMOL(){return CheckName("Moon of Lunacy");}
 [Header("Phase1")]
@@ -125,13 +127,14 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
     [ShowIf("@this._isMOL()")][ReadOnly][SerializeField]float _molDistToPlayer;
     void MoonOfLunacyAI(){
         if(phase==0){
-            if(_molP1_attack1Timer>0)_molP1_attack1Timer-=Time.deltaTime;
+            if(_molP1_attack1Timer>0){_molP1_attack1Timer-=Time.deltaTime;if(_molP1_attack1Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P1_Attack1",transform.position,3f);_preAttackVFXSpawned=true;}}
             else if(_molP1_attack1Timer!=-4){//Attack 1
                 FindObjectOfType<Waves>().currentWave=GameAssets.instance.GetWaveConfig("Comet Barrage");
                 FindObjectOfType<Waves>().SpawnAllEnemiesInCurrentWave();
                 _molP1_attack1Count++;
                 _molP1_attack1Timer=_molP1_attack1Time;
                 FindObjectOfType<Waves>().currentWave=null;
+                _preAttackVFXSpawned=false;
             }
             if(_molP1_attack1Count>=_molP1_attack1CountFor2){//Countdown to Attack 2
                 _molP1_attack1Timer=-4;
@@ -139,18 +142,19 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
                 _molP1_attack1CountFor2=Mathf.RoundToInt(Random.Range((float)_molP1_attack1CountFor2Range.x,(float)_molP1_attack1CountFor2Range.y));
                 _molP1_attack2Timer=_molP1_attack2Time;
             }
-            if(_molP1_attack2Timer>0)_molP1_attack2Timer-=Time.deltaTime;
+            if(_molP1_attack2Timer>0){_molP1_attack2Timer-=Time.deltaTime;if(_molP1_attack2Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P1_Attack2",transform.position,3f);_preAttackVFXSpawned=true;}}
             else if(_molP1_attack2Timer!=-4){//Attack 2
                 GameAssets.instance.Make("LunarPulse",transform.position);
                 if(_molP1_attack1Time>_molP1_attack2SubTime1Limit)_molP1_attack1Time-=_molP1_attack2SubTime1;
                 _molP1_attack1Timer=_molP1_attack1Time;
                 _molP1_attack2Timer=-4;
+                _preAttackVFXSpawned=false;
             }
-            if(Player.instance!=null){_molDistToPlayer=Vector2.Distance(transform.position,Player.instance.transform.position);if(_molDistToPlayer<=_molP1_attack2DistanceForForce&&_molP1_attack2Timer==-4){_molP1_attack2Timer=1f;_molP1_attack1Timer=-4;}}
+            if(Player.instance!=null){_molDistToPlayer=Vector2.Distance(transform.position,Player.instance.transform.position);if(_molDistToPlayer<=_molP1_attack2DistanceForForce&&_molP1_attack2Timer==-4){_preAttackVFXSpawned=false;_molP1_attack2Timer=1f;_molP1_attack1Timer=-4;}}
 
             if(en.health<=en.healthMax/2){en.health=Mathf.FloorToInt(en.healthMax/2);ChangePhase(1);}
         }else if(phase==1){
-            if(_molP2_attack1Timer>0)_molP2_attack1Timer-=Time.deltaTime;
+            if(_molP2_attack1Timer>0){_molP2_attack1Timer-=Time.deltaTime;}//if(_molP2_attack1Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P2_Attack1",transform.position,3f);_preAttackVFXSpawned=true;}}
             else if(_molP2_attack1Timer!=-4){//Attack 1
                 var xRange=new Vector2(-2.5f,2.5f);
                 var yRange=new Vector2(-6f,6f);
@@ -158,6 +162,7 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
                 GameAssets.instance.Make("LunarSickle",objPos);
                 _molP2_attack1Count++;
                 _molP2_attack1Timer=_molP2_attack1Time;
+                _preAttackVFXSpawned=false;
             }
             if(_molP2_attack1Count>=_molP2_attack1CountFor2){//Countdown to Attack 2
                 _molP2_attack1Timer=-4;
@@ -165,7 +170,7 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
                 _molP2_attack1CountFor2=Mathf.RoundToInt(Random.Range((float)_molP2_attack1CountFor2Range.x,(float)_molP2_attack1CountFor2Range.y));
                 _molP2_attack2Timer=_molP2_attack2Time;
             }
-            if(_molP2_attack2Timer>0)_molP2_attack2Timer-=Time.deltaTime;
+            if(_molP2_attack2Timer>0){_molP2_attack2Timer-=Time.deltaTime;if(_molP2_attack2Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P2_Attack2",transform.position,3f);_preAttackVFXSpawned=true;}}
             else if(_molP2_attack2Timer!=-4){//Start Attack 2
                 if(GetComponent<Follow>()==null){var f=gameObject.AddComponent<Follow>();
                     f.target=Player.instance.gameObject;f.followAfterOOR=true;f.dirYYUp=true;//f.rotateTowards=true;
@@ -174,14 +179,23 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
                 }
                 GetComponent<Follow>().enabled=true;
                 GetComponent<PointPathing>().enabled=false;
+                if(GetComponent<Glow>()==null){var g=gameObject.AddComponent<Glow>();
+                    g.size=new Vector2(3f,3f);g.alignToDirection=true;g.color=new Color(70,250,200);
+                }
+                GetComponent<Glow>().enabled=true;
+                en._dmgHeals=true;
                 _molP2_attack2DurationTimer=_molP2_attack2Duration;
                 _molP2_attack2Timer=-4;
                 en.name="Moon of Lunacy - Spin";
+                _preAttackVFXSpawned=false;
             }
             if(_molP2_attack2DurationTimer>0){_molP2_attack2DurationTimer-=Time.deltaTime;var rotSpeed=_molP2_attack2FollowSpeed*360*Time.deltaTime;AudioManager.instance.Play("Spin");transform.Rotate(new Vector3(0,0,rotSpeed));}
             else if(_molP2_attack2DurationTimer!=-4){//Stop Attack 2
                 if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=false;
                 GetComponent<PointPathing>().enabled=true;
+                GetComponent<Glow>().enabled=false;
+                foreach(ParticleSystem ps in GetComponentsInChildren<ParticleSystem>())Destroy(ps.gameObject);
+                en._dmgHeals=false;
                 if(_molP2_attack1Time>_molP2_attack2SubTime1Limit)_molP2_attack1Time-=_molP2_attack2SubTime1;
                 _molP2_attack1Timer=_molP2_attack1Time;
                 transform.rotation=Quaternion.identity;
@@ -194,7 +208,8 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
             if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=false;
             GetComponent<PointPathing>().enabled=false;
             en.name="Moon of Lunacy";
-            foreach(GloomyScythe gs in FindObjectsOfType<GloomyScythe>()){if(gs.gameObject.name.Contains("LunarSickle")){Destroy(gs.gameObject);}}
+            foreach(FadeOutBullet fob in FindObjectsOfType<FadeOutBullet>()){if(fob.gameObject.name.Contains("LunarSickle")){if(fob.timer>fob.timeStartFade)fob.timer=fob.timeStartFade;}}
+            //foreach(GloomyScythe gs in FindObjectsOfType<GloomyScythe>()){if(gs.gameObject.name.Contains("LunarSickle")){Destroy(gs.gameObject);}}
         }
     }
 #endregion

@@ -23,6 +23,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     [ChildGameObjectsOnly]public GameObject modulesList;
     [ChildGameObjectsOnly]public GameObject skillsList;
     [ChildGameObjectsOnly]public Toggle autoascendToggle;
+    [ChildGameObjectsOnly]public Toggle autoLvlToggle;
     [ChildGameObjectsOnly]public GameObject backButton;
     [AssetsOnly]public GameObject moduleSkillElementPrefab;
     [AssetsOnly]public GameObject moduleSlotPrefab;
@@ -62,6 +63,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     }
     public void Open(){
         if(autoascendToggle!=null)autoascendToggle.isOn=pmodules.autoAscend;
+        if(autoLvlToggle!=null)autoLvlToggle.isOn=pmodules.autoLvl;
         if(FindObjectOfType<CelestialPoints>()!=null)FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();
         upgradeMenuUI.SetActive(true);
         /*if(GameRules.instance.upgradeMenuPause)*/GameSession.instance.gameSpeed=GameRules.instance.upgradeMenuOpenGameSpeed;
@@ -378,6 +380,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     }
 
     public void SetAutoascend(bool isOn){pmodules.autoAscend=isOn;autoascendToggle.isOn=isOn;}
+    public void SetAutoLvl(bool isOn){pmodules.autoLvl=isOn;autoLvlToggle.isOn=isOn;}
     public void LevelUp(){
         AudioManager.instance.Play("LvlUp2");
         FindObjectOfType<OnScreenButtons>().GetComponent<Animator>().SetTrigger("on");

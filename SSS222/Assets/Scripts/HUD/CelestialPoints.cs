@@ -21,12 +21,13 @@ public class CelestialPoints : MonoBehaviour{
             if(pm.lvlFractionsMax>6){container.GetComponent<GridLayoutGroup>().cellSize=new Vector2(morePointSize,morePointSize);}
             else{container.GetComponent<GridLayoutGroup>().cellSize=new Vector2(defaultPointSize,defaultPointSize);}
             if((i+1)>pm.shipLvlFraction){go.GetComponent<Image>().material=GameAssets.instance.GetMat("GrayedOut");}
-            if(i==pm.shipLvlFraction&&!pm._isAutoAscend()&&GameSession.instance.xp>=GameSession.instance.xpMax){
+            if((!pm._isLvlUpable()&&!pm._isAutoAscend()&&i==pm.shipLvlFraction&&GameSession.instance.xp>=GameSession.instance.xpMax)||(pm._isLvlUpable()&&!pm._isAutoLvl()&&i==pm.lvlFractionsMax-1)){
                 var anim=go.AddComponent<Animator>();
                 anim.updateMode=AnimatorUpdateMode.UnscaledTime;
                 anim.runtimeAnimatorController=ascendAnimController;//anim.Play();
                 var bt=go.AddComponent<Button>();
-                bt.onClick.AddListener(()=>pm.Ascend());
+                if(!pm._isLvlUpable()){bt.onClick.AddListener(()=>pm.Ascend());}
+                else{bt.onClick.AddListener(()=>pm.LevelUp());}
                 bt.onClick.AddListener(()=>RefreshCelestialPoints());
             }
         }
