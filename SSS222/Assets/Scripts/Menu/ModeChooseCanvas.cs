@@ -9,6 +9,8 @@ public class ModeChooseCanvas : MonoBehaviour{
     [SceneObjectsOnly][SerializeField] Transform container;
     [AssetsOnly][SerializeField] GameObject elementPrefab;
     void Start(){
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(false);
         foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){
             string name=gr.cfgName;     if(name.Contains(" Mode"))name=name.Replace(" Mode","");
             if(!gr.cfgName.Contains("Arcade Mode")){
@@ -26,4 +28,6 @@ public class ModeChooseCanvas : MonoBehaviour{
     public void OpenGamemode(string str){GSceneManager.instance.LoadGameModeInfoSceneSetStr(str);}
     public void OpenAdventure(){GSceneManager.instance.LoadAdventureZonesScene();}
     public void OpenSandbox(){GSceneManager.instance.LoadSandboxModeScene();}
+    public void OpenDeleteAdventure(){transform.GetChild(1).gameObject.SetActive(true);transform.GetChild(0).gameObject.SetActive(false);}
+    public void CloseDeleteAdventure(){transform.GetChild(0).gameObject.SetActive(true);transform.GetChild(1).gameObject.SetActive(false);}
 }

@@ -34,10 +34,16 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="buildVersion-Menu") _txt="build "+gs.buildVersion.ToString();
             else if(value=="timePlayed"){
                 if(gs.gamemodeSelected!=-1){_txt=gs.GetGameSessionTimeFormat();}
-                else{_txt=(Mathf.RoundToInt(gs.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";}
+                else{
+                    if(FindObjectOfType<BossAI>()==null){_txt=(Mathf.RoundToInt(gs.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";}
+                    else{var b=FindObjectOfType<BossAI>();_txt=System.Math.Round(((b.GetComponent<Enemy>().health/b.GetComponent<Enemy>().healthMax)*100f),2).ToString()+"%";}
+                }
             }else if(value=="timePlayed_txt"){
                 if(gs.gamemodeSelected!=-1){_txt="Time Played :";}
-                else{_txt="Distance traveled :";}
+                else{
+                    if(FindObjectOfType<BossAI>()==null){_txt="Distance traveled :";}
+                    else{_txt="Boss Fight Progress: ";}
+                }
             }
             else if(value=="scoreMulti") _txt=gs.scoreMulti.ToString();
             else if(value=="luck") _txt=gs.luckMulti.ToString();

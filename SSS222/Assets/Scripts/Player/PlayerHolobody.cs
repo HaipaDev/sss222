@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 public class PlayerHolobody : MonoBehaviour{
     [SerializeField] float timeToUncover=1.5f;
     [DisableInEditorMode]public int crystalsStored;
+    [DisableInEditorMode]public Powerup powerupStored=null;
     [DisableInEditorMode][SerializeField]float timeLeft=-4;
     void Update(){
         if(Player.instance!=null){

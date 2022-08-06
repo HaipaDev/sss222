@@ -197,6 +197,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public List<string> lockedZones;
 
 		public int holo_crystalsStored=0;
+		public Powerup holo_powerupStored=null;
 		public int holo_timeAt=0;
 		public float holo_posX=0;
 		public float holo_zoneSelected=0;
@@ -212,8 +213,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 
 		public int shipLvl=0;
 		public int shipLvlFraction=0;
-		public bool autoAscend;
-		public bool autoLvl;
+		public bool autoAscend=true;
+		public bool autoLvl=true;
 		public List<string> moduleSlots=new List<string>();
 		public List<string> skillsSlots=new List<string>(2);
 		public List<Module> modulesList=new List<Module>();

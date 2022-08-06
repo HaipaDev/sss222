@@ -411,8 +411,10 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public void ChangeMaxXP(int amnt){GameSession.instance.xpMax=amnt;}
     public void MaxHPAdd(float amnt){
         Player.instance.healthMax+=amnt;
-        if(GameRules.instance._isAdventure())Player.instance.healthStart+=(amnt/2f);//SaveSerial.instance.advD.healthStart+=(amnt/2f);
-        if(!GameSession.instance._lvlEventsLoading)Player.instance.health+=amnt;
+        if(!GameSession.instance._lvlEventsLoading){
+            if(GameRules.instance._isAdventure())Player.instance.healthStart+=(amnt/2f);
+            Player.instance.health+=amnt;
+        }
     }
     public void UpgradeBody(){Player.instance.GetComponent<PlayerModules>().bodyUpgraded++;}
     public void UpgradeEngine(){Player.instance.GetComponent<PlayerModules>().engineUpgraded++;}

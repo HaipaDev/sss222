@@ -209,6 +209,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         autoShoot=i.autoShootPlayer;
         shaderMatProps=i.playerShaderMatProps;
         health=i.healthPlayer;
+        healthStart=i.healthPlayer;
         healthMax=i.healthMaxPlayer;
         defenseInit=i.defensePlayer;
         energyOn=i.energyOnPlayer;
@@ -1238,6 +1239,8 @@ public class Player : MonoBehaviour{    public static Player instance;
     public bool _isPowerupEmptyCur(){return _isPowerupEmptyID(powerupCurID);}
     public Powerup GetPowerup(int id){Powerup pwrup=null;if(id<powerups.Count){
         pwrup=powerups[id];}return pwrup;}
+    public Powerup GetPowerupRandom(){Powerup pwrup=null;while(pwrup==null||(pwrup!=null&&pwrup.name=="")){pwrup=powerups[UnityEngine.Random.Range(0,powerups.Count)];}return pwrup;}
+    public Powerup GetPowerupRandomNotStarting(){Powerup pwrup=null;while(pwrup==null||(pwrup!=null&&pwrup.name==""&&GameRules.instance.powerupsStarting.Exists(x=>x.name==pwrup.name))){pwrup=powerups[UnityEngine.Random.Range(0,powerups.Count)];}if(GameRules.instance.powerupsStarting.Exists(x=>x.name==pwrup.name)){pwrup=null;}return pwrup;}
     public Powerup GetPowerupStr(string str){Powerup pwrup=null;
         pwrup=powerups.Find(x=>x.name==str);return pwrup;}
     public Powerup _curPwrup(){Powerup pwrup=null;if(powerups.Count>powerupCurID){pwrup=powerups[powerupCurID];}return pwrup;}
@@ -1315,13 +1318,15 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(_curPwrupName()==comp){b=true;}
         return b;
     }
+    bool _allPowerupsEmpty=true;
     void SetPowerupsCapacity(){
         if(powerups.Count!=powerupsCapacity){
-            Debug.Log("PowerupsCapacity: "+powerupsCapacity+" | powerups.Count: "+powerups.Count+" | Dif: "+(powerups.Count-powerupsCapacity).ToString());
+            //Debug.Log("PowerupsCapacity: "+powerupsCapacity+" | powerups.Count: "+powerups.Count+" | Dif: "+(powerups.Count-powerupsCapacity).ToString());
             for(var i=powerups.Count-1;i>powerupsCapacity-1;i--){powerups.RemoveAt(i);FindObjectOfType<PowerupInventory>().SetCapacity();}
             for(var i=powerups.Count;i<powerupsCapacity;i++){powerups.Add(new Powerup());FindObjectOfType<PowerupInventory>().SetCapacity();}
-            //for(var i=0;i<powerups.Capacity-powerupsCapacity;i++){powerups.Add(new Powerup());FindObjectOfType<PowerupInventory>().SetCapacity();}
         }
+        if(_allPowerupsEmpty){for(var i=0;i<powerups.Count;i++){if(powerups[i].name!=""){_allPowerupsEmpty=false;}}}
+        if(_allPowerupsEmpty){for(var i=0;i<GameRules.instance.powerupsStarting.Count;i++){powerups[i]=GameRules.instance.powerupsStarting[i];Debug.Log("All powerups empty, setting to starting");}}
     }
 
     public void HPAdd(float hp){Damage(hp,dmgType.heal);}

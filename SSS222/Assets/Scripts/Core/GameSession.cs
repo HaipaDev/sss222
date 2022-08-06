@@ -297,7 +297,8 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                             presenceStatus=_prefixStatus+"Adventure Zone "+GameCreator.instance.adventureZones[zoneSelected].name+nickInfo+_suffixStatus;
                         }else{
                             var b=FindObjectOfType<BossAI>();var be=b.GetComponent<Enemy>();
-                            presenceDetails=_prefixDetails+"Health: "+be.health+"/"+be.healthMax+_suffixDetails;
+                            //presenceDetails=_prefixDetails+"Boss Health: "+be.health+"/"+be.healthMax+_suffixDetails;
+                            presenceDetails=_prefixDetails+"Progress: "+System.Math.Round((be.health/be.healthMax)*100f,2)+"%"+_suffixDetails;
                             presenceStatus=_prefixStatus+"Fighting "+be.name+nickInfo+_suffixStatus;
                         }
                     }
@@ -429,6 +430,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             if(FindObjectOfType<PlayerHolobody>()!=null){
                 var phb=FindObjectOfType<PlayerHolobody>();
                 ss.holo_crystalsStored=phb.crystalsStored;
+                ss.holo_powerupStored=phb.powerupStored;
                 ss.holo_posX=phb.transform.position.x;
                 if(phb.GetTimeLeft()<=0){ss.holo_timeAt=Mathf.RoundToInt(currentPlaytime*GameRules.instance.holodeathTimeRatio);}
                 else{ss.holo_timeAt=Mathf.RoundToInt(phb.GetTimeLeft());}
@@ -450,11 +452,12 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     ss.xp=0;
                     ss._coreSpawnedPreAscend=false;
                     ss.health=0;
+                    ss.healthStart=p.healthStart;
                     ss.hpAbsorpAmnt=0;
                     ss.energy=GameRules.instance.energyPlayer;
                     ss.enAbsorpAmnt=0;
-                    //ss.powerups=GameRules.instance.powerupsStarting;
-                    ss.powerups=new List<Powerup>();
+                    ss.powerups=GameRules.instance.powerupsStarting;
+                    //ss.powerups=new List<Powerup>();
                     ss.powerupCurID=0;
                     ss.statuses=new List<StatusFx>();
                 }
@@ -507,7 +510,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             p.energy=ss.energy;
             if(ss.health>0){p.health=ss.health;xp=ss.xp;_coreSpawnedPreAscend=ss._coreSpawnedPreAscend;}
             else{xp=0;_coreSpawnedPreAscend=false;
-                if(ss.healthStart>0){p.health=ss.healthStart;}else{p.health=GameRules.instance.healthPlayer;ss.healthStart=p.health;p.energy=GameRules.instance.energyPlayer;ss.energy=p.energy;}
+                if(ss.healthStart>0){if(ss.healthStart<GameRules.instance.healthPlayer){ss.healthStart=GameRules.instance.healthPlayer;}p.healthStart=ss.healthStart;p.health=p.healthStart;}
+                else{Debug.Log("Health start is 0");//if(p.healthStart!=0&&p.healthStart!=GameRules.instance.healthPlayer){ss.healthStart=p.health;}
+                p.healthStart=GameRules.instance.healthPlayer;p.health=p.healthStart;ss.healthStart=p.healthStart;p.energy=GameRules.instance.energyPlayer;ss.energy=p.energy;}
             }//currentPlaytime=0;}
             p.hpAbsorpAmnt=ss.hpAbsorpAmnt;
             p.enAbsorpAmnt=ss.enAbsorpAmnt;
@@ -602,8 +607,8 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             if(force&&FindObjectOfType<PlayerHolobody>()!=null){Destroy(FindObjectOfType<PlayerHolobody>().gameObject);}
             var go=GameAssets.instance.Make("PlayerHolobody",pos);
             var phb=go.GetComponent<PlayerHolobody>();
-            if(!show)phb.crystalsStored=SaveSerial.instance.advD.holo_crystalsStored;
-            else phb.crystalsStored=Mathf.RoundToInt(coins*GameRules.instance.holodeathCrystalsRatio);
+            if(!show){phb.crystalsStored=SaveSerial.instance.advD.holo_crystalsStored;phb.powerupStored=SaveSerial.instance.advD.holo_powerupStored;}
+            else{phb.crystalsStored=Mathf.RoundToInt(coins*GameRules.instance.holodeathCrystalsRatio);phb.powerupStored=Player.instance.GetPowerupRandomNotStarting();}
             phb.Switch(show,collectible);
             return phb;
         }else{return null;}

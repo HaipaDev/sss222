@@ -16,15 +16,16 @@ MonoBehaviour:
   assetName: MLaser
   weaponType: 0
   weaponTypeProperties:
-    id: 0
+    rid: 0
   costType: 0
   costTypeProperties:
-    id: 1
+    rid: 1
   ovheat: 0.1
   duration: 10
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: weaponTypeBullet, ns: , asm: Assembly-CSharp}
       data:
         leftSide: 1
@@ -34,7 +35,7 @@ MonoBehaviour:
         rightAnchor: {x: 0.28, y: 0}
         rightAnchorE: {x: 0.36, y: 0}
         randomSide: 0
-        bulletAmount: 3
+        bulletAmount: 6
         speed: {x: 0, y: 8.5}
         speedE: {x: 0, y: 10}
         serialOffsetSpeed: {x: 0.46, y: 0}
@@ -48,7 +49,7 @@ MonoBehaviour:
         recoilTime: 0.15
         flare: 1
         flareDur: 0.3
-    00000001:
+    - rid: 1
       type: {class: costTypeEnergy, ns: , asm: Assembly-CSharp}
       data:
         cost: 0.33
