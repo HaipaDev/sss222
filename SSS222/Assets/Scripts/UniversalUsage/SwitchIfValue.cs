@@ -29,6 +29,11 @@ public class SwitchIfValue : MonoBehaviour{
                 }else{DisableIfNotPresent();}
             }
             else if(valueName=="isBossZone"){value=GameAssets.BoolToInt(FindObjectOfType<BossAI>()!=null);}
+            else if(valueName=="breakEncounter"){
+                if(BreakEncounter.instance!=null){
+                    value=GameAssets.BoolToInt(BreakEncounter.instance.calledBreak);
+                }else{DisableIfNotPresent();}
+            }
 
             void DisableIfNotPresent(){if(timerToCheckForPresence<=0){Switch(enable);}}
             if(!below){if(value>=valueSet){Switch(enable);}else{if(revertAfterChanged)Switch(!enable);}}

@@ -36,9 +36,9 @@ public class CargoShip : MonoBehaviour{
             AudioManager.instance.Play("Explosion");
             GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);
             Shake.instance.CamShake(2,1);
-            Destroy(gameObject,0.01f);
-            GameAssets.instance.MakeSpread("CoinB",transform.position,5);
+            GameAssets.instance.MakeSpread("CoinB",transform.position,GameRules.instance.cargoDeathCoinsB);
             Shop.instance.RepChange(repMinusKill,false);
+            Destroy(gameObject,0.01f);
         }
     }
     void OnDestroy(){

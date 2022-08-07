@@ -201,6 +201,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public int holo_timeAt=0;
 		public float holo_posX=0;
 		public float holo_zoneSelected=0;
+		public bool calledBreak;
 		
 		public float health=0;
 		public float healthStart=0;
@@ -219,7 +220,6 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public List<string> skillsSlots=new List<string>(2);
 		public List<Module> modulesList=new List<Module>();
 		public List<Skill> skillsList=new List<Skill>();
-
 		public int bodyUpgraded;
 		public int engineUpgraded;
 		public int blastersUpgraded;

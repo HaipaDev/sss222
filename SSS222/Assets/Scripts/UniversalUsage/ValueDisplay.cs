@@ -208,10 +208,15 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="blastersUpgrade_price") _txt=gr.blastersUpgrade_price.ToString();
 
             else if(value=="bodyUpgrade_changes"){
-                _txt=
-                "+ "+gr.bodyUpgrade_defense.ToString()+" DEFENSE"+"<br>"+
-                "+ "+gr.bodyUpgrade_powerupCapacity.ToString()+" POWERUP SLOTS"
-                ;
+                if(Player.instance.powerupsCapacity<10){
+                    _txt=
+                    "+ "+gr.bodyUpgrade_defense.ToString()+" DEFENSE"+"<br>"+
+                    "+ "+gr.bodyUpgrade_powerupCapacity.ToString()+" POWERUP SLOTS"
+                    ;
+                }else{
+                    _txt=
+                    "+ "+gr.bodyUpgrade_defense.ToString()+" DEFENSE"+"<br>";
+                }
             }
             else if(value=="engineUpgrade_changes"){
                 if(GameRules.instance._isAdventure()){

@@ -165,10 +165,12 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         }else{GlobalTimeIsPaused=false;}
 
         if(SceneManager.GetActiveScene().name=="Game"&&Player.instance!=null&&!GlobalTimeIsPaused){
-            currentPlaytime+=Time.unscaledDeltaTime;
-            if(gameTimeLeft!=-4){
-                /*if(Player.instance._hasStatus("inverter"))*/gameTimeLeft-=Time.deltaTime;
-                //else gameTimeLeft+=Time.deltaTime;
+            if(_noBreak()){
+                currentPlaytime+=Time.unscaledDeltaTime;
+                if(gameTimeLeft!=-4){
+                    /*if(Player.instance._hasStatus("inverter"))*/gameTimeLeft-=Time.deltaTime;
+                    //else gameTimeLeft+=Time.deltaTime;
+                }
             }
         }
         if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
@@ -199,17 +201,25 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 }
                 if(Player.instance!=null){
                     if(Player.instance.GetComponent<PlayerModules>()!=null){
-                        if(Player.instance.GetComponent<PlayerModules>()._isAutoAscend()||(!Player.instance.GetComponent<PlayerModules>()._isAutoAscend()&&Input.GetKeyDown(KeyCode.L))){
+                        if(Player.instance.GetComponent<PlayerModules>()._isAutoAscend()
+                        ||(!Player.instance.GetComponent<PlayerModules>()._isAutoAscend()&&Input.GetKeyDown(KeyCode.L))){
                             Player.instance.GetComponent<PlayerModules>().Ascend();
                             Ascend();
                         }
+                        if(Player.instance.GetComponent<PlayerModules>()._isLvlUpable()&&Player.instance.GetComponent<PlayerModules>()._isAutoLvl()&&Input.GetKeyDown(KeyCode.L)){Player.instance.GetComponent<PlayerModules>().LevelUp();}
                     }
                 }
+                
+                
             }
 
             if(stayingTimeXP>GameRules.instance.stayingTimeReq){AddXP(GameRules.instance.xp_staying);stayingTimeXP=0f;}
             if(movingTimeXP>GameRules.instance.flyingTimeReq){AddXP(GameRules.instance.xp_flying);movingTimeXP=0f;}
-        }
+
+            if(GameRules.instance.breakEncounter){
+                if(GetComponent<BreakEncounter>()==null)gameObject.AddComponent<BreakEncounter>();
+            }
+        }else{if(GetComponent<BreakEncounter>()!=null)Destroy(GetComponent<BreakEncounter>());}
 
         //Set speed to normal
         if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
@@ -363,6 +373,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         AudioManager.instance.Play("LvlUp");
         _coreSpawnedPreAscend=false;
         if(FindObjectOfType<CelestialPoints>()!=null)FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();
+        if(BreakEncounter.instance!=null)BreakEncounter.instance.Ascended();
     }
     public void AddEnemyCount(){
         enemiesCount++;
@@ -435,6 +446,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 if(phb.GetTimeLeft()<=0){ss.holo_timeAt=Mathf.RoundToInt(currentPlaytime*GameRules.instance.holodeathTimeRatio);}
                 else{ss.holo_timeAt=Mathf.RoundToInt(phb.GetTimeLeft());}
             }
+            if(BreakEncounter.instance!=null){ss.calledBreak=BreakEncounter.instance.calledBreak;}else{ss.calledBreak=false;}
             if(p!=null){
                 if(p.health>0){
                     ss.xp=xp;
@@ -507,6 +519,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 var phb=CreatePlayerHoloBody(new Vector2(ss.holo_posX,7.6f));
                 phb.SetTime(ss.holo_timeAt);
             }
+            if(ss.calledBreak&&_noBreak()){BreakEncounter.instance.CallBreak();BreakEncounter.instance.waitForCargoSpawn=false;}
             p.energy=ss.energy;
             if(ss.health>0){p.health=ss.health;xp=ss.xp;_coreSpawnedPreAscend=ss._coreSpawnedPreAscend;}
             else{xp=0;_coreSpawnedPreAscend=false;
@@ -697,6 +710,8 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public void AddSpawnReqsMono(){if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}}
     public void RemoveSpawnReqsMono(){if(GetComponent<spawnReqsMono>()!=null){Destroy(GetComponent<spawnReqsMono>());}}
     public void ResetAndRemoveSpawnReqsMono(){if(GetComponent<spawnReqsMono>()!=null){spawnReqsMono.RestartAllValues();spawnReqsMono.ResetSpawnReqsList();ReAddSpawnReqsMono();}}
+
+    public bool _noBreak(){return (BreakEncounter.instance!=null&&!BreakEncounter.instance.calledBreak)||BreakEncounter.instance==null;}
 }
 
 public enum dir{up,down,left,right}

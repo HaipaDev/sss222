@@ -45,6 +45,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool statUpgOn=false;
     //[HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool iteminvOn=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool barrierOn=false;
+    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool breakEncounter=false;
 
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool instaPause=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool musicSlowdownOnPause=true;
@@ -182,19 +183,20 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 #endregion
 #region//Shop
 [Title("Trading", titleAlignment: TitleAlignments.Centered)]
-    [FoldoutGroup("Trading",false,VisibleIf="@this._isAdventureSubZone==false")][OnValueChanged("VaildateShopSpawnReqs")]public spawnReqsType shopSpawnReqsType=spawnReqsType.score;
+    [FoldoutGroup("Trading",false,VisibleIf="@this._isAdventureSubZone==false&&this.shopOn")][OnValueChanged("VaildateShopSpawnReqs")]public spawnReqsType shopSpawnReqsType=spawnReqsType.score;
     [FoldoutGroup("Trading")][Button("VaildateShopSpawnReqs")][ContextMenu("VaildateShopSpawnReqs")]void VaildateShopSpawnReqs(){spawnReqsMono.Validate(ref shopSpawnReqs, ref shopSpawnReqsType);}
     [FoldoutGroup("Trading")][SerializeReference]public spawnReqs shopSpawnReqs=new spawnScore();
     [FoldoutGroup("Trading")]public List<LootTableEntryShop> shopList;
-    [FoldoutGroup("Trading")]public float cargoSpeed=2;
-    [FoldoutGroup("Trading")]public float cargoHealth=44;
-    [FoldoutGroup("Trading")][SerializeField] public int[] repMinusCargoHit=new int[2]{1,3};
-    [FoldoutGroup("Trading")][SerializeField] public int repMinusCargoKill=7;
+    [FoldoutGroup("Trading")][EnableIf("shopCargoOn")]public float cargoSpeed=2;
+    [FoldoutGroup("Trading")][EnableIf("shopCargoOn")]public float cargoHealth=44;
+    [FoldoutGroup("Trading")][EnableIf("shopCargoOn")] public int[] repMinusCargoHit=new int[2]{1,3};
+    [FoldoutGroup("Trading")][EnableIf("shopCargoOn")] public int repMinusCargoKill=7;
+    [FoldoutGroup("Trading")][EnableIf("shopCargoOn")] public int cargoDeathCoinsB=5;
     [FoldoutGroup("Trading")]public bool repEnabled=true;
     [FoldoutGroup("Trading")]public const int repLength=4;
     [FoldoutGroup("Trading")]public int[] reputationThresh=new int[repLength];
     [FoldoutGroup("Trading")]public bool shopTimeLimitEnabled=true;
-    [FoldoutGroup("Trading")]public float shopTimeLimit=10;
+    [FoldoutGroup("Trading")][EnableIf("shopTimeLimitEnabled")]public float shopTimeLimit=10;
     [FoldoutGroup("Trading")]public float shopOpenGameSpeed=0;
 #endregion
 #region//Leveling
@@ -237,6 +239,12 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [FoldoutGroup("Modules, Skills & Stats")]public float blastersUpgrade_critChance=0.2f;
 
     [FoldoutGroup("Modules, Skills & Stats")]public float upgradeMenuOpenGameSpeed=0;
+#endregion
+#region//Break Encounter
+    [FoldoutGroup("Break Encounter",false,VisibleIf="@this._isAdventureSubZone==false&&this.breakEncounter")]public bool breakEncounterAscendReq=true;
+    [FoldoutGroup("Break Encounter")][DisableIf("@this.breakEncounterAscendReq==false")]public bool breakEncounterCountWavesPostAscend=false;
+    [FoldoutGroup("Break Encounter")]public int breakEncounterWavesReq=5;
+    [FoldoutGroup("Break Encounter")]public bool breakEncounterQuitWhenPlayerUp=true;
 #endregion
 #endregion
 
@@ -412,9 +420,9 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public void MaxHPAdd(float amnt){
         Player.instance.healthMax+=amnt;
         if(!GameSession.instance._lvlEventsLoading){
-            if(GameRules.instance._isAdventure())Player.instance.healthStart+=(amnt/2f);
+            Player.instance.healthStart+=(amnt/2f);
             Player.instance.health+=amnt;
-        }
+        }else{if(Player.instance.healthStart==healthPlayer)Player.instance.healthStart+=(amnt/2f);}
     }
     public void UpgradeBody(){Player.instance.GetComponent<PlayerModules>().bodyUpgraded++;}
     public void UpgradeEngine(){Player.instance.GetComponent<PlayerModules>().engineUpgraded++;}

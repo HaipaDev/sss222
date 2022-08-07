@@ -35,13 +35,14 @@ public class Waves : MonoBehaviour{
         yield return null;
     }*/
 
-    [Button("Spawn RandomizeWave")][ContextMenu("RandomizeWave")]public void RandomizeWaveCall(){StartCoroutine(RandomizeWave());}
-    public IEnumerator RandomizeWave(){
+    [Button("Spawn RandomizeWave")][ContextMenu("RandomizeWave")]public void RandomizeWave(){StartCoroutine(RandomizeWaveI());}
+    public IEnumerator RandomizeWaveI(){
         if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
         currentWave=GetRandomWave();
         if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameRules.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameRules.instance.xp_wave);}
         GameSession.instance.RandomizeWaveScoreMax();
         spawnReqsMono.AddWaves();
+        if(BreakEncounter.instance!=null)BreakEncounter.instance.AddWaves();
         yield return null;
     }
     public WaveConfig GetRandomWave(){
@@ -67,28 +68,30 @@ public class Waves : MonoBehaviour{
     }
     void Update(){
         if(!GameSession.GlobalTimeIsPaused){
-            CheckSpawnReqs();
+            if(GameSession.instance._noBreak()){
+                CheckSpawnReqs();
 
-            if(currentWave==null&&lootTable.itemList.Count>0)currentWave=lootTable.itemList[startingWave].lootItem;
-            if(timeSpawns>0){timeSpawns-=Time.deltaTime;}
-            else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
-            else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){SpawnAllEnemiesInCurrentWave();timeSpawns=currentWave.timeSpawnWave;}
-            
+                if(currentWave==null&&lootTable.itemList.Count>0)currentWave=lootTable.itemList[startingWave].lootItem;
+                if(timeSpawns>0){timeSpawns-=Time.deltaTime;}
+                else if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
+                else if(timeSpawns<=0&&timeSpawns>-4&&currentWave!=null){SpawnAllEnemiesInCurrentWave();timeSpawns=currentWave.timeSpawnWave;}
+                
 
-            //Check if no Enemies for some time, force a wave spawn
-            if(lootTable.itemList.Count>0){
-                if(FindObjectsOfType<Tag_WaveEnemy>().Length==0){
-                    if(checkSpawnsTimer==-4)checkSpawnsTimer=checkSpawns;
-                    if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
-                    else if(checkSpawnsTimer<=0&&checkSpawnsTimer>-4){
-                        Debug.LogWarning("No WaveEnemies found, forcing a spawn!");
-                        if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
-                        currentWave=GetRandomWave();
-                        if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
-                        //StartCoroutine(SpawnWave());
-                        checkSpawnsTimer=checkSpawns;
-                    }
-                }else{checkSpawnsTimer=-4;}
+                //Check if no Enemies for some time, force a wave spawn
+                if(lootTable.itemList.Count>0){
+                    if(FindObjectsOfType<Tag_WaveEnemy>().Length==0){
+                        if(checkSpawnsTimer==-4)checkSpawnsTimer=checkSpawns;
+                        if(checkSpawnsTimer>0)checkSpawnsTimer-=Time.deltaTime;
+                        else if(checkSpawnsTimer<=0&&checkSpawnsTimer>-4){
+                            Debug.LogWarning("No WaveEnemies found, forcing a spawn!");
+                            if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
+                            currentWave=GetRandomWave();
+                            if(timeSpawns==-4){timeSpawns=currentWave.timeSpawnWave;}
+                            //StartCoroutine(SpawnWave());
+                            checkSpawnsTimer=checkSpawns;
+                        }
+                    }else{checkSpawnsTimer=-4;}
+                }
             }
         }
     }

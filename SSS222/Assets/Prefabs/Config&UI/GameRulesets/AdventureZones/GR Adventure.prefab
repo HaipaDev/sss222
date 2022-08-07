@@ -88,6 +88,7 @@ MonoBehaviour:
   modulesOn: 1
   statUpgOn: 1
   barrierOn: 0
+  breakEncounter: 1
   instaPause: 0
   musicSlowdownOnPause: 1
   musicSlowdownOnPaceChange: 1
@@ -1587,6 +1588,7 @@ MonoBehaviour:
   cargoHealth: 44
   repMinusCargoHit: 0100000003000000
   repMinusCargoKill: 7
+  cargoDeathCoinsB: 5
   repEnabled: 1
   reputationThresh: 01000000030000000500000008000000
   shopTimeLimitEnabled: 1
@@ -1710,6 +1712,10 @@ MonoBehaviour:
   blastersUpgrade_shootMulti: 0.05
   blastersUpgrade_critChance: 0.2
   upgradeMenuOpenGameSpeed: 0
+  breakEncounterAscendReq: 1
+  breakEncounterCountWavesPostAscend: 0
+  breakEncounterWavesReq: 5
+  breakEncounterQuitWhenPlayerUp: 1
   references:
     version: 2
     RefIds:

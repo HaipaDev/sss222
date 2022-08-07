@@ -20,7 +20,7 @@ public class PowerupsSpawner : MonoBehaviour{
         if(x!=null)spawnReqsMono.instance.CheckSpawns(x,xt,this,"SpawnPowerup");
     }
     void Update(){
-        if(!GameSession.GlobalTimeIsPaused)CheckSpawnReqs();
+        if(!GameSession.GlobalTimeIsPaused)if(GameSession.instance._noBreak())CheckSpawnReqs();
     }
     [Button("Spawn Powerup")][ContextMenu("Spawn Powerup")]public void SpawnPowerupCall(){StartCoroutine(SpawnPowerup());}
     IEnumerator SpawnPowerup(){

@@ -57,16 +57,21 @@ public class Shop : MonoBehaviour{
         if(currentSlotsList.Count>0)if(currentSlotsList.FindAll(x=>x.limitCount>=x.limit).Count>lootTable.currentQueue.slotList.Count/2){NewQueue();}
     }
     void CheckSpawnReqs(){
-        if(shopSpawnReqs!=GameRules.instance.shopSpawnReqs)shopSpawnReqs=GameRules.instance.shopSpawnReqs;
-        if(shopSpawnReqsType!=GameRules.instance.shopSpawnReqsType)shopSpawnReqsType=GameRules.instance.shopSpawnReqsType;
-        spawnReqs x=shopSpawnReqs;
-        spawnReqsType xt=shopSpawnReqsType;
-        if(GameSession.instance.ZoneNotBossNorTravel())spawnReqsMono.instance.CheckSpawns(x,xt,this,"CallOpenShop");
+        if(!GameRules.instance.breakEncounter){
+            if(shopSpawnReqs!=GameRules.instance.shopSpawnReqs)shopSpawnReqs=GameRules.instance.shopSpawnReqs;
+            if(shopSpawnReqsType!=GameRules.instance.shopSpawnReqsType)shopSpawnReqsType=GameRules.instance.shopSpawnReqsType;
+            spawnReqs x=shopSpawnReqs;
+            spawnReqsType xt=shopSpawnReqsType;
+            if(GameSession.instance.ZoneNotBossNorTravel())spawnReqsMono.instance.CheckSpawns(x,xt,this,"CallOpenShop");
+        }else{
+            shopSpawnReqs=null;
+            shopSpawnReqsType=spawnReqsType.time;
+        }
     }
     IEnumerator CallOpenShop(){
         //do{//Make it wait for your money to spawn lmao
         if(GameRules.instance.shopOn){//&&GameSession.instance.coins>0){
-            if(GameRules.instance.shopCargoOn){Shop.instance.SpawnCargo();}
+            if(GameRules.instance.shopCargoOn){Shop.instance.SpawnCargo(dir.left,true);}
             else{Shop.shopOpen=true;
             /*foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
                 enemy.givePts=false;
@@ -77,12 +82,11 @@ public class Shop : MonoBehaviour{
             GameSession.instance.RandomizeShopScoreMax();
         }/*}while(GameSession.instance.coins<=0);*/yield return null;
     }
-    public void SpawnCargo(){
-        var cargoDir=dir.up;
+    public void SpawnCargo(dir cargoDir, bool _randomLR=false){
         float xx=3.45f;
         float yy=7.4f;
         GameObject go;
-        if(UnityEngine.Random.value<0.5f){cargoDir=dir.right;}else{cargoDir=dir.left;}
+        if(UnityEngine.Random.value<0.5f&&_randomLR){cargoDir=dir.right;}else{if(_randomLR){cargoDir=dir.left;}}
         if(cargoDir==dir.up){yy=7.4f;}
         if(cargoDir==dir.down){yy=-7.4f;}
         if(cargoDir==dir.left){xx=-4.55f;}
