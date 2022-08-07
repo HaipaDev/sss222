@@ -1,80 +1,99 @@
-body{
-	background-image:url("img/sss222bg.png");
-	//background-repeat:repeat;
-	background-color: rgb(49,9,49);
-	//background-blend-mode: screen;
-	background-size:160% 120%;
-	cursor: url("img/cursor.png"), auto;
-	font-family: "deathstar";
-	letter-spacing:2px;
-	color: white;
-}div.bodyoverlay{background-color: rgb(0,0,0,0.2);}
-a{color:#ffb8ff;text-decoration:none;cursor:url("img/cursor.png"), auto;}
-a:active{color:#ff9cdd;}
+body {
+  background-image: url("img/sss222bg.png");
+  background-color: rgb(49, 9, 49);
+  background-size: 160% 120%;
+  cursor: url("img/cursor.png"), auto;
+  font-family: "deathstar";
+  letter-spacing: 2px;
+  color: white;
+}
+
+div.bodyoverlay {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+a {
+  color: #ffb8ff;
+  text-decoration: none;
+  cursor: url("img/cursor.png"), auto;
+}
+
+a:active {
+  color: #ffb8ff;
+}
+
 @font-face {
-    font-family: "moonhouse";
-    src: url("fonts/moonhouse/moonhouse-webfont.woff2") format('woff2'),
-         url("fonts/moonhouse/moonhouse-webfont.woff") format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "moonhouse";
+  src: url("fonts/moonhouse/moonhouse-webfont.woff2") format("woff2"), url("fonts/moonhouse/moonhouse-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 @font-face {
-    font-family: 'deathstar';
-    src: url('fonts/deathstar/death_star-webfont.woff2') format('woff2'),
-         url('fonts/deathstar/death_star-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "deathstar";
+  src: url("fonts/deathstar/death_star-webfont.woff2") format("woff2"), url("fonts/deathstar/death_star-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
-h1.title{font-family: "moonhouse";letter-spacing:2.5px;margin-bottom:30px;}
-h2.shortDesc{color:#c476f5;}
-
-div.logo{
-	width:100%;height:25%;
-	background-image:url('img/sss222Logo.png');
-	background-repeat:no-repeat;
-	background-position:center;
-	background-size:calc(348px*1.55) calc(234px*1.55);
-}
-img.logo{}
-div.desc{}
-
-.images img{
-	width:344;
-	height:615;
+h1.title {
+  font-family: "moonhouse";
+  letter-spacing: 2.5px;
+  margin-bottom: 30px;
 }
 
-div.icons{
-	margin-top:50px;
+h2.shortDesc {
+  color: #c476f5;
 }
-.icons td{
-	width:50px;height:50px;
+
+div.logo {
+  width: 100%;
+  height: 25%;
+  background-image: url("img/sss222Logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 539.4px 362.7px;
 }
-.iconsButton{
-	background-color:rgba(0,0,0,0);
-	background-size:100% 100%;
-	border:none;
+
+.images img {
+  width: 344;
+  height: 615;
 }
-div.release{
-	margin-top:4vmin;
-	height:10%;
+
+div.icons {
+  margin-top: 50px;
 }
-a.release{
-	width:500px;
-	background-color: rgba(0,0,0,0);
-	background:url("img/button.png") no-repeat;
-	background-position:-24px -12px;
-	background-size:112% 130%;
-	border:none;
-	font-family: "moonhouse";
-	color: white;
-	letter-spacing:3px;
-	line-height:24px;
-	display:inline-block;
+
+.icons td {
+  width: 50px;
+  height: 50px;
 }
-div.footer{
-	margin-top:4vmin;
-	height:2%;
-	//background-color: rgb(49,9,49);
-	//background-size:100% 100%;
-	color: white;
+
+.iconsButton {
+  background-color: rgba(0, 0, 0, 0);
+  background-size: 100% 100%;
+  border: none;
 }
+
+div.release {
+  margin-top: 4vmin;
+  height: 10%;
+}
+
+a.release {
+  width: 500px;
+  background-color: rgba(0, 0, 0, 0);
+  background: url("img/button.png") no-repeat;
+  background-position: -24px -12px;
+  background-size: 112% 130%;
+  border: none;
+  font-family: "moonhouse";
+  color: white;
+  letter-spacing: 3px;
+  line-height: 24px;
+  display: inline-block;
+}
+
+div.footer {
+  margin-top: 4vmin;
+  height: 2%;
+  color: white;
+}/*# sourceMappingURL=style.css.map */
