@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21fab347b30673d498850dec5e9b780c, type: 3}
   m_Name: MagneticPulse
   m_EditorClassIdentifier: 
-  name: Magnetic Pulse
+  name: MPulse
+  displayName: Magnetic Pulse
   desc: SHOOTS OUT A PULSE DEALING HIGH DMG TO ALL ENEMIES ON SCREEN
   descGradient:
     topLeft: {r: 0.12156863, g: 0.67058825, b: 0.8784314, a: 1}

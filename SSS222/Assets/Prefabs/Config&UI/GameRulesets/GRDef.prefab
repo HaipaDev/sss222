@@ -89,6 +89,7 @@ MonoBehaviour:
   modulesOn: 1
   statUpgOn: 1
   barrierOn: 0
+  breakEncounter: 0
   instaPause: 0
   musicSlowdownOnPause: 1
   musicSlowdownOnPaceChange: 1
@@ -724,6 +725,23 @@ MonoBehaviour:
     dmgBySize: 0
     dmgBySpeed: 0
     armorPenetr: 1
+    phase: 0
+    dmgPhase: 0.5
+    phaseFreqFirst: 0
+    phaseFreq: 0.33
+    phaseCountLimit: 3
+    dmgFx: 0
+    dmgFxValues: []
+    sound: EnemyHit
+    soundPhase: 
+    dispDmgCount: 0
+    colliEvents: []
+  - name: EnBurstBall
+    colliType: 1
+    dmg: 10
+    dmgBySize: 0
+    dmgBySpeed: 0
+    armorPenetr: 2
     phase: 0
     dmgPhase: 0.5
     phaseFreqFirst: 0
@@ -1540,6 +1558,7 @@ MonoBehaviour:
   cargoHealth: 44
   repMinusCargoHit: 0100000003000000
   repMinusCargoKill: 7
+  cargoDeathCoinsB: 5
   repEnabled: 1
   reputationThresh: 01000000030000000500000008000000
   shopTimeLimitEnabled: 1
@@ -1582,6 +1601,15 @@ MonoBehaviour:
     lvlExpire: 2
     unlockedLvl: 1
     equipped: 1
+  - item: {fileID: 11400000, guid: 0a67d7d394589fb40b679732c653e033, type: 2}
+    lvlVals:
+    - coreCost: 1
+      lvlReq: 1
+    - coreCost: 1
+      lvlReq: 3
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
   - item: {fileID: 11400000, guid: 3477e1bf2eb61d840b325eafbec617d3, type: 2}
     lvlVals:
     - coreCost: 4
@@ -1628,6 +1656,19 @@ MonoBehaviour:
     lvlExpire: 0
     unlockedLvl: 0
     equipped: 0
+  - item: {fileID: 11400000, guid: d8164949932b99b4ba2cbe65dccec931, type: 2}
+    costType: 0
+    costTypeProperties:
+      cost: 0
+    cooldown: 120
+    lvlVals:
+    - coreCost: 3
+      lvlReq: 3
+    - coreCost: 5
+      lvlReq: 2
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
   playerModulesCapacity: 4
   timeOverhaul: 10
   playerExhaustROF: 1
@@ -1645,6 +1686,11 @@ MonoBehaviour:
   blastersUpgrade_shootMulti: 0.05
   blastersUpgrade_critChance: 0.2
   upgradeMenuOpenGameSpeed: 0
+  breakEncounterAscendReq: 1
+  breakEncounterCountWavesPostAscend: 0
+  breakEncounterWavesReq: 5
+  breakEncounterQuitWhenPlayerUp: 1
+  breakEncounterPauseMusic: 0
   references:
     version: 2
     RefIds:

@@ -1125,13 +1125,12 @@ public class Player : MonoBehaviour{    public static Player instance;
             if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax&&!_hasStatus("infEnergy")&&!_hasStatus("electrc")){AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}}
         }
     }
-    public void Thorns(){
-        if(_hasStatus("thorns")){
-            var lrb=gameObject.AddComponent<LaunchRadialBullets>();
-            lrb.Setup(GameAssets.instance.Get("LSpike"),6);
-            lrb.Shoot();
-            Destroy(lrb,0.01f);
-        }
+    public void Thorns(){if(_hasStatus("thorns")){ShootRadialBullets("LSpike",6,6f);}}
+    public void ShootRadialBullets(string asset="LSpike",int amnt=6,float speed=5){
+        var lrb=gameObject.AddComponent<LaunchRadialBullets>();
+        lrb.Setup(GameAssets.instance.Get(asset),amnt,speed);
+        lrb.Shoot();
+        Destroy(lrb,0.01f);
     }
     public void Recoil(float strength, float time){if(recoilOn)StartCoroutine(RecoilI(strength,time));}
     IEnumerator RecoilI(float strength,float time){     if(!GameSession.GlobalTimeIsPaused){

@@ -131,7 +131,7 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
     [ShowIf("@this._isMOL()")][ReadOnly][SerializeField]float _molDistToPlayer;
     void MoonOfLunacyAI(){
         if(phase==0){
-            if(_molP1_attack1Timer>0){_molP1_attack1Timer-=Time.deltaTime;if(_molP1_attack1Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P1_Attack1",transform.position,3f);_preAttackVFXSpawned=true;}}
+            if(_molP1_attack1Timer>0){_molP1_attack1Timer-=Time.deltaTime;if(_molP1_attack1Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P1_Attack1",transform.position,3f);AudioManager.instance.Play("MoonOfLunacy-Rumble");_preAttackVFXSpawned=true;}}
             else if(_molP1_attack1Timer!=-4){//Attack 1
                 FindObjectOfType<Waves>().currentWave=GameAssets.instance.GetWaveConfig("Comet Barrage");
                 FindObjectOfType<Waves>().SpawnAllEnemiesInCurrentWave();
@@ -146,7 +146,7 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
                 _molP1_attack1CountFor2=Mathf.RoundToInt(Random.Range((float)_molP1_attack1CountFor2Range.x,(float)_molP1_attack1CountFor2Range.y));
                 _molP1_attack2Timer=_molP1_attack2Time;
             }
-            if(_molP1_attack2Timer>0){_molP1_attack2Timer-=Time.deltaTime;if(_molP1_attack2Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P1_Attack2",transform.position,3f);_preAttackVFXSpawned=true;}}
+            if(_molP1_attack2Timer>0){_molP1_attack2Timer-=Time.deltaTime;if(_molP1_attack2Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P1_Attack2",transform.position,3f);AudioManager.instance.Play("MoonOfLunacy-Growl");_preAttackVFXSpawned=true;}}
             else if(_molP1_attack2Timer!=-4){//Attack 2
                 GameAssets.instance.Make("LunarPulse",transform.position);
                 if(_molP1_attack1Time>_molP1_attack2SubTime1Limit)_molP1_attack1Time-=_molP1_attack2SubTime1;
@@ -174,7 +174,7 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
                 _molP2_attack1CountFor2=Mathf.RoundToInt(Random.Range((float)_molP2_attack1CountFor2Range.x,(float)_molP2_attack1CountFor2Range.y));
                 _molP2_attack2Timer=_molP2_attack2Time;
             }
-            if(_molP2_attack2Timer>0){_molP2_attack2Timer-=Time.deltaTime;if(_molP2_attack2Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P2_Attack2",transform.position,3f);_preAttackVFXSpawned=true;}}
+            if(_molP2_attack2Timer>0){_molP2_attack2Timer-=Time.deltaTime;if(_molP2_attack2Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P2_Attack2",transform.position,3f);AudioManager.instance.Play("MoonOfLunacy-Laugh");_preAttackVFXSpawned=true;}}
             else if(_molP2_attack2Timer!=-4){//Start Attack 2
                 if(GetComponent<Follow>()==null){var f=gameObject.AddComponent<Follow>();
                     f.target=Player.instance.gameObject;f.followAfterOOR=true;f.dirYYUp=true;//f.rotateTowards=true;

@@ -53,7 +53,7 @@ public class PlayerModules : MonoBehaviour{
         player=GetComponent<Player>();
         timerUI=GameObject.Find("SkillTimer_par");
         yield return new WaitForSeconds(0.2f);
-        if(shipLvlFractionsValues.Capacity>0&&shipLvl==0)lvlFractionsMax=shipLvlFractionsValues[0].fractions;
+        if(shipLvlFractionsValues.Count>0&&shipLvl==0)lvlFractionsMax=shipLvlFractionsValues[0].fractions;
         if(!GameSession.instance.CheckGamemodeSelected("Adventure")){autoLvl=true;}
     }
 
@@ -97,7 +97,7 @@ public class PlayerModules : MonoBehaviour{
     
     #region//Skills & Modules
     public void CheckSkillButton(int key=0){     if(!GameSession.GlobalTimeIsPaused){
-        for(var i=0;i<skillsList.Capacity-2;i++){
+        for(var i=0;i<skillsList.Count;i++){
             if(skillsList[i].cooldown>0)skillsList[i].cooldown-=Time.deltaTime;
         }
         if(!Player.instance._hasStatus("hacked")){
@@ -113,38 +113,39 @@ public class PlayerModules : MonoBehaviour{
         }
     }}
     public void DeathSkills(){
-        if(_isSkillLvl("Magnetic Pulse",2))UseSkill(GetSkillProperties("Magnetic Pulse"),true);//PostMortem MagneticPulse
+        if(_isSkillLvl("MPulse",2))UseSkill(GetSkillProperties("MPulse"),true);//PostMortem MagneticPulse
     }
     public void UseSkill(SkillPropertiesGR item,bool ignoreCosts=false){     if(item!=null){
         //var _item=GetSkillProperties(item.name);
-        if(item.item.name!="Overhaul"){
-            if(Player.instance.energy>0||ignoreCosts){
-                Player.instance.AddSubEnergy(item.costTypeProperties.cost,false);
-                if(item.item.name=="Magnetic Pulse"){
-                    GameObject mPulse=GameAssets.instance.Make("MPulse",transform.position);
+        if(Player.instance.energy>0||ignoreCosts){
+            Player.instance.AddSubEnergy(item.costTypeProperties.cost,false);
+            if(item.item.name=="MPulse"){
+                GameObject mPulse=GameAssets.instance.Make("MPulse",transform.position);
+                GetSkill(item.item.name).cooldown=item.cooldown;
+            }else if(item.item.name=="Teleport"){//Teleport
+                GameSession.instance.gameSpeed=0.025f;
+                GameSession.instance.speedChanged=true;
+                if(timerUI!=null)SetActiveAllChildren(timerUI.transform,true);
+                currentSkill="Teleport";
+                GetSkill(item.item.name).cooldown=item.cooldown;
+            }else if(item.item.name=="LShield"){bool _canMakeShield=false;
+                var fragments=4;var cost=fragments*2;
+                if(_isSkillLvl("LShield",2)){fragments=8;cost=fragments*2;}
+                if(FindObjectOfType<LunarShield>()!=null){
+                    var l=FindObjectOfType<LunarShield>();
+                    if(l._notDamagedShieldPiecesCount()!=0&&GameSession.instance.coins>=cost){_canMakeShield=true;}
+                    cost-=l._notDamagedShieldPiecesCount();
+                    if(_canMakeShield)Destroy(l.gameObject);
+                }else{_canMakeShield=true;}
+                if(_canMakeShield){
+                    var l=GameAssets.instance.Make("LunarShield",transform.position);l.transform.parent=transform;
+                    l.GetComponent<LunarShield>().fragmentsPresent=fragments;
                     GetSkill(item.item.name).cooldown=item.cooldown;
-                }if(item.item.name=="Teleport"){//Teleport
-                    GameSession.instance.gameSpeed=0.025f;
-                    GameSession.instance.speedChanged=true;
-                    if(timerUI!=null)SetActiveAllChildren(timerUI.transform,true);
-                    currentSkill="Teleport";
-                GetSkill(item.item.name).cooldown=item.cooldown;
+                    player.AddSubCoins(cost);
                 }
-            }else{AudioManager.instance.Play("Deny");}
-        }else if(item.item.name=="Overhaul"){//Overhaul
-            if(GameSession.instance.xp>0||ignoreCosts){
-                if(Player.instance.energy<1){Player.instance.AddSubEnergy(20);}
-                var ratio=(GameSession.instance.xp/GameSession.instance.xpMax);
-                GameCanvas.instance.XPPopUpHUD(-GameSession.instance.xp);
-                Player.instance.InfEnergy(ratio*33,0);
-                Player.instance.Power(16,Mathf.Clamp(3f*ratio,1.1f,2.2f));
-                timerOverhaul=timeOverhaul;
-                GameSession.instance.xp=0;
-                AudioManager.instance.Play("Overhaul");
-                AudioManager.instance.GetSource("Overhaul").loop=true;
-                GetSkill(item.item.name).cooldown=item.cooldown;
-            }else{AudioManager.instance.Play("Deny");}
-        }
+
+            }
+        }else{AudioManager.instance.Play("Deny");}
     }}
 
     void SkillsUpdate(){
@@ -178,14 +179,14 @@ public class PlayerModules : MonoBehaviour{
     }}
 
     void ModulesUpdate(){
-        SwitchExhaust(_isModuleEquipped("Ring of Fire"));
-        if(_isModuleEquipped("Crystal Mending")&&Player.instance.hpAbsorpAmnt<=0){
+        SwitchExhaust(_isModuleEquipped("ROF"));
+        if(_isModuleEquipped("CrMending")&&Player.instance.hpAbsorpAmnt<=0){
             if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){Player.instance.HPAbsorp(Player.instance.crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}
         }
-        if(_isModuleEquipped("Energy Dissolution")&&Player.instance.enAbsorpAmnt<=0){
+        if(_isModuleEquipped("EnDiss")&&Player.instance.enAbsorpAmnt<=0){
             if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){Player.instance.EnAbsorp(Player.instance.energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}
         }
-        if(_isModuleEquipped("Dark Surge")){
+        if(_isModuleEquipped("DkSurge")){
             if(GameSession.instance.xp>=GameSession.instance.xpMax){
                 var dif=(GameSession.instance.xpMax*GameRules.instance.xpMaxOvefillMult)-GameSession.instance.xp;
                 if(dif<=25&&!Player.instance._hasStatus("speed")){Player.instance.Speed(5,5,1.2f);if(Player.instance._hasStatus("slow")){Player.instance.RemoveStatus("slow");}}
@@ -214,6 +215,7 @@ public class PlayerModules : MonoBehaviour{
     }return false;}
     public bool _isModuleEquipped(string name){return moduleSlots.Contains(name);}
     public bool _isModuleLvl(string name,int lvl){return modulesList.Find(x=>x.name==name).lvl>=lvl;}
+    public bool _isModuleBelowLvl(string name,int lvl){return modulesList.Find(x=>x.name==name).lvl<lvl;}
     public bool _isModuleMaxed(string name){return GetModuleNextLvlVals(name)==null;}
     public Module GetModule(string name){Module _target=null;_target=modulesList.Find(x=>x.name==name);if(_target!=null){return _target;}else{return null;}}
     public Module GetModuleFromID(int id){Module _target=null;_target=modulesList.Find(x=>x.name==moduleSlots[id]);if(_target!=null){return _target;}else{return null;}}
@@ -222,7 +224,7 @@ public class PlayerModules : MonoBehaviour{
         var mp=GetModuleProperties(name);
         if(mp!=null){
             var m=GetModule(name);
-            if(m!=null){if(m.lvl<mp.lvlVals.Capacity){return mp.lvlVals[m.lvl];}}
+            if(m!=null){if(m.lvl<mp.lvlVals.Count){return mp.lvlVals[m.lvl];}}
         }return null;
     }
     public void SetModule(int id, string item){moduleSlots[id]=item;}
@@ -242,6 +244,7 @@ public class PlayerModules : MonoBehaviour{
     }return false;}
     public bool _isSkillEquipped(string name){return skillsSlots.Contains(name);}
     public bool _isSkillLvl(string name,int lvl){return skillsList.Find(x=>x.name==name).lvl>=lvl;}
+    public bool _isSkillBelowLvl(string name,int lvl){return skillsList.Find(x=>x.name==name).lvl<lvl;}
     public bool _isSkillMaxed(string name){return GetSkillNextLvlVals(name)==null;}
     public Skill GetSkill(string name){Skill _target=null;_target=skillsList.Find(x=>x.name==name);if(_target!=null){return _target;}else{return null;}}
     public Skill GetSkillFromID(int id){Skill _target=null;_target=skillsList.Find(x=>x.name==skillsSlots[id]);if(_target!=null){return _target;}else{return null;}}
@@ -258,7 +261,7 @@ public class PlayerModules : MonoBehaviour{
     public void ClearSkill(string name){ReplaceSkill(name,"");}
     public bool _isAutoAscend(){return autoAscend||GameRules.instance.forceAutoAscend;}
     public bool _isAutoLvl(){return autoLvl;}//||GameRules.instance.forceAutoAscend;}
-    public void ResetSkillCooldowns(){for(var i=0;i<skillsSlots.Capacity;i++){skillsList[i].cooldown=0;}}
+    public void ResetSkillCooldowns(){for(var i=0;i<skillsSlots.Count;i++){skillsList[i].cooldown=0;}}
 
     void CalculateStats(){
         player.defenseBase=player.defenseInit+(bodyUpgraded*GameRules.instance.bodyUpgrade_defense);

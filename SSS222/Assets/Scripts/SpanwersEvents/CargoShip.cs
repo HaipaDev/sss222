@@ -117,4 +117,5 @@ public class CargoShip : MonoBehaviour{
         GetComponent<Rigidbody2D>().velocity=new Vector2(hspeed,vspeed);
         transform.eulerAngles=new Vector3(transform.rotation.x,transform.rotation.y,zRot);
     }
+    public void StopCargo(){GetComponent<Rigidbody2D>().velocity=Vector3.zero;GetComponent<Tag_PauseVelocity>().velPaused=Vector2.zero;}
 }

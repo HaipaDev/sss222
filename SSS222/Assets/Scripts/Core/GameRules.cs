@@ -245,6 +245,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     [FoldoutGroup("Break Encounter")][DisableIf("@this.breakEncounterAscendReq==false")]public bool breakEncounterCountWavesPostAscend=false;
     [FoldoutGroup("Break Encounter")]public int breakEncounterWavesReq=5;
     [FoldoutGroup("Break Encounter")]public bool breakEncounterQuitWhenPlayerUp=true;
+    [FoldoutGroup("Break Encounter")]public bool breakEncounterPauseMusic=false;
 #endregion
 #endregion
 

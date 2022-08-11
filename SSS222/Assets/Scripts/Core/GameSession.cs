@@ -177,7 +177,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         
         var _maxXpOverflow=false;
         if(GameRules.instance!=null&&Player.instance!=null)if(Player.instance.GetComponent<PlayerModules>()!=null){
-            if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("Dark Surge")){_maxXpOverflow=true;}
+            if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("DkSurge")){_maxXpOverflow=true;}
             else _maxXpOverflow=false;
         }
         if(_maxXpOverflow){xp=Mathf.Clamp(xp,0,xpMax*GameRules.instance.xpMaxOvefillMult);}

@@ -50,7 +50,18 @@ public class PlayerCollider : MonoBehaviour{
             #endregion
             #region//Powerups
             else if(other.gameObject.CompareTag("Collectibles")){
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){player.AddSubEnergy(gr.energyBall_energyGain,true);}
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)){
+                    player.AddSubEnergy(gr.energyBall_energyGain,true);
+                    if(GetComponent<PlayerModules>()!=null){
+                        if(GetComponent<PlayerModules>()._isModuleEquipped("EnBurst")){
+                            if(!GetComponent<PlayerModules>()._isModuleLvl("EnBurst",2)){
+                                if(GameAssets.CheckChance(20f)){player.ShootRadialBullets("EnBurstBall",4,7f);}//Lvl 1
+                            }else{
+                                if(GameAssets.CheckChance(35f)){player.ShootRadialBullets("EnBurstBall",5,8f);}//Lvl 2+
+                            }
+                        }
+                    }
+                }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Battery").name)){player.AddSubEnergy(gr.battery_energyGain,true);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){player.AddSubCoins(gr.crystalGain,true);}
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("CoinB").name)){player.AddSubCoins(gr.crystalBigGain,true);}
@@ -257,7 +268,7 @@ public class PlayerCollider : MonoBehaviour{
             if(colliTypes.Contains(dmgVal.colliType)){
                 if(dmgVal.dmgFx){
                     foreach(DmgFxValues fx in dmgVal.dmgFxValues){
-                        if((!phase||(phase&&fx.onPhase))&&(fx.chance>=Random.Range(0f,100f))){
+                        if((!phase||(phase&&fx.onPhase))&&(GameAssets.CheckChance(fx.chance))){
                             var _timerCap=fx.length*2;
                             if(fx.dmgFxType==dmgFxType.fire){player.OnFire(fx.length,_timerCap,fx.power);}
                             if(fx.dmgFxType==dmgFxType.decay){player.Decay(fx.length,_timerCap,fx.power);}

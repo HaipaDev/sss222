@@ -391,6 +391,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	public static float InvertNormalized(float val){return 1-val;}
 	public static float InvertNormalizedAbs(float val){return Mathf.Abs(InvertNormalized(val));}
 	public static float InvertNormalizedMin(float val,float min){return InvertNormalized(val)*min;}
+	public static float RandomFloat(float min,float max){return (float)System.Math.Round(UnityEngine.Random.Range(min, max), 2);}
+	public static bool CheckChance(float chance){return chance>=RandomFloat(0f,100f);}
 
 	
 

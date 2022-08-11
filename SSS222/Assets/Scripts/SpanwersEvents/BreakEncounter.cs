@@ -13,7 +13,7 @@ public class BreakEncounter : MonoBehaviour{    public static BreakEncounter ins
 
         if(calledBreak){
             if(Player.instance!=null){if(Player.instance.transform.position.y>5f&&GameRules.instance.breakEncounterQuitWhenPlayerUp&&!waitForCargoSpawn){QuitBreak();}}
-            if(FindObjectOfType<CargoShip>()!=null){if(FindObjectOfType<CargoShip>().transform.position.y<1f){FindObjectOfType<CargoShip>().GetComponent<Rigidbody2D>().velocity=Vector2.zero;}}
+            if(FindObjectOfType<CargoShip>()!=null){if(FindObjectOfType<CargoShip>().transform.position.y<1f){FindObjectOfType<CargoShip>().StopCargo();}}
             if(FindObjectsOfType<Enemy>().Length<=0&&waitForCargoSpawn){Shop.instance.SpawnCargo(dir.up);waitForCargoSpawn=false;}
         }
     }
@@ -22,7 +22,8 @@ public class BreakEncounter : MonoBehaviour{    public static BreakEncounter ins
         calledBreak=true;
         waitForCargoSpawn=true;
         FindObjectOfType<Waves>().timeSpawns=-4;
-        GameSession.instance.SaveAdventure();
+        if(GameRules.instance.breakEncounterPauseMusic){Jukebox.instance.Pause();}
+        if(GameSession.instance.CheckGamemodeSelected("Adventure"))GameSession.instance.SaveAdventure();
     }
     public void QuitBreak(){
         Debug.Log("Quitting Break");
@@ -31,7 +32,8 @@ public class BreakEncounter : MonoBehaviour{    public static BreakEncounter ins
         if(FindObjectOfType<CargoShip>()!=null)FindObjectOfType<CargoShip>().SetCargoSpawnDir(dir.up);
         FindObjectOfType<Waves>().RandomizeWave();
         FindObjectOfType<Waves>().timeSpawns=FindObjectOfType<Waves>().currentWave.timeSpawnWave;
-        GameSession.instance.SaveAdventure();
+        if(GameRules.instance.breakEncounterPauseMusic){Jukebox.instance.UnPause();}
+        if(GameSession.instance.CheckGamemodeSelected("Adventure"))GameSession.instance.SaveAdventure();
     }
     public void Ascended(){ascended=true;}
     public void AddWaves(){

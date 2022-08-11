@@ -38,10 +38,12 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     }
     public void SetMusic(AudioClip clip,bool force=false){if(currentMusic!=clip||force)currentMusic=clip;GetComponent<AudioSource>().loop=true;}
     public void SetMusicToCstmzMusic(bool force=false){SetMusic(GameAssets.instance.GetMusic(SaveSerial.instance.playerData.musicName).track,force);}
+    public void Pause(){GetComponent<AudioSource>().Pause();}
+    public void UnPause(){GetComponent<AudioSource>().UnPause();}
     public void PauseFor(float delay){StartCoroutine(PauseForI(delay));}
     IEnumerator PauseForI(float delay){
-        GetComponent<AudioSource>().Pause();
+        Pause();
         yield return new WaitForSeconds(delay);
-        GetComponent<AudioSource>().UnPause();
+        UnPause();
     }
 }

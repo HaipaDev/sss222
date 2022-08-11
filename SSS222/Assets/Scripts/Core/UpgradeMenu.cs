@@ -218,7 +218,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         foreach(ModulePropertiesGR m in GameRules.instance.modulesPlayer){
             var go=Instantiate(moduleSkillElementPrefab,modulesContainer);
             go.name=m.item.name;
-            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=m.item.name;
+            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=m.item.displayName;
             go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=m.item.desc;
             go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().colorGradient=new VertexGradient(m.item.descGradient.topLeft,m.item.descGradient.topRight,m.item.descGradient.bottomLeft,m.item.descGradient.bottomRight);
             go.transform.GetChild(2).GetComponent<Image>().sprite=moduleSlotPrefab.GetComponent<Image>().sprite;
@@ -259,7 +259,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         foreach(SkillPropertiesGR s in GameRules.instance.skillsPlayer){
             var go=Instantiate(moduleSkillElementPrefab,skillsContainer);
             go.name=s.item.name;
-            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=s.item.name;
+            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=s.item.displayName;
             go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=s.item.desc;
             go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().colorGradient=new VertexGradient(s.item.descGradient.topLeft,s.item.descGradient.topRight,s.item.descGradient.bottomLeft,s.item.descGradient.bottomRight);
             go.transform.GetChild(2).GetComponent<Image>().sprite=skillSlotPrefab.GetComponent<Image>().sprite;

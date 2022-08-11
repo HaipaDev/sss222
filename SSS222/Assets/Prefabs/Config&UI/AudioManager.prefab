@@ -651,6 +651,33 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: MoonOfLunacy-Rumble
+    clip: {fileID: 8300000, guid: a9ae8aa6f5b8bb84ebb74b03a20f94e9, type: 3}
+    volume: 1
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: MoonOfLunacy-Growl
+    clip: {fileID: 8300000, guid: c7396b0420916a54ab1df90f96d70c86, type: 3}
+    volume: 1
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: MoonOfLunacy-Laugh
+    clip: {fileID: 8300000, guid: 5a63c2c7bde6d2943a0a485b5f76d8c8, type: 3}
+    volume: 1
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
   - name: Spin
     clip: {fileID: 8300000, guid: 7901bc790a198b848ba6953e168c5424, type: 3}
     volume: 0.8
