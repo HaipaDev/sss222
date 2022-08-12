@@ -1671,6 +1671,13 @@ MonoBehaviour:
     lvlExpire: 3
     unlockedLvl: 1
     equipped: 1
+  - item: {fileID: 11400000, guid: 02085997c75dfc9428d309f279347a05, type: 2}
+    lvlVals:
+    - coreCost: 1
+      lvlReq: 2
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
   - item: {fileID: 11400000, guid: 3477e1bf2eb61d840b325eafbec617d3, type: 2}
     lvlVals:
     - coreCost: 6
@@ -1694,10 +1701,17 @@ MonoBehaviour:
     equipped: 0
   - item: {fileID: 11400000, guid: 0a67d7d394589fb40b679732c653e033, type: 2}
     lvlVals:
-    - coreCost: 1
+    - coreCost: 2
       lvlReq: 1
     - coreCost: 1
       lvlReq: 3
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
+  - item: {fileID: 11400000, guid: c424de3356ce36b40a6696cf2dcbb87b, type: 2}
+    lvlVals:
+    - coreCost: 4
+      lvlReq: 6
     lvlExpire: 0
     unlockedLvl: 0
     equipped: 0

@@ -340,6 +340,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: modulesPlayer.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: statusesStart.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -536,6 +541,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: modulesPlayer.Array.data[6].item
+      value: 
+      objectReference: {fileID: 11400000, guid: daa37055ab85a8f45aaa5dda14c70307,
+        type: 2}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: statusesStart.Array.data[0].name
       value: fuel
       objectReference: {fileID: 0}
@@ -562,7 +573,7 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: statusesStart.Array.data[0].timer
-      value: -5
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -583,6 +594,11 @@ PrefabInstance:
         type: 3}
       propertyPath: dmgValues.Array.data[3].armorPenetr
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: powerupsStarting.Array.data[0].ammo
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -741,6 +757,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: modulesPlayer.Array.data[6].lvlVals.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: shopList.Array.data[7].dropChance.Array.data[0]
       value: 7
       objectReference: {fileID: 0}
@@ -891,6 +912,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: modulesPlayer.Array.data[6].lvlVals.Array.data[0].lvlReq
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: managedReferences[7402535244629278720].scoreMaxSetRange.x
       value: 12
       objectReference: {fileID: 0}
@@ -898,6 +924,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[7402535244629278720].scoreMaxSetRange.y
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: modulesPlayer.Array.data[6].lvlVals.Array.data[0].coreCost
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

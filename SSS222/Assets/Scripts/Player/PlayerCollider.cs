@@ -31,10 +31,13 @@ public class PlayerCollider : MonoBehaviour{
                 }
                 if(dmg>0){dmg=CalculateDmg(dmg,armorPenetr);}
                 else if(dmg<0){player.Damage(dmg,dmgType.heal);}
+
+                if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("CodeBreaker")&&other.gameObject.name.Contains("Zone_"))){dmg=0;}
+                
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){
                     Enemy en=other.GetComponent<Enemy>();
                     if(player.dashing==false){
-                        if(dmg!=0&&!player._hasStatus("gclover")){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");ThornsHit();}
+                        if(dmg!=0&&!player._hasStatus("gclover")){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");ThornsHit();}//Damage if not Invincible & not dashing
                         else if(dmg!=0&&player._hasStatus("gclover")){AudioManager.instance.Play("GCloverHit");}
                         GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,transform.position.y+0.5f),0.3f);
                         if(dmgVal!=null){if(!dmgVal.phase)if(en!=null)en.Kill(false);}
@@ -42,8 +45,8 @@ public class PlayerCollider : MonoBehaviour{
                     else if(player._hasStatus("shadowdash")&&player.dashing==true){
                         if(en!=null){if(en.killOnDash){en.Kill(explode:false);}else{float dmgS=UniCollider.GetDmgValAbs("Shadowdash").dmg;en.health-=dmgS;UniCollider.DMG_VFX(0,other,other.transform,dmgS);}}
                    }
-                }else{
-                    if(dmg!=0&&!player._hasStatus("gclover")){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}
+                }else{//if HLaser
+                    if(dmg!=0&&!player._hasStatus("gclover")){player.Damage(dmg,dmgType.normal);AudioManager.instance.Play("ShipHit");}//Damage if not Invincible
                     else if(dmg!=0&&player._hasStatus("gclover")){AudioManager.instance.Play("GCloverHit");}
                 }
             }
@@ -238,11 +241,14 @@ public class PlayerCollider : MonoBehaviour{
                     armorPenetr=UniCollider.GetArmorPenetr(dmgVal.armorPenetr,player.defense);
                     PlayerEffects(other.gameObject.name,true);
                 }
-                
-                if(dmg>0){dmg=CalculateDmg(dmg,armorPenetr,true);player.Damage(dmg,dmgType.silent);}
-                else if(dmg<0){player.Damage(dmg,dmgType.heal);}//?
-                UniCollider.DMG_VFX(3,other,transform,dmg);
 
+                if(dmg>0){dmg=CalculateDmg(dmg,armorPenetr,true);}
+                if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("CodeBreaker")&&other.gameObject.name.Contains("Zone_"))){dmg=0;}
+
+                if(dmg>0){player.Damage(dmg,dmgType.silent);}
+                else if(dmg<0){player.Damage(dmg,dmgType.healSilent);}
+                
+                UniCollider.DMG_VFX(3,other,transform,dmg);
                 string hitName="";
                 if((dmg!=0||other.gameObject.name.Contains("Zone_"))&&!player._hasStatus("gclover")){hitName=other.gameObject.name;
                     if(hitName.Contains("(Clone)"))hitName=hitName.Replace("(Clone)","");lastHitName=hitName;lastHitDmg=dmg;lastHitPhasing=true;}

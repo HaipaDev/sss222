@@ -78,6 +78,7 @@ public class Player : MonoBehaviour{    public static Player instance;
 #region//Statuses
 [Header("Statuses")]
     [SerializeField] public List<StatusFx> statuses=new List<StatusFx>();
+    [DisableInEditorMode] public List<StatusFx> _statusesPersistent=new List<StatusFx>();
     public float dashTime;
     public float infPrevEnergy;
     public List<float> speedPrev=new List<float>(1);
@@ -233,7 +234,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         recoilOn=i.recoilOnPlayer;
         critChanceInit=i.critChancePlayer;
         ///State Defaults
-        foreach(StatusFx st in i.statusesStart){statuses.Add(st);}
+        foreach(StatusFx st in i.statusesStart){statuses.Add(st);if(st.timer==-6)_statusesPersistent.Add(st);}
         flipTime=i.flipTime;
         gcloverTime=i.gcloverTime;
         shadowTime=i.shadowTime;
@@ -932,7 +933,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                     if(!unscaledTime){_step=Time.deltaTime*_mult;}else{_step=Time.unscaledDeltaTime*_mult;}
                     GetStatus(name).timer-=_step;
                 }
-                else{if(GetStatus(name).timer!=-5){
+                else{if(GetStatus(name).timer!=-5&&GetStatus(name).timer!=-6){
                     RemoveStatus(name);
                     if(playSound=="-"){AudioManager.instance.Play("PowerupOff");}else if(playSound!="-"&&playSound!=""){AudioManager.instance.Play(playSound);}
                     if(revertToPrevSpeed)RevertToSpeedPrev();
@@ -979,7 +980,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                 //else{if(InverterFx.instance.on){InverterFx.instance.on=false;}if(InverterFx.instance.revertMusic==false){InverterFx.instance.revertMusic=true;}
                 //    if(MusicPlayer.instance!=null&&MusicPlayer.instance.GetComponent<AudioSource>().pitch==-1){MusicPlayer.instance.GetComponent<AudioSource>().pitch=1;}}
                 if(GetStatus("inverter").timer<inverterTimeMax&&GetStatus("inverter").timer>-4){GetStatus("inverter").timer+=Time.deltaTime;}
-                else if(GetStatus("inverter").timer>=inverterTimeMax&&GetStatus("inverter").timer!=-5){
+                else if(GetStatus("inverter").timer>=inverterTimeMax&&GetStatus("inverter").timer!=-5&&GetStatus("inverter").timer!=-6){
                     GetStatus("inverter").timer=inverterTimeMax+4;RemoveStatus("inverter");AudioManager.instance.Play("PowerupOff");
                     if(InverterFx.instance!=null){InverterFx.instance.on=false;InverterFx.instance.reverted=false;}
                 }
@@ -1219,7 +1220,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         var _status=GetStatus(status);
         if(!_hasStatus(status)){statuses.Add(new StatusFx{name=status,timer=time,timerCap=timerCap,strength=strength});}
         else{
-            if(_status.timer!=-5){
+            if(_status.timer!=-5&&_status.timer!=-6){
                 if(timerCap!=_status.timerCap){_status.timerCap=timerCap;}
                 if(GameRules.instance.addToStatusTimer){if(_status.timer<(_status.timerCap-time)||_status.timerCap<=0)_status.timer+=time;}
                 if(_status.strength<strength){ResetStatus(status,time,strength);}//_status.strength=strength;}
@@ -1397,11 +1398,11 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
     public void HPAbsorp(float value, bool add=true,bool ignoreInvert=true){
         if(!_hasStatus("inverter")||ignoreInvert){
-            if(add){hpAbsorpAmnt+=value;HpAbsorpPopUpHUD(value);}
+            if(add){var _val=value;if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("AbsorpConc"))){Damage(value*0.5f,dmgType.healSilent);}else{_val*=0.5f;}hpAbsorpAmnt+=_val;HpAbsorpPopUpHUD(_val);}
             else{hpAbsorpAmnt-=value;HpAbsorpPopUpHUD(-value);}
         }else{
             if(add){hpAbsorpAmnt-=value;HpAbsorpPopUpHUD(-value);}
-            else{hpAbsorpAmnt+=value;HpAbsorpPopUpHUD(value);}
+            else{var _val=value;if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("AbsorpConc"))){Damage(value*0.5f,dmgType.healSilent);}else{_val*=0.5f;}hpAbsorpAmnt+=_val;HpAbsorpPopUpHUD(_val);}
         }
     }
     public void EnAbsorp(float value, bool add=true,bool ignoreInvert=true){

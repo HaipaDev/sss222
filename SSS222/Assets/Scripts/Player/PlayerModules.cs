@@ -180,7 +180,7 @@ public class PlayerModules : MonoBehaviour{
 
     void ModulesUpdate(){
         SwitchExhaust(_isModuleEquipped("ROF"));
-        if(_isModuleEquipped("CrMending")&&Player.instance.hpAbsorpAmnt<=0){
+        if(_isModuleEquipped("CrMend")&&Player.instance.hpAbsorpAmnt<=0){
             if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){Player.instance.HPAbsorp(Player.instance.crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}
         }
         if(_isModuleEquipped("EnDiss")&&Player.instance.enAbsorpAmnt<=0){
@@ -194,6 +194,12 @@ public class PlayerModules : MonoBehaviour{
                 if(dif==0&&!Player.instance._hasStatus("power")){Player.instance.Power(5,5,1.15f);if(Player.instance._hasStatus("weakns")){Player.instance.RemoveStatus("weakns");}}
             }
         }
+        if(_isModuleEquipped("CodeBreaker")){
+            if(player._hasStatus("hacked")){player.RemoveStatus("hacked");}
+        }
+        if(_isModuleEquipped("FOGas")){
+            if(player._hasStatus("fuel")){player.RemoveStatus("fuel");}
+        }else{if(player._statusesPersistent.Exists(x=>x.name=="fuel")){player.SetStatus("fuel",-5);}}
     }
     void CheckExpired(){
         foreach(ModulePropertiesGR m in GameRules.instance.modulesPlayer){if(shipLvl>=m.lvlExpire&&m.lvlExpire!=0)if(_isModuleEquipped(m.item.name))ClearModule(m.item.name);}
