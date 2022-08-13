@@ -1715,6 +1715,20 @@ MonoBehaviour:
     lvlExpire: 0
     unlockedLvl: 0
     equipped: 0
+  - item: {fileID: 11400000, guid: 6d1c2b2ab3a2eaa4c9c9ae7321402f30, type: 2}
+    lvlVals:
+    - coreCost: 7
+      lvlReq: 7
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
+  - item: {fileID: 11400000, guid: c72bdc69ea147c340a7415b924a1f907, type: 2}
+    lvlVals:
+    - coreCost: 4
+      lvlReq: 6
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
   skillsPlayer:
   - item: {fileID: 11400000, guid: fbc604d84b0ed004387f7c03607722dc, type: 2}
     costType: 0

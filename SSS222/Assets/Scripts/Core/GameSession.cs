@@ -175,11 +175,17 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         }
         if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
         
-        var _maxXpOverflow=false;
+        bool _maxXpOverflow=false;bool _maxXpLowerCap=false;
         if(GameRules.instance!=null&&Player.instance!=null)if(Player.instance.GetComponent<PlayerModules>()!=null){
+            if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("STraveler"))_playerTravelCutRatio=0.65f;
+            else _playerTravelCutRatio=1f;
             if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("DkSurge")){_maxXpOverflow=true;}
             else _maxXpOverflow=false;
+            if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("TakeMeHigher")){_maxXpLowerCap=true;}
+            else _maxXpLowerCap=false;
         }
+        if(_maxXpLowerCap){xpMax=GameRules.instance.xpMax*0.77f;}
+        else{xpMax=GameRules.instance.xpMax;}
         if(_maxXpOverflow){xp=Mathf.Clamp(xp,0,xpMax*GameRules.instance.xpMaxOvefillMult);}
         else{xp=Mathf.Clamp(xp,0,xpMax);}
         cores=Mathf.Clamp(cores,0,9999);
@@ -349,8 +355,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             //if(zoneSelected==-1){zoneSelected=0;}
         }
     }
+    float _playerTravelCutRatio=1f;
     public float CalcZoneTravelTime(){
-        return (Vector2.Distance(GameCreator.instance.adventureZones[zoneSelected].pos,GameCreator.instance.adventureZones[zoneToTravelTo].pos)*GameCreator.instance.adventureTravelZonePrefab.travelTimeToDistanceRatio);
+        return (Vector2.Distance(GameCreator.instance.adventureZones[zoneSelected].pos,GameCreator.instance.adventureZones[zoneToTravelTo].pos)*GameCreator.instance.adventureTravelZonePrefab.travelTimeToDistanceRatio)*_playerTravelCutRatio;
     }
     public float NormalizedZoneTravelTimeLeft(){return GameAssets.Normalize(GameSession.instance.gameTimeLeft,0,GameSession.instance.CalcZoneTravelTime());}
 
@@ -429,14 +436,14 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(ss!=null){
             ss.buildLastLoaded=buildVersion;
             if(zoneToTravelTo!=-1&&p!=null&&p.health<=0){//Die during travel
-                if(GameCreator.instance.adventureTravelZonePrefab.travelTimeToAddOnDeath==0){
-                    zoneToTravelTo=-1;//var _zoneBack=zoneSelected;zoneSelected=-1;LoadAdventureZone(_zoneBack);
-                }else{gameTimeLeft+=GameCreator.instance.adventureTravelZonePrefab.travelTimeToAddOnDeath;}
+                if(GameCreator.instance.adventureTravelZonePrefab.travelTimeToAddOnDeath==0&&Player.instance.GetComponent<PlayerModules>()==null){
+                    zoneToTravelTo=-1;
+                }else if(GameCreator.instance.adventureTravelZonePrefab.travelTimeToAddOnDeath!=0){gameTimeLeft+=GameCreator.instance.adventureTravelZonePrefab.travelTimeToAddOnDeath;}
             }
             ss.cores=cores;
             ss.zoneSelected=zoneSelected;
             ss.zoneToTravelTo=zoneToTravelTo;
-            if(zoneToTravelTo!=-1){ss.travelTimeLeft=gameTimeLeft;}else{ss.travelTimeLeft=-4;}
+            //if(zoneToTravelTo!=-1){ss.travelTimeLeft=gameTimeLeft;}else{ss.travelTimeLeft=-4;}
             //ss.gameSessionTime=currentPlaytime;
             if(FindObjectOfType<PlayerHolobody>()!=null){
                 var phb=FindObjectOfType<PlayerHolobody>();
@@ -487,7 +494,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                     ss.bodyUpgraded=pm.bodyUpgraded;
                     ss.engineUpgraded=pm.engineUpgraded;
                     ss.blastersUpgraded=pm.blastersUpgraded;
+                    if(pm._isModuleEquipped("STraveler")){if(gameTimeLeft<CalcZoneTravelTime()-30)gameTimeLeft+=30;}
+                    else{if(p.health<=0)zoneToTravelTo=-1;}
                 }else{Debug.LogError("PlayerModules not present");}
+            if(zoneToTravelTo!=-1){ss.travelTimeLeft=gameTimeLeft;}else{ss.travelTimeLeft=-4;}
             yield return new WaitForSecondsRealtime(0.02f);
             Debug.Log("Adventure data saved in GameSession");
             yield return new WaitForSecondsRealtime(0.033f);

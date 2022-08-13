@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fab347b30673d498850dec5e9b780c, type: 3}
+  m_Name: Determined
+  m_EditorClassIdentifier: 
+  name: Determined
+  displayName: Determined
+  desc: WHEN HITTING LOW HEALTH, GET A BURST OF FIRE POWER
+  descGradient:
+    topLeft: {r: 0.6415094, g: 0.169998, b: 0.16037735, a: 1}
+    topRight: {r: 0.54901963, g: 0.1882353, b: 0.18039216, a: 1}
+    bottomLeft: {r: 0.6431373, g: 0.17254902, b: 0.16078432, a: 1}
+    bottomRight: {r: 0.5471698, g: 0.18709028, b: 0.17808829, a: 1}
+  sprite: {fileID: 21300000, guid: 1968303b350c33c44b63f8e6b84e44bc, type: 3}
+  iconsGo: {fileID: 0}

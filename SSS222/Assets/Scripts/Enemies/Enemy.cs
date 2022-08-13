@@ -194,6 +194,8 @@ public class Enemy : MonoBehaviour{
         else{GameSession.instance.AddXP(xpAmnt);}
         giveScore=false;
         if(GameSession.instance.zoneToTravelTo!=-1){
+            var cutTime=GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime;
+            if(Player.instance!=null){if(Player.instance.GetComponent<PlayerModules>()!=null)if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("STraveler"))cutTime=GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime*1.33f;}
             GameSession.instance.gameTimeLeft-=GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime;
             if(GameRules.instance.scoreDisplay==scoreDisplay.timeLeft)GameCanvas.instance.ScorePopupSwitch(-GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime);
         }
