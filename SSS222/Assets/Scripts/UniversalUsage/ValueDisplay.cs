@@ -77,10 +77,18 @@ public class ValueDisplay : MonoBehaviour{
             ///Player Modules
             PlayerModules pmodules=p.GetComponent<PlayerModules>();
             if(pmodules!=null){
-                if(value.Contains("cooldownSkill_")){_txt=System.Math.Round(pmodules.GetSkillFromID(int.Parse(value.Split('_')[1])).cooldown,0).ToString();}
-                else if(value=="timerTeleport"){
-                    if(FindObjectOfType<PlayerModules>()!=null){_txt=System.Math.Round(pmodules.timerTeleport,1).ToString();}else{Destroy(transform.parent.gameObject);}
-                    if(_txt=="-4"){var tempColor=txt.color;tempColor.a=0;txt.color=tempColor;}
+                if(value.Contains("cooldownSkill_")){
+                    var id=int.Parse(value.Split('_')[1]);
+                    var s=pmodules.GetSkillFromID(id);
+                    if(
+                    (s.name=="Teleport"&&pmodules.timerTeleport==-4)||
+                    (s.name=="Determined"&&pmodules.timerDetemined==-4)||
+                    (s.name=="GiveItToMe"&&pmodules.timerGiveItToMe==-4)||
+                    (s.name!="Teleport"&&s.name!="Determined"&&s.name!="GiveItToMe")
+                    ){if(s.cooldown>=10){_txt=System.Math.Round(s.cooldown,0).ToString();}else{_txt=System.Math.Round(s.cooldown,1).ToString();}}
+                    else if(s.name=="Teleport"&&pmodules.timerTeleport!=-4){_txt=System.Math.Round(pmodules.timerTeleport,1).ToString();}
+                    else if(s.name=="Determined"&&pmodules.timerDetemined!=-4){_txt=System.Math.Round(pmodules.timerDetemined,1).ToString();}
+                    else if(s.name=="GiveItToMe"&&pmodules.timerGiveItToMe!=-4){_txt=System.Math.Round(pmodules.timerGiveItToMe,1).ToString();}
                 }
                 if(value.Contains("moduleEquippedSlot_")){var m=pmodules.moduleSlots.FindIndex(x=>x==value.Split('_')[1]);if(m!=-1){_txt="Slot: "+(m+1).ToString();}else _txt="Not-Eq";}
                 if(value.Contains("skillEquippedSlot_")){var s=pmodules.skillsSlots.FindIndex(x=>x==value.Split('_')[1]);if(s!=-1){_txt="Slot: "+(s+1).ToString();}else _txt="Not-Eq";}

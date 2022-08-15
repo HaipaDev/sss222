@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fab347b30673d498850dec5e9b780c, type: 3}
+  m_Name: GiveItToMe
+  m_EditorClassIdentifier: 
+  name: GiveItToMe
+  displayName: Give It To Me
+  desc: NEXT HIT YOU TAKE WILL HEAL YOU ITS TRUE DAMAGE
+  descGradient:
+    topLeft: {r: 0.16078432, g: 0.6431373, b: 0.46603778, a: 1}
+    topRight: {r: 0.16078432, g: 0.6431373, b: 0.46666667, a: 1}
+    bottomLeft: {r: 0.6431373, g: 0.17254902, b: 0.16078432, a: 1}
+    bottomRight: {r: 0.5471698, g: 0.18709028, b: 0.17808829, a: 1}
+  sprite: {fileID: 21300000, guid: 048b294e2f3b80f45afbf9924e2ad2cc, type: 3}
+  iconsGo: {fileID: 0}

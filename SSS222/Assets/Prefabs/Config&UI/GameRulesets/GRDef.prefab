@@ -1690,8 +1690,32 @@ MonoBehaviour:
     lvlExpire: 0
     unlockedLvl: 0
     equipped: 0
+  - item: {fileID: 11400000, guid: 6f0ffea35b5c72646a6df2fb158e1a99, type: 2}
+    costType: 0
+    costTypeProperties:
+      cost: 0
+    cooldown: 90
+    lvlVals:
+    - coreCost: 3
+      lvlReq: 3
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
+  - item: {fileID: 11400000, guid: ca5c1961c724bd241a27907b6043e2e0, type: 2}
+    costType: 0
+    costTypeProperties:
+      cost: 0
+    cooldown: 140
+    lvlVals:
+    - coreCost: 4
+      lvlReq: 2
+    lvlExpire: 0
+    unlockedLvl: 0
+    equipped: 0
   playerModulesCapacity: 4
-  timeOverhaul: 10
+  timeTeleport: 3
+  timeDetemined: 5
+  timeGiveItToMe: 8
   playerExhaustROF: 1
   crystalMend_refillCost: 2
   energyDiss_refillCost: 3.3

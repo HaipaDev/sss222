@@ -154,7 +154,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         if(pmodules._isModuleUnlocked(name)||name==""){
             if(pmodules._isModuleEquipped(name)&&name!=""){pmodules.ClearModule(name);}
             pmodules.SetModule(selectedModuleSlot,name);
-            if(name=="Dark Surge"){SetAutoascend(false);}
+            if(name=="DkSurge"){SetAutoascend(false);}
             //BackToModulesSkillsInventory();
         }
     }

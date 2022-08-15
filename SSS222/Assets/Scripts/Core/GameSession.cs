@@ -177,12 +177,12 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         
         bool _maxXpOverflow=false;bool _maxXpLowerCap=false;
         if(GameRules.instance!=null&&Player.instance!=null)if(Player.instance.GetComponent<PlayerModules>()!=null){
-            if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("STraveler"))_playerTravelCutRatio=0.65f;
-            else _playerTravelCutRatio=1f;
+            if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("STraveler")){_playerTravelCutRatio=0.65f;}
+            else{_playerTravelCutRatio=1f;}
             if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("DkSurge")){_maxXpOverflow=true;}
-            else _maxXpOverflow=false;
+            else{_maxXpOverflow=false;}
             if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("TakeMeHigher")){_maxXpLowerCap=true;}
-            else _maxXpLowerCap=false;
+            else{_maxXpLowerCap=false;}
         }
         if(_maxXpLowerCap){xpMax=GameRules.instance.xpMax*0.77f;}
         else{xpMax=GameRules.instance.xpMax;}

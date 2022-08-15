@@ -6,7 +6,8 @@ using Sirenix.OdinInspector;
 public class PlayerModules : MonoBehaviour{
 [Header("Settings")]
     public float timeTeleport=3f;
-    public float timeOverhaul=10f;
+    public float timeDetemined=4f;
+    public float timeGiveItToMe=8f;
     public GameObject exhaustColliderObj;
 [Header("Level Values")]
     [SerializeField] public int shipLvl=0;
@@ -28,9 +29,9 @@ public class PlayerModules : MonoBehaviour{
 [Header("Timers etc")]
     [DisableInEditorMode]public string currentSkill="";
     [DisableInEditorMode]public float timerTeleport=-4;
-    [DisableInEditorMode]public float timerOverhaul=-4;
+    [DisableInEditorMode]public float timerDetemined=-4;
+    [DisableInEditorMode]public float timerGiveItToMe=-4;
 
-    GameObject timerUI;
     Player player;
     void Awake(){StartCoroutine(SetValues());}
     IEnumerator SetValues(){
@@ -45,13 +46,14 @@ public class PlayerModules : MonoBehaviour{
             //for(var m=0;m<i.playerSkillsCapacity;m++){skillsSlots.Add("");}
             if(modulesList.Count==0){var _id=0;foreach(ModulePropertiesGR m in i.modulesPlayer){if(m.equipped&&_id<moduleSlots.Count){SetModule(_id,m.item.name);}modulesList.Add(new Module{name=m.item.name,lvl=m.unlockedLvl});}_id++;}
             if(skillsList.Count==0){var _id=0;foreach(SkillPropertiesGR s in i.skillsPlayer){if(s.equipped&&_id<skillsSlots.Count){SetSkill(_id,s.item.name);}skillsList.Add(new Skill{name=s.item.name,lvl=s.unlockedLvl});}_id++;}
-            timeOverhaul=i.timeOverhaul;
+            timeTeleport=i.timeTeleport;
+            timeDetemined=i.timeDetemined;
+            timeGiveItToMe=i.timeGiveItToMe;
         }
         if(GameRules.instance.modulesOn!=true){Destroy(this);}
     }
     IEnumerator Start(){
         player=GetComponent<Player>();
-        timerUI=GameObject.Find("SkillTimer_par");
         yield return new WaitForSeconds(0.2f);
         if(shipLvlFractionsValues.Count>0&&shipLvl==0)lvlFractionsMax=shipLvlFractionsValues[0].fractions;
         if(!GameSession.instance.CheckGamemodeSelected("Adventure")){autoLvl=true;}
@@ -98,7 +100,8 @@ public class PlayerModules : MonoBehaviour{
     #region//Skills & Modules
     public void CheckSkillButton(int key=0){     if(!GameSession.GlobalTimeIsPaused){
         for(var i=0;i<skillsList.Count;i++){
-            if(skillsList[i].cooldown>0)skillsList[i].cooldown-=Time.deltaTime;
+            if(skillsList[i].cooldown>0){skillsList[i].cooldown-=Time.deltaTime;}
+            if(skillsList[i].name=="Determined"&&skillsList[i].cooldown<0.1f&&player.health>25){skillsList[i].cooldown=0.01f;}
         }
         if(!Player.instance._hasStatus("hacked")){
             var _slot=0;
@@ -122,10 +125,9 @@ public class PlayerModules : MonoBehaviour{
             if(item.item.name=="MPulse"){
                 GameObject mPulse=GameAssets.instance.Make("MPulse",transform.position);
                 GetSkill(item.item.name).cooldown=item.cooldown;
-            }else if(item.item.name=="Teleport"){//Teleport
+            }else if(item.item.name=="Teleport"){
                 GameSession.instance.gameSpeed=0.025f;
                 GameSession.instance.speedChanged=true;
-                if(timerUI!=null)SetActiveAllChildren(timerUI.transform,true);
                 currentSkill="Teleport";
                 GetSkill(item.item.name).cooldown=item.cooldown;
             }else if(item.item.name=="LShield"){bool _canMakeShield=false;
@@ -140,19 +142,22 @@ public class PlayerModules : MonoBehaviour{
                 if(_canMakeShield){
                     var l=GameAssets.instance.Make("LunarShield",transform.position);l.transform.parent=transform;
                     l.GetComponent<LunarShield>().fragmentsPresent=fragments;
-                    GetSkill(item.item.name).cooldown=item.cooldown;
                     player.AddSubCoins(cost);
+                    GetSkill(item.item.name).cooldown=item.cooldown;
                 }
-
+            }else if(item.item.name=="Determined"&&player.health<=25){
+                timerDetemined=timeDetemined;
+                GetSkill(item.item.name).cooldown=item.cooldown;
+            }else if(item.item.name=="GiveItToMe"){
+                timerGiveItToMe=timeGiveItToMe;
+                GetSkill(item.item.name).cooldown=item.cooldown;
             }
         }else{AudioManager.instance.Play("Deny");}
     }}
 
     void SkillsUpdate(){
     if(!GameSession.GlobalTimeIsPaused){
-        if(currentSkill!="Teleport"){
-            if(timerUI!=null)SetActiveAllChildren(timerUI.transform,false);
-        }else if(currentSkill=="Teleport"){
+        if(currentSkill=="Teleport"){
             if(timerTeleport==-4)timerTeleport=timeTeleport;
             if(timerTeleport>0){
                 timerTeleport-=Time.unscaledDeltaTime;
@@ -165,17 +170,18 @@ public class PlayerModules : MonoBehaviour{
                     var ps2=tp2.GetComponent<ParticleSystem>();var main2=ps2.main;
                     main2.startColor=new Color(255,140,0,255);//Orange
                     transform.position=Player.instance.mousePos;
-                    if(timerUI!=null)SetActiveAllChildren(timerUI.transform,false);
-                    GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;timerTeleport=-4;currentSkill="";}
+                    GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;timerTeleport=-4;currentSkill="";
+                }
             }else if(timerTeleport<=0&&timerTeleport!=-4){
-                if(timerUI!=null)SetActiveAllChildren(timerUI.transform,false);
                 GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;timerTeleport=-4;currentSkill="";
             }
         }
-        if(timerOverhaul>0&&Player.instance._hasStatus("infenergy")){
-            timerOverhaul-=Time.deltaTime;
-        }if((timerOverhaul<0&&timerOverhaul!=-4)&&Player.instance._hasStatus("infenergy")){timerOverhaul=timeOverhaul;}
-        if(!Player.instance._hasStatus("infenergy")&&AudioManager.instance.GetSource("Overhaul").isPlaying){AudioManager.instance.StopPlaying("Overhaul");}
+        //Determined
+        if(timerDetemined>0){timerDetemined-=Time.deltaTime;}
+        else if(timerDetemined<=0&&timerDetemined!=-4){timerDetemined=-4;}
+        //GiveItToMe
+        if(timerGiveItToMe>0){timerGiveItToMe-=Time.deltaTime;}
+        else if(timerGiveItToMe<=0&&timerGiveItToMe!=-4){timerGiveItToMe=-4;}
     }}
 
     void ModulesUpdate(){
@@ -284,8 +290,10 @@ public class PlayerModules : MonoBehaviour{
             if(engineUpgraded>1)player.freqEnRegen=1f-((engineUpgraded-1)*GameRules.instance.engineUpgrade_energyRegenFreqMinus);
         }
         
-        player.shootMultiBase=player.shootMultiInit+(blastersUpgraded*GameRules.instance.blastersUpgrade_shootMulti);
-        player.critChanceBase=player.critChanceInit+(blastersUpgraded*GameRules.instance.blastersUpgrade_critChance);
+        float _determinedAddShootMulti=0;float _determinedAddCritChance=0;
+        if(timerDetemined>0){_determinedAddShootMulti=1f;_determinedAddCritChance=5f;}
+        player.shootMultiBase=player.shootMultiInit+(blastersUpgraded*GameRules.instance.blastersUpgrade_shootMulti)+_determinedAddShootMulti;
+        player.critChanceBase=player.critChanceInit+(blastersUpgraded*GameRules.instance.blastersUpgrade_critChance)+_determinedAddCritChance;
     }
 
     public void SwitchExhaust(bool on=false){exhaustColliderObj.SetActive(on);}

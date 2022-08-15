@@ -33,6 +33,8 @@ public class PlayerCollider : MonoBehaviour{
                 else if(dmg<0){player.Damage(dmg,dmgType.heal);}
 
                 if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("CodeBreaker")&&other.gameObject.name.Contains("Zone_"))){dmg=0;}
+                if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isSkillEquipped("GiveItToMe")&&GetComponent<PlayerModules>().timerGiveItToMe>0)){
+                    player.Damage(dmg,dmgType.heal);GameAssets.instance.VFX("HealExplosion",transform.position,0.2f);AudioManager.instance.Play("Heal");GetComponent<PlayerModules>().timerGiveItToMe=-4;return;}
                 
                 if(!other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){
                     Enemy en=other.GetComponent<Enemy>();
