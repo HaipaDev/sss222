@@ -102,6 +102,11 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public string flaresName="def";
 		public string deathFxName="def";
 		public string musicName=CstmzMusic._cstmzMusicDef;
+		public List<string> skinsUnlocked;
+		public List<string> trailsUnlocked;
+		public List<string> flaresUnlocked;
+		public List<string> deathFxUnlocked;
+		public List<string> musicUnlocked;
 		public AchievData[] achievsCompleted=new AchievData[0];
 	}
 

@@ -39,13 +39,19 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     bool loaded;
     void Awake(){instance=this;}
     IEnumerator Start(){
-        if(String.IsNullOrEmpty(skinName)||GetSkin(skinName)==null){skinName="def";}
-        if(String.IsNullOrEmpty(trailName)||GetTrail(trailName)==null){trailName="def";}
-        if(String.IsNullOrEmpty(flaresName)||GetFlares(flaresName)==null){flaresName="def";}
-        if(String.IsNullOrEmpty(deathFxName)||GetDeathFx(deathFxName)==null){deathFxName="def";}
-        if(String.IsNullOrEmpty(musicName)||GetMusic(musicName)==null){musicName=CstmzMusic._cstmzMusicDef;}
+        if(String.IsNullOrEmpty(skinName)||GetSkin(skinName)==null||!_isSkinUnlocked(skinName)){skinName="def";}
+        if(String.IsNullOrEmpty(trailName)||GetTrail(trailName)==null||!_isTrailUnlocked(trailName)){trailName="def";}
+        if(String.IsNullOrEmpty(flaresName)||GetFlares(flaresName)==null||!_isFlareUnlocked(flaresName)){flaresName="def";}
+        if(String.IsNullOrEmpty(deathFxName)||GetDeathFx(deathFxName)==null||!_isDeathFxUnlocked(deathFxName)){deathFxName="def";}
+        if(String.IsNullOrEmpty(musicName)||GetMusic(musicName)==null||!_isMusicUnlocked(musicName)){musicName=CstmzMusic._cstmzMusicDef;}
         skinName=SaveSerial.instance.playerData.skinName;
         SetCategory(GameAssets.instance.skins.Find(x=>x.name.Contains(GetSkinName(SaveSerial.instance.playerData.skinName))).category);
+        
+        foreach(CstmzSkin s in GameAssets.instance.skins){if(s.name!="def"&&s.rarity==CstmzRarity.def)UnlockSkin(s.name);}
+        foreach(CstmzSkin t in GameAssets.instance.skins){if(t.name!="def"&&t.rarity==CstmzRarity.def)UnlockTrail(t.name);}
+        foreach(CstmzSkin f in GameAssets.instance.skins){if(f.name!="def"&&f.rarity==CstmzRarity.def)UnlockFlare(f.name);}
+        foreach(CstmzSkin d in GameAssets.instance.skins){if(d.name!="def"&&d.rarity==CstmzRarity.def)UnlockDeathFx(d.name);}
+        foreach(CstmzSkin m in GameAssets.instance.skins){if(m.name!=CstmzMusic._cstmzMusicDef&&m.rarity==CstmzRarity.def)UnlockMusic(m.name);}
 
         float[] hsvArr=new float[3]{0,1,1};
         overlayColor = SaveSerial.instance.playerData.overlayColor;
@@ -393,4 +399,16 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public void SetDeathFx(string str){deathFxName=str;HighlightSelectedElement();HighlightSelectedType();}
     public CstmzMusic GetMusic(string str){return GameAssets.instance.GetMusic(str);}
     public void SetMusic(string str){musicName=str;Jukebox.instance.SetMusic(GameAssets.instance.GetMusic(musicName).track,true);HighlightSelectedElement();HighlightSelectedType();}
+
+
+    public bool _isSkinUnlocked(string name){return SaveSerial.instance.playerData.skinsUnlocked.Contains(name)||name=="def";}
+    public bool _isTrailUnlocked(string name){return SaveSerial.instance.playerData.trailsUnlocked.Contains(name)||name=="def";}
+    public bool _isFlareUnlocked(string name){return SaveSerial.instance.playerData.flaresUnlocked.Contains(name)||name=="def";}
+    public bool _isDeathFxUnlocked(string name){return SaveSerial.instance.playerData.deathFxUnlocked.Contains(name)||name=="def";}
+    public bool _isMusicUnlocked(string name){return SaveSerial.instance.playerData.musicUnlocked.Contains(name)||name==CstmzMusic._cstmzMusicDef;}
+    public void UnlockSkin(string name){if(!_isSkinUnlocked(name)){SaveSerial.instance.playerData.skinsUnlocked.Add(name);}}
+    public void UnlockTrail(string name){if(!_isTrailUnlocked(name)){SaveSerial.instance.playerData.trailsUnlocked.Add(name);}}
+    public void UnlockFlare(string name){if(!_isFlareUnlocked(name)){SaveSerial.instance.playerData.flaresUnlocked.Add(name);}}
+    public void UnlockDeathFx(string name){if(!_isDeathFxUnlocked(name)){SaveSerial.instance.playerData.deathFxUnlocked.Add(name);}}
+    public void UnlockMusic(string name){if(!_isMusicUnlocked(name)){SaveSerial.instance.playerData.musicUnlocked.Add(name);}}
 }

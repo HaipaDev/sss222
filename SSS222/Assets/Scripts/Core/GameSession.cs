@@ -185,7 +185,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             else{_maxXpLowerCap=false;}
         }
         if(_maxXpLowerCap){xpMax=GameRules.instance.xpMax*0.77f;}
-        else{xpMax=GameRules.instance.xpMax;}
+        else{if(GameRules.instance!=null){xpMax=GameRules.instance.xpMax;}else{xpMax=0;}}
         if(_maxXpOverflow){xp=Mathf.Clamp(xp,0,xpMax*GameRules.instance.xpMaxOvefillMult);}
         else{xp=Mathf.Clamp(xp,0,xpMax);}
         cores=Mathf.Clamp(cores,0,9999);

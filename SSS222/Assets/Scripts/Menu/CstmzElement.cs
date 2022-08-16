@@ -30,17 +30,24 @@ public class CstmzElement : MonoBehaviour, IEventSystemHandler, IPointerEnterHan
             else{overlayImg.GetComponent<Image>().color=Color.clear;}
         }else{if(overlayImg!=null){Destroy(overlayImg);}if(editButton.activeSelf)editButton.SetActive(false);}
 
+        if(elementType==CstmzType.skin){if(!CustomizationInventory.instance._isSkinUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.white;}}
+        if(elementType==CstmzType.trail){if(!CustomizationInventory.instance._isTrailUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.clear;}}
+        if(elementType==CstmzType.flares){if(!CustomizationInventory.instance._isFlareUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.clear;}}
+        if(elementType==CstmzType.deathFx){if(!CustomizationInventory.instance._isDeathFxUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.clear;}}
+        if(elementType==CstmzType.music){if(!CustomizationInventory.instance._isMusicUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.white;}}
+
         if(UIInputSystem.instance.currentSelected==gameObject){if(Input.GetKeyDown(KeyCode.E))OpenVariants();}
         /*if(UIInputSystem.instance.currentSelected==gameObject){
             UnityEventTools.AddPersistentListener(GetComponent<Button>().onClick,SetElement());
         }else{UnityEventTools.RemovePersistentListener(GetComponent<Button>().onClick,SetElement());}*/
     }
-    public void SetSkin(){CustomizationInventory.instance.SetSkin(elementName+_VariantID());}
-    public void SetTrail(){CustomizationInventory.instance.SetTrail(elementName);}
-    public void SetFlares(){CustomizationInventory.instance.SetFlares(elementName);}
-    public void SetDeathFx(){CustomizationInventory.instance.SetDeathFx(elementName);}
-    public void SetMusic(){CustomizationInventory.instance.SetMusic(elementName);}
+    public void SetSkin(){if(CustomizationInventory.instance._isSkinUnlocked(elementName))CustomizationInventory.instance.SetSkin(elementName+_VariantID());}
+    public void SetTrail(){if(CustomizationInventory.instance._isTrailUnlocked(elementName))CustomizationInventory.instance.SetTrail(elementName);}
+    public void SetFlares(){if(CustomizationInventory.instance._isFlareUnlocked(elementName))CustomizationInventory.instance.SetFlares(elementName);}
+    public void SetDeathFx(){if(CustomizationInventory.instance._isDeathFxUnlocked(elementName))CustomizationInventory.instance.SetDeathFx(elementName);}
+    public void SetMusic(){if(CustomizationInventory.instance._isMusicUnlocked(elementName))CustomizationInventory.instance.SetMusic(elementName);}
 
+    
     public void SetElement(){
         switch(elementType){
             case CstmzType.skin:SetSkin();break;
@@ -50,7 +57,7 @@ public class CstmzElement : MonoBehaviour, IEventSystemHandler, IPointerEnterHan
             case CstmzType.music:SetMusic();break;
         }
     }
-    public void OpenVariants(){if(!variant)CustomizationInventory.instance.OpenVariants(elementName);}
+    public void OpenVariants(){if(!variant&&CustomizationInventory.instance._isSkinUnlocked(elementName))CustomizationInventory.instance.OpenVariants(elementName);}
     public void OnPointerClick(PointerEventData eventData){
         if(eventData.button==PointerEventData.InputButton.Left){
             SetElement();
