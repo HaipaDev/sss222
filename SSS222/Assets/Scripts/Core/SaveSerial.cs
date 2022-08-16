@@ -23,6 +23,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		if(String.IsNullOrEmpty(playerData.deathFxName)||GameAssets.instance.GetDeathFx(playerData.deathFxName)==null){playerData.deathFxName="def";}
 		if(String.IsNullOrEmpty(playerData.musicName)||GameAssets.instance.GetMusic(playerData.musicName)==null){playerData.musicName=CstmzMusic._cstmzMusicDef;}
 
+		foreach(CstmzLockbox lb in GameAssets.instance.lockboxes){if(!playerData.lockboxesInventory.Exists(x=>x.name==lb.name)){playerData.lockboxesInventory.Add(new LockboxCount{name=lb.name,count=0});}}
+
 		/*settingsData.masterVolume=Mathf.Clamp(settingsData.masterVolume,0,2);
 		settingsData.soundVolume=Mathf.Clamp(settingsData.soundVolume,0,2);
 		settingsData.ambienceVolume=Mathf.Clamp(settingsData.ambienceVolume,0,2);
@@ -102,6 +104,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public string flaresName="def";
 		public string deathFxName="def";
 		public string musicName=CstmzMusic._cstmzMusicDef;
+		public List<LockboxCount> lockboxesInventory;
 		public List<string> skinsUnlocked;
 		public List<string> trailsUnlocked;
 		public List<string> flaresUnlocked;
@@ -365,3 +368,5 @@ public class Highscore{
 	public float build;
 	public DateTime date;
 }
+[System.Serializable]
+public class LockboxCount{public string name;public int count;}

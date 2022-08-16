@@ -70,7 +70,8 @@ public class CstmzElement : MonoBehaviour, IEventSystemHandler, IPointerEnterHan
         if(FindObjectOfType<CstmzSelectedInfo>()!=null&&!variant){FindObjectOfType<CstmzSelectedInfo>().selectedElement=gameObject;}
     }
     public void OnPointerExit(PointerEventData eventData){if(FindObjectOfType<CstmzSelectedInfo>()!=null){if(!UIInputSystem.instance.inputSelecting)
-        if(FindObjectOfType<CstmzSelectedInfo>().selectedElement==gameObject){FindObjectOfType<CstmzSelectedInfo>().selectedElement=null;}}}
+        if(FindObjectOfType<CstmzSelectedInfo>().selectedElement==gameObject){FindObjectOfType<CstmzSelectedInfo>().selectedElement=null;}}
+    }
 
     string _VariantID(){string _str="";if(variantId>=0){_str="_"+variantId.ToString();}else{}return _str;}
     public Sprite GetSkinSpriteAnim(string str){CstmzSkin skin=null;Sprite spr=null;

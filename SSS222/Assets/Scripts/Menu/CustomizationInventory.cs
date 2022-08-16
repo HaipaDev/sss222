@@ -10,6 +10,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [HeaderAttribute("Panels")]
     [SceneObjectsOnly][SerializeField] GameObject customizationPanel;
     [SceneObjectsOnly][SerializeField] GameObject lockboxesPanel;
+    [SceneObjectsOnly][SerializeField] GameObject lockboxOpeningPanel;
     [HeaderAttribute("Customization Objects")]
     [SceneObjectsOnly][SerializeField] CstmzCategoryDropdown categoriesDropdown;
     [SceneObjectsOnly][SerializeField] RectTransform typesListContent;
@@ -27,6 +28,10 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [HeaderAttribute("Lockboxes Objects")]
     [AssetsOnly][SerializeField] GameObject lockboxElementPrefab;
     [SceneObjectsOnly][SerializeField] RectTransform lockboxElementListContent;
+    [HeaderAttribute("LockboxOpening Objects")]
+    [SceneObjectsOnly][SerializeField] Image lockboxIcon;
+    [SceneObjectsOnly][SerializeField] Image rerityGlow;
+    [SceneObjectsOnly][SerializeField] Image dropIcon;
     [HeaderAttribute("Rarity Colors")]    
     public Color defColor=Color.grey;
     public Color commonColor=Color.green;
@@ -42,6 +47,9 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [SerializeField] public string flaresName="def";
     [SerializeField] public string deathFxName="def";
     [SerializeField] public string musicName=CstmzMusic._cstmzMusicDef;
+    [SerializeField] public float openingTime=4;
+    [DisableInEditorMode] public float openingTimer=-4;
+    [DisableInEditorMode] public string openingLockbox;
     bool loaded;
     void Awake(){instance=this;}
     IEnumerator Start(){
@@ -84,6 +92,8 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         RecreateAllLockboxElements();
         yield return new WaitForSecondsRealtime(0.02f);
         HighlightSelectedType();
+
+        foreach(CstmzLockbox lb in GameAssets.instance.lockboxes){if(!SaveSerial.instance.playerData.lockboxesInventory.Exists(x=>x.name==lb.name)){SaveSerial.instance.playerData.lockboxesInventory.Add(new LockboxCount{name=lb.name,count=0});}}
     }
     //void OnDestroy(){DestroyImmediate(SsliderIMG.material);}
     //void OnDisable(){DestroyImmediate(SsliderIMG.material);}
@@ -111,16 +121,38 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
             ShipCustomizationManager.instance.deathFxName=deathFxName;
         }
 
+        if(openingTimer>0){openingTimer-=Time.unscaledDeltaTime;}
+        else if(openingTimer<=0&&openingTimer!=-4){
+            
+            openingTimer=-4;
+        }
+
         if(skinName!="def"&&trailName!="def"&&flaresName!="def"){StatsAchievsManager.instance.CustomizedAll();}
         RefreshParticles();
         if(GSceneManager.EscPressed()){Back();}
     }
     public void Back(){
         if(variantsPanel.activeSelf){CloseVariants();}
-        else{DBAccess.instance.UpdateCustomizationData();GSceneManager.instance.LoadStartMenu();}
+        else{if(!lockboxOpeningPanel.activeSelf){DBAccess.instance.UpdateCustomizationData();GSceneManager.instance.LoadStartMenu();}else{QuitOpeningLockbox();}}
     }
-    public void OpenCustomizationPanel(){customizationPanel.SetActive(true);lockboxesPanel.SetActive(false);RecreateAllElements();}
-    public void OpenLockboxesPanel(){customizationPanel.SetActive(false);lockboxesPanel.SetActive(true);RecreateAllLockboxElements();}
+    bool _itemDropped;
+    public void OpenCustomizationPanel(){CloseAllPanels();customizationPanel.SetActive(true);RecreateAllElements();}
+    public void OpenLockboxesPanel(){CloseAllPanels();lockboxesPanel.SetActive(true);RecreateAllLockboxElements();}
+    public void OpenLockboxOpeningPanel(string name){CloseAllPanels();lockboxOpeningPanel.SetActive(true);OpenLockbox(name);}
+    public void CloseAllPanels(){customizationPanel.SetActive(false);lockboxesPanel.SetActive(false);lockboxOpeningPanel.SetActive(false);}
+    public void OpenLockbox(string name){StartCoroutine(OpenLockboxI(name));}
+    IEnumerator OpenLockboxI(string name){
+        AudioManager.instance.Play("LockboxOpen");
+        lockboxIcon.sprite=GameAssets.instance.lockboxes.Find(x=>x.name==name).icon;
+        dropIcon.color=Color.clear;
+        rerityGlow.color=Color.clear;
+        yield return new WaitForSeconds(0.3f);
+        lockboxIcon.sprite=GameAssets.instance.lockboxes.Find(x=>x.name==name).iconOpen;
+        dropIcon.color=Color.white;
+        rerityGlow.color=commonColor;
+        _itemDropped=true;
+    }
+    public void QuitOpeningLockbox(){if(_itemDropped){OpenLockboxesPanel();_itemDropped=false;}}
 
     public void RecreateAllElements(){DeleteAllElements();CreateAllElements();HighlightSelectedElement();}
     //public void RecreateAllElements(){StartCoroutine(RecreateAllElementsI());}
@@ -339,7 +371,6 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
             LockboxElement le=go.GetComponent<LockboxElement>();
             le.name=lb.name;
             le.titleText.text=lb.displayName+" Lockbox";
-            //le.countText.text=SaveSerial.instance.playerData.locboxesInventory;
             le.iconImg.sprite=lb.icon;
         }
     }

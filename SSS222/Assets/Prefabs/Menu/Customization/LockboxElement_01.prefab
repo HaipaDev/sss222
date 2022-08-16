@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconImg: {fileID: 6069585701672689532}
   titleText: {fileID: 6295981304102635534}
-  countText: {fileID: 0}
+  countText: {fileID: 9024547607830748514}
   name: 
 --- !u!1 &176085433403007417
 GameObject:
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -312,7 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 8654560380017480663}
   - component: {fileID: 9024547607830748514}
   m_Layer: 5
-  m_Name: Ammount
+  m_Name: Count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

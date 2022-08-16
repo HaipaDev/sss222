@@ -89,6 +89,9 @@ public class PlayerCollider : MonoBehaviour{
                     if(hb.absorp)HPAbsorp(hb.value);
                     else HPAddSilent(hb.value);
                 }
+                if(other.gameObject.name.Contains(GameAssets.instance.Get("Lockbox").name)){
+                    if(other.GetComponent<LockboxItemDrop>()!=null){var lid=other.GetComponent<LockboxItemDrop>();if(lid.name!="")SaveSerial.instance.playerData.lockboxesInventory.Find(x=>x.name==lid.name).count++;}
+                }
 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("medkitPwrup").name)){
                     if(!SaveSerial.instance.settingsData.autoUseMedkitsIfLow){player.AddItem("medkit");}

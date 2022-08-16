@@ -463,6 +463,7 @@ public class RectTransformAndPos{
 }
 
 public enum CstmzRarity{def,common,rare,epic,legend}
+[System.Serializable]public class CstmzRarityChance{public CstmzRarity rarity;public float chance;}
 public enum CstmzCategory{special,shop,reOne,twoPiece}
 public enum CstmzType{skin,trail,flares,deathFx,music,bg}
 [System.Serializable]
@@ -548,5 +549,11 @@ public class CstmzLockbox:_CstmzTypable{
 	[Header("Properties")]
 	public string name;
 	public Sprite icon;
-	//public List<CstmzSkin> skinDrops;
+	public Sprite iconOpen;
+	public CstmzCategory category;
+	public List<CstmzRarityChance> skinDrops=new List<CstmzRarityChance>(){new CstmzRarityChance{rarity=CstmzRarity.common,chance=0},new CstmzRarityChance{rarity=CstmzRarity.rare,chance=0},new CstmzRarityChance{rarity=CstmzRarity.epic,chance=0},new CstmzRarityChance{rarity=CstmzRarity.legend,chance=0}};
+	public List<CstmzRarityChance> trailDrops=new List<CstmzRarityChance>(){new CstmzRarityChance{rarity=CstmzRarity.common,chance=0},new CstmzRarityChance{rarity=CstmzRarity.rare,chance=0},new CstmzRarityChance{rarity=CstmzRarity.epic,chance=0},new CstmzRarityChance{rarity=CstmzRarity.legend,chance=0}};
+	public List<CstmzRarityChance> flareDrops=new List<CstmzRarityChance>(){new CstmzRarityChance{rarity=CstmzRarity.common,chance=0},new CstmzRarityChance{rarity=CstmzRarity.rare,chance=0},new CstmzRarityChance{rarity=CstmzRarity.epic,chance=0},new CstmzRarityChance{rarity=CstmzRarity.legend,chance=0}};
+	public List<CstmzRarityChance> deathFxDrops=new List<CstmzRarityChance>(){new CstmzRarityChance{rarity=CstmzRarity.rare,chance=0},new CstmzRarityChance{rarity=CstmzRarity.epic,chance=0},new CstmzRarityChance{rarity=CstmzRarity.legend,chance=0}};
+	public List<CstmzRarityChance> musicDrops=new List<CstmzRarityChance>(){new CstmzRarityChance{rarity=CstmzRarity.rare,chance=0},new CstmzRarityChance{rarity=CstmzRarity.epic,chance=0},new CstmzRarityChance{rarity=CstmzRarity.legend,chance=0}};
 }
