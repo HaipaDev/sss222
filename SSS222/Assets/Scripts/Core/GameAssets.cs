@@ -23,6 +23,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	[AssetsOnly,Searchable]public List<CstmzFlares> flares;
 	[AssetsOnly,Searchable]public List<CstmzDeathFx> deathFxs;
 	[AssetsOnly,Searchable]public List<CstmzMusic> musics;
+	[AssetsOnly,Searchable]public List<CstmzLockbox> lockboxes;
     
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
 	void Start(){
@@ -539,4 +540,13 @@ public class CstmzMusic:_ArtistInfo,_CstmzTypable{
 	public CstmzCategory category;
 	public AudioClip track;
 	public Sprite icon;
+}
+[System.Serializable]
+public class CstmzLockbox:_CstmzTypable{
+	[Header("Display")]
+	public string displayName;
+	[Header("Properties")]
+	public string name;
+	public Sprite icon;
+	//public List<CstmzSkin> skinDrops;
 }

@@ -7,7 +7,10 @@ using TMPro;
 using Sirenix.OdinInspector;
 
 public class CustomizationInventory : MonoBehaviour{    public static CustomizationInventory instance;
-    [HeaderAttribute("Objects")]
+    [HeaderAttribute("Panels")]
+    [SceneObjectsOnly][SerializeField] GameObject customizationPanel;
+    [SceneObjectsOnly][SerializeField] GameObject lockboxesPanel;
+    [HeaderAttribute("Customization Objects")]
     [SceneObjectsOnly][SerializeField] CstmzCategoryDropdown categoriesDropdown;
     [SceneObjectsOnly][SerializeField] RectTransform typesListContent;
     [AssetsOnly][SerializeField] GameObject cstmzElementPrefab;
@@ -21,6 +24,9 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [SceneObjectsOnly][SerializeField] Image SsliderIMG;
     [SceneObjectsOnly][SerializeField] Image VsliderIMG;
     [AssetsOnly][SerializeField] Material gradientShader;
+    [HeaderAttribute("Lockboxes Objects")]
+    [AssetsOnly][SerializeField] GameObject lockboxElementPrefab;
+    [SceneObjectsOnly][SerializeField] RectTransform lockboxElementListContent;
     [HeaderAttribute("Rarity Colors")]    
     public Color defColor=Color.grey;
     public Color commonColor=Color.green;
@@ -46,7 +52,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         if(String.IsNullOrEmpty(musicName)||GetMusic(musicName)==null||!_isMusicUnlocked(musicName)){musicName=CstmzMusic._cstmzMusicDef;}
         skinName=SaveSerial.instance.playerData.skinName;
         SetCategory(GameAssets.instance.skins.Find(x=>x.name.Contains(GetSkinName(SaveSerial.instance.playerData.skinName))).category);
-        
+
         foreach(CstmzSkin s in GameAssets.instance.skins){if(s.name!="def"&&s.rarity==CstmzRarity.def)UnlockSkin(s.name);}
         foreach(CstmzSkin t in GameAssets.instance.skins){if(t.name!="def"&&t.rarity==CstmzRarity.def)UnlockTrail(t.name);}
         foreach(CstmzSkin f in GameAssets.instance.skins){if(f.name!="def"&&f.rarity==CstmzRarity.def)UnlockFlare(f.name);}
@@ -73,7 +79,9 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         loaded=true;
         SetType(typeSelected);
         yield return new WaitForSecondsRealtime(0.02f);
-        RecreateAllElements();
+        OpenCustomizationPanel();
+        //RecreateAllElements();
+        RecreateAllLockboxElements();
         yield return new WaitForSecondsRealtime(0.02f);
         HighlightSelectedType();
     }
@@ -95,22 +103,24 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
             SaveSerial.instance.playerData.musicName=musicName;
         }
 
-        ShipCustomizationManager.instance.skinName=skinName;
-        ShipCustomizationManager.instance.overlayColor=overlayColor;
-        ShipCustomizationManager.instance.trailName=trailName;
-        ShipCustomizationManager.instance.flaresName=flaresName;
-        ShipCustomizationManager.instance.deathFxName=deathFxName;
+        if(ShipCustomizationManager.instance!=null){
+            ShipCustomizationManager.instance.skinName=skinName;
+            ShipCustomizationManager.instance.overlayColor=overlayColor;
+            ShipCustomizationManager.instance.trailName=trailName;
+            ShipCustomizationManager.instance.flaresName=flaresName;
+            ShipCustomizationManager.instance.deathFxName=deathFxName;
+        }
 
         if(skinName!="def"&&trailName!="def"&&flaresName!="def"){StatsAchievsManager.instance.CustomizedAll();}
-
         RefreshParticles();
-
         if(GSceneManager.EscPressed()){Back();}
     }
     public void Back(){
         if(variantsPanel.activeSelf){CloseVariants();}
         else{DBAccess.instance.UpdateCustomizationData();GSceneManager.instance.LoadStartMenu();}
     }
+    public void OpenCustomizationPanel(){customizationPanel.SetActive(true);lockboxesPanel.SetActive(false);RecreateAllElements();}
+    public void OpenLockboxesPanel(){customizationPanel.SetActive(false);lockboxesPanel.SetActive(true);RecreateAllLockboxElements();}
 
     public void RecreateAllElements(){DeleteAllElements();CreateAllElements();HighlightSelectedElement();}
     //public void RecreateAllElements(){StartCoroutine(RecreateAllElementsI());}
@@ -318,6 +328,22 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         (!skinName.Contains("_")&&GetSkinName(skinName)==ce.elementName&&ce.variantId==-1)){ce.selectedBg.SetActive(true);}
         else{ce.selectedBg.SetActive(false);}
     }}
+
+    public void RecreateAllLockboxElements(){DeleteAllLockboxElements();CreateAllLockboxElements();}
+    public IEnumerator RecreateAllLockboxElementsI(){DeleteAllLockboxElements();yield return new WaitForSeconds(0.01f);CreateAllElements();}
+    void DeleteAllLockboxElements(){foreach(Transform t in lockboxElementListContent){Destroy(t.gameObject);}}
+    void CreateAllLockboxElements(){
+        foreach(CstmzLockbox lb in GameAssets.instance.lockboxes){
+            var go=Instantiate(lockboxElementPrefab,lockboxElementListContent);
+            go.name="LockboxElement_"+lb.name;
+            LockboxElement le=go.GetComponent<LockboxElement>();
+            le.name=lb.name;
+            le.titleText.text=lb.displayName+" Lockbox";
+            //le.countText.text=SaveSerial.instance.playerData.locboxesInventory;
+            le.iconImg.sprite=lb.icon;
+        }
+    }
+
     float refreshTimer;
     void RefreshParticles(){if(refreshTimer>0){refreshTimer-=Time.deltaTime;}if(refreshTimer<=0){
         if(typeSelected==CstmzType.flares){
@@ -401,14 +427,14 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public void SetMusic(string str){musicName=str;Jukebox.instance.SetMusic(GameAssets.instance.GetMusic(musicName).track,true);HighlightSelectedElement();HighlightSelectedType();}
 
 
-    public bool _isSkinUnlocked(string name){return SaveSerial.instance.playerData.skinsUnlocked.Contains(name)||name=="def";}
-    public bool _isTrailUnlocked(string name){return SaveSerial.instance.playerData.trailsUnlocked.Contains(name)||name=="def";}
-    public bool _isFlareUnlocked(string name){return SaveSerial.instance.playerData.flaresUnlocked.Contains(name)||name=="def";}
-    public bool _isDeathFxUnlocked(string name){return SaveSerial.instance.playerData.deathFxUnlocked.Contains(name)||name=="def";}
-    public bool _isMusicUnlocked(string name){return SaveSerial.instance.playerData.musicUnlocked.Contains(name)||name==CstmzMusic._cstmzMusicDef;}
-    public void UnlockSkin(string name){if(!_isSkinUnlocked(name)){SaveSerial.instance.playerData.skinsUnlocked.Add(name);}}
-    public void UnlockTrail(string name){if(!_isTrailUnlocked(name)){SaveSerial.instance.playerData.trailsUnlocked.Add(name);}}
-    public void UnlockFlare(string name){if(!_isFlareUnlocked(name)){SaveSerial.instance.playerData.flaresUnlocked.Add(name);}}
-    public void UnlockDeathFx(string name){if(!_isDeathFxUnlocked(name)){SaveSerial.instance.playerData.deathFxUnlocked.Add(name);}}
-    public void UnlockMusic(string name){if(!_isMusicUnlocked(name)){SaveSerial.instance.playerData.musicUnlocked.Add(name);}}
+    public static bool _isSkinUnlocked(string name){return SaveSerial.instance.playerData.skinsUnlocked.Contains(name)||name=="def";}
+    public static bool _isTrailUnlocked(string name){return SaveSerial.instance.playerData.trailsUnlocked.Contains(name)||name=="def";}
+    public static bool _isFlareUnlocked(string name){return SaveSerial.instance.playerData.flaresUnlocked.Contains(name)||name=="def";}
+    public static bool _isDeathFxUnlocked(string name){return SaveSerial.instance.playerData.deathFxUnlocked.Contains(name)||name=="def";}
+    public static bool _isMusicUnlocked(string name){return SaveSerial.instance.playerData.musicUnlocked.Contains(name)||name==CstmzMusic._cstmzMusicDef;}
+    public static void UnlockSkin(string name){if(!_isSkinUnlocked(name)){SaveSerial.instance.playerData.skinsUnlocked.Add(name);}}
+    public static void UnlockTrail(string name){if(!_isTrailUnlocked(name)){SaveSerial.instance.playerData.trailsUnlocked.Add(name);}}
+    public static void UnlockFlare(string name){if(!_isFlareUnlocked(name)){SaveSerial.instance.playerData.flaresUnlocked.Add(name);}}
+    public static void UnlockDeathFx(string name){if(!_isDeathFxUnlocked(name)){SaveSerial.instance.playerData.deathFxUnlocked.Add(name);}}
+    public static void UnlockMusic(string name){if(!_isMusicUnlocked(name)){SaveSerial.instance.playerData.musicUnlocked.Add(name);}}
 }
