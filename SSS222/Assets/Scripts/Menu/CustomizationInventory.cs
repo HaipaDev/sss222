@@ -30,7 +30,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [SceneObjectsOnly][SerializeField] RectTransform lockboxElementListContent;
     [HeaderAttribute("LockboxOpening Objects")]
     [SceneObjectsOnly][SerializeField] Image lockboxIcon;
-    [SceneObjectsOnly][SerializeField] Image rerityGlow;
+    [SceneObjectsOnly][SerializeField] Image rarityGlow;
     [SceneObjectsOnly][SerializeField] Image dropIcon;
     [HeaderAttribute("Rarity Colors")]    
     public Color defColor=Color.grey;
@@ -142,15 +142,65 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public void CloseAllPanels(){customizationPanel.SetActive(false);lockboxesPanel.SetActive(false);lockboxOpeningPanel.SetActive(false);}
     public void OpenLockbox(string name){StartCoroutine(OpenLockboxI(name));}
     IEnumerator OpenLockboxI(string name){
+        var lb=GameAssets.instance.lockboxes.Find(x=>x.name==name);
         AudioManager.instance.Play("LockboxOpen");
-        lockboxIcon.sprite=GameAssets.instance.lockboxes.Find(x=>x.name==name).icon;
+        lockboxIcon.sprite=lb.icon;
+        rarityGlow.color=Color.clear;
         dropIcon.color=Color.clear;
-        rerityGlow.color=Color.clear;
         yield return new WaitForSeconds(0.3f);
-        lockboxIcon.sprite=GameAssets.instance.lockboxes.Find(x=>x.name==name).iconOpen;
+        lockboxIcon.sprite=lb.iconOpen;
+        rarityGlow.color=commonColor;
         dropIcon.color=Color.white;
-        rerityGlow.color=commonColor;
+        SetDroppedItem(name);
         _itemDropped=true;
+    }
+    public void SetDroppedItem(string lockboxName){
+        var lb=GameAssets.instance.lockboxes.Find(x=>x.name==lockboxName);
+        /*Dictionary<string,CstmzType> items=new Dictionary<string,CstmzType>();
+        foreach(CstmzSkin s in GameAssets.instance.skins){if(s.category==lb.category){items.Add(s.name,CstmzType.skin);}}
+        foreach(CstmzTrail t in GameAssets.instance.trails){if(t.category==lb.category){items.Add(t.name,CstmzType.trail);}}
+        foreach(CstmzFlares f in GameAssets.instance.flares){if(f.category==lb.category){items.Add(f.name,CstmzType.flares);}}
+        foreach(CstmzDeathFx d in GameAssets.instance.deathFxs){if(d.category==lb.category){items.Add(d.name,CstmzType.deathFx);}}
+        foreach(CstmzMusic m in GameAssets.instance.musics){if(m.category==lb.category){items.Add(m.name,CstmzType.music);}}
+        LootTableCstmz lt=new LootTableCstmz();
+        foreach(KeyValuePair<string,CstmzType> it in items){
+            var dropChance=0f;
+            if(it.Value==CstmzType.skin){var s=GameAssets.instance.GetSkin(it.Key);dropChance=lb.skinDrops[((int)s.rarity)-1].chance;}
+            if(it.Value==CstmzType.trail){var t=GameAssets.instance.GetTrail(it.Key);dropChance=lb.trailDrops[((int)t.rarity)-1].chance;}
+            if(it.Value==CstmzType.flares){var f=GameAssets.instance.GetFlares(it.Key);dropChance=lb.flareDrops[((int)f.rarity)-1].chance;}
+            if(it.Value==CstmzType.deathFx){var d=GameAssets.instance.GetDeathFx(it.Key);dropChance=lb.deathFxDrops[((int)d.rarity)-2].chance;}
+            if(it.Value==CstmzType.music){var m=GameAssets.instance.GetMusic(it.Key);dropChance=lb.musicDrops[((int)m.rarity)-2].chance;}
+            lt.itemList.Add(new LootTableEntryCstmz{lootItem=it.Key,cstmzType=it.Value,dropChance=dropChance});
+        }*/
+        LootTableCstmz lt=gameObject.AddComponent<LootTableCstmz>();
+        lt.itemList=new List<LootTableEntryCstmz>();
+        foreach(CstmzSkin s in GameAssets.instance.skins){
+            if(s.category==lb.category&&s.rarity!=0){
+            lt.itemList.Add(new LootTableEntryCstmz{
+                lootItem=s.name,
+                cstmzType=CstmzType.skin,
+                dropChance=1f});}}//lb.skinDrops.Find(x=>x.rarity==s.rarity).chance});}}
+                /*lb.skinDrops[
+                    ((int)s.rarity)-1].
+                chance});}}*/
+        foreach(CstmzTrail t in GameAssets.instance.trails){if(t.category==lb.category&&t.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=t.name,cstmzType=CstmzType.trail,dropChance=lb.trailDrops.Find(x=>x.rarity==t.rarity).chance});}}
+        foreach(CstmzFlares f in GameAssets.instance.flares){if(f.category==lb.category&&f.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=f.name,cstmzType=CstmzType.flares,dropChance=lb.flareDrops.Find(x=>x.rarity==f.rarity).chance});}}
+        foreach(CstmzDeathFx d in GameAssets.instance.deathFxs){if(d.category==lb.category&&d.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=d.name,cstmzType=CstmzType.deathFx,dropChance=lb.deathFxDrops.Find(x=>x.rarity==d.rarity).chance});}}
+        foreach(CstmzMusic m in GameAssets.instance.musics){if(m.category==lb.category&&m.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=m.name,cstmzType=CstmzType.music,dropChance=lb.musicDrops.Find(x=>x.rarity==m.rarity).chance});}}
+        lt.SumUp();
+
+        KeyValuePair<string,CstmzType> i=new KeyValuePair<string,CstmzType>("",0);
+        while(i.Key==""){
+            LootTableEntryCstmz r=lt.GetItem();
+            Debug.Log(r.lootItem+" | "+r.cstmzType+" | "+r.dropChance);
+            if(r.cstmzType==CstmzType.skin){
+                i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
+                CstmzSkin s=GetSkin(i.Key);
+                dropIcon.sprite=s.spr;
+                rarityGlow.color=GetRarityColor(s.rarity);
+            }
+        }
+        Destroy(lt);
     }
     public void QuitOpeningLockbox(){if(_itemDropped){OpenLockboxesPanel();_itemDropped=false;}}
 

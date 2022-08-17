@@ -4,46 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class LootTableEntry{
-    [HideInInspector]public string name;
-    public LootItem lootItem;
+public class LootTableEntryString{
+    public string lootItem;
     public float dropChance=0f;
 
 }
-[System.Serializable]
-public class ItemPercentageLable{
-    [HideInInspector]public string name;
-}
-public class LootTable : MonoBehaviour{
+public class LootTableString : MonoBehaviour{
     [SerializeField]
-    private List<LootTableEntry> itemList;
-    private Dictionary<LootItem, float> itemTable;
-    [SerializeField] ItemPercentageLable[] itemsPercentage;
+    public List<LootTableEntryString> itemList;
+    private Dictionary<string, float> itemTable;
+    [HideInInspector] ItemPercentageLable[] itemsPercentage;
     public float sum;
     public bool restart;
     
-    private void Awake(){
-        /*itemTable = new Dictionary<LootItem, float>();
-        foreach(LootTableEntry entry in itemList){
-            itemTable.Add(entry.lootItem, entry.dropChance);
-        }*/
-        //foreach(float dropChance in itemTable.Values){sum+=dropChance;}
-        SumUp();
-    }
+    void Awake(){SumUp();}
     void OnValidate(){
-        /*itemTable = new Dictionary<LootItem, float>();
-        foreach(LootTableEntry entry in itemList){
-            itemTable.Add(entry.lootItem, entry.dropChance);
-        }*/
         SumUp();
         if(restart){
-            foreach(LootTableEntry entry in itemList){
+            foreach(LootTableEntryString entry in itemList){
                 entry.dropChance=0;
             }
             restart=false;
         }
     }
-    public LootItem GetItem(){
+    public string GetItem(){
         float randomWeight = 0;
         do
         {
@@ -51,7 +35,7 @@ public class LootTable : MonoBehaviour{
             if (sum == 0) return null;
             randomWeight = Random.Range(0, sum);
         } while (randomWeight == sum);
-        foreach(LootTableEntry entry in itemList){
+        foreach(LootTableEntryString entry in itemList){
             if(randomWeight<entry.dropChance) return entry.lootItem;
             randomWeight-=entry.dropChance;
         }
@@ -64,11 +48,10 @@ public class LootTable : MonoBehaviour{
     }
     void SumUp(){
         //foreach(float dropChance in itemTable.Values){sum+=dropChance;};
-        itemTable = new Dictionary<LootItem, float>();
+        itemTable = new Dictionary<string, float>();
         //itemsPercentage = new ItemPercentage[itemList.Count];
         var i=-1;
-        foreach(LootTableEntry entry in itemList){
-            entry.name=entry.lootItem.gameObject.name;
+        foreach(LootTableEntryString entry in itemList){
             itemTable.Add(entry.lootItem, (float)entry.dropChance);
             var value=System.Convert.ToSingle(System.Math.Round((entry.dropChance/sum*100),2));
             //itemsPercentage.Add(value);
@@ -77,7 +60,7 @@ public class LootTable : MonoBehaviour{
                 //itemsPercentage.Join();
                 //ItemPercentage itemsPercentage= new ItemPercentage();
                 //itemsPercentage[i].itemPercentage=value;
-                if(i>=0&&i<itemsPercentage.Length)itemsPercentage[i].name=entry.name+" - "+value+"%"+" - "+entry.dropChance+"/"+(sum-entry.dropChance);
+                if(i>=0&&i<itemsPercentage.Length)itemsPercentage[i].name=entry.lootItem+" - "+value+"%"+" - "+entry.dropChance+"/"+(sum-entry.dropChance);
                 //foreach(ItemPercentage item in itemsPercentage){item.name=entry.name;item.itemPercentage=value;}
             //}
         }

@@ -11,16 +11,12 @@ public class LootTableEntryWaves{
     public float dropChance=0f;
     public int levelReq=0;
 }
-[System.Serializable]
-public class ItemPercentageWaves{
-    [HideInInspector]public string name;
-}
 public class LootTableWaves : MonoBehaviour{
     [SerializeField]public List<LootTableEntryWaves> itemList;
     private Dictionary<WaveConfig, float> itemTable;
     [SerializeField] int currentLvl;
     [ReadOnly][SerializeField] List<float> dropList;
-    [ReadOnly][SerializeField] ItemPercentageWaves[] itemsPercentage;
+    [ReadOnly][SerializeField] ItemPercentageLable[] itemsPercentage;
     [ReadOnly]public float sum;
     
     void OnValidate(){SumUp();}

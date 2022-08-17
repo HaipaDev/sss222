@@ -12,17 +12,13 @@ public class LootTableEntryPowerup{
     public float dropChance=0f;
     public int levelReq=0;
 }
-[System.Serializable]
-public class ItemPercentagePowerup{
-    [ReadOnly]public string name;
-}
 public class LootTablePowerups : MonoBehaviour{
     [Searchable][SerializeField]public List<LootTableEntryPowerup> itemList;
     [DisableInPlayMode][SerializeField]public int currentLvl;
 
     [ReadOnly]public List<float> dropList;
     private Dictionary<PowerupItem, float> itemTable;
-    [ReadOnly][SerializeField] ItemPercentagePowerup[] itemsPercentage;
+    [ReadOnly][SerializeField] ItemPercentageLable[] itemsPercentage;
     [ReadOnly]public float sum;
 
 
