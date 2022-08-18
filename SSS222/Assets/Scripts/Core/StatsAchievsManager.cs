@@ -90,7 +90,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
             if(a!=null){
                 if(!a._isCompleted()){
                     a.achievData.completed=true;a.achievData.dateAchieved=DateTime.Now;AchievPopups.instance.AddToQueue(a.name);SaveAchievs();
-                    if(a.name=="arcade_score-3"){CustomizationInventory.UnlockSkin("moyaiGold");}
+                    AchievCosmeticsUnlocks(a);
                 }
                 if(GameSession.instance.steamAchievsStatsLeaderboards){
                     var sa=new Steamworks.Data.Achievement(str);
@@ -119,6 +119,9 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public void BossDefeated(string name){switch(name){
         case "Moon of Lunacy":CompleteAchiev("boss1");break;
     }}
+    void AchievCosmeticsUnlocks(Achievement a){
+        if(a.name=="arcade_score-3"){CustomizationInventory.UnlockSkin("moyaiGold");}
+    }
 
     [Button]public void ClearSteamAchievs(){foreach(Steamworks.Data.Achievement sa in SteamUserStats.Achievements){sa.Clear();}}
     #endregion

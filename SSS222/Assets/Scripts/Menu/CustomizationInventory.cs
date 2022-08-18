@@ -32,6 +32,8 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [SceneObjectsOnly][SerializeField] Image lockboxIcon;
     [SceneObjectsOnly][SerializeField] Image rarityGlow;
     [SceneObjectsOnly][SerializeField] Image dropIcon;
+    [SceneObjectsOnly][SerializeField] TextMeshProUGUI dropText;
+    [SceneObjectsOnly][SerializeField] TextMeshProUGUI dropTypeText;
     [HeaderAttribute("Rarity Colors")]    
     public Color defColor=Color.grey;
     public Color commonColor=Color.green;
@@ -49,13 +51,13 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [SerializeField] public string musicName=CstmzMusic._cstmzMusicDef;
     [SerializeField] public float openingTime=4;
     [DisableInEditorMode] public float openingTimer=-4;
-    [DisableInEditorMode] public string openingLockbox;
+    [DisableInEditorMode] public bool lockboxesPanelOpen;
     bool loaded;
     void Awake(){instance=this;}
     IEnumerator Start(){
         if(String.IsNullOrEmpty(skinName)||GetSkin(skinName)==null||!_isSkinUnlocked(skinName)){skinName="def";}
         if(String.IsNullOrEmpty(trailName)||GetTrail(trailName)==null||!_isTrailUnlocked(trailName)){trailName="def";}
-        if(String.IsNullOrEmpty(flaresName)||GetFlares(flaresName)==null||!_isFlareUnlocked(flaresName)){flaresName="def";}
+        if(String.IsNullOrEmpty(flaresName)||GetFlares(flaresName)==null||!_isFlaresUnlocked(flaresName)){flaresName="def";}
         if(String.IsNullOrEmpty(deathFxName)||GetDeathFx(deathFxName)==null||!_isDeathFxUnlocked(deathFxName)){deathFxName="def";}
         if(String.IsNullOrEmpty(musicName)||GetMusic(musicName)==null||!_isMusicUnlocked(musicName)){musicName=CstmzMusic._cstmzMusicDef;}
         skinName=SaveSerial.instance.playerData.skinName;
@@ -63,7 +65,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
 
         foreach(CstmzSkin s in GameAssets.instance.skins){if(s.name!="def"&&s.rarity==CstmzRarity.def)UnlockSkin(s.name);}
         foreach(CstmzSkin t in GameAssets.instance.skins){if(t.name!="def"&&t.rarity==CstmzRarity.def)UnlockTrail(t.name);}
-        foreach(CstmzSkin f in GameAssets.instance.skins){if(f.name!="def"&&f.rarity==CstmzRarity.def)UnlockFlare(f.name);}
+        foreach(CstmzSkin f in GameAssets.instance.skins){if(f.name!="def"&&f.rarity==CstmzRarity.def)UnlockFlares(f.name);}
         foreach(CstmzSkin d in GameAssets.instance.skins){if(d.name!="def"&&d.rarity==CstmzRarity.def)UnlockDeathFx(d.name);}
         foreach(CstmzSkin m in GameAssets.instance.skins){if(m.name!=CstmzMusic._cstmzMusicDef&&m.rarity==CstmzRarity.def)UnlockMusic(m.name);}
 
@@ -130,6 +132,8 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         if(skinName!="def"&&trailName!="def"&&flaresName!="def"){StatsAchievsManager.instance.CustomizedAll();}
         RefreshParticles();
         if(GSceneManager.EscPressed()){Back();}
+        if(lockboxesPanel.activeSelf||lockboxOpeningPanel.activeSelf){lockboxesPanelOpen=true;}else{lockboxesPanelOpen=false;}
+        if(lockboxAnimSpr!=null){dropIcon.sprite=lockboxAnimSpr;}
     }
     public void Back(){
         if(variantsPanel.activeSelf){CloseVariants();}
@@ -147,42 +151,21 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         lockboxIcon.sprite=lb.icon;
         rarityGlow.color=Color.clear;
         dropIcon.color=Color.clear;
+        dropText.text="";
+        dropTypeText.text="";
+        foreach(Transform tr in dropIcon.transform){Destroy(tr.gameObject);}
         yield return new WaitForSeconds(0.3f);
         lockboxIcon.sprite=lb.iconOpen;
-        rarityGlow.color=commonColor;
-        dropIcon.color=Color.white;
+        rarityGlow.color=defColor;
+        //dropIcon.color=Color.white;
         SetDroppedItem(name);
         _itemDropped=true;
     }
     public void SetDroppedItem(string lockboxName){
         var lb=GameAssets.instance.lockboxes.Find(x=>x.name==lockboxName);
-        /*Dictionary<string,CstmzType> items=new Dictionary<string,CstmzType>();
-        foreach(CstmzSkin s in GameAssets.instance.skins){if(s.category==lb.category){items.Add(s.name,CstmzType.skin);}}
-        foreach(CstmzTrail t in GameAssets.instance.trails){if(t.category==lb.category){items.Add(t.name,CstmzType.trail);}}
-        foreach(CstmzFlares f in GameAssets.instance.flares){if(f.category==lb.category){items.Add(f.name,CstmzType.flares);}}
-        foreach(CstmzDeathFx d in GameAssets.instance.deathFxs){if(d.category==lb.category){items.Add(d.name,CstmzType.deathFx);}}
-        foreach(CstmzMusic m in GameAssets.instance.musics){if(m.category==lb.category){items.Add(m.name,CstmzType.music);}}
-        LootTableCstmz lt=new LootTableCstmz();
-        foreach(KeyValuePair<string,CstmzType> it in items){
-            var dropChance=0f;
-            if(it.Value==CstmzType.skin){var s=GameAssets.instance.GetSkin(it.Key);dropChance=lb.skinDrops[((int)s.rarity)-1].chance;}
-            if(it.Value==CstmzType.trail){var t=GameAssets.instance.GetTrail(it.Key);dropChance=lb.trailDrops[((int)t.rarity)-1].chance;}
-            if(it.Value==CstmzType.flares){var f=GameAssets.instance.GetFlares(it.Key);dropChance=lb.flareDrops[((int)f.rarity)-1].chance;}
-            if(it.Value==CstmzType.deathFx){var d=GameAssets.instance.GetDeathFx(it.Key);dropChance=lb.deathFxDrops[((int)d.rarity)-2].chance;}
-            if(it.Value==CstmzType.music){var m=GameAssets.instance.GetMusic(it.Key);dropChance=lb.musicDrops[((int)m.rarity)-2].chance;}
-            lt.itemList.Add(new LootTableEntryCstmz{lootItem=it.Key,cstmzType=it.Value,dropChance=dropChance});
-        }*/
         LootTableCstmz lt=gameObject.AddComponent<LootTableCstmz>();
         lt.itemList=new List<LootTableEntryCstmz>();
-        foreach(CstmzSkin s in GameAssets.instance.skins){
-            if(s.category==lb.category&&s.rarity!=0){
-            lt.itemList.Add(new LootTableEntryCstmz{
-                lootItem=s.name,
-                cstmzType=CstmzType.skin,
-                dropChance=1f});}}//lb.skinDrops.Find(x=>x.rarity==s.rarity).chance});}}
-                /*lb.skinDrops[
-                    ((int)s.rarity)-1].
-                chance});}}*/
+        foreach(CstmzSkin s in GameAssets.instance.skins){if(s.category==lb.category&&s.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=s.name,cstmzType=CstmzType.skin,dropChance=lb.skinDrops.Find(x=>x.rarity==s.rarity).chance});}}
         foreach(CstmzTrail t in GameAssets.instance.trails){if(t.category==lb.category&&t.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=t.name,cstmzType=CstmzType.trail,dropChance=lb.trailDrops.Find(x=>x.rarity==t.rarity).chance});}}
         foreach(CstmzFlares f in GameAssets.instance.flares){if(f.category==lb.category&&f.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=f.name,cstmzType=CstmzType.flares,dropChance=lb.flareDrops.Find(x=>x.rarity==f.rarity).chance});}}
         foreach(CstmzDeathFx d in GameAssets.instance.deathFxs){if(d.category==lb.category&&d.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=d.name,cstmzType=CstmzType.deathFx,dropChance=lb.deathFxDrops.Find(x=>x.rarity==d.rarity).chance});}}
@@ -193,16 +176,96 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         while(i.Key==""){
             LootTableEntryCstmz r=lt.GetItem();
             Debug.Log(r.lootItem+" | "+r.cstmzType+" | "+r.dropChance);
-            if(r.cstmzType==CstmzType.skin){
+            if(r.cstmzType==CstmzType.skin&&(!_isSkinUnlocked(r.lootItem)||_allCategorySkinsUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
                 CstmzSkin s=GetSkin(i.Key);
-                dropIcon.sprite=s.spr;
+                dropText.text=s.displayName;
+                dropIcon.enabled=true;
+                if(s.spr!=null){dropIcon.sprite=s.spr;}dropIcon.GetComponent<Image>().color=Color.white;
+                if(s.animated){StartCoroutine(AnimateLockboxDrop(s));}
+                else{StopAnimatingLockboxDrop();}
                 rarityGlow.color=GetRarityColor(s.rarity);
+                PlayRaritySound(s.rarity);
+                UnlockSkin(r.lootItem);
+                if(_allCategorySkinsUnlocked(lb.category)&&!_literallyEverythingInCategoryUnlocked(lb.category)&&!(_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){i=new KeyValuePair<string,CstmzType>("",0);Debug.Log("All Skins unlocked, trying to find other items");}
             }
+            else if(r.cstmzType==CstmzType.trail&&(!_isTrailUnlocked(r.lootItem)||_allCategoryTrailsUnlocked(lb.category))){
+                i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
+                CstmzTrail t=GetTrail(i.Key);
+                dropText.text=t.displayName;
+                dropIcon.enabled=false;
+                LockboxDropPreviewTrail(t);
+                rarityGlow.color=new Color(GetRarityColor(t.rarity).r,GetRarityColor(t.rarity).g,GetRarityColor(t.rarity).b,110f/255f);
+                PlayRaritySound(t.rarity);
+                UnlockTrail(r.lootItem);
+                if(_allCategoryTrailsUnlocked(lb.category)&&!_literallyEverythingInCategoryUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){i=new KeyValuePair<string,CstmzType>("",0);Debug.Log("All Trails unlocked, trying to find other items");}
+            }
+            else if(r.cstmzType==CstmzType.flares&&(!_isFlaresUnlocked(r.lootItem)||_allCategoryFlaresUnlocked(lb.category))){
+                i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
+                CstmzFlares f=GetFlares(i.Key);
+                dropText.text=f.displayName;
+                dropIcon.enabled=false;
+                LockboxDropPreviewFlares(f);
+                rarityGlow.color=new Color(GetRarityColor(f.rarity).r,GetRarityColor(f.rarity).g,GetRarityColor(f.rarity).b,110f/255f);
+                PlayRaritySound(f.rarity);
+                UnlockFlares(r.lootItem);
+                if(_allCategoryFlaresUnlocked(lb.category)&&!_literallyEverythingInCategoryUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){i=new KeyValuePair<string,CstmzType>("",0);Debug.Log("All Flares unlocked, trying to find other items");}
+            }
+            else if(r.cstmzType==CstmzType.deathFx&&(!_isDeathFxUnlocked(r.lootItem)||_allCategoryDeathFxUnlocked(lb.category))){
+                i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
+                CstmzDeathFx d=GetDeathFx(i.Key);
+                dropText.text=d.displayName;
+                dropIcon.enabled=false;
+                LockboxDropPreviewDeathFx(d);
+                rarityGlow.color=new Color(GetRarityColor(d.rarity).r,GetRarityColor(d.rarity).g,GetRarityColor(d.rarity).b,110f/255f);
+                PlayRaritySound(d.rarity);
+                UnlockDeathFx(r.lootItem);
+                if(_allCategoryDeathFxUnlocked(lb.category)&&!_literallyEverythingInCategoryUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){i=new KeyValuePair<string,CstmzType>("",0);Debug.Log("All DeathFx unlocked, trying to find other items");}
+            }
+            else if(r.cstmzType==CstmzType.music&&(!_isMusicUnlocked(r.lootItem)||_allCategoryMusicUnlocked(lb.category))){
+                i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
+                CstmzMusic m=GetMusic(i.Key);
+                dropText.text=m.displayName;
+                dropIcon.enabled=true;
+                dropIcon.sprite=m.icon;dropIcon.GetComponent<Image>().color=Color.white;
+                rarityGlow.color=GetRarityColor(m.rarity);
+                PlayRaritySound(m.rarity);
+                UnlockMusic(r.lootItem);
+                if(_allCategoryMusicUnlocked(lb.category)&&!_literallyEverythingInCategoryUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category))){i=new KeyValuePair<string,CstmzType>("",0);Debug.Log("All Music unlocked, trying to find other items");}
+            }
+            dropTypeText.text=r.cstmzType.ToString();
+            if(r.cstmzType!=CstmzType.skin){StopAnimatingLockboxDrop();}
         }
         Destroy(lt);
     }
-    public void QuitOpeningLockbox(){if(_itemDropped){OpenLockboxesPanel();_itemDropped=false;}}
+    void LockboxDropPreviewTrail(CstmzTrail t){
+        GameObject goPt=Instantiate(t.part,dropIcon.transform);goPt.transform.localScale=new Vector2(5,5);
+        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4);
+    }
+    void LockboxDropPreviewFlares(CstmzFlares f){
+        GameObject goPt=Instantiate(GetFlareVFX(f.name),dropIcon.transform);goPt.transform.localPosition=new Vector2(-44*4,0);goPt.transform.localScale=new Vector2(4,4);GameAssets.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
+        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4);
+        goPt=Instantiate(GetFlareVFX(f.name),dropIcon.transform);goPt.transform.localPosition=new Vector2(44*4,0);goPt.transform.localScale=new Vector2(4,4);GameAssets.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
+        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4);
+    }
+    void LockboxDropPreviewDeathFx(CstmzDeathFx d){
+        GameObject goPt=Instantiate(d.obj,dropIcon.transform);goPt.transform.localScale=new Vector2(4,4);GameAssets.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
+        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4,true,0);
+    }
+    Coroutine lockboxDropAnim;int iLockboxDropAnim=0;Sprite lockboxAnimSpr=null;
+    IEnumerator AnimateLockboxDrop(CstmzSkin skin){Sprite _spr;
+        Debug.Log("Animating skin: "+skin.name+" | Frame: "+iLockboxDropAnim);
+        if(skin.animSpeed>0){yield return new WaitForSeconds(skin.animSpeed);}
+        else{yield return new WaitForSeconds(skin.animVals[iLockboxDropAnim].delay);}
+        _spr=skin.animVals[iLockboxDropAnim].spr;
+        if(iLockboxDropAnim==skin.animVals.Count-1)iLockboxDropAnim=0;
+        if(iLockboxDropAnim<skin.animVals.Count)iLockboxDropAnim++;
+        lockboxAnimSpr=_spr;
+        lockboxDropAnim=StartCoroutine(AnimateLockboxDrop(skin));
+        //if(lockboxDropAnim!=null)StopCoroutine(lockboxDropAnim);lockboxDropAnim=null;iLockboxDropAnim=0;
+    }
+    void StopAnimatingLockboxDrop(){lockboxAnimSpr=null;if(lockboxDropAnim!=null)StopCoroutine(lockboxDropAnim);lockboxDropAnim=null;iLockboxDropAnim=0;}
+    public void QuitOpeningLockbox(){if(_itemDropped){OpenLockboxesPanel();_itemDropped=false;StopAnimatingLockboxDrop();foreach(Transform tr in dropIcon.transform){Destroy(tr.gameObject);}}}
 
     public void RecreateAllElements(){DeleteAllElements();CreateAllElements();HighlightSelectedElement();}
     //public void RecreateAllElements(){StartCoroutine(RecreateAllElementsI());}
@@ -248,7 +311,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 ce.rarity=ge.rarity;
                 Destroy(ce.overlayImg);
                 ce.elementPv.GetComponent<Image>().sprite=null;ce.elementPv.GetComponent<Image>().color=new Color(1,1,1,1f/255f);
-                for(var i=0;i<ce.elementPv.transform.childCount;i++){Destroy(ce.elementPv.transform.GetChild(i).gameObject);}
+                foreach(Transform t in ce.elementPv.transform){Destroy(t.gameObject);}
                 GameObject goPt=Instantiate(GetFlareVFX(ge.name),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
                 GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
                 goPt=Instantiate(GetFlareVFX(ge.name),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
@@ -460,7 +523,10 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         }
     }}
 
-
+    public void PlayRaritySound(CstmzRarity rarity){
+        if(rarity==CstmzRarity.epic){AudioManager.instance.Play("DropEpic");}
+        else if(rarity==CstmzRarity.legend){AudioManager.instance.Play("DropLegend");}
+    }
     public Color GetRarityColor(CstmzRarity rarity){
         var col=Color.white;
         switch(rarity){
@@ -510,12 +576,38 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
 
     public static bool _isSkinUnlocked(string name){return SaveSerial.instance.playerData.skinsUnlocked.Contains(name)||name=="def";}
     public static bool _isTrailUnlocked(string name){return SaveSerial.instance.playerData.trailsUnlocked.Contains(name)||name=="def";}
-    public static bool _isFlareUnlocked(string name){return SaveSerial.instance.playerData.flaresUnlocked.Contains(name)||name=="def";}
+    public static bool _isFlaresUnlocked(string name){return SaveSerial.instance.playerData.flaresUnlocked.Contains(name)||name=="def";}
     public static bool _isDeathFxUnlocked(string name){return SaveSerial.instance.playerData.deathFxUnlocked.Contains(name)||name=="def";}
     public static bool _isMusicUnlocked(string name){return SaveSerial.instance.playerData.musicUnlocked.Contains(name)||name==CstmzMusic._cstmzMusicDef;}
+    public static bool _allCategorySkinsUnlocked(CstmzCategory category){
+        var count=0;var _allCategoryItems=GameAssets.instance.skins.FindAll(x=>x.category==category);
+        foreach(CstmzSkin s in _allCategoryItems){if(SaveSerial.instance.playerData.skinsUnlocked.Contains(s.name))count++;}
+        return count==_allCategoryItems.Count;
+    }
+    public static bool _allCategoryTrailsUnlocked(CstmzCategory category){
+        var count=0;var _allCategoryItems=GameAssets.instance.trails.FindAll(x=>x.category==category);
+        foreach(CstmzTrail t in _allCategoryItems){if(SaveSerial.instance.playerData.trailsUnlocked.Contains(t.name))count++;}
+        return count==_allCategoryItems.Count;
+    }
+    public static bool _allCategoryFlaresUnlocked(CstmzCategory category){
+        var count=0;var _allCategoryItems=GameAssets.instance.flares.FindAll(x=>x.category==category);
+        foreach(CstmzFlares f in _allCategoryItems){if(SaveSerial.instance.playerData.flaresUnlocked.Contains(f.name))count++;}
+        return count==_allCategoryItems.Count;
+    }
+    public static bool _allCategoryDeathFxUnlocked(CstmzCategory category){
+        var count=0;var _allCategoryItems=GameAssets.instance.deathFxs.FindAll(x=>x.category==category);
+        foreach(CstmzDeathFx d in _allCategoryItems){if(SaveSerial.instance.playerData.deathFxUnlocked.Contains(d.name))count++;}
+        return count==_allCategoryItems.Count;
+    }
+    public static bool _allCategoryMusicUnlocked(CstmzCategory category){
+        var count=0;var _allCategoryItems=GameAssets.instance.musics.FindAll(x=>x.category==category);
+        foreach(CstmzMusic m in _allCategoryItems){if(SaveSerial.instance.playerData.deathFxUnlocked.Contains(m.name))count++;}
+        return count==_allCategoryItems.Count;
+    }
+    public static bool _literallyEverythingInCategoryUnlocked(CstmzCategory category){return (_allCategorySkinsUnlocked(category)&&_allCategoryTrailsUnlocked(category)&&_allCategoryFlaresUnlocked(category)&&_allCategoryDeathFxUnlocked(category)&&_allCategoryMusicUnlocked(category));}
     public static void UnlockSkin(string name){if(!_isSkinUnlocked(name)){SaveSerial.instance.playerData.skinsUnlocked.Add(name);}}
     public static void UnlockTrail(string name){if(!_isTrailUnlocked(name)){SaveSerial.instance.playerData.trailsUnlocked.Add(name);}}
-    public static void UnlockFlare(string name){if(!_isFlareUnlocked(name)){SaveSerial.instance.playerData.flaresUnlocked.Add(name);}}
+    public static void UnlockFlares(string name){if(!_isFlaresUnlocked(name)){SaveSerial.instance.playerData.flaresUnlocked.Add(name);}}
     public static void UnlockDeathFx(string name){if(!_isDeathFxUnlocked(name)){SaveSerial.instance.playerData.deathFxUnlocked.Add(name);}}
     public static void UnlockMusic(string name){if(!_isMusicUnlocked(name)){SaveSerial.instance.playerData.musicUnlocked.Add(name);}}
 }

@@ -32,7 +32,7 @@ public class CstmzElement : MonoBehaviour, IEventSystemHandler, IPointerEnterHan
 
         if(elementType==CstmzType.skin){if(!CustomizationInventory._isSkinUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.white;}}
         if(elementType==CstmzType.trail){if(!CustomizationInventory._isTrailUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.clear;}}
-        if(elementType==CstmzType.flares){if(!CustomizationInventory._isFlareUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.clear;}}
+        if(elementType==CstmzType.flares){if(!CustomizationInventory._isFlaresUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.clear;}}
         if(elementType==CstmzType.deathFx){if(!CustomizationInventory._isDeathFxUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.clear;}}
         if(elementType==CstmzType.music){if(!CustomizationInventory._isMusicUnlocked(elementName)){elementPv.GetComponent<Image>().color=new Color(0.15f,0.15f,0.15f,1);}else{elementPv.GetComponent<Image>().color=Color.white;}}
 
@@ -43,7 +43,7 @@ public class CstmzElement : MonoBehaviour, IEventSystemHandler, IPointerEnterHan
     }
     public void SetSkin(){if(CustomizationInventory._isSkinUnlocked(elementName))CustomizationInventory.instance.SetSkin(elementName+_VariantID());}
     public void SetTrail(){if(CustomizationInventory._isTrailUnlocked(elementName))CustomizationInventory.instance.SetTrail(elementName);}
-    public void SetFlares(){if(CustomizationInventory._isFlareUnlocked(elementName))CustomizationInventory.instance.SetFlares(elementName);}
+    public void SetFlares(){if(CustomizationInventory._isFlaresUnlocked(elementName))CustomizationInventory.instance.SetFlares(elementName);}
     public void SetDeathFx(){if(CustomizationInventory._isDeathFxUnlocked(elementName))CustomizationInventory.instance.SetDeathFx(elementName);}
     public void SetMusic(){if(CustomizationInventory._isMusicUnlocked(elementName))CustomizationInventory.instance.SetMusic(elementName);}
 

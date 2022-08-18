@@ -781,6 +781,13 @@ MonoBehaviour:
     category: 3
     parts:
     - {fileID: 100000, guid: 9bd8305abbcce0a419c1d923b5d7392c, type: 3}
+  - displayName: B&W
+    name: bw
+    rarity: 2
+    category: 2
+    parts:
+    - {fileID: 100000, guid: 840d8214466c97b4d991f8521f417efb, type: 3}
+    - {fileID: 100000, guid: ad511b5106fd1c147bbe1f9ba76e39e9, type: 3}
   - displayName: Police
     name: police
     rarity: 3
@@ -794,13 +801,6 @@ MonoBehaviour:
     category: 2
     parts:
     - {fileID: 100000, guid: 4173a980ade408149b1be734ac52c21c, type: 3}
-  - displayName: B&W
-    name: bw
-    rarity: 2
-    category: 2
-    parts:
-    - {fileID: 100000, guid: 840d8214466c97b4d991f8521f417efb, type: 3}
-    - {fileID: 100000, guid: ad511b5106fd1c147bbe1f9ba76e39e9, type: 3}
   - displayName: Pink
     name: pink
     rarity: 1

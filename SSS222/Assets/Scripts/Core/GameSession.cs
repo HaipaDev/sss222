@@ -293,7 +293,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             string nickInfo="";if(!String.IsNullOrEmpty(nickname))nickInfo=" | "+nickname;
             if(sceneName!="Game"){
                 if(sceneName=="SandboxMode"){presenceStatus=_prefixStatus+"Creating a gamemode"+nickInfo+_suffixStatus;}
-                else if(sceneName=="Customization"){presenceStatus=_prefixStatus+"Customizing"+nickInfo+_suffixStatus;}
+                else if(sceneName=="Customization"){
+                    if(!CustomizationInventory.instance.lockboxesPanelOpen){presenceStatus=_prefixStatus+"Customizing"+nickInfo+_suffixStatus;}
+                    else{presenceStatus=_prefixStatus+"Opening Lockboxes"+nickInfo+_suffixStatus;}
+                }
                 else{presenceStatus=_prefixStatus+"In Menus"+nickInfo+_suffixStatus;}
                 presenceDetails=_prefixDetails+""+_suffixDetails;
             }else{
@@ -315,7 +318,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                             var b=FindObjectOfType<BossAI>();var be=b.GetComponent<Enemy>();
                             //presenceDetails=_prefixDetails+"Boss Health: "+be.health+"/"+be.healthMax+_suffixDetails;
                             presenceDetails=_prefixDetails+"Progress: "+System.Math.Round((be.health/be.healthMax)*100f,2)+"%"+_suffixDetails;
-                            presenceStatus=_prefixStatus+"Fighting "+be.name+nickInfo+_suffixStatus;
+                            presenceStatus=_prefixStatus+"Fighting "+GameRules.instance.bossInfo.name+nickInfo+_suffixStatus;
                         }
                     }
                 }

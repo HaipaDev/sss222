@@ -71,6 +71,7 @@ public class BossAI : MonoBehaviour{
         Shake.instance.CamShake(GameRules.instance.bossInfo.deathShakeStrength,GameRules.instance.bossInfo.deathShakeSpeed);
         SaveSerial.instance.advD.defeatedBosses.Add(en.name);
         StatsAchievsManager.instance.BossDefeated(en.name);
+        BossCosmeticsUnlocks();
         UpgradeMenu.instance.OpenZoneMapPostBoss();
         Destroy(gameObject);
     }
@@ -240,5 +241,10 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
         SetBossSpecificVars();
         _phaseCor=null;
 
+    }
+
+
+    void BossCosmeticsUnlocks(){
+        //if(_isMOL()){CustomizationInventory.UnlockSkin("Maniac");}
     }
 }

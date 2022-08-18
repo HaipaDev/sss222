@@ -321,7 +321,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 #endregion
 
 #region//Public functions
-	public void TransformIntoUIParticle(GameObject go,float mult=0,float dur=-4,bool multShape=false){
+	public void TransformIntoUIParticle(GameObject go,float mult=0,float dur=-4,bool multShape=false,int type=0){
 		if(go.GetComponent<UnityEngine.UI.Extensions.UIParticleSystem>()==null){
 			var ps=go.GetComponent<ParticleSystem>();var psMain=ps.main;
 			if(mult==0){
@@ -336,7 +336,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 			var startSpeed=psMain.startSpeed;
 			var speedMin=startSpeed.constantMin;var speedMax=startSpeed.constantMax;if(speedMin==0){speedMin=speedMax;}
 			var startColor=new ParticleSystem.MinMaxGradient(psMain.startColor.colorMin,psMain.startColor.colorMax);
-			var _color=startColor.colorMin;if(startColor.colorMin.r<0){_color=startColor.colorMax;}
+			var _color=startColor.colorMin;if(startColor.colorMin.r<0.15f&&startColor.colorMin.g<0.15f&&startColor.colorMin.b<0.15f){_color=startColor.colorMax;}
 			if(_color==Color.clear){_color=Color.white;}
 			//psMain.startColor=new ParticleSystem.MinMaxGradient(_color,psMain.startColor.colorMax);
 			var colorBySpeed=ps.colorBySpeed;
@@ -355,7 +355,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 			Debug.Log(go.name+" | ColorMax: "+startColor.colorMax);
 			float H,S,V;Color.RGBToHSV(_color,out H,out S,out V);
 			Debug.Log(go.name+" | _color: "+_color + " | HSV("+H+", "+S+", "+V+")");*/
-			if(_isColorDark(_color)){
+			if(_isColorDark(_color)||type==1){
 				//Debug.Log(go.name+" - IsDark");
 				mat=new Material(Shader.Find("UI Extensions/Particles/Alpha Blended"));
 			}
@@ -369,7 +369,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		return Quaternion.AngleAxis(angle, Vector3.forward);
 	}
 	public static bool _isColorDark(Color color){bool b=false;float H,S,V;Color.RGBToHSV(color,out H,out S,out V);if(V<=0.3f){b=true;}return b;}
-	public void MakeParticleLooping(ParticleSystem ps){var psMain=ps.main;psMain.loop=true;psMain.stopAction=ParticleSystemStopAction.None;}
+	public static void MakeParticleLooping(ParticleSystem ps){var psMain=ps.main;psMain.loop=true;psMain.stopAction=ParticleSystemStopAction.None;}
 
 	public class CoroutineWithData {
 		public Coroutine coroutine { get; private set; }
