@@ -22,8 +22,9 @@ public class LockboxElement : MonoBehaviour, IEventSystemHandler, IPointerEnterH
             _lockboxCount(name).count--;
         }else{AudioManager.instance.Play("Deny");}
     }
-    public void AddLockbox(){
-        _lockboxCount(name).count++;
+    public void CraftLockbox(){
+        if(SaveSerial.instance.playerData.dynamCelestStars>=GameAssets.instance.GetLockbox(name).cost){_lockboxCount(name).count++;SaveSerial.instance.playerData.dynamCelestStars-=GameAssets.instance.GetLockbox(name).cost;AudioManager.instance.Play("LockboxCraft");}
+        else{AudioManager.instance.Play("Deny");}
     }
     public LockboxCount _lockboxCount(string str){return SaveSerial.instance.playerData.lockboxesInventory.Find(x=>x.name==str);}
     public void OnPointerClick(PointerEventData eventData){
@@ -31,7 +32,7 @@ public class LockboxElement : MonoBehaviour, IEventSystemHandler, IPointerEnterH
             UseLockbox();
         }
         else if(eventData.button==PointerEventData.InputButton.Right){
-            AddLockbox();
+            CraftLockbox();
         }
     }
     

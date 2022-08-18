@@ -131,7 +131,7 @@ public class ValueDisplay : MonoBehaviour{
         }
     #endregion
     #region//SaveSerial
-        if(SaveSerial.instance!=null){      var s=SaveSerial.instance;var ss=s.settingsData;var sh=s.hyperGamerLoginData;
+        if(SaveSerial.instance!=null){      var s=SaveSerial.instance;var sp=s.playerData;var sa=s.advD;var ss=s.settingsData;var sh=s.hyperGamerLoginData;
             if(value=="inputType"){_txt=ss.inputType.ToString();}
             else if(value=="joystickType"){_txt=ss.joystickType.ToString();}
             else if(value=="joystickSize"){_txt=System.Math.Round(ss.joystickSize,2).ToString();}
@@ -140,6 +140,9 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="soundVolume"){_txt=ss.soundVolume.ToString();}
             else if(value=="ambienceVolume"){_txt=ss.ambienceVolume.ToString();}
             else if(value=="musicVolume"){_txt=ss.musicVolume.ToString();}
+
+            else if(value=="dynamCelestStarsCount"){_txt="x"+sp.dynamCelestStars.ToString();}
+            else if(value=="starshardsCount"){_txt="x"+sp.starshards.ToString();}
         }
     #endregion
     #region//DBAccess

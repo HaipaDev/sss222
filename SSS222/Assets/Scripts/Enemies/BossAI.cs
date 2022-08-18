@@ -245,6 +245,6 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
 
 
     void BossCosmeticsUnlocks(){
-        //if(_isMOL()){CustomizationInventory.UnlockSkin("Maniac");}
+        if(_isMOL()){CustomizationInventory.UnlockSkin("maniac");}
     }
 }

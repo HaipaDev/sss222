@@ -94,6 +94,7 @@ public class PlayerModules : MonoBehaviour{
         shipLvl++;shipLvlFraction=0;
         UpgradeMenu.instance.LevelUp();UpgradeMenu.instance.LvlEvents();
         if(FindObjectOfType<CelestialPoints>()!=null){FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();}
+        if(shipLvl>1)SaveSerial.instance.playerData.dynamCelestStars++;
     }
     public bool _isLvlUpable(){return shipLvlFraction>=lvlFractionsMax&&lvlFractionsMax!=0;}
     

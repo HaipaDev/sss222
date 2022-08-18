@@ -28,6 +28,8 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [HeaderAttribute("Lockboxes Objects")]
     [AssetsOnly][SerializeField] GameObject lockboxElementPrefab;
     [SceneObjectsOnly][SerializeField] RectTransform lockboxElementListContent;
+    [SceneObjectsOnly][SerializeField] TextMeshProUGUI starCraft_costText;
+    [SceneObjectsOnly][SerializeField] TextMeshProUGUI starCraft_chanceText;
     [HeaderAttribute("LockboxOpening Objects")]
     [SceneObjectsOnly][SerializeField] Image lockboxIcon;
     [SceneObjectsOnly][SerializeField] Image rarityGlow;
@@ -50,6 +52,8 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [SerializeField] public string deathFxName="def";
     [SerializeField] public string musicName=CstmzMusic._cstmzMusicDef;
     [SerializeField] public float openingTime=4;
+    [SerializeField] public int dynamCelestStar_shardCost=10;
+    [SerializeField] public float dynamCelestStar_craftChance=70;
     [DisableInEditorMode] public float openingTimer=-4;
     [DisableInEditorMode] public bool lockboxesPanelOpen;
     bool loaded;
@@ -89,10 +93,9 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         loaded=true;
         SetType(typeSelected);
         yield return new WaitForSecondsRealtime(0.02f);
-        OpenCustomizationPanel();
-        //RecreateAllElements();
         RecreateAllLockboxElements();
         yield return new WaitForSecondsRealtime(0.02f);
+        OpenCustomizationPanel();
         HighlightSelectedType();
 
         foreach(CstmzLockbox lb in GameAssets.instance.lockboxes){if(!SaveSerial.instance.playerData.lockboxesInventory.Exists(x=>x.name==lb.name)){SaveSerial.instance.playerData.lockboxesInventory.Add(new LockboxCount{name=lb.name,count=0});}}
@@ -124,16 +127,15 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         }
 
         if(openingTimer>0){openingTimer-=Time.unscaledDeltaTime;}
-        else if(openingTimer<=0&&openingTimer!=-4){
-            
-            openingTimer=-4;
-        }
+        else if(openingTimer<=0&&openingTimer!=-4){openingTimer=-4;}
 
         if(skinName!="def"&&trailName!="def"&&flaresName!="def"){StatsAchievsManager.instance.CustomizedAll();}
         RefreshParticles();
         if(GSceneManager.EscPressed()){Back();}
         if(lockboxesPanel.activeSelf||lockboxOpeningPanel.activeSelf){lockboxesPanelOpen=true;}else{lockboxesPanelOpen=false;}
         if(lockboxAnimSpr!=null){dropIcon.sprite=lockboxAnimSpr;}
+        if(starCraft_costText!=null){starCraft_costText.text="x"+dynamCelestStar_shardCost.ToString();}
+        if(starCraft_chanceText!=null){starCraft_chanceText.text=Math.Round(dynamCelestStar_craftChance,2).ToString()+"%";}
     }
     public void Back(){
         if(variantsPanel.activeSelf){CloseVariants();}
@@ -266,6 +268,15 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     }
     void StopAnimatingLockboxDrop(){lockboxAnimSpr=null;if(lockboxDropAnim!=null)StopCoroutine(lockboxDropAnim);lockboxDropAnim=null;iLockboxDropAnim=0;}
     public void QuitOpeningLockbox(){if(_itemDropped){OpenLockboxesPanel();_itemDropped=false;StopAnimatingLockboxDrop();foreach(Transform tr in dropIcon.transform){Destroy(tr.gameObject);}}}
+    public void CraftCelestStar(){
+        if(SaveSerial.instance.playerData.starshards>=dynamCelestStar_shardCost){
+            if(GameAssets.CheckChance(dynamCelestStar_craftChance)){
+                SaveSerial.instance.playerData.dynamCelestStars++;
+                AudioManager.instance.Play("StarCraft");
+            }else{AudioManager.instance.Play("StarCraft-Fail");}
+            SaveSerial.instance.playerData.starshards-=dynamCelestStar_shardCost;
+        }else{AudioManager.instance.Play("Deny");}
+    }
 
     public void RecreateAllElements(){DeleteAllElements();CreateAllElements();HighlightSelectedElement();}
     //public void RecreateAllElements(){StartCoroutine(RecreateAllElementsI());}
@@ -571,7 +582,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     }
     public void SetDeathFx(string str){deathFxName=str;HighlightSelectedElement();HighlightSelectedType();}
     public CstmzMusic GetMusic(string str){return GameAssets.instance.GetMusic(str);}
-    public void SetMusic(string str){musicName=str;Jukebox.instance.SetMusic(GameAssets.instance.GetMusic(musicName).track,true);HighlightSelectedElement();HighlightSelectedType();}
+    public void SetMusic(string str){musicName=str;if(Jukebox.instance==null){Instantiate(GameCreator.instance.GetJukeboxPrefab());}Jukebox.instance.SetMusic(GameAssets.instance.GetMusic(musicName).track,true);HighlightSelectedElement();HighlightSelectedType();}
 
 
     public static bool _isSkinUnlocked(string name){return SaveSerial.instance.playerData.skinsUnlocked.Contains(name)||name=="def";}

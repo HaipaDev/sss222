@@ -104,6 +104,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public string flaresName="def";
 		public string deathFxName="def";
 		public string musicName=CstmzMusic._cstmzMusicDef;
+		public int dynamCelestStars;
+		public int starshards;
 		public List<LockboxCount> lockboxesInventory;
 		public List<string> skinsUnlocked;
 		public List<string> trailsUnlocked;

@@ -276,6 +276,15 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
         return s;
 	}
+
+	public CstmzLockbox GetLockbox(string str){
+		CstmzLockbox lb=lockboxes.Find(x=>x.name==str);
+		if(lb==null){
+			Debug.LogWarning("Lockbox: " + str + " not found!");
+			return null;
+		}
+        return lb;
+	}
 	
 	public string GetDisplayName(string str,CstmzType cstmzType){
 		string ss=null;
@@ -551,6 +560,7 @@ public class CstmzLockbox:_CstmzTypable{
 	public Sprite icon;
 	public Sprite iconOpen;
 	public CstmzCategory category;
+	public int cost=10;
 	public List<CstmzRarityChance> skinDrops=new List<CstmzRarityChance>(){new CstmzRarityChance{rarity=CstmzRarity.common,chance=4},new CstmzRarityChance{rarity=CstmzRarity.rare,chance=3},new CstmzRarityChance{rarity=CstmzRarity.epic,chance=2},new CstmzRarityChance{rarity=CstmzRarity.legend,chance=1}};
 	public List<CstmzRarityChance> trailDrops=new List<CstmzRarityChance>(){new CstmzRarityChance{rarity=CstmzRarity.common,chance=4},new CstmzRarityChance{rarity=CstmzRarity.rare,chance=3},new CstmzRarityChance{rarity=CstmzRarity.epic,chance=2},new CstmzRarityChance{rarity=CstmzRarity.legend,chance=1}};
 	public List<CstmzRarityChance> flareDrops=new List<CstmzRarityChance>(){new CstmzRarityChance{rarity=CstmzRarity.common,chance=4},new CstmzRarityChance{rarity=CstmzRarity.rare,chance=3},new CstmzRarityChance{rarity=CstmzRarity.epic,chance=2},new CstmzRarityChance{rarity=CstmzRarity.legend,chance=1}};

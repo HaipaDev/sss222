@@ -723,3 +723,30 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: LockboxCraft
+    clip: {fileID: 8300000, guid: 3f4da4c775cdd69478ae96b4b8749949, type: 3}
+    volume: 0.75
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: StarCraft
+    clip: {fileID: 8300000, guid: 34187465cb99c2e469556c3c514233cd, type: 3}
+    volume: 0.75
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: StarCraft-Fail
+    clip: {fileID: 8300000, guid: 345f795542f398949a515f7c52d8aecb, type: 3}
+    volume: 0.75
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
