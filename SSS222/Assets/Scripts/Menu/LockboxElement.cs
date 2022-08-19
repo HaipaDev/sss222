@@ -7,14 +7,16 @@ using Sirenix.OdinInspector;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
-public class LockboxElement : MonoBehaviour, IEventSystemHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler{
+public class LockboxElement : MonoBehaviour{//, IEventSystemHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler{
     [SerializeField] public Image iconImg;
     [SerializeField] public TextMeshProUGUI titleText;
     [SerializeField] public TextMeshProUGUI countText;
-    public string name;
+    [SerializeField] public TextMeshProUGUI costText;
+    [DisableInEditorMode] public string name;
     void Start(){}
     void Update(){
         if(countText!=null)countText.text="x"+_lockboxCount(name).count.ToString();
+        if(costText!=null)costText.text=GameAssets.instance.GetLockbox(name).cost.ToString();
     }
     public void UseLockbox(){
         if(_lockboxCount(name).count>0){
@@ -27,7 +29,7 @@ public class LockboxElement : MonoBehaviour, IEventSystemHandler, IPointerEnterH
         else{AudioManager.instance.Play("Deny");}
     }
     public LockboxCount _lockboxCount(string str){return SaveSerial.instance.playerData.lockboxesInventory.Find(x=>x.name==str);}
-    public void OnPointerClick(PointerEventData eventData){
+    /*public void OnPointerClick(PointerEventData eventData){
         if(eventData.button==PointerEventData.InputButton.Left){
             UseLockbox();
         }
@@ -41,5 +43,5 @@ public class LockboxElement : MonoBehaviour, IEventSystemHandler, IPointerEnterH
     }
     public void OnPointerExit(PointerEventData eventData){//if(FindObjectOfType<CstmzSelectedInfo>()!=null){if(!UIInputSystem.instance.inputSelecting)
         //if(FindObjectOfType<CstmzSelectedInfo>().selectedElement==gameObject){FindObjectOfType<CstmzSelectedInfo>().selectedElement=null;}}
-    }
+    }*/
 }

@@ -734,16 +734,16 @@ MonoBehaviour:
     rarity: 3
     category: 3
     part: {fileID: 100000, guid: b98728d174a74e2488ee2ecdc2aa2b3f, type: 3}
-  - displayName: Rainbow
-    name: rainbow
-    rarity: 4
-    category: 2
-    part: {fileID: 100000, guid: 31f2e3cb080cbb24b993da879e10c178, type: 3}
   - displayName: Silverflame
     name: silverflame
     rarity: 2
     category: 2
     part: {fileID: 100000, guid: 83eea72fc297ad548a9f0ae07fad1a92, type: 3}
+  - displayName: Rainbow
+    name: rainbow
+    rarity: 4
+    category: 2
+    part: {fileID: 100000, guid: 31f2e3cb080cbb24b993da879e10c178, type: 3}
   - displayName: Goldenflame
     name: goldenflame
     rarity: 4
@@ -882,45 +882,45 @@ MonoBehaviour:
     cost: 10
     skinDrops:
     - rarity: 1
-      chance: 4
+      chance: 10
     - rarity: 2
-      chance: 3
+      chance: 5
     - rarity: 3
-      chance: 2
-    - rarity: 4
       chance: 1
+    - rarity: 4
+      chance: 0.05
     trailDrops:
     - rarity: 1
-      chance: 4
+      chance: 9
     - rarity: 2
-      chance: 3
+      chance: 5
     - rarity: 3
-      chance: 2
-    - rarity: 4
       chance: 1
+    - rarity: 4
+      chance: 0.04
     flareDrops:
     - rarity: 1
-      chance: 4
+      chance: 9
     - rarity: 2
-      chance: 3
+      chance: 4
     - rarity: 3
-      chance: 2
+      chance: 0.7
     - rarity: 4
-      chance: 1
+      chance: 0.04
     deathFxDrops:
     - rarity: 2
-      chance: 3
+      chance: 4
     - rarity: 3
-      chance: 2
+      chance: 0.7
     - rarity: 4
-      chance: 1
+      chance: 0.04
     musicDrops:
     - rarity: 2
-      chance: 3
-    - rarity: 3
       chance: 2
+    - rarity: 3
+      chance: 0.5
     - rarity: 4
-      chance: 1
+      chance: 0.03
   - displayName: Two Piece
     name: twoPiece
     icon: {fileID: 21300000, guid: aeb2747a2091d644cbe85cd06754aeed, type: 3}
@@ -929,42 +929,42 @@ MonoBehaviour:
     cost: 10
     skinDrops:
     - rarity: 1
-      chance: 4
+      chance: 10
     - rarity: 2
-      chance: 3
+      chance: 5
     - rarity: 3
-      chance: 2
-    - rarity: 4
       chance: 1
+    - rarity: 4
+      chance: 0.04
     trailDrops:
     - rarity: 1
-      chance: 4
+      chance: 9
     - rarity: 2
-      chance: 3
+      chance: 4
     - rarity: 3
-      chance: 2
+      chance: 0.7
     - rarity: 4
-      chance: 1
+      chance: 0.04
     flareDrops:
     - rarity: 1
-      chance: 4
+      chance: 9
     - rarity: 2
-      chance: 3
+      chance: 4
     - rarity: 3
-      chance: 2
+      chance: 0.7
     - rarity: 4
-      chance: 1
+      chance: 0.04
     deathFxDrops:
     - rarity: 2
-      chance: 3
-    - rarity: 3
       chance: 2
+    - rarity: 3
+      chance: 0.5
     - rarity: 4
-      chance: 1
+      chance: 0.03
     musicDrops:
     - rarity: 2
-      chance: 3
-    - rarity: 3
       chance: 2
+    - rarity: 3
+      chance: 0.5
     - rarity: 4
-      chance: 1
+      chance: 0.03

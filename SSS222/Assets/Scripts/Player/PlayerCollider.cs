@@ -131,6 +131,7 @@ public class PlayerCollider : MonoBehaviour{
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("gcloverPwrup").name)){
                     player.SetStatus("gclover",player.gcloverTime,GameRules.instance.statusCapDefault);
+                    foreach(Enemy en in FindObjectsOfType<Enemy>()){en.drops.Find(x=>x.name=="Starshard").dropChance*=4;}
                     GameSession.instance.MultiplyScore(1.25f);
                     player.energy=player.energyMax;
                     GameAssets.instance.VFX("GCloverOutVFX", Vector2.zero,1f);
