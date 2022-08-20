@@ -40,7 +40,7 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
     [DisableInEditorMode][SerializeField] float ammoTimer;
     void Awake(){if(GameCanvas.instance!=null){Destroy(gameObject);}else{instance=this;}}
     void Start(){
-        if(Camera.main.aspect>=1.33&&SaveSerial.instance.settingsData.upscaleHUD){
+        if(_canUpscaleHud()){
             foreach(RectTransform t in rescale16by9){
                 t.localScale=new Vector2(2,2);
                 t.anchoredPosition=new Vector2(t.anchoredPosition.x*2,t.anchoredPosition.y*2);
@@ -58,6 +58,7 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
             }
         }
     }
+    public static bool _canUpscaleHud(){return (Camera.main.aspect>=1.33&&SaveSerial.instance.settingsData.upscaleHUD&&!GameSession.instance.CheckGamemodeSelected("Classic"));}
     void Update(){
         if(SaveSerial.instance!=null)if(popupSumTime!=SaveSerial.instance.settingsData.popupSumTime){popupSumTime=SaveSerial.instance.settingsData.popupSumTime;}
 

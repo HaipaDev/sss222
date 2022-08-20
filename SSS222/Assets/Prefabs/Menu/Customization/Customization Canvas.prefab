@@ -1481,7 +1481,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 543, y: -75.632}
+  m_AnchoredPosition: {x: 543, y: -75.63202}
   m_SizeDelta: {x: 317.42404, y: 129.99997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5097213013255059657
@@ -3737,6 +3737,7 @@ MonoBehaviour:
   dynamCelestStar_craftChance: 70
   openingTimer: -4
   lockboxesPanelOpen: 0
+  _lockboxSelected: 
   _CstmzCategoryNames:
   - Special
   - Shop
@@ -6596,7 +6597,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5594342582179611756}
         m_TargetAssemblyTypeName: CustomizationInventory, Assembly-CSharp
-        m_MethodName: QuitOpeningLockbox
+        m_MethodName: OpenCloseLockboxButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7257,10 +7258,10 @@ RectTransform:
   m_Father: {fileID: 2882850442968600918}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 529.5, y: 1718.6}
-  m_SizeDelta: {x: 1081, y: 212.53}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -10.5, y: 758.6}
+  m_SizeDelta: {x: 1081, y: 212.53003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4496220915490460286
 CanvasRenderer:
@@ -7714,7 +7715,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 181, y: -75.632}
+  m_AnchoredPosition: {x: 181, y: -75.63202}
   m_SizeDelta: {x: 317.42404, y: 129.99997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6700657208260196925
@@ -8689,7 +8690,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 902.49994, y: -75.632}
+  m_AnchoredPosition: {x: 902.49994, y: -75.63202}
   m_SizeDelta: {x: 312.42398, y: 121.95498}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7346621091860634368
@@ -8970,7 +8971,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -30.634}
+  m_AnchoredPosition: {x: 0, y: -30.633972}
   m_SizeDelta: {x: 0, y: -61.266}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1230286640316233152
@@ -9940,7 +9941,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00020599365}
+  m_AnchoredPosition: {x: 0, y: -0.00024414062}
   m_SizeDelta: {x: 0, y: 59.94}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6796665718279464104

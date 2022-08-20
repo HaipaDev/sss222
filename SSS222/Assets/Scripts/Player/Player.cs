@@ -362,7 +362,7 @@ public class Player : MonoBehaviour{    public static Player instance;
 
             if(weaponsLimited){if(_curPwrup().timer>0){_curPwrup().timer-=Time.deltaTime;}
             if(_curPwrup().timer<=0&&_curPwrup().timer!=-4){_curPwrup().timer=-4;
-                if(powerups.Capacity>1){ClearCurrentPowerup();SelectAnyNotEmptyPowerup();}else{ResetPowerupDef();}
+                if(NotEmptyPowerupsCount()>1){ClearCurrentPowerup();SelectAnyNotEmptyPowerup();}else{ResetPowerupDef();}
                 if(autoShoot){shootCoroutine=null;Shoot();}AudioManager.instance.Play("PowerupOff");}
             }
 
@@ -559,13 +559,13 @@ public class Player : MonoBehaviour{    public static Player instance;
                     }if((!Input.GetButton("Fire1")&&!Input.GetKey(KeyCode.Z))||shootTimer<-1f){
                         if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                         shootCoroutine=null;
-                        if(moving==true)timerEnRegen+=Time.deltaTime;
+                        if(_canRegenEnergy())timerEnRegen+=Time.deltaTime;
                     }
                 }else{
                     if(shootCoroutine!=null){return;}
                     else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
                     //shootCoroutine=null;
-                    if(moving==true)timerEnRegen+=Time.deltaTime;
+                    if(_canRegenEnergy())timerEnRegen+=Time.deltaTime;
                 }
             }else if(inputType==InputType.drag){
                 if(!autoShoot){
@@ -578,14 +578,14 @@ public class Player : MonoBehaviour{    public static Player instance;
                     }if((!Input.GetButton("Fire1")&&!Input.GetKey(KeyCode.Z))||shootTimer<-1f){
                         if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                         shootCoroutine=null;
-                        if(moving==true)timerEnRegen+=Time.deltaTime;
+                        if(_canRegenEnergy())timerEnRegen+=Time.deltaTime;
                     }
                 }
             }else{//Regular shooting on Touch in ShootButton()
                 if(autoShoot){//Autoshoot on Touch
                     if(shootCoroutine!=null){return;}
                     else if(shootCoroutine==null&&shootTimer<=0f){shootCoroutine=ShootContinuously();StartCoroutine(shootCoroutine);}
-                    if(moving==true)timerEnRegen+=Time.deltaTime;
+                    if(_canRegenEnergy())timerEnRegen+=Time.deltaTime;
                 }
             }
         }else{if(shootCoroutine!=null)StopCoroutine(shootCoroutine);shootCoroutine=null;shootTimer=0;}
@@ -599,7 +599,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             }else if(pressed==false||shootTimer<-1f){
                 if(shootCoroutine!=null)StopCoroutine(shootCoroutine);
                 shootCoroutine=null;
-                if(moving==true)timerEnRegen+=Time.deltaTime;
+                if(_canRegenEnergy())timerEnRegen+=Time.deltaTime;
             }
         }else{return;}//Autoshoot in Shoot()
     }}
@@ -609,6 +609,13 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(!moveX&&moveY)tpPos=new Vector2(transform.position.x,pos.y);
         DClick(0);
     }
+    bool _canRegenEnergy(){return (moving&&
+        (_isPowerupEmptyCur()||
+            (!_isPowerupEmptyCur()&&
+                ((GetWeaponPropertyCur().weaponType==weaponType.melee&&GetWeaponPropertyCur().costType!=costType.energy)||GetWeaponPropertyCur().weaponType!=weaponType.melee)
+            )
+        )
+    );}
     public void DClick(int dir){
         if(_hasStatus("shadowdash")&&(energy>0||!energyOn)){
             if(inputType==InputType.mouse){
@@ -1250,6 +1257,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     public string _curPwrupName(){string str="";if(powerups.Count>powerupCurID){if(_curPwrup()!=null)str=_curPwrup().name;}return str;}
     public bool _isCurPowerupAnItem(){if(!_isPowerupEmptyCur())return _curPwrupName().Contains("item");else return false;}
     public bool ContainsPowerup(string str){bool b=false;if(powerups.Exists(x=>x.name==str)){b=true;}return b;}
+    public int NotEmptyPowerupsCount(){int i=0;foreach(Powerup p in powerups){if(p.name!="")i++;}return i;}
     public void SetPowerup(Powerup val){if(!ContainsPowerup(val.name)){
         if(!SaveSerial.instance.settingsData.alwaysReplaceCurrentSlot){int emptyCount=0;
             for(var i=0;i<powerups.Count;i++){

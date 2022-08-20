@@ -108,8 +108,10 @@ public class Enemy : MonoBehaviour{
                 if(!GameRules.instance.energyOnPlayer)dropValues[0]=0;
                 if(!GameRules.instance.crystalsOn)dropValues[1]=0;
                 if(!GameRules.instance.coresOn&&!GameSession.instance.CheckGamemodeSelected("Classic"))dropValues[2]=0;
-                if(GameSession.instance.CheckGamemodeSelected("Classic")){drops[2].name="Starshard";drops[2].ammount=Vector2.one;drops[2].dropChance=15f;}
-                if(!drops.Exists(x=>x.name=="Starshard")){drops.Add(new LootTableEntryDrops{name="Starshard",ammount=Vector2.one,dropChance=15f});}
+                if(GameSession.instance.CheckGamemodeSelected("Classic")){
+                    drops[2].name="Starshard";drops[2].ammount=Vector2.one;drops[2].dropChance=15f;
+                    if(!drops.Exists(x=>x.name=="Starshard")){drops.Add(new LootTableEntryDrops{name="Starshard",ammount=Vector2.one,dropChance=15f});}
+                }
             }
         }
 

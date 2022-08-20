@@ -371,18 +371,18 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
 
     public void UpgradeBody(){
         var _isAdventure=GameSession.instance.CheckGamemodeSelected("Adventure");
-        if(_isAdventure&&pmodules.shipLvlFraction>=GameRules.instance.bodyUpgrade_price){pmodules.bodyUpgraded++;pmodules.shipLvlFraction-=GameRules.instance.bodyUpgrade_price;}
-        else if(!_isAdventure&&pmodules.accumulatedCelestPoints>=GameRules.instance.bodyUpgrade_price){pmodules.bodyUpgraded++;pmodules.accumulatedCelestPoints-=GameRules.instance.bodyUpgrade_price;}
+        if(_isAdventure&&pmodules.shipLvlFraction>=GameRules.instance.bodyUpgrade_price){pmodules.bodyUpgraded++;pmodules.shipLvlFraction-=GameRules.instance.bodyUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
+        else if(!_isAdventure&&pmodules.accumulatedCelestPoints>=GameRules.instance.bodyUpgrade_price){pmodules.bodyUpgraded++;pmodules.accumulatedCelestPoints-=GameRules.instance.bodyUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
     }
     public void UpgradeEngine(){
         var _isAdventure=GameSession.instance.CheckGamemodeSelected("Adventure");
-        if(_isAdventure&&pmodules.shipLvlFraction>=GameRules.instance.engineUpgrade_price){pmodules.engineUpgraded++;pmodules.shipLvlFraction-=GameRules.instance.engineUpgrade_price;}
-        else if(!_isAdventure&&pmodules.accumulatedCelestPoints>=GameRules.instance.engineUpgrade_price){pmodules.engineUpgraded++;pmodules.accumulatedCelestPoints-=GameRules.instance.engineUpgrade_price;}
+        if(_isAdventure&&pmodules.shipLvlFraction>=GameRules.instance.engineUpgrade_price){pmodules.engineUpgraded++;pmodules.shipLvlFraction-=GameRules.instance.engineUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
+        else if(!_isAdventure&&pmodules.accumulatedCelestPoints>=GameRules.instance.engineUpgrade_price){pmodules.engineUpgraded++;pmodules.accumulatedCelestPoints-=GameRules.instance.engineUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
     }
     public void UpgradeBlasters(){
         var _isAdventure=GameSession.instance.CheckGamemodeSelected("Adventure");
-        if(_isAdventure&&pmodules.shipLvlFraction>=GameRules.instance.blastersUpgrade_price){pmodules.blastersUpgraded++;pmodules.shipLvlFraction-=GameRules.instance.blastersUpgrade_price;}
-        else if(!_isAdventure&&pmodules.accumulatedCelestPoints>=GameRules.instance.blastersUpgrade_price){pmodules.blastersUpgraded++;pmodules.accumulatedCelestPoints-=GameRules.instance.blastersUpgrade_price;}
+        if(_isAdventure&&pmodules.shipLvlFraction>=GameRules.instance.blastersUpgrade_price){pmodules.blastersUpgraded++;pmodules.shipLvlFraction-=GameRules.instance.blastersUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
+        else if(!_isAdventure&&pmodules.accumulatedCelestPoints>=GameRules.instance.blastersUpgrade_price){pmodules.blastersUpgraded++;pmodules.accumulatedCelestPoints-=GameRules.instance.blastersUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
     }
 
     public void SetAutoascend(bool isOn){pmodules.autoAscend=isOn;autoascendToggle.isOn=isOn;}

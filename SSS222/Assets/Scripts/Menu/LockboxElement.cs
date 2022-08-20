@@ -17,16 +17,20 @@ public class LockboxElement : MonoBehaviour{//, IEventSystemHandler, IPointerEnt
     void Update(){
         if(countText!=null)countText.text="x"+_lockboxCount(name).count.ToString();
         if(costText!=null)costText.text=GameAssets.instance.GetLockbox(name).cost.ToString();
+        if(CustomizationInventory._literallyEverythingInCategoryUnlocked(GameAssets.instance.GetLockbox(name).category))Debug.Log("everything unlocked in: "+name);
     }
     public void UseLockbox(){
-        if(_lockboxCount(name).count>0){
+        if(_lockboxCount(name).count>0&&!CustomizationInventory._literallyEverythingInCategoryUnlocked(GameAssets.instance.GetLockbox(name).category)){
             CustomizationInventory.instance.OpenLockboxOpeningPanel(name);
             _lockboxCount(name).count--;
         }else{AudioManager.instance.Play("Deny");}
     }
     public void CraftLockbox(){
-        if(SaveSerial.instance.playerData.dynamCelestStars>=GameAssets.instance.GetLockbox(name).cost){_lockboxCount(name).count++;SaveSerial.instance.playerData.dynamCelestStars-=GameAssets.instance.GetLockbox(name).cost;AudioManager.instance.Play("LockboxCraft");}
-        else{AudioManager.instance.Play("Deny");}
+        if(SaveSerial.instance.playerData.dynamCelestStars>=GameAssets.instance.GetLockbox(name).cost&&!CustomizationInventory._literallyEverythingInCategoryUnlocked(GameAssets.instance.GetLockbox(name).category)){
+            _lockboxCount(name).count++;
+            SaveSerial.instance.playerData.dynamCelestStars-=GameAssets.instance.GetLockbox(name).cost;
+            AudioManager.instance.Play("LockboxCraft");
+        }else{AudioManager.instance.Play("Deny");}
     }
     public LockboxCount _lockboxCount(string str){return SaveSerial.instance.playerData.lockboxesInventory.Find(x=>x.name==str);}
     /*public void OnPointerClick(PointerEventData eventData){

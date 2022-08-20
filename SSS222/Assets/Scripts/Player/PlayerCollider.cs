@@ -29,8 +29,9 @@ public class PlayerCollider : MonoBehaviour{
                     armorPenetr=UniCollider.GetArmorPenetr(dmgVal.armorPenetr,player.defense);
                     if(player.dashing==false)PlayerEffects(other.gameObject.name);
                 }
-                if(dmg>0){dmg=CalculateDmg(dmg,armorPenetr);}
+                if(dmg>0&&!GameSession.instance.CheckGamemodeSelected("Classic")){dmg=CalculateDmg(dmg,armorPenetr);}
                 else if(dmg<0){player.Damage(dmg,dmgType.heal);}
+                else if(dmg>0&&GameSession.instance.CheckGamemodeSelected("Classic")){dmg=CalculateDmgClassic(dmg);}
 
                 if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("CodeBreaker")&&other.gameObject.name.Contains("Zone_"))){dmg=0;}
                 if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isSkillEquipped("GiveItToMe")&&GetComponent<PlayerModules>().timerGiveItToMe>0)){
@@ -278,7 +279,7 @@ public class PlayerCollider : MonoBehaviour{
         if(def<-1){dmg/=Mathf.Abs(def);}
         return (float)System.Math.Round(dmg,2);
     }
-   void PlayerEffects(string goName,bool phase=false){
+    void PlayerEffects(string goName,bool phase=false){
         DamageValues dmgVal=UniCollider.GetDmgVal(goName);  if(dmgVal!=null){
             if(colliTypes.Contains(dmgVal.colliType)){
                 if(dmgVal.dmgFx){
@@ -303,6 +304,13 @@ public class PlayerCollider : MonoBehaviour{
                 }
             }
         }
+   }
+   float CalculateDmgClassic(float dmg){
+        var _cDmg=dmg;
+        if((_cDmg-Mathf.RoundToInt(_cDmg))<=0.4f){_cDmg=Mathf.RoundToInt(_cDmg);}
+        if(((_cDmg-Mathf.RoundToInt(_cDmg))>0.4f)&&((_cDmg-Mathf.RoundToInt(_cDmg))<0.6f)){_cDmg=Mathf.RoundToInt(_cDmg)+0.5f;}
+        if((_cDmg-Mathf.RoundToInt(_cDmg))>=0.6f){_cDmg=Mathf.RoundToInt(_cDmg)+1f;}
+        return _cDmg;
    }
    void ThornsHit(){player.Thorns();}
    public string _LastHitName(){return lastHitName;}

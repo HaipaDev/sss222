@@ -212,7 +212,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                             Player.instance.GetComponent<PlayerModules>().Ascend();
                             Ascend();
                         }
-                        if(Player.instance.GetComponent<PlayerModules>()._isLvlUpable()&&Player.instance.GetComponent<PlayerModules>()._isAutoLvl()&&Input.GetKeyDown(KeyCode.L)){Player.instance.GetComponent<PlayerModules>().LevelUp();}
+                        if(Player.instance.GetComponent<PlayerModules>()._isLvlUpable()&&!Player.instance.GetComponent<PlayerModules>()._isAutoLvl()&&Input.GetKeyDown(KeyCode.L)){Player.instance.GetComponent<PlayerModules>().LevelUp();}
                     }
                 }
                 
@@ -450,6 +450,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             //ss.gameSessionTime=currentPlaytime;
             if(FindObjectOfType<PlayerHolobody>()!=null){
                 var phb=FindObjectOfType<PlayerHolobody>();
+                ss.holo_zoneSelected=zoneSelected;
                 ss.holo_crystalsStored=phb.crystalsStored;
                 ss.holo_powerupStored=phb.powerupStored;
                 ss.holo_posX=phb.transform.position.x;
