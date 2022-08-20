@@ -645,6 +645,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6644735265139863176}
     m_Modifications:
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: frozenFlashSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: frozenFlashColor.a
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: frozenFlashColor.b
+      value: 0.8584906
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: frozenFlashColor.g
+      value: 0.7920185
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: frozenFlashColor.r
+      value: 0.54668033
+      objectReference: {fileID: 0}
     - target: {fileID: 233457172424892969, guid: cb589810bddf2054fb5df3ff39ad5292,
         type: 3}
       propertyPath: valueReq

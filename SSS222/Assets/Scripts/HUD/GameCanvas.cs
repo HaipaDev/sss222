@@ -10,6 +10,7 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
     [ChildGameObjectsOnly][SerializeField] List<RectTransform> rescale16by9;
     [SerializeField] List<RectTransformAndPos> rescaleAndMove16by9;
     [SerializeField] List<RectTransformAndPos> onlyMove16by9;
+    [SerializeField] List<RectTransformAlign> changeAlignment16by9;
     [SceneObjectsOnly][SerializeField] GameObject hpPopup;
     [DisableInEditorMode][SerializeField] float hpCount;
     [DisableInEditorMode][SerializeField] float hpTimer;
@@ -51,6 +52,9 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
             }
             foreach(RectTransformAndPos rt in onlyMove16by9){
                 rt.trans.anchoredPosition=new Vector2(rt.pos.x,rt.pos.y);
+            }
+            foreach(RectTransformAlign rt in changeAlignment16by9){
+                rt.trans.GetComponent<LayoutGroup>().childAlignment=rt.align;
             }
         }
     }

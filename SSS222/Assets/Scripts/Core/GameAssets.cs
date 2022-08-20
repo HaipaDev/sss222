@@ -470,6 +470,11 @@ public class RectTransformAndPos{
 	public RectTransform trans;
 	public Vector2 pos;
 }
+[System.Serializable]
+public class RectTransformAlign{
+	public RectTransform trans;
+	public TextAnchor align;
+}
 
 public enum CstmzRarity{def,common,rare,epic,legend}
 [System.Serializable]public class CstmzRarityChance{public CstmzRarity rarity;public float chance;}

@@ -14,6 +14,8 @@ public class Screenflash : MonoBehaviour{
     [SerializeField] float flameFlashSpeed;
     [SerializeField] Color electrcFlashColor;
     [SerializeField] float electrcFlashSpeed;
+    [SerializeField] Color frozenFlashColor;
+    [SerializeField] float frozenFlashSpeed;
     Image image;
     void Start(){
         image=GetComponent<Image>();
@@ -31,6 +33,8 @@ public class Screenflash : MonoBehaviour{
         else{image.color=Color.Lerp(image.color, Color.clear, flameFlashSpeed*Time.deltaTime);}
         if (Player.instance.electricified==true){image.color=electrcFlashColor;Player.instance.electricified=false;}
         else{image.color=Color.Lerp(image.color, Color.clear, electrcFlashSpeed*Time.deltaTime);}
+        if (Player.instance.frozen==true){image.color=frozenFlashColor;Player.instance.frozen=false;}
+        else{image.color=Color.Lerp(image.color, Color.clear, frozenFlashSpeed*Time.deltaTime);}
     }
     }
 }

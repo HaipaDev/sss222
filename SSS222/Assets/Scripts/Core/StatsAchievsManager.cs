@@ -120,7 +120,8 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
         case "Moon of Lunacy":CompleteAchiev("boss1");break;
     }}
     void AchievCosmeticsUnlocks(Achievement a){
-        if(a.name=="arcade_score-3"){CustomizationInventory.UnlockSkin("moyaiGold");}
+        if(a.name=="arcade_score-3"){CustomizationInventory._unlockGoldenMoyai();}
+        if(a.name=="boss1"){CustomizationInventory._unlockMOL();}
     }
 
     [Button]public void ClearSteamAchievs(){foreach(Steamworks.Data.Achievement sa in SteamUserStats.Achievements){sa.Clear();}}

@@ -88,7 +88,8 @@ public class ShipUI : MonoBehaviour{
     }
 
     IEnumerator FlaresPreviewI(){
-        if(flaresParent.childCount==0&&ShipCustomizationManager.instance!=null){
+        Debug.Log("FlaresPreviewI");
+        if(ShipCustomizationManager.instance!=null){
             var ps=ShipCustomizationManager.instance.GetFlareVFX().GetComponent<ParticleSystem>();var psMain=ps.main;var dur=psMain.duration;
             MakeFlares();
             yield return new WaitForSeconds(psMain.startLifetime.constantMax+psMain.duration*2);
@@ -96,6 +97,7 @@ public class ShipUI : MonoBehaviour{
         }else{yield return null;}
     }
     public void MakeFlares(){
+        Debug.Log("Making flares");
         var flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);
             GameAssets.instance.TransformIntoUIParticle(flareObj,0,-1);flareObj.transform.localPosition=new Vector2(-44f,6f);
         flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);

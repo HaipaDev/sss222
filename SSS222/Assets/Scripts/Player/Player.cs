@@ -130,6 +130,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     [HideInInspector]public bool dashing = false;
     [HideInInspector]public bool flamed = false;
     [HideInInspector]public bool electricified = false;
+    [HideInInspector]public bool frozen = false;
     [HideInInspector]public float shootTimer = 2f;
     [HideInInspector]public float shadowdashInstTime = 0.025f;
     [HideInInspector]public float shadowtracesInstTime = 0.1f;
@@ -1168,6 +1169,8 @@ public class Player : MonoBehaviour{    public static Player instance;
         SetStatus("electrc",duration,timerCap);
     }
     public void Freeze(float duration,float timerCap=0){
+        frozen=true;
+        AudioManager.instance.Play("Freeze");
         SetStatus("frozen",duration,timerCap);
     }
     public void Armor(float duration,float timerCap,/*int*/float strength=1){float _strgh=strength;

@@ -628,4 +628,8 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public static void UnlockFlares(string name){if(!_isFlaresUnlocked(name)){SaveSerial.instance.playerData.flaresUnlocked.Add(name);}}
     public static void UnlockDeathFx(string name){if(!_isDeathFxUnlocked(name)){SaveSerial.instance.playerData.deathFxUnlocked.Add(name);}}
     public static void UnlockMusic(string name){if(!_isMusicUnlocked(name)){SaveSerial.instance.playerData.musicUnlocked.Add(name);}}
+
+    public static void _unlockGoldenMoyai(){CustomizationInventory.UnlockSkin("moyaiGold");CustomizationInventory.UnlockTrail("goldenflame");CustomizationInventory.UnlockFlares("golden");}
+    public static void _unlockStargazer(){CustomizationInventory.UnlockSkin("stargazer");CustomizationInventory.UnlockTrail("stardust");}
+    public static void _unlockMOL(){CustomizationInventory.UnlockSkin("maniac");}
 }

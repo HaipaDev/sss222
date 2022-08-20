@@ -2819,6 +2819,9 @@ MonoBehaviour:
   onlyMove16by9:
   - trans: {fileID: 5200935096917740692}
     pos: {x: 930, y: 410}
+  changeAlignment16by9:
+  - trans: {fileID: 2521916807951642110}
+    align: 0
   hpPopup: {fileID: 4206067267432462627}
   hpCount: 0
   hpTimer: 0
@@ -5683,6 +5686,8 @@ MonoBehaviour:
   flameFlashSpeed: 3
   electrcFlashColor: {r: 0.15477037, g: 0.34252575, b: 0.6981132, a: 0.5882353}
   electrcFlashSpeed: 2
+  frozenFlashColor: {r: 0, g: 0, b: 0, a: 0}
+  frozenFlashSpeed: 0
 --- !u!1 &7407391320998035130
 GameObject:
   m_ObjectHideFlags: 0
@@ -7162,6 +7167,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3910c3b57144e94ba72d0ba5ab10dc8, type: 3}
+--- !u!224 &2521916807951642110 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 58493022283278326, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+    type: 3}
+  m_PrefabInstance: {fileID: 2463586513523558920}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2521916808574491117 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 58493023979869157, guid: c3910c3b57144e94ba72d0ba5ab10dc8,

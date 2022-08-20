@@ -423,25 +423,12 @@ MonoBehaviour:
     sprOverlay: {fileID: 0}
     variants: []
   - artist: 
-    displayName: Chameleon
-    name: chameleon
-    rarity: 4
+    displayName: Maniac
+    name: maniac
+    rarity: 3
     category: 0
     animated: 0
-    spr: {fileID: 21300000, guid: 8c3dccef1eacea141a8d89d0bd965366, type: 3}
-    animSpeed: 0.05
-    animVals: []
-    sprOverlay: {fileID: 21300000, guid: 823400051cf2dd84495c524fba381fef, type: 3}
-    variants:
-    - spr: {fileID: 21300000, guid: eb0e0377b922df040b69396d565f0312, type: 3}
-      sprOverlay: {fileID: 21300000, guid: 823400051cf2dd84495c524fba381fef, type: 3}
-  - artist: Shy
-    displayName: Golden Moyai
-    name: moyaiGold
-    rarity: 4
-    category: 0
-    animated: 0
-    spr: {fileID: 21300000, guid: e5e675c81ffb1f642b0e76cd73e0750c, type: 3}
+    spr: {fileID: 21300000, guid: 22d332bd8d1167c45a3e7cd9a290725a, type: 3}
     animSpeed: 0.05
     animVals: []
     sprOverlay: {fileID: 0}
@@ -457,6 +444,30 @@ MonoBehaviour:
     animVals: []
     sprOverlay: {fileID: 0}
     variants: []
+  - artist: Shy
+    displayName: Golden Moyai
+    name: moyaiGold
+    rarity: 4
+    category: 0
+    animated: 0
+    spr: {fileID: 21300000, guid: e5e675c81ffb1f642b0e76cd73e0750c, type: 3}
+    animSpeed: 0.05
+    animVals: []
+    sprOverlay: {fileID: 0}
+    variants: []
+  - artist: 
+    displayName: Chameleon
+    name: chameleon
+    rarity: 4
+    category: 0
+    animated: 0
+    spr: {fileID: 21300000, guid: 8c3dccef1eacea141a8d89d0bd965366, type: 3}
+    animSpeed: 0.05
+    animVals: []
+    sprOverlay: {fileID: 21300000, guid: 823400051cf2dd84495c524fba381fef, type: 3}
+    variants:
+    - spr: {fileID: 21300000, guid: eb0e0377b922df040b69396d565f0312, type: 3}
+      sprOverlay: {fileID: 21300000, guid: 823400051cf2dd84495c524fba381fef, type: 3}
   - artist: 
     displayName: Mk.20
     name: mk20
@@ -724,16 +735,16 @@ MonoBehaviour:
     rarity: 0
     category: 3
     part: {fileID: 100000, guid: 081b45b1b47b4094f818a7a47a0c69b6, type: 3}
-  - displayName: Octane
-    name: octane
-    rarity: 2
-    category: 3
-    part: {fileID: 100000, guid: 7b1e0deef82c92e4b9b21ccf71210a72, type: 3}
-  - displayName: Invert
-    name: invert
+  - displayName: Pinkflame
+    name: pinkflame
     rarity: 3
-    category: 3
-    part: {fileID: 100000, guid: b98728d174a74e2488ee2ecdc2aa2b3f, type: 3}
+    category: 0
+    part: {fileID: 100000, guid: 0eb6d8be563b00d47a507fefe3eb89c4, type: 3}
+  - displayName: Goldenflame
+    name: goldenflame
+    rarity: 4
+    category: 0
+    part: {fileID: 100000, guid: f7694e66ba7ee76428257d541adaff0e, type: 3}
   - displayName: Silverflame
     name: silverflame
     rarity: 2
@@ -744,31 +755,31 @@ MonoBehaviour:
     rarity: 4
     category: 2
     part: {fileID: 100000, guid: 31f2e3cb080cbb24b993da879e10c178, type: 3}
-  - displayName: Goldenflame
-    name: goldenflame
-    rarity: 4
-    category: 0
-    part: {fileID: 100000, guid: f7694e66ba7ee76428257d541adaff0e, type: 3}
   - displayName: Purple Shadow
     name: purple
     rarity: 1
     category: 3
     part: {fileID: 100000, guid: da64923a9b5a3b34fbcce1040f7b3126, type: 3}
-  - displayName: Pinkflame
-    name: pinkflame
-    rarity: 3
-    category: 0
-    part: {fileID: 100000, guid: 0eb6d8be563b00d47a507fefe3eb89c4, type: 3}
   - displayName: Greenflame
     name: greenflame
     rarity: 1
     category: 3
     part: {fileID: 100000, guid: 1c58864a1ebfb1348885b6480d217ef9, type: 3}
+  - displayName: Octane
+    name: octane
+    rarity: 2
+    category: 3
+    part: {fileID: 100000, guid: 7b1e0deef82c92e4b9b21ccf71210a72, type: 3}
   - displayName: Icyflame
     name: icyflame
     rarity: 2
     category: 3
     part: {fileID: 100000, guid: c33e32c74d5c2d74cb3fd5761cf53b82, type: 3}
+  - displayName: Invert
+    name: invert
+    rarity: 3
+    category: 3
+    part: {fileID: 100000, guid: b98728d174a74e2488ee2ecdc2aa2b3f, type: 3}
   - displayName: Shadow Ink
     name: shadowInk
     rarity: 3
@@ -807,9 +818,9 @@ MonoBehaviour:
     category: 2
     parts:
     - {fileID: 100000, guid: 4173a980ade408149b1be734ac52c21c, type: 3}
-  - displayName: Pink
-    name: pink
-    rarity: 1
+  - displayName: Gum
+    name: gum
+    rarity: 2
     category: 3
     parts:
     - {fileID: 100000, guid: afc7453f21dce3046bf8f051ad805f8d, type: 3}
