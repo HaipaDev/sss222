@@ -436,6 +436,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_fontColorGradient.topRight.b
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_fontColorGradient.topRight.g
+      value: 0.5294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_fontColorGradient.topRight.r
+      value: 0.6784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_fontColorGradient.bottomRight.b
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_fontColorGradient.bottomRight.g
+      value: 0.61960787
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542442388, guid: c3243b564edf95f46895bf4210dd31a4, type: 3}
+      propertyPath: m_fontColorGradient.bottomRight.r
+      value: 0.5921569
+      objectReference: {fileID: 0}
     - target: {fileID: 525797133258980674, guid: c3243b564edf95f46895bf4210dd31a4,
         type: 3}
       propertyPath: m_AnchorMax.y
