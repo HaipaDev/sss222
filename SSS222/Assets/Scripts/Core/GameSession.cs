@@ -553,10 +553,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 pm.shipLvlFraction=ss.shipLvlFraction;
                 pm.autoAscend=ss.autoAscend;
                 pm.autoLvl=ss.autoLvl;
-                pm.moduleSlots=ss.moduleSlots;
-                pm.skillsSlots=ss.skillsSlots;
-                pm.modulesList=ss.modulesList;
-                pm.skillsList=ss.skillsList;
+                if(ss.moduleSlots.Count>0)pm.moduleSlots=ss.moduleSlots;
+                if(ss.skillsSlots.Count>0)pm.skillsSlots=ss.skillsSlots;
+                if(ss.modulesList.Count>0)pm.modulesList=ss.modulesList;
+                if(ss.skillsList.Count>0)pm.skillsList=ss.skillsList;
 
                 pm.bodyUpgraded=ss.bodyUpgraded;
                 pm.engineUpgraded=ss.engineUpgraded;

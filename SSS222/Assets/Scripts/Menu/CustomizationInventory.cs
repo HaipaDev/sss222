@@ -57,9 +57,10 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [DisableInEditorMode] public float openingTimer=-4;
     [DisableInEditorMode] public bool lockboxesPanelOpen;
     [DisableInEditorMode] public string _lockboxSelected;
-    bool loaded;
+    [ReadOnly][SerializeField]bool loaded;
     void Awake(){instance=this;}
     IEnumerator Start(){
+        yield return new WaitForSecondsRealtime(0.02f);
         if(String.IsNullOrEmpty(skinName)||GetSkin(skinName)==null||!_isSkinUnlocked(skinName)){skinName="def";}
         if(String.IsNullOrEmpty(trailName)||GetTrail(trailName)==null||!_isTrailUnlocked(trailName)){trailName="def";}
         if(String.IsNullOrEmpty(flaresName)||GetFlares(flaresName)==null||!_isFlaresUnlocked(flaresName)){flaresName="def";}

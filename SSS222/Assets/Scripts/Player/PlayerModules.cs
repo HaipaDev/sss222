@@ -143,7 +143,7 @@ public class PlayerModules : MonoBehaviour{
                 if(_canMakeShield){
                     var l=GameAssets.instance.Make("LunarShield",transform.position);l.transform.parent=transform;
                     l.GetComponent<LunarShield>().fragmentsPresent=fragments;
-                    player.AddSubCoins(cost);
+                    player.AddSubCoins(cost,false);
                     GetSkill(item.item.name).cooldown=item.cooldown;
                 }
             }else if(item.item.name=="Determined"&&player.health<=25){

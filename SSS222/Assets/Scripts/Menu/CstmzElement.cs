@@ -43,7 +43,7 @@ public class CstmzElement : MonoBehaviour, IEventSystemHandler, IPointerEnterHan
     }
     public void SetSkin(){if(CustomizationInventory._isSkinUnlocked(elementName))CustomizationInventory.instance.SetSkin(elementName+_VariantID());}
     public void SetTrail(){if(CustomizationInventory._isTrailUnlocked(elementName))CustomizationInventory.instance.SetTrail(elementName);}
-    public void SetFlares(){if(CustomizationInventory._isFlaresUnlocked(elementName))CustomizationInventory.instance.SetFlares(elementName);}
+    public void SetFlares(){if(CustomizationInventory._isFlaresUnlocked(elementName))CustomizationInventory.instance.SetFlares(elementName);FindObjectOfType<ShipUI>().FlaresPreview();}
     public void SetDeathFx(){if(CustomizationInventory._isDeathFxUnlocked(elementName))CustomizationInventory.instance.SetDeathFx(elementName);}
     public void SetMusic(){if(CustomizationInventory._isMusicUnlocked(elementName))CustomizationInventory.instance.SetMusic(elementName);}
 

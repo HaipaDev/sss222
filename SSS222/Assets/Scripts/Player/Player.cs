@@ -292,7 +292,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             if(!GameSession.instance._adventureLoading&&!GameSession.instance._lvlEventsLoading)health=Mathf.Clamp(health,0,healthMax);
             energy=Mathf.Clamp(energy,0,energyMax);
             transform.localScale=new Vector3(shipScale,shipScale,1);
-            LosePowerup();
+            CheckPowerups();
             DrawMeleeWeapons();
             HideMeleeWeapons();
             UpdateItems();
@@ -1329,15 +1329,29 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(_curPwrupName()==comp){b=true;}
         return b;
     }
-    bool _allPowerupsEmpty=true;
     void SetPowerupsCapacity(){
         if(powerups.Count!=powerupsCapacity){
             //Debug.Log("PowerupsCapacity: "+powerupsCapacity+" | powerups.Count: "+powerups.Count+" | Dif: "+(powerups.Count-powerupsCapacity).ToString());
             for(var i=powerups.Count-1;i>powerupsCapacity-1;i--){powerups.RemoveAt(i);FindObjectOfType<PowerupInventory>().SetCapacity();}
             for(var i=powerups.Count;i<powerupsCapacity;i++){powerups.Add(new Powerup());FindObjectOfType<PowerupInventory>().SetCapacity();}
         }
-        if(_allPowerupsEmpty){for(var i=0;i<powerups.Count;i++){if(powerups[i].name!=""){_allPowerupsEmpty=false;}}}
-        if(_allPowerupsEmpty){for(var i=0;i<GameRules.instance.powerupsStarting.Count;i++){powerups[i]=GameRules.instance.powerupsStarting[i];Debug.Log("All powerups empty, setting to starting");}}
+    }
+    public bool _allPowerupsEmpty(){bool b=true;for(var i=0;i<powerups.Count;i++){if(!String.IsNullOrEmpty(powerups[i].name)){b=false;}}return b;}
+    bool _allPowerupsEmptyStart=true;
+    float _checkPowerupsTimerStart=0.5f;
+    void CheckPowerups(){
+        if(_checkPowerupsTimerStart>0){_checkPowerupsTimerStart-=Time.deltaTime;}//Debug.Log(_checkPowerupsTimerStart);}
+        else{
+            //Debug.Log("Checking on powerups");
+            if(_allPowerupsEmptyStart){for(var i=0;i<powerups.Count;i++){if(!String.IsNullOrEmpty(powerups[i].name)){_allPowerupsEmptyStart=false;}}}
+            if(_allPowerupsEmptyStart){for(var i=0;i<GameRules.instance.powerupsStarting.Count;i++){powerups[i]=GameRules.instance.powerupsStarting[i];Debug.Log("All powerups empty, setting to starting");}}
+            //else{Debug.Log("All good, powerups not empty on start");}
+
+            if(_allPowerupsEmpty()){ResetPowerupDef();Debug.Log("All powerups empty, setting to default");}
+            //else{Debug.Log("All good, powerups not empty at all");}
+            if(losePwrupOutOfEn&&energy<=0&&!ComparePowerupStrCur(powerupDefault)){ResetPowerupDef();}
+            if(!_isPowerupEmptyCur()){if(GetWeaponPropertyCur()!=null&&GetWeaponPropertyCur().costType==costType.ammo){if(losePwrupOutOfAmmo&&_curPwrup().ammo<=0)ResetPowerupDef();}}
+        }
     }
 
     public void HPAdd(float hp){Damage(hp,dmgType.heal);}
@@ -1441,21 +1455,8 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
         }
     }
-    public WeaponProperties GetWeaponProperty(string name){
-        foreach(WeaponProperties w in weaponProperties){
-            if(w.weaponType==weaponType.bullet){
-                if(w.name==name){return w;}//else{Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
-            }else if(w.weaponType==weaponType.melee){
-                weaponTypeMelee wp=(weaponTypeMelee)w.weaponTypeProperties;
-                if(w.name==name){return w;}//else{Debug.LogWarning("No WeaponProperty by name: "+name);return null;}
-            }
-        }return null;
-    }
+    public WeaponProperties GetWeaponProperty(string name){return weaponProperties.Find(x=>x.name==name);}
     public WeaponProperties GetWeaponPropertyCur(){return GetWeaponProperty(_curPwrupName());}
-    void LosePowerup(){
-        if(losePwrupOutOfEn&&energy<=0&&!ComparePowerupStrCur(powerupDefault)){ResetPowerupDef();}
-        if(!_isPowerupEmptyCur()){if(GetWeaponPropertyCur()!=null&&GetWeaponPropertyCur().costType==costType.ammo){if(losePwrupOutOfAmmo&&_curPwrup().ammo<=0)ResetPowerupDef();}}
-    }
 
     public void SetSpeedPrev(){
         //if(speedPrev.Count==1&&speedPrev[0]==moveSpeedBase){speedPrev[0]=moveSpeedCurrent;}

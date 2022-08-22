@@ -29,7 +29,7 @@ public class ShipUI : MonoBehaviour{
     RectTransform rt;
     void Start(){
         rt=GetComponent<RectTransform>();
-        if(flaresPreview){StartCoroutine(FlaresPreviewI());}
+        if(flaresPreview){FlaresPreview();}
     }
     void Update(){
         var step=Time.unscaledDeltaTime;
@@ -87,17 +87,18 @@ public class ShipUI : MonoBehaviour{
         if(!Input.GetMouseButton(0)){_mousePressedInBound=false;}
     }
 
+    public void FlaresPreview(){StartCoroutine(FlaresPreviewI());}
     IEnumerator FlaresPreviewI(){
-        Debug.Log("FlaresPreviewI");
+        //Debug.Log("FlaresPreviewI");
         if(ShipCustomizationManager.instance!=null){
             var ps=ShipCustomizationManager.instance.GetFlareVFX().GetComponent<ParticleSystem>();var psMain=ps.main;var dur=psMain.duration;
             MakeFlares();
             yield return new WaitForSeconds(psMain.startLifetime.constantMax+psMain.duration*2);
-            if(flaresPreview)StartCoroutine(FlaresPreviewI());
-        }else{yield return null;}
+            FlaresPreview();
+        }else{yield return new WaitForSeconds(1f);FlaresPreview();}
     }
     public void MakeFlares(){
-        Debug.Log("Making flares");
+        //Debug.Log("Making flares");
         var flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);
             GameAssets.instance.TransformIntoUIParticle(flareObj,0,-1);flareObj.transform.localPosition=new Vector2(-44f,6f);
         flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);

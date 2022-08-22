@@ -49,7 +49,6 @@ MonoBehaviour:
   filenameStats: statsData
   filenameAdventure: adventureData
   filenameSettings: gameSettings
-  maxRegisteredHyperGamers: 3
   hyperGamerLoginData:
     registeredCount: 0
     loggedIn: 0
@@ -63,6 +62,14 @@ MonoBehaviour:
     flaresName: def
     deathFxName: def
     musicName: findYou
+    dynamCelestStars: 0
+    starshards: 0
+    lockboxesInventory: []
+    skinsUnlocked: []
+    trailsUnlocked: []
+    flaresUnlocked: []
+    deathFxUnlocked: []
+    musicUnlocked: []
     achievsCompleted: []
   buildFirstLoaded: 0
   buildLastLoaded: 0
@@ -71,25 +78,43 @@ MonoBehaviour:
     sandboxTime: 0
     uniquePowerups: []
   advD:
-    coins: 0
+    buildLastLoaded: 0
     cores: 0
-    total_UpgradesCount: 0
-    total_UpgradesLvl: 0
-    healthMax_UpgradesCount: 0
-    healthMax_UpgradesLvl: 0
-    energyMax_UpgradesCount: 0
-    energyMax_UpgradesLvl: 0
-    speed_UpgradesCount: 0
-    speed_UpgradesLvl: 0
-    luck_UpgradesCount: 0
-    luck_UpgradesLvl: 0
-    defaultPowerup_upgradeCount: 0
-    energyRefill_upgraded: 0
-    mPulse_upgraded: 0
-    teleport_upgraded: 0
-    overhaul_upgraded: 0
-    crMend_upgraded: 0
-    enDiss_upgraded: 0
+    xp: 0
+    _coreSpawnedPreAscend: 0
+    zoneSelected: 0
+    zoneToTravelTo: -1
+    travelTimeLeft: -4
+    defeatedBosses: []
+    lockedZones: []
+    holo_crystalsStored: 0
+    holo_powerupStored:
+      name: 
+      ammo: -5
+      timer: -4
+    holo_timeAt: 0
+    holo_posX: 0
+    holo_zoneSelected: 0
+    calledBreak: 0
+    health: 0
+    healthStart: 0
+    hpAbsorpAmnt: 0
+    energy: 0
+    enAbsorpAmnt: 0
+    powerups: []
+    powerupCurID: 0
+    statuses: []
+    shipLvl: 0
+    shipLvlFraction: 0
+    autoAscend: 1
+    autoLvl: 1
+    moduleSlots: []
+    skillsSlots: []
+    modulesList: []
+    skillsList: []
+    bodyUpgraded: 0
+    engineUpgraded: 0
+    blastersUpgraded: 0
   settingsData:
     inputType: 0
     joystickType: 0
@@ -110,6 +135,7 @@ MonoBehaviour:
     ambienceVolume: 0.55
     musicVolume: 0.66
     windDownMusic: 1
+    bossVolumeTurnUp: 1
     playfieldRot: 0
     quality: 4
     fullscreen: 1
@@ -118,6 +144,14 @@ MonoBehaviour:
     dmgPopups: 1
     particles: 1
     screenflash: 1
+    upscaleHUD: 1
+    playerWeaponsFade: 1
+    hudVis_graphics: 0.9
+    hudVis_text: 1
+    hudVis_barFill: 1
+    hudVis_absorpFill: 0.5
+    hudVis_popups: 0.9
+    hudVis_notif: 1
     popupSumTime: 0.25
     hpPopupsSum: 1
     hpAbsorpPopupsSum: 0
@@ -128,10 +162,3 @@ MonoBehaviour:
     coinPopupsSum: 1
     corePopupsSum: 1
     scorePopupsSum: 0
-    playerWeaponsFade: 1
-    hudVis_graphics: 0.9
-    hudVis_text: 1
-    hudVis_barFill: 1
-    hudVis_absorpFill: 0.5
-    hudVis_popups: 0.9
-    hudVis_notif: 1

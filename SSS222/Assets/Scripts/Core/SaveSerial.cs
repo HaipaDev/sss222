@@ -97,7 +97,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public float buildFirstLoaded;
 	public float buildLastLoaded;
 	[System.Serializable]public class PlayerData{
-		public Highscore[] highscore=new Highscore[GameCreator.GetGamerulesetsPrefabsLength()];
+		public Highscore[] highscore=new Highscore[0];
 		public string skinName="def";
 		public Color overlayColor=Color.white;
 		public string trailName="def";

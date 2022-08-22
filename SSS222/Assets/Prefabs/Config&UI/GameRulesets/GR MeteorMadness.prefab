@@ -403,7 +403,7 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: bgMaterial.value
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -528,7 +528,7 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: bgMaterial.saturation
-      value: 0.11
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
@@ -1482,6 +1482,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cometSettings.lunarDrops.Array.data[1].ammount.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: managedReferences[7402535001339199496].specialId
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
