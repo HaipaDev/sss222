@@ -57,7 +57,7 @@ public class ScoreUserDataCanvas : MonoBehaviour{
         if(scoreText!=null)scoreText.text="<color=grey>Score: </color>"+score.ToString();
         if(playtimeText!=null)playtimeText.text="<color=grey>Playtime: </color>"+GameSession.FormatTime(playtime);
         if(versionBuildText!=null){
-            string versionString="v"+versionAchieved;
+            string versionString=versionAchieved;
             if(buildAchieved!=0)versionString+=" (b"+buildAchieved.ToString()+")";
             versionBuildText.text=versionString;
         }

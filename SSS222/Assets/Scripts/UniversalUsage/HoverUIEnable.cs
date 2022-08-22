@@ -17,7 +17,7 @@ public class HoverUIEnable : MonoBehaviour{
         }
     }
     bool CheckAllOtherPointers(){
-        if(Array.Exists(FindObjectsOfType<HoverUIEnable>(),x=>x.IsPointerOverUIElement())){return true;}
+        if(Array.Exists(FindObjectsOfType<HoverUIEnable>(),x=>x.IsPointerOverUIElement()&&x.name==name)){return true;}
         else{return false;}
     }
     ///Returns 'true' if we touched or hovering on Unity UI element.

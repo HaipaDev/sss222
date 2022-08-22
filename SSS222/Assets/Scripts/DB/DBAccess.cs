@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 
 public class DBAccess : MonoBehaviour{      public static DBAccess instance;
-    /*const*/ string MONGO_URI = gitignoreScript.mongoDBString;//= "";
+    /*const*/ string MONGO_URI = gitignoreScript.mongoDBString;
     MongoClient client_SSS222;
     const string DATABASE_NAME_SSS222 = "sss222";
     IMongoDatabase db_SSS222;
@@ -20,6 +20,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     IMongoCollection<Model_Score> scores_classic;
     IMongoCollection<Model_Score> scores_meteormadness;
     IMongoCollection<Model_Score> scores_hardcore;
+    IMongoCollection<Model_SSSCustomization> sssCustomizationData;
     IMongoCollection<HyperGamer> hyperGamers;
     public string loginMessage;
     public string loggedInMessage;
@@ -38,6 +39,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
         scores_hardcore=db_SSS222.GetCollection<Model_Score>("scores_hardcore");
         scores_classic=db_SSS222.GetCollection<Model_Score>("scores_classic");
         scores_meteormadness=db_SSS222.GetCollection<Model_Score>("scores_meteormadness");
+        sssCustomizationData=db_SSS222.GetCollection<Model_SSSCustomization>("customizationData");
 
         
         client_hyperGamers=new MongoClient(MONGO_URI);
@@ -52,15 +54,20 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
 
     public async void SaveScoreToDB(string name, Highscore highscore){
         var scores=GetGamemodeCollection();
-        var sameNameScore=await scores.FindAsync(e => e.name==name);
+        var user=await GetUserAsync(name);
+        var _id=user._id;
+        var sameIdScore=await scores.FindAsync(e => e._id==_id);
         //if(sameIDscore.ToList().Count>0){Debug.Log(id);}else{Debug.Log("Score with name "+name+" not found");}
-        if(sameNameScore.ToList().Count>0){
-            sameNameScore=await scores.FindAsync(e => e.name==name);
+        if(sameIdScore.ToList().Count>0){
+            sameIdScore=await scores.FindAsync(e => e._id==_id);
             if(highscore.score==0){SetSubmitMessage("Score is equals 0!");}
-            else if(highscore.score<=sameNameScore.ToList()[0].score){SetSubmitMessage("Score is lower or equals to submitted");}
-            else{await scores.FindOneAndUpdateAsync(e=>e.name==name,Builders<Model_Score>.Update.Set(e=>e.score,highscore.score));SetSubmitMessage("Score overwritten!");}
+            else if(highscore.score<=sameIdScore.ToList()[0].score){SetSubmitMessage("Score is lower or equals to submitted");}
+            else{
+                scores.FindOneAndUpdate(e=>e._id==_id,Builders<Model_Score>.Update.Set(e=>e.name,name));
+                await scores.FindOneAndUpdateAsync(e=>e._id==_id,Builders<Model_Score>.Update.Set(e=>e.score,highscore.score));SetSubmitMessage("Score overwritten!");
+            }
         }else{if(highscore.score!=0){
-            Model_Score document=new Model_Score{name=name,score=highscore.score,
+            Model_Score document=new Model_Score{_id=_id,name=name,score=highscore.score,
             playtime=highscore.playtime,
             version=highscore.version,build=highscore.build,
             date=highscore.date
@@ -108,9 +115,10 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
             HyperGamer document=new HyperGamer{username=username,password=password,
                 dateRegister=System.DateTime.Now,dateLastLogin=System.DateTime.Now,
                 appRegistered=hyperLastLoginAppDisplay,appLastLogin=hyperLastLoginAppDisplay,
-                isSteam=GameSession.instance.isSteam,/*steamID=Steamworks.SteamClient.SteamId,*/sss222_customizationData=customizationData(),sss222_overlayColors=overlayColors()};
+                isSteam=GameSession.instance.isSteam,/*steamID=Steamworks.SteamClient.SteamId,*/};
             //if(GameSession.instance.isSteam)document.steamId=Steamworks.SteamClient.SteamId.Value;
             await hyperGamers.InsertOneAsync(document);
+
             string _pass=password;if(FindObjectOfType<Login>()!=null){if(!FindObjectOfType<Login>()._rememberPassword())_pass="";}
             SaveSerial.instance.SetLogin(username,_pass);SaveSerial.instance.SaveLogin();
             SaveSerial.instance.hyperGamerLoginData.registeredCount++;
@@ -129,8 +137,6 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
                 loginUsername=await hyperGamers.FindAsync(e=>e.username==username);
                 hyperGamers.FindOneAndUpdate(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.dateLastLogin,System.DateTime.Now));
                 hyperGamers.FindOneAndUpdate(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.appLastLogin,hyperLastLoginAppDisplay));
-                await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.sss222_customizationData,customizationData()));
-                await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.sss222_overlayColors,overlayColors()));
                 //if(GameSession.instance.isSteam)await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.steamId,Steamworks.SteamClient.SteamId.Value));
                 string _pass=password;if(FindObjectOfType<Login>()!=null){if(!FindObjectOfType<Login>()._rememberPassword())_pass="";}
                 SaveSerial.instance.SetLogin(username,_pass);SaveSerial.instance.SaveLogin();
@@ -140,21 +146,34 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     public string[] customizationData(){var pd=SaveSerial.instance.playerData;return new string[]{pd.skinName,pd.trailName,pd.flaresName,pd.deathFxName};}
     public float[] overlayColors(){var pd=SaveSerial.instance.playerData;return new float[]{pd.overlayColor[0],pd.overlayColor[1],pd.overlayColor[2]};}
     public async void UpdateCustomizationData(){
-        var loginUsername=await hyperGamers.FindAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username);
-        if(loginUsername.ToList().Count>0){
-            loginUsername=await hyperGamers.FindAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username);
+        var user=await GetUserAsync(SaveSerial.instance.hyperGamerLoginData.username);
+        var _id=user._id;
+        var sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id);
+        if(sameIdCust.ToList().Count>0){
+            sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id);
             
-            await hyperGamers.FindOneAndUpdateAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,Builders<HyperGamer>.Update.Set(e=>e.sss222_customizationData,customizationData()));
-            await hyperGamers.FindOneAndUpdateAsync(e=>e.username==SaveSerial.instance.hyperGamerLoginData.username,Builders<HyperGamer>.Update.Set(e=>e.sss222_overlayColors,overlayColors()));
+            await sssCustomizationData.FindOneAndUpdateAsync(e=>e._id==_id,Builders<Model_SSSCustomization>.Update.Set(e=>e.customizationData,customizationData()));
+            await sssCustomizationData.FindOneAndUpdateAsync(e=>e._id==_id,Builders<Model_SSSCustomization>.Update.Set(e=>e.overlayColors,overlayColors()));
             SetLoggedInMessage("Customization Data updated");Debug.Log("Customization Data updated");
-        }else{SetLoggedInMessage("Login not found");if(SaveSerial.instance.hyperGamerLoginData.loggedIn)SaveSerial.instance.LogOut();}
+        }else{
+            Model_SSSCustomization document=new Model_SSSCustomization{_id=_id,
+            customizationData=customizationData(),
+            overlayColors=overlayColors()
+            };
+            await sssCustomizationData.InsertOneAsync(document);
+            SetLoggedInMessage("Customization Data uploaded");
+        }
     }
+    public HyperGamer GetUser(string username){return GetUserAsync(username).Result;}
+    public async Task<HyperGamer> GetUserAsync(string username){var loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,System.Threading.CancellationToken.None);return loginUsername.First();}
     public async Task<string[]> GetUsersCustomizationData(string username){
         System.Threading.CancellationToken cancellationToken=System.Threading.CancellationToken.None;
-        var loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
-        if(loginUsername.ToList().Count>0){
-            loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,cancellationToken);
-            return loginUsername.First().sss222_customizationData;
+        var user=await GetUserAsync(SaveSerial.instance.hyperGamerLoginData.username);
+        var _id=user._id;
+        var sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id);
+        if(sameIdCust.ToList().Count>0){
+            sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id,null,cancellationToken);
+            return sameIdCust.First().customizationData;
         }else{SetLoggedInMessage("User not found");return null;}
     }
     public async void ChangePassHyperGamer(string password,string newPass){
@@ -187,33 +206,34 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     public void SetSubmitMessage(string msg){StartCoroutine(SetSubmitMessageI(msg));}
     IEnumerator SetSubmitMessageI(string msg){DBAccess.instance.submitMessage=msg;yield return new WaitForSecondsRealtime(2f);if(DBAccess.instance.submitMessage==msg)DBAccess.instance.submitMessage="";}
 }
-// Model_User Sample
 [System.Serializable]
 public class Model_Score {
     public ObjectId _id { set; get; }
-    
-    //public ObjectId usersId { set; get; }
+
     public string name {  set; get; }
     public int score { set; get; }
     public float playtime { set; get; }
     public string version { set; get; }
     public float build { set; get; }
     public System.DateTime date { set; get; }
-    
-    //Possible Methods ...
+        
+}
+[System.Serializable]
+public class Model_SSSCustomization {
+    public ObjectId _id { set; get; }
+
+    public string[] customizationData { set; get; }
+    public float[] overlayColors { set; get; }
         
 }
 [System.Serializable]
 public class HyperGamer {
     public ObjectId _id { set; get; }
     
-
     public string username {  set; get; }
     public string password { set; get; }
     public bool isSteam { set; get; }
     public ulong steamId { set; get; }
-    public string[] sss222_customizationData { set; get; }
-    public float[] sss222_overlayColors { set; get; }
     public string appRegistered { set; get; }
     public string appLastLogin { set; get; }
     public System.DateTime dateLastLogin { set; get; }

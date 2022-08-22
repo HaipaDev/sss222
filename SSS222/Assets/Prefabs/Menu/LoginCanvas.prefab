@@ -3731,7 +3731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4844326166060716584
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4538,8 +4538,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Note: The accounts and leaderboards will probably be cleared after each
-    beta and before release as I improve the system and add more content'
+  m_text: 'Note: The accounts and leaderboards could possibly be cleared in the future,
+    as im not very experienced with databases'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4949b6fb520a4654ea3c7bdd9b500e11, type: 2}
   m_sharedMaterial: {fileID: -978371348157908502, guid: 4949b6fb520a4654ea3c7bdd9b500e11,
@@ -4549,8 +4549,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 2164260863
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4567,7 +4567,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.15
+  m_fontSize: 49.65
   m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 1
