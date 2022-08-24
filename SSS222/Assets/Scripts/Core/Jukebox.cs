@@ -11,7 +11,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     [SerializeField]float windUpDownSpeed=0.05f;
     [SerializeField]float lowerPitchLimit=0.1f;
     [SerializeField]float upperPitchLimit=2f;
-    [HideInInspector]public bool inverted=false;
+    [DisableInEditorMode]public bool inverted=false;
     [SerializeField]AudioClip currentMusic;
     void Awake(){
         if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
@@ -20,7 +20,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     void Update(){
         if(GetComponent<AudioSource>().clip!=currentMusic){GetComponent<AudioSource>().clip=currentMusic;GetComponent<AudioSource>().Play();}
 
-        if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"&&SaveSerial.instance.settingsData.windDownMusic){
+        if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"&&SaveSerial.instance.settingsData.windDownMusic&&Player.instance!=null){
             float _curMusicSpeed=GetComponent<AudioSource>().pitch;
             float _musicSpeed=1f;
             if(GameRules.instance.musicSlowdownOnPause&&GameSession.GlobalTimeIsPausedNotSlowed){_musicSpeed=pauseSpeed;}
@@ -30,10 +30,11 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
 
             if(GameRules.instance.musicSlowdownOnPause&&!GameSession.GlobalTimeIsPausedNotSlowed&&!GameRules.instance.musicSlowdownOnPaceChange){_musicSpeed=1f;}
             
-            else if(_curMusicSpeed>_musicSpeed)_curMusicSpeed=Mathf.Clamp(_curMusicSpeed-=windUpDownSpeed,_musicSpeed,upperPitchLimit);
-            if(_curMusicSpeed<_musicSpeed)_curMusicSpeed=Mathf.Clamp(_curMusicSpeed+=windUpDownSpeed,lowerPitchLimit,_musicSpeed);
             int _mult=1;if(inverted){_mult=-1;}else{_mult=1;}
-            GetComponent<AudioSource>().pitch=_curMusicSpeed*_mult;//*(inverted?  1 : 0);
+            if(_curMusicSpeed>_musicSpeed*_mult)_curMusicSpeed=Mathf.Clamp(_curMusicSpeed-=windUpDownSpeed,_musicSpeed,upperPitchLimit)*_mult;
+            if(_curMusicSpeed<_musicSpeed*_mult)_curMusicSpeed=Mathf.Clamp(_curMusicSpeed+=windUpDownSpeed,lowerPitchLimit,_musicSpeed)*_mult;
+            //int _mult=1;if(inverted){_mult=-1;GetComponent<AudioSource>().pitch=-1;}else{GetComponent<AudioSource>().pitch=_curMusicSpeed;}
+            GetComponent<AudioSource>().pitch=_curMusicSpeed;
         }else{GetComponent<AudioSource>().pitch=1;}
     }
     public void SetMusic(AudioClip clip,bool force=false){if(currentMusic!=clip||force)currentMusic=clip;GetComponent<AudioSource>().loop=true;}

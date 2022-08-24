@@ -13,10 +13,10 @@ public class InverterFx : MonoBehaviour{
     [HideIf("@this.invertParticlesInGame==true")][SerializeField] public bool invertSpritesInGame=true;
     [DisableIf("@this.invertSpritesInGame==false")][SerializeField] public bool invertParticlesInGame=true;
 
-    [HideInInspector] public bool reverted=true;
-    [HideInInspector] List<AudioSource> loopedSounds;
-    //float offTimer;
+    [DisableInEditorMode][SerializeField] public bool reverted=true;
+    [DisableInEditorMode][SerializeField] List<AudioSource> loopedSounds;
     [HideInInspector] public SpriteRenderer sprRend;
+    //float offTimer;
     void Start(){
         if(instance!=null){Destroy(gameObject);}else{instance=this;}
         sprRend=GetComponent<SpriteRenderer>();
@@ -31,30 +31,29 @@ public class InverterFx : MonoBehaviour{
         if(on){if(invertSprite)sprRend.enabled=true;}
         if(invertSounds||invertMusic){
             foreach(AudioSource snd in FindObjectsOfType<AudioSource>()){if(snd!=null){
-                GameObject sndGo=snd.gameObject;
                 if(on){
-                    if(invertSounds&&sndGo!=Jukebox.instance){//If not Jukebox
-                        if(snd.loop){loopedSounds.Add(snd);}
+                    if(invertSounds&&((Jukebox.instance!=null&&snd!=Jukebox.instance.GetComponent<AudioSource>())||Jukebox.instance==null)){
+                        if(snd.loop){if(!loopedSounds.Contains(snd)&&snd!=null)loopedSounds.Add(snd);}
                         SetSoundReverse(snd,snd.loop);
-                    }else if(invertMusic&&sndGo==Jukebox.instance){
-                        if(!Jukebox.instance.inverted)Jukebox.instance.inverted=true;
                     }
-                }else{
-                    if(!reverted){
-                        if(invertSprite)sprRend.enabled=false;
-                        if(invertSounds){
-                            if(!loopedSounds.Contains(snd)){snd.loop=false;}//snd.Stop();}
-                            if(loopedSounds.Count>0){for(int i=0;i<loopedSounds.Count;i++){
-                                if(loopedSounds[i]!=null){loopedSounds[i].pitch=1;loopedSounds[i].loop=true;}
-                                loopedSounds.Remove(loopedSounds[i]);
-                            }}
-                        }
-                        if(invertMusic)if(Jukebox.instance!=null){Jukebox.instance.GetComponent<AudioSource>().pitch=1;}//offTimer=1f;}
-                        reverted=true;
+                    if(invertMusic&&((Jukebox.instance!=null&&snd==Jukebox.instance.GetComponent<AudioSource>())||Jukebox.instance==null)){Jukebox.instance.inverted=true;}
+                }else{if(!reverted){if(!loopedSounds.Contains(snd)&&((Jukebox.instance!=null&&snd!=Jukebox.instance.GetComponent<AudioSource>())||Jukebox.instance==null)){snd.loop=false;}}}
+            }}
+            if(!on){
+                if(!reverted){
+                    if(invertSprite)sprRend.enabled=false;
+                    if(invertSounds){
+                        if(loopedSounds.Count>0){for(int i=0;i<loopedSounds.Count;i++){
+                            if(loopedSounds[i]!=null){loopedSounds[i].pitch=1;loopedSounds[i].loop=true;}
+                            loopedSounds.Remove(loopedSounds[i]);
+                        }}
                     }
+                    if(invertMusic&&Jukebox.instance!=null){Jukebox.instance.inverted=false;}//offTimer=1f;}
+                    loopedSounds.Clear();
+                    reverted=true;
                 }
             }
-        }}
+        }
         if(Player.instance!=null){
             //if(Player.instance.inverter!=true){reverted=true;on=false;}
         }else{

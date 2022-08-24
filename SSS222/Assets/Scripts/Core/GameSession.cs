@@ -543,7 +543,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
             }//currentPlaytime=0;}
             p.hpAbsorpAmnt=ss.hpAbsorpAmnt;
             p.enAbsorpAmnt=ss.enAbsorpAmnt;
-            p.powerups=ss.powerups;
+            if(ss.powerups.Count>0)p.powerups=ss.powerups;
             p.powerupCurID=ss.powerupCurID;
             p.statuses=ss.statuses;
             
