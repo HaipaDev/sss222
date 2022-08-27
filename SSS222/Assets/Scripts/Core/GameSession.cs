@@ -339,6 +339,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(Input.GetKeyDown(KeyCode.JoystickButton0)){if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData.inputType!=InputType.keyboard){SaveSerial.instance.settingsData.inputType=InputType.keyboard;}}
 
         if(!isSteam){steamAchievsStatsLeaderboards=false;}
+        else{CustomizationInventory._unlockSteam();}
 
         if(UpgradeMenu.instance!=null)CalculateLuck();
         CheckCodes(".",".");

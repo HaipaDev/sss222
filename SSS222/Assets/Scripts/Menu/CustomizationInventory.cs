@@ -138,13 +138,6 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         if(lockboxAnimSpr!=null){dropIcon.sprite=lockboxAnimSpr;}
         if(starCraft_costText!=null){starCraft_costText.text="x"+dynamCelestStar_shardCost.ToString();}
         if(starCraft_chanceText!=null){starCraft_chanceText.text=Math.Round(dynamCelestStar_craftChance,2).ToString()+"%";}
-
-        if(GameSession.instance.cheatmode){
-            if(Input.GetKey(KeyCode.L)){
-                if(Input.GetKeyDown(KeyCode.Alpha1)){for(var i=0;i<10;i++){OpenLockbox(GameAssets.instance.lockboxes[0].name);}}
-                if(Input.GetKeyDown(KeyCode.Alpha2)){for(var i=0;i<10;i++){OpenLockbox(GameAssets.instance.lockboxes[1].name);}}
-            }
-        }
     }
     public void Back(){
         if(variantsPanel.activeSelf){CloseVariants();}
@@ -638,4 +631,5 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public static void _unlockGoldenMoyai(){CustomizationInventory.UnlockSkin("moyaiGold");CustomizationInventory.UnlockTrail("goldenflame");CustomizationInventory.UnlockFlares("golden");}
     public static void _unlockStargazer(){CustomizationInventory.UnlockSkin("stargazer");CustomizationInventory.UnlockTrail("stardust");}
     public static void _unlockMOL(){CustomizationInventory.UnlockSkin("maniac");}
+    public static void _unlockSteam(){CustomizationInventory.UnlockSkin("chameleon");CustomizationInventory.UnlockMusic("one");}
 }

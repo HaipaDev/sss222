@@ -20,13 +20,13 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     void Update(){
         if(GetComponent<AudioSource>().clip!=currentMusic){GetComponent<AudioSource>().clip=currentMusic;GetComponent<AudioSource>().Play();}
 
-        if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"&&SaveSerial.instance.settingsData.windDownMusic&&Player.instance!=null){
+        if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"&&SaveSerial.instance.settingsData.windDownMusic){
             float _curMusicSpeed=GetComponent<AudioSource>().pitch;
             float _musicSpeed=1f;
             if(GameRules.instance.musicSlowdownOnPause&&GameSession.GlobalTimeIsPausedNotSlowed){_musicSpeed=pauseSpeed;}
             if(GameRules.instance.musicSlowdownOnPaceChange&&!GameSession.GlobalTimeIsPausedNotSlowed/*&&GameSession.instance.speedChanged*/){_musicSpeed=1-(GameSession.instance.defaultGameSpeed-GameSession.instance.gameSpeed);}
             if(GameRules.instance.musicSlowdownOnPaceChange&&!GameSession.GlobalTimeIsPausedNotSlowed&&Player.instance!=null){_musicSpeed=1-(GameSession.instance.defaultGameSpeed-GameSession.instance.gameSpeed);}
-            if(Player.instance==null){_musicSpeed=deadSpeed;}
+            if(Player.instance==null){_musicSpeed=deadSpeed;inverted=false;}
 
             if(GameRules.instance.musicSlowdownOnPause&&!GameSession.GlobalTimeIsPausedNotSlowed&&!GameRules.instance.musicSlowdownOnPaceChange){_musicSpeed=1f;}
             
