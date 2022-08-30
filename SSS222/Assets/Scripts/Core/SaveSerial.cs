@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine;
-using BayatGames.SaveGameFree;
-using BayatGames.SaveGameFree.Encoders;
-using BayatGames.SaveGameFree.Serializers;
+using Sirenix.OdinInspector;
 
 public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	void Awake(){if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
@@ -66,19 +64,11 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		Debug.Log("Login saved");
 	}
 	public void LoadLogin(){
-		if(File.Exists(Application.persistentDataPath+"/"+filenameLogin)){//Legacy loading
-			SaveGame.Encode=false;SaveGame.Serializer=new SaveGameJsonSerializer();
-			hyperGamerLoginData = SaveGame.Load<HyperGamerLoginData>(filenameLogin);
-
-			File.Delete(Application.persistentDataPath+"/"+filenameLogin);
-			Debug.Log("Login (legacy) loaded and replaced");
-			AutoLogin();
-			SaveLogin();
-		}
 		if(ES3.FileExists(_loginDataPath())){
 			var settings=new ES3Settings(_loginDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
-			if(ES3.KeyExists("hyperGamerLogin",settings))ES3.LoadInto<HyperGamerLoginData>("hyperGamerLoginData",settings);
-		}else Debug.LogWarning("Login Data file not found in "+Application.persistentDataPath+"/"+filenameLogin);
+			if(ES3.KeyExists("hyperGamerLoginData",settings)){ES3.LoadInto<HyperGamerLoginData>("hyperGamerLoginData",hyperGamerLoginData,settings);}
+			else{Debug.LogWarning("Key for hyperGamerLoginData not found in: "+_loginDataPath());}
+		}else Debug.LogWarning("Login Data file not found in "+_loginDataPath());
 	}
 	void AutoLogin(){
 		//TimeSpan tsSession=DateTime.Now.Subtract(hyperGamerLoginData.lastLoggedIn);
@@ -124,15 +114,6 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		Debug.Log("Game Data saved");
 	}
 	public void Load(){
-		if(File.Exists(Application.persistentDataPath+"/"+filename)){//Legacy loading
-			SaveGame.Encode=false;SaveGame.Serializer=new SaveGameJsonSerializer();
-			playerData = SaveGame.Load<PlayerData>(filename);
-			var hi=-1;foreach(Highscore h in playerData.highscore){hi++;if(h.score!=0)playerData.highscore[hi]=h;}
-
-			File.Delete(Application.persistentDataPath+"/"+filename);
-			Debug.Log("Game Data (legacy) loaded and replaced");
-			Save();
-		}
 		if(ES3.FileExists(_playerDataPath())){
 			var settings=new ES3Settings(_playerDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
 			if(ES3.KeyExists("buildFirstLoaded",settings))buildFirstLoaded=ES3.Load<float>("buildFirstLoaded",settings);
@@ -169,14 +150,6 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		Debug.Log("Stats Data saved");
 	}
 	public void LoadStats(){
-		if(File.Exists(Application.persistentDataPath+"/"+filenameStats)){//Legacy loading
-			SaveGame.Encode=false;SaveGame.Serializer=new SaveGameJsonSerializer();
-			statsData = SaveGame.Load<StatsData>(filenameStats);
-
-			File.Delete(Application.persistentDataPath+"/"+filenameStats);
-			Debug.Log("Stats Data (legacy) loaded and replaced");
-			SaveStats();
-		}
 		if(ES3.FileExists(_statsDataPath())){
 			var settings=new ES3Settings(_statsDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
 			if(ES3.KeyExists("statsData",settings))ES3.LoadInto<StatsData>("statsData",statsData,settings);
@@ -242,19 +215,11 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		Debug.Log("Adventure Data saved");
 	}
 	public void LoadAdventure(){
-		if(File.Exists(Application.persistentDataPath+"/"+filenameAdventure)){//Legacy loading
-			SaveGame.Encode=false;SaveGame.Serializer=new SaveGameJsonSerializer();
-			advD = SaveGame.Load<AdventureData>(filenameAdventure);
-
-			File.Delete(Application.persistentDataPath+"/"+filenameAdventure);
-			Debug.Log("Adventure Data (legacy) loaded and replaced");
-			SaveAdventure();
-		}
 		if(ES3.FileExists(_advDataPath())){
 			var settings=new ES3Settings(_advDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
 			if(ES3.KeyExists("advData",settings))ES3.LoadInto<AdventureData>("advData",advD,settings);
-			else Debug.LogWarning("Key for advData not found in: "+_statsDataPath());
-		}else Debug.LogWarning("Adventure Data file not found in: "+_statsDataPath());
+			else Debug.LogWarning("Key for advData not found in: "+_advDataPath());
+		}else Debug.LogWarning("Adventure Data file not found in: "+_advDataPath());
 	}
 	public void ResetAdventure(){
 		if(advD==null){Debug.LogError("AdventureData null");}else{Debug.Log("AdventureData not empty");}
@@ -334,22 +299,10 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		Debug.Log("Settings saved");
 	}
 	public void LoadSettings(){
-		if(File.Exists(Application.persistentDataPath+"/"+filenameSettings+".cfg")){//Legacy loading
-			SaveGame.Encode=false;SaveGame.Serializer=new SaveGameJsonSerializer();
-			settingsData = SaveGame.Load<SettingsData>(filenameSettings+".cfg");
-			
-			File.Delete(Application.persistentDataPath+"/"+filenameSettings+".cfg");
-			Debug.Log("Settings (legacy) loaded and replaced");
-			settingsData.masterVolume=(float)System.Math.Round(GameAssets.Normalize(settingsData.masterVolume,-50,15),2);
-			settingsData.soundVolume=(float)System.Math.Round(GameAssets.Normalize(settingsData.soundVolume,-50,15),2);
-			settingsData.ambienceVolume=(float)System.Math.Round(GameAssets.Normalize(settingsData.ambienceVolume,-50,15),2);
-			settingsData.musicVolume=(float)System.Math.Round(GameAssets.Normalize(settingsData.musicVolume,-50,15),2);
-			SaveSettings();
-		}
 		if(ES3.FileExists(_settingsDataPath())){
 		var settings=new ES3Settings(_settingsDataPath());
 			if(ES3.KeyExists("settingsData",settings))ES3.LoadInto<SettingsData>("settingsData",settingsData,settings);
-			else Debug.LogWarning("Key for settingsData not found in: "+_statsDataPath());
+			else Debug.LogWarning("Key for settingsData not found in: "+_settingsDataPath());
 		}else Debug.LogWarning("Settings file not found in: "+_settingsDataPath());
 	}
 	public void ResetSettings(){

@@ -29,7 +29,8 @@ public class Loader : MonoBehaviour{
         //Jukebox.instance.SetMusicToCstmzMusic();
     }
     public void ForceLoad(){
-        if(loaded)GSceneManager.instance.LoadStartMenuLoader();
+        if(GameObject.Find("IntroLong").GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("IntroLongStart")){GameObject.Find("IntroLong").GetComponent<Animator>().SetBool("force",true);}
+        else{if(loaded)GSceneManager.instance.LoadStartMenuLoader();}
     }
     void Update(){
         Load();

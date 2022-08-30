@@ -325,11 +325,11 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
         return ss;
 	}
-	public static bool CaseInsStrCmpr(string str,string toComp){return str.IndexOf(toComp, StringComparison.OrdinalIgnoreCase) >= 0;}
-	public static int BoolToInt(bool b){if(b){return 1;}else{return 0;}}
 #endregion
 
 #region//Public functions
+	public static bool CaseInsStrCmpr(string str,string toComp){return str.IndexOf(toComp, StringComparison.OrdinalIgnoreCase) >= 0;}
+	public static int BoolToInt(bool b){if(b){return 1;}else{return 0;}}
 	public void TransformIntoUIParticle(GameObject go,float mult=0,float dur=-4,bool multShape=false,int type=0){
 		if(go.GetComponent<UnityEngine.UI.Extensions.UIParticleSystem>()==null){
 			var ps=go.GetComponent<ParticleSystem>();var psMain=ps.main;
