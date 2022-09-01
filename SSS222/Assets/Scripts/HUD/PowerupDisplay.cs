@@ -47,7 +47,7 @@ public class PowerupDisplay : MonoBehaviour{
                 else{numberDisplay.SetActive(true);}
                 
                 if(_id>=0&&Player.instance!=null&&Player.instance.powerupCurID==_id){highlightIMG.enabled=true;}
-                else{highlightIMG.enabled=false;}
+                else{if(_id>=0)highlightIMG.enabled=false;}
 
                 if(timer>0){highlightIMG.fillAmount=(timer/timerMax);highlightIMG.color=highlightTimerColor;}
                 else{highlightIMG.fillAmount=1;highlightIMG.color=new Color(1,1,1,35f/255f);}

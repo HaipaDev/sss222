@@ -12,6 +12,9 @@ public class AdventureZonesCanvas : MonoBehaviour{
     [SerializeField] float regularZoneSize=1.7f;
     [SerializeField] float bossZoneSize=2.5f;
     void Start(){Setup();}
+    void Update(){
+        if(listContent.Find("Zone_0")!=null){Setup();}
+    }
     public void Setup(){
         foreach(Transform t in listContent){if(t.name!="Future"&&t!=shipUI.transform)Destroy(t.gameObject);}
         for(var i=0;i<GameCreator.instance.adventureZones.Capacity;i++){if(GameCreator.instance.adventureZones[i].enabled){
@@ -19,7 +22,9 @@ public class AdventureZonesCanvas : MonoBehaviour{
             var go=Instantiate(zoneButtonPrefab,listContent);
             go.name="Zone_"+GameCreator.instance.adventureZones[i].name;
             go.GetComponent<RectTransform>().anchoredPosition=GameCreator.instance.adventureZones[i].pos;
-            if(!SaveSerial.instance.advD.lockedZones.Contains(GameCreator.instance.adventureZones[i].name))go.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(()=>GSceneManager.instance.LoadAdventureZone(_i));
+            if((SaveSerial.instance.advD!=null&&SaveSerial.instance.advD.lockedZones!=null&&!SaveSerial.instance.advD.lockedZones.Contains(GameCreator.instance.adventureZones[i].name))||SaveSerial.instance.advD==null||SaveSerial.instance.advD.lockedZones==null||SaveSerial.instance.advD.lockedZones.Count==0){
+                go.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(()=>GSceneManager.instance.LoadAdventureZone(_i));
+            }
 
             var mat=GameAssets.instance.UpdateShaderMatProps(GameAssets.instance.GetMat("AIOShaderMat_UI",true),GameCreator.instance.adventureZones[i].gameRules.bgMaterial,true);
             go.transform.GetChild(1).GetComponent<Image>().material=null;go.transform.GetChild(1).GetComponent<Image>().material=mat;//refresh it
@@ -39,10 +44,15 @@ public class AdventureZonesCanvas : MonoBehaviour{
                         if(GameCreator.instance.adventureZones[i].bossBlackOutImg){var lvreq=img.gameObject.AddComponent<ShipLevelRequired>();lvreq.adventureData=true;lvreq.blackOutImg=true;lvreq.value=GameCreator.instance.adventureZones[i].lvlReq;}
                     }
                 }
-                if(!SaveSerial.instance.advD.defeatedBosses.Contains(GameCreator.instance.adventureZones[i].gameRules.bossInfo.name)){Destroy(go.transform.GetChild(6).gameObject);}
+                if((SaveSerial.instance.advD!=null&&SaveSerial.instance.advD.lockedZones!=null&&!SaveSerial.instance.advD.defeatedBosses.Contains(GameCreator.instance.adventureZones[i].gameRules.bossInfo.name))||SaveSerial.instance.advD==null||SaveSerial.instance.advD.defeatedBosses==null||SaveSerial.instance.advD.defeatedBosses.Count==0){
+                    Destroy(go.transform.GetChild(6).gameObject);
+                }
                 Destroy(go.transform.GetChild(2).gameObject);
             }else{go.transform.localScale=new Vector2(regularZoneSize,regularZoneSize);Destroy(go.transform.GetChild(6).gameObject);Destroy(go.transform.GetChild(5).gameObject);Destroy(go.transform.GetChild(3).gameObject);}
-            if(!SaveSerial.instance.advD.lockedZones.Contains(GameCreator.instance.adventureZones[i].name)){if(go.transform.childCount>5){Destroy(go.transform.GetChild(5).gameObject);}else{Destroy(go.transform.GetChild(4).gameObject);}}
+            if((SaveSerial.instance.advD!=null&&SaveSerial.instance.advD.lockedZones!=null&&!SaveSerial.instance.advD.lockedZones.Contains(GameCreator.instance.adventureZones[i].name))||SaveSerial.instance.advD==null||SaveSerial.instance.advD.lockedZones==null||SaveSerial.instance.advD.lockedZones.Count==0){
+                if(go.transform.childCount>5){Destroy(go.transform.GetChild(5).gameObject);}
+                else{Destroy(go.transform.GetChild(4).gameObject);}
+            }
         }}
         shipUI.transform.SetAsLastSibling();
     }

@@ -108,8 +108,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public string _playerDataPath(){return Application.persistentDataPath+"/"+filename+".hyper";}
 	public void Save(){
         var settings=new ES3Settings(_playerDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
-		if(!ES3.KeyExists("buildFirstLoaded",settings))ES3.Save("buildFirstLoaded",GameSession.instance.buildVersion,settings);
-		ES3.Save("buildLastLoaded",GameSession.instance.buildVersion,settings);
+		if(!ES3.KeyExists("buildFirstLoaded",settings)){buildFirstLoaded=GameSession.instance.buildVersion;ES3.Save("buildFirstLoaded",buildFirstLoaded,settings);}
+		buildLastLoaded=GameSession.instance.buildVersion;ES3.Save("buildLastLoaded",buildLastLoaded,settings);
 		ES3.Save("playerData",playerData,settings);
 		Debug.Log("Game Data saved");
 	}

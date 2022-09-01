@@ -51,8 +51,8 @@ public class Leaderboard : MonoBehaviour{
     }
     public void ClearLeaderboards(){
         if(hgCont.childCount>0)for(var i=0;i<hgCont.childCount;i++){Destroy(hgCont.GetChild(i).gameObject);}
-        if(steamGlobalCont.childCount>0)for(var i=0;i<steamGlobalCont.childCount;i++){Destroy(steamGlobalCont.GetChild(i).gameObject);}
-        if(steamFriendsCont.childCount>0)for(var i=0;i<steamFriendsCont.childCount;i++){Destroy(steamFriendsCont.GetChild(i).gameObject);}
+        if(steamGlobalCont!=null){if(steamGlobalCont.childCount>0)for(var i=0;i<steamGlobalCont.childCount;i++){Destroy(steamGlobalCont.GetChild(i).gameObject);}}
+        if(steamFriendsCont!=null){if(steamFriendsCont.childCount>0)for(var i=0;i<steamFriendsCont.childCount;i++){Destroy(steamFriendsCont.GetChild(i).gameObject);}}
     }
     public async void DisplayLeaderboards(){
         var hgScores=await DBAccess.instance.GetScoresFromDB();

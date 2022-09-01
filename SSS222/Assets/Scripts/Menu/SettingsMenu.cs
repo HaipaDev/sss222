@@ -164,7 +164,8 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
                 settingsData.inputType=(InputType)1;
                 break;
             case (InputType)1:
-                settingsData.inputType=(InputType)2;
+                if(GameSession.instance.cheatmode)settingsData.inputType=(InputType)2;
+                else settingsData.inputType=(InputType)0;
                 break;
             case (InputType)2:
                 if(GameSession.instance.cheatmode)settingsData.inputType=(InputType)3;
