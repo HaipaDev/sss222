@@ -998,20 +998,18 @@ public class Player : MonoBehaviour{    public static Player instance;
 
             if(_hasStatus("magnet")){
                 CountdownStatusTimer("magnet","-");
-                if(FindObjectsOfType<Tag_MagnetAffected>()!=null){
-                    Tag_MagnetAffected[] objs=FindObjectsOfType<Tag_MagnetAffected>();
-                    foreach(Tag_MagnetAffected obj in objs){
+                if(FindObjectsOfType<Tag_MagnetAffected>().Length>0){
+                    foreach(Tag_MagnetAffected obj in FindObjectsOfType<Tag_MagnetAffected>()){
                         var followC=obj.GetComponent<Follow>();
-                        if(followC==null){Follow follow=obj.gameObject.AddComponent(typeof(Follow)) as Follow;follow.target=this.gameObject;follow.distReq=4;follow.speedFollow=5;}
+                        if(followC==null){Follow follow=obj.gameObject.AddComponent<Follow>();follow.targetObj=this.gameObject;follow.distReq=4;follow.speedFollow=5;}
                         else{followC.distReq=obj.GetDistReq();followC.speedFollow=obj.GetSpeedFollow();}
                     }
-                }else{
-                    Tag_Collectible[] objs=FindObjectsOfType<Tag_Collectible>();
-                    foreach(Tag_Collectible obj in objs){
+                }/*else{
+                    foreach(Tag_Collectible obj in FindObjectsOfType<Tag_Collectible>()){
                         var follow=obj.GetComponent<Follow>();
                         if(follow!=null)Destroy(follow);
                     }
-                }
+                }*/
             }
 
             CountdownStatusTimer("onfire",countQuickerWhenMoving:true);

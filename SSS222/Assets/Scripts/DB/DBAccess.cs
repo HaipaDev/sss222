@@ -69,7 +69,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
         }else{if(highscore.score!=0){
             Model_Score document=new Model_Score{_id=_id,name=name,score=highscore.score,
             playtime=highscore.playtime,
-            version=highscore.version,build=highscore.build,
+            version=highscore.version,build=(float)System.Math.Round(highscore.build,2),
             date=highscore.date
             };
             await scores.InsertOneAsync(document);

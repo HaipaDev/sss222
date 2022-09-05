@@ -416,7 +416,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         //if(CheckGamemodeSelected("Adventure")&&Player.instance!=null){SaveAdventure();}
         if(gamemodeSelected>0&&(gamemodeSelected-1)<SaveSerial.instance.playerData.highscore.Length){
             if(score>GetHighscoreCurrent().score){
-                SaveSerial.instance.playerData.highscore[GameSession.instance.gamemodeSelected-1]=new Highscore(){score=score,playtime=Mathf.Round(currentPlaytime),
+                SaveSerial.instance.playerData.highscore[GameSession.instance.gamemodeSelected-1]=new Highscore(){score=score,playtime=Mathf.RoundToInt(currentPlaytime),
                 version=gameVersion,build=(float)System.Math.Round(buildVersion,2),
                 date=DateTime.Now};
                 Debug.Log("Highscore set for: "+GetCurrentGamemodeName());

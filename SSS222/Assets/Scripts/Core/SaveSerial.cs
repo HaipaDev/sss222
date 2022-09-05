@@ -249,7 +249,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool discordRPC=true;
 		public bool autoselectNewItem=true;
 		public bool alwaysReplaceCurrentSlot=false;
-		public bool autoUseMedkitsIfLow=false;
+		public bool autoUseMedkitsIfLow=true;
 		public bool allowSelectingEmptySlots=true;
 		public bool allowScrollingEmptySlots=false;
 		public bool autosubmitScores=true;
