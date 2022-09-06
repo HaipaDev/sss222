@@ -249,7 +249,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool discordRPC=true;
 		public bool autoselectNewItem=true;
 		public bool alwaysReplaceCurrentSlot=false;
-		public bool autoUseMedkitsIfLow=false;
+		public bool autoUseMedkitsIfLow=true;
 		public bool allowSelectingEmptySlots=true;
 		public bool allowScrollingEmptySlots=false;
 		public bool autosubmitScores=true;
@@ -318,9 +318,9 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 [System.Serializable]
 public class Highscore{
 	public int score;
-	public float playtime;
+	public int playtime;
 	public string version;
-	public float build;
+	public double build;
 	public DateTime date;
 }
 [System.Serializable]

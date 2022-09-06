@@ -168,8 +168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selfPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
-  target: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
-  targetTag: 
+  target: {fileID: 0}
+  targetTag: Player
   targetObj: {fileID: 0}
   dist: 0
   distReq: 2

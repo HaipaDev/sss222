@@ -63,7 +63,8 @@ public class Leaderboard : MonoBehaviour{
                 for(var i=0;i<hgCont.childCount;i++){
                     var go=hgCont.GetChild(i).gameObject;
                     go.GetComponent<DisplayLeaderboard>().rank=i+1;
-                    go.GetComponent<DisplayLeaderboard>().username=hgScoresSorted[i].name;
+                    var user=await DBAccess.instance.GetUserByIDAsync(hgScoresSorted[i]._id);
+                    go.GetComponent<DisplayLeaderboard>().username=user.username;
                     go.GetComponent<DisplayLeaderboard>().score=hgScoresSorted[i].score;
 
                     go.AddComponent<Button>().onClick.AddListener(()=>go.GetComponent<DisplayLeaderboard>().OpenScoreUsersData());
@@ -72,12 +73,13 @@ public class Leaderboard : MonoBehaviour{
             for(var i=hgCont.childCount;i<hgScoresSorted.Count;i++){
                 var element=lbElement2;
                 if(i==0)element=lbElement1;
-                if(hgScoresSorted[i].name==SaveSerial.instance.hyperGamerLoginData.username&&SaveSerial.instance.hyperGamerLoginData.loggedIn&&(hgScoresSorted[i].name!=""&&SaveSerial.instance.hyperGamerLoginData.username!="")){element=lbElement3;}
+                var user=await DBAccess.instance.GetUserByIDAsync(hgScoresSorted[i]._id);
+                if(user.username==SaveSerial.instance.hyperGamerLoginData.username&&SaveSerial.instance.hyperGamerLoginData.loggedIn&&(user.username!=""&&SaveSerial.instance.hyperGamerLoginData.username!="")){element=lbElement3;}
                 GameObject go=Instantiate(element,hgCont);
                 string[]name=go.name.Split('_');
                 go.name=name[0]+"_"+(i+1);
                 go.GetComponent<DisplayLeaderboard>().rank=i+1;
-                go.GetComponent<DisplayLeaderboard>().username=hgScoresSorted[i].name;
+                go.GetComponent<DisplayLeaderboard>().username=user.username;
                 go.GetComponent<DisplayLeaderboard>().score=hgScoresSorted[i].score;
 
                 go.AddComponent<Button>().onClick.AddListener(()=>go.GetComponent<DisplayLeaderboard>().OpenScoreUsersData());

@@ -69,7 +69,7 @@ public class PowerupDisplay : MonoBehaviour{
             }else{Debug.LogWarning("No txt obj assigned!");}
             string name=pwrup;
             if(!String.IsNullOrEmpty(name)){
-                if(name.Contains(Player.instance._itemSuffix)){name=name.Split('_')[0];}name=name+"Pwrup";
+                if(name.Contains(Player._itemSuffix)){name=name.Split('_')[0];}name=name+"Pwrup";
                 img.sprite=GameAssets.instance.Get(name).GetComponent<SpriteRenderer>().sprite;
             }else{img.sprite=GameAssets.instance.Spr("nullPwrup");}
         }}else{img.sprite=GameAssets.instance.Spr("nullPwrup");txt.text="";highlightIMG.fillAmount=0;}

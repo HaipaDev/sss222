@@ -227,10 +227,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         }else{if(GetComponent<BreakEncounter>()!=null)Destroy(GetComponent<BreakEncounter>());}
 
         //Set speed to normal
-        if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
-        (Player.instance!=null&&!Player.instance._hasStatus("matrix")&&!Player.instance._hasStatus("accel"))&&speedChanged!=true){gameSpeed=defaultGameSpeed;}
-        if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
+        if(!PauseMenu.GameIsPaused&&!Shop.shopOpened&&!UpgradeMenu.UpgradeMenuIsOpen&&
+        (Player.instance!=null&&!Player.instance._hasStatus("matrix")&&!Player.instance._hasStatus("accel"))&&!speedChanged){gameSpeed=defaultGameSpeed;}
         if(Player.instance==null){gameSpeed=defaultGameSpeed;}
+        if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
         
         //Restart with R or Space/Resume with Space
         if(SceneManager.GetActiveScene().name=="Game"){
@@ -416,7 +416,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         //if(CheckGamemodeSelected("Adventure")&&Player.instance!=null){SaveAdventure();}
         if(gamemodeSelected>0&&(gamemodeSelected-1)<SaveSerial.instance.playerData.highscore.Length){
             if(score>GetHighscoreCurrent().score){
-                SaveSerial.instance.playerData.highscore[GameSession.instance.gamemodeSelected-1]=new Highscore(){score=score,playtime=Mathf.Round(currentPlaytime),
+                SaveSerial.instance.playerData.highscore[GameSession.instance.gamemodeSelected-1]=new Highscore(){score=score,playtime=Mathf.RoundToInt(currentPlaytime),
                 version=gameVersion,build=(float)System.Math.Round(buildVersion,2),
                 date=DateTime.Now};
                 Debug.Log("Highscore set for: "+GetCurrentGamemodeName());

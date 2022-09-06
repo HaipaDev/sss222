@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d422e32c874b4f990eb161a8699ea, type: 3}
+  m_Name: HLaser-Single
+  m_EditorClassIdentifier: 
+  waveConfig: {fileID: 11400000, guid: 09b00df44a9ac9d4e96a9d1fd120108e, type: 2}
+  spawnReqsType: 0
+  spawnReqs:
+    rid: 2370248135178452992
+  references:
+    version: 2
+    RefIds:
+    - rid: 2370248135178452992
+      type: {class: spawnReqs, ns: , asm: Assembly-CSharp}
+      data:
+        timeEnabled: 1
+        time: {x: 30, y: 66}
+        timer: -4
+        repeat: 1
+        repeatInterval: 0.75
+        repI: 1
+        bothNeeded: 0
+        startTimeAfterSecond: 0
+        specialId: 0
