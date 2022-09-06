@@ -69,7 +69,7 @@ public class ScoreUserDataCanvas : MonoBehaviour{
     async void DisplaySelectedUsersScoreData(){
         var result=await DBAccess.instance.GetScoresFromDB();
         var resultSorted=result.OrderByDescending(e=>e.score).ToList();
-        for(var i=0;i<resultSorted.Count;i++){if(resultSorted[i].name==GameSession.instance.GetSelectedUsersDataName()){
+        for(var i=0;i<resultSorted.Count;i++){var user=await DBAccess.instance.GetUserByIDAsync(resultSorted[i]._id);if(user.username==GameSession.instance.GetSelectedUsersDataName()){
             /*var _user=await DBAccess.instance.GetHyperUser(resultSorted[i].name);
             HyperGamer user=_user.Current.Where(e=>e.username==GameSession.instance.GetSelectedUsersDataName()).First();
             steamId=user.steamId;*/

@@ -63,11 +63,11 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
             if(highscore.score==0){SetSubmitMessage("Score is equals 0!");}
             else if(highscore.score<=sameIdScore.ToList()[0].score){SetSubmitMessage("Score is lower or equals to submitted");}
             else{
-                scores.FindOneAndUpdate(e=>e._id==_id,Builders<Model_Score>.Update.Set(e=>e.name,name));
+                //scores.FindOneAndUpdate(e=>e._id==_id,Builders<Model_Score>.Update.Set(e=>e.name,name));
                 await scores.FindOneAndUpdateAsync(e=>e._id==_id,Builders<Model_Score>.Update.Set(e=>e.score,highscore.score));SetSubmitMessage("Score overwritten!");
             }
         }else{if(highscore.score!=0){
-            Model_Score document=new Model_Score{_id=_id,name=name,score=highscore.score,
+            Model_Score document=new Model_Score{_id=_id,score=highscore.score,
             playtime=highscore.playtime,
             version=highscore.version,build=System.Math.Round(highscore.build,2),
             date=highscore.date
@@ -78,8 +78,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     }
     public async Task<List<Model_Score>> GetScoresFromDB(){
         var scores=GetGamemodeCollection();
-        var allScoresTask=scores.FindAsync<Model_Score>(FilterDefinition<Model_Score>.Empty);
-        var scoresAwaited=await allScoresTask;
+        var scoresAwaited=await scores.FindAsync<Model_Score>(FilterDefinition<Model_Score>.Empty);
         List<Model_Score> highscores=new List<Model_Score>();
         foreach(var score in scoresAwaited.ToList()){
             //Debug.Log(score.ToString());
@@ -168,6 +167,8 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     }
     public HyperGamer GetUser(string username){return GetUserAsync(username).Result;}
     public async Task<HyperGamer> GetUserAsync(string username){var loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,System.Threading.CancellationToken.None);return loginUsername.First();}
+    public HyperGamer GetUserByID(ObjectId id){return GetUserByIDAsync(id).Result;}
+    public async Task<HyperGamer> GetUserByIDAsync(ObjectId id){var loginUsername=await hyperGamers.FindAsync(e=>e._id==id,null,System.Threading.CancellationToken.None);return loginUsername.First();}
     public async Task<string[]> GetUsersCustomizationData(string username){
         System.Threading.CancellationToken cancellationToken=System.Threading.CancellationToken.None;
         var user=await GetUserAsync(SaveSerial.instance.hyperGamerLoginData.username);
@@ -212,7 +213,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
 public class Model_Score {
     public ObjectId _id { set; get; }
 
-    public string name {  set; get; }
+    public string name {  set; get; }//
     public int score { set; get; }
     public int playtime { set; get; }
     public string version { set; get; }

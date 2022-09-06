@@ -45,8 +45,13 @@ public class DisplayLeaderboard : MonoBehaviour{
                 var result=await DBAccess.instance.GetScoresFromDB();
                 var resultSorted=result.OrderByDescending(e=>e.score).ToList();
                 
-                for(var i=0;i<resultSorted.Count;i++){if(resultSorted[i].name==SaveSerial.instance.hyperGamerLoginData.username){
-                    currentUserRank=i;currentUserScore=resultSorted[i].score;}}
+                
+                for(var i=0;i<resultSorted.Count;i++){
+                    var user=await DBAccess.instance.GetUserAsync(SaveSerial.instance.hyperGamerLoginData.username);
+                    if(resultSorted[i]._id==user._id){
+                        currentUserRank=i;currentUserScore=resultSorted[i].score;
+                    }
+                }
                 if(currentUserScore>0){
                     rank=currentUserRank+1;
                 }else{rank=0;}
