@@ -318,9 +318,9 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 [System.Serializable]
 public class Highscore{
 	public int score;
-	public float playtime;
+	public int playtime;
 	public string version;
-	public float build;
+	public double build;
 	public DateTime date;
 }
 [System.Serializable]

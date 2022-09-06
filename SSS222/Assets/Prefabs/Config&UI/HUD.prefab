@@ -665,6 +665,11 @@ PrefabInstance:
       propertyPath: frozenFlashColor.r
       value: 0.54668033
       objectReference: {fileID: 0}
+    - target: {fileID: 1522960445, guid: cb589810bddf2054fb5df3ff39ad5292, type: 3}
+      propertyPath: screenflashImgPrefab
+      value: 
+      objectReference: {fileID: 1032597982458430518, guid: f2bfd125d07b824488199545638ad02a,
+        type: 3}
     - target: {fileID: 233457172424892969, guid: cb589810bddf2054fb5df3ff39ad5292,
         type: 3}
       propertyPath: valueReq

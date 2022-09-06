@@ -227,10 +227,10 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         }else{if(GetComponent<BreakEncounter>()!=null)Destroy(GetComponent<BreakEncounter>());}
 
         //Set speed to normal
-        if(PauseMenu.GameIsPaused==false&&Shop.shopOpened==false&&UpgradeMenu.UpgradeMenuIsOpen==false&&
-        (Player.instance!=null&&!Player.instance._hasStatus("matrix")&&!Player.instance._hasStatus("accel"))&&speedChanged!=true){gameSpeed=defaultGameSpeed;}
-        if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
+        if(!PauseMenu.GameIsPaused&&!Shop.shopOpened&&!UpgradeMenu.UpgradeMenuIsOpen&&
+        (Player.instance!=null&&!Player.instance._hasStatus("matrix")&&!Player.instance._hasStatus("accel"))&&!speedChanged){gameSpeed=defaultGameSpeed;}
         if(Player.instance==null){gameSpeed=defaultGameSpeed;}
+        if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
         
         //Restart with R or Space/Resume with Space
         if(SceneManager.GetActiveScene().name=="Game"){

@@ -24,9 +24,9 @@ public class ScoreUserDataCanvas : MonoBehaviour{
     ulong steamId;
     int rank;
     int score;
-    float playtime;
+    int playtime;
     string versionAchieved;
-    float buildAchieved;
+    double buildAchieved;
     DateTime dateAchieved;
 
     void Start(){

@@ -99,7 +99,7 @@ public class PlayerCollider : MonoBehaviour{
 
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("medkitPwrup").name)){
                     if(!SaveSerial.instance.settingsData.autoUseMedkitsIfLow){player.AddItem("medkit");}
-                    else if(SaveSerial.instance.settingsData.autoUseMedkitsIfLow&&player.health<=(player.healthMax-GameRules.instance.medkit_hpGain))player.MedkitUse();
+                    else if(SaveSerial.instance.settingsData.autoUseMedkitsIfLow&&player.health<=(player.healthMax-GameRules.instance.medkit_hpGain)){player.MedkitUse();}
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("medkitCPwrup").name)){
                     if(player.health>=player.healthMax){GameSession.instance.AddToScoreNoEV(25);}
@@ -141,12 +141,12 @@ public class PlayerCollider : MonoBehaviour{
                     PwrupEnergyAdd();
                     if(player._hasStatus("shadowdash")){PwrupEnergyAddDupl();}
                     player.SetStatus("shadowdash",player.shadowTime,GameRules.instance.statusCapDefault);
-                    player.shadowed=true;
+                    Screenflash.instance.Shadow();
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("shadowtracesPwrup").name)){
-                    if(!player._hasStatus("shadowtracesPwrup")){player.SetSpeedPrev();player.moveSpeedCurrent*=player.shadowtracesSpeed;}
+                    if(!player._hasStatus("shadowtraces")){player.SetSpeedPrev();}
                     player.SetStatus("shadowtraces",player.shadowTime,GameRules.instance.statusCapDefault);
-                    player.shadowed=true;
+                    Screenflash.instance.Shadow();
                 }
                 if(other.gameObject.name.Contains(GameAssets.instance.Get("assassinPwrup").name)){
                     PwrupEnergyAdd();
@@ -252,7 +252,8 @@ public class PlayerCollider : MonoBehaviour{
                     PlayerEffects(other.gameObject.name,true);
                 }
 
-                if(dmg>0){dmg=CalculateDmg(dmg,armorPenetr,true);}
+                if(dmg>0&&!GameSession.instance.CheckGamemodeSelected("Classic")){dmg=CalculateDmg(dmg,armorPenetr,true);}
+                else if(dmg>0&&GameSession.instance.CheckGamemodeSelected("Classic")){dmg=CalculateDmgClassic(dmg);}
                 if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("CodeBreaker")&&other.gameObject.name.Contains("Zone_"))){dmg=0;}
 
                 if(dmg>0){player.Damage(dmg,dmgType.silent);}
@@ -310,6 +311,7 @@ public class PlayerCollider : MonoBehaviour{
         if((_cDmg-Mathf.RoundToInt(_cDmg))<=0.4f){_cDmg=Mathf.RoundToInt(_cDmg);}
         if(((_cDmg-Mathf.RoundToInt(_cDmg))>0.4f)&&((_cDmg-Mathf.RoundToInt(_cDmg))<0.6f)){_cDmg=Mathf.RoundToInt(_cDmg)+0.5f;}
         if((_cDmg-Mathf.RoundToInt(_cDmg))>=0.6f){_cDmg=Mathf.RoundToInt(_cDmg)+1f;}
+        Debug.Log(_cDmg);
         return _cDmg;
    }
    void ThornsHit(){player.Thorns();}

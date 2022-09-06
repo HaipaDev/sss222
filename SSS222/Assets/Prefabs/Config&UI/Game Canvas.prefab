@@ -5614,7 +5614,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7293689707047259069}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.9062507}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5641,7 +5641,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7293689707047259069}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -5676,16 +5676,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a4cab4622fd1dc4fbe1b47d20646474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenflashImgPrefab: {fileID: 0}
+  damageFlashSprite: {fileID: 0}
   damageFlashColor: {r: 0.92156863, g: 0, b: 0, a: 0.49803922}
-  damageFlashSpeed: 2
+  damageFlashSpeed: 4
+  healFlashSprite: {fileID: 0}
   healFlashColor: {r: 0.41960785, g: 0.88235295, b: 0.7058824, a: 0.7372549}
-  healedFlashSpeed: 1
+  healFlashSpeed: 3
+  shadowFlashSprite: {fileID: 0}
   shadowFlashColor: {r: 0, g: 0, b: 0, a: 0.6666667}
-  shadowFlashSpeed: 5
+  shadowFlashSpeed: 6
+  flameFlashSprite: {fileID: 0}
   flameFlashColor: {r: 0.92156863, g: 0.3452724, b: 0, a: 0.5882353}
-  flameFlashSpeed: 3
+  flameFlashSpeed: 5
+  electrcFlashSprite: {fileID: 0}
   electrcFlashColor: {r: 0.15477037, g: 0.34252575, b: 0.6981132, a: 0.5882353}
   electrcFlashSpeed: 2
+  frozenFlashSprite: {fileID: 0}
   frozenFlashColor: {r: 0, g: 0, b: 0, a: 0}
   frozenFlashSpeed: 0
 --- !u!1 &7407391320998035130

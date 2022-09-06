@@ -69,7 +69,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
         }else{if(highscore.score!=0){
             Model_Score document=new Model_Score{_id=_id,name=name,score=highscore.score,
             playtime=highscore.playtime,
-            version=highscore.version,build=(float)System.Math.Round(highscore.build,2),
+            version=highscore.version,build=System.Math.Round(highscore.build,2),
             date=highscore.date
             };
             await scores.InsertOneAsync(document);
@@ -146,22 +146,24 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     public string[] customizationData(){var pd=SaveSerial.instance.playerData;return new string[]{pd.skinName,pd.trailName,pd.flaresName,pd.deathFxName};}
     public float[] overlayColors(){var pd=SaveSerial.instance.playerData;return new float[]{pd.overlayColor[0],pd.overlayColor[1],pd.overlayColor[2]};}
     public async void UpdateCustomizationData(){
-        var user=await GetUserAsync(SaveSerial.instance.hyperGamerLoginData.username);
-        var _id=user._id;
-        var sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id);
-        if(sameIdCust.ToList().Count>0){
-            sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id);
-            
-            await sssCustomizationData.FindOneAndUpdateAsync(e=>e._id==_id,Builders<Model_SSSCustomization>.Update.Set(e=>e.customizationData,customizationData()));
-            await sssCustomizationData.FindOneAndUpdateAsync(e=>e._id==_id,Builders<Model_SSSCustomization>.Update.Set(e=>e.overlayColors,overlayColors()));
-            SetLoggedInMessage("Customization Data updated");Debug.Log("Customization Data updated");
-        }else{
-            Model_SSSCustomization document=new Model_SSSCustomization{_id=_id,
-            customizationData=customizationData(),
-            overlayColors=overlayColors()
-            };
-            await sssCustomizationData.InsertOneAsync(document);
-            SetLoggedInMessage("Customization Data uploaded");
+        if(SaveSerial.instance.hyperGamerLoginData.loggedIn){
+            var user=await GetUserAsync(SaveSerial.instance.hyperGamerLoginData.username);
+            var _id=user._id;
+            var sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id);
+            if(sameIdCust.ToList().Count>0){
+                sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id);
+                
+                await sssCustomizationData.FindOneAndUpdateAsync(e=>e._id==_id,Builders<Model_SSSCustomization>.Update.Set(e=>e.customizationData,customizationData()));
+                await sssCustomizationData.FindOneAndUpdateAsync(e=>e._id==_id,Builders<Model_SSSCustomization>.Update.Set(e=>e.overlayColors,overlayColors()));
+                SetLoggedInMessage("Customization Data updated");Debug.Log("Customization Data updated");
+            }else{
+                Model_SSSCustomization document=new Model_SSSCustomization{_id=_id,
+                customizationData=customizationData(),
+                overlayColors=overlayColors()
+                };
+                await sssCustomizationData.InsertOneAsync(document);
+                SetLoggedInMessage("Customization Data uploaded");
+            }
         }
     }
     public HyperGamer GetUser(string username){return GetUserAsync(username).Result;}
@@ -212,9 +214,9 @@ public class Model_Score {
 
     public string name {  set; get; }
     public int score { set; get; }
-    public float playtime { set; get; }
+    public int playtime { set; get; }
     public string version { set; get; }
-    public float build { set; get; }
+    public double build { set; get; }
     public System.DateTime date { set; get; }
         
 }
