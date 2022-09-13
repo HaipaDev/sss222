@@ -119,11 +119,11 @@ public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustom
         deathFxName=SaveSerial.instance.playerData.deathFxName;
     }
     async void LoadValuesFromSelectedUsersData(){
-        string[] customizationData=await DBAccess.instance.GetUsersCustomizationData(GameSession.instance.GetSelectedUsersDataName());
-        skinName=customizationData[0];
-        overlayColor=Color.HSVToRGB(SaveSerial.instance.playerData.overlayColor[0],SaveSerial.instance.playerData.overlayColor[1],SaveSerial.instance.playerData.overlayColor[2]);
-        trailName=customizationData[1];
-        flaresName=customizationData[2];
-        deathFxName=customizationData[3];
+        SSSCustomizationData cstmzData=await DBAccess.instance.GetUsersCustomizationData(GameSession.instance.GetSelectedUsersDataName());
+        skinName=cstmzData.customizationData[0];
+        trailName=cstmzData.customizationData[1];
+        flaresName=cstmzData.customizationData[2];
+        deathFxName=cstmzData.customizationData[3];
+        overlayColor=Color.HSVToRGB(cstmzData.overlayColors[0],cstmzData.overlayColors[1],cstmzData.overlayColors[2]);
     }
 }

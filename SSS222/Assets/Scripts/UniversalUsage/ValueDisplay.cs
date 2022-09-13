@@ -32,13 +32,15 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="gameVersion") _txt=gs.gameVersion;
             else if(value=="buildVersion") _txt=gs.buildVersion.ToString();
             else if(value=="buildVersion-Menu") _txt="build "+gs.buildVersion.ToString();
-            else if(value=="timePlayed"){
+            else if(value=="buildVersion-Menu") _txt="build "+gs.buildVersion.ToString();
+            else if(value=="playtime") _txt=gs.GetGameSessionTimeFormat();
+            else if(value=="postgameInfo"){
                 if(gs.gamemodeSelected!=-1){_txt=gs.GetGameSessionTimeFormat();}
                 else{
                     if(FindObjectOfType<BossAI>()==null){_txt=(Mathf.RoundToInt(gs.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";}
                     else{var b=FindObjectOfType<BossAI>();_txt=System.Math.Round(((b.GetComponent<Enemy>().health/b.GetComponent<Enemy>().healthMax)*100f),2).ToString()+"%";}
                 }
-            }else if(value=="timePlayed_txt"){
+            }else if(value=="postgameInfo_txt"){
                 if(gs.gamemodeSelected!=-1){_txt="Time Played :";}
                 else{
                     if(FindObjectOfType<BossAI>()==null){_txt="Distance traveled :";}
@@ -119,8 +121,8 @@ public class ValueDisplay : MonoBehaviour{
                 if(value=="blastersUpgraded"){_txt="Lvl "+pmodules.blastersUpgraded.ToString();}
             }
             ///Other player related
-            if(value=="holodeath_popup"&&FindObjectOfType<PlayerHolobody>()!=null){
-                _txt="Distance to Hologram: "+FindObjectOfType<PlayerHolobody>().GetDistanceLeft()+"m";
+            if(value=="holobody_popup"&&FindObjectOfType<PlayerHolobody>()!=null){
+                _txt="Distance to Holobody: "+FindObjectOfType<PlayerHolobody>().GetDistanceLeft()+"m";
             }
         }
     #endregion

@@ -105,10 +105,10 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     //void OnDestroy(){DestroyImmediate(SsliderIMG.material);}
     //void OnDisable(){DestroyImmediate(SsliderIMG.material);}
     public void ValueChangeCheck(){
-        overlayColor=Color.HSVToRGB(Hslider.value,Sslider.value,Vslider.value);
+        overlayColor=Color.HSVToRGB((float)System.Math.Round(Hslider.value,2),(float)System.Math.Round(Sslider.value,2),(float)System.Math.Round(Vslider.value,2));
 
         SsliderIMG.material.SetColor("_Color2",Color.HSVToRGB(Hslider.value,1,1));
-        VsliderIMG.color = Color.HSVToRGB(Hslider.value, 1, 1);
+        VsliderIMG.color = Color.HSVToRGB((float)System.Math.Round(Hslider.value,2), 1, 1);
     }
     void Update(){
         if(loaded){

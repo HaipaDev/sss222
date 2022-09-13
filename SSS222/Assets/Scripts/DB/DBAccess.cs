@@ -143,7 +143,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
         }else{SetLoginMessage("Login not found");if(SaveSerial.instance.hyperGamerLoginData.loggedIn)SaveSerial.instance.LogOut();}
     }
     public string[] customizationData(){var pd=SaveSerial.instance.playerData;return new string[]{pd.skinName,pd.trailName,pd.flaresName,pd.deathFxName};}
-    public float[] overlayColors(){var pd=SaveSerial.instance.playerData;return new float[]{pd.overlayColor[0],pd.overlayColor[1],pd.overlayColor[2]};}
+    public float[] overlayColors(){var pd=SaveSerial.instance.playerData;return new float[]{(float)System.Math.Round(pd.overlayColor[0],2),(float)System.Math.Round(pd.overlayColor[1],2),(float)System.Math.Round(pd.overlayColor[2],2)};}
     public async void UpdateCustomizationData(){
         if(SaveSerial.instance.hyperGamerLoginData.loggedIn){
             var user=await GetUserAsync(SaveSerial.instance.hyperGamerLoginData.username);
@@ -169,14 +169,18 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     public async Task<HyperGamer> GetUserAsync(string username){var loginUsername=await hyperGamers.FindAsync(e=>e.username==username,null,System.Threading.CancellationToken.None);return loginUsername.First();}
     public HyperGamer GetUserByID(ObjectId id){return GetUserByIDAsync(id).Result;}
     public async Task<HyperGamer> GetUserByIDAsync(ObjectId id){var loginUsername=await hyperGamers.FindAsync(e=>e._id==id,null,System.Threading.CancellationToken.None);return loginUsername.First();}
-    public async Task<string[]> GetUsersCustomizationData(string username){
+    public async Task<SSSCustomizationData> GetUsersCustomizationData(string username){
         System.Threading.CancellationToken cancellationToken=System.Threading.CancellationToken.None;
-        var user=await GetUserAsync(SaveSerial.instance.hyperGamerLoginData.username);
+        var user=await GetUserAsync(username);
         var _id=user._id;
         var sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id);
         if(sameIdCust.ToList().Count>0){
+            var _sssCustomizationDataClass=new SSSCustomizationData();
             sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id,null,cancellationToken);
-            return sameIdCust.First().customizationData;
+            _sssCustomizationDataClass.customizationData=sameIdCust.First().customizationData;
+            sameIdCust=await sssCustomizationData.FindAsync(e=>e._id==_id,null,cancellationToken);
+            _sssCustomizationDataClass.overlayColors=sameIdCust.First().overlayColors;
+            return _sssCustomizationDataClass;
         }else{SetLoggedInMessage("User not found");return null;}
     }
     public async void ChangePassHyperGamer(string password,string newPass){
@@ -227,7 +231,10 @@ public class Model_SSSCustomization {
 
     public string[] customizationData { set; get; }
     public float[] overlayColors { set; get; }
-        
+}
+public class SSSCustomizationData{
+    public string[] customizationData;
+    public float[] overlayColors;
 }
 [System.Serializable]
 public class HyperGamer {

@@ -1060,7 +1060,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1587.1871, y: 918.5977}
+  m_AnchoredPosition: {x: -421.5, y: 918.79}
   m_SizeDelta: {x: 276.88953, y: 122.80554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6523849274733867411
@@ -2373,7 +2373,7 @@ GameObject:
   - component: {fileID: 5988652838924368578}
   - component: {fileID: 1220109907797109619}
   m_Layer: 5
-  m_Name: Holodeath-popup
+  m_Name: Holobody-popup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2471,9 +2471,9 @@ MonoBehaviour:
   value: 0
   below: 1
   enable: 0
-  revertAfterChanged: 0
+  revertAfterChanged: 1
   components: 1
-  children: 0
+  children: 1
   childrenComponents: 1
   timeToCheckForPresence: 3
   timerToCheckForPresence: 0
@@ -2863,7 +2863,7 @@ GameObject:
   - component: {fileID: 2820535017575985802}
   - component: {fileID: 2900990368353960867}
   m_Layer: 5
-  m_Name: Holodeath-txt
+  m_Name: Holobody-txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2917,7 +2917,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Distance to Hologram: 1000m'
+  m_text: 'Distance to Holobody: 1000m'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 35db192c52f17524e9a86acba765b267, type: 2}
   m_sharedMaterial: {fileID: -1547585524736492212, guid: 35db192c52f17524e9a86acba765b267,
@@ -3015,7 +3015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b49163d5326f942bba584de186f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: holodeath_popup
+  value: holobody_popup
   onlyOnEnable: 0
   onValidate: 0
 --- !u!1 &2959909714479607572
@@ -5063,7 +5063,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontSize: 56
-  m_fontSizeBase: 66
+  m_fontSizeBase: 56
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5676,7 +5676,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a4cab4622fd1dc4fbe1b47d20646474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenflashImgPrefab: {fileID: 0}
+  screenflashImgPrefab: {fileID: 1032597982458430518, guid: f2bfd125d07b824488199545638ad02a,
+    type: 3}
   damageFlashSprite: {fileID: 0}
   damageFlashColor: {r: 0.92156863, g: 0, b: 0, a: 0.49803922}
   damageFlashSpeed: 4
@@ -5693,8 +5694,8 @@ MonoBehaviour:
   electrcFlashColor: {r: 0.15477037, g: 0.34252575, b: 0.6981132, a: 0.5882353}
   electrcFlashSpeed: 2
   frozenFlashSprite: {fileID: 0}
-  frozenFlashColor: {r: 0, g: 0, b: 0, a: 0}
-  frozenFlashSpeed: 0
+  frozenFlashColor: {r: 0.54668033, g: 0.7920185, b: 0.8584906, a: 0.5882353}
+  frozenFlashSpeed: 2
 --- !u!1 &7407391320998035130
 GameObject:
   m_ObjectHideFlags: 0
@@ -7193,6 +7194,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2614155989906725886}
     m_Modifications:
+    - target: {fileID: 2611494090873113757, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: valueReq
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3409646300750999410, guid: 8403b980781c67245b276530776781ee,
+        type: 3}
+      propertyPath: valueReq
+      value: 0.0001
+      objectReference: {fileID: 0}
     - target: {fileID: 3480599764833232933, guid: 8403b980781c67245b276530776781ee,
         type: 3}
       propertyPath: m_AnchorMax.y

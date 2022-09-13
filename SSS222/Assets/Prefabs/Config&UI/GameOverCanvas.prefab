@@ -1763,7 +1763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b49163d5326f942bba584de186f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: timePlayed_txt
+  value: postgameInfo_txt
   onlyOnEnable: 1
   onValidate: 0
 --- !u!1 &7503667156785292984
@@ -1914,7 +1914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b49163d5326f942bba584de186f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: timePlayed
+  value: postgameInfo
   onlyOnEnable: 0
   onValidate: 0
 --- !u!1 &7605019875179854833
