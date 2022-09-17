@@ -136,13 +136,13 @@ public class PlayerModules : MonoBehaviour{
                 if(_isSkillLvl("LShield",2)){fragments=8;cost=fragments*2;}
                 if(FindObjectOfType<LunarShield>()!=null){
                     var l=FindObjectOfType<LunarShield>();
-                    if(l._notDamagedShieldPiecesCount()!=0&&GameSession.instance.coins>=cost){_canMakeShield=true;}
-                    cost-=l._notDamagedShieldPiecesCount();
+                    if((l._damagedShieldPiecesCount()>0||l.fragments.Count<fragments)&&GameSession.instance.coins>=cost){_canMakeShield=true;}
+                    cost-=l._damagedShieldPiecesCount();
                     if(_canMakeShield)Destroy(l.gameObject);
                 }else{_canMakeShield=true;}
                 if(_canMakeShield){
                     var l=GameAssets.instance.Make("LunarShield",transform.position);l.transform.parent=transform;
-                    l.GetComponent<LunarShield>().fragmentsPresent=fragments;
+                    l.GetComponent<LunarShield>().fragmentsStart=fragments;
                     player.AddSubCoins(cost,false);
                     GetSkill(item.item.name).cooldown=item.cooldown;
                 }
@@ -196,10 +196,14 @@ public class PlayerModules : MonoBehaviour{
         if(_isModuleEquipped("DkSurge")){
             if(GameSession.instance.xp>=GameSession.instance.xpMax){
                 var dif=(GameSession.instance.xpMax*GameRules.instance.xpMaxOvefillMult)-GameSession.instance.xp;
-                if(dif<=25&&!Player.instance._hasStatus("speed")){Player.instance.Speed(5,5,1.2f);if(Player.instance._hasStatus("slow")){Player.instance.RemoveStatus("slow");}}
-                if(dif<=15&&!Player.instance._hasStatus("armored")){Player.instance.Armor(5,5,2);if(Player.instance._hasStatus("fragile")){Player.instance.RemoveStatus("fragile");}}
-                if(dif==0&&!Player.instance._hasStatus("power")){Player.instance.Power(5,5,1.15f);if(Player.instance._hasStatus("weakns")){Player.instance.RemoveStatus("weakns");}}
+                if(dif<=25&&!Player.instance._hasStatus("speed")){Player.instance.Speed(-7,5,1.2f);if(Player.instance._hasStatus("slow")){Player.instance.RemoveStatus("slow");}}
+                if(dif<=15&&!Player.instance._hasStatus("armored")){Player.instance.Armor(-7,5,2);if(Player.instance._hasStatus("fragile")){Player.instance.RemoveStatus("fragile");}}
+                if(dif==0&&!Player.instance._hasStatus("power")){Player.instance.Power(-7,5,1.15f);if(Player.instance._hasStatus("weakns")){Player.instance.RemoveStatus("weakns");}}
             }
+        }else{
+            if(Player.instance._hasStatus("speed")){if(Player.instance.GetStatus("speed").timer==-7)Player.instance.RemoveStatus("speed");}
+            if(Player.instance._hasStatus("armored")){if(Player.instance.GetStatus("armored").timer==-7)Player.instance.RemoveStatus("armored");}
+            if(Player.instance._hasStatus("power")){if(Player.instance.GetStatus("power").timer==-7)Player.instance.RemoveStatus("power");}
         }
         if(_isModuleEquipped("CodeBreaker")){
             if(player._hasStatus("hacked")){player.RemoveStatus("hacked");}

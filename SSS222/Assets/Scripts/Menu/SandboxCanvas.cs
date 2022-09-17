@@ -113,7 +113,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 else if(basicCollectiblesPanel.activeSelf||powerupsPanel.activeSelf){OpenCollectiblesPanel();}
         else{
             if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="InfoGameMode"){FindObjectOfType<ModeInfoManager>().SetActivePanel(0);}
-            else{GSceneManager.instance.LoadGameModeChooseScene();GameSession.instance.defaultGameSpeed=1;}
+            else{GSceneManager.instance.LoadGameModeChooseScene();}
         }
     }
     public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}

@@ -940,7 +940,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                     s.timer-=_step;
                     if(playTimerCloseSound&&!playedStatusTimerCloseSound&&s.timer<=1.33f){AudioManager.instance.Play("TimerTicking");playedStatusTimerCloseSound=true;}
                 }
-                else{if(s.timer!=-5&&s.timer!=-6){
+                else{if(s.timer!=-5&&s.timer!=-6&&s.timer!=-7){
                     RemoveStatus(name);
                     if(playSound=="-"){AudioManager.instance.Play("PowerupOff");}else if(playSound!="-"&&playSound!=""){AudioManager.instance.Play(playSound);}
                     if(playTimerCloseSound){playedStatusTimerCloseSound=false;}
@@ -1135,7 +1135,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(!GameSession.GlobalTimeIsPaused){
             hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax/GameRules.instance.hpAbsorpFractionCap);
             enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax/GameRules.instance.enAbsorpFractionCap);
-            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax&&!_hasStatus("noHeal")){HPAddSilent(hpRegenAmnt);HPAbsorp(-hpRegenAmnt);timerHpRegen=0;}}
+            if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax&&!_hasStatus("noHeal")){HPAddSilent(hpRegenAmnt);HPAbsorp(hpRegenAmnt,false);timerHpRegen=0;}}
             if(energyOn)if(enAbsorpAmnt>0&&timerEnRegen>=freqEnRegen){if(energy<energyMax&&!_hasStatus("infEnergy")&&!_hasStatus("electrc")){AddSubEnergy(enRegenAmnt,true);EnAbsorp(-enRegenAmnt);timerEnRegen=0;}}
         }
     }
@@ -1433,11 +1433,11 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
     public void HPAbsorp(float value, bool add=true,bool ignoreInvert=true){
         if(!_hasStatus("inverter")||ignoreInvert){
-            if(add){var _val=value;if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("AbsorpConc"))){Damage(value*0.5f,dmgType.healSilent);}else{_val*=0.5f;}hpAbsorpAmnt+=_val;HpAbsorpPopUpHUD(_val);}
+            if(add){var _val=value;if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("AbsorpConc"))&&value>0){HPAddSilent(value*0.5f);_val*=0.5f;}hpAbsorpAmnt+=_val;HpAbsorpPopUpHUD(_val);}
             else{hpAbsorpAmnt-=value;HpAbsorpPopUpHUD(-value);}
         }else{
             if(add){hpAbsorpAmnt-=value;HpAbsorpPopUpHUD(-value);}
-            else{var _val=value;if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("AbsorpConc"))){Damage(value*0.5f,dmgType.healSilent);}else{_val*=0.5f;}hpAbsorpAmnt+=_val;HpAbsorpPopUpHUD(_val);}
+            else{var _val=value;if(GetComponent<PlayerModules>()!=null&&(GetComponent<PlayerModules>()._isModuleEquipped("AbsorpConc"))&&value>0){HPAddSilent(value*0.5f);_val*=0.5f;}hpAbsorpAmnt+=_val;HpAbsorpPopUpHUD(_val);}
         }
     }
     public void EnAbsorp(float value, bool add=true,bool ignoreInvert=true){

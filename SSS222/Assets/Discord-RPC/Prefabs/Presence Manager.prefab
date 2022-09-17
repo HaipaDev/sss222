@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -60,7 +61,7 @@ MonoBehaviour:
     spectateSecret: 
     instance: 0
   applicationId: 929733174446161920
-  optionalSteamId: 
+  optionalSteamId: 2000190
   callbackCalls: 0
   joinRequest:
     userId: 
@@ -85,3 +86,4 @@ MonoBehaviour:
   onJoinRequest:
     m_PersistentCalls:
       m_Calls: []
+  initialized: 0

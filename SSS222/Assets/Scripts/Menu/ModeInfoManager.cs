@@ -50,13 +50,20 @@ public class ModeInfoManager : MonoBehaviour{
                 else{SwitchBackButtonAndArrows(false);}
             }else{SwitchBackButtonAndArrows(true);}
         }
+        CheckESC();
+    }
+    void CheckESC(){
+        if(Input.GetKeyDown(KeyCode.Escape)&&_escapeDelay<=0){
+            if(panelActive!=1&&panelActive!=0){SetActivePanel(0);}
+            else if(panelActive==0){GSceneManager.instance.LoadGameModeChooseScene();}
+        }
     }
     void SwitchBackButtonAndArrows(bool b){
         transform.GetChild(0).gameObject.SetActive(b);
         transform.GetChild(1).gameObject.SetActive(b);
         transform.GetChild(2).gameObject.SetActive(b);
     }
-    public void SetActivePanel(int i){foreach(GameObject p in panels){p.SetActive(false);}panels[i].SetActive(true);panelActive=i;_escapeDelay=0.04f;}
+    public void SetActivePanel(int i){foreach(GameObject p in panels){p.SetActive(false);}panels[i].SetActive(true);panelActive=i;_escapeDelay=0.4f;}
     public void OpenNextPanel(){if(panelActive<panels.Length-1)SetActivePanel(panelActive+1);else SetActivePanel(0);}
     public void OpenPrevPanel(){if(panelActive>0)SetActivePanel(panelActive-1);else SetActivePanel(panels.Length-1);}
 }

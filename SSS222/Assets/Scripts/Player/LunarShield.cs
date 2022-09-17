@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 public class LunarShield : MonoBehaviour{
     [SerializeField] float startHp=25;
     [SerializeField] float rotSpeed=1;
-    [Range(0,8)][SerializeField] public int fragmentsPresent=8;
+    [Range(0,8)][SerializeField] public int fragmentsStart=8;
     [ReadOnly][SerializeField] public List<LunarShield_fragment> fragments;
     void Start(){
         foreach(Transform t in transform){
@@ -20,8 +20,8 @@ public class LunarShield : MonoBehaviour{
         float rotStep=rotSpeed*Time.deltaTime;
         if(!GameSession.GlobalTimeIsPaused)transform.Rotate(new Vector3(0,0,rotSpeed));
         
-        if(transform.childCount!=fragmentsPresent){
-            for(var i=transform.childCount;i>fragmentsPresent;i--){
+        if(transform.childCount!=fragmentsStart){
+            for(var i=transform.childCount;i>fragmentsStart;i--){
                 fragments.Remove(transform.GetChild(i-1).GetComponent<LunarShield_fragment>());
                 Destroy(transform.GetChild(i-1).gameObject);
             }
@@ -34,7 +34,8 @@ public class LunarShield : MonoBehaviour{
         }
         if(_allPiecesDestroyed()){Destroy(gameObject);}
     }
-    public int _notDamagedShieldPiecesCount(){var i=fragments.Count;foreach(LunarShield_fragment l in fragments){if(l.hp<=startHp*0.75f){i--;}}return i;}
+    public int _damagedShieldPiecesCount(){var i=0;foreach(LunarShield_fragment l in fragments){if(l.hp<=startHp*0.75f){i++;}}return i;}
+    public int _notDamagedShieldPiecesCount(){return fragments.Count-_damagedShieldPiecesCount();}
     public int _fullShieldPiecesCount(){var i=fragments.Count;foreach(LunarShield_fragment l in fragments){if(l.hp<=startHp){i--;}}return i;}
     public int _destroyedShieldPiecesCount(){var i=0;foreach(LunarShield_fragment l in fragments){if(l.hp<=0){i++;}}return i;}
     public bool _allPiecesDestroyed(){return _destroyedShieldPiecesCount()==fragments.Count;}//return !(fragments.Exists(x=>x.hp>0));}

@@ -46,12 +46,12 @@ public class StatusDisplay : MonoBehaviour{
                 var timer=Player.instance.GetStatus(state).timer;//Player.instance.GetType().GetField(state+"Timer").GetValue(Player.instance);
                 if((float)timer<10f&&(float)timer>=0f){value=(float)System.Math.Round((float)timer, 1);txt.characterSpacing=-25f;}
                 else if((float)timer>10f){value=(float)Mathf.RoundToInt((float)timer);txt.characterSpacing=0f;}
-                else if((float)timer==-5f){value=-5f;}
+                else if((float)timer<=-5f){value=-5f;}
                 //var value=System.Math.Round(timer, 1);
 
-                if (value<=0&&value>-5) {value = 0;}
+                if(value<=0&&value>-5){value=0;}
                 if(value<=-5){txt.text="∞";}
-                else {txt.text=value.ToString();}
+                else{txt.text=value.ToString();}
             }
         }
     }
