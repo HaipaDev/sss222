@@ -7,7 +7,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
-	void Awake(){if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
+	void Awake(){if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}}
 	IEnumerator Start(){
 		yield return new WaitForSecondsRealtime(0.01f);
 		playerData.highscore=new Highscore[GameCreator.GetGamerulesetsPrefabsLength()];

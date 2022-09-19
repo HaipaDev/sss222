@@ -75,24 +75,33 @@ public class spawnReqsMono:MonoBehaviour{
             if(float.Parse(valCur)!=-4&&(float.Parse(valCur)>=float.Parse(valMaxx))){
                 if(xs.startTimeAfterSecond&&xs.timer==-4){RestartTimer(xs);return;}
                 if(((xs.bothNeeded&&(xs.timeEnabled&&xs.timer<=0&&xs.timer>-4))||(!xs.bothNeeded))||xs.timer==-5){
-                    if(xs.repeat>1&&xs.timer!=-5){
-                        StartCoroutine(RepSpawns());
-                        SetTimer(xs,-5);
-                        if(xs.GetType().IsSubclassOf(typeof(spawnReqs)))if(!String.IsNullOrEmpty(val)){xs.GetType().GetField(val).SetValue(xs,-5);}
+                    if(xs.repeat>1){//&&xs.timer!=-5){
+                        if(xs.timer!=-5){
+                            StartCoroutine(RepSpawns());
+                            SetTimer(xs,-5);
+                            if(xs.GetType().IsSubclassOf(typeof(spawnReqs)))if(!String.IsNullOrEmpty(val)){xs.GetType().GetField(val).SetValue(xs,0);}
+                            ResetReps();
+                        }else{
+                            xs.repI=1;
+                        }
                     }else{
                         mb.StartCoroutine(cor,corInfo);
                         if(xs.timeEnabled){RestartTimer(xs);}
                         if(xs.GetType().IsSubclassOf(typeof(spawnReqs)))if(!String.IsNullOrEmpty(val))xs.GetType().GetField(val).SetValue(xs,0);
                     }
 
-                    if(xs.repI>xs.repeat){
-                        if(xs.timeEnabled){RestartTimer(xs);}else xs.timer=-4;
-                        if(!String.IsNullOrEmpty(val))xs.GetType().GetField(val).SetValue(xs,0);
-                        xs.repI=1;
-                    }
+                    ResetReps();
                 }
             }
-            IEnumerator RepSpawns(){for(xs.repI=1;xs.repI<=xs.repeat;xs.repI++){yield return new WaitForSeconds(xs.repeatInterval);mb.StartCoroutine(cor,corInfo);}yield break;}
+            IEnumerator RepSpawns(){for(xs.repI=1;xs.repI<=xs.repeat;xs.repI++){yield return new WaitForSeconds(xs.repeatInterval);mb.StartCoroutine(cor,corInfo);Debug.Log("Spawning");}ResetReps();yield break;}
+            void ResetReps(){
+                if(xs.repeat>1&&xs.repI>=xs.repeat){
+                    //if(xs.timeEnabled){RestartTimer(xs);}else xs.timer=-4;
+                    SetTimer(xs,-4);
+                    if(!String.IsNullOrEmpty(val))xs.GetType().GetField(val).SetValue(xs,0);
+                    xs.repI=1;
+                }
+            }
         }
     }else{Debug.LogError("Youre trying to CheckSpawns for a null spawnReqs");}}}
     

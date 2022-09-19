@@ -104,7 +104,7 @@ namespace DiscordPresence
         #region Monobehaviour Callbacks
         // Singleton
         void Awake(){
-            if(instance==null){instance=this;DontDestroyOnLoad(gameObject);}else if (instance!=this){Destroy(gameObject);}
+            if(PresenceManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
         }
 
         void Update(){

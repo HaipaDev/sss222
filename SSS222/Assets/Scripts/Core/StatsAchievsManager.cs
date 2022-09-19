@@ -36,7 +36,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public bool statsLoaded;
     public bool statsTotalSummed;
 
-    void Awake(){if(StatsAchievsManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
+    void Awake(){if(StatsAchievsManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}}
     void Start(){SetStatsList();}//uniquePowerups=new List<string>();}
     void SetStatsList(){foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){statsGamemodesList.Add(new StatsGamemode(){gmName=gr.cfgName});}statsGamemodesList.Add(new StatsGamemode(){gmName="Sandbox Mode"});}
     void Update(){

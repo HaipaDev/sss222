@@ -14,7 +14,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     [DisableInEditorMode]public bool inverted=false;
     [SerializeField]AudioClip currentMusic;
     void Awake(){
-        if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
+        if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
     }
     IEnumerator Start(){yield return new WaitForSecondsRealtime(0.1f);if(currentMusic==null)SetMusicToCstmzMusic();}
     void Update(){

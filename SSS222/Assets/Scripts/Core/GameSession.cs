@@ -82,7 +82,6 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
 
     void Awake(){
         SetUpSingleton();
-        StartCoroutine(SetGameRulesValues());
         #if UNITY_EDITOR
         cheatmode=true;
         #else
@@ -90,9 +89,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         #endif
         gameObject.AddComponent<gitignoreScript>();
     }
-    void SetUpSingleton(){if(GameSession.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
+    void SetUpSingleton(){if(GameSession.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}}
     void Start(){
-        if(SceneManager.GetActiveScene().name=="Game"){ReAddSpawnReqsMono();}
+        if(SceneManager.GetActiveScene().name=="Game"){EnterGameScene();GameRules.instance.EnterGameScene();}
         else if(SceneManager.GetActiveScene().name!="Game"){RemoveSpawnReqsMono();}
 
         presenceTimeSet=false;

@@ -29,7 +29,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     public string hyperLastLoginAppDisplay="SSS222";
 
     void Awake(){
-        if(DBAccess.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
+        if(DBAccess.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
         MONGO_URI=gitignoreScript.mongoDBString;
     }
     void Start(){

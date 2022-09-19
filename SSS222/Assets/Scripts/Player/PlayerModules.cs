@@ -125,12 +125,12 @@ public class PlayerModules : MonoBehaviour{
             Player.instance.AddSubEnergy(item.costTypeProperties.cost,false);
             if(item.item.name=="MPulse"){
                 GameObject mPulse=GameAssets.instance.Make("MPulse",transform.position);
-                GetSkill(item.item.name).cooldown=item.cooldown;
+                ResetCooldown();
             }else if(item.item.name=="Teleport"){
                 GameSession.instance.gameSpeed=0.025f;
                 GameSession.instance.speedChanged=true;
                 currentSkill="Teleport";
-                GetSkill(item.item.name).cooldown=item.cooldown;
+                ResetCooldown();
             }else if(item.item.name=="LShield"){bool _canMakeShield=false;
                 var fragments=4;var cost=fragments*2;
                 if(_isSkillLvl("LShield",2)){fragments=8;cost=fragments*2;}
@@ -144,16 +144,16 @@ public class PlayerModules : MonoBehaviour{
                     var l=GameAssets.instance.Make("LunarShield",transform.position);l.transform.parent=transform;
                     l.GetComponent<LunarShield>().fragmentsStart=fragments;
                     player.AddSubCoins(cost,false);
-                    GetSkill(item.item.name).cooldown=item.cooldown;
+                    ResetCooldown();
                 }
             }else if(item.item.name=="Determined"&&player.health<=25){
                 timerDetemined=timeDetemined;
-                GetSkill(item.item.name).cooldown=item.cooldown;
             }else if(item.item.name=="GiveItToMe"){
                 timerGiveItToMe=timeGiveItToMe;
-                GetSkill(item.item.name).cooldown=item.cooldown;
+                ResetCooldown();
             }
         }else{AudioManager.instance.Play("Deny");}
+        void ResetCooldown(){GetSkill(item.item.name).cooldown=item.cooldown;}
     }}
 
     void SkillsUpdate(){

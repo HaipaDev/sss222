@@ -10,7 +10,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
     float transitionTime=0.35f;*/
     //float prevGameSpeed;
     void OnDisable(){Debug.LogWarning("GSceneManager disabled?");}
-    void Awake(){if(GSceneManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}}
+    void Awake(){if(GSceneManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}}
     void Start(){
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
         //prevGameSpeed = GameSession.instance.gameSpeed;

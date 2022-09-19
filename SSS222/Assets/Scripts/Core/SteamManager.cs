@@ -11,7 +11,7 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
     const int mainAppID=2000190;
     const int playtestID=2000200;
     void Awake(){
-        if(SteamManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
+        if(SteamManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
     }
     void Start(){//IEnumerator Start(){
         //yield return new WaitForSeconds(0.1f);

@@ -22,5 +22,5 @@ public class ScreenflashImg : MonoBehaviour{
             if(img.color.a<=0.01f/*&&setup*/){Destroy(gameObject);}
         }
     }
-    public void Setup(Sprite spr,Color _color,float _speed){Debug.Log(_speed+" | "+_color+" | "+spr);speed=_speed;  color=_color;     if(spr!=null){sprite=spr;img.sprite=sprite;}}//setup=true;}
+    public void Setup(Sprite spr,Color _color,float _speed){speed=_speed;  color=_color;     if(spr!=null){sprite=spr;img.sprite=sprite;}}//setup=true;}
 }

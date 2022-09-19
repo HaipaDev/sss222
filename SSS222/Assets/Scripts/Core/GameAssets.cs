@@ -25,7 +25,7 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	[AssetsOnly,Searchable]public List<CstmzMusic> musics;
 	[AssetsOnly,Searchable]public List<CstmzLockbox> lockboxes;
     
-    void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
+    void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;gameObject.name=gameObject.name.Split('(')[0];}}
 	void Start(){
 		var waveConfigsArr=Resources.LoadAll("ScriptableObjects/WaveConfigs", typeof(WaveConfig));
 		foreach(UnityEngine.Object o in waveConfigsArr){waveConfigs.Add((WaveConfig)o);}
