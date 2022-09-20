@@ -253,6 +253,8 @@ MonoBehaviour:
     gobj: {fileID: 1056705403108089519, guid: 484447fe7bc20d44f80aa2056c73e8e2, type: 3}
   - name: Starshard
     gobj: {fileID: 1056705403108089519, guid: 62e164979933d3d4fa5ed1e72e1f47ca, type: 3}
+  - name: GoldenMoyaiPopup
+    gobj: {fileID: 5545133771202568643, guid: 25df17ad924877548b1bc9a6506d7337, type: 3}
   vfx:
   - name: Explosion
     gobj: {fileID: 100000, guid: 8d461a6c09bbbb0409666aa9bc00431a, type: 3}
@@ -979,3 +981,8 @@ MonoBehaviour:
       chance: 0.5
     - rarity: 4
       chance: 0.03
+  defColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  commonColor: {r: 0.13725491, g: 0.8039216, b: 0.13725491, a: 1}
+  rareColor: {r: 0.09803922, g: 0.21568628, b: 1, a: 1}
+  epicColor: {r: 0.50980395, g: 0, b: 1, a: 1}
+  legendColor: {r: 1, g: 0.78431374, b: 0.23529412, a: 1}

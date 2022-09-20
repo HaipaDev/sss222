@@ -19,7 +19,7 @@ public class AchievPopups : MonoBehaviour{  public static AchievPopups instance;
     public string firstInQueueName;
     
     void Awake(){
-        if(AchievPopups.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);}
+        if(AchievPopups.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
         if(transform.GetChild(0).gameObject.activeSelf)transform.GetChild(0).gameObject.SetActive(false);
     }
     void Update(){

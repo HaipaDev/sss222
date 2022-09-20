@@ -50,14 +50,14 @@ public class CstmzSelectedInfo : MonoBehaviour{
             if(ce!=null){
                 name=GameAssets.instance.GetDisplayName(CutUnderscore(ce.elementName),ce.elementType);
                 artist=GameAssets.instance.GetArtist(CutUnderscore(ce.elementName),ce.elementType);
-                color=CustomizationInventory.instance.GetRarityColor(ce.rarity);
+                color=GameAssets.instance.GetRarityColor(ce.rarity);
             }
 
             if(selectedElement.GetComponent<CstmzTypeElement>()!=null)cte=selectedElement.GetComponent<CstmzTypeElement>();
             if(cte!=null){
                 name=GameAssets.instance.GetDisplayName(CutUnderscore(cte.elementName),cte.elementType);
                 artist=GameAssets.instance.GetArtist(CutUnderscore(cte.elementName),cte.elementType);
-                color=CustomizationInventory.instance.GetRarityColor(cte.rarity);
+                color=GameAssets.instance.GetRarityColor(cte.rarity);
             }
         }else{transform.GetChild(0).gameObject.SetActive(false);}
 

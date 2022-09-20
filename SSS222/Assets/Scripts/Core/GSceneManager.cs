@@ -29,13 +29,13 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             SaveSerial.instance.SaveStats();
         }
         SceneManager.LoadScene("Menu");
-        GameSession.instance.ResetMusicPitch();if(SceneManager.GetActiveScene().name=="Menu")GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;
+        GameSession.instance.ResetMusicPitch();if(GSceneManager.CheckScene("Menu"))GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;
         Resources.UnloadUnusedAssets();
         GameSession.instance.ResetTempSandboxSaveName();
     }
     public void LoadStartMenuGame(){GSceneManager.instance.StartCoroutine(LoadStartMenuGameI());}
     IEnumerator LoadStartMenuGameI(){
-        if(SceneManager.GetActiveScene().name=="Game"){
+        if(GSceneManager.CheckScene("Game")){
             GameSession.instance.SaveHighscore();
             if(GameSession.instance.gamemodeSelected==-1&&Player.instance!=null)GameSession.instance.SaveAdventure();
             yield return new WaitForSecondsRealtime(0.01f);
@@ -173,6 +173,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             else if(scene=="AdventureZones"){LoadGameModeChooseScene();}
             else if(scene=="ScoreSubmit"){LoadGameModeInfoScene();}
     }}
+    public static bool CheckScene(string name){return SceneManager.GetActiveScene().name==name;}
 
     /*void LoadLevel(string sceneName){
         //StartCoroutine(LoadTransition(sceneName));

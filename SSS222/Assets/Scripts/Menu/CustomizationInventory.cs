@@ -32,16 +32,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     [SceneObjectsOnly][SerializeField] TextMeshProUGUI starCraft_chanceText;
     [HeaderAttribute("LockboxOpening Objects")]
     [SceneObjectsOnly][SerializeField] Image lockboxIcon;
-    [SceneObjectsOnly][SerializeField] Image rarityGlow;
-    [SceneObjectsOnly][SerializeField] Image dropIcon;
-    [SceneObjectsOnly][SerializeField] TextMeshProUGUI dropText;
-    [SceneObjectsOnly][SerializeField] TextMeshProUGUI dropTypeText;
-    [HeaderAttribute("Rarity Colors")]    
-    public Color defColor=Color.grey;
-    public Color commonColor=Color.green;
-    public Color rareColor=Color.blue;
-    public Color epicColor=Color.magenta;
-    public Color legendColor=Color.yellow;
+    [SceneObjectsOnly][SerializeField] CosmeticDrop cosmeticDropParent;
     [HeaderAttribute("Properties")]
     [SerializeField] public CstmzCategory categorySelected=CstmzCategory.twoPiece;
     [SerializeField] public CstmzType typeSelected=CstmzType.skin;
@@ -135,7 +126,6 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         RefreshParticles();
         if(GSceneManager.EscPressed()){Back();}
         if(lockboxesPanel.activeSelf||lockboxOpeningPanel.activeSelf){lockboxesPanelOpen=true;}else{lockboxesPanelOpen=false;}
-        if(lockboxAnimSpr!=null){dropIcon.sprite=lockboxAnimSpr;}
         if(starCraft_costText!=null){starCraft_costText.text="x"+dynamCelestStar_shardCost.ToString();}
         if(starCraft_chanceText!=null){starCraft_chanceText.text=Math.Round(dynamCelestStar_craftChance,2).ToString()+"%";}
     }
@@ -150,20 +140,14 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public void CloseAllPanels(){customizationPanel.SetActive(false);lockboxesPanel.SetActive(false);lockboxOpeningPanel.SetActive(false);}
     public void OpenLockbox(string name){_lockboxSelected=name;StartCoroutine(OpenLockboxI());}
     void PreLockboxOpen(){
-        var lb=GameAssets.instance.lockboxes.Find(x=>x.name==_lockboxSelected);
-        lockboxIcon.sprite=lb.icon;
-        rarityGlow.color=Color.clear;
-        dropIcon.color=Color.clear;
-        dropText.text="";
-        dropTypeText.text="";
-        foreach(Transform tr in dropIcon.transform){Destroy(tr.gameObject);}
+        lockboxIcon.sprite=GameAssets.instance.lockboxes.Find(x=>x.name==_lockboxSelected).icon;
+        cosmeticDropParent.PresetCosmeticDrop();
     }
     IEnumerator OpenLockboxI(){
         AudioManager.instance.Play("LockboxOpen");
         yield return new WaitForSeconds(0.3f);
         var lb=GameAssets.instance.lockboxes.Find(x=>x.name==_lockboxSelected);
         lockboxIcon.sprite=lb.iconOpen;
-        rarityGlow.color=defColor;
         SetDroppedItem();
         _itemDropped=true;
     }
@@ -185,12 +169,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
             if(r.cstmzType==CstmzType.skin&&(!_isSkinUnlocked(r.lootItem)||_allCategorySkinsUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
                 CstmzSkin s=GetSkin(i.Key);
-                dropText.text=s.displayName;
-                dropIcon.enabled=true;
-                if(s.spr!=null){dropIcon.sprite=s.spr;}dropIcon.GetComponent<Image>().color=Color.white;
-                if(s.animated){StartCoroutine(AnimateLockboxDrop(s));}
-                else{StopAnimatingLockboxDrop();}
-                rarityGlow.color=GetRarityColor(s.rarity);
+                cosmeticDropParent.SetSkin(s);
                 PlayRaritySound(s.rarity);
                 UnlockSkin(r.lootItem);
                 if(_allCategorySkinsUnlocked(lb.category)&&!(_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Skins unlocked, trying to find other items");}
@@ -198,10 +177,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
             else if(r.cstmzType==CstmzType.trail&&(!_isTrailUnlocked(r.lootItem)||_allCategoryTrailsUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
                 CstmzTrail t=GetTrail(i.Key);
-                dropText.text=t.displayName;
-                dropIcon.enabled=false;
-                LockboxDropPreviewTrail(t);
-                rarityGlow.color=new Color(GetRarityColor(t.rarity).r,GetRarityColor(t.rarity).g,GetRarityColor(t.rarity).b,110f/255f);
+                cosmeticDropParent.SetTrail(t);
                 PlayRaritySound(t.rarity);
                 UnlockTrail(r.lootItem);
                 if(_allCategoryTrailsUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Trails unlocked, trying to find other items");}
@@ -209,10 +185,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
             else if(r.cstmzType==CstmzType.flares&&(!_isFlaresUnlocked(r.lootItem)||_allCategoryFlaresUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
                 CstmzFlares f=GetFlares(i.Key);
-                dropText.text=f.displayName;
-                dropIcon.enabled=false;
-                LockboxDropPreviewFlares(f);
-                rarityGlow.color=new Color(GetRarityColor(f.rarity).r,GetRarityColor(f.rarity).g,GetRarityColor(f.rarity).b,110f/255f);
+                cosmeticDropParent.SetFlares(f);
                 PlayRaritySound(f.rarity);
                 UnlockFlares(r.lootItem);
                 if(_allCategoryFlaresUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Flares unlocked, trying to find other items");}
@@ -220,10 +193,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
             else if(r.cstmzType==CstmzType.deathFx&&(!_isDeathFxUnlocked(r.lootItem)||_allCategoryDeathFxUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
                 CstmzDeathFx d=GetDeathFx(i.Key);
-                dropText.text=d.displayName;
-                dropIcon.enabled=false;
-                LockboxDropPreviewDeathFx(d);
-                rarityGlow.color=new Color(GetRarityColor(d.rarity).r,GetRarityColor(d.rarity).g,GetRarityColor(d.rarity).b,110f/255f);
+                cosmeticDropParent.SetDeathFx(d);
                 PlayRaritySound(d.rarity);
                 UnlockDeathFx(r.lootItem);
                 if(_allCategoryDeathFxUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All DeathFx unlocked, trying to find other items");}
@@ -231,49 +201,19 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
             else if(r.cstmzType==CstmzType.music&&(!_isMusicUnlocked(r.lootItem)||_allCategoryMusicUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
                 CstmzMusic m=GetMusic(i.Key);
-                dropText.text=m.displayName;
-                dropIcon.enabled=true;
-                dropIcon.sprite=m.icon;dropIcon.GetComponent<Image>().color=Color.white;
-                rarityGlow.color=GetRarityColor(m.rarity);
+                cosmeticDropParent.SetMusic(m);
                 PlayRaritySound(m.rarity);
                 UnlockMusic(r.lootItem);
                 if(_allCategoryMusicUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Music unlocked, trying to find other items");}
             }
-            dropTypeText.text=r.cstmzType.ToString();
-            if(r.cstmzType!=CstmzType.skin){StopAnimatingLockboxDrop();}
+            //dropTypeText.text=r.cstmzType.ToString();
+            if(r.cstmzType!=CstmzType.skin){cosmeticDropParent.StopAnimatingCosmeticDrop();}
         }
         if(_literallyEverythingInCategoryUnlocked(lb.category)){QuitOpeningLockbox();SaveSerial.instance.playerData.dynamCelestStars+=lb.cost;}
         Destroy(lt);
     }
-    void LockboxDropPreviewTrail(CstmzTrail t){
-        GameObject goPt=Instantiate(t.part,dropIcon.transform);goPt.transform.localScale=new Vector2(5,5);
-        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4);
-    }
-    void LockboxDropPreviewFlares(CstmzFlares f){
-        GameObject goPt=Instantiate(GetFlareVFX(f.name),dropIcon.transform);goPt.transform.localPosition=new Vector2(-44*4,0);goPt.transform.localScale=new Vector2(4,4);GameAssets.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
-        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4);
-        goPt=Instantiate(GetFlareVFX(f.name),dropIcon.transform);goPt.transform.localPosition=new Vector2(44*4,0);goPt.transform.localScale=new Vector2(4,4);GameAssets.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
-        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4);
-    }
-    void LockboxDropPreviewDeathFx(CstmzDeathFx d){
-        GameObject goPt=Instantiate(d.obj,dropIcon.transform);goPt.transform.localScale=new Vector2(4,4);GameAssets.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
-        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4,true,0);
-    }
-    Coroutine lockboxDropAnim;int iLockboxDropAnim=0;Sprite lockboxAnimSpr=null;
-    IEnumerator AnimateLockboxDrop(CstmzSkin skin){Sprite _spr;
-        Debug.Log("Animating skin: "+skin.name+" | Frame: "+iLockboxDropAnim);
-        if(skin.animSpeed>0){yield return new WaitForSeconds(skin.animSpeed);}
-        else{yield return new WaitForSeconds(skin.animVals[iLockboxDropAnim].delay);}
-        _spr=skin.animVals[iLockboxDropAnim].spr;
-        if(iLockboxDropAnim==skin.animVals.Count-1)iLockboxDropAnim=0;
-        if(iLockboxDropAnim<skin.animVals.Count)iLockboxDropAnim++;
-        lockboxAnimSpr=_spr;
-        lockboxDropAnim=StartCoroutine(AnimateLockboxDrop(skin));
-        //if(lockboxDropAnim!=null)StopCoroutine(lockboxDropAnim);lockboxDropAnim=null;iLockboxDropAnim=0;
-    }
-    void StopAnimatingLockboxDrop(){lockboxAnimSpr=null;if(lockboxDropAnim!=null)StopCoroutine(lockboxDropAnim);lockboxDropAnim=null;iLockboxDropAnim=0;}
     public void OpenCloseLockboxButton(){QuitOpeningLockbox();}//if(!_itemDropped){OpenLockbox(_lockboxSelected);}else{QuitOpeningLockbox();}}
-    public void QuitOpeningLockbox(){if(_itemDropped){OpenLockboxesPanel();_itemDropped=false;StopAnimatingLockboxDrop();foreach(Transform tr in dropIcon.transform){Destroy(tr.gameObject);}}}
+    public void QuitOpeningLockbox(){if(_itemDropped){OpenLockboxesPanel();_itemDropped=false;cosmeticDropParent.Stop();}}
     public void CraftCelestStar(){
         if(SaveSerial.instance.playerData.starshards>=dynamCelestStar_shardCost){
             if(GameAssets.CheckChance(dynamCelestStar_craftChance)){
@@ -544,17 +484,6 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         if(rarity==CstmzRarity.epic){AudioManager.instance.Play("DropEpic");}
         else if(rarity==CstmzRarity.legend){AudioManager.instance.Play("DropLegend");}
     }
-    public Color GetRarityColor(CstmzRarity rarity){
-        var col=Color.white;
-        switch(rarity){
-            case CstmzRarity.def:col=defColor;break;
-            case CstmzRarity.common:col=commonColor;break;
-            case CstmzRarity.rare:col=rareColor;break;
-            case CstmzRarity.epic:col=epicColor;break;
-            case CstmzRarity.legend:col=legendColor;break;
-        }
-        return col;
-    }
     public void SetType(CstmzType type){if(typeSelected!=type){typeSelected=type;HighlightSelectedType();SetCategoryFromTypeElement();RecreateAllElements();CloseVariants();refreshTimer=0.04f;}}
 
     string GetSkinName(string str){string _str=str;if(skinName.Contains("_")){_str=skinName.Split('_')[0];}return _str;}
@@ -622,14 +551,14 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         return count==_allCategoryItems.Count;
     }
     public static bool _literallyEverythingInCategoryUnlocked(CstmzCategory category){return (_allCategorySkinsUnlocked(category)&&_allCategoryTrailsUnlocked(category)&&_allCategoryFlaresUnlocked(category)&&_allCategoryDeathFxUnlocked(category)&&_allCategoryMusicUnlocked(category));}
-    public static void UnlockSkin(string name){if(!_isSkinUnlocked(name)){SaveSerial.instance.playerData.skinsUnlocked.Add(name);}}
-    public static void UnlockTrail(string name){if(!_isTrailUnlocked(name)){SaveSerial.instance.playerData.trailsUnlocked.Add(name);}}
-    public static void UnlockFlares(string name){if(!_isFlaresUnlocked(name)){SaveSerial.instance.playerData.flaresUnlocked.Add(name);}}
-    public static void UnlockDeathFx(string name){if(!_isDeathFxUnlocked(name)){SaveSerial.instance.playerData.deathFxUnlocked.Add(name);}}
-    public static void UnlockMusic(string name){if(!_isMusicUnlocked(name)){SaveSerial.instance.playerData.musicUnlocked.Add(name);}}
+    public static void UnlockSkin(string name,bool _outsideOfLockbox=false){if(!_isSkinUnlocked(name)){SaveSerial.instance.playerData.skinsUnlocked.Add(name);if(_outsideOfLockbox)CosmeticPopups.instance.AddToQueue(name,CstmzType.skin);}}
+    public static void UnlockTrail(string name,bool _outsideOfLockbox=false){if(!_isTrailUnlocked(name)){SaveSerial.instance.playerData.trailsUnlocked.Add(name);if(_outsideOfLockbox)CosmeticPopups.instance.AddToQueue(name,CstmzType.trail);}}
+    public static void UnlockFlares(string name,bool _outsideOfLockbox=false){if(!_isFlaresUnlocked(name)){SaveSerial.instance.playerData.flaresUnlocked.Add(name);if(_outsideOfLockbox)CosmeticPopups.instance.AddToQueue(name,CstmzType.flares);}}
+    public static void UnlockDeathFx(string name,bool _outsideOfLockbox=false){if(!_isDeathFxUnlocked(name)){SaveSerial.instance.playerData.deathFxUnlocked.Add(name);if(_outsideOfLockbox)CosmeticPopups.instance.AddToQueue(name,CstmzType.deathFx);}}
+    public static void UnlockMusic(string name,bool _outsideOfLockbox=false){if(!_isMusicUnlocked(name)){SaveSerial.instance.playerData.musicUnlocked.Add(name);if(_outsideOfLockbox)CosmeticPopups.instance.AddToQueue(name,CstmzType.music);}}
 
-    public static void _unlockGoldenMoyai(){CustomizationInventory.UnlockSkin("moyaiGold");CustomizationInventory.UnlockTrail("goldenflame");CustomizationInventory.UnlockFlares("golden");}
-    public static void _unlockStargazer(){CustomizationInventory.UnlockSkin("stargazer");CustomizationInventory.UnlockTrail("stardust");}
-    public static void _unlockMOL(){CustomizationInventory.UnlockSkin("maniac");}
-    public static void _unlockSteam(){CustomizationInventory.UnlockSkin("chameleon");CustomizationInventory.UnlockMusic("one");}
+    public static void _unlockGoldenMoyai(){CustomizationInventory.UnlockSkin("moyaiGold",true);CustomizationInventory.UnlockTrail("goldenflame",true);CustomizationInventory.UnlockFlares("golden",true);}
+    public static void _unlockStargazer(){CustomizationInventory.UnlockSkin("stargazer",true);CustomizationInventory.UnlockTrail("stardust",true);}
+    public static void _unlockMOL(){CustomizationInventory.UnlockSkin("maniac",true);}
+    public static void _unlockSteam(){CustomizationInventory.UnlockSkin("chameleon",true);CustomizationInventory.UnlockMusic("one",true);}
 }

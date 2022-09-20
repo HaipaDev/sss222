@@ -24,6 +24,11 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	[AssetsOnly,Searchable]public List<CstmzDeathFx> deathFxs;
 	[AssetsOnly,Searchable]public List<CstmzMusic> musics;
 	[AssetsOnly,Searchable]public List<CstmzLockbox> lockboxes;
+    public Color defColor=new Color(128,128,128);
+    public Color commonColor=new Color(35,205,35);
+    public Color rareColor=new Color(25,55,255);
+    public Color epicColor=new Color(130,0,255);
+    public Color legendColor=new Color(225,200,60);
     
     void Awake(){if(instance!=null){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;gameObject.name=gameObject.name.Split('(')[0];}}
 	void Start(){
@@ -325,6 +330,17 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 		}
         return ss;
 	}
+	public Color GetRarityColor(CstmzRarity rarity){
+		var col=Color.gray;
+        switch(rarity){
+            case CstmzRarity.def:col=defColor;break;
+            case CstmzRarity.common:col=commonColor;break;
+            case CstmzRarity.rare:col=rareColor;break;
+            case CstmzRarity.epic:col=epicColor;break;
+            case CstmzRarity.legend:col=legendColor;break;
+        }
+        return col;
+	}
 #endregion
 
 #region//Public functions
@@ -483,6 +499,8 @@ public enum CstmzType{skin,trail,flares,deathFx,music,bg}
 [System.Serializable]
 public class _ArtistInfo{[PropertyOrder(-1)]public string artist;}
 public interface _CstmzTypable{}
+[System.Serializable]
+public class _CstmzItemNameAndType{public string name;public CstmzType type;}
 [System.Serializable]
 public class CstmzSkin:_ArtistInfo,_CstmzTypable{
 	[Header("Display")]

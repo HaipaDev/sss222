@@ -53,7 +53,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public float horizCameraSize=3.92f;
     [Header("Other")]
     public string gameVersion;
-	public float buildVersion;
+	public double buildVersion;
     [SerializeField][ReadOnly] string _tempSandboxSaveName;
     [SerializeField][ReadOnly] string _selectedUsersDataName;
     public bool isSteam=true;
@@ -91,8 +91,8 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     }
     void SetUpSingleton(){if(GameSession.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}}
     void Start(){
-        if(SceneManager.GetActiveScene().name=="Game"){EnterGameScene();GameRules.instance.EnterGameScene();}
-        else if(SceneManager.GetActiveScene().name!="Game"){RemoveSpawnReqsMono();}
+        if(GSceneManager.CheckScene("Game")){EnterGameScene();GameRules.instance.EnterGameScene();}
+        else{RemoveSpawnReqsMono();}
 
         presenceTimeSet=false;
     }
@@ -157,12 +157,12 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     SpriteRenderer _blurImg;
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
-        if(SceneManager.GetActiveScene().name=="Game"){
+        if(GSceneManager.CheckScene("Game")){
         if(Time.timeScale<=0.0001f||PauseMenu.GameIsPaused||Shop.shopOpened||UpgradeMenu.UpgradeMenuIsOpen){GlobalTimeIsPaused=true;}else{GlobalTimeIsPaused=false;}
         if(PauseMenu.GameIsPaused||Shop.shopOpened||UpgradeMenu.UpgradeMenuIsOpen){GlobalTimeIsPausedNotSlowed=true;}else{GlobalTimeIsPausedNotSlowed=false;}
         }else{GlobalTimeIsPaused=false;}
 
-        if(SceneManager.GetActiveScene().name=="Game"&&Player.instance!=null&&!GlobalTimeIsPaused){
+        if(GSceneManager.CheckScene("Game")&&Player.instance!=null&&!GlobalTimeIsPaused){
             if(_noBreak()){
                 currentPlaytime+=Time.unscaledDeltaTime;
                 if(gameTimeLeft!=-4){
@@ -189,7 +189,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         cores=Mathf.Clamp(cores,0,9999);
         coins=Mathf.Clamp(coins,0,9999);
         
-        if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"){
+        if(GameRules.instance!=null&&GSceneManager.CheckScene("Game")){
             if(xpTotal<0)xpTotal=0;
             if(GameRules.instance.xpOn&&xp>=xpMax&&GameRules.instance.levelingOn){
                 if(!_coreSpawnedPreAscend){
@@ -232,7 +232,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
         
         //Restart with R or Space/Resume with Space
-        if(SceneManager.GetActiveScene().name=="Game"){
+        if(GSceneManager.CheckScene("Game")){
             if(_blurImg==null)_blurImg=GameObject.Find("BlurImage").GetComponent<SpriteRenderer>();_blurImg.enabled=(PauseMenu.GameIsPaused||UpgradeMenu.UpgradeMenuIsOpen||Shop.shopOpened);
             if((GameOverCanvas.instance==null||GameOverCanvas.instance.gameOver==false)&&PauseMenu.GameIsPaused==false){restartTimer=-4;}
             if(PauseMenu.GameIsPaused==true){if(restartTimer==-4)restartTimer=0.5f;}
@@ -343,7 +343,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         CheckCodes(".",".");
         
         if(SceneManager.GetActiveScene().name!="Game"&&SceneManager.GetActiveScene().name!="AdventureZones"){zoneSelected=-1;zoneToTravelTo=-1;gameTimeLeft=-4;}
-        else if(SceneManager.GetActiveScene().name=="Game"){
+        else if(GSceneManager.CheckScene("Game")){
             if(gamemodeSelected!=-1){zoneSelected=-1;zoneToTravelTo=-1;}
             else{
                 if(zoneSelected==-1){zoneSelected=0;GameRules.instance.ReplaceAdventureZoneInfo(GameCreator.instance.adventureZones[zoneSelected].gameRules);}
@@ -352,7 +352,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
                 else{gameTimeLeft=-4;}
                 if(gameTimeLeft<=0&&gameTimeLeft!=-4){zoneSelected=-1;GSceneManager.instance.LoadAdventureZone(zoneToTravelTo);}
             }
-        }else if(SceneManager.GetActiveScene().name=="AdventureZones"){
+        }else if(GSceneManager.CheckScene("AdventureZones")){
             gamemodeSelected=-1;
             //if(zoneSelected==-1){zoneSelected=0;}
         }
@@ -416,7 +416,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         if(gamemodeSelected>0&&(gamemodeSelected-1)<SaveSerial.instance.playerData.highscore.Length){
             if(score>GetHighscoreCurrent().score){
                 SaveSerial.instance.playerData.highscore[GameSession.instance.gamemodeSelected-1]=new Highscore(){score=score,playtime=Mathf.RoundToInt(currentPlaytime),
-                version=gameVersion,build=(float)System.Math.Round(buildVersion,2),
+                version=gameVersion,build=System.Math.Round(buildVersion,2),
                 date=DateTime.Now};
                 Debug.Log("Highscore set for: "+GetCurrentGamemodeName());
             }
@@ -712,7 +712,7 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
         else if(gamemodeSelected==-1){n="Adventure Mode";}
         else if(gamemodeSelected==0){n="Sandbox Mode";}
         return n;}
-    public bool _isSandboxMode(){return (SceneManager.GetActiveScene().name.Contains("Sandbox")||(SceneManager.GetActiveScene().name=="Game"&&GetCurrentGamemodeName().Contains("Sandbox")));}
+    public bool _isSandboxMode(){return (SceneManager.GetActiveScene().name.Contains("Sandbox")||(GSceneManager.CheckScene("Game")&&GetCurrentGamemodeName().Contains("Sandbox")));}
 
         
     //public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
@@ -725,6 +725,9 @@ public class GameSession : MonoBehaviour{   public static GameSession instance;
     public void ResetAndRemoveSpawnReqsMono(){if(GetComponent<spawnReqsMono>()!=null){spawnReqsMono.RestartAllValues();spawnReqsMono.ResetSpawnReqsList();ReAddSpawnReqsMono();}}
 
     public bool _noBreak(){return (BreakEncounter.instance!=null&&!BreakEncounter.instance.calledBreak)||BreakEncounter.instance==null;}
+
+    bool _goldenMoyaiPoppedup;
+    public void GoldenMoyaiPopup(){if(!_goldenMoyaiPoppedup)GameAssets.instance.Make("GoldenMoyaiPopup",Vector2.zero);_goldenMoyaiPoppedup=true;}
 }
 
 public enum dir{up,down,left,right}

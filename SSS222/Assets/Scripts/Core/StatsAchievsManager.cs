@@ -55,7 +55,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=1000)
         ||GameSession.instance.GetHighscoreByName("Arcade").score>=1000){CompleteAchiev("arcade_score-2");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=10000)
-        ||GameSession.instance.GetHighscoreByName("Arcade").score>=10000){CompleteAchiev("arcade_score-3");}
+        ||GameSession.instance.GetHighscoreByName("Arcade").score>=10000){CompleteAchiev("arcade_score-3");GameSession.instance.GoldenMoyaiPopup();}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Hardcore")&&GameSession.instance.score>=666)
         ||GameSession.instance.GetHighscoreByName("Hardcore").score>=666){CompleteAchiev("hardcore_score-1");}
         if((GameSession.instance.GetCurrentGamemodeName().Contains("Classic")&&GameSession.instance.score>=2077)

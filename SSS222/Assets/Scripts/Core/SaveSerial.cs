@@ -84,8 +84,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 #endregion
 #region//Player Data
 	public PlayerData playerData=new PlayerData();
-	public float buildFirstLoaded;
-	public float buildLastLoaded;
+	public double buildFirstLoaded;
+	public double buildLastLoaded;
 	[System.Serializable]public class PlayerData{
 		public Highscore[] highscore=new Highscore[0];
 		public string skinName="def";
@@ -168,7 +168,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 #region //Adventure Data
 	public AdventureData advD=new AdventureData();
 	[System.Serializable]public class AdventureData{
-		public float buildLastLoaded;
+		public double buildLastLoaded;
 		public int cores=0;
 		public float xp=0;
 		public bool _coreSpawnedPreAscend=false;

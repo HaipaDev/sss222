@@ -21,7 +21,7 @@ public class CstmzElement : MonoBehaviour, IEventSystemHandler, IPointerEnterHan
     [EnableIf("@this.variant")][SerializeField] public int variantId=-1;
     void Awake(){GetComponent<Button>().onClick.AddListener(SetElement);}
     void Update(){
-        GetComponent<Image>().color=CustomizationInventory.instance.GetRarityColor(rarity);
+        GetComponent<Image>().color=GameAssets.instance.GetRarityColor(rarity);
         if(elementType==CstmzType.skin){
             if(!CustomizationInventory.instance.SkinHasVariants(elementName)||variant){if(editButton.activeSelf)editButton.SetActive(false);}
             if(CustomizationInventory.instance.GetSkinSprite(elementName+_VariantID())!=null){elementPv.GetComponent<Image>().sprite=CustomizationInventory.instance.GetSkinSprite(elementName+_VariantID());}
