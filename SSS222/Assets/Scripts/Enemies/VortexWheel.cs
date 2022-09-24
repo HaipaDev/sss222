@@ -37,7 +37,7 @@ public class VortexWheel : MonoBehaviour{
     }
 
     void Update(){
-        if(!GameSession.GlobalTimeIsPaused){
+        if(!GameManager.GlobalTimeIsPaused){
             Weaps=FindAllLaserWeapons();
             Discharge();
         }

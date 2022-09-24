@@ -286,18 +286,18 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             //Boss info
             bossInfo=gr.bossInfo;
             shipScaleBoss=gr.shipScaleBoss;
-            //if(_isAdventureBossZone){GameAssets.instance.Make(bossInfo.name,Vector2.zero);Debug.Log("Spawned: "+bossInfo.name);}
-            //if(gr.bossInfo.name!=""){GameAssets.instance.Make(gr.bossInfo.name,Vector2.zero);Debug.Log("Spawned: "+gr.bossInfo.name);}
+            //if(_isAdventureBossZone){AssetsManager.instance.Make(bossInfo.name,Vector2.zero);Debug.Log("Spawned: "+bossInfo.name);}
+            //if(gr.bossInfo.name!=""){AssetsManager.instance.Make(gr.bossInfo.name,Vector2.zero);Debug.Log("Spawned: "+gr.bossInfo.name);}
         }
     }
     void Awake(){if(GameRules.instance!=null&&this!=GameRules.instance){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}
     IEnumerator Start(){
         if(gameObject.name.Contains("(Clone)")){gameObject.name.Replace("(Clone)","");}
-        if(_isAdventure()){GameSession.instance.gamemodeSelected=-1;if(GameSession.instance.zoneSelected==-1)GameSession.instance.zoneSelected=0;}
+        if(_isAdventure()){GameManager.instance.gamemodeSelected=-1;if(GameManager.instance.zoneSelected==-1)GameManager.instance.zoneSelected=0;}
         //Set gameModeSelected if artificially turned on gamemode etc
         yield return new WaitForSecondsRealtime(0.05f);
-        if(!GameSession.instance.CheckGamemodeSelected(cfgName)){
-            GameSession.instance.SetGamemodeSelectedStr(cfgName);
+        if(!GameManager.instance.CheckGamemodeSelected(cfgName)){
+            GameManager.instance.SetGamemodeSelectedStr(cfgName);
             if(SceneManager.GetActiveScene().name=="Game")EnterGameScene();
         }
         yield return new WaitForSecondsRealtime(0.02f);
@@ -311,7 +311,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         yield return new WaitForSeconds(0.02f);
         StartCoroutine(CreateSpawners());
         yield return new WaitForSeconds(1f);
-        if(_isAdventureBossZone&&FindObjectOfType<BossAI>()==null&&!SaveSerial.instance.advD.defeatedBosses.Contains(bossInfo.name)){GameAssets.instance.Make(bossInfo.name,bossInfo.spawnPos);Debug.Log("Spawned: "+bossInfo.name);}
+        if(_isAdventureBossZone&&FindObjectOfType<BossAI>()==null&&!SaveSerial.instance.advD.defeatedBosses.Contains(bossInfo.name)){AssetsManager.instance.Make(bossInfo.name,bossInfo.spawnPos);Debug.Log("Spawned: "+bossInfo.name);}
         enterGameCor=null;
     }
     IEnumerator CreateSpawners(){
@@ -319,7 +319,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         if(waveList!=null){if(waveList.Count>0){
             Waves ws;
             if(FindObjectOfType<Waves>()==null){
-                ws=Instantiate(GameAssets.instance.waveSpawnerPrefab).GetComponent<Waves>();
+                ws=Instantiate(AssetsManager.instance.waveSpawnerPrefab).GetComponent<Waves>();
                 ws.name="Waves";
             }else{ws=FindObjectOfType<Waves>();}
             yield return new WaitForSecondsRealtime(0.005f);
@@ -334,7 +334,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
         if(disrupterList!=null){if(disrupterList.Count>0){
             DisruptersSpawner ds;
             if(FindObjectOfType<DisruptersSpawner>()==null){
-                ds=Instantiate(GameAssets.instance.disrupterSpawnerPrefab).GetComponent<DisruptersSpawner>();
+                ds=Instantiate(AssetsManager.instance.disrupterSpawnerPrefab).GetComponent<DisruptersSpawner>();
                 ds.name="DisruptersSpawner";
             }else{ds=FindObjectOfType<DisruptersSpawner>();}
             yield return new WaitForSecondsRealtime(0.005f);
@@ -346,7 +346,7 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             List<PowerupsSpawner> ps=new List<PowerupsSpawner>();
             if(FindObjectsOfType<PowerupsSpawner>()!=null){
                 foreach(PowerupsSpawner ps1 in FindObjectsOfType<PowerupsSpawner>()){ps.Add(ps1);}
-            }for(int i=FindObjectsOfType<PowerupsSpawner>().Length;i<powerupSpawners.Count;i++)ps.Add(Instantiate(GameAssets.instance.powerupSpawnerPrefab).GetComponent<PowerupsSpawner>());
+            }for(int i=FindObjectsOfType<PowerupsSpawner>().Length;i<powerupSpawners.Count;i++)ps.Add(Instantiate(AssetsManager.instance.powerupSpawnerPrefab).GetComponent<PowerupsSpawner>());
             yield return new WaitForSecondsRealtime(0.005f);
             for(int i=0;i<powerupSpawners.Count;i++){   if(powerupSpawners[i].powerupList.Count>0){
                 ps[i].GetComponent<LootTablePowerups>().itemList=powerupSpawners[i].powerupList;
@@ -422,10 +422,10 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
     public void ShootMultiAdd(float amnt){p.shootMulti+=amnt;}
     public void LaserShootSpeed(float amnt){if(p.GetWeaponProperty("laser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("laser").weaponTypeProperties;wp.shootDelay=amnt;}}
     public void MLaserBulletAmnt(int amnt){if(p.GetWeaponProperty("mlaser")!=null){var wp=(weaponTypeBullet)p.GetWeaponProperty("mlaser").weaponTypeProperties;wp.bulletAmount=amnt;}}
-    public void ChangeMaxXP(int amnt){GameSession.instance.xpMax=amnt;}
+    public void ChangeMaxXP(int amnt){GameManager.instance.xpMax=amnt;}
     public void MaxHPAdd(float amnt){
         Player.instance.healthMax+=amnt;
-        if(!GameSession.instance._lvlEventsLoading){
+        if(!GameManager.instance._lvlEventsLoading){
             Player.instance.healthStart+=(amnt/2f);
             Player.instance.health+=amnt;
         }else{if(Player.instance.healthStart==healthPlayer)Player.instance.healthStart+=(amnt/2f);}

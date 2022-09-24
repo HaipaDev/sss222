@@ -6,15 +6,15 @@ using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.EventSystems;
 using Sirenix.OdinInspector;
 
-public class GameCreator : MonoBehaviour{   public static GameCreator instance;
+public class CoreSetup : MonoBehaviour{   public static CoreSetup instance;
     [Header("Main managers")]
     [AssetsOnly][SerializeField] GameObject saveSerialPrefab;
     [AssetsOnly][SerializeField] GameObject easySavePrefab;
     [AssetsOnly][SerializeField] GameObject gsceneManagerPrefab;
-    [AssetsOnly][SerializeField] GameObject gameSessionPrefab;
+    [AssetsOnly][SerializeField] GameObject gameManagerPrefab;
     
     [Header("Assets managers")]
-    [AssetsOnly][SerializeField] GameObject gameAssetsPrefab;
+    [AssetsOnly][SerializeField] GameObject assetsManagerPrefab;
     [AssetsOnly][SerializeField] GameObject audioManagerPrefab;
     [AssetsOnly][SerializeField] GameObject jukeboxPrefab;
     
@@ -44,9 +44,9 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
     }
     void Load(){
         LoadPre();
-        if(FindObjectOfType<GameSession>()==null){Instantiate(gameSessionPrefab);}
+        if(FindObjectOfType<GameManager>()==null){Instantiate(gameManagerPrefab);}
 
-        if(FindObjectOfType<GameAssets>()==null){Instantiate(gameAssetsPrefab);}
+        if(FindObjectOfType<AssetsManager>()==null){Instantiate(assetsManagerPrefab);}
         if(FindObjectOfType<AudioManager>()==null){Instantiate(audioManagerPrefab);}
 
         //if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
@@ -54,9 +54,9 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
         if(FindObjectOfType<SteamManager>()==null){Instantiate(steamManagerPrefab);}
         if(FindObjectOfType<StatsAchievsManager>()==null){Instantiate(statsAchievsManagerPrefab);}
         
-        if(FindObjectOfType<GameRules>()==null&&GameSession.instance.gamemodeSelected>0&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){
-            Instantiate(GameSession.instance.GetGameRulesCurrent());}
-        if(FindObjectOfType<GameRules>()==null&&GameSession.instance.gamemodeSelected==-1&&SceneManager.GetActiveScene().name=="Game"){Instantiate(adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(adventureZones[GameSession.instance.zoneSelected].gameRules);}
+        if(FindObjectOfType<GameRules>()==null&&GameManager.instance.gamemodeSelected>0&&(SceneManager.GetActiveScene().name=="Game"||SceneManager.GetActiveScene().name=="InfoGameMode")){
+            Instantiate(GameManager.instance.GetGameRulesCurrent());}
+        if(FindObjectOfType<GameRules>()==null&&GameManager.instance.gamemodeSelected==-1&&SceneManager.GetActiveScene().name=="Game"){Instantiate(adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(adventureZones[GameManager.instance.zoneSelected].gameRules);}
         if(FindObjectOfType<GameRules>()==null&&SceneManager.GetActiveScene().name=="SandboxMode"){
             GameRules gr=Instantiate(gamerulesetsPrefabs[0]);gr.gameObject.name="GRSandbox";gr.cfgName="Sandbox Mode";gr.cfgDesc="New Sandbox Mode Savefile!";gr.cfgIconsGo=null;gr.cfgIconAssetName="questionMark";}
 
@@ -67,6 +67,6 @@ public class GameCreator : MonoBehaviour{   public static GameCreator instance;
         //Destroy(gameObject);
     }
 
-    public static int GetGamerulesetsPrefabsLength(){return GameCreator.instance._gamerulesetsPrefabsLength;}
+    public static int GetGamerulesetsPrefabsLength(){return CoreSetup.instance._gamerulesetsPrefabsLength;}
     public GameObject GetJukeboxPrefab(){return jukeboxPrefab;}
 }

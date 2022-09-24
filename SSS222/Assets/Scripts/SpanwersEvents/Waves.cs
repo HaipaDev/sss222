@@ -31,7 +31,7 @@ public class Waves : MonoBehaviour{
     }
     /*public IEnumerator CallRandomizeWave(){
         RandomizeWave();
-        GameSession.instance.RandomizeWaveScoreMax();
+        GameManager.instance.RandomizeWaveScoreMax();
         yield return null;
     }*/
 
@@ -39,8 +39,8 @@ public class Waves : MonoBehaviour{
     public IEnumerator RandomizeWaveI(){
         if(waveDisplay!=null){waveDisplay.enableText=true;waveDisplay.timer=waveDisplay.showTime;}
         currentWave=GetRandomWave();
-        if(GameRules.instance.xpOn){GameSession.instance.DropXP(GameRules.instance.xp_wave,new Vector2(0,7),3f);}else{GameSession.instance.AddXP(GameRules.instance.xp_wave);}
-        GameSession.instance.RandomizeWaveScoreMax();
+        if(GameRules.instance.xpOn){GameManager.instance.DropXP(GameRules.instance.xp_wave,new Vector2(0,7),3f);}else{GameManager.instance.AddXP(GameRules.instance.xp_wave);}
+        GameManager.instance.RandomizeWaveScoreMax();
         spawnReqsMono.AddWaves();
         if(BreakEncounter.instance!=null)BreakEncounter.instance.AddWaves();
         yield return null;
@@ -67,8 +67,8 @@ public class Waves : MonoBehaviour{
         spawnReqsMono.instance.CheckSpawns(x,xt,this,"RandomizeWave");
     }
     void Update(){
-        if(!GameSession.GlobalTimeIsPaused){
-            if(GameSession.instance._noBreak()){
+        if(!GameManager.GlobalTimeIsPaused){
+            if(GameManager.instance._noBreak()){
                 CheckSpawnReqs();
 
                 if(currentWave==null&&lootTable.itemList.Count>0)currentWave=lootTable.itemList[startingWave].lootItem;

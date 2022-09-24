@@ -58,7 +58,7 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
             }
         }
     }
-    public static bool _canUpscaleHud(){return (Camera.main.aspect>=1.33&&SaveSerial.instance.settingsData.upscaleHUD&&!GameSession.instance.CheckGamemodeSelected("Classic"));}
+    public static bool _canUpscaleHud(){return (Camera.main.aspect>=1.33&&SaveSerial.instance.settingsData.upscaleHUD&&!GameManager.instance.CheckGamemodeSelected("Classic"));}
     void Update(){
         if(SaveSerial.instance!=null)if(popupSumTime!=SaveSerial.instance.settingsData.popupSumTime){popupSumTime=SaveSerial.instance.settingsData.popupSumTime;}
 
@@ -89,7 +89,7 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
         if(ammoPopup!=null&&ammoCount!=0){string symbol="-";if(ammoCount>0){symbol="+";}ammoPopup.GetComponentInChildren<TextMeshProUGUI>().text=
         symbol+System.Math.Abs(System.Math.Round(ammoCount,1)).ToString();}
 
-    if(!GameSession.GlobalTimeIsPaused){
+    if(!GameManager.GlobalTimeIsPaused){
         if(hpTimer>0){hpTimer-=Time.unscaledDeltaTime;}
         if(hpAbsorpTimer>0){hpAbsorpTimer-=Time.unscaledDeltaTime;}
         if(enTimer>0){enTimer-=Time.unscaledDeltaTime;}

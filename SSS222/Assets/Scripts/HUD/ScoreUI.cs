@@ -9,9 +9,9 @@ public class ScoreUI : MonoBehaviour{
     void Update(){
         if(_delay>0){_delay-=Time.unscaledDeltaTime;}
         if(_delay<=0){scalePre=transform.localScale;
-            if(GameSession.instance!=null){
-                if(GameSession.instance.gamemodeSelected<=0){Destroy(this);}
-                else if(GameSession.instance.score>GameSession.instance.GetHighscoreCurrent().score){GetComponent<Animator>().SetTrigger("beaten");Destroy(this);}
+            if(GameManager.instance!=null){
+                if(GameManager.instance.gamemodeSelected<=0){Destroy(this);}
+                else if(GameManager.instance.score>GameManager.instance.GetHighscoreCurrent().score){GetComponent<Animator>().SetTrigger("beaten");Destroy(this);}
             }
             transform.localScale=scale*scalePre;
         }

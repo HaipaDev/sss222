@@ -10,7 +10,7 @@ public class Tag_PauseVelocity : MonoBehaviour{
     }
     void Update(){
         if(rb.velocity!=Vector2.zero){velPaused=rb.velocity;}
-        if(GameSession.GlobalTimeIsPaused){if(rb.velocity!=Vector2.zero){velPaused=rb.velocity;rb.velocity=Vector2.zero;}}else{if(velPaused!=Vector2.zero)rb.velocity=velPaused;}
+        if(GameManager.GlobalTimeIsPaused){if(rb.velocity!=Vector2.zero){velPaused=rb.velocity;rb.velocity=Vector2.zero;}}else{if(velPaused!=Vector2.zero)rb.velocity=velPaused;}
     }
-    public static Vector2 MoveTowards(Vector2 current, Vector2 target, float maxDistanceDelta){if(!GameSession.GlobalTimeIsPaused){return Vector2.MoveTowards(current,target,maxDistanceDelta);}else{return current;}}
+    public static Vector2 MoveTowards(Vector2 current, Vector2 target, float maxDistanceDelta){if(!GameManager.GlobalTimeIsPaused){return Vector2.MoveTowards(current,target,maxDistanceDelta);}else{return current;}}
 }

@@ -22,9 +22,9 @@ public class BarValue : MonoBehaviour{
         if(valueName=="hpAbsorp"){if(Player.instance!=null){value=Player.instance.hpAbsorpAmnt;maxValue=Player.instance.healthMax/GameRules.instance.hpAbsorpFractionCap;}}
         if(valueName=="enAbsorp"){if(Player.instance!=null){value=Player.instance.enAbsorpAmnt;maxValue=Player.instance.energyMax/GameRules.instance.enAbsorpFractionCap;}}
         if(valueName=="xp"){
-            if(GameSession.instance!=null){
-                if(GameSession.instance.xp>GameSession.instance.xpMax){value=GameSession.instance.xp;maxValue=GameSession.instance.xpMax*GameRules.instance.xpMaxOvefillMult;GetComponent<Image>().sprite=GameAssets.instance.Spr("overfilledXpBar");}
-                else{value=GameSession.instance.xp;maxValue=GameSession.instance.xpMax;GetComponent<Image>().sprite=GameAssets.instance.Spr("regularXpBar");}
+            if(GameManager.instance!=null){
+                if(GameManager.instance.xp>GameManager.instance.xpMax){value=GameManager.instance.xp;maxValue=GameManager.instance.xpMax*GameRules.instance.xpMaxOvefillMult;GetComponent<Image>().sprite=AssetsManager.instance.Spr("overfilledXpBar");}
+                else{value=GameManager.instance.xp;maxValue=GameManager.instance.xpMax;GetComponent<Image>().sprite=AssetsManager.instance.Spr("regularXpBar");}
             }
         }
         if(valueName=="shopTimer"){if(Shop.instance!=null){value=Shop.instance.shopTimer;maxValue=Shop.instance.shopTimeMax;}}

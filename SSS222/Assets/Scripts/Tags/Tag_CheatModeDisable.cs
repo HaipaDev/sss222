@@ -11,27 +11,27 @@ public class Tag_CheatModeDisable : MonoBehaviour{
         if(!components){
             if(!inOrderedList){
                 foreach(Transform t in transform){
-                    if(GameSession.instance.cheatmode!=true)t.gameObject.SetActive(false);
+                    if(GameManager.instance.cheatmode!=true)t.gameObject.SetActive(false);
                     else t.gameObject.SetActive(true);
                 }
             }else{
                 foreach(Transform t in transform){
-                    if(GameSession.instance.cheatmode!=true)t.gameObject.SetActive(false);
+                    if(GameManager.instance.cheatmode!=true)t.gameObject.SetActive(false);
                     else t.gameObject.SetActive(true);
                 }
-                if(GameSession.instance.cheatmode!=true)GetComponent<RectTransform>().sizeDelta=Vector2.zero;
+                if(GameManager.instance.cheatmode!=true)GetComponent<RectTransform>().sizeDelta=Vector2.zero;
                 else GetComponent<RectTransform>().sizeDelta=new Vector2(100,100);
             }
         }else{
             if(!button){
                 foreach(MonoBehaviour c in GetComponents(typeof(MonoBehaviour))){
                 if(c!=this){
-                    if(GameSession.instance.cheatmode!=true){c.enabled=false;}
+                    if(GameManager.instance.cheatmode!=true){c.enabled=false;}
                     else{c.enabled=true;}
                 }
                 }
             }else{
-                if(GameSession.instance.cheatmode!=true)GetComponent<Button>().interactable=false;
+                if(GameManager.instance.cheatmode!=true)GetComponent<Button>().interactable=false;
                 else GetComponent<Button>().interactable=true;
             }
         }

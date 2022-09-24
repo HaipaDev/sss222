@@ -17,7 +17,7 @@ public class Glow : MonoBehaviour{
     void Start(){MakeParticle();}
     void OnEnable(){MakeParticle();}
     public void MakeParticle(){
-        GameObject go=Instantiate(GameAssets.instance.GetVFX(assetName),transform);
+        GameObject go=Instantiate(AssetsManager.instance.GetVFX(assetName),transform);
         go.transform.localPosition=offset;
 
         if(go!=null){ps=go.GetComponent<ParticleSystem>();}else{Debug.LogWarning("No particle created for "+gameObject.name);}

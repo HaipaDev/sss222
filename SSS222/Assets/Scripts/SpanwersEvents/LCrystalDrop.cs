@@ -16,6 +16,6 @@ public class LCrystalDrop : MonoBehaviour{
     }*/
     void Start(){
         amnt=Random.Range(amntS,amntE);
-        if(amnt>=amntS+amntE/2)GetComponent<SpriteRenderer>().sprite=GameAssets.instance.Spr("coinB");
+        if(amnt>=amntS+amntE/2)GetComponent<SpriteRenderer>().sprite=AssetsManager.instance.Spr("coinB");
     }
 }

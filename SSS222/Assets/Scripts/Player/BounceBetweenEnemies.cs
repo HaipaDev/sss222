@@ -15,7 +15,7 @@ public class BounceBetweenEnemies : MonoBehaviour{
     void Update(){
         float step=speed*Time.deltaTime;
         var target=FindClosestEnemy();
-        if(target!=null&&(timesHit<timesHitMax&&timesHitMax>0)&&!GameSession.GlobalTimeIsPaused){GetComponent<Rigidbody2D>().velocity=Vector2.zero;transform.position=Vector2.MoveTowards(transform.position,target.transform.position,step);}
+        if(target!=null&&(timesHit<timesHitMax&&timesHitMax>0)&&!GameManager.GlobalTimeIsPaused){GetComponent<Rigidbody2D>().velocity=Vector2.zero;transform.position=Vector2.MoveTowards(transform.position,target.transform.position,step);}
         else if(target==null||(timesHit>=timesHitMax&&timesHitMax>0)){GetComponent<Rigidbody2D>().velocity=savedVel;}
     }
     public Enemy FindClosestEnemy(){

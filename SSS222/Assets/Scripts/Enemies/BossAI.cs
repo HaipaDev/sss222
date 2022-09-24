@@ -34,12 +34,12 @@ public class BossAI : MonoBehaviour{
         ChangePhase(0);
         //Spawn FX
         /*AudioManager.instance.Play(phasesInfo[0].audioAsset);
-        GameAssets.instance.VFX(phasesInfo[0].vfxAsset,transform.position);
+        AssetsManager.instance.VFX(phasesInfo[0].vfxAsset,transform.position);
         Shake.instance.CamShake(phasesInfo[0].camShakeStrength,phasesInfo[0].camShakeSpeed);*/
         SetBossSpecificVars();
     }
     void Update(){
-        if(!GameSession.GlobalTimeIsPaused){
+        if(!GameManager.GlobalTimeIsPaused){
             if(phase==-1&&GameRules.instance.bossInfo.scaleUpOnSpawn){
                 var scaleUpSpeed=phasesInfo[0].delay/10f*Time.deltaTime;
                 if(Vector2.Distance(en.size,phasesInfo[0].size)>scaleUpSpeed){
@@ -65,9 +65,9 @@ public class BossAI : MonoBehaviour{
         GetComponent<PointPathing>().enabled=false;
         Jukebox.instance.SetMusic(null);
         AudioManager.instance.Play(GameRules.instance.bossInfo.preDeathAudio);
-        GameAssets.instance.VFX(GameRules.instance.bossInfo.preDeathVFX,transform.position,3f);
+        AssetsManager.instance.VFX(GameRules.instance.bossInfo.preDeathVFX,transform.position,3f);
         yield return new WaitForSeconds(GameRules.instance.bossInfo.deathLength);
-        GameAssets.instance.VFX(GameRules.instance.bossInfo.deathVFX,transform.position,3f);
+        AssetsManager.instance.VFX(GameRules.instance.bossInfo.deathVFX,transform.position,3f);
         Shake.instance.CamShake(GameRules.instance.bossInfo.deathShakeStrength,GameRules.instance.bossInfo.deathShakeSpeed);
         SaveSerial.instance.advD.defeatedBosses.Add(en.name);
         StatsAchievsManager.instance.BossDefeated(en.name);
@@ -131,9 +131,9 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
     [ShowIf("@this._isMOL()")][ReadOnly][SerializeField]float _molDistToPlayer;
     void MoonOfLunacyAI(){
         if(phase==0){
-            if(_molP1_attack1Timer>0){_molP1_attack1Timer-=Time.deltaTime;if(_molP1_attack1Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P1_Attack1",transform.position,3f);AudioManager.instance.Play("MoonOfLunacy-Rumble");_preAttackVFXSpawned=true;}}
+            if(_molP1_attack1Timer>0){_molP1_attack1Timer-=Time.deltaTime;if(_molP1_attack1Timer<=1&&!_preAttackVFXSpawned){AssetsManager.instance.VFX("MoonOfLunacy-P1_Attack1",transform.position,3f);AudioManager.instance.Play("MoonOfLunacy-Rumble");_preAttackVFXSpawned=true;}}
             else if(_molP1_attack1Timer!=-4){//Attack 1
-                FindObjectOfType<Waves>().currentWave=GameAssets.instance.GetWaveConfig("Comet Barrage");
+                FindObjectOfType<Waves>().currentWave=AssetsManager.instance.GetWaveConfig("Comet Barrage");
                 FindObjectOfType<Waves>().SpawnAllEnemiesInCurrentWave();
                 _molP1_attack1Count++;
                 _molP1_attack1Timer=_molP1_attack1Time;
@@ -146,9 +146,9 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
                 _molP1_attack1CountFor2=Mathf.RoundToInt(Random.Range((float)_molP1_attack1CountFor2Range.x,(float)_molP1_attack1CountFor2Range.y));
                 _molP1_attack2Timer=_molP1_attack2Time;
             }
-            if(_molP1_attack2Timer>0){_molP1_attack2Timer-=Time.deltaTime;if(_molP1_attack2Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P1_Attack2",transform.position,3f);AudioManager.instance.Play("MoonOfLunacy-Growl");_preAttackVFXSpawned=true;}}
+            if(_molP1_attack2Timer>0){_molP1_attack2Timer-=Time.deltaTime;if(_molP1_attack2Timer<=1&&!_preAttackVFXSpawned){AssetsManager.instance.VFX("MoonOfLunacy-P1_Attack2",transform.position,3f);AudioManager.instance.Play("MoonOfLunacy-Growl");_preAttackVFXSpawned=true;}}
             else if(_molP1_attack2Timer!=-4){//Attack 2
-                GameAssets.instance.Make("LunarPulse",transform.position);
+                AssetsManager.instance.Make("LunarPulse",transform.position);
                 if(_molP1_attack1Time>_molP1_attack2SubTime1Limit)_molP1_attack1Time-=_molP1_attack2SubTime1;
                 _molP1_attack1Timer=_molP1_attack1Time;
                 _molP1_attack2Timer=-4;
@@ -158,12 +158,12 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
 
             if(en.health<=en.healthMax/2){en.health=Mathf.FloorToInt(en.healthMax/2);ChangePhase(1);}
         }else if(phase==1){
-            if(_molP2_attack1Timer>0){_molP2_attack1Timer-=Time.deltaTime;}//if(_molP2_attack1Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P2_Attack1",transform.position,3f);_preAttackVFXSpawned=true;}}
+            if(_molP2_attack1Timer>0){_molP2_attack1Timer-=Time.deltaTime;}//if(_molP2_attack1Timer<=1&&!_preAttackVFXSpawned){AssetsManager.instance.VFX("MoonOfLunacy-P2_Attack1",transform.position,3f);_preAttackVFXSpawned=true;}}
             else if(_molP2_attack1Timer!=-4){//Attack 1
                 var xRange=new Vector2(-2.5f,2.5f);
                 var yRange=new Vector2(-6f,6f);
                 var objPos=new Vector2(Random.Range(xRange.x,xRange.y),Random.Range(yRange.x,yRange.y));
-                GameAssets.instance.Make("LunarSickle",objPos);
+                AssetsManager.instance.Make("LunarSickle",objPos);
                 _molP2_attack1Count++;
                 _molP2_attack1Timer=_molP2_attack1Time;
                 _preAttackVFXSpawned=false;
@@ -174,7 +174,7 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
                 _molP2_attack1CountFor2=Mathf.RoundToInt(Random.Range((float)_molP2_attack1CountFor2Range.x,(float)_molP2_attack1CountFor2Range.y));
                 _molP2_attack2Timer=_molP2_attack2Time;
             }
-            if(_molP2_attack2Timer>0){_molP2_attack2Timer-=Time.deltaTime;if(_molP2_attack2Timer<=1&&!_preAttackVFXSpawned){GameAssets.instance.VFX("MoonOfLunacy-P2_Attack2",transform.position,3f);AudioManager.instance.Play("MoonOfLunacy-Laugh");_preAttackVFXSpawned=true;}}
+            if(_molP2_attack2Timer>0){_molP2_attack2Timer-=Time.deltaTime;if(_molP2_attack2Timer<=1&&!_preAttackVFXSpawned){AssetsManager.instance.VFX("MoonOfLunacy-P2_Attack2",transform.position,3f);AudioManager.instance.Play("MoonOfLunacy-Laugh");_preAttackVFXSpawned=true;}}
             else if(_molP2_attack2Timer!=-4){//Start Attack 2
                 if(GetComponent<Follow>()==null){var f=gameObject.AddComponent<Follow>();
                     f.target=Player.instance.gameObject;f.followAfterOOR=true;f.dirYYUp=true;//f.rotateTowards=true;
@@ -230,10 +230,10 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
         if(Jukebox.instance!=null&&GameRules.instance.bossInfo.pauseOstOnPhaseChange)Jukebox.instance.PauseFor(phasesInfo[p].delay);
         yield return new WaitForSeconds(phasesInfo[p].delay);
         if(p==0){
-            if(Jukebox.instance==null){Instantiate(GameCreator.instance.GetJukeboxPrefab());}if(Jukebox.instance!=null)Jukebox.instance.SetMusic(GameRules.instance.bossInfo.ost,true);if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameSession.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}
+            if(Jukebox.instance==null){Instantiate(CoreSetup.instance.GetJukeboxPrefab());}if(Jukebox.instance!=null)Jukebox.instance.SetMusic(GameRules.instance.bossInfo.ost,true);if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameManager.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}
             en.health=GameRules.instance.bossInfo.healthStart;
         }
-        GameAssets.instance.VFX(phasesInfo[p].vfxAsset,transform.position,3f);
+        AssetsManager.instance.VFX(phasesInfo[p].vfxAsset,transform.position,3f);
         Shake.instance.CamShake(phasesInfo[p].camShakeStrength,phasesInfo[p].camShakeSpeed);
         GetComponent<PointPathing>().enabled=true;
         phase=p;

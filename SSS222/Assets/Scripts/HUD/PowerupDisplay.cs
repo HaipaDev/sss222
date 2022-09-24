@@ -25,7 +25,7 @@ public class PowerupDisplay : MonoBehaviour{
     void Start(){
         img=GetComponent<Image>();
         if(bg!=null)bgcolor=bg.color;
-        if(GameRules.instance!=null){pwrup="";img.sprite=GameAssets.instance.Spr("nullPwrup");}
+        if(GameRules.instance!=null){pwrup="";img.sprite=AssetsManager.instance.Spr("nullPwrup");}
     }
     void Update(){
         if(Player.instance!=null){if(number<Player.instance.powerups.Capacity){
@@ -70,9 +70,9 @@ public class PowerupDisplay : MonoBehaviour{
             string name=pwrup;
             if(!String.IsNullOrEmpty(name)){
                 if(name.Contains(Player._itemSuffix)){name=name.Split('_')[0];}name=name+"Pwrup";
-                img.sprite=GameAssets.instance.Get(name).GetComponent<SpriteRenderer>().sprite;
-            }else{img.sprite=GameAssets.instance.Spr("nullPwrup");}
-        }}else{img.sprite=GameAssets.instance.Spr("nullPwrup");txt.text="";highlightIMG.fillAmount=0;}
+                img.sprite=AssetsManager.instance.Get(name).GetComponent<SpriteRenderer>().sprite;
+            }else{img.sprite=AssetsManager.instance.Spr("nullPwrup");}
+        }}else{img.sprite=AssetsManager.instance.Spr("nullPwrup");txt.text="";highlightIMG.fillAmount=0;}
     }
     public void SetPlayerPowerup(){if(Player.instance!=null)if(number>=0)Player.instance.powerupCurID=number;}
 }

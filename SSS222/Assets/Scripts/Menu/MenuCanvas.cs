@@ -15,15 +15,15 @@ public class MenuCanvas : MonoBehaviour{
     void ExplosionShipAnim(){
         var dfx=ShipCustomizationManager.instance.GetDeathFx();
         var expl=Instantiate(dfx.obj,shipUI.transform);
-        GameAssets.instance.TransformIntoUIParticle(expl,0,-1,true);
+        AssetsManager.instance.TransformIntoUIParticle(expl,0,-1,true);
         AudioManager.instance.Play(dfx.sound);
         shipUI.GetComponent<TrailVFX>().ClearTrail();
         foreach(MonoBehaviour c in shipUI.GetComponents<MonoBehaviour>())c.enabled=false;
     }
     void ExplosionScreenAnim(){
-        var expl=Instantiate(GameAssets.instance.GetVFX("Explosion"),transform);
+        var expl=Instantiate(AssetsManager.instance.GetVFX("Explosion"),transform);
         AudioManager.instance.Play("Explosion");
-        GameAssets.instance.TransformIntoUIParticle(expl,1000,-1,true);
+        AssetsManager.instance.TransformIntoUIParticle(expl,1000,-1,true);
     }
     const float laserAnimLength=0.14f;
     const float explosionShipAnimLength=0.2f;

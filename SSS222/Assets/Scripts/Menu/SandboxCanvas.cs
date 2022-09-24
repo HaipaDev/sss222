@@ -82,12 +82,12 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 #region//Base
     void Start(){
         instance=this;
-        if(!String.IsNullOrEmpty(GameSession.instance.GetTempSandboxSaveName())){
-            SelectPreset(GameSession.instance.GetTempSandboxSaveName());
+        if(!String.IsNullOrEmpty(GameManager.instance.GetTempSandboxSaveName())){
+            SelectPreset(GameManager.instance.GetTempSandboxSaveName());
             if(ES3.FileExists(_currentSandboxFilePath()))if(ES3.KeyExists("buildVersion",_currentSandboxFilePath()))buildVersion=ES3.Load<int>("buildVersion",_currentSandboxFilePath());
         }
         
-        defPresetGameruleset=GameCreator.instance.gamerulesetsPrefabs[0];
+        defPresetGameruleset=CoreSetup.instance.gamerulesetsPrefabs[0];
         OpenDefaultPanel();
         SetupEverything();
         SetWaveSpawnReqsInputs();
@@ -97,7 +97,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     void Update(){
         if(GSceneManager.EscPressed()){Back();}
         SetPowerups();
-        GameSession.instance.defaultGameSpeed=GameRules.instance.defaultGameSpeed;
+        GameManager.instance.defaultGameSpeed=GameRules.instance.defaultGameSpeed;
     }
     public void Back(){
         if(_anyFirstLevelPanelsActive()){OpenDefaultPanel();}
@@ -243,7 +243,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public IEnumerator SetPresetI(string str){
         if(GameRules.instance!=null)Destroy(GameRules.instance.gameObject);
         yield return new WaitForSecondsRealtime(0.02f);
-        defPresetGameruleset=GameCreator.instance.gamerulesetsPrefabs[GameSession.instance.GetGamemodeID(str)];
+        defPresetGameruleset=CoreSetup.instance.gamerulesetsPrefabs[GameManager.instance.GetGamemodeID(str)];
         Debug.Log(defPresetGameruleset);
         var gr=Instantiate(defPresetGameruleset);
         gr.gameObject.name="GRSandbox";
@@ -374,7 +374,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     void UpdateBgMaterial(){
         GameRules.instance.bgMaterial.text=FindObjectOfType<BGManager>().GetBgTexture();
         //Material _mat=new Material(Resources.Load("AllIn1SpriteShader", typeof(Shader)) as Shader);
-        //_mat=GameAssets.instance.UpdateShaderMatProps(FindObjectOfType<BGManager>().GetBgMat(),GameRules.instance.bgMaterial);
+        //_mat=AssetsManager.instance.UpdateShaderMatProps(FindObjectOfType<BGManager>().GetBgMat(),GameRules.instance.bgMaterial);
     }
 #endregion
 #region//Player
@@ -567,8 +567,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     void SetPresetIconSpritesLibrary(){
         presetIconSprites=new List<GSprite>();
         presetIconSprites.AddRange(enemySprites);
-        if(!GameAssets.instance.sprites.Contains(enemySprites[0]))GameAssets.instance.sprites.AddRange(enemySprites);
-        //foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){}
+        if(!AssetsManager.instance.sprites.Contains(enemySprites[0]))AssetsManager.instance.sprites.AddRange(enemySprites);
+        //foreach(GameRules gr in CoreSetup.instance.gamerulesetsPrefabs){}
         presetIconSprites=presetIconSprites.OrderBy(x=>x.name).ToList();
 
         Transform presetAppearanceIconSprLibTransform=presetAppearanceIconSprLibPanel.transform.GetChild(1).GetChild(0);presetAppearanceIconSprLibTransform.GetComponent<ContentSizeFitter>().enabled=true;presetAppearanceIconSprLibTransform.localPosition=new Vector2(0,-999);
@@ -607,13 +607,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         Transform startingPowerupChoicesListTransform=startingPowerupChoices.transform.GetChild(0);//startingPowerupChoicesListTransform.GetComponent<ContentSizeFitter>().enabled=true;startingPowerupChoicesListTransform.localPosition=new Vector2(0,-999);
         GameObject prefab=startingPowerupChoicesListTransform.GetChild(0).gameObject;
             prefab.name="null";
-            prefab.GetComponent<Image>().sprite=GameAssets.instance.Spr("nullPwrup");
+            prefab.GetComponent<Image>().sprite=AssetsManager.instance.Spr("nullPwrup");
             prefab.GetComponent<Button>().onClick.AddListener(()=>SetPowerupStarting(""));
-        List<PowerupItem> sortedPowerupList=GameAssets.instance.powerupItems.OrderBy(x=>x.name).ToList();
+        List<PowerupItem> sortedPowerupList=AssetsManager.instance.powerupItems.OrderBy(x=>x.name).ToList();
         foreach(PowerupItem p in sortedPowerupList){if(p.powerupType==powerupType.weapon){
             GameObject go=Instantiate(prefab,startingPowerupChoicesListTransform);
             go.name=p.name;
-            go.GetComponent<Image>().sprite=GameAssets.instance.GetObjSpr(p.assetName);
+            go.GetComponent<Image>().sprite=AssetsManager.instance.GetObjSpr(p.assetName);
             go.GetComponent<Button>().onClick.AddListener(()=>SetPowerupStarting(p.name));
         }}
         startingPowerupChoices.SetActive(false);
@@ -636,7 +636,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
     void SetEnemySpritesLibrary(){
         enemySprites=new List<GSprite>();
-        foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){
+        foreach(GameRules gr in CoreSetup.instance.gamerulesetsPrefabs){
             foreach(EnemyClass e in gr.enemies){
                 Sprite _spr=_enSprGR(e.name,gr);
                 string _n=_spr.name;
@@ -740,8 +740,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             GameObject go=Instantiate(prefab,powerupsSpawnerListTransform);
             go.name=e.name;
             go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=e.name;
-            Sprite _spr=GameAssets.instance.Get(e.sprAssetName).GetComponent<SpriteRenderer>().sprite;
-            if(GameAssets.instance.Spr(e.sprAssetName)!=null)GameAssets.instance.Spr(e.sprAssetName);
+            Sprite _spr=AssetsManager.instance.Get(e.sprAssetName).GetComponent<SpriteRenderer>().sprite;
+            if(AssetsManager.instance.Spr(e.sprAssetName)!=null)AssetsManager.instance.Spr(e.sprAssetName);
             if(_spr!=null)go.transform.GetChild(0).GetComponent<Image>().sprite=_spr;
             go.GetComponent<Button>().onClick.AddListener(()=>OpenPowerupsSpawnPanel(e.name));
         }
@@ -758,7 +758,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             GameObject go=Instantiate(prefab,powerupsListTransform);
             go.name=e.lootItem.name;
             go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=e.lootItem.name;
-            Sprite _spr=GameAssets.instance.Get(e.lootItem.assetName).GetComponent<SpriteRenderer>().sprite;
+            Sprite _spr=AssetsManager.instance.Get(e.lootItem.assetName).GetComponent<SpriteRenderer>().sprite;
             if(_spr!=null)go.transform.GetChild(0).GetComponent<Image>().sprite=_spr;
             var dropChanceInput=go.transform.GetChild(3).GetComponent<TMP_InputField>();
                 dropChanceInput.text=e.dropChance.ToString();
@@ -771,7 +771,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
 
     void SetBuiltInPresetsButtons(){
-        foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){
+        foreach(GameRules gr in CoreSetup.instance.gamerulesetsPrefabs){
             string name=gr.cfgName;     if(name.Contains(" Mode"))name=name.Replace(" Mode","");
             Transform builtInModesListTransform=builtInPresetsPanel.transform.GetChild(0).GetChild(0);
             GameObject go=Instantiate(gameModeListElementPrefab,builtInModesListTransform);
@@ -782,7 +782,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr.cfgDesc;
             if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
             if(gr.cfgIconsGo!=null){Instantiate(gr.cfgIconsGo,go.transform.GetChild(1));}
-            else{go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.SprAny(gr.cfgIconAssetName);}
+            else{go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=AssetsManager.instance.SprAny(gr.cfgIconAssetName);}
         }
     }
     void SetYoursPresetsButtons(){
@@ -823,8 +823,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                     Instantiate(gr[0].cfgIconsGo,go.transform.GetChild(1));
                 }else{
                     if(!String.IsNullOrEmpty(gr[0].cfgIconAssetName)){
-                        go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.SprAny(gr[0].cfgIconAssetName);
-                        go.transform.GetChild(1).gameObject.GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(go.transform.GetChild(1).gameObject.GetComponent<Image>().material,gr[0].cfgIconShaderMatProps,true);
+                        go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=AssetsManager.instance.SprAny(gr[0].cfgIconAssetName);
+                        go.transform.GetChild(1).gameObject.GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(go.transform.GetChild(1).gameObject.GetComponent<Image>().material,gr[0].cfgIconShaderMatProps,true);
                     }//else{Instantiate(sandboxIconsGo,go.transform.GetChild(1));}
                 }
                 //Destroy(gr);
@@ -848,8 +848,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             for(var i=0;i<GameRules.instance.powerupsCapacity;i++){
                 Sprite _spr;
                 if(GameRules.instance.powerupsStarting.Count>i&&!String.IsNullOrEmpty(GameRules.instance.powerupsStarting[i].name)){
-                    _spr=GameAssets.instance.Get(GameAssets.instance.GetPowerupItem(GameRules.instance.powerupsStarting[i].name).assetName).GetComponent<SpriteRenderer>().sprite;
-                }else{_spr=GameAssets.instance.Spr("nullPwrup");}
+                    _spr=AssetsManager.instance.Get(AssetsManager.instance.GetPowerupItem(GameRules.instance.powerupsStarting[i].name).assetName).GetComponent<SpriteRenderer>().sprite;
+                }else{_spr=AssetsManager.instance.Spr("nullPwrup");}
                 powerupInventory.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite=_spr;
             }
             for(var i=9;i>=GameRules.instance.powerupsCapacity;i--){
@@ -871,20 +871,20 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }else{Debug.LogError("PowerupInventory not assigned!");}
     }
     void SetPresetIconPreviewsSprite(){
-        presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().sprite=GameAssets.instance.SprAny(GameRules.instance.cfgIconAssetName);
-        presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().sprite=GameAssets.instance.SprAny(GameRules.instance.cfgIconAssetName);
+        presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().sprite=AssetsManager.instance.SprAny(GameRules.instance.cfgIconAssetName);
+        presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().sprite=AssetsManager.instance.SprAny(GameRules.instance.cfgIconAssetName);
 
-        presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.cfgIconShaderMatProps,true);
-        presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().material,GameRules.instance.cfgIconShaderMatProps,true);
+        presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.cfgIconShaderMatProps,true);
+        presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().material,GameRules.instance.cfgIconShaderMatProps,true);
     }
     void SetPlayerPreviewsSprite(){
-        playerMainPanel.transform.GetChild(0).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(playerMainPanel.transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.playerShaderMatProps,true);
-        playerSpritePanel.transform.GetChild(0).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(playerSpritePanel.transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.playerShaderMatProps,true);
+        playerMainPanel.transform.GetChild(0).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(playerMainPanel.transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.playerShaderMatProps,true);
+        playerSpritePanel.transform.GetChild(0).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(playerSpritePanel.transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.playerShaderMatProps,true);
     }
     void SetEnemyPreviewsSprite(){
         if(true){foreach(Transform t in enemiesPanel.transform.GetChild(1).GetChild(0)){if(_en(t.gameObject.name)!=null){
             t.GetChild(0).GetComponent<Image>().sprite=_enSpr(t.gameObject.name);
-            t.GetChild(0).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(t.GetChild(0).GetComponent<Image>().material,_enSprMat(t.gameObject.name),true);
+            t.GetChild(0).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(t.GetChild(0).GetComponent<Image>().material,_enSprMat(t.gameObject.name),true);
         }}}
         if(_enMod()!=null){
             if(_enModSpr()!=null){
@@ -892,8 +892,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 enemySpritePanel.transform.GetChild(1).GetComponent<Image>().sprite=_enModSpr();
             }
             if(_enModSprMat()!=null){
-                enemyMainPanel.transform.GetChild(1).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(enemyMainPanel.transform.GetChild(1).GetComponent<Image>().material,_enModSprMat(),true);
-                enemySpritePanel.transform.GetChild(1).GetComponent<Image>().material=GameAssets.instance.UpdateShaderMatProps(enemySpritePanel.transform.GetChild(1).GetComponent<Image>().material,_enModSprMat(),true);
+                enemyMainPanel.transform.GetChild(1).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(enemyMainPanel.transform.GetChild(1).GetComponent<Image>().material,_enModSprMat(),true);
+                enemySpritePanel.transform.GetChild(1).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(enemySpritePanel.transform.GetChild(1).GetComponent<Image>().material,_enModSprMat(),true);
             }
         }
     }

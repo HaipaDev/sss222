@@ -32,7 +32,7 @@ public class CosmeticDrop : MonoBehaviour{
         if(s.spr!=null){dropIcon.sprite=s.spr;}dropIcon.GetComponent<Image>().color=Color.white;
         if(s.animated){StartCoroutine(AnimateCosmeticDrop(s));}
         else{StopAnimatingCosmeticDrop();}
-        rarityGlow.color=GameAssets.instance.GetRarityColor(s.rarity);
+        rarityGlow.color=AssetsManager.instance.GetRarityColor(s.rarity);
     }
     public void SetTrail(CstmzTrail t){
         PresetCosmeticDrop();
@@ -40,7 +40,7 @@ public class CosmeticDrop : MonoBehaviour{
         dropText.text=t.displayName;
         dropIcon.enabled=false;
         DropPreviewTrail(t);
-        Color c=GameAssets.instance.GetRarityColor(t.rarity);
+        Color c=AssetsManager.instance.GetRarityColor(t.rarity);
         rarityGlow.color=new Color(c.r,c.g,c.b,110f/255f);
     }
     public void SetFlares(CstmzFlares f){
@@ -49,7 +49,7 @@ public class CosmeticDrop : MonoBehaviour{
         dropText.text=f.displayName;
         dropIcon.enabled=false;
         DropPreviewFlares(f);
-        Color c=GameAssets.instance.GetRarityColor(f.rarity);
+        Color c=AssetsManager.instance.GetRarityColor(f.rarity);
         rarityGlow.color=new Color(c.r,c.g,c.b,110f/255f);
     }
     public void SetDeathFx(CstmzDeathFx d){
@@ -58,7 +58,7 @@ public class CosmeticDrop : MonoBehaviour{
         dropText.text=d.displayName;
         dropIcon.enabled=false;
         DropPreviewDeathFx(d);
-        Color c=GameAssets.instance.GetRarityColor(d.rarity);
+        Color c=AssetsManager.instance.GetRarityColor(d.rarity);
         rarityGlow.color=new Color(c.r,c.g,c.b,110f/255f);
     }
     public void SetMusic(CstmzMusic m){
@@ -67,22 +67,22 @@ public class CosmeticDrop : MonoBehaviour{
         dropText.text=m.displayName;
         dropIcon.enabled=true;
         dropIcon.sprite=m.icon;dropIcon.GetComponent<Image>().color=Color.white;
-        rarityGlow.color=GameAssets.instance.GetRarityColor(m.rarity);
+        rarityGlow.color=AssetsManager.instance.GetRarityColor(m.rarity);
     }
 
     void DropPreviewTrail(CstmzTrail t){
         GameObject goPt=Instantiate(t.part,dropIcon.transform);goPt.transform.localScale=new Vector2(5,5);
-        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4);
+        AssetsManager.instance.TransformIntoUIParticle(goPt,0,-4);
     }
     void DropPreviewFlares(CstmzFlares f){
-        GameObject goPt=Instantiate(GameAssets.instance.GetFlareRandom(f.name),dropIcon.transform);goPt.transform.localPosition=new Vector2(-44*4,0);goPt.transform.localScale=new Vector2(4,4);GameAssets.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
-        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4);
-        goPt=Instantiate(GameAssets.instance.GetFlareRandom(f.name),dropIcon.transform);goPt.transform.localPosition=new Vector2(44*4,0);goPt.transform.localScale=new Vector2(4,4);GameAssets.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
-        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4);
+        GameObject goPt=Instantiate(AssetsManager.instance.GetFlareRandom(f.name),dropIcon.transform);goPt.transform.localPosition=new Vector2(-44*4,0);goPt.transform.localScale=new Vector2(4,4);AssetsManager.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
+        AssetsManager.instance.TransformIntoUIParticle(goPt,0,-4);
+        goPt=Instantiate(AssetsManager.instance.GetFlareRandom(f.name),dropIcon.transform);goPt.transform.localPosition=new Vector2(44*4,0);goPt.transform.localScale=new Vector2(4,4);AssetsManager.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
+        AssetsManager.instance.TransformIntoUIParticle(goPt,0,-4);
     }
     void DropPreviewDeathFx(CstmzDeathFx d){
-        GameObject goPt=Instantiate(d.obj,dropIcon.transform);goPt.transform.localScale=new Vector2(4,4);GameAssets.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
-        GameAssets.instance.TransformIntoUIParticle(goPt,0,-4,true,0);
+        GameObject goPt=Instantiate(d.obj,dropIcon.transform);goPt.transform.localScale=new Vector2(4,4);AssetsManager.MakeParticleLooping(goPt.GetComponent<ParticleSystem>());
+        AssetsManager.instance.TransformIntoUIParticle(goPt,0,-4,true,0);
     }
 
     Coroutine cosmeticDropAnim;int iCosmeticDropAnim=0;Sprite cosmeticAnimSpr=null;

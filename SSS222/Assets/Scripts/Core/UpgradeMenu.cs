@@ -36,7 +36,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     void Start(){
         instance=this;
         pmodules=Player.instance.GetComponent<PlayerModules>();
-        //if(GameSession.instance.CheckGamemodeSelected("Adventure")){LvlEventsAdventure();}
+        //if(GameManager.instance.CheckGamemodeSelected("Adventure")){LvlEventsAdventure();}
         SetupModulesAndSkills();
         if(GameRules.instance.forceAutoAscend)Destroy(autoascendToggle.gameObject);
 
@@ -49,7 +49,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
                 if(_isOpenable()){Open();}
             }
         }
-        if(Input.GetKeyDown(KeyCode.M)&&GameSession.instance.CheckGamemodeSelected("Adventure")&&FindObjectOfType<BossAI>()==null&&Player.instance!=null){if(!Player.instance._hasStatus("hacked"))Open();OpenZoneMap();}
+        if(Input.GetKeyDown(KeyCode.M)&&GameManager.instance.CheckGamemodeSelected("Adventure")&&FindObjectOfType<BossAI>()==null&&Player.instance!=null){if(!Player.instance._hasStatus("hacked"))Open();OpenZoneMap();}
         if(UpgradeMenuIsOpen&&GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton1)){Back();}
         //SetModulesAndSkillsPreviews();
     }
@@ -60,7 +60,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         lvltreeUI.SetActive(false);
         zoneMap.SetActive(false);
         //BackToModulesSkillsInventory();
-        GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
+        GameManager.instance.gameSpeed=GameManager.instance.defaultGameSpeed;
         UpgradeMenuIsOpen=false;
     }
     public bool _isOpenable(){return
@@ -72,8 +72,8 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         if(autoLvlToggle!=null)autoLvlToggle.isOn=pmodules.autoLvl;
         if(FindObjectOfType<CelestialPoints>()!=null)FindObjectOfType<CelestialPoints>().RefreshCelestialPoints();
         upgradeMenuUI.SetActive(true);
-        /*if(GameRules.instance.upgradeMenuPause)*/GameSession.instance.gameSpeed=GameRules.instance.upgradeMenuOpenGameSpeed;
-        //else{GameSession.instance.gameSpeed=GameRules.instance.upgradeMenuSlowdownSpeed;}
+        /*if(GameRules.instance.upgradeMenuPause)*/GameManager.instance.gameSpeed=GameRules.instance.upgradeMenuOpenGameSpeed;
+        //else{GameManager.instance.gameSpeed=GameRules.instance.upgradeMenuSlowdownSpeed;}
         UpgradeMenuIsOpen=true;
         StartCoroutine(ForceLayoutUpdate());
     }
@@ -341,7 +341,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
                     if(m.item.iconsGo!=null)Instantiate(m.item.iconsGo,t.GetChild(0));
                 }
             }else{
-                t.GetComponent<Image>().material=GameAssets.instance.GetMat("GrayedOut");
+                t.GetComponent<Image>().material=AssetsManager.instance.GetMat("GrayedOut");
                 t.GetChild(0).GetComponent<Image>().enabled=false;
                 if(t.GetChild(0).childCount>0){foreach(Transform tt in t.GetChild(0))Destroy(tt.gameObject);}
             }
@@ -362,7 +362,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
                     if(s.item.iconsGo!=null)Instantiate(s.item.iconsGo,t.GetChild(0));
                 }
             }else{
-                t.GetComponent<Image>().material=GameAssets.instance.GetMat("GrayedOut");
+                t.GetComponent<Image>().material=AssetsManager.instance.GetMat("GrayedOut");
                 t.GetChild(0).GetComponent<Image>().enabled=false;
                 if(t.GetChild(0).childCount>0){foreach(Transform tt in t.GetChild(0))Destroy(tt.gameObject);}
             }
@@ -370,17 +370,17 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     }
 
     public void UpgradeBody(){
-        var _isAdventure=GameSession.instance.CheckGamemodeSelected("Adventure");
+        var _isAdventure=GameManager.instance.CheckGamemodeSelected("Adventure");
         if(_isAdventure&&pmodules.shipLvlFraction>=GameRules.instance.bodyUpgrade_price){pmodules.bodyUpgraded++;pmodules.shipLvlFraction-=GameRules.instance.bodyUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
         else if(!_isAdventure&&pmodules.accumulatedCelestPoints>=GameRules.instance.bodyUpgrade_price){pmodules.bodyUpgraded++;pmodules.accumulatedCelestPoints-=GameRules.instance.bodyUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
     }
     public void UpgradeEngine(){
-        var _isAdventure=GameSession.instance.CheckGamemodeSelected("Adventure");
+        var _isAdventure=GameManager.instance.CheckGamemodeSelected("Adventure");
         if(_isAdventure&&pmodules.shipLvlFraction>=GameRules.instance.engineUpgrade_price){pmodules.engineUpgraded++;pmodules.shipLvlFraction-=GameRules.instance.engineUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
         else if(!_isAdventure&&pmodules.accumulatedCelestPoints>=GameRules.instance.engineUpgrade_price){pmodules.engineUpgraded++;pmodules.accumulatedCelestPoints-=GameRules.instance.engineUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
     }
     public void UpgradeBlasters(){
-        var _isAdventure=GameSession.instance.CheckGamemodeSelected("Adventure");
+        var _isAdventure=GameManager.instance.CheckGamemodeSelected("Adventure");
         if(_isAdventure&&pmodules.shipLvlFraction>=GameRules.instance.blastersUpgrade_price){pmodules.blastersUpgraded++;pmodules.shipLvlFraction-=GameRules.instance.blastersUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
         else if(!_isAdventure&&pmodules.accumulatedCelestPoints>=GameRules.instance.blastersUpgrade_price){pmodules.blastersUpgraded++;pmodules.accumulatedCelestPoints-=GameRules.instance.blastersUpgrade_price;AudioManager.instance.Play("Upgrade-Parts");}
     }
@@ -390,7 +390,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
     public void LevelUp(){
         AudioManager.instance.Play("LvlUp2");
         FindObjectOfType<OnScreenButtons>().GetComponent<Animator>().SetTrigger("on");
-        var lvlPopup=GameAssets.instance.FindNotifUIByType(notifUI_type.lvlUp);
+        var lvlPopup=AssetsManager.instance.FindNotifUIByType(notifUI_type.lvlUp);
         lvlPopup.GetComponent<ValueDisplay>().value="lvlPopup";
         FindObjectOfType<OnScreenButtons>().lvldUp=true;
     }
@@ -413,11 +413,11 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             if(le.lvls.x==0&&le.lvls.y==0){for(var i=0;i<pmodules.shipLvl;i++)le.events.Invoke();}
             else{if(pmodules.shipLvl>=le.lvls.x&&!le.skipRe){le.events.Invoke();}}
         }}
-        GameSession.instance._lvlEventsLoading=false;
+        GameManager.instance._lvlEventsLoading=false;
         Debug.Log("LvlEvents Loaded");
         _lvlEvCor=null;
     }
     public void CheatCores(){gitignoreScript.instance.CheatCores();}
     public void CheatLevels(){gitignoreScript.instance.CheatLevels();}
-    public void CheatXP(){GameSession.instance.xp=GameSession.instance.xpMax;}
+    public void CheatXP(){GameManager.instance.xp=GameManager.instance.xpMax;}
 }

@@ -52,31 +52,31 @@ public class ShipUI : MonoBehaviour{
         }
         else if(followZones){
             var _zoneId=0;
-            if(GameSession.instance.zoneSelected!=-1){_zoneId=GameSession.instance.zoneSelected;}
-            if(GameSession.instance.zoneToTravelTo==-1){
+            if(GameManager.instance.zoneSelected!=-1){_zoneId=GameManager.instance.zoneSelected;}
+            if(GameManager.instance.zoneToTravelTo==-1){
                 var _spacingY=spacingY_zone;
-                if(GameCreator.instance.adventureZones[_zoneId].isBoss){_spacingY=spacingY_zoneBoss;}
-                var _pos=new Vector2(GameCreator.instance.adventureZones[_zoneId].pos.x,
-                    GameCreator.instance.adventureZones[_zoneId].pos.y+_spacingY);
+                if(CoreSetup.instance.adventureZones[_zoneId].isBoss){_spacingY=spacingY_zoneBoss;}
+                var _pos=new Vector2(CoreSetup.instance.adventureZones[_zoneId].pos.x,
+                    CoreSetup.instance.adventureZones[_zoneId].pos.y+_spacingY);
                 rt.anchoredPosition=_pos;
             }else{
                 if(displayTravel){
-                    var _pos=(GameCreator.instance.adventureZones[_zoneId].pos+GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos)/2;
+                    var _pos=(CoreSetup.instance.adventureZones[_zoneId].pos+CoreSetup.instance.adventureZones[GameManager.instance.zoneToTravelTo].pos)/2;
                     if(travelPosExactDistance){
-                        //_pos=(GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos-GameCreator.instance.adventureZones[_zoneId].pos)*(GameSession.instance.NormalizedZoneTravelTimeLeft());
-                        //var ab=(GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos-GameCreator.instance.adventureZones[_zoneId].pos);
-                        //_pos=GameCreator.instance.adventureZones[_zoneId].pos+(GameSession.instance.NormalizedZoneTravelTimeLeft()*ab.normalized);
-                        _pos=Vector3.Lerp(GameCreator.instance.adventureZones[_zoneId].pos, GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos, GameAssets.InvertNormalizedAbs(GameSession.instance.NormalizedZoneTravelTimeLeft()));
+                        //_pos=(CoreSetup.instance.adventureZones[GameManager.instance.zoneToTravelTo].pos-CoreSetup.instance.adventureZones[_zoneId].pos)*(GameManager.instance.NormalizedZoneTravelTimeLeft());
+                        //var ab=(CoreSetup.instance.adventureZones[GameManager.instance.zoneToTravelTo].pos-CoreSetup.instance.adventureZones[_zoneId].pos);
+                        //_pos=CoreSetup.instance.adventureZones[_zoneId].pos+(GameManager.instance.NormalizedZoneTravelTimeLeft()*ab.normalized);
+                        _pos=Vector3.Lerp(CoreSetup.instance.adventureZones[_zoneId].pos, CoreSetup.instance.adventureZones[GameManager.instance.zoneToTravelTo].pos, AssetsManager.InvertNormalizedAbs(GameManager.instance.NormalizedZoneTravelTimeLeft()));
                     }
                     rt.anchoredPosition=_pos;
                     if(rotateTowardsTravelDest){
-                        transform.rotation=GameAssets.QuatRotateTowards(GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].pos, rt.anchoredPosition, 90);//Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 60);
+                        transform.rotation=AssetsManager.QuatRotateTowards(CoreSetup.instance.adventureZones[GameManager.instance.zoneToTravelTo].pos, rt.anchoredPosition, 90);//Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 60);
                     }
                 }
             }
         }
         if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().trailObj!=null){
-            GameAssets.instance.TransformIntoUIParticle(GetComponent<TrailVFX>().trailObj);
+            AssetsManager.instance.TransformIntoUIParticle(GetComponent<TrailVFX>().trailObj);
             GetComponent<TrailVFX>().trailObj.transform.localPosition=GetComponent<TrailVFX>().offset*-200;
         }}
     }
@@ -100,8 +100,8 @@ public class ShipUI : MonoBehaviour{
     public void MakeFlares(){
         //Debug.Log("Making flares");
         var flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);
-            GameAssets.instance.TransformIntoUIParticle(flareObj,0,-1);flareObj.transform.localPosition=new Vector2(-44f,6f);
+            AssetsManager.instance.TransformIntoUIParticle(flareObj,0,-1);flareObj.transform.localPosition=new Vector2(-44f,6f);
         flareObj=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),flaresParent);
-            GameAssets.instance.TransformIntoUIParticle(flareObj,0,-1);flareObj.transform.localPosition=new Vector2(44f,6f);
+            AssetsManager.instance.TransformIntoUIParticle(flareObj,0,-1);flareObj.transform.localPosition=new Vector2(44f,6f);
     }
 }

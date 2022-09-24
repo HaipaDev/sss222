@@ -53,9 +53,9 @@ public class Enemy : MonoBehaviour{
     void Awake(){
         if(GetComponent<SpriteRenderer>()!=null){sprRender=GetComponent<SpriteRenderer>();}
         else{if(transform.GetChild(0)!=null){sprRender=transform.GetChild(0).GetComponent<SpriteRenderer>();}}
-        if(GameSession.maskMode!=0){
-            if(sprRender!=null)sprRender.maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
-            else{if(transform.GetChild(0)!=null)transform.GetChild(0).GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;}
+        if(GameManager.maskMode!=0){
+            if(sprRender!=null)sprRender.maskInteraction=(SpriteMaskInteraction)GameManager.maskMode;
+            else{if(transform.GetChild(0)!=null)transform.GetChild(0).GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameManager.maskMode;}
         }
         StartCoroutine(SetValues());
         if(GetComponent<BossAI>()!=null&&GameRules.instance.bossInfo.scaleUpOnSpawn){size=Vector2.zero;}
@@ -98,24 +98,24 @@ public class Enemy : MonoBehaviour{
             yield return new WaitForSeconds(0.04f);
             if(drops!=null){
                 for(var d=0;d<drops.Count;d++){dropValues.Add(drops[d].dropChance);}
-                dropValues[0]*=GameSession.instance.enballDropMulti;
-                dropValues[1]*=GameSession.instance.coinDropMulti;
-                dropValues[2]*=GameSession.instance.coreDropMulti;
+                dropValues[0]*=GameManager.instance.enballDropMulti;
+                dropValues[1]*=GameManager.instance.coinDropMulti;
+                dropValues[2]*=GameManager.instance.coreDropMulti;
 
                 for(var d=0;d<dropValues.Count;d++){
                     if(Random.Range(1,101)<=dropValues[d]&&dropValues[d]!=0){dropValues[d]=101;}
                 }
                 if(!GameRules.instance.energyOnPlayer)dropValues[0]=0;
                 if(!GameRules.instance.crystalsOn)dropValues[1]=0;
-                if(!GameRules.instance.coresOn&&!GameSession.instance.CheckGamemodeSelected("Classic"))dropValues[2]=0;
-                if(GameSession.instance.CheckGamemodeSelected("Classic")){
+                if(!GameRules.instance.coresOn&&!GameManager.instance.CheckGamemodeSelected("Classic"))dropValues[2]=0;
+                if(GameManager.instance.CheckGamemodeSelected("Classic")){
                     drops[2].name="Starshard";drops[2].ammount=Vector2.one;drops[2].dropChance=15f;
                     if(!drops.Exists(x=>x.name=="Starshard")){drops.Add(new LootTableEntryDrops{name="Starshard",ammount=Vector2.one,dropChance=15f});}
                 }
             }
         }
 
-        bullet=GameAssets.instance.GetEnemyBullet(bulletAssetName);
+        bullet=AssetsManager.instance.GetEnemyBullet(bulletAssetName);
     }
     void Start(){
         rb=GetComponent<Rigidbody2D>();
@@ -136,10 +136,10 @@ public class Enemy : MonoBehaviour{
         if((Vector2)transform.localScale!=size)transform.localScale=size;
         if(sizeAvg!=(size.x+size.y)/2)sizeAvg=(size.x+size.y)/2;
         if(sprRender.sprite!=spr)sprRender.sprite=spr;
-        if(sprMatProps!=null){sprRender.material=GameAssets.instance.UpdateShaderMatProps(sprRender.material,sprMatProps);}
+        if(sprMatProps!=null){sprRender.material=AssetsManager.instance.UpdateShaderMatProps(sprRender.material,sprMatProps);}
     }
     
-    void Shoot(){   if(!GameSession.GlobalTimeIsPaused){
+    void Shoot(){   if(!GameManager.GlobalTimeIsPaused){
         shootTimer-=Time.deltaTime;
         if(shootTimer<=0f){
         if(GetComponent<LaunchRadialBullets>()==null&&GetComponent<LaunchSwarmBullets>()==null&&GetComponent<HealingDrone>()==null){
@@ -173,7 +173,7 @@ public class Enemy : MonoBehaviour{
     bool dead;
     public void Die(bool explode=true){if(health<=0&&health!=-1000){if(!dead){
         if(GetComponent<BossAI>()==null){
-            GameSession.instance.AddEnemyCount();
+            GameManager.instance.AddEnemyCount();
             StatsAchievsManager.instance.AddKills(Name,type);
             int score=Random.Range((int)scoreValue.x,(int)scoreValue.y+1);
             if(GetComponent<CometRandomProperties>()!=null){
@@ -187,21 +187,21 @@ public class Enemy : MonoBehaviour{
                     comet.LunarDrop();
                 }
             }
-            if(giveScore==true)GameSession.instance.AddToScore(score);
+            if(giveScore==true)GameManager.instance.AddToScore(score);
         }
         if(GameRules.instance.xpOn)if(xpAmnt!=0&&xpChance>=Random.Range(0f,100f)){
             if(accumulateXp){
-                if(xpAmnt/5>=1){for(var i=0;i<(int)(xpAmnt/5);i++){GameAssets.instance.Make("CelestVial",transform.position);}}
-                GameSession.instance.DropXP(xpAmnt%5,transform.position);
-            }else{GameSession.instance.DropXP(xpAmnt,transform.position);}
+                if(xpAmnt/5>=1){for(var i=0;i<(int)(xpAmnt/5);i++){AssetsManager.instance.Make("CelestVial",transform.position);}}
+                GameManager.instance.DropXP(xpAmnt%5,transform.position);
+            }else{GameManager.instance.DropXP(xpAmnt,transform.position);}
         }
-        else{GameSession.instance.AddXP(xpAmnt);}
+        else{GameManager.instance.AddXP(xpAmnt);}
         giveScore=false;
-        if(GameSession.instance.zoneToTravelTo!=-1){
-            var cutTime=GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime;
-            if(Player.instance!=null){if(Player.instance.GetComponent<PlayerModules>()!=null)if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("STraveler"))cutTime=GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime*1.33f;}
-            GameSession.instance.gameTimeLeft-=GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime;
-            if(GameRules.instance.scoreDisplay==scoreDisplay.timeLeft)GameCanvas.instance.ScorePopupSwitch(-GameCreator.instance.adventureTravelZonePrefab.killSubTravelTime);
+        if(GameManager.instance.zoneToTravelTo!=-1){
+            var cutTime=CoreSetup.instance.adventureTravelZonePrefab.killSubTravelTime;
+            if(Player.instance!=null){if(Player.instance.GetComponent<PlayerModules>()!=null)if(Player.instance.GetComponent<PlayerModules>()._isModuleEquipped("STraveler"))cutTime=CoreSetup.instance.adventureTravelZonePrefab.killSubTravelTime*1.33f;}
+            GameManager.instance.gameTimeLeft-=CoreSetup.instance.adventureTravelZonePrefab.killSubTravelTime;
+            if(GameRules.instance.scoreDisplay==scoreDisplay.timeLeft)GameCanvas.instance.ScorePopupSwitch(-CoreSetup.instance.adventureTravelZonePrefab.killSubTravelTime);
         }
 
 
@@ -213,18 +213,18 @@ public class Enemy : MonoBehaviour{
             var amnt=Random.Range((int)ld[i].ammount.x,(int)ld[i].ammount.y);
             if(amnt!=0){
                 if(!st.Contains("Coin")){
-                    if(amnt==1)GameAssets.instance.Make(st,transform.position);
-                    else{GameAssets.instance.MakeSpread(st,transform.position,amnt);}
+                    if(amnt==1)AssetsManager.instance.Make(st,transform.position);
+                    else{AssetsManager.instance.MakeSpread(st,transform.position,amnt);}
                 }else{//Drop Lunar Crystals
-                    if(amnt/GameRules.instance.crystalBigGain>=1){for(var c=0;c<(int)(amnt/GameRules.instance.crystalBigGain);c++){GameAssets.instance.MakeSpread("CoinB",transform.position,1);}}
-                    GameAssets.instance.MakeSpread("Coin",transform.position,(amnt%GameRules.instance.crystalBigGain)/GameRules.instance.crystalGain);//CrystalB=6, CrystalS=2
+                    if(amnt/GameRules.instance.crystalBigGain>=1){for(var c=0;c<(int)(amnt/GameRules.instance.crystalBigGain);c++){AssetsManager.instance.MakeSpread("CoinB",transform.position,1);}}
+                    AssetsManager.instance.MakeSpread("Coin",transform.position,(amnt%GameRules.instance.crystalBigGain)/GameRules.instance.crystalGain);//CrystalB=6, CrystalS=2
                 }
             }}}
         }
         if(GetComponent<BossAI>()==null){
             if(GetComponent<Goblin>()!=null){GetComponent<Goblin>().DropPowerup(true);if(GetComponent<Goblin>().bossForm){GetComponent<Goblin>().GoblinBossDrop();}}
             
-            if(explode){AudioManager.instance.Play("Explosion");GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject);}
+            if(explode){AudioManager.instance.Play("Explosion");GameObject explosion=AssetsManager.instance.VFX("Explosion",transform.position,0.5f);Destroy(gameObject);}
             Shake.instance.CamShake(2,1);
         }
         if(GetComponent<BossAI>()!=null){GetComponent<BossAI>().Die();}

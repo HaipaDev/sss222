@@ -56,7 +56,7 @@ public class PlayerModules : MonoBehaviour{
         player=GetComponent<Player>();
         yield return new WaitForSeconds(0.2f);
         if(shipLvlFractionsValues.Count>0&&shipLvl==0)lvlFractionsMax=shipLvlFractionsValues[0].fractions;
-        if(!GameSession.instance.CheckGamemodeSelected("Adventure")){autoLvl=true;}
+        if(!GameManager.instance.CheckGamemodeSelected("Adventure")){autoLvl=true;}
     }
 
     void Update(){
@@ -86,8 +86,8 @@ public class PlayerModules : MonoBehaviour{
     public void Ascend(){
         if(!_isLvlUpable()){
             shipLvlFraction++;
-            if(!GameSession.instance.CheckGamemodeSelected("Adventure")){if(shipLvl>=GameRules.instance.accumulateCelestPointsFromLvl)accumulatedCelestPoints++;}
-            GameSession.instance.Ascend();
+            if(!GameManager.instance.CheckGamemodeSelected("Adventure")){if(shipLvl>=GameRules.instance.accumulateCelestPointsFromLvl)accumulatedCelestPoints++;}
+            GameManager.instance.Ascend();
         }
     }
     public void LevelUp(){
@@ -99,7 +99,7 @@ public class PlayerModules : MonoBehaviour{
     public bool _isLvlUpable(){return shipLvlFraction>=lvlFractionsMax&&lvlFractionsMax!=0;}
     
     #region//Skills & Modules
-    public void CheckSkillButton(int key=0){     if(!GameSession.GlobalTimeIsPaused){
+    public void CheckSkillButton(int key=0){     if(!GameManager.GlobalTimeIsPaused){
         for(var i=0;i<skillsList.Count;i++){
             if(skillsList[i].cooldown>0){skillsList[i].cooldown-=Time.deltaTime;}
             if(skillsList[i].name=="Determined"&&skillsList[i].cooldown<0.1f&&player.health>25){skillsList[i].cooldown=0.01f;}
@@ -124,11 +124,11 @@ public class PlayerModules : MonoBehaviour{
         if(Player.instance.energy>0||ignoreCosts){
             Player.instance.AddSubEnergy(item.costTypeProperties.cost,false);
             if(item.item.name=="MPulse"){
-                GameObject mPulse=GameAssets.instance.Make("MPulse",transform.position);
+                GameObject mPulse=AssetsManager.instance.Make("MPulse",transform.position);
                 ResetCooldown();
             }else if(item.item.name=="Teleport"){
-                GameSession.instance.gameSpeed=0.025f;
-                GameSession.instance.speedChanged=true;
+                GameManager.instance.gameSpeed=0.025f;
+                GameManager.instance.speedChanged=true;
                 currentSkill="Teleport";
                 ResetCooldown();
             }else if(item.item.name=="LShield"){bool _canMakeShield=false;
@@ -136,12 +136,12 @@ public class PlayerModules : MonoBehaviour{
                 if(_isSkillLvl("LShield",2)){fragments=8;cost=fragments*2;}
                 if(FindObjectOfType<LunarShield>()!=null){
                     var l=FindObjectOfType<LunarShield>();
-                    if((l._damagedShieldPiecesCount()>0||l.fragments.Count<fragments)&&GameSession.instance.coins>=cost){_canMakeShield=true;}
+                    if((l._damagedShieldPiecesCount()>0||l.fragments.Count<fragments)&&GameManager.instance.coins>=cost){_canMakeShield=true;}
                     cost-=l._damagedShieldPiecesCount();
                     if(_canMakeShield)Destroy(l.gameObject);
                 }else{_canMakeShield=true;}
                 if(_canMakeShield){
-                    var l=GameAssets.instance.Make("LunarShield",transform.position);l.transform.parent=transform;
+                    var l=AssetsManager.instance.Make("LunarShield",transform.position);l.transform.parent=transform;
                     l.GetComponent<LunarShield>().fragmentsStart=fragments;
                     player.AddSubCoins(cost,false);
                     ResetCooldown();
@@ -157,24 +157,24 @@ public class PlayerModules : MonoBehaviour{
     }}
 
     void SkillsUpdate(){
-    if(!GameSession.GlobalTimeIsPaused){
+    if(!GameManager.GlobalTimeIsPaused){
         if(currentSkill=="Teleport"){
             if(timerTeleport==-4)timerTeleport=timeTeleport;
             if(timerTeleport>0){
                 timerTeleport-=Time.unscaledDeltaTime;
                 if(Input.GetMouseButtonDown(0)){
                     AudioManager.instance.Play("Portal");
-                    GameObject tp1=GameAssets.instance.VFX("PortalVFX",transform.position,1.25f);
-                    GameObject tp2=GameAssets.instance.VFX("PortalVFX",Player.instance.mousePos,1.25f);
+                    GameObject tp1=AssetsManager.instance.VFX("PortalVFX",transform.position,1.25f);
+                    GameObject tp2=AssetsManager.instance.VFX("PortalVFX",Player.instance.mousePos,1.25f);
                     var ps1=tp1.GetComponent<ParticleSystem>();var main1=ps1.main;
                     main1.startColor=Color.blue;
                     var ps2=tp2.GetComponent<ParticleSystem>();var main2=ps2.main;
                     main2.startColor=new Color(255,140,0,255);//Orange
                     transform.position=Player.instance.mousePos;
-                    GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;timerTeleport=-4;currentSkill="";
+                    GameManager.instance.speedChanged=false;GameManager.instance.gameSpeed=1f;timerTeleport=-4;currentSkill="";
                 }
             }else if(timerTeleport<=0&&timerTeleport!=-4){
-                GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;timerTeleport=-4;currentSkill="";
+                GameManager.instance.speedChanged=false;GameManager.instance.gameSpeed=1f;timerTeleport=-4;currentSkill="";
             }
         }
         //Determined
@@ -188,14 +188,14 @@ public class PlayerModules : MonoBehaviour{
     void ModulesUpdate(){
         SwitchExhaust(_isModuleEquipped("ROF"));
         if(_isModuleEquipped("CrMend")&&Player.instance.hpAbsorpAmnt<=0){
-            if(GameSession.instance.coins>=GameRules.instance.crystalMend_refillCost){Player.instance.HPAbsorp(Player.instance.crystalMendAbsorp);GameSession.instance.coins-=GameRules.instance.crystalMend_refillCost;}
+            if(GameManager.instance.coins>=GameRules.instance.crystalMend_refillCost){Player.instance.HPAbsorp(Player.instance.crystalMendAbsorp);GameManager.instance.coins-=GameRules.instance.crystalMend_refillCost;}
         }
         if(_isModuleEquipped("EnDiss")&&Player.instance.enAbsorpAmnt<=0){
-            if(GameSession.instance.xp>=GameRules.instance.energyDiss_refillCost){Player.instance.EnAbsorp(Player.instance.energyDissAbsorp);GameSession.instance.xp-=GameRules.instance.energyDiss_refillCost;}
+            if(GameManager.instance.xp>=GameRules.instance.energyDiss_refillCost){Player.instance.EnAbsorp(Player.instance.energyDissAbsorp);GameManager.instance.xp-=GameRules.instance.energyDiss_refillCost;}
         }
         if(_isModuleEquipped("DkSurge")){
-            if(GameSession.instance.xp>=GameSession.instance.xpMax){
-                var dif=(GameSession.instance.xpMax*GameRules.instance.xpMaxOvefillMult)-GameSession.instance.xp;
+            if(GameManager.instance.xp>=GameManager.instance.xpMax){
+                var dif=(GameManager.instance.xpMax*GameRules.instance.xpMaxOvefillMult)-GameManager.instance.xp;
                 if(dif<=25&&!Player.instance._hasStatus("speed")){Player.instance.Speed(-7,5,1.2f);if(Player.instance._hasStatus("slow")){Player.instance.RemoveStatus("slow");}}
                 if(dif<=15&&!Player.instance._hasStatus("armored")){Player.instance.Armor(-7,5,2);if(Player.instance._hasStatus("fragile")){Player.instance.RemoveStatus("fragile");}}
                 if(dif==0&&!Player.instance._hasStatus("power")){Player.instance.Power(-7,5,1.15f);if(Player.instance._hasStatus("weakns")){Player.instance.RemoveStatus("weakns");}}
@@ -217,13 +217,13 @@ public class PlayerModules : MonoBehaviour{
         foreach(SkillPropertiesGR s in GameRules.instance.skillsPlayer){if(shipLvl>=s.lvlExpire&&s.lvlExpire!=0)if(_isSkillEquipped(s.item.name))ClearSkill(s.item.name);}
     }
     #endregion
-    public bool _canUnlockModuleSkill(string name){return GameSession.instance.cores>=GetModuleNextLvlVals(name).coreCost&&GetModuleNextLvlVals(name).coreCost>=0&&(shipLvl>=GetModuleNextLvlVals(name).lvlReq||!GameRules.instance.levelingOn);}
+    public bool _canUnlockModuleSkill(string name){return GameManager.instance.cores>=GetModuleNextLvlVals(name).coreCost&&GetModuleNextLvlVals(name).coreCost>=0&&(shipLvl>=GetModuleNextLvlVals(name).lvlReq||!GameRules.instance.levelingOn);}
 
     public bool _isModuleUnlocked(string name){return modulesList.Find(x=>x.name==name&&x.lvl>=1)!=null;}
     public bool UnlockModule(string name){if(GetModuleProperties(name)!=null){
         if(GetModuleNextLvlVals(name)!=null){
             if(_canUnlockModuleSkill(name)){
-                GameSession.instance.cores-=GetModuleNextLvlVals(name).coreCost;
+                GameManager.instance.cores-=GetModuleNextLvlVals(name).coreCost;
                 if(!_isModuleUnlocked(name)){GetModule(name).lvl=1;}
                 else{GetModule(name).lvl++;}
                 return true;
@@ -251,8 +251,8 @@ public class PlayerModules : MonoBehaviour{
     public bool _isSkillUnlocked(string name){return skillsList.Find(x=>x.name==name&&x.lvl>=1)!=null;}
     public bool UnlockSkill(string name){if(GetSkillProperties(name)!=null){
         if(GetSkillNextLvlVals(name)!=null){
-            if(GameSession.instance.cores>=GetSkillNextLvlVals(name).coreCost&&shipLvl>=GetSkillNextLvlVals(name).lvlReq){
-                GameSession.instance.cores-=GetSkillNextLvlVals(name).coreCost;
+            if(GameManager.instance.cores>=GetSkillNextLvlVals(name).coreCost&&shipLvl>=GetSkillNextLvlVals(name).lvlReq){
+                GameManager.instance.cores-=GetSkillNextLvlVals(name).coreCost;
                 if(!_isSkillUnlocked(name)){GetSkill(name).lvl=1;}
                 else{GetSkill(name).lvl++;}
                 return true;

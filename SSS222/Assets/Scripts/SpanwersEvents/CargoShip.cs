@@ -34,9 +34,9 @@ public class CargoShip : MonoBehaviour{
 
         if(health<=0){
             AudioManager.instance.Play("Explosion");
-            GameObject explosion=GameAssets.instance.VFX("Explosion",transform.position,0.5f);
+            GameObject explosion=AssetsManager.instance.VFX("Explosion",transform.position,0.5f);
             Shake.instance.CamShake(2,1);
-            GameAssets.instance.MakeSpread("CoinB",transform.position,GameRules.instance.cargoDeathCoinsB);
+            AssetsManager.instance.MakeSpread("CoinB",transform.position,GameRules.instance.cargoDeathCoinsB);
             Shop.instance.RepChange(repMinusKill,false);
             Destroy(gameObject,0.01f);
         }
@@ -102,7 +102,7 @@ public class CargoShip : MonoBehaviour{
         float hspeed=0;
         float vspeed=0;
         float zRot=0;
-        //GameObject pt=GameAssets.instance.GetVFX("BFlameUp");
+        //GameObject pt=AssetsManager.instance.GetVFX("BFlameUp");
         //float ptRot=180;
         //float ptxx=0.3f;
         //float ptyy=0.5f;

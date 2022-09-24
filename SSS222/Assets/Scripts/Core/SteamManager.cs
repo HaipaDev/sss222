@@ -16,11 +16,11 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
     void Start(){//IEnumerator Start(){
         //yield return new WaitForSeconds(0.1f);
         if(Application.platform==RuntimePlatform.WindowsPlayer||Application.platform==RuntimePlatform.WindowsEditor){
-        if(GameSession.instance!=null){if(GameSession.instance.isSteam){
+        if(GameManager.instance!=null){if(GameManager.instance.isSteam){
             InitSteam();
             SteamUserStats.RequestCurrentStats();
         }}
-        }else{if(GameSession.instance!=null){GameSession.instance.isSteam=false;}}
+        }else{if(GameManager.instance!=null){GameManager.instance.isSteam=false;}}
     }
     void Update(){
         //SteamClient.RunCallbacks();
@@ -32,8 +32,8 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
         }
         catch(System.Exception e){
             Debug.LogError(e);
-            GameSession.instance.isSteam=false;
-            GameSession.instance.steamAchievsStatsLeaderboards=false;
+            GameManager.instance.isSteam=false;
+            GameManager.instance.steamAchievsStatsLeaderboards=false;
             // Something went wrong - it's one of these:
             //
             //     Steam is closed?

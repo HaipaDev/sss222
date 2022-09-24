@@ -11,7 +11,7 @@ public class BounceThroughEnemies : MonoBehaviour{
     void Update(){
         float step=speed*Time.deltaTime;
         var target=FindClosestEnemy();
-        if(target!=null&&!GameSession.GlobalTimeIsPaused)transform.position=Vector2.MoveTowards(transform.position,target.transform.position,step);
+        if(target!=null&&!GameManager.GlobalTimeIsPaused)transform.position=Vector2.MoveTowards(transform.position,target.transform.position,step);
     }
     public Enemy FindClosestEnemy(){
         KdTree<Enemy> Enemies=new KdTree<Enemy>();

@@ -26,11 +26,11 @@ public class CosmeticPopups : MonoBehaviour{  public static CosmeticPopups insta
     void PopupCosmetic(){
         finished=false;
         if(!transform.GetChild(0).gameObject.activeSelf)transform.GetChild(0).gameObject.SetActive(true);
-        if(queue[0].type==CstmzType.skin){cosmeticDropParent.SetSkin(GameAssets.instance.GetSkin(queue[0].name));}
-        if(queue[0].type==CstmzType.trail){cosmeticDropParent.SetTrail(GameAssets.instance.GetTrail(queue[0].name));}
-        if(queue[0].type==CstmzType.flares){cosmeticDropParent.SetFlares(GameAssets.instance.GetFlares(queue[0].name));}
-        if(queue[0].type==CstmzType.deathFx){cosmeticDropParent.SetDeathFx(GameAssets.instance.GetDeathFx(queue[0].name));}
-        if(queue[0].type==CstmzType.music){cosmeticDropParent.SetMusic(GameAssets.instance.GetMusic(queue[0].name));}
+        if(queue[0].type==CstmzType.skin){cosmeticDropParent.SetSkin(AssetsManager.instance.GetSkin(queue[0].name));}
+        if(queue[0].type==CstmzType.trail){cosmeticDropParent.SetTrail(AssetsManager.instance.GetTrail(queue[0].name));}
+        if(queue[0].type==CstmzType.flares){cosmeticDropParent.SetFlares(AssetsManager.instance.GetFlares(queue[0].name));}
+        if(queue[0].type==CstmzType.deathFx){cosmeticDropParent.SetDeathFx(AssetsManager.instance.GetDeathFx(queue[0].name));}
+        if(queue[0].type==CstmzType.music){cosmeticDropParent.SetMusic(AssetsManager.instance.GetMusic(queue[0].name));}
         GetComponent<Animator>().SetBool("on",true);
     }
     public void AddToQueue(string n,CstmzType t){

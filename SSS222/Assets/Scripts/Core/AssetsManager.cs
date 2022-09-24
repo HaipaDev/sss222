@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class GameAssets : MonoBehaviour{	public static GameAssets instance;
+public class AssetsManager : MonoBehaviour{	public static AssetsManager instance;
 	[Header("Special game-related")]
     [AssetsOnly]public GameObject powerupSpawnerPrefab;
     [AssetsOnly]public GameObject waveSpawnerPrefab;
@@ -144,8 +144,8 @@ public class GameAssets : MonoBehaviour{	public static GameAssets instance;
 	}
 	public Material UpdateShaderMatProps(Material mat,ShaderMatProps shaderMatProps,bool isUI=false){	Material _mat=mat;
 		if(_mat!=null&&!_mat.shader.name.Contains("AllIn1SpriteShader")){
-        	if(!isUI){if(GameAssets.instance.GetMat("AIOShaderMat")!=null)_mat=Instantiate(GameAssets.instance.GetMat("AIOShaderMat"));}
-			else{if(GameAssets.instance.GetMat("AIOShaderMat_UI")!=null)_mat=Instantiate(GameAssets.instance.GetMat("AIOShaderMat_UI"));}
+        	if(!isUI){if(AssetsManager.instance.GetMat("AIOShaderMat")!=null)_mat=Instantiate(AssetsManager.instance.GetMat("AIOShaderMat"));}
+			else{if(AssetsManager.instance.GetMat("AIOShaderMat_UI")!=null)_mat=Instantiate(AssetsManager.instance.GetMat("AIOShaderMat_UI"));}
 		}
 		_mat.SetTexture("_MainTex",shaderMatProps.text);
 		_mat.SetFloat("_HsvShift",shaderMatProps.hue*360);

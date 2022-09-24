@@ -23,7 +23,7 @@ public class CstmzSelectedInfo : MonoBehaviour{
     void Update(){
         var name="Mk.22";Color color=Color.white;var artist="Hyper";
         CstmzElement ce=null;CstmzTypeElement cte=null;
-        //T ceType=GameAssets.instance.GetCustomizationTypeFromEnum<ce.elementType>();
+        //T ceType=AssetsManager.instance.GetCustomizationTypeFromEnum<ce.elementType>();
 
         if(!UIInputSystem.instance.inputSelecting){transform.position=Input.mousePosition;}
         else{
@@ -45,19 +45,19 @@ public class CstmzSelectedInfo : MonoBehaviour{
         if(selectedElement!=null){
             transform.GetChild(0).gameObject.SetActive(true);
 
-            //if(ce!=null){name=ce.elementName;artist=GameAssets.GetArtist<ceType>(ce.elementName);}
+            //if(ce!=null){name=ce.elementName;artist=AssetsManager.GetArtist<ceType>(ce.elementName);}
             if(selectedElement.GetComponent<CstmzElement>()!=null)ce=selectedElement.GetComponent<CstmzElement>();
             if(ce!=null){
-                name=GameAssets.instance.GetDisplayName(CutUnderscore(ce.elementName),ce.elementType);
-                artist=GameAssets.instance.GetArtist(CutUnderscore(ce.elementName),ce.elementType);
-                color=GameAssets.instance.GetRarityColor(ce.rarity);
+                name=AssetsManager.instance.GetDisplayName(CutUnderscore(ce.elementName),ce.elementType);
+                artist=AssetsManager.instance.GetArtist(CutUnderscore(ce.elementName),ce.elementType);
+                color=AssetsManager.instance.GetRarityColor(ce.rarity);
             }
 
             if(selectedElement.GetComponent<CstmzTypeElement>()!=null)cte=selectedElement.GetComponent<CstmzTypeElement>();
             if(cte!=null){
-                name=GameAssets.instance.GetDisplayName(CutUnderscore(cte.elementName),cte.elementType);
-                artist=GameAssets.instance.GetArtist(CutUnderscore(cte.elementName),cte.elementType);
-                color=GameAssets.instance.GetRarityColor(cte.rarity);
+                name=AssetsManager.instance.GetDisplayName(CutUnderscore(cte.elementName),cte.elementType);
+                artist=AssetsManager.instance.GetArtist(CutUnderscore(cte.elementName),cte.elementType);
+                color=AssetsManager.instance.GetRarityColor(cte.rarity);
             }
         }else{transform.GetChild(0).gameObject.SetActive(false);}
 

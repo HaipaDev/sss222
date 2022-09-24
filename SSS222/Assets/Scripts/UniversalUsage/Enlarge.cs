@@ -6,7 +6,7 @@ public class Enlarge : MonoBehaviour{
     [SerializeField] float speed=0.5f;
     [SerializeField] float limit=10f;
     void Update(){
-        if(!GameSession.GlobalTimeIsPaused){
+        if(!GameManager.GlobalTimeIsPaused){
             if(transform.localScale.x<limit && transform.localScale.y<limit){
                 var step=speed*Time.deltaTime;
                 var scaleChange=step+=speed;

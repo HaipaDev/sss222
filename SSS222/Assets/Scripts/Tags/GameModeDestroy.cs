@@ -7,7 +7,7 @@ public class GameModeDestroy : MonoBehaviour{
     [SerializeField] string gamemodeName;
     void Start(){
         //yield return new WaitForSecondsRealtime(Random.Range(0.1f,0.25f));//Prevent overload crash?
-        if(!reverse&&GameSession.instance.CheckGamemodeSelected(gamemodeName))Destroy(gameObject);
-        if(reverse&&!GameSession.instance.CheckGamemodeSelected(gamemodeName))Destroy(gameObject);
+        if(!reverse&&GameManager.instance.CheckGamemodeSelected(gamemodeName))Destroy(gameObject);
+        if(reverse&&!GameManager.instance.CheckGamemodeSelected(gamemodeName))Destroy(gameObject);
     }
 }

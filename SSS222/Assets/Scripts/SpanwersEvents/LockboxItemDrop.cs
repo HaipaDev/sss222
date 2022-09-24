@@ -6,7 +6,7 @@ public class LockboxItemDrop : MonoBehaviour{
     public string name;
     void Start(){
         if(name!=""){
-            var lb=GameAssets.instance.lockboxes.Find(x=>x.name==name);
+            var lb=AssetsManager.instance.lockboxes.Find(x=>x.name==name);
             GetComponent<SpriteRenderer>().sprite=lb.icon;
         }
     }

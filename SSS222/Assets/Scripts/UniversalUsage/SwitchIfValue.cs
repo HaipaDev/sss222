@@ -28,10 +28,10 @@ public class SwitchIfValue : MonoBehaviour{
                     value=FindObjectOfType<PlayerHolobody>().GetTimeLeft();
                 }else{DisableIfNotPresent();}
             }
-            else if(valueName=="isBossZone"){value=GameAssets.BoolToInt(FindObjectOfType<BossAI>()!=null);}
+            else if(valueName=="isBossZone"){value=AssetsManager.BoolToInt(FindObjectOfType<BossAI>()!=null);}
             else if(valueName=="breakEncounter"){
                 if(BreakEncounter.instance!=null){
-                    value=GameAssets.BoolToInt(BreakEncounter.instance.calledBreak);
+                    value=AssetsManager.BoolToInt(BreakEncounter.instance.calledBreak);
                 }else{DisableIfNotPresent();}
             }
 

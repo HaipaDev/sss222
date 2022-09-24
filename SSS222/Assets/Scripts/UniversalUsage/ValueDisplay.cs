@@ -22,8 +22,8 @@ public class ValueDisplay : MonoBehaviour{
     void Update(){if(!onlyOnEnable)ChangeText();}
 
     void ChangeText(){      string _txt="";
-    #region//GameSession
-        if(GameSession.instance!=null){     var gs=GameSession.instance;
+    #region//GameManager
+        if(GameManager.instance!=null){     var gs=GameManager.instance;
             if(value=="score") _txt=gs.score.ToString();
             else if(value=="coins") _txt=gs.coins.ToString();
             else if(value=="cores") _txt=gs.cores.ToString();
@@ -33,9 +33,9 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="buildVersion") _txt=gs.buildVersion.ToString();
             else if(value=="buildVersion-Menu") _txt="build "+gs.buildVersion.ToString();
             else if(value=="buildVersion-Menu") _txt="build "+gs.buildVersion.ToString();
-            else if(value=="playtime") _txt=gs.GetGameSessionTimeFormat();
+            else if(value=="playtime") _txt=gs.GetGameManagerTimeFormat();
             else if(value=="postgameInfo"){
-                if(gs.gamemodeSelected!=-1){_txt=gs.GetGameSessionTimeFormat();}
+                if(gs.gamemodeSelected!=-1){_txt=gs.GetGameManagerTimeFormat();}
                 else{
                     if(FindObjectOfType<BossAI>()==null){_txt=(Mathf.RoundToInt(gs.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";}
                     else{var b=FindObjectOfType<BossAI>();_txt=System.Math.Round(((b.GetComponent<Enemy>().health/b.GetComponent<Enemy>().healthMax)*100f),2).ToString()+"%";}
@@ -61,7 +61,7 @@ public class ValueDisplay : MonoBehaviour{
     #region//Player
         if(Player.instance!=null){      var p=Player.instance;
             if(value=="hpOffMax"){
-                if(GameSession.instance.CheckGamemodeSelected("Classic")||p.health<=5){
+                if(GameManager.instance.CheckGamemodeSelected("Classic")||p.health<=5){
                     _txt=System.Math.Round(p.health,1).ToString()+"/"+p.healthMax.ToString();}//Round to .1
                 else _txt=Mathf.RoundToInt(p.health).ToString()+"/"+p.healthMax.ToString();
             }
@@ -113,7 +113,7 @@ public class ValueDisplay : MonoBehaviour{
                 }
 
                 if(value=="accumulatedCelestPoints"){
-                    if(!GameSession.instance.CheckGamemodeSelected("Adventure")){_txt=pmodules.accumulatedCelestPoints.ToString();}
+                    if(!GameManager.instance.CheckGamemodeSelected("Adventure")){_txt=pmodules.accumulatedCelestPoints.ToString();}
                     else{_txt=pmodules.shipLvlFraction.ToString();}
                 }
                 if(value=="bodyUpgraded"){_txt="Lvl "+pmodules.bodyUpgraded.ToString();}
@@ -158,11 +158,11 @@ public class ValueDisplay : MonoBehaviour{
         if(GameRules.instance!=null){   var gr=GameRules.instance;
             if(value=="cfgName") _txt=gr.cfgName;
             else if(value=="cfgDesc") _txt=gr.cfgDesc;
-            else if(value=="scoreDisplay"){if(GameSession.instance!=null){
-                    if(gr.scoreDisplay==scoreDisplay.score)_txt=GameSession.instance.score.ToString();
-                    else if(gr.scoreDisplay==scoreDisplay.sessionTime)_txt=GameSession.instance.GetGameSessionTimeFormat().ToString();
-                    else if(gr.scoreDisplay==scoreDisplay.timeLeft)_txt=GameSession.instance.GetGameTimeLeftFormat().ToString();
-                    else if(gr.scoreDisplay==scoreDisplay.sessionTimeAsDistance)_txt=(Mathf.RoundToInt(GameSession.instance.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";
+            else if(value=="scoreDisplay"){if(GameManager.instance!=null){
+                    if(gr.scoreDisplay==scoreDisplay.score)_txt=GameManager.instance.score.ToString();
+                    else if(gr.scoreDisplay==scoreDisplay.sessionTime)_txt=GameManager.instance.GetGameManagerTimeFormat().ToString();
+                    else if(gr.scoreDisplay==scoreDisplay.timeLeft)_txt=GameManager.instance.GetGameTimeLeftFormat().ToString();
+                    else if(gr.scoreDisplay==scoreDisplay.sessionTimeAsDistance)_txt=(Mathf.RoundToInt(GameManager.instance.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";
                     
                     else if(gr.scoreDisplay==scoreDisplay.bossHealth){
                         if(FindObjectOfType<BossAI>()!=null){

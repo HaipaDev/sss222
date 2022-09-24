@@ -68,27 +68,27 @@ public class Goblin : MonoBehaviour{
             if(dropValues.Count>=ld.Count){
             if(dropValues[i]>=101){
                 var amnt=Random.Range((int)ld[i].ammount.x,(int)ld[i].ammount.y);
-                if(amnt==1)GameAssets.instance.Make(st,transform.position);
-                else{GameAssets.instance.MakeSpread(st,transform.position,amnt);}
+                if(amnt==1)AssetsManager.instance.Make(st,transform.position);
+                else{AssetsManager.instance.MakeSpread(st,transform.position,amnt);}
             }}
         }
     }
 
     void OnTriggerEnter2D(Collider2D other){
         if(bossForm!=true){
-            if(other.CompareTag("Collectibles")&&(!other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)&&!other.gameObject.name.Contains(GameAssets.instance.Get("Starshard").name))){
+            if(other.CompareTag("Collectibles")&&(!other.gameObject.name.Contains(AssetsManager.instance.Get("EnBall").name)&&!other.gameObject.name.Contains(AssetsManager.instance.Get("Coin").name)&&!other.gameObject.name.Contains(AssetsManager.instance.Get("PowerCore").name)&&!other.gameObject.name.Contains(AssetsManager.instance.Get("Starshard").name))){
                 AudioManager.instance.Play("GoblinSteal");
                 powerups.Add(other.gameObject);
                 other.gameObject.SetActive(false);
                 questionMarkObj.SetActive(false);
                 confused=false;
-            }else if(other.gameObject.name.Contains(GameAssets.instance.Get("EnBall").name)||other.gameObject.name.Contains(GameAssets.instance.Get("Coin").name)){
+            }else if(other.gameObject.name.Contains(AssetsManager.instance.Get("EnBall").name)||other.gameObject.name.Contains(AssetsManager.instance.Get("Coin").name)){
                 if(confused==false){
                     AudioManager.instance.Play("GoblinConfused");
                     questionMarkObj.SetActive(true);
                     confused=true;
                 }
-            }else if(other.gameObject.name.Contains(GameAssets.instance.Get("PowerCore").name)||other.gameObject.name.Contains(GameAssets.instance.Get("Starshard").name)){//Transform
+            }else if(other.gameObject.name.Contains(AssetsManager.instance.Get("PowerCore").name)||other.gameObject.name.Contains(AssetsManager.instance.Get("Starshard").name)){//Transform
                 powerups.Add(other.gameObject);
                 other.gameObject.SetActive(false);
                 GoblinTransform();
@@ -100,7 +100,7 @@ public class Goblin : MonoBehaviour{
         bossForm=true;
         GetComponent<Follow>().enabled=false;
         if(GetComponent<TrailVFX>().trailObj!=null){Destroy(GetComponent<TrailVFX>().trailObj);}GetComponent<TrailVFX>().enabled=false;
-        GameAssets.instance.VFX(transformVfxAssetName,transform.position);
+        AssetsManager.instance.VFX(transformVfxAssetName,transform.position);
         confused=false;Destroy(transform.GetChild(0).gameObject);
         Enemy en=GetComponent<Enemy>();
         en.spr=bossSprite;
@@ -111,7 +111,7 @@ public class Goblin : MonoBehaviour{
         AudioManager.instance.Play("GoblinTransform");
     }
     void BossAI(){
-        if(!GameSession.GlobalTimeIsPaused){
+        if(!GameManager.GlobalTimeIsPaused){
             float step=vspeed*Time.timeScale;
             if(!moveDown&&pos.y<yMax)pos.y+=step;
             if(pos.y>=yMax)moveDown=true;

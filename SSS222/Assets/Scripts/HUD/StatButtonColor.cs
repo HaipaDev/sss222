@@ -11,14 +11,14 @@ public class StatButtonColor : MonoBehaviour{
     TMPro.TextMeshProUGUI txt;
 
     UpgradeMenu upgradeMenu;
-    GameSession gameSession;
+    GameManager GameManager;
     
     void Start(){
         //img=GetComponent<Image>();
         bt=GetComponent<Button>();
         txt=GetComponent<TMPro.TextMeshProUGUI>();
         upgradeMenu=FindObjectOfType<UpgradeMenu>();
-        gameSession=FindObjectOfType<GameSession>();
+        GameManager=FindObjectOfType<GameManager>();
     }
 
     void Update(){
@@ -40,7 +40,7 @@ public class StatButtonColor : MonoBehaviour{
             var go=bt.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             go.color=Color.red;
             }
-        /*}else if(gameSession.cores==){
+        /*}else if(GameManager.cores==){
             if(bt!=null){var co=bt.colors;
             co.normalColor=Color.red;
             bt.colors=co;

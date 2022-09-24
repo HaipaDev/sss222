@@ -18,7 +18,7 @@ public class LunarShield : MonoBehaviour{
     void Update(){
         if(_colliDelay>0){_colliDelay-=Time.deltaTime;}
         float rotStep=rotSpeed*Time.deltaTime;
-        if(!GameSession.GlobalTimeIsPaused)transform.Rotate(new Vector3(0,0,rotSpeed));
+        if(!GameManager.GlobalTimeIsPaused)transform.Rotate(new Vector3(0,0,rotSpeed));
         
         if(transform.childCount!=fragmentsStart){
             for(var i=transform.childCount;i>fragmentsStart;i--){

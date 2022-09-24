@@ -27,7 +27,7 @@ public class HLaser : MonoBehaviour{
         transform.GetChild(stage).gameObject.SetActive(true);
         if(stage==0){timer=timerWarn;}
     }
-    void Update(){  if(!GameSession.GlobalTimeIsPaused){
+    void Update(){  if(!GameManager.GlobalTimeIsPaused){
         if(timer>0)timer-=Time.deltaTime;
         if(timer<=0&&timer>-4){
             DisableAllChildren();

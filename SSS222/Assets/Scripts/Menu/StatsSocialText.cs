@@ -14,7 +14,7 @@ public class StatsSocialText : MonoBehaviour{
         if(ddvalue=="Total"){
             txt.text=
             "<color=grey>Score Total: </color>"+GetStatTot("scoreTotal")+"\n"
-            +"<color=grey>Playtime: </color>"+GameSession.FormatTimeWithHours(int.Parse(GetStatTot("playtime")))+"\n"
+            +"<color=grey>Playtime: </color>"+GameManager.FormatTimeWithHours(int.Parse(GetStatTot("playtime")))+"\n"
             +"<color=grey>Deaths: </color>"+GetStatTot("deaths")+"\n"
             +"<color=grey>Powerups: </color>"+GetStatTot("powerups")+"\n"
             +"<color=grey>Kills Total: </color>"+GetStatTot("killsTotal")+"\n"
@@ -24,13 +24,13 @@ public class StatsSocialText : MonoBehaviour{
             +"<color=grey>Kills Comets: </color>"+GetStatTot("killsComets")+"\n"
             +"<color=grey>Shots Total: </color>"+GetStatTot("shotsTotal")+"\n";
         }else if(ddvalue.Contains("Sandbox")){
-            txt.text="<color=grey>Time spent: </color>"+GameSession.FormatTimeWithHours(StatsAchievsManager.instance.sandboxTime)+"\n";
+            txt.text="<color=grey>Time spent: </color>"+GameManager.FormatTimeWithHours(StatsAchievsManager.instance.sandboxTime)+"\n";
         }else{
             txt.text=
-            "<color=grey>Highscore: </color>"+GameSession.instance.GetHighscoreByName(ddvalue)+"\n"
+            "<color=grey>Highscore: </color>"+GameManager.instance.GetHighscoreByName(ddvalue)+"\n"
             +"<color=grey>Score Total: </color>"+GetStatGM("scoreTotal")+"\n"
-            +"<color=grey>Longest Session: </color>"+GameSession.FormatTimeWithHours(int.Parse(GetStatGM("longestSession")))+"\n"
-            +"<color=grey>Playtime: </color>"+GameSession.FormatTimeWithHours(int.Parse(GetStatGM("playtime")))+"\n"
+            +"<color=grey>Longest Session: </color>"+GameManager.FormatTimeWithHours(int.Parse(GetStatGM("longestSession")))+"\n"
+            +"<color=grey>Playtime: </color>"+GameManager.FormatTimeWithHours(int.Parse(GetStatGM("playtime")))+"\n"
             +"<color=grey>Deaths: </color>"+GetStatGM("deaths")+"\n"
             +"<color=grey>Powerups: </color>"+GetStatGM("powerups")+"\n"
             +"<color=grey>Kills Total: </color>"+GetStatGM("killsTotal")+"\n"

@@ -14,19 +14,19 @@ public class GameModeDropdown : MonoBehaviour{
         dd=GetComponent<TMP_Dropdown>();
         
         List<OptionData> options=new List<OptionData>();
-        for(var i=0;i<GameCreator.instance.gamerulesetsPrefabs.Length;i++){
+        for(var i=0;i<CoreSetup.instance.gamerulesetsPrefabs.Length;i++){
             if(skip.Count==0){
-                options.Add(new OptionData(GameCreator.instance.gamerulesetsPrefabs[i].cfgName,dd.itemImage.sprite));
-            }else{for(var j=0;j<skip.Count;j++){if(!GameCreator.instance.gamerulesetsPrefabs[i].cfgName.Contains(skip[j])){
-                    options.Add(new OptionData(GameCreator.instance.gamerulesetsPrefabs[i].cfgName,dd.itemImage.sprite));
+                options.Add(new OptionData(CoreSetup.instance.gamerulesetsPrefabs[i].cfgName,dd.itemImage.sprite));
+            }else{for(var j=0;j<skip.Count;j++){if(!CoreSetup.instance.gamerulesetsPrefabs[i].cfgName.Contains(skip[j])){
+                    options.Add(new OptionData(CoreSetup.instance.gamerulesetsPrefabs[i].cfgName,dd.itemImage.sprite));
             }}}
         }
         dd.ClearOptions();
         dd.AddOptions(options);
-        dd.value=dd.options.FindIndex(d=>d.text.Contains(GameSession.instance.GetCurrentGamemodeName()));//GameSession.instance.GetGamemodeID(dd.options[dd.value].text);
+        dd.value=dd.options.FindIndex(d=>d.text.Contains(GameManager.instance.GetCurrentGamemodeName()));//GameManager.instance.GetGamemodeID(dd.options[dd.value].text);
     }
     public void SetGamemode(){
-        GameSession.instance.SetGamemodeSelectedStr(dd.options[dd.value].text);
+        GameManager.instance.SetGamemodeSelectedStr(dd.options[dd.value].text);
         if(FindObjectOfType<DisplayLeaderboard>()!=null){FindObjectOfType<DisplayLeaderboard>().DisplayCurrentUserHighscore();}
     }
     public void SetSandboxPreset(){if(FindObjectOfType<SandboxCanvas>()!=null)FindObjectOfType<SandboxCanvas>().SetPreset(dd.options[dd.value].text);}

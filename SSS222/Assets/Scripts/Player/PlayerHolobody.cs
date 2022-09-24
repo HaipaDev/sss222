@@ -10,7 +10,7 @@ public class PlayerHolobody : MonoBehaviour{
     [DisableInEditorMode][SerializeField]float timeLeft=-4;
     void Update(){
         if(Player.instance!=null){
-            if(timeLeft>0&&GameSession.instance._noBreak()){timeLeft-=Time.deltaTime;}
+            if(timeLeft>0&&GameManager.instance._noBreak()){timeLeft-=Time.deltaTime;}
             if(timeLeft<=timeToUncover&&timeLeft!=-4){Switch(true,true);}
         }
     }

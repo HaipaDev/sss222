@@ -24,7 +24,7 @@ public class EnShip : MonoBehaviour{
         posY=new Vector2(transform.position.x,transform.position.y-distY);
     }
 
-    void Update(){  if(!GameSession.GlobalTimeIsPaused&&Player.instance!=null){
+    void Update(){  if(!GameManager.GlobalTimeIsPaused&&Player.instance!=null){
         float stepY=vspeed*Time.deltaTime;
         float stepX=speedFollow*Time.deltaTime;
         playerPosX=new Vector2(Player.instance.transform.position.x,transform.position.y);

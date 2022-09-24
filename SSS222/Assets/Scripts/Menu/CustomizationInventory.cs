@@ -58,13 +58,13 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         if(String.IsNullOrEmpty(deathFxName)||GetDeathFx(deathFxName)==null||!_isDeathFxUnlocked(deathFxName)){deathFxName="def";}
         if(String.IsNullOrEmpty(musicName)||GetMusic(musicName)==null||!_isMusicUnlocked(musicName)){musicName=CstmzMusic._cstmzMusicDef;}
         skinName=SaveSerial.instance.playerData.skinName;
-        SetCategory(GameAssets.instance.skins.Find(x=>x.name.Contains(GetSkinName(SaveSerial.instance.playerData.skinName))).category);
+        SetCategory(AssetsManager.instance.skins.Find(x=>x.name.Contains(GetSkinName(SaveSerial.instance.playerData.skinName))).category);
 
-        foreach(CstmzSkin s in GameAssets.instance.skins){if(s.name!="def"&&s.rarity==CstmzRarity.def)UnlockSkin(s.name);}
-        foreach(CstmzTrail t in GameAssets.instance.trails){if(t.name!="def"&&t.rarity==CstmzRarity.def)UnlockTrail(t.name);}
-        foreach(CstmzFlares f in GameAssets.instance.flares){if(f.name!="def"&&f.rarity==CstmzRarity.def)UnlockFlares(f.name);}
-        foreach(CstmzDeathFx d in GameAssets.instance.deathFxs){if(d.name!="def"&&d.rarity==CstmzRarity.def)UnlockDeathFx(d.name);}
-        foreach(CstmzMusic m in GameAssets.instance.musics){if(m.name!=CstmzMusic._cstmzMusicDef&&m.rarity==CstmzRarity.def)UnlockMusic(m.name);}
+        foreach(CstmzSkin s in AssetsManager.instance.skins){if(s.name!="def"&&s.rarity==CstmzRarity.def)UnlockSkin(s.name);}
+        foreach(CstmzTrail t in AssetsManager.instance.trails){if(t.name!="def"&&t.rarity==CstmzRarity.def)UnlockTrail(t.name);}
+        foreach(CstmzFlares f in AssetsManager.instance.flares){if(f.name!="def"&&f.rarity==CstmzRarity.def)UnlockFlares(f.name);}
+        foreach(CstmzDeathFx d in AssetsManager.instance.deathFxs){if(d.name!="def"&&d.rarity==CstmzRarity.def)UnlockDeathFx(d.name);}
+        foreach(CstmzMusic m in AssetsManager.instance.musics){if(m.name!=CstmzMusic._cstmzMusicDef&&m.rarity==CstmzRarity.def)UnlockMusic(m.name);}
 
         float[] hsvArr=new float[3]{0,1,1};
         overlayColor = SaveSerial.instance.playerData.overlayColor;
@@ -91,7 +91,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         OpenCustomizationPanel();
         HighlightSelectedType();
 
-        foreach(CstmzLockbox lb in GameAssets.instance.lockboxes){if(!SaveSerial.instance.playerData.lockboxesInventory.Exists(x=>x.name==lb.name)){SaveSerial.instance.playerData.lockboxesInventory.Add(new LockboxCount{name=lb.name,count=0});}}
+        foreach(CstmzLockbox lb in AssetsManager.instance.lockboxes){if(!SaveSerial.instance.playerData.lockboxesInventory.Exists(x=>x.name==lb.name)){SaveSerial.instance.playerData.lockboxesInventory.Add(new LockboxCount{name=lb.name,count=0});}}
     }
     //void OnDestroy(){DestroyImmediate(SsliderIMG.material);}
     //void OnDisable(){DestroyImmediate(SsliderIMG.material);}
@@ -140,26 +140,26 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public void CloseAllPanels(){customizationPanel.SetActive(false);lockboxesPanel.SetActive(false);lockboxOpeningPanel.SetActive(false);}
     public void OpenLockbox(string name){_lockboxSelected=name;StartCoroutine(OpenLockboxI());}
     void PreLockboxOpen(){
-        lockboxIcon.sprite=GameAssets.instance.lockboxes.Find(x=>x.name==_lockboxSelected).icon;
+        lockboxIcon.sprite=AssetsManager.instance.lockboxes.Find(x=>x.name==_lockboxSelected).icon;
         cosmeticDropParent.PresetCosmeticDrop();
     }
     IEnumerator OpenLockboxI(){
         AudioManager.instance.Play("LockboxOpen");
         yield return new WaitForSeconds(0.3f);
-        var lb=GameAssets.instance.lockboxes.Find(x=>x.name==_lockboxSelected);
+        var lb=AssetsManager.instance.lockboxes.Find(x=>x.name==_lockboxSelected);
         lockboxIcon.sprite=lb.iconOpen;
         SetDroppedItem();
         _itemDropped=true;
     }
     public void SetDroppedItem(){
-        var lb=GameAssets.instance.lockboxes.Find(x=>x.name==_lockboxSelected);
+        var lb=AssetsManager.instance.lockboxes.Find(x=>x.name==_lockboxSelected);
         LootTableCstmz lt=gameObject.AddComponent<LootTableCstmz>();
         lt.itemList=new List<LootTableEntryCstmz>();
-        foreach(CstmzSkin s in GameAssets.instance.skins){if(s.category==lb.category&&s.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=s.name,cstmzType=CstmzType.skin,dropChance=lb.skinDrops.Find(x=>x.rarity==s.rarity).chance});}}
-        foreach(CstmzTrail t in GameAssets.instance.trails){if(t.category==lb.category&&t.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=t.name,cstmzType=CstmzType.trail,dropChance=lb.trailDrops.Find(x=>x.rarity==t.rarity).chance});}}
-        foreach(CstmzFlares f in GameAssets.instance.flares){if(f.category==lb.category&&f.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=f.name,cstmzType=CstmzType.flares,dropChance=lb.flareDrops.Find(x=>x.rarity==f.rarity).chance});}}
-        foreach(CstmzDeathFx d in GameAssets.instance.deathFxs){if(d.category==lb.category&&d.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=d.name,cstmzType=CstmzType.deathFx,dropChance=lb.deathFxDrops.Find(x=>x.rarity==d.rarity).chance});}}
-        foreach(CstmzMusic m in GameAssets.instance.musics){if(m.category==lb.category&&m.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=m.name,cstmzType=CstmzType.music,dropChance=lb.musicDrops.Find(x=>x.rarity==m.rarity).chance});}}
+        foreach(CstmzSkin s in AssetsManager.instance.skins){if(s.category==lb.category&&s.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=s.name,cstmzType=CstmzType.skin,dropChance=lb.skinDrops.Find(x=>x.rarity==s.rarity).chance});}}
+        foreach(CstmzTrail t in AssetsManager.instance.trails){if(t.category==lb.category&&t.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=t.name,cstmzType=CstmzType.trail,dropChance=lb.trailDrops.Find(x=>x.rarity==t.rarity).chance});}}
+        foreach(CstmzFlares f in AssetsManager.instance.flares){if(f.category==lb.category&&f.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=f.name,cstmzType=CstmzType.flares,dropChance=lb.flareDrops.Find(x=>x.rarity==f.rarity).chance});}}
+        foreach(CstmzDeathFx d in AssetsManager.instance.deathFxs){if(d.category==lb.category&&d.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=d.name,cstmzType=CstmzType.deathFx,dropChance=lb.deathFxDrops.Find(x=>x.rarity==d.rarity).chance});}}
+        foreach(CstmzMusic m in AssetsManager.instance.musics){if(m.category==lb.category&&m.rarity!=0){lt.itemList.Add(new LootTableEntryCstmz{lootItem=m.name,cstmzType=CstmzType.music,dropChance=lb.musicDrops.Find(x=>x.rarity==m.rarity).chance});}}
         lt.SumUp();
 
         KeyValuePair<string,CstmzType> i=new KeyValuePair<string,CstmzType>("",0);
@@ -216,7 +216,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public void QuitOpeningLockbox(){if(_itemDropped){OpenLockboxesPanel();_itemDropped=false;cosmeticDropParent.Stop();}}
     public void CraftCelestStar(){
         if(SaveSerial.instance.playerData.starshards>=dynamCelestStar_shardCost){
-            if(GameAssets.CheckChance(dynamCelestStar_craftChance)){
+            if(AssetsManager.CheckChance(dynamCelestStar_craftChance)){
                 SaveSerial.instance.playerData.dynamCelestStars++;
                 AudioManager.instance.Play("StarCraft");
             }else{AudioManager.instance.Play("StarCraft-Fail");}
@@ -232,7 +232,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     void DeleteAllElements(){foreach(Transform t in elementsListContent){Destroy(t.gameObject);}}
     void CreateAllElements(){
         if(typeSelected==CstmzType.skin){
-            var currentCategorySkins=GameAssets.instance.skins.FindAll(x=>x.category==categorySelected);
+            var currentCategorySkins=AssetsManager.instance.skins.FindAll(x=>x.category==categorySelected);
             foreach(CstmzSkin ge in currentCategorySkins){
                 var go=Instantiate(cstmzElementPrefab,elementsListContent);
                 go.name="SkinElement_"+ge.name;
@@ -244,7 +244,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 ce.overlayImg.GetComponent<Image>().sprite=ge.sprOverlay;
             }
         }else if(typeSelected==CstmzType.trail){
-            var currentCategoryTrails=GameAssets.instance.trails.FindAll(x=>x.category==categorySelected);
+            var currentCategoryTrails=AssetsManager.instance.trails.FindAll(x=>x.category==categorySelected);
             foreach(CstmzTrail ge in currentCategoryTrails){
                 var go=Instantiate(cstmzElementPrefab,elementsListContent);
                 go.name="TrailElement_"+ge.name;
@@ -255,10 +255,10 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 Destroy(ce.overlayImg);
                 ce.elementPv.GetComponent<Image>().sprite=null;ce.elementPv.GetComponent<Image>().color=new Color(1,1,1,1f/255f);
                 GameObject goPt=Instantiate(ge.part,ce.elementPv.transform);
-                GameAssets.instance.TransformIntoUIParticle(goPt);
+                AssetsManager.instance.TransformIntoUIParticle(goPt);
             }
         }else if(typeSelected==CstmzType.flares){
-            var currentCategoryFlares=GameAssets.instance.flares.FindAll(x=>x.category==categorySelected);
+            var currentCategoryFlares=AssetsManager.instance.flares.FindAll(x=>x.category==categorySelected);
             foreach(CstmzFlares ge in currentCategoryFlares){
                 var go=Instantiate(cstmzElementPrefab,elementsListContent);
                 go.name="FlaresElement_"+ge.name;
@@ -270,12 +270,12 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 ce.elementPv.GetComponent<Image>().sprite=null;ce.elementPv.GetComponent<Image>().color=new Color(1,1,1,1f/255f);
                 foreach(Transform t in ce.elementPv.transform){Destroy(t.gameObject);}
                 GameObject goPt=Instantiate(GetFlareVFX(ge.name),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
-                GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
+                AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1);
                 goPt=Instantiate(GetFlareVFX(ge.name),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
-                GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
+                AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1);
             }
         }else if(typeSelected==CstmzType.deathFx){
-            var currentCategoryDeathFxs=GameAssets.instance.deathFxs.FindAll(x=>x.category==categorySelected);
+            var currentCategoryDeathFxs=AssetsManager.instance.deathFxs.FindAll(x=>x.category==categorySelected);
             foreach(CstmzDeathFx ge in currentCategoryDeathFxs){
                 var go=Instantiate(cstmzElementPrefab,elementsListContent);
                 go.name="DeathFxElement_"+ge.name;
@@ -286,10 +286,10 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 Destroy(ce.overlayImg);
                 ce.elementPv.GetComponent<Image>().sprite=null;ce.elementPv.GetComponent<Image>().color=new Color(1,1,1,1f/255f);
                 GameObject goPt=Instantiate(ge.obj,go.transform);
-                GameAssets.instance.TransformIntoUIParticle(goPt,0,-1,true);
+                AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1,true);
             }
         }else if(typeSelected==CstmzType.music){
-            var currentCategoryMusic=GameAssets.instance.musics.FindAll(x=>x.category==categorySelected);
+            var currentCategoryMusic=AssetsManager.instance.musics.FindAll(x=>x.category==categorySelected);
             foreach(CstmzMusic ge in currentCategoryMusic){
                 var go=Instantiate(cstmzElementPrefab,elementsListContent);
                 go.name="MusicElement_"+ge.name;
@@ -344,19 +344,19 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
             ce.elementPv.GetComponent<Image>().sprite=null;ce.elementPv.GetComponent<Image>().color=new Color(1,1,1,1f/255f);
             for(var i=0;i<ce.elementPv.transform.childCount;i++){Destroy(ce.elementPv.transform.GetChild(i).gameObject);}
             GameObject goPt=Instantiate(GetTrail(trailName).part,ce.elementPv.transform);
-            GameAssets.instance.TransformIntoUIParticle(goPt);
+            AssetsManager.instance.TransformIntoUIParticle(goPt);
         }else if(ce.elementType==CstmzType.flares){
             Destroy(ce.overlayImg);
             for(var i=0;i<ce.elementPv.transform.childCount;i++){Destroy(ce.elementPv.transform.GetChild(i).gameObject);}
             GameObject goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
-            GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
+            AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1);
             goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
-            GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
+            AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1);
         }else if(ce.elementType==CstmzType.deathFx){
             Destroy(ce.overlayImg);
             ce.elementPv.GetComponent<Image>().sprite=null;ce.elementPv.GetComponent<Image>().color=new Color(1,1,1,1f/255f);
             GameObject goPt=Instantiate(GetDeathFxObj(ce.elementName),ce.elementPv.transform);
-            GameAssets.instance.TransformIntoUIParticle(goPt,0,-1,true);
+            AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1,true);
         }if(ce.elementType==CstmzType.music){
             ce.elementPv.GetComponent<Image>().sprite=GetMusic(musicName).icon;
         }
@@ -435,7 +435,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public IEnumerator RecreateAllLockboxElementsI(){DeleteAllLockboxElements();yield return new WaitForSeconds(0.01f);CreateAllElements();}
     void DeleteAllLockboxElements(){foreach(Transform t in lockboxElementListContent){Destroy(t.gameObject);}}
     void CreateAllLockboxElements(){
-        foreach(CstmzLockbox lb in GameAssets.instance.lockboxes){
+        foreach(CstmzLockbox lb in AssetsManager.instance.lockboxes){
             var go=Instantiate(lockboxElementPrefab,lockboxElementListContent);
             go.name="LockboxElement_"+lb.name;
             LockboxElement le=go.GetComponent<LockboxElement>();
@@ -451,32 +451,32 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
             foreach(CstmzElement ce in elementsListContent.GetComponentsInChildren<CstmzElement>()){
                 if(ce.elementPv.transform.childCount==0){
                     GameObject goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
-                    GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
+                    AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1);
                     goPt=Instantiate(GetFlareVFX(ce.elementName),ce.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
-                    GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
+                    AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1);
                 }
             }
         }
         CstmzTypeElement typeFlares=Array.Find(typesListContent.GetComponentsInChildren<CstmzTypeElement>(),x=>x.elementType==CstmzType.flares);
         if(typeFlares.elementPv.transform.childCount==0){
             GameObject goPt=Instantiate(GetFlareVFX(flaresName),typeFlares.elementPv.transform);goPt.transform.localPosition=new Vector2(-44,0);
-            GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
+            AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1);
             goPt=Instantiate(GetFlareVFX(flaresName),typeFlares.elementPv.transform);goPt.transform.localPosition=new Vector2(44,0);
-            GameAssets.instance.TransformIntoUIParticle(goPt,0,-1);
+            AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1);
         }
 
         if(typeSelected==CstmzType.deathFx){
             foreach(CstmzElement ce in elementsListContent.GetComponentsInChildren<CstmzElement>()){
                 if(ce.elementPv.transform.childCount==0){
                     GameObject goPt=Instantiate(GetDeathFxObj(ce.elementName),ce.elementPv.transform);
-                    GameAssets.instance.TransformIntoUIParticle(goPt,0,-1,true);
+                    AssetsManager.instance.TransformIntoUIParticle(goPt,0,-1,true);
                 }
             }
         }
         CstmzTypeElement typeDeathFx=Array.Find(typesListContent.GetComponentsInChildren<CstmzTypeElement>(),x=>x.elementType==CstmzType.deathFx);
         if(typeDeathFx.elementPv.transform.childCount==0){
             var pt=Instantiate(GetDeathFxObj(deathFxName),typeDeathFx.elementPv.transform);
-            GameAssets.instance.TransformIntoUIParticle(pt,0,-1,true);
+            AssetsManager.instance.TransformIntoUIParticle(pt,0,-1,true);
         }
     }}
 
@@ -487,37 +487,37 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public void SetType(CstmzType type){if(typeSelected!=type){typeSelected=type;HighlightSelectedType();SetCategoryFromTypeElement();RecreateAllElements();CloseVariants();refreshTimer=0.04f;}}
 
     string GetSkinName(string str){string _str=str;if(skinName.Contains("_")){_str=skinName.Split('_')[0];}return _str;}
-    public CstmzSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
+    public CstmzSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return AssetsManager.instance.GetSkin(_str);}
     CstmzSkin GetSkinCurrent(){return GetSkin(skinName);}
-    int GetSkinID(string str){return GameAssets.instance.GetSkinID(str);}
-    CstmzSkin GetSkinByID(int i){return GameAssets.instance.GetSkinByID(i);}
+    int GetSkinID(string str){return AssetsManager.instance.GetSkinID(str);}
+    CstmzSkin GetSkinByID(int i){return AssetsManager.instance.GetSkinByID(i);}
     public Sprite GetSkinSprite(string str){return ShipCustomizationManager.instance.GetSkinSprite(str);}
     public Sprite GetOverlaySprite(string str){return ShipCustomizationManager.instance.GetOverlaySprite(str);}
-    CstmzSkinVariant GetSkinVariant(string str,int id){return GameAssets.instance.GetSkinVariant(str,id);}
+    CstmzSkinVariant GetSkinVariant(string str,int id){return AssetsManager.instance.GetSkinVariant(str,id);}
     public bool SkinHasVariants(string str){bool b=false;if(GetSkin(str).variants.Count>0){b=true;}return b;}
     public void SetSkin(string str){skinName=str;if(variantsPanel.activeSelf){variantsPanel.SetActive(false);colorSliders.SetActive(false);}HighlightSelectedElement();HighlightSelectedType();
         if(skinName!="def"){StatsAchievsManager.instance.Customized();}}
 
-    public CstmzTrail GetTrail(string str){return GameAssets.instance.GetTrail(str);}
+    public CstmzTrail GetTrail(string str){return AssetsManager.instance.GetTrail(str);}
     public void SetTrail(string str){trailName=str;HighlightSelectedElement();HighlightSelectedType();
         if(trailName!="def"){StatsAchievsManager.instance.Customized();}}
 
-    public CstmzFlares GetFlares(string str){return GameAssets.instance.GetFlares(str);}
+    public CstmzFlares GetFlares(string str){return AssetsManager.instance.GetFlares(str);}
     public GameObject GetFlareVFX(string str){GameObject go=null;
-        if(GameAssets.instance.GetFlares(str)!=null){go=GameAssets.instance.GetFlareRandom(str);}
+        if(AssetsManager.instance.GetFlares(str)!=null){go=AssetsManager.instance.GetFlareRandom(str);}
         return go;
     }
     public void SetFlares(string str){flaresName=str;HighlightSelectedElement();HighlightSelectedType();
         if(flaresName!="def"){StatsAchievsManager.instance.Customized();}}
 
-    public CstmzDeathFx GetDeathFx(string str){return GameAssets.instance.GetDeathFx(str);}
+    public CstmzDeathFx GetDeathFx(string str){return AssetsManager.instance.GetDeathFx(str);}
     public GameObject GetDeathFxObj(string str){GameObject go=null;
-        if(GameAssets.instance.GetDeathFx(str)!=null){go=GameAssets.instance.GetDeathFx(str).obj;}
+        if(AssetsManager.instance.GetDeathFx(str)!=null){go=AssetsManager.instance.GetDeathFx(str).obj;}
         return go;
     }
     public void SetDeathFx(string str){deathFxName=str;HighlightSelectedElement();HighlightSelectedType();}
-    public CstmzMusic GetMusic(string str){return GameAssets.instance.GetMusic(str);}
-    public void SetMusic(string str){musicName=str;if(Jukebox.instance==null){Instantiate(GameCreator.instance.GetJukeboxPrefab());}Jukebox.instance.SetMusic(GameAssets.instance.GetMusic(musicName).track,true);HighlightSelectedElement();HighlightSelectedType();}
+    public CstmzMusic GetMusic(string str){return AssetsManager.instance.GetMusic(str);}
+    public void SetMusic(string str){musicName=str;if(Jukebox.instance==null){Instantiate(CoreSetup.instance.GetJukeboxPrefab());}Jukebox.instance.SetMusic(AssetsManager.instance.GetMusic(musicName).track,true);HighlightSelectedElement();HighlightSelectedType();}
 
 
     public static bool _isSkinUnlocked(string name){return SaveSerial.instance.playerData.skinsUnlocked.Contains(name)||name=="def";}
@@ -526,27 +526,27 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public static bool _isDeathFxUnlocked(string name){return SaveSerial.instance.playerData.deathFxUnlocked.Contains(name)||name=="def";}
     public static bool _isMusicUnlocked(string name){return SaveSerial.instance.playerData.musicUnlocked.Contains(name)||name==CstmzMusic._cstmzMusicDef;}
     public static bool _allCategorySkinsUnlocked(CstmzCategory category){
-        var count=0;var _allCategoryItems=GameAssets.instance.skins.FindAll(x=>x.category==category);
+        var count=0;var _allCategoryItems=AssetsManager.instance.skins.FindAll(x=>x.category==category);
         foreach(CstmzSkin s in _allCategoryItems){if(SaveSerial.instance.playerData.skinsUnlocked.Contains(s.name))count++;}
         return count==_allCategoryItems.Count;
     }
     public static bool _allCategoryTrailsUnlocked(CstmzCategory category){
-        var count=0;var _allCategoryItems=GameAssets.instance.trails.FindAll(x=>x.category==category);
+        var count=0;var _allCategoryItems=AssetsManager.instance.trails.FindAll(x=>x.category==category);
         foreach(CstmzTrail t in _allCategoryItems){if(SaveSerial.instance.playerData.trailsUnlocked.Contains(t.name))count++;}
         return count==_allCategoryItems.Count;
     }
     public static bool _allCategoryFlaresUnlocked(CstmzCategory category){
-        var count=0;var _allCategoryItems=GameAssets.instance.flares.FindAll(x=>x.category==category);
+        var count=0;var _allCategoryItems=AssetsManager.instance.flares.FindAll(x=>x.category==category);
         foreach(CstmzFlares f in _allCategoryItems){if(SaveSerial.instance.playerData.flaresUnlocked.Contains(f.name))count++;}
         return count==_allCategoryItems.Count;
     }
     public static bool _allCategoryDeathFxUnlocked(CstmzCategory category){
-        var count=0;var _allCategoryItems=GameAssets.instance.deathFxs.FindAll(x=>x.category==category);
+        var count=0;var _allCategoryItems=AssetsManager.instance.deathFxs.FindAll(x=>x.category==category);
         foreach(CstmzDeathFx d in _allCategoryItems){if(SaveSerial.instance.playerData.deathFxUnlocked.Contains(d.name))count++;}
         return count==_allCategoryItems.Count;
     }
     public static bool _allCategoryMusicUnlocked(CstmzCategory category){
-        var count=0;var _allCategoryItems=GameAssets.instance.musics.FindAll(x=>x.category==category);
+        var count=0;var _allCategoryItems=AssetsManager.instance.musics.FindAll(x=>x.category==category);
         foreach(CstmzMusic m in _allCategoryItems){if(SaveSerial.instance.playerData.deathFxUnlocked.Contains(m.name))count++;}
         return count==_allCategoryItems.Count;
     }

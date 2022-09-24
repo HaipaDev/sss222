@@ -35,7 +35,7 @@ public class Follow : MonoBehaviour{
    }
 
     void Update(){
-    if(!GameSession.GlobalTimeIsPaused){
+    if(!GameManager.GlobalTimeIsPaused){
         if(target!=null){targetObj=GameObject.FindGameObjectWithTag(target.tag);}
         else{targetObj=GameObject.FindGameObjectWithTag(targetTag);}
 

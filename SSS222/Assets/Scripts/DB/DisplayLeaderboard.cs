@@ -30,13 +30,13 @@ public class DisplayLeaderboard : MonoBehaviour{
             if(SaveSerial.instance.hyperGamerLoginData.loggedIn){GSceneManager.instance.LoadScoreSubmitScene();}
             else{GSceneManager.instance.LoadLoginScene();}
         }else{if(SaveSerial.instance.hyperGamerLoginData.loggedIn){
-            if(score!=0){GameSession.instance.SetSelectedUsersDataName(SaveSerial.instance.hyperGamerLoginData.username);GSceneManager.instance.LoadScoreUsersDataScene();}
+            if(score!=0){GameManager.instance.SetSelectedUsersDataName(SaveSerial.instance.hyperGamerLoginData.username);GSceneManager.instance.LoadScoreUsersDataScene();}
             else{GSceneManager.instance.LoadLeaderboardsScene();}
         }
             else{GSceneManager.instance.LoadLoginScene();}
         }
     }
-    public void OpenScoreUsersData(){GameSession.instance.SetSelectedUsersDataName(username);GSceneManager.instance.LoadScoreUsersDataScene();}
+    public void OpenScoreUsersData(){GameManager.instance.SetSelectedUsersDataName(username);GSceneManager.instance.LoadScoreUsersDataScene();}
     public async void DisplayCurrentUserHighscore(){
         if(currentUser){
             int currentUserRank=0;
@@ -70,7 +70,7 @@ public class DisplayLeaderboard : MonoBehaviour{
             int currentUserRank=0;
             int currentUserScore=0;
 
-            Steamworks.Data.Leaderboard? leaderboard = await SteamUserStats.FindLeaderboardAsync(GameSession.instance.GetCurrentGamemodeName());
+            Steamworks.Data.Leaderboard? leaderboard = await SteamUserStats.FindLeaderboardAsync(GameManager.instance.GetCurrentGamemodeName());
             if(leaderboard.HasValue){
                 LeaderboardEntry[] scores=await leaderboard.Value.GetScoresAsync(100);
                 if(friends){scores=await leaderboard.Value.GetScoresFromFriendsAsync();}

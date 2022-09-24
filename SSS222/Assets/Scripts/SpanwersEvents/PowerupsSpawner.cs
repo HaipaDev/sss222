@@ -20,7 +20,7 @@ public class PowerupsSpawner : MonoBehaviour{
         if(x!=null)spawnReqsMono.instance.CheckSpawns(x,xt,this,"SpawnPowerup");
     }
     void Update(){
-        if(!GameSession.GlobalTimeIsPaused)if(GameSession.instance._noBreak())CheckSpawnReqs();
+        if(!GameManager.GlobalTimeIsPaused)if(GameManager.instance._noBreak())CheckSpawnReqs();
     }
     [Button("Spawn Powerup")][ContextMenu("Spawn Powerup")]public void SpawnPowerupCall(){StartCoroutine(SpawnPowerup());}
     IEnumerator SpawnPowerup(){
@@ -30,9 +30,9 @@ public class PowerupsSpawner : MonoBehaviour{
         if(lootTable!=null){
             lootItem=lootTable.GetItem();
             if(lootItem!=null){
-                if(!System.String.IsNullOrEmpty(lootItem.assetName)||GameAssets.instance.Get(lootTable.GetItem().assetName)==null){
+                if(!System.String.IsNullOrEmpty(lootItem.assetName)||AssetsManager.instance.Get(lootTable.GetItem().assetName)==null){
                     newPowerup=Instantiate(
-                        GameAssets.instance.Get(lootTable.GetItem().assetName),
+                        AssetsManager.instance.Get(lootTable.GetItem().assetName),
                         powerupsPos,
                         Quaternion.identity);
                     //Debug.Log("Powerup spawned: "+newPowerup.name);

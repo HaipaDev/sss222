@@ -21,7 +21,7 @@ public class GlareDevil : MonoBehaviour{
         timerBlind=timerBlindMax;
         path=GetComponent<PointPathing>();
     }
-    void Update(){  if(!GameSession.GlobalTimeIsPaused){
+    void Update(){  if(!GameManager.GlobalTimeIsPaused){
         if(path.waypointIndex==path.waypointsL.Count-1){GetComponent<SpriteRenderer>().flipX=false;transform.GetChild(0).position=new Vector3(transform.position.x+(-GetComponent<Glow>().offset.x),transform.position.y+GetComponent<Glow>().offset.y,0.01f);}
         if(path.waypointIndex==1){GetComponent<SpriteRenderer>().flipX=true;transform.GetChild(0).position=new Vector3(transform.position.x+GetComponent<Glow>().offset.x,transform.position.y+GetComponent<Glow>().offset.y,0.01f);}
         if(Player.instance!=null)if(Vector2.Distance(Player.instance.transform.position,transform.position)<radiusBlind){Blind();}

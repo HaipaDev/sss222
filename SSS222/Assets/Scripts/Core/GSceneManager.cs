@@ -13,14 +13,14 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
     void Awake(){if(GSceneManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}}
     void Start(){
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
-        //prevGameSpeed = GameSession.instance.gameSpeed;
+        //prevGameSpeed = GameManager.instance.gameSpeed;
     }
     void Update(){
         CheckESC();
         //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
         //transitioner=FindObjectOfType<Tag_Transition>().GetComponent<Animator>();
     }
-    public void LoadStartMenuLoader(){SceneManager.LoadScene("Menu");Instantiate(GameCreator.instance.GetJukeboxPrefab());Jukebox.instance.SetMusicToCstmzMusic();}
+    public void LoadStartMenuLoader(){SceneManager.LoadScene("Menu");Instantiate(CoreSetup.instance.GetJukeboxPrefab());Jukebox.instance.SetMusicToCstmzMusic();}
     public void LoadStartMenu(){
         SaveSerial.instance.Save();
         SaveSerial.instance.SaveLogin();
@@ -29,113 +29,113 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             SaveSerial.instance.SaveStats();
         }
         SceneManager.LoadScene("Menu");
-        GameSession.instance.ResetMusicPitch();if(GSceneManager.CheckScene("Menu"))GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;
+        GameManager.instance.ResetMusicPitch();if(GSceneManager.CheckScene("Menu"))GameManager.instance.speedChanged=false;GameManager.instance.gameSpeed=1f;
         Resources.UnloadUnusedAssets();
-        GameSession.instance.ResetTempSandboxSaveName();
+        GameManager.instance.ResetTempSandboxSaveName();
     }
     public void LoadStartMenuGame(){GSceneManager.instance.StartCoroutine(LoadStartMenuGameI());}
     IEnumerator LoadStartMenuGameI(){
         if(GSceneManager.CheckScene("Game")){
-            GameSession.instance.SaveHighscore();
-            if(GameSession.instance.gamemodeSelected==-1&&Player.instance!=null)GameSession.instance.SaveAdventure();
+            GameManager.instance.SaveHighscore();
+            if(GameManager.instance.gamemodeSelected==-1&&Player.instance!=null)GameManager.instance.SaveAdventure();
             yield return new WaitForSecondsRealtime(0.01f);
-            GameSession.instance.ResetScore();
-            GameSession.instance.ResetAfterAdventure();
+            GameManager.instance.ResetScore();
+            GameManager.instance.ResetAfterAdventure();
         }
         yield return new WaitForSecondsRealtime(0.05f);
         SaveSerial.instance.Save();
         SaveSerial.instance.SaveLogin();
         StatsAchievsManager.instance.SaveStats();
         SaveSerial.instance.SaveStats();
-        GameSession.instance.ResetMusicPitch();
+        GameManager.instance.ResetMusicPitch();
         if(Jukebox.instance!=null)Jukebox.instance.SetMusicToCstmzMusic();
-        if(GameSession.instance.gamemodeSelected!=0)SceneManager.LoadScene("Menu");
+        if(GameManager.instance.gamemodeSelected!=0)SceneManager.LoadScene("Menu");
         else{if(GameRules.instance!=null){if(GameRules.instance.cfgName.Contains("Sandbox")){SceneManager.LoadScene("SandboxMode");}}}
         yield return new WaitForSecondsRealtime(0.01f);
-        GameSession.instance.speedChanged=false;GameSession.instance.defaultGameSpeed=1f;GameSession.instance.gameSpeed=1f;
+        GameManager.instance.speedChanged=false;GameManager.instance.defaultGameSpeed=1f;GameManager.instance.gameSpeed=1f;
         Resources.UnloadUnusedAssets();
-        /*GameSession.instance.SetGamemodeSelected(0);*/
+        /*GameManager.instance.SetGamemodeSelected(0);*/
     }
     public void RestartGame(){GSceneManager.instance.StartCoroutine(GSceneManager.instance.RestartGameI());}
     IEnumerator RestartGameI(){
-        GameSession.instance.SaveHighscore();
-        //if(GameSession.instance.CheckGamemodeSelected("Adventure"))GameSession.instance.SaveAdventure();//not sure if Restart should save or not
+        GameManager.instance.SaveHighscore();
+        //if(GameManager.instance.CheckGamemodeSelected("Adventure"))GameManager.instance.SaveAdventure();//not sure if Restart should save or not
         yield return new WaitForSecondsRealtime(0.01f);
         //spawnReqsMono.RestartAllValues();
         //spawnReqsMono.ResetSpawnReqsList();
-        GameSession.instance.ResetAndRemoveSpawnReqsMono();
-        GameSession.instance.ResetScore();
-        GameSession.instance.ResetMusicPitch();
+        GameManager.instance.ResetAndRemoveSpawnReqsMono();
+        GameManager.instance.ResetScore();
+        GameManager.instance.ResetMusicPitch();
         yield return new WaitForSecondsRealtime(0.05f);
-        if(GameSession.instance.gamemodeSelected==-1){
-            if(GameSession.instance.zoneToTravelTo==-1){LoadAdventureZone(GameSession.instance.zoneSelected,true);}
+        if(GameManager.instance.gamemodeSelected==-1){
+            if(GameManager.instance.zoneToTravelTo==-1){LoadAdventureZone(GameManager.instance.zoneSelected,true);}
             else{ReloadScene();}
-            //yield return new WaitForSecondsRealtime(0.1f);GameSession.instance.LoadAdventurePre();GameSession.instance.LoadAdventurePost();
+            //yield return new WaitForSecondsRealtime(0.1f);GameManager.instance.LoadAdventurePre();GameManager.instance.LoadAdventurePost();
         }else{ReloadScene();}
-        GameSession.instance.ResetAfterAdventure();
-        GameSession.instance.EnterGameScene();
+        GameManager.instance.ResetAfterAdventure();
+        GameManager.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }
     public void LoadGameScene(){
-        SceneManager.LoadScene("Game");GameSession.instance.ResetScore();
-        GameSession.instance.gameSpeed=1f;
-        GameSession.instance.EnterGameScene();
+        SceneManager.LoadScene("Game");GameManager.instance.ResetScore();
+        GameManager.instance.gameSpeed=1f;
+        GameManager.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }
     public void LoadAdventureZone(int i, bool _force=false){StartCoroutine(LoadAdventureZoneI(i,_force));}
     IEnumerator LoadAdventureZoneI(int i, bool _force=false){
-        GameSession.instance.SetGamemodeSelected(-1);
-        bool boss=GameCreator.instance.adventureZones[i].isBoss;
-        if((GameSession.instance.zoneToTravelTo==-1&&GameSession.instance.zoneSelected!=i&&GameSession.instance.zoneSelected!=-1)||(_force)){//Travel
-            GameSession.instance.zoneToTravelTo=i;
-            if(Player.instance!=null)GameSession.instance.SaveAdventure();
-            if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(GameCreator.instance.adventureTravelZonePrefab,false);}
-            else{Instantiate(GameCreator.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(GameCreator.instance.adventureTravelZonePrefab,false);}
+        GameManager.instance.SetGamemodeSelected(-1);
+        bool boss=CoreSetup.instance.adventureZones[i].isBoss;
+        if((GameManager.instance.zoneToTravelTo==-1&&GameManager.instance.zoneSelected!=i&&GameManager.instance.zoneSelected!=-1)||(_force)){//Travel
+            GameManager.instance.zoneToTravelTo=i;
+            if(Player.instance!=null)GameManager.instance.SaveAdventure();
+            if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureTravelZonePrefab,false);}
+            else{Instantiate(CoreSetup.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureTravelZonePrefab,false);}
             StartCoroutine(ResetStuffAndLoadGameScene());
             yield return new WaitForSecondsRealtime(0.2f);
-            GameSession.instance.EnterGameScene();
-            if(GameSession.instance.zoneSelected==-1)GameSession.instance.LoadAdventurePre();
-            GameSession.instance.LoadAdventurePost();
+            GameManager.instance.EnterGameScene();
+            if(GameManager.instance.zoneSelected==-1)GameManager.instance.LoadAdventurePre();
+            GameManager.instance.LoadAdventurePost();
             GameRules.instance.EnterGameScene();
-        }else if((GameSession.instance.zoneSelected==-1)||(GameSession.instance.zoneToTravelTo==-1&&_force)){
-            if(GameSession.instance.zoneSelected==-1)GameSession.instance.LoadAdventurePre();
-            GameSession.instance.zoneSelected=i;
-            GameSession.instance.zoneToTravelTo=-1;
-            GameSession.instance.gameTimeLeft=-4;
+        }else if((GameManager.instance.zoneSelected==-1)||(GameManager.instance.zoneToTravelTo==-1&&_force)){
+            if(GameManager.instance.zoneSelected==-1)GameManager.instance.LoadAdventurePre();
+            GameManager.instance.zoneSelected=i;
+            GameManager.instance.zoneToTravelTo=-1;
+            GameManager.instance.gameTimeLeft=-4;
             StartCoroutine(ResetStuffAndLoadGameScene());
             
-            if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(GameCreator.instance.adventureZones[i].gameRules,boss);}
-            else{Instantiate(GameCreator.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(GameCreator.instance.adventureZones[i].gameRules,boss);}
+            if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureZones[i].gameRules,boss);}
+            else{Instantiate(CoreSetup.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureZones[i].gameRules,boss);}
             if(boss){if(Jukebox.instance!=null)Jukebox.instance.SetMusic(null);}
             yield return new WaitForSecondsRealtime(0.2f);
-            GameSession.instance.EnterGameScene();
-            GameSession.instance.LoadAdventurePost();
+            GameManager.instance.EnterGameScene();
+            GameManager.instance.LoadAdventurePost();
             GameRules.instance.EnterGameScene();
         }
         IEnumerator ResetStuffAndLoadGameScene(){
-            GameSession.instance.ResetScore();
+            GameManager.instance.ResetScore();
             yield return new WaitForSecondsRealtime(0.05f);
-            GameSession.instance.ResetAndRemoveSpawnReqsMono();
+            GameManager.instance.ResetAndRemoveSpawnReqsMono();
             //RestartGame();//ReloadScene();
             SceneManager.LoadScene("Game");
-            GameSession.instance.gameSpeed=1f;
+            GameManager.instance.gameSpeed=1f;
         }
     }
-    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");GameSession.instance.ResetTempSandboxSaveName();GameSession.instance.defaultGameSpeed=1;StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();}
+    public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");GameManager.instance.ResetTempSandboxSaveName();GameManager.instance.defaultGameSpeed=1;StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();}
     public void LoadAdventureZonesScene(){StartCoroutine(LoadAdventureZonesSceneI());}
     IEnumerator LoadAdventureZonesSceneI(){
-        SceneManager.LoadScene("AdventureZones");GameSession.instance.gamemodeSelected=-1;
+        SceneManager.LoadScene("AdventureZones");GameManager.instance.gamemodeSelected=-1;
         yield return new WaitForSecondsRealtime(0.03f);
-        GameSession.instance.LoadAdventurePre();
+        GameManager.instance.LoadAdventurePre();
         yield return new WaitForSecondsRealtime(0.02f);
-        if(GameSession.instance.zoneToTravelTo!=-1){LoadAdventureZone(GameSession.instance.zoneToTravelTo,true);}
-        else if(GameSession.instance.zoneSelected!=-1){LoadAdventureZone(GameSession.instance.zoneSelected,true);}
+        if(GameManager.instance.zoneToTravelTo!=-1){LoadAdventureZone(GameManager.instance.zoneToTravelTo,true);}
+        else if(GameManager.instance.zoneSelected!=-1){LoadAdventureZone(GameManager.instance.zoneSelected,true);}
         //else{LoadGameScene();}
     }
-    public void LoadSandboxModeScene(){SceneManager.LoadScene("SandboxMode");GameSession.instance.SetGamemodeSelected(0);StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();}
+    public void LoadSandboxModeScene(){SceneManager.LoadScene("SandboxMode");GameManager.instance.SetGamemodeSelected(0);StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();}
     public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}
-    public void LoadGameModeInfoSceneSet(int i){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGamemodeSelected(i);}
-    public void LoadGameModeInfoSceneSetStr(string str){SceneManager.LoadScene("InfoGameMode");GameSession.instance.SetGamemodeSelectedStr(str);}
+    public void LoadGameModeInfoSceneSet(int i){SceneManager.LoadScene("InfoGameMode");GameManager.instance.SetGamemodeSelected(i);}
+    public void LoadGameModeInfoSceneSetStr(string str){SceneManager.LoadScene("InfoGameMode");GameManager.instance.SetGamemodeSelectedStr(str);}
     public void LoadOptionsScene(){SceneManager.LoadScene("Options");}
     public void LoadCustomizationScene(){SceneManager.LoadScene("Customization");}
     public void LoadSocialsScene(){SceneManager.LoadScene("Socials");}
@@ -150,20 +150,20 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
     public void SubmitScore(){if(SaveSerial.instance.hyperGamerLoginData.loggedIn){LoadScoreSubmitScene();}else{LoadLoginScene();}}
     public void ReloadScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        GameSession.instance.speedChanged=false;
-        GameSession.instance.gameSpeed=1f;
+        GameManager.instance.speedChanged=false;
+        GameManager.instance.gameSpeed=1f;
     }
     public void QuitGame(){
         Application.Quit();
     }
     /*void OnApplicationQuit(){
-        GameSession.
+        GameManager.
     }*/
     public void RestartApp(){
         if(Jukebox.instance!=null)Destroy(Jukebox.instance.gameObject);
         SceneManager.LoadScene("Loading");
-        GameSession.instance.speedChanged=false;
-        GameSession.instance.gameSpeed=1f;
+        GameManager.instance.speedChanged=false;
+        GameManager.instance.gameSpeed=1f;
     }
     public static bool EscPressed(){return Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Joystick1Button1);}
     void CheckESC(){    if(EscPressed()){

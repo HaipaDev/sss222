@@ -70,8 +70,8 @@ public class LootTablePowerups : MonoBehaviour{
         foreach(LootTableEntryPowerup entry in itemList){
             i++;
             if(entry.rarity==rarityPowerup.Common)dropList[i]=entry.dropChance;
-            else if(entry.rarity==rarityPowerup.Rare)dropList[i]=entry.dropChance*GameSession.instance.rarePwrupMulti;
-            else if(entry.rarity==rarityPowerup.Legendary)dropList[i]=entry.dropChance*GameSession.instance.legendPwrupMulti;
+            else if(entry.rarity==rarityPowerup.Rare)dropList[i]=entry.dropChance*GameManager.instance.rarePwrupMulti;
+            else if(entry.rarity==rarityPowerup.Legendary)dropList[i]=entry.dropChance*GameManager.instance.legendPwrupMulti;
             if(!GameRules.instance.levelingOn){entry.levelReq=0;}
             if(currentLvl<entry.levelReq&&GameRules.instance.levelingOn)dropList[i]=0;
             

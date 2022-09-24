@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1876557319712579720}
   - component: {fileID: 1876557319712579721}
   m_Layer: 0
-  m_Name: GameCreator
+  m_Name: CoreSetup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,9 +50,9 @@ MonoBehaviour:
     type: 3}
   gsceneManagerPrefab: {fileID: 7128682332300410602, guid: f0f9db98eefc6544cb033ccb81dab8ea,
     type: 3}
-  gameSessionPrefab: {fileID: 2670168737584117729, guid: 2187d17e87e167843a47ecaa776cb1b9,
+  gameManagerPrefab: {fileID: 2670168737584117729, guid: 2187d17e87e167843a47ecaa776cb1b9,
     type: 3}
-  gameAssetsPrefab: {fileID: 6877064455026536268, guid: 1d59b6eef7bf8454cb6d3bc6643a5db3,
+  assetsManagerPrefab: {fileID: 6877064455026536268, guid: 1d59b6eef7bf8454cb6d3bc6643a5db3,
     type: 3}
   audioManagerPrefab: {fileID: 2010752312624517974, guid: 0c9cb9ae722d0a244a77d03aa7b1265e,
     type: 3}

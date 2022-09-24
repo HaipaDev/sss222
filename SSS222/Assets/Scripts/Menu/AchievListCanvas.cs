@@ -31,7 +31,7 @@ public class AchievListCanvas : MonoBehaviour{
         GameObject go=Instantiate(elementPrefab,listObject.transform);
         go.GetComponent<AchievListElement>().SetName("???");
         go.GetComponent<AchievListElement>().SetDesc(hiddenAchievsCount+"x Hidden achievements");
-        go.GetComponent<AchievListElement>().SetIcon(GameAssets.instance.Spr("AchievHidden"));
+        go.GetComponent<AchievListElement>().SetIcon(AssetsManager.instance.Spr("AchievHidden"));
         return go;
     }
 }

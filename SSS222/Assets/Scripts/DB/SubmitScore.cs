@@ -11,10 +11,10 @@ public class SubmitScore : MonoBehaviour{
     void Start(){
         autosubmitScoresToggle.GetComponent<Toggle>().isOn=SaveSerial.instance.settingsData.autosubmitScores;
     }
-    public static void SubmitScoreFunc(){if(GameSession.instance.gamemodeSelected>0){
-        if(GameSession.instance.steamAchievsStatsLeaderboards){SteamManager.instance.SubmitScore(GameSession.instance.GetCurrentGamemodeName(),GameSession.instance.GetHighscoreCurrent().score);}
+    public static void SubmitScoreFunc(){if(GameManager.instance.gamemodeSelected>0){
+        if(GameManager.instance.steamAchievsStatsLeaderboards){SteamManager.instance.SubmitScore(GameManager.instance.GetCurrentGamemodeName(),GameManager.instance.GetHighscoreCurrent().score);}
         if(SaveSerial.instance.hyperGamerLoginData.username!=""&&SaveSerial.instance.hyperGamerLoginData.loggedIn){
-            DBAccess.instance.SaveScoreToDB(SaveSerial.instance.hyperGamerLoginData.username,GameSession.instance.GetHighscoreCurrent());
+            DBAccess.instance.SaveScoreToDB(SaveSerial.instance.hyperGamerLoginData.username,GameManager.instance.GetHighscoreCurrent());
             if(_exceptionScenes())if(FindObjectOfType<DisplayLeaderboard>().currentUser)FindObjectOfType<DisplayLeaderboard>().DisplayCurrentUserHighscore();
         }else{if(_exceptionScenes())
             GSceneManager.instance.LoadLoginScene();

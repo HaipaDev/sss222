@@ -22,15 +22,15 @@ public class TimeFreezer : MonoBehaviour{
     }
     IEnumerator DoFreeze(){
         _isFrozen=true;
-        var ogTime=GameSession.instance.gameSpeed;
-        var ogChanged=GameSession.instance.speedChanged;
-        GameSession.instance.speedChanged=true;
-        GameSession.instance.gameSpeed=0f;
+        var ogTime=GameManager.instance.gameSpeed;
+        var ogChanged=GameManager.instance.speedChanged;
+        GameManager.instance.speedChanged=true;
+        GameManager.instance.gameSpeed=0f;
         
         yield return new WaitForSecondsRealtime(dur);
         
-        GameSession.instance.speedChanged=ogChanged;
-        GameSession.instance.gameSpeed=ogTime;
+        GameManager.instance.speedChanged=ogChanged;
+        GameManager.instance.gameSpeed=ogTime;
         _pendingFreezeDuration=0;
         _isFrozen=false;
     }

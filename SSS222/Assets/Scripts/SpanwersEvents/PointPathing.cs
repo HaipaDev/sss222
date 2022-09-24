@@ -54,7 +54,7 @@ public class PointPathing : MonoBehaviour{
         }else{Debug.LogWarning(gameObject.name+" WaveConfig not found.");}
     }}
     
-    void Update(){  if(!GameSession.GlobalTimeIsPaused){
+    void Update(){  if(!GameManager.GlobalTimeIsPaused){
         if(!off)Move();
     }}
     public void SetWaveConfig(WaveConfig waveConfig){this.waveConfig = waveConfig;}

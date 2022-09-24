@@ -25,7 +25,7 @@ public class Login : MonoBehaviour{
     [SerializeField] public static readonly string developerNicknameColor="#c74b3e";
     //public static bool _isDeveloperNick(string str){return str.IndexOf("Hyper", StringComparison.OrdinalIgnoreCase) >= 0;}
     //public static bool _isDeveloperNick(string str){foreach(string dn in developerNicknames){return str.IndexOf(dn, StringComparison.OrdinalIgnoreCase) >= 0;}return false;}
-    public static bool _isDeveloperNick(string str){foreach(string dn in developerNicknames){return GameAssets.CaseInsStrCmpr(str,dn);}return false;}
+    public static bool _isDeveloperNick(string str){foreach(string dn in developerNicknames){return AssetsManager.CaseInsStrCmpr(str,dn);}return false;}
     void Start(){
         username.text=SaveSerial.instance.hyperGamerLoginData.username;
     }

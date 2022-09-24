@@ -90,9 +90,9 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     }
     IMongoCollection<Model_Score> GetGamemodeCollection(){
         var collection=scores_arcade;
-        if(GameSession.instance.CheckGamemodeSelected("Classic")){collection=scores_classic;}
-        else if(GameSession.instance.CheckGamemodeSelected("Hardcore")){collection=scores_hardcore;}
-        else if(GameSession.instance.CheckGamemodeSelected("Meteor")){collection=scores_meteormadness;}
+        if(GameManager.instance.CheckGamemodeSelected("Classic")){collection=scores_classic;}
+        else if(GameManager.instance.CheckGamemodeSelected("Hardcore")){collection=scores_hardcore;}
+        else if(GameManager.instance.CheckGamemodeSelected("Meteor")){collection=scores_meteormadness;}
         return collection;
     }
 
@@ -114,8 +114,8 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
             HyperGamer document=new HyperGamer{username=username,password=password,
                 dateRegister=System.DateTime.Now,dateLastLogin=System.DateTime.Now,
                 appRegistered=hyperLastLoginAppDisplay,appLastLogin=hyperLastLoginAppDisplay,
-                isSteam=GameSession.instance.isSteam,/*steamID=Steamworks.SteamClient.SteamId,*/};
-            //if(GameSession.instance.isSteam)document.steamId=Steamworks.SteamClient.SteamId.Value;
+                isSteam=GameManager.instance.isSteam,/*steamID=Steamworks.SteamClient.SteamId,*/};
+            //if(GameManager.instance.isSteam)document.steamId=Steamworks.SteamClient.SteamId.Value;
             await hyperGamers.InsertOneAsync(document);
 
             string _pass=password;if(FindObjectOfType<Login>()!=null){if(!FindObjectOfType<Login>()._rememberPassword())_pass="";}
@@ -136,7 +136,7 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
                 loginUsername=await hyperGamers.FindAsync(e=>e.username==username);
                 hyperGamers.FindOneAndUpdate(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.dateLastLogin,System.DateTime.Now));
                 hyperGamers.FindOneAndUpdate(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.appLastLogin,hyperLastLoginAppDisplay));
-                //if(GameSession.instance.isSteam)await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.steamId,Steamworks.SteamClient.SteamId.Value));
+                //if(GameManager.instance.isSteam)await hyperGamers.FindOneAndUpdateAsync(e=>e.username==username,Builders<HyperGamer>.Update.Set(e=>e.steamId,Steamworks.SteamClient.SteamId.Value));
                 string _pass=password;if(FindObjectOfType<Login>()!=null){if(!FindObjectOfType<Login>()._rememberPassword())_pass="";}
                 SaveSerial.instance.SetLogin(username,_pass);SaveSerial.instance.SaveLogin();
             }

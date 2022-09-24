@@ -68,7 +68,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         autoUseMedkitsIfLowToggle.isOn=settingsData.autoUseMedkitsIfLow;
         allowSelectingEmptySlotsToggle.isOn=settingsData.allowSelectingEmptySlots;
         allowScrollingEmptySlotsToggle.isOn=settingsData.allowScrollingEmptySlots;
-        cheatToggle.isOn=GameSession.instance.cheatmode;
+        cheatToggle.isOn=GameManager.instance.cheatmode;
         bool h=false;if(settingsData.playfieldRot==PlaneDir.horiz){h=true;}horizPlayfieldToggle.isOn=h;
 
         foreach(Transform t in steeringButton.transform.GetChild(0)){t.gameObject.SetActive(false);}
@@ -154,8 +154,8 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     public void SetPlayfieldRot(bool horiz){
         PlaneDir h=PlaneDir.vert;if(horiz==true){h=PlaneDir.horiz;}settingsData.playfieldRot=h;
         if(SceneManager.GetActiveScene().name=="Game"&&Application.isPlaying){
-            if(h==PlaneDir.horiz){FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,90);FindObjectOfType<Camera>().orthographicSize=GameSession.instance.horizCameraSize;}
-            else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=GameSession.instance.vertCameraSize;}
+            if(h==PlaneDir.horiz){FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,90);FindObjectOfType<Camera>().orthographicSize=GameManager.instance.horizCameraSize;}
+            else{FindObjectOfType<Camera>().transform.localEulerAngles=new Vector3(0,0,0);FindObjectOfType<Camera>().orthographicSize=GameManager.instance.vertCameraSize;}
         }
     }
     public void SetSteering(){
@@ -164,11 +164,11 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
                 settingsData.inputType=(InputType)1;
                 break;
             case (InputType)1:
-                if(GameSession.instance.cheatmode)settingsData.inputType=(InputType)2;
+                if(GameManager.instance.cheatmode)settingsData.inputType=(InputType)2;
                 else settingsData.inputType=(InputType)0;
                 break;
             case (InputType)2:
-                if(GameSession.instance.cheatmode)settingsData.inputType=(InputType)3;
+                if(GameManager.instance.cheatmode)settingsData.inputType=(InputType)3;
                 else settingsData.inputType=(InputType)0;
                 break;
             case (InputType)3:
@@ -196,7 +196,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         if(FindObjectOfType<SwitchPlacesCanvas>()!=null)FindObjectOfType<SwitchPlacesCanvas>().Set();
     }
     public void SetDTapMouse(bool isOn){settingsData.dtapMouseShoot=isOn;}
-    public void SetCheatmode(bool isOn){if(GameSession.instance!=null)GameSession.instance.cheatmode=isOn;}
+    public void SetCheatmode(bool isOn){if(GameManager.instance!=null)GameManager.instance.cheatmode=isOn;}
     #endregion
 
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Stinger : MonoBehaviour{
     public Vector2 distReq=new Vector2(0.5f,3f);
     public bool flipped;
-    void Update(){  if(!GameSession.GlobalTimeIsPaused){
+    void Update(){  if(!GameManager.GlobalTimeIsPaused){
         if(Player.instance!=null){
             if((Mathf.Abs(transform.position.x-Player.instance.transform.position.x)<distReq.x)&&
             ((transform.position.y-Player.instance.transform.position.y<distReq.y)&&

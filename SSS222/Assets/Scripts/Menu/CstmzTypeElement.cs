@@ -18,7 +18,7 @@ public class CstmzTypeElement : MonoBehaviour, IEventSystemHandler, IPointerEnte
     [SerializeField] public CstmzRarity rarity;
     void Awake(){GetComponent<Button>().onClick.AddListener(SetType);}
     void Update(){
-        GetComponent<Image>().color=GameAssets.instance.GetRarityColor(rarity);
+        GetComponent<Image>().color=AssetsManager.instance.GetRarityColor(rarity);
         switch(elementType){
             case CstmzType.skin:
                 elementName=CustomizationInventory.instance.skinName;

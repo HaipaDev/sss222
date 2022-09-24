@@ -8,7 +8,7 @@ public class Tag_Collectible : MonoBehaviour{
     [SerializeField] public bool isPowerup=false;
     [SerializeField] public bool isDestructible=true;
     void Start(){
-        if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
+        if(GameManager.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameManager.maskMode;
 
         SetDirSpeed();
         if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}

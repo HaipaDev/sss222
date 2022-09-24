@@ -71,7 +71,7 @@ public class CometRandomProperties : MonoBehaviour{
     public int LunarScore(){return Random.Range((int)lunarScore.x,(int)lunarScore.y);}
     bool _ambiencePlayed=false;
     void Update(){
-        if(!GameSession.GlobalTimeIsPaused){
+        if(!GameManager.GlobalTimeIsPaused){
             if(healhitCount>=3&&!isLunar){MakeLunar();}
             if(transform.GetChild(0)!=null){
                 float step=rotationSpeed*Time.deltaTime;
@@ -114,11 +114,11 @@ public class CometRandomProperties : MonoBehaviour{
             var amnt=Random.Range((int)ld[i].ammount.x,(int)ld[i].ammount.y);
             if(amnt!=0){
                 if(!st.Contains("Coin")){
-                    if(amnt==1)GameAssets.instance.Make(st,transform.position);
-                    else{GameAssets.instance.MakeSpread(st,transform.position,amnt);}
+                    if(amnt==1)AssetsManager.instance.Make(st,transform.position);
+                    else{AssetsManager.instance.MakeSpread(st,transform.position,amnt);}
                 }else{//Drop Lunar Crystals
-                    if(amnt/GameRules.instance.crystalBigGain>=1){for(var c=0;c<(int)(amnt/GameRules.instance.crystalBigGain);c++){GameAssets.instance.MakeSpread("CoinB",transform.position,1);}}
-                    GameAssets.instance.MakeSpread("Coin",transform.position,(amnt%GameRules.instance.crystalBigGain)/GameRules.instance.crystalGain);//CrystalB=6, CrystalS=2
+                    if(amnt/GameRules.instance.crystalBigGain>=1){for(var c=0;c<(int)(amnt/GameRules.instance.crystalBigGain);c++){AssetsManager.instance.MakeSpread("CoinB",transform.position,1);}}
+                    AssetsManager.instance.MakeSpread("Coin",transform.position,(amnt%GameRules.instance.crystalBigGain)/GameRules.instance.crystalGain);//CrystalB=6, CrystalS=2
                 }
             }}}
         }

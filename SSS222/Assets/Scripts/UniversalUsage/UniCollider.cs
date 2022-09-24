@@ -23,11 +23,11 @@ public class UniCollider : MonoBehaviour{
                 else if(dmgVal.dmgBySize&&dmgVal.dmgBySpeed){dmg*=_dmgBySizeVal*_dmgBySpeedVal;}
                 
                 foreach(colliEvents co in dmgVal.colliEvents){
-                    if(!String.IsNullOrEmpty(co.vfx)){if(GameAssets.instance.GetVFX(co.vfx)!=null)Instantiate(GameAssets.instance.GetVFX(co.vfx),(Vector2)transform.position+co.vfxPos,Quaternion.identity);}
+                    if(!String.IsNullOrEmpty(co.vfx)){if(AssetsManager.instance.GetVFX(co.vfx)!=null)Instantiate(AssetsManager.instance.GetVFX(co.vfx),(Vector2)transform.position+co.vfxPos,Quaternion.identity);}
                     if(co.dmgPlayer!=0){if(Player.instance!=null){Player.instance.Damage(co.dmgPlayer,co.dmgPlayerType);}}
-                    if(!String.IsNullOrEmpty(co.assetMake)){if(GameAssets.instance.Get(co.assetMake)!=null)GameAssets.instance.Make(co.assetMake,(Vector2)transform.position+co.assetPos);}
+                    if(!String.IsNullOrEmpty(co.assetMake)){if(AssetsManager.instance.Get(co.assetMake)!=null)AssetsManager.instance.Make(co.assetMake,(Vector2)transform.position+co.assetPos);}
                     if(co.healBeamPlayer!=0){
-                        HealBeam hb=Instantiate(GameAssets.instance.Get("HealBeam"),(Vector2)transform.position+co.assetPos,Quaternion.identity).GetComponent<HealBeam>();
+                        HealBeam hb=Instantiate(AssetsManager.instance.Get("HealBeam"),(Vector2)transform.position+co.assetPos,Quaternion.identity).GetComponent<HealBeam>();
                         if(co.healBeamPlayer>0){hb.value=co.healBeamPlayer;}
                         else if(co.healBeamPlayer==-1||co.healBeamPlayer==-7){hb.value=dmg;}
                         else if(co.healBeamPlayer==-2||co.healBeamPlayer==-8){hb.value=dmg/2;}
@@ -66,7 +66,7 @@ public class UniCollider : MonoBehaviour{
         //DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
         if(type==0){//Enemy - TriggerEnter
             MakeFlare();
-            if(GameSession.instance.dmgPopups==true&&dmg>0){
+            if(GameManager.instance.dmgPopups==true&&dmg>0){
                 DamageValues dmgVal=UniCollider.GetDmgVal(other.gameObject.name);
                 if(dmgVal!=null&&dmgVal.dispDmgCount){
                     if(transform.GetComponent<Enemy>()!=null){
@@ -76,35 +76,35 @@ public class UniCollider : MonoBehaviour{
                 }else{
                     //default
                 }
-            }else if(GameSession.instance.dmgPopups==true&&dmg<0){
+            }else if(GameManager.instance.dmgPopups==true&&dmg<0){
                 color=ColorInt32.dmgHealColor;
             }
         }else if(type==1){//Enemy - TriggerStay
             MakeFlare();
-            if(GameSession.instance.dmgPopups==true&&dmg>0){
+            if(GameManager.instance.dmgPopups==true&&dmg>0){
                 color=ColorInt32.dmgPhaseColor;
-            }else if(GameSession.instance.dmgPopups==true&&dmg<0){
+            }else if(GameManager.instance.dmgPopups==true&&dmg<0){
                 color=ColorInt32.dmgHealColor;
             }
         }else if(type==2){//Player - TriggerEnter
             var player=Player.instance;
-            if(GameSession.instance.dmgPopups==true&&dmg>0&&!player._hasStatus("gclover")&&!player.dashing){color=ColorInt32.dmgPlayerHitColor;scale=2;}
+            if(GameManager.instance.dmgPopups==true&&dmg>0&&!player._hasStatus("gclover")&&!player.dashing){color=ColorInt32.dmgPlayerHitColor;scale=2;}
             else if(dmg<0){color=ColorInt32.dmgPlayerHealColor;scale=1.5f;}
         }else if(type==3){//Player - TriggerStay
             var player=Player.instance;
-            if(GameSession.instance.dmgPopups==true&&dmg>0&&!player._hasStatus("gclover")&&!player.dashing){color=ColorInt32.dmgPlayerPhaseColor;scale=2;}
+            if(GameManager.instance.dmgPopups==true&&dmg>0&&!player._hasStatus("gclover")&&!player.dashing){color=ColorInt32.dmgPlayerPhaseColor;scale=2;}
             else if(dmg<0){color=ColorInt32.dmgPlayerHealColor;scale=1.4f;}
         }else if(type==4){//Player - Absorp
             var player=Player.instance;
             dmg*=-1;color=ColorInt32.dmgHealColor;scale=1.4f;
         }else if(type==-1){//Default / Cargo
-            if(GameSession.instance.dmgPopups==true&&dmg>0){color=ColorInt32.grey;scale=2;}
+            if(GameManager.instance.dmgPopups==true&&dmg>0){color=ColorInt32.grey;scale=2;}
             else if(dmg<0){color=ColorInt32.dmgHealColor;scale=1.4f;}
         }
 
         if(dmg!=0)WorldCanvas.instance.DMGPopup(dmg,other.transform.position,ColorInt32.Int2Color(color),scale,crit);
         void MakeFlare(){
-            GameObject flare=GameAssets.instance.VFX("FlareHit",new Vector2(other.transform.position.x,other.transform.position.y));
+            GameObject flare=AssetsManager.instance.VFX("FlareHit",new Vector2(other.transform.position.x,other.transform.position.y));
             Vector2 flareScale=Vector2.one;
             if(other.gameObject.GetComponent<SpriteRenderer>()!=null)flareScale=new Vector2(other.gameObject.GetComponent<SpriteRenderer>().bounds.size.x,other.gameObject.GetComponent<SpriteRenderer>().bounds.size.y)*3;flareScale*=other.transform.localScale;
             flare.transform.localScale=flareScale;
@@ -113,8 +113,8 @@ public class UniCollider : MonoBehaviour{
     public static DamageValues GetDmgVal(string objName){
         DamageValues dmgVal=null;
         List<GObject> assets=new List<GObject>();
-        foreach(GObject gobj in GameAssets.instance.objects){assets.Add(gobj);}
-        foreach(GObject vfx in GameAssets.instance.vfx){assets.Add(vfx);}
+        foreach(GObject gobj in AssetsManager.instance.objects){assets.Add(gobj);}
+        foreach(GObject vfx in AssetsManager.instance.vfx){assets.Add(vfx);}
         var asset=assets.Find(x=>objName.Contains(x.gobj.name));
         if(asset!=null)dmgVal=GameRules.instance.dmgValues.Find(x=>x.name==asset.name);
         if(dmgVal==null){dmgVal=GetDmgValAbs(objName.Split('_')[0]);}

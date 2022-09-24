@@ -20,10 +20,10 @@ public class HealingDrone : MonoBehaviour{
             shootFrequency=e.shootFrequency;
             speedBullet=e.speedBullet;
         }
-        healPellet=GameAssets.instance.GetEnemyBullet(healPelletAssetName);
+        healPellet=AssetsManager.instance.GetEnemyBullet(healPelletAssetName);
     }
     void Update(){
-        if(healPellet==null)healPellet=GameAssets.instance.GetEnemyBullet(healPelletAssetName);
+        if(healPellet==null)healPellet=AssetsManager.instance.GetEnemyBullet(healPelletAssetName);
         closestEnemy=FindClosestHealableEnemy();
         var shootHealBullets=ShootHealBullets();
         if(closestEnemy!=null||(GetComponent<Enemy>()!=null&&GetComponent<Enemy>().health<GetComponent<Enemy>().healthMax)){

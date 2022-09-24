@@ -19,6 +19,6 @@ public class Tag_PlayerWeapon:MonoBehaviour{
             spr.color=tempColor;
             GetComponent<Glow>().color.a=opacity;
         }
-        if(GameSession.maskMode!=0)if(GetComponent<SpriteRenderer>()!=null)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
+        if(GameManager.maskMode!=0)if(GetComponent<SpriteRenderer>()!=null)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameManager.maskMode;
     }
 }

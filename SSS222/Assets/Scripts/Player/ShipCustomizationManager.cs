@@ -38,7 +38,7 @@ public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustom
             overlayObj.transform.localScale=Vector3.one;
             overlaySpr=overlayObj.GetComponent<SpriteRenderer>();
             if(overlaySpr==null){overlayImg=overlayObj.GetComponent<Image>();}
-            if(GameSession.maskMode!=0&&overlaySpr!=null){overlaySpr.maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;}
+            if(GameManager.maskMode!=0&&overlaySpr!=null){overlaySpr.maskInteraction=(SpriteMaskInteraction)GameManager.maskMode;}
         }
     }
     void Update(){
@@ -53,11 +53,11 @@ public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustom
 
 
     //string GetSkinName(){string str=skinName;if(skinName.Contains(" _")){str=skinName.Split('_')[0];}return str;}
-    public CstmzSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
-    //public CstmzSkin GetSkinCurrent(){string _str=skinName;if(_str.Contains("_")){_str=_str.Split('_')[0];}return GameAssets.instance.GetSkin(_str);}
+    public CstmzSkin GetSkin(string str){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}return AssetsManager.instance.GetSkin(_str);}
+    //public CstmzSkin GetSkinCurrent(){string _str=skinName;if(_str.Contains("_")){_str=_str.Split('_')[0];}return AssetsManager.instance.GetSkin(_str);}
     public CstmzSkinVariant GetSkinVariant(string str,int id){string _str=str;if(_str.Contains("_")){_str=_str.Split('_')[0];}
-        return GameAssets.instance.GetSkinVariant(_str,id);}
-    public CstmzSkinVariant GetSkinVariantAuto(string str){return GameAssets.instance.GetSkinVariant(str.Split('_')[0],int.Parse(str.Split('_')[1]));}
+        return AssetsManager.instance.GetSkinVariant(_str,id);}
+    public CstmzSkinVariant GetSkinVariantAuto(string str){return AssetsManager.instance.GetSkinVariant(str.Split('_')[0],int.Parse(str.Split('_')[1]));}
     
     
     public Sprite GetSkinSprite(string str){CstmzSkin skin=null;Sprite spr=null;
@@ -83,8 +83,8 @@ public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustom
         else{if(anim!=null)StopCoroutine(anim);anim=null;iAnim=0;}
     }
     public Sprite GetOverlaySprite(string str){Sprite spr=null;
-        if(str.Contains("_")){spr=GameAssets.instance.GetSkin(str.Split('_')[0]).variants[int.Parse(str.Split('_')[1])].sprOverlay;}
-        else{spr=GameAssets.instance.GetSkin(str).sprOverlay;}
+        if(str.Contains("_")){spr=AssetsManager.instance.GetSkin(str.Split('_')[0]).variants[int.Parse(str.Split('_')[1])].sprOverlay;}
+        else{spr=AssetsManager.instance.GetSkin(str).sprOverlay;}
     return spr;}
     void SetSkin(string str){if(spr!=null){if(spr.sprite!=GetSkinSprite(str))spr.sprite=GetSkinSprite(str);}
         else if(img!=null){if(img.sprite!=GetSkinSprite(str))img.sprite=GetSkinSprite(str);}}
@@ -101,14 +101,14 @@ public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustom
     void SetTrail(string str){
         if(GetComponent<TrailVFX>()!=null){GetComponent<TrailVFX>().SetNewTrail(str,true);}
         /*else{if(trailObj!=null){if(trailObjPos==Vector2.zero){trailObjPos=trailObj.transform.localPosition;}
-        if(GameAssets.instance.GetTrail(str)!=null){if(!trailObj.name.Contains(GameAssets.instance.GetTrail(str).part.name)){
-            var _tempTrailObj=trailObj;trailObj=Instantiate(GameAssets.instance.GetTrail(str).part,transform);trailObj.transform.localPosition=trailObjPos;Destroy(_tempTrailObj);
-            GameAssets.instance.TransformIntoUIParticle(trailObj);
+        if(AssetsManager.instance.GetTrail(str)!=null){if(!trailObj.name.Contains(AssetsManager.instance.GetTrail(str).part.name)){
+            var _tempTrailObj=trailObj;trailObj=Instantiate(AssetsManager.instance.GetTrail(str).part,transform);trailObj.transform.localPosition=trailObjPos;Destroy(_tempTrailObj);
+            AssetsManager.instance.TransformIntoUIParticle(trailObj);
         }}}}*/
     }
-    public GameObject GetFlareVFX(){GameObject go=GameAssets.instance.GetVFX("FlareShoot");if(GameAssets.instance.GetFlares(flaresName)!=null){go=GameAssets.instance.GetFlareRandom(flaresName);}return go;}
-    public CstmzDeathFx GetDeathFx(){return GameAssets.instance.GetDeathFx(deathFxName);}
-    public GameObject GetDeathFxObj(){GameObject go=GameAssets.instance.GetVFX("Explosion");if(GameAssets.instance.GetDeathFx(deathFxName)!=null){go=GameAssets.instance.GetDeathFx(deathFxName).obj;}return go;}
+    public GameObject GetFlareVFX(){GameObject go=AssetsManager.instance.GetVFX("FlareShoot");if(AssetsManager.instance.GetFlares(flaresName)!=null){go=AssetsManager.instance.GetFlareRandom(flaresName);}return go;}
+    public CstmzDeathFx GetDeathFx(){return AssetsManager.instance.GetDeathFx(deathFxName);}
+    public GameObject GetDeathFxObj(){GameObject go=AssetsManager.instance.GetVFX("Explosion");if(AssetsManager.instance.GetDeathFx(deathFxName)!=null){go=AssetsManager.instance.GetDeathFx(deathFxName).obj;}return go;}
 
 
     void LoadValues(){
@@ -119,7 +119,7 @@ public class ShipCustomizationManager : MonoBehaviour{  public static ShipCustom
         deathFxName=SaveSerial.instance.playerData.deathFxName;
     }
     async void LoadValuesFromSelectedUsersData(){
-        SSSCustomizationData cstmzData=await DBAccess.instance.GetUsersCustomizationData(GameSession.instance.GetSelectedUsersDataName());
+        SSSCustomizationData cstmzData=await DBAccess.instance.GetUsersCustomizationData(GameManager.instance.GetSelectedUsersDataName());
         skinName=cstmzData.customizationData[0];
         trailName=cstmzData.customizationData[1];
         flaresName=cstmzData.customizationData[2];

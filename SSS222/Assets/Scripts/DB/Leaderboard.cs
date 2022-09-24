@@ -37,14 +37,14 @@ public class Leaderboard : MonoBehaviour{
         DisplayLeaderboards();
         OpenMainPanel();
         SetGameModesButtons();
-        if(!GameSession.instance.steamAchievsStatsLeaderboards){Destroy(steamGlobalPanel);Destroy(steamFriendsPanel);}
+        if(!GameManager.instance.steamAchievsStatsLeaderboards){Destroy(steamGlobalPanel);Destroy(steamFriendsPanel);}
     }
     void Update(){
         if(GSceneManager.EscPressed()){Back();}
     }
     public void OpenMainPanel(){CloseAllPanels();mainPanel.SetActive(true);}
     public void OpenGameModesPanel(){CloseAllPanels();gameModesPanel.SetActive(true);}
-    public void Back(){if(gameModesPanel.activeSelf){OpenMainPanel();}else{GSceneManager.instance.LoadSocialsScene();GameSession.instance.ResetSelectedUsersDataName();}}
+    public void Back(){if(gameModesPanel.activeSelf){OpenMainPanel();}else{GSceneManager.instance.LoadSocialsScene();GameManager.instance.ResetSelectedUsersDataName();}}
     public void CloseAllPanels(){
         mainPanel.SetActive(false);
         gameModesPanel.SetActive(false);
@@ -88,8 +88,8 @@ public class Leaderboard : MonoBehaviour{
         if(currentUserScore!=null){currentUserScore.DisplayCurrentUserHighscore();}
 
         //Steam Leaderboards
-        if(GameSession.instance.steamAchievsStatsLeaderboards){
-            Steamworks.Data.Leaderboard? lb = await SteamUserStats.FindLeaderboardAsync(GameSession.instance.GetCurrentGamemodeName());
+        if(GameManager.instance.steamAchievsStatsLeaderboards){
+            Steamworks.Data.Leaderboard? lb = await SteamUserStats.FindLeaderboardAsync(GameManager.instance.GetCurrentGamemodeName());
             if(lb.HasValue){
                 if(steamGlobalCont!=null){
                     var globalScores = await lb.Value.GetScoresAsync(100);
@@ -149,7 +149,7 @@ public class Leaderboard : MonoBehaviour{
         }
     }
     void SetGameModesButtons(){
-        foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){
+        foreach(GameRules gr in CoreSetup.instance.gamerulesetsPrefabs){
             string name=gr.cfgName;     if(name.Contains(" Mode"))name=name.Replace(" Mode","");
             GameObject go=Instantiate(gameModeListElementPrefab,gameModesListTransform);
             gameModesListTransform.GetComponent<ContentSizeFitter>().enabled=true;gameModesListTransform.localPosition=new Vector2(0,-999);
@@ -159,11 +159,11 @@ public class Leaderboard : MonoBehaviour{
             go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr.cfgDesc;
             if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
             if(gr.cfgIconsGo!=null){Instantiate(gr.cfgIconsGo,go.transform.GetChild(1));}
-            else{go.transform.GetChild(1).gameObject.AddComponent<UnityEngine.UI.Image>().sprite=GameAssets.instance.SprAny(gr.cfgIconAssetName);}
+            else{go.transform.GetChild(1).gameObject.AddComponent<UnityEngine.UI.Image>().sprite=AssetsManager.instance.SprAny(gr.cfgIconAssetName);}
         }
     }
     public void SetGamemode(string name){
-        GameSession.instance.SetGamemodeSelectedStr(name);
+        GameManager.instance.SetGamemodeSelectedStr(name);
         ClearLeaderboards();
         DisplayLeaderboards();
         OpenMainPanel();

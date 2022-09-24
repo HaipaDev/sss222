@@ -38,7 +38,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
 
     void Awake(){if(StatsAchievsManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}}
     void Start(){SetStatsList();}//uniquePowerups=new List<string>();}
-    void SetStatsList(){foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){statsGamemodesList.Add(new StatsGamemode(){gmName=gr.cfgName});}statsGamemodesList.Add(new StatsGamemode(){gmName="Sandbox Mode"});}
+    void SetStatsList(){foreach(GameRules gr in CoreSetup.instance.gamerulesetsPrefabs){statsGamemodesList.Add(new StatsGamemode(){gmName=gr.cfgName});}statsGamemodesList.Add(new StatsGamemode(){gmName="Sandbox Mode"});}
     void Update(){
         if(!achievsLoaded)LoadAchievs();
         if(!statsLoaded)LoadStats();
@@ -50,56 +50,56 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
 
     #region//Achievs
     void CheckAllAchievs(){
-        if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=100)
-        ||GameSession.instance.GetHighscoreByName("Arcade").score>=100){CompleteAchiev("arcade_score-1");}
-        if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=1000)
-        ||GameSession.instance.GetHighscoreByName("Arcade").score>=1000){CompleteAchiev("arcade_score-2");}
-        if((GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameSession.instance.score>=10000)
-        ||GameSession.instance.GetHighscoreByName("Arcade").score>=10000){CompleteAchiev("arcade_score-3");GameSession.instance.GoldenMoyaiPopup();}
-        if((GameSession.instance.GetCurrentGamemodeName().Contains("Hardcore")&&GameSession.instance.score>=666)
-        ||GameSession.instance.GetHighscoreByName("Hardcore").score>=666){CompleteAchiev("hardcore_score-1");}
-        if((GameSession.instance.GetCurrentGamemodeName().Contains("Classic")&&GameSession.instance.score>=2077)
-        ||GameSession.instance.GetHighscoreByName("Classic").score>=2077){CompleteAchiev("classic_score-1");}
-        if((GameSession.instance.GetCurrentGamemodeName().Contains("Meteor")&&GameSession.instance.score>=150)
-        ||GameSession.instance.GetHighscoreByName("Meteor").score>=150){CompleteAchiev("meteor_score-1");}
+        if((GameManager.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameManager.instance.score>=100)
+        ||GameManager.instance.GetHighscoreByName("Arcade").score>=100){CompleteAchiev("arcade_score-1");}
+        if((GameManager.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameManager.instance.score>=1000)
+        ||GameManager.instance.GetHighscoreByName("Arcade").score>=1000){CompleteAchiev("arcade_score-2");}
+        if((GameManager.instance.GetCurrentGamemodeName().Contains("Arcade")&&GameManager.instance.score>=10000)
+        ||GameManager.instance.GetHighscoreByName("Arcade").score>=10000){CompleteAchiev("arcade_score-3");GameManager.instance.GoldenMoyaiPopup();}
+        if((GameManager.instance.GetCurrentGamemodeName().Contains("Hardcore")&&GameManager.instance.score>=666)
+        ||GameManager.instance.GetHighscoreByName("Hardcore").score>=666){CompleteAchiev("hardcore_score-1");}
+        if((GameManager.instance.GetCurrentGamemodeName().Contains("Classic")&&GameManager.instance.score>=2077)
+        ||GameManager.instance.GetHighscoreByName("Classic").score>=2077){CompleteAchiev("classic_score-1");}
+        if((GameManager.instance.GetCurrentGamemodeName().Contains("Meteor")&&GameManager.instance.score>=150)
+        ||GameManager.instance.GetHighscoreByName("Meteor").score>=150){CompleteAchiev("meteor_score-1");}
 
         if(statsTotal.deaths>=100){CompleteAchiev("die-1");}
         if(statsTotal.killsComets>=1000){CompleteAchiev("comets_kills-1");}
         if(statsTotal.killsMecha>=500){CompleteAchiev("mechas_kills-1");}
 
 
-        if(GameSession.instance._isSandboxMode()/*UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("Sandbox")
-        ||GameSession.instance.GetCurrentGamemodeName().Contains("Sandbox")*/){sandboxTime+=Time.unscaledDeltaTime;}
+        if(GameManager.instance._isSandboxMode()/*UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("Sandbox")
+        ||GameManager.instance.GetCurrentGamemodeName().Contains("Sandbox")*/){sandboxTime+=Time.unscaledDeltaTime;}
         if(sandboxTime>=sandboxTimeMax){CompleteAchiev("sandbox_time-1");}
 
         if(personalityCrisisTimerOn&&personalityCrisisTimer<personalityCrisisTimeMax){personalityCrisisTimer+=Time.unscaledDeltaTime;}
         else{personalityCrisisTimerOn=false;personalityCrisisTimer=0;personalityCrisisCount=0;}
         if(personalityCrisisCount>=personalityCrisisCountMax){CompleteAchiev("customize-crisis");}
 
-        if(determinationTimerOn&&!GameSession.GlobalTimeIsPaused&&determinationTimer<determinationTimeMax){determinationTimer+=Time.deltaTime;}
+        if(determinationTimerOn&&!GameManager.GlobalTimeIsPaused&&determinationTimer<determinationTimeMax){determinationTimer+=Time.deltaTime;}
         else if(Player.instance!=null&&determinationTimer>=determinationTimeMax){CompleteAchiev("determination");StopDeterminationTimer();}
         if(Player.instance==null||UnityEngine.SceneManagement.SceneManager.GetActiveScene().name!="Game"){StopDeterminationTimer();}
 
-        if(Player.instance!=null){if(Player.instance.health<=determinationHealth&&(GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")||GameSession.instance.GetCurrentGamemodeName().Contains("Hardcore")))SetDeterminationTimer();}
+        if(Player.instance!=null){if(Player.instance.health<=determinationHealth&&(GameManager.instance.GetCurrentGamemodeName().Contains("Arcade")||GameManager.instance.GetCurrentGamemodeName().Contains("Hardcore")))SetDeterminationTimer();}
     }
     
     public void CompleteAchiev(string str){
         Achievement a;
-        //if(!GameSession.instance._isSandboxMode()){
+        //if(!GameManager.instance._isSandboxMode()){
             a=GetAchievByName(str,true);//if(a==null)a=GetAchievByDesc(str,true);
             if(a!=null){
                 if(!a._isCompleted()){
                     a.achievData.completed=true;a.achievData.dateAchieved=DateTime.Now;AchievPopups.instance.AddToQueue(a.name);SaveAchievs();
                     AchievCosmeticsUnlocks(a);
                 }
-                if(GameSession.instance.steamAchievsStatsLeaderboards){
+                if(GameManager.instance.steamAchievsStatsLeaderboards){
                     var sa=new Steamworks.Data.Achievement(str);
                     //if(Steamworks.SteamUserStats.Achievements.Intersect<Steamworks.Data.Achievement>(str).Any()>0){
                         if(!sa.State)sa.Trigger();
-                        if(GameSession.instance.GetCurrentGamemodeName().Contains("Arcade")){SteamUserStats.SetStat("arcadeScore",GameSession.instance.score);}//string _strp1=str.Split('-')[0]+int.Parse(str.Split('-')[1])+1;if(Steamworks.SteamUserStats.Achievements.Contains(x=>x.name==_strp1))SteamUserStats.IndicateAchievementProgress(_strp1,);}
-                        if(GameSession.instance.GetCurrentGamemodeName().Contains("Hardcore")){SteamUserStats.SetStat("hardcoreScore",GameSession.instance.score);}
-                        if(GameSession.instance.GetCurrentGamemodeName().Contains("Classic")){SteamUserStats.SetStat("classicScore",GameSession.instance.score);}
-                        if(GameSession.instance.GetCurrentGamemodeName().Contains("Meteor")){SteamUserStats.SetStat("meteorScore",GameSession.instance.score);}
+                        if(GameManager.instance.GetCurrentGamemodeName().Contains("Arcade")){SteamUserStats.SetStat("arcadeScore",GameManager.instance.score);}//string _strp1=str.Split('-')[0]+int.Parse(str.Split('-')[1])+1;if(Steamworks.SteamUserStats.Achievements.Contains(x=>x.name==_strp1))SteamUserStats.IndicateAchievementProgress(_strp1,);}
+                        if(GameManager.instance.GetCurrentGamemodeName().Contains("Hardcore")){SteamUserStats.SetStat("hardcoreScore",GameManager.instance.score);}
+                        if(GameManager.instance.GetCurrentGamemodeName().Contains("Classic")){SteamUserStats.SetStat("classicScore",GameManager.instance.score);}
+                        if(GameManager.instance.GetCurrentGamemodeName().Contains("Meteor")){SteamUserStats.SetStat("meteorScore",GameManager.instance.score);}
                         /*if(str.Contains("comets_kills")){*/SteamUserStats.SetStat("cometsDestroyed",statsTotal.killsComets);//}
                         /*if(str.Contains("mechas_kills")){*/SteamUserStats.SetStat("mechasDestroyed",statsTotal.killsMecha);//}
                         /*if(str.Contains("sandbox_time")){*/SteamUserStats.SetStat("sandboxTime",Mathf.RoundToInt(sandboxTime));//}
@@ -147,14 +147,14 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
         }
     }
     public void SetSteamStats(){
-        if(GameSession.instance.steamAchievsStatsLeaderboards){
+        if(GameManager.instance.steamAchievsStatsLeaderboards){
             //SteamUserStats.RequestCurrentStats();
             SteamUserStats.AddStat("deaths",1);
-            var arcadeHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Arcade")];
+            var arcadeHighscore=SaveSerial.instance.playerData.highscore[GameManager.instance.GetGamemodeID("Arcade")];
             SteamUserStats.SetStat("arcadeScore",arcadeHighscore.score);
-            var hardcoreHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Hardcore")];
+            var hardcoreHighscore=SaveSerial.instance.playerData.highscore[GameManager.instance.GetGamemodeID("Hardcore")];
             SteamUserStats.SetStat("hardcoreScore",hardcoreHighscore.score);
-            var meteorHighscore=SaveSerial.instance.playerData.highscore[GameSession.instance.GetGamemodeID("Meteor")];
+            var meteorHighscore=SaveSerial.instance.playerData.highscore[GameManager.instance.GetGamemodeID("Meteor")];
             SteamUserStats.SetStat("meteorScore",meteorHighscore.score);
             var cometsDestroyed=statsTotal.killsComets;
             SteamUserStats.SetStat("cometsDestroyed",cometsDestroyed);
@@ -169,7 +169,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public void ClearStatsTotal(){statsTotalSummed=false;statsTotal=new StatsTotal();}
     [Button]public void ClearSteamStats(){SteamUserStats.ResetAll(false);SteamUserStats.StoreStats();SteamUserStats.RequestCurrentStats();}
     [Button]public void ClearSteamAllStatsAndAchievs(){SteamUserStats.ResetAll(true);SteamUserStats.StoreStats();SteamUserStats.RequestCurrentStats();}
-    public StatsGamemode GetStatsForCurrentGamemode(){StatsGamemode r=null;if(GameSession.instance.gamemodeSelected>=0){r=GetStatsForGamemode(GameSession.instance.GetCurrentGamemodeName());}return r;}
+    public StatsGamemode GetStatsForCurrentGamemode(){StatsGamemode r=null;if(GameManager.instance.gamemodeSelected>=0){r=GetStatsForGamemode(GameManager.instance.GetCurrentGamemodeName());}return r;}
     public StatsGamemode GetStatsForGamemode(string str){return statsGamemodesList.Find(x=>x.gmName.Contains(str));}
 
     public void AddScoreTotal(int i){var s=GetStatsForCurrentGamemode();if(s!=null){s.scoreTotal+=i;ClearStatsTotal();}}
@@ -177,7 +177,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
     public void AddDeaths(){var s=GetStatsForCurrentGamemode();if(s!=null){s.deaths++;ClearStatsTotal();}}
     public void AddPowerups(string name){
         if(uniquePowerups!=null){if(!uniquePowerups.Contains(name)){string _name=name;if(name.Contains("(Clone)")){_name=name.Split("(")[0];}
-            uniquePowerups.Add(name);if(GameSession.instance.steamAchievsStatsLeaderboards){SteamUserStats.AddStat("uniquePowerups",1);SteamUserStats.StoreStats();}}}//else{uniquePowerups=new List<string>();AddPowerups(name);}
+            uniquePowerups.Add(name);if(GameManager.instance.steamAchievsStatsLeaderboards){SteamUserStats.AddStat("uniquePowerups",1);SteamUserStats.StoreStats();}}}//else{uniquePowerups=new List<string>();AddPowerups(name);}
         var s=GetStatsForCurrentGamemode();if(s!=null){s.powerups++;ClearStatsTotal();}
     }
     public void AddKills(string name,enemyType type){
@@ -236,7 +236,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
         SaveSerial.instance.statsData.sandboxTime=sandboxTime;
         SaveSerial.instance.statsData.uniquePowerups=uniquePowerups;
         SetSteamStats();
-        /*if(GameSession.instance.steamAchievsStatsLeaderboards){
+        /*if(GameManager.instance.steamAchievsStatsLeaderboards){
             SteamUserStats.SetStat("sandboxTime",Mathf.RoundToInt(sandboxTime));
             SteamUserStats.StoreStats();
         }*/

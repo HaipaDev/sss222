@@ -5,7 +5,7 @@ using UnityEngine;
 public class HLaserKillThis : MonoBehaviour{
     [SerializeField] float delay=1f;
     private void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)||other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name))StartCoroutine(KillDelay());
+        if(other.gameObject.name.Contains(AssetsManager.instance.Get("HLaser").name)||other.gameObject.name.Contains(AssetsManager.instance.Get("VLaser").name))StartCoroutine(KillDelay());
     }
     private void OnTriggerExit2D(Collider2D other){StopCoroutine(KillDelay());}
     IEnumerator KillDelay(){
@@ -17,7 +17,7 @@ public class HLaserKillThis : MonoBehaviour{
         LaunchRadialBullets bt = gameObject.AddComponent(typeof(LaunchRadialBullets)) as LaunchRadialBullets;
         bt.SetProjectile(cargoDrop);//GameObject.Find("Coin"));
         bt.Shoot();
-        GameAssets.instance.VFX("Explosion",transform.position,0.33f);
+        AssetsManager.instance.VFX("Explosion",transform.position,0.33f);
         yield return new WaitForSeconds(0.05f);
         Destroy(gameObject);
     }*/

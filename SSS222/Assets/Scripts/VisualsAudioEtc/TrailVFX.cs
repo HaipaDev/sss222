@@ -19,11 +19,11 @@ public class TrailVFX : MonoBehaviour{
         if(onTop==true){zz=transform.position.z-0.01f;}
         if(trailObj==null){
             if(!System.String.IsNullOrEmpty(part)){
-                if(!cstmzTrail){if(GameAssets.instance.GetVFX(part)!=null){
-                    if(trailObj==null){trailObj=Instantiate(GameAssets.instance.GetVFX(part),new Vector3(xx,yy,zz),Quaternion.identity,transform);}//Debug.Log("Creating particle for: "+gameObject.name);}
+                if(!cstmzTrail){if(AssetsManager.instance.GetVFX(part)!=null){
+                    if(trailObj==null){trailObj=Instantiate(AssetsManager.instance.GetVFX(part),new Vector3(xx,yy,zz),Quaternion.identity,transform);}//Debug.Log("Creating particle for: "+gameObject.name);}
                     if(SaveSerial.instance.settingsData.particles){trailObj.GetComponent<ParticleSystem>().Play();}//Debug.Log("Playing particle first time for: "+gameObject.name);}
-                }}else{if(GameAssets.instance.GetTrail(part)!=null){
-                    if(trailObj==null){trailObj=Instantiate(GameAssets.instance.GetTrail(part).part,new Vector3(xx,yy,zz),Quaternion.identity,transform);}//Debug.Log("Creating particle for: "+gameObject.name);}
+                }}else{if(AssetsManager.instance.GetTrail(part)!=null){
+                    if(trailObj==null){trailObj=Instantiate(AssetsManager.instance.GetTrail(part).part,new Vector3(xx,yy,zz),Quaternion.identity,transform);}//Debug.Log("Creating particle for: "+gameObject.name);}
                     if(SaveSerial.instance.settingsData.particles){trailObj.GetComponent<ParticleSystem>().Play();}//Debug.Log("Playing particle first time for: "+gameObject.name);}
                 }}
             }else{Debug.LogWarning("No particle name set for TrailVFX of "+gameObject.name);}
@@ -38,8 +38,8 @@ public class TrailVFX : MonoBehaviour{
     public void SetNewTrail(string str,bool _cstmzTrail=false){if(part!=str){ClearTrail();part=str;cstmzTrail=_cstmzTrail;}}//Debug.Log("Setting new Trail for: "+gameObject.name);}}
 
     bool _exceptions(){/*if(trailObj.GetComponent<DamageParticle>()!=null
-    ||trailObj.name.Contains(GameAssets.instance.GetVFX("trailObjDMG").name)
-    ||trailObj.name.Contains(GameAssets.instance.GetVFX("trailObjDMG_Blue").name)
+    ||trailObj.name.Contains(AssetsManager.instance.GetVFX("trailObjDMG").name)
+    ||trailObj.name.Contains(AssetsManager.instance.GetVFX("trailObjDMG_Blue").name)
     )return true;*/
     /*else */if(SaveSerial.instance.settingsData.quality==0)return false;else return true;}
 }

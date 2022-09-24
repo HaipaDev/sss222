@@ -14,7 +14,7 @@ public class FadeOutBullet : MonoBehaviour{
         if(timer>0){timer-=Time.deltaTime;}
         if(timer<=timeStartFade){
             Color c=GetComponent<SpriteRenderer>().color;
-            GetComponent<SpriteRenderer>().color=new Color(c.r,c.g,c.b,startAlpha*GameAssets.Normalize(timeStartFade-timer,timeStartFade,0f));
+            GetComponent<SpriteRenderer>().color=new Color(c.r,c.g,c.b,startAlpha*AssetsManager.Normalize(timeStartFade-timer,timeStartFade,0f));
             if(GetComponentInChildren<ParticleSystem>()!=null){
                 Destroy(GetComponentInChildren<ParticleSystem>().gameObject);
                 /*c=GetComponentInChildren<ParticleSystem>().startColor;

@@ -53,7 +53,7 @@ public class Shop : MonoBehaviour{
         if(shopTimeMax!=-5&&shopOpened&&shopTimer>0){shopTimer-=Time.unscaledDeltaTime;}
         if(shopTimeMax!=-5&&shopTimer<=0&&shopTimer!=-4){Resume();}
         if(purchaseTimer>0){purchaseTimer-=Time.unscaledDeltaTime;}
-        if(purchaseTimer<=0&&purchaseTimer!=-4){GameSession.instance.gameSpeed=0;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=true;}purchaseTimer=-4;}
+        if(purchaseTimer<=0&&purchaseTimer!=-4){GameManager.instance.gameSpeed=0;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=true;}purchaseTimer=-4;}
         if(currentSlotsList.Count>0)if(currentSlotsList.FindAll(x=>x.limitCount>=x.limit).Count>lootTable.currentQueue.slotList.Count/2){NewQueue();}
     }
     void CheckSpawnReqs(){
@@ -62,7 +62,7 @@ public class Shop : MonoBehaviour{
             if(shopSpawnReqsType!=GameRules.instance.shopSpawnReqsType)shopSpawnReqsType=GameRules.instance.shopSpawnReqsType;
             spawnReqs x=shopSpawnReqs;
             spawnReqsType xt=shopSpawnReqsType;
-            if(GameSession.instance.ZoneNotBossNorTravel())spawnReqsMono.instance.CheckSpawns(x,xt,this,"CallOpenShop");
+            if(GameManager.instance.ZoneNotBossNorTravel())spawnReqsMono.instance.CheckSpawns(x,xt,this,"CallOpenShop");
         }else{
             shopSpawnReqs=null;
             shopSpawnReqsType=spawnReqsType.time;
@@ -70,7 +70,7 @@ public class Shop : MonoBehaviour{
     }
     IEnumerator CallOpenShop(){
         //do{//Make it wait for your money to spawn lmao
-        if(GameRules.instance.shopOn){//&&GameSession.instance.coins>0){
+        if(GameRules.instance.shopOn){//&&GameManager.instance.coins>0){
             if(GameRules.instance.shopCargoOn){Shop.instance.SpawnCargo(dir.left,true);}
             else{Shop.shopOpen=true;
             /*foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
@@ -78,9 +78,9 @@ public class Shop : MonoBehaviour{
                 enemy.health=-1;
                 enemy.Die();
             }*/
-            GameSession.instance.gameSpeed=GameRules.instance.shopOpenGameSpeed;}
-            GameSession.instance.RandomizeShopScoreMax();
-        }/*}while(GameSession.instance.coins<=0);*/yield return null;
+            GameManager.instance.gameSpeed=GameRules.instance.shopOpenGameSpeed;}
+            GameManager.instance.RandomizeShopScoreMax();
+        }/*}while(GameManager.instance.coins<=0);*/yield return null;
     }
     public void SpawnCargo(dir cargoDir, bool _randomLR=false){
         float xx=3.45f;
@@ -93,7 +93,7 @@ public class Shop : MonoBehaviour{
         if(cargoDir==dir.right){xx=4.55f;}
         if(cargoDir==dir.up||cargoDir==dir.down){if(UnityEngine.Random.value<0.5f){xx=-3.45f;}}
         if(cargoDir==dir.left||cargoDir==dir.right){yy=Random.Range(3.6f,-4.15f);}
-        go=GameAssets.instance.Make("CargoShip",new Vector2(xx,yy));
+        go=AssetsManager.instance.Make("CargoShip",new Vector2(xx,yy));
         go.GetComponent<CargoShip>().SetCargoSpawnDir(cargoDir);
     }
     public void OpenShop(){
@@ -101,7 +101,7 @@ public class Shop : MonoBehaviour{
         shopMenuUI.SetActive(true);
         //RandomizeShop();
         shopOpen=false;
-        GameSession.instance.gameSpeed=GameRules.instance.shopOpenGameSpeed;
+        GameManager.instance.gameSpeed=GameRules.instance.shopOpenGameSpeed;
         shopOpened=true;
         shopTimer=shopTimeMax;
     }
@@ -112,7 +112,7 @@ public class Shop : MonoBehaviour{
         if(purchasedNotTimes==2){RepChange(1,false);purchasedNotTimes=0;}
         shopMenuUI.SetActive(false);
         shopOpened=false;
-        GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=1f;
+        GameManager.instance.speedChanged=false;GameManager.instance.gameSpeed=1f;
     }
 
     [Button("NewQueue")][ContextMenu("NewQueue")]public void NewQueue(){StartCoroutine(NewQueueI());}
@@ -157,19 +157,19 @@ public class Shop : MonoBehaviour{
             purchases+=1;
             //RepPlus(1);
             if(!purchased)purchased=true;
-            if(GameSession.instance.steamAchievsStatsLeaderboards){Steamworks.SteamUserStats.AddStat("trade",1);Steamworks.SteamUserStats.StoreStats();}
-            //GameSession.instance.gameSpeed=0.05f;purchaseTimer=0.3f;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=false;}
+            if(GameManager.instance.steamAchievsStatsLeaderboards){Steamworks.SteamUserStats.AddStat("trade",1);Steamworks.SteamUserStats.StoreStats();}
+            //GameManager.instance.gameSpeed=0.05f;purchaseTimer=0.3f;foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=false;}
         }
     //}
-        if(pco!=null&&purchaseTimer>0){GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=0;StopCoroutine(pco);pco=null;}
+        if(pco!=null&&purchaseTimer>0){GameManager.instance.speedChanged=false;GameManager.instance.gameSpeed=0;StopCoroutine(pco);pco=null;}
         if(pco==null){pco=PurchaseTimeI(0.02f);}if(pco!=null&&purchaseTimer<=0){StartCoroutine(pco);}
     }
     public IEnumerator PurchaseTimeI(float time){
-        GameSession.instance.speedChanged=true;GameSession.instance.gameSpeed=1f;
+        GameManager.instance.speedChanged=true;GameManager.instance.gameSpeed=1f;
         foreach(Button bt in GetComponentsInChildren<Button>()){bt.interactable=false;}
         purchaseTimer=time;
         yield return new WaitForSecondsRealtime(time);
-        GameSession.instance.speedChanged=false;GameSession.instance.gameSpeed=0;
+        GameManager.instance.speedChanged=false;GameManager.instance.gameSpeed=0;
         pco=null;
     }
 

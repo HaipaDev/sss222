@@ -173,7 +173,7 @@ public class Player : MonoBehaviour{    public static Player instance;
 #endregion
     private void Awake(){instance=this;StartCoroutine(SetGameRuleValues());}
     IEnumerator Start(){
-        if(GameSession.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameSession.maskMode;
+        if(GameManager.maskMode!=0)GetComponent<SpriteRenderer>().maskInteraction=(SpriteMaskInteraction)GameManager.maskMode;
         
         rb=GetComponent<Rigidbody2D>();
         pmodules=GetComponent<PlayerModules>();
@@ -248,7 +248,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         decayTickrate=i.decayTickrate;
         decayDmg=i.decayDmg;
         //WeaponProperties
-        GameRules grdef=GameCreator.instance.gamerulesetsPrefabs[0];
+        GameRules grdef=CoreSetup.instance.gamerulesetsPrefabs[0];
         if(grdef!=null){
         foreach(WeaponProperties wi in grdef.weaponProperties){
             if(!weaponProperties.Contains(wi)){weaponProperties.Add(wi);}
@@ -280,10 +280,10 @@ public class Player : MonoBehaviour{    public static Player instance;
 
     void Update(){
         SetPowerupsCapacity();
-        if(!GameSession.GlobalTimeIsPaused){
+        if(!GameManager.GlobalTimeIsPaused){
             SetInputType(SaveSerial.instance.settingsData.inputType);
             HandleInput(false);
-            if(!GameSession.instance._adventureLoading&&!GameSession.instance._lvlEventsLoading)health=Mathf.Clamp(health,0,healthMax);
+            if(!GameManager.instance._adventureLoading&&!GameManager.instance._lvlEventsLoading)health=Mathf.Clamp(health,0,healthMax);
             energy=Mathf.Clamp(energy,0,energyMax);
             transform.localScale=new Vector3(shipScale,shipScale,1);
             CheckPowerups();
@@ -301,8 +301,8 @@ public class Player : MonoBehaviour{    public static Player instance;
             SelectItemSlot();
             Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
             Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
-            if(shaderMatProps!=null){GetComponent<SpriteRenderer>().material=GameAssets.instance.UpdateShaderMatProps(GetComponent<SpriteRenderer>().material,shaderMatProps);}
-            else{GetComponent<SpriteRenderer>().material=GameAssets.instance.UpdateShaderMatProps(GetComponent<SpriteRenderer>().material,new ShaderMatProps());}
+            if(shaderMatProps!=null){GetComponent<SpriteRenderer>().material=AssetsManager.instance.UpdateShaderMatProps(GetComponent<SpriteRenderer>().material,shaderMatProps);}
+            else{GetComponent<SpriteRenderer>().material=AssetsManager.instance.UpdateShaderMatProps(GetComponent<SpriteRenderer>().material,new ShaderMatProps());}
             if(!_hasStatus("frozen")){//&&(!_hasStatus("fuel")||(_hasStatus("fuel")&&energy>0))){
                 if(GetComponent<TrailVFX>()!=null){
                     if(GetComponent<TrailVFX>().enabled==false){GetComponent<TrailVFX>().enabled=true;}
@@ -320,8 +320,8 @@ public class Player : MonoBehaviour{    public static Player instance;
             if(shootTimer>0)shootTimer-=Time.deltaTime;
             if(shadowInstTimer>0)shadowInstTimer-=Time.deltaTime;
             rb.velocity=vel;
-            if(!moving){spawnReqsMono.AddStayingTime(Time.deltaTime);GameSession.instance.stayingTimeXP+=Time.deltaTime;/*stayingTimerTotal+=Time.deltaTime;*/timerHpRegen+=Time.deltaTime;}
-            if(moving){spawnReqsMono.AddMovingTime(Time.deltaTime);GameSession.instance.movingTimeXP+=Time.deltaTime;//timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;
+            if(!moving){spawnReqsMono.AddStayingTime(Time.deltaTime);GameManager.instance.stayingTimeXP+=Time.deltaTime;/*stayingTimerTotal+=Time.deltaTime;*/timerHpRegen+=Time.deltaTime;}
+            if(moving){spawnReqsMono.AddMovingTime(Time.deltaTime);GameManager.instance.movingTimeXP+=Time.deltaTime;//timeFlyingTotal+=Time.deltaTime;timeFlyingCore+=Time.deltaTime;
                 if(_hasStatus("fuel")){
                     if(fuelDrainTimer<=0){
                         var _drain=fuelDrainAmnt*GetStatus("fuel").strength;
@@ -345,9 +345,9 @@ public class Player : MonoBehaviour{    public static Player instance;
                     OnFire(3.8f,1);
                     overheatTimer=-4;overheated=true;overheatedTimer=overheatedTime;
                 }
-                if(overheated==true&&overheatedTimer>0&&!GameSession.GlobalTimeIsPaused){overheatedTimer-=Time.deltaTime;
-                    GameAssets.instance.VFX("FlareHit",new Vector2((transform.position.x+0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
-                    GameAssets.instance.VFX("FlareHit",new Vector2((transform.position.x-0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
+                if(overheated==true&&overheatedTimer>0&&!GameManager.GlobalTimeIsPaused){overheatedTimer-=Time.deltaTime;
+                    AssetsManager.instance.VFX("FlareHit",new Vector2((transform.position.x+0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
+                    AssetsManager.instance.VFX("FlareHit",new Vector2((transform.position.x-0.35f)*shipScale,(transform.position.y+flareShootYY)*shipScale),0.04f);
                 }
                 if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
             }
@@ -397,14 +397,14 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(inputType==InputType.touch){
             if(joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(joystick.Vertical>0.2f||joystick.Vertical<-0.2f){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
-            if(((joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f)||(joystick.Vertical>0.2f||joystick.Vertical<-0.2f))&&!GameSession.GlobalTimeIsPaused){moving=true;}//Add to total time flying
+            if(((joystick.Horizontal>0.2f||joystick.Horizontal<-0.2f)||(joystick.Vertical>0.2f||joystick.Vertical<-0.2f))&&!GameManager.GlobalTimeIsPaused){moving=true;}//Add to total time flying
             if(joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f){hPressedTime=0;}
             if(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f){vPressedTime=0;}
             if((joystick.Horizontal<=0.2f && joystick.Horizontal>=-0.2f)&&(joystick.Vertical<=0.2f && joystick.Vertical>=-0.2f)){mPressedTime=0;moving=false;}
         }else if(inputType==InputType.keyboard){
             if(Input.GetButton("Horizontal")){hPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
             if(Input.GetButton("Vertical")){vPressedTime+=Time.unscaledDeltaTime; mPressedTime+=Time.unscaledDeltaTime;}
-            if(Input.GetButton("Horizontal")||Input.GetButton("Vertical")&&!GameSession.GlobalTimeIsPaused){moving=true;}//Add to total time flying
+            if(Input.GetButton("Horizontal")||Input.GetButton("Vertical")&&!GameManager.GlobalTimeIsPaused){moving=true;}//Add to total time flying
             if(!Input.GetButton("Horizontal")){hPressedTime=0;}
             if(!Input.GetButton("Vertical")){vPressedTime=0;}
             if(!Input.GetButton("Horizontal")&&!Input.GetButton("Vertical")){mPressedTime=0;moving=false;}
@@ -458,7 +458,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         float distX=0;if(moveX){distX=Mathf.Abs(mousePos.x-transform.position.x);}
         float distY=0;if(moveY){distY=Mathf.Abs(mousePos.y-transform.position.y);}
         if((moveX&&distX>0f&&distX<0.35f)||(moveY&&distY>0f&&distY<0.35f)){dist=0.35f;}
-        if(dist>=0.3f&&!GameSession.GlobalTimeIsPaused){moving=true;}
+        if(dist>=0.3f&&!GameManager.GlobalTimeIsPaused){moving=true;}
         if((moveX&&moveY)&&dist<=0.05f){moving=false;}
         if(((moveX&&!moveY)||!moveX&&moveY)&&dist<=0.24f){moving=false;}
 
@@ -502,7 +502,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             float distX=0;if(moveX){distX=Mathf.Abs(movePos.x-dragStartPos.x);}
             float distY=0;if(moveY){distY=Mathf.Abs(movePos.y-dragStartPos.y);}
             if((moveX&&distX>0f&&distX<0.35f)||(moveY&&distY>0f&&distY<0.35f)){dist=0.35f;}
-            if(dist>=0.3f&&!GameSession.GlobalTimeIsPaused){moving=true;}
+            if(dist>=0.3f&&!GameManager.GlobalTimeIsPaused){moving=true;}
             if((moveX&&moveY)&&dist<=0.05f){moving=false;}
             if(((moveX&&!moveY)||!moveX&&moveY)&&dist<=0.24f){moving=false;}
             
@@ -536,7 +536,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     //const float DCLICK_SHOOT_TIME=0.2f;
     float lastClickShootTime;
     void Shoot(){
-        if(!GameSession.GlobalTimeIsPaused){
+        if(!GameManager.GlobalTimeIsPaused){
             if(inputType!=InputType.touch&&inputType!=InputType.drag){
                 if(!autoShoot){
                     if(Input.GetButtonDown("Fire1")||Input.GetKeyDown(KeyCode.Z)){
@@ -586,7 +586,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         }else{if(shootCoroutine!=null)StopCoroutine(shootCoroutine);shootCoroutine=null;shootTimer=0;}
     }
 
-    public void ShootButton(bool pressed){      if(!GameSession.GlobalTimeIsPaused){
+    public void ShootButton(bool pressed){      if(!GameManager.GlobalTimeIsPaused){
         if(!autoShoot){
             if(pressed){
                 if(shootCoroutine!=null){return;}
@@ -641,9 +641,9 @@ public class Player : MonoBehaviour{    public static Player instance;
         Hide();
         pmodules.DeathSkills();
         StatsAchievsManager.instance.AddDeaths();
-        GameSession.instance.SetAnalytics();
+        GameManager.instance.SetAnalytics();
 
-        if(GameSession.instance.CheckGamemodeSelected("Adventure")){GameSession.instance.DieAdventure();}
+        if(GameManager.instance.CheckGamemodeSelected("Adventure")){GameManager.instance.DieAdventure();}
 
         DeathFX();
         GameOverCanvas.instance.OpenGameOverCanvas();
@@ -666,14 +666,14 @@ public class Player : MonoBehaviour{    public static Player instance;
             Instantiate(dfx.obj,transform.position,Quaternion.identity);
             AudioManager.instance.Play(dfx.sound);
         }else{
-            GameAssets.instance.VFX("Explosion",transform.position,0.5f);
+            AssetsManager.instance.VFX("Explosion",transform.position,0.5f);
             AudioManager.instance.Play("Death");
         }
         
     }
 
 #region//Powerups & Slotted items
-    public IEnumerator ShootContinuously(){     while(!GameSession.GlobalTimeIsPausedNotSlowed){
+    public IEnumerator ShootContinuously(){     while(!GameManager.GlobalTimeIsPausedNotSlowed){
         WeaponProperties w=null;
         if(!_isPowerupEmptyCur()){
             if(GetWeaponPropertyCur()!=null){w=GetWeaponPropertyCur();}
@@ -691,8 +691,8 @@ public class Player : MonoBehaviour{    public static Player instance;
                     var _ammo=_curPwrup().ammo;
                     if((w.costType==costType.energy&&((energyOn&&energy>0)||(!energyOn)))
                     ||((w.costType==costType.ammo&&_ammo>0))
-                    ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcCA.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameSession.instance.coins>0))
-                    ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameSession.instance.xp>0))){
+                    ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcCA.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameManager.instance.coins>0))
+                    ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameManager.instance.xp>0))){
                         if((/*w.costType==costType.ammo&&*/!overheated)&&((w.costType==costType.energy&&!_hasStatus("electrc"))||w.costType!=costType.energy)){
                             weaponTypeBullet wp=null;
                             if(w.weaponType==weaponType.bullet){wp=(weaponTypeBullet)w.weaponTypeProperties;}
@@ -711,7 +711,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                             void LeftSide(){for(var i=0;i<wp.bulletAmount;i++,
                             rL=new Vector3(rL.x+=wp.serialOffsetAngle.x,0,rL.z+=wp.serialOffsetAngle.y),soundIntervalL+=wp.serialOffsetSound){
                                 if(wp.leftAnchorE!=Vector2.zero){posL=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.leftAnchor.x,wp.leftAnchorE.x),UnityEngine.Random.Range(wp.leftAnchor.y,wp.leftAnchorE.y))*shipScale;}
-                                bulletL=GameAssets.instance.Make(asset, posL) as GameObject;
+                                bulletL=AssetsManager.instance.Make(asset, posL) as GameObject;
                                 if(bulletL!=null){
                                     if(bulletResize){bulletL.transform.localScale*=shipScale;}
                                     if(i>0){speedoffxL=wp.serialOffsetSpeed.x;speedoffyL=wp.serialOffsetSpeed.y;
@@ -727,13 +727,13 @@ public class Player : MonoBehaviour{    public static Player instance;
                                 }}
                                 if(wp.flare){
                                     if(ShipCustomizationManager.instance!=null){flareL=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),posL,Quaternion.identity);Destroy(flareL,wp.flareDur);}
-                                    else{flareL=GameAssets.instance.GetVFX("FlareShoot");}
+                                    else{flareL=AssetsManager.instance.GetVFX("FlareShoot");}
                                 }
                             }
                             void RightSide(){for(var i=0;i<wp.bulletAmount;i++,
                             rR=new Vector3(rR.x-=wp.serialOffsetAngle.x,0,rR.z-=wp.serialOffsetAngle.y),soundIntervalR+=wp.serialOffsetSound){
                                 if(wp.rightAnchorE!=Vector2.zero){posR=(Vector2)transform.position+new Vector2(UnityEngine.Random.Range(wp.rightAnchor.x,wp.rightAnchorE.x),UnityEngine.Random.Range(wp.rightAnchor.y,wp.rightAnchorE.y))*shipScale;}
-                                bulletR=GameAssets.instance.Make(asset, posR) as GameObject;
+                                bulletR=AssetsManager.instance.Make(asset, posR) as GameObject;
                                 if(bulletR!=null){
                                     if(bulletResize){bulletR.transform.localScale*=shipScale;}
                                     if(i>0){speedoffxR=wp.serialOffsetSpeed.x;speedoffyR=wp.serialOffsetSpeed.y;
@@ -749,7 +749,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                                 }}
                                 if(wp.flare){
                                     if(ShipCustomizationManager.instance!=null){flareR=Instantiate(ShipCustomizationManager.instance.GetFlareVFX(),posR,Quaternion.identity);Destroy(flareR,wp.flareDur);}
-                                    else{flareR=GameAssets.instance.GetVFX("FlareShoot");}
+                                    else{flareR=AssetsManager.instance.GetVFX("FlareShoot");}
                                 }
                             }
                             if(wp.leftSide)LeftSide();
@@ -787,14 +787,14 @@ public class Player : MonoBehaviour{    public static Player instance;
                 if(w.costType==costType.ammo){wc=(costTypeAmmo)w.costTypeProperties;}
                 if(w.costType==costType.crystalAmmo){wc=(costTypeCrystalAmmo)w.costTypeProperties;wcCA=(costTypeCrystalAmmo)wc;}
                 if(w.costType==costType.blackEnergy){wc=(costTypeBlackEnergy)w.costTypeProperties;wcBE=(costTypeBlackEnergy)wc;}
-                GameObject asset=GameAssets.instance.Get(w.assetName);
+                GameObject asset=AssetsManager.instance.Get(w.assetName);
                 var _ammo=_curPwrup().ammo;
                 if(ComparePowerupStrCur(w.name)&&
                 (
                     (w.costType==costType.energy&&!_hasStatus("electrc")&&((energyOn&&energy>0)||(!energyOn)))
                     ||((w.costType==costType.ammo&&_ammo>0))
-                    ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcCA.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameSession.instance.coins>0))
-                    ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameSession.instance.xp>0))
+                    ||((w.costType==costType.crystalAmmo)&&((energyOn&&wcCA.regularEnergyCost>0&&energy>0)||(!energyOn)||wcCA.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameManager.instance.coins>0))
+                    ||((w.costType==costType.blackEnergy)&&((energyOn&&wcBE.regularEnergyCost>0&&energy>0)||(!energyOn)||wcBE.regularEnergyCost==0)&&(_ammo>0||_ammo==-5||GameManager.instance.xp>0))
                 )
                 ){
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(asset.name))go=t.gameObject;}
@@ -831,7 +831,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                     (ws.costType==costType.energy&&((energyOn&&energy<=0)||_hasStatus("electrc"))))
                     ||(ws.costType!=costType.energy&&_ammo<=0&&_ammo!=-5)
                 ){
-                    GameObject asset=GameAssets.instance.Get(ws.assetName);
+                    GameObject asset=AssetsManager.instance.Get(ws.assetName);
                     foreach(Transform t in transform){if(t.gameObject.name.Contains(ws.assetName)){Destroy(t.gameObject);}}
                 }
             }
@@ -874,8 +874,8 @@ public class Player : MonoBehaviour{    public static Player instance;
     void QuickHeal(){if(Input.GetKeyDown(KeyCode.H)){UseItem("medkit_item");}}
     public void MedkitUse(){
         if(health<=(healthMax-GameRules.instance.medkit_hpGain)){HPAdd(GameRules.instance.medkit_hpGain);}
-        else{float _hpDif=healthMax-health;HPAdd(_hpDif);int _scoreVal=Mathf.RoundToInt(GameRules.instance.medkit_hpGain-_hpDif);GameSession.instance.AddToScoreNoEV(_scoreVal);}
-        if(health==healthMax&&GameRules.instance.medkit_hpGain==1){GameSession.instance.AddToScoreNoEV(25);}
+        else{float _hpDif=healthMax-health;HPAdd(_hpDif);int _scoreVal=Mathf.RoundToInt(GameRules.instance.medkit_hpGain-_hpDif);GameManager.instance.AddToScoreNoEV(_scoreVal);}
+        if(health==healthMax&&GameRules.instance.medkit_hpGain==1){GameManager.instance.AddToScoreNoEV(25);}
         AddSubEnergy(GameRules.instance.medkit_energyGain,true);
         AudioManager.instance.Play("Heal");
     }
@@ -951,7 +951,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         if(!_hasStatus("onfire")){if(onFireCor!=null)StopCoroutine(onFireCor);onFireCor=null;}
         if(!_hasStatus("decay")){if(decayCor!=null)StopCoroutine(decayCor);decayCor=null;}
 
-        if(!GameSession.GlobalTimeIsPaused){
+        if(!GameManager.GlobalTimeIsPaused){
             if(_hasStatus("flip")){
                 CountdownStatusTimer("flip",playTimerCloseSound:true);
                 moveDir=-1;
@@ -967,7 +967,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                 else{AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();RemoveStatus("shadowdash");}
 
                 if(dashTime<=0&&dashTime!=-4){vel=Vector2.zero;dashing=false;dashTime=-4;}
-                else{if(!GameSession.GlobalTimeIsPaused)dashTime-=Time.deltaTime;}
+                else{if(!GameManager.GlobalTimeIsPaused)dashTime-=Time.deltaTime;}
                 if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}
                 if(energyOn&&energy<=0){RemoveStatus("shadowdash");}
                 Shadow();if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==true)GetComponent<TrailVFX>().enabled=false;}
@@ -1040,26 +1040,26 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
         
         #region//Matrix & Accel
-        if(!GameSession.GlobalTimeIsPausedNotSlowed){
+        if(!GameManager.GlobalTimeIsPausedNotSlowed){
             var accelLimit=GameRules.instance.accelLimit;
-            if(accelLimit<0){accelLimit=GameSession.instance.defaultGameSpeed*Mathf.Abs(GameRules.instance.accelLimit);}
+            if(accelLimit<0){accelLimit=GameManager.instance.defaultGameSpeed*Mathf.Abs(GameRules.instance.accelLimit);}
             if(_hasStatus("matrix")&&!_hasStatus("accel")){
                 CountdownStatusTimer("matrix",unscaledTime:true);
                 //if((vel.x<0.7 && vel.x>-0.7) || (vel.y<0.7 && vel.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if((inputType==InputType.mouse || inputType==InputType.drag) && dist<1){
-                    GameSession.instance.gameSpeed=dist;
-                    GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,GameRules.instance.matrixLimit,GameSession.instance.defaultGameSpeed);
+                    GameManager.instance.gameSpeed=dist;
+                    GameManager.instance.gameSpeed=Mathf.Clamp(GameManager.instance.gameSpeed,GameRules.instance.matrixLimit,GameManager.instance.defaultGameSpeed);
                 }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
-                    //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameRules.instance.matrixLimit,GameSession.instance.defaultGameSpeed);
+                    //GameManager.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    GameManager.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameRules.instance.matrixLimit,GameManager.instance.defaultGameSpeed);
                 }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameRules.instance.matrixLimit,GameSession.instance.defaultGameSpeed);
+                    GameManager.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameRules.instance.matrixLimit,GameManager.instance.defaultGameSpeed);
                 }else{
-                    if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
+                    if(GameManager.instance.speedChanged!=true)GameManager.instance.gameSpeed=GameManager.instance.defaultGameSpeed;
                 }
-                //if(GetStatus("matrix").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; RemoveStatus("matrix");}
+                //if(GetStatus("matrix").timer<=0){GameManager.instance.gameSpeed=GameManager.instance.defaultGameSpeed; RemoveStatus("matrix");}
             }
 
             else if(_hasStatus("accel")&&!_hasStatus("matrix")){
@@ -1067,18 +1067,18 @@ public class Player : MonoBehaviour{    public static Player instance;
                 //if((vel.x<0.7 && vel.x>-0.7) || (vel.y<0.7 && vel.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if((inputType==InputType.mouse || inputType==InputType.drag) && dist>0.35){
-                    GameSession.instance.gameSpeed=dist+(1-0.35f);
-                    GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,GameSession.instance.defaultGameSpeed,accelLimit);
+                    GameManager.instance.gameSpeed=dist+(1-0.35f);
+                    GameManager.instance.gameSpeed=Mathf.Clamp(GameManager.instance.gameSpeed,GameManager.instance.defaultGameSpeed,accelLimit);
                 }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
-                    //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,accelLimit);
+                    //GameManager.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    GameManager.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameManager.instance.defaultGameSpeed,accelLimit);
                 }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameSession.instance.defaultGameSpeed,accelLimit);
+                    GameManager.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameManager.instance.defaultGameSpeed,accelLimit);
                 }else{
-                    if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
+                    if(GameManager.instance.speedChanged!=true)GameManager.instance.gameSpeed=GameManager.instance.defaultGameSpeed;
                 }
-                //if(GetStatus("accel").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed; RemoveStatus("accel");}
+                //if(GetStatus("accel").timer<=0){GameManager.instance.gameSpeed=GameManager.instance.defaultGameSpeed; RemoveStatus("accel");}
             }
 
             else if(_hasStatus("matrix")&&_hasStatus("accel")){
@@ -1087,19 +1087,19 @@ public class Player : MonoBehaviour{    public static Player instance;
                 //if((vel.x<0.7 && vel.x>-0.7) || (vel.y<0.7 && vel.y>-0.7)){
                 //||(inputType==false && (((Input.GetAxis("Horizontal")<0.6)||Input.GetAxis("Horizontal")>-0.6))||((Input.GetAxis("Vertical")<0.6)||Input.GetAxis("Vertical")>-0.6))
                 if(inputType==InputType.mouse || inputType==InputType.drag){
-                    GameSession.instance.gameSpeed=dist;
-                    GameSession.instance.gameSpeed=Mathf.Clamp(GameSession.instance.gameSpeed,GameRules.instance.matrixLimit,accelLimit);
+                    GameManager.instance.gameSpeed=dist;
+                    GameManager.instance.gameSpeed=Mathf.Clamp(GameManager.instance.gameSpeed,GameRules.instance.matrixLimit,accelLimit);
                 }else if(inputType==InputType.keyboard && (((Input.GetAxis("Horizontal")<0.5)||Input.GetAxis("Horizontal")>-0.5)||((Input.GetAxis("Vertical")<0.5)||Input.GetAxis("Vertical")>-0.5))){
                     
-                    //GameSession.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
-                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameRules.instance.matrixLimit,accelLimit);
+                    //GameManager.instance.gameSpeed=(Mathf.Abs(Input.GetAxis("Horizontal"))+Mathf.Abs(Input.GetAxis("Vertical"))/2);
+                    GameManager.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameRules.instance.matrixLimit,accelLimit);
                 }else if(inputType==InputType.touch && (((joystick.Horizontal<0.4f)||joystick.Horizontal>-0.4f)||((joystick.Vertical<0.4f)||joystick.Vertical>-0.4f))){
-                    GameSession.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameRules.instance.matrixLimit,accelLimit);
+                    GameManager.instance.gameSpeed=Mathf.Clamp(mPressedTime,GameRules.instance.matrixLimit,accelLimit);
                 }else{
-                    if(GameSession.instance.speedChanged!=true)GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;
+                    if(GameManager.instance.speedChanged!=true)GameManager.instance.gameSpeed=GameManager.instance.defaultGameSpeed;
                 }
-                //if(GetStatus("matrix").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;RemoveStatus("matrix");}
-                //if(GetStatus("accel").timer<=0){GameSession.instance.gameSpeed=GameSession.instance.defaultGameSpeed;RemoveStatus("accel");}
+                //if(GetStatus("matrix").timer<=0){GameManager.instance.gameSpeed=GameManager.instance.defaultGameSpeed;RemoveStatus("matrix");}
+                //if(GetStatus("accel").timer<=0){GameManager.instance.gameSpeed=GameManager.instance.defaultGameSpeed;RemoveStatus("accel");}
             }
         }
         #endregion
@@ -1121,10 +1121,10 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
     
     void Shadow(){
-        if(!GameSession.GlobalTimeIsPaused&&shadowInstTimer<=0){
+        if(!GameManager.GlobalTimeIsPaused&&shadowInstTimer<=0){
             GameObject shadow=null;
-            if(_hasStatus("shadowdash")){shadow=GameAssets.instance.Make("PlayerShadow",transform.position);shadowInstTimer=shadowdashInstTime;}
-            else if(_hasStatus("shadowtraces")){shadow=GameAssets.instance.Make("PlayerShadowColli",transform.position);shadowInstTimer=shadowtracesInstTime;}
+            if(_hasStatus("shadowdash")){shadow=AssetsManager.instance.Make("PlayerShadow",transform.position);shadowInstTimer=shadowdashInstTime;}
+            else if(_hasStatus("shadowtraces")){shadow=AssetsManager.instance.Make("PlayerShadowColli",transform.position);shadowInstTimer=shadowtracesInstTime;}
             if(shadow!=null){
                 shadow.transform.localScale=new Vector3(shipScale,shipScale,1);
                 Destroy(shadow.gameObject,shadowLength);
@@ -1132,7 +1132,7 @@ public class Player : MonoBehaviour{    public static Player instance;
         }
     }
     void Regen(){
-        if(!GameSession.GlobalTimeIsPaused){
+        if(!GameManager.GlobalTimeIsPaused){
             hpAbsorpAmnt=Mathf.Clamp(hpAbsorpAmnt,0,healthMax/GameRules.instance.hpAbsorpFractionCap);
             enAbsorpAmnt=Mathf.Clamp(enAbsorpAmnt,0,energyMax/GameRules.instance.enAbsorpFractionCap);
             if(hpAbsorpAmnt>0&&timerHpRegen>=freqHpRegen){if(health<healthMax&&!_hasStatus("noHeal")){HPAddSilent(hpRegenAmnt);HPAbsorp(hpRegenAmnt,false);timerHpRegen=0;}}
@@ -1142,12 +1142,12 @@ public class Player : MonoBehaviour{    public static Player instance;
     public void Thorns(){if(_hasStatus("thorns")){ShootRadialBullets("LSpike",6,6f);}}
     public void ShootRadialBullets(string asset="LSpike",int amnt=6,float speed=5){
         var lrb=gameObject.AddComponent<LaunchRadialBullets>();
-        lrb.Setup(GameAssets.instance.Get(asset),amnt,speed);
+        lrb.Setup(AssetsManager.instance.Get(asset),amnt,speed);
         lrb.Shoot();
         Destroy(lrb,0.01f);
     }
     public void Recoil(float strength, float time){if(recoilOn)StartCoroutine(RecoilI(strength,time));}
-    IEnumerator RecoilI(float strength,float time){     if(!GameSession.GlobalTimeIsPaused){
+    IEnumerator RecoilI(float strength,float time){     if(!GameManager.GlobalTimeIsPaused){
         Shake.instance.CamShake(0.1f,1/(time*4));
         if(SaveSerial.instance.settingsData.vibrations)Vibrator.Vibrate(2);
         vel = Vector2.down*strength;
@@ -1406,29 +1406,29 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
     public void AddSubCoins(int value, bool add=true,bool ignoreInvert=false){
         if(!_hasStatus("inverter")||ignoreInvert){
-            if(add){GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
-            else{GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
+            if(add){GameManager.instance.coins+=value;CoinsPopUpHUD(value);}
+            else{GameManager.instance.coins-=value;CoinsPopUpHUD(-value);}
         }else{
-            if(add){GameSession.instance.coins-=value;CoinsPopUpHUD(-value);}
-            else{GameSession.instance.coins+=value;CoinsPopUpHUD(value);}
+            if(add){GameManager.instance.coins-=value;CoinsPopUpHUD(-value);}
+            else{GameManager.instance.coins+=value;CoinsPopUpHUD(value);}
         }
     }
     public void AddSubXP(float value, bool add=true,bool ignoreInvert=false){
         if(!_hasStatus("inverter")||ignoreInvert){
-            if(add){GameSession.instance.AddXP(value);}
-            else{GameSession.instance.AddXP(-value);}
+            if(add){GameManager.instance.AddXP(value);}
+            else{GameManager.instance.AddXP(-value);}
         }else{
-            if(add){GameSession.instance.AddXP(-value);}
-            else{GameSession.instance.AddXP(value);}
+            if(add){GameManager.instance.AddXP(-value);}
+            else{GameManager.instance.AddXP(value);}
         }
     }
     public void AddSubCores(int value, bool add=true,bool ignoreInvert=false){
         if(!_hasStatus("inverter")||ignoreInvert){
-            if(add){GameSession.instance.cores+=value;CoresPopUpHUD(value);}
-            else{GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
+            if(add){GameManager.instance.cores+=value;CoresPopUpHUD(value);}
+            else{GameManager.instance.cores-=value;CoresPopUpHUD(-value);}
         }else{
-            if(add){GameSession.instance.cores-=value;CoresPopUpHUD(-value);}
-            else{GameSession.instance.cores+=value;CoresPopUpHUD(value);}
+            if(add){GameManager.instance.cores-=value;CoresPopUpHUD(-value);}
+            else{GameManager.instance.cores+=value;CoresPopUpHUD(value);}
         }
     }
     public void HPAbsorp(float value, bool add=true,bool ignoreInvert=true){

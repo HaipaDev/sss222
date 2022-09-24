@@ -6,7 +6,7 @@ public class AssetAsChild : MonoBehaviour{
     [SerializeField] string assetName;
     [SerializeField] Vector2 offset;
     void Start(){
-        GameObject go=Instantiate(GameAssets.instance.Get(assetName),transform);
+        GameObject go=Instantiate(AssetsManager.instance.Get(assetName),transform);
         go.transform.localPosition=offset;
     }
 }

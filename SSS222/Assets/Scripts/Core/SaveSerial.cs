@@ -10,18 +10,18 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	void Awake(){if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}}
 	IEnumerator Start(){
 		yield return new WaitForSecondsRealtime(0.01f);
-		playerData.highscore=new Highscore[GameCreator.GetGamerulesetsPrefabsLength()];
+		playerData.highscore=new Highscore[CoreSetup.GetGamerulesetsPrefabsLength()];
 		for(int i=0;i<playerData.highscore.Length;i++){playerData.highscore[i]=new Highscore();}
 		//playerData.achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()];
 		statsData.statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()];
 		
-		if(String.IsNullOrEmpty(playerData.skinName)||GameAssets.instance.GetSkin(playerData.skinName)==null){playerData.skinName="def";}
-		if(String.IsNullOrEmpty(playerData.trailName)||GameAssets.instance.GetTrail(playerData.trailName)==null){playerData.trailName="def";}
-		if(String.IsNullOrEmpty(playerData.flaresName)||GameAssets.instance.GetFlares(playerData.flaresName)==null){playerData.flaresName="def";}
-		if(String.IsNullOrEmpty(playerData.deathFxName)||GameAssets.instance.GetDeathFx(playerData.deathFxName)==null){playerData.deathFxName="def";}
-		if(String.IsNullOrEmpty(playerData.musicName)||GameAssets.instance.GetMusic(playerData.musicName)==null){playerData.musicName=CstmzMusic._cstmzMusicDef;}
+		if(String.IsNullOrEmpty(playerData.skinName)||AssetsManager.instance.GetSkin(playerData.skinName)==null){playerData.skinName="def";}
+		if(String.IsNullOrEmpty(playerData.trailName)||AssetsManager.instance.GetTrail(playerData.trailName)==null){playerData.trailName="def";}
+		if(String.IsNullOrEmpty(playerData.flaresName)||AssetsManager.instance.GetFlares(playerData.flaresName)==null){playerData.flaresName="def";}
+		if(String.IsNullOrEmpty(playerData.deathFxName)||AssetsManager.instance.GetDeathFx(playerData.deathFxName)==null){playerData.deathFxName="def";}
+		if(String.IsNullOrEmpty(playerData.musicName)||AssetsManager.instance.GetMusic(playerData.musicName)==null){playerData.musicName=CstmzMusic._cstmzMusicDef;}
 
-		foreach(CstmzLockbox lb in GameAssets.instance.lockboxes){if(!playerData.lockboxesInventory.Exists(x=>x.name==lb.name)){playerData.lockboxesInventory.Add(new LockboxCount{name=lb.name,count=0});}}
+		foreach(CstmzLockbox lb in AssetsManager.instance.lockboxes){if(!playerData.lockboxesInventory.Exists(x=>x.name==lb.name)){playerData.lockboxesInventory.Add(new LockboxCount{name=lb.name,count=0});}}
 
 		/*settingsData.masterVolume=Mathf.Clamp(settingsData.masterVolume,0,2);
 		settingsData.soundVolume=Mathf.Clamp(settingsData.soundVolume,0,2);
@@ -108,8 +108,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public string _playerDataPath(){return Application.persistentDataPath+"/"+filename+".hyper";}
 	public void Save(){
         var settings=new ES3Settings(_playerDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
-		if(!ES3.KeyExists("buildFirstLoaded",settings)){buildFirstLoaded=GameSession.instance.buildVersion;ES3.Save("buildFirstLoaded",buildFirstLoaded,settings);}
-		buildLastLoaded=GameSession.instance.buildVersion;ES3.Save("buildLastLoaded",buildLastLoaded,settings);
+		if(!ES3.KeyExists("buildFirstLoaded",settings)){buildFirstLoaded=GameManager.instance.buildVersion;ES3.Save("buildFirstLoaded",buildFirstLoaded,settings);}
+		buildLastLoaded=GameManager.instance.buildVersion;ES3.Save("buildLastLoaded",buildLastLoaded,settings);
 		ES3.Save("playerData",playerData,settings);
 		Debug.Log("Game Data saved");
 	}
@@ -127,7 +127,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		}else Debug.LogWarning("Game Data file not found in: "+_playerDataPath());
 	}
 	public void Delete(){
-		playerData=new PlayerData(){highscore=new Highscore[GameCreator.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
+		playerData=new PlayerData(){highscore=new Highscore[CoreSetup.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
 		GC.Collect();
 		if(ES3.FileExists(_playerDataPath())){
 			ES3.DeleteFile(_playerDataPath());
@@ -175,7 +175,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public int zoneSelected=0;
 		public int zoneToTravelTo=-1;
 		public float travelTimeLeft=-4;
-		//public float gameSessionTime;
+		//public float GameManagerTime;
 		public List<string> defeatedBosses;
 		public List<string> lockedZones;
 

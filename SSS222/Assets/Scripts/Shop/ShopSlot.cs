@@ -35,13 +35,13 @@ public class ShopSlot : MonoBehaviour{
     }
     public void Purchase(){
     if(Player.instance!=null){
-    if(GameSession.instance.coins>=price&&limitCount<limit){
-        GameSession.instance.coins-=price;
+    if(GameManager.instance.coins>=price&&limitCount<limit){
+        GameManager.instance.coins-=price;
         purchasedCount++;
         Shop.instance.RepChange(rep);
         if(Shop.instance.currentSlotID>=Shop.instance.lootTable.currentQueue.slotsWhenLimit)limitCount++;
         var pos=Player.instance.transform.position;
-        if(!String.IsNullOrEmpty(item.assetName)){Instantiate(GameAssets.instance.Get(item.assetName),pos,Quaternion.identity);}
+        if(!String.IsNullOrEmpty(item.assetName)){Instantiate(AssetsManager.instance.Get(item.assetName),pos,Quaternion.identity);}
         else{}
         Shop.instance.Purchase();
     }

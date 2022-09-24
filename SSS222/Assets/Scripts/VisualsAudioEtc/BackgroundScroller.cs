@@ -13,7 +13,7 @@ public class BackgroundScroller : MonoBehaviour{
     void Update(){
         offSet=new Vector2(0f,bgFarSpeed);
         //#if !UNITY_EDITOR
-        if(!GameSession.GlobalTimeIsPaused)
+        if(!GameManager.GlobalTimeIsPaused)
         //#endif
             myMat.mainTextureOffset+=offSet*Time.deltaTime;
     }

@@ -23,7 +23,7 @@ public class BreakEncounter : MonoBehaviour{    public static BreakEncounter ins
         waitForCargoSpawn=true;
         FindObjectOfType<Waves>().timeSpawns=-4;
         if(GameRules.instance.breakEncounterPauseMusic){Jukebox.instance.Pause();}
-        if(GameSession.instance.CheckGamemodeSelected("Adventure"))GameSession.instance.SaveAdventure();
+        if(GameManager.instance.CheckGamemodeSelected("Adventure"))GameManager.instance.SaveAdventure();
     }
     public void QuitBreak(){
         Debug.Log("Quitting Break");
@@ -33,7 +33,7 @@ public class BreakEncounter : MonoBehaviour{    public static BreakEncounter ins
         FindObjectOfType<Waves>().RandomizeWave();
         FindObjectOfType<Waves>().timeSpawns=FindObjectOfType<Waves>().currentWave.timeSpawnWave;
         if(GameRules.instance.breakEncounterPauseMusic){Jukebox.instance.UnPause();}
-        if(GameSession.instance.CheckGamemodeSelected("Adventure"))GameSession.instance.SaveAdventure();
+        if(GameManager.instance.CheckGamemodeSelected("Adventure"))GameManager.instance.SaveAdventure();
     }
     public void Ascended(){ascended=true;}
     public void AddWaves(){

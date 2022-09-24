@@ -15,7 +15,7 @@ public class EnemyCollider : MonoBehaviour{
                 armorPenetr=UniCollider.GetArmorPenetr(dmgVal.armorPenetr,en.defense);
             }
 
-            if(other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)||other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){GetComponent<Enemy>().Kill(false);return;}
+            if(other.gameObject.name.Contains(AssetsManager.instance.Get("VLaser").name)||other.gameObject.name.Contains(AssetsManager.instance.Get("HLaser").name)){GetComponent<Enemy>().Kill(false);return;}
 
             
             if(dmgVal!=null){
@@ -31,7 +31,7 @@ public class EnemyCollider : MonoBehaviour{
                 }
                 if(en._healable()){
                     if(Player.instance!=null){if(Player.instance._hasStatus("lifeSteal")){
-                        HealBeam hb=Instantiate(GameAssets.instance.Get("HealBeam"),(Vector2)transform.position,Quaternion.identity).GetComponent<HealBeam>();
+                        HealBeam hb=Instantiate(AssetsManager.instance.Get("HealBeam"),(Vector2)transform.position,Quaternion.identity).GetComponent<HealBeam>();
                         hb.value=dmg/100*(Player.instance.GetStatus("lifeSteal").strength);
                         hb.absorp=false;
                     }}
@@ -49,7 +49,7 @@ public class EnemyCollider : MonoBehaviour{
                     armorPenetr=UniCollider.GetArmorPenetr(dmgVal.armorPenetr,en.defense);
                 }
 
-                if(other.gameObject.name.Contains(GameAssets.instance.Get("VLaser").name)||other.gameObject.name.Contains(GameAssets.instance.Get("HLaser").name)){GetComponent<Enemy>().Kill(false);return;}
+                if(other.gameObject.name.Contains(AssetsManager.instance.Get("VLaser").name)||other.gameObject.name.Contains(AssetsManager.instance.Get("HLaser").name)){GetComponent<Enemy>().Kill(false);return;}
 
             if(dmgVal!=null){
                 if(dmgVal.colliType==colliTypes.playerWeapons||dmgVal.colliType==colliTypes.player){

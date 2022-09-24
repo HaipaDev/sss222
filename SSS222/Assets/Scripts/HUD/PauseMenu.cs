@@ -28,7 +28,7 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
             }else{
                 if(_isPausable()){Pause();}
             }
-        }//if(Input.GetKeyDown(KeyCode.R)){//in GameSession}
+        }//if(Input.GetKeyDown(KeyCode.R)){//in GameManager}
         if(!GameIsPaused){
             if(unpausedTimer==-1)unpausedTimer=0;
             unpausedTimer+=Time.unscaledDeltaTime;
@@ -38,7 +38,7 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         pauseMenuUI.SetActive(false);
         if(optionsUI.transform.GetChild(0).gameObject.activeSelf){SettingsMenu.instance.Back();}
         //if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();}
-        GameSession.instance.gameSpeed=1;
+        GameManager.instance.gameSpeed=1;
         //StartCoroutine(SpeedUp());
         GameIsPaused = false;
         slowDownCo=null;
@@ -47,7 +47,7 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
     public void PauseEmpty(){
         GameIsPaused = true;
         if(!GameRules.instance.instaPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
-        else{GameSession.instance.gameSpeed=0;}
+        else{GameManager.instance.gameSpeed=0;}
         unpausedTimer=-1;
         //Debug.Log("Pausing");
     }
@@ -58,7 +58,7 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         &&(FindObjectOfType<BossAI>()==null||(FindObjectOfType<BossAI>()!=null&&FindObjectOfType<BossAI>().GetComponent<Enemy>().health>0));
     }
     public void Pause(){
-        prevGameSpeed = GameSession.instance.gameSpeed;
+        prevGameSpeed = GameManager.instance.gameSpeed;
         pauseMenuUI.SetActive(true);
         PauseEmpty();
         //ParticleSystem.Stop();
@@ -66,24 +66,24 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         //foreach(ptSystem in ptSystems){ParticleSystem.Pause();}
     }
     IEnumerator SlowDown(){
-        while(GameSession.instance.gameSpeed>0){
-        GameSession.instance.speedChanged=true; GameSession.instance.gameSpeed-=slowPauseSpeed;
+        while(GameManager.instance.gameSpeed>0){
+        GameManager.instance.speedChanged=true; GameManager.instance.gameSpeed-=slowPauseSpeed;
         yield return new WaitForEndOfFrame();
         }
     }IEnumerator SpeedUp(){
-        while(GameSession.instance.gameSpeed<1){
-        GameSession.instance.speedChanged=true; GameSession.instance.gameSpeed+=slowPauseSpeed;
+        while(GameManager.instance.gameSpeed<1){
+        GameManager.instance.speedChanged=true; GameManager.instance.gameSpeed+=slowPauseSpeed;
         yield return new WaitForEndOfFrame();
         }
     }
     public void Menu(){
-        //GameSession.instance.gameSpeed = prevGameSpeed;
-        GameSession.instance.gameSpeed = 1f;
+        //GameManager.instance.gameSpeed = prevGameSpeed;
+        GameManager.instance.gameSpeed = 1f;
         SceneManager.LoadScene("Menu");
     }
     public void OpenOptions(){
         optionsUI.GetComponent<SettingsMenu>().OpenSettings();
         pauseMenuUI.SetActive(false);
     }
-    public void PreviousGameSpeed(){GameSession.instance.gameSpeed = prevGameSpeed;}
+    public void PreviousGameSpeed(){GameManager.instance.gameSpeed = prevGameSpeed;}
 }

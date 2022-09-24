@@ -16,19 +16,19 @@ public class LockboxElement : MonoBehaviour{//, IEventSystemHandler, IPointerEnt
     void Start(){}
     void Update(){
         if(countText!=null)countText.text="x"+_lockboxCount(name).count.ToString();
-        if(costText!=null)costText.text=GameAssets.instance.GetLockbox(name).cost.ToString();
-        if(CustomizationInventory._literallyEverythingInCategoryUnlocked(GameAssets.instance.GetLockbox(name).category))Debug.Log("everything unlocked in: "+name);
+        if(costText!=null)costText.text=AssetsManager.instance.GetLockbox(name).cost.ToString();
+        if(CustomizationInventory._literallyEverythingInCategoryUnlocked(AssetsManager.instance.GetLockbox(name).category))Debug.Log("everything unlocked in: "+name);
     }
     public void UseLockbox(){
-        if(_lockboxCount(name).count>0&&!CustomizationInventory._literallyEverythingInCategoryUnlocked(GameAssets.instance.GetLockbox(name).category)){
+        if(_lockboxCount(name).count>0&&!CustomizationInventory._literallyEverythingInCategoryUnlocked(AssetsManager.instance.GetLockbox(name).category)){
             CustomizationInventory.instance.OpenLockboxOpeningPanel(name);
             _lockboxCount(name).count--;
         }else{AudioManager.instance.Play("Deny");}
     }
     public void CraftLockbox(){
-        if(SaveSerial.instance.playerData.dynamCelestStars>=GameAssets.instance.GetLockbox(name).cost&&!CustomizationInventory._literallyEverythingInCategoryUnlocked(GameAssets.instance.GetLockbox(name).category)){
+        if(SaveSerial.instance.playerData.dynamCelestStars>=AssetsManager.instance.GetLockbox(name).cost&&!CustomizationInventory._literallyEverythingInCategoryUnlocked(AssetsManager.instance.GetLockbox(name).category)){
             _lockboxCount(name).count++;
-            SaveSerial.instance.playerData.dynamCelestStars-=GameAssets.instance.GetLockbox(name).cost;
+            SaveSerial.instance.playerData.dynamCelestStars-=AssetsManager.instance.GetLockbox(name).cost;
             AudioManager.instance.Play("LockboxCraft");
         }else{AudioManager.instance.Play("Deny");}
     }

@@ -40,21 +40,21 @@ public class BGManager : MonoBehaviour{
     float _deltaTime;
     void Update(){
         if(SceneManager.GetActiveScene().name=="SandboxMode"){if(GameRules.instance.bgMaterial!=null){SetMatProps(GameRules.instance.bgMaterial);}}
-        if(SceneManager.GetActiveScene().name=="Game"&&GameSession.instance.zoneToTravelTo!=-1){
-            var curMat=GameCreator.instance.adventureZones[GameSession.instance.zoneSelected].gameRules.bgMaterial;
-            var targMat=GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].gameRules.bgMaterial;
-            var vel=0f;var smoothTime=GameSession.instance.NormalizedZoneTravelTimeLeft()/10;
-                //(GameSession.instance.CalcZoneTravelTime()/2);
-                //Mathf.Round(GameSession.instance.gameTimeLeft)/100;
+        if(SceneManager.GetActiveScene().name=="Game"&&GameManager.instance.zoneToTravelTo!=-1){
+            var curMat=CoreSetup.instance.adventureZones[GameManager.instance.zoneSelected].gameRules.bgMaterial;
+            var targMat=CoreSetup.instance.adventureZones[GameManager.instance.zoneToTravelTo].gameRules.bgMaterial;
+            var vel=0f;var smoothTime=GameManager.instance.NormalizedZoneTravelTimeLeft()/10;
+                //(GameManager.instance.CalcZoneTravelTime()/2);
+                //Mathf.Round(GameManager.instance.gameTimeLeft)/100;
             if(Time.deltaTime>0){_deltaTime=Time.deltaTime;}var maxSpeed=Mathf.Infinity;
 
             TransitionBackgroundMats(ref travelingShaderMatProps, curMat, targMat, ref vel, smoothTime, maxSpeed, _deltaTime);
 
-            //travelingShaderMatProps.hue=(GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].gameRules.bgMaterial.hue-GameCreator.instance.adventureZones[GameSession.instance.zoneSelected].gameRules.bgMaterial.hue)*Time.deltaTime;
-            /*travelingShaderMatProps.hue=GameAssets.Normalize(
-                GameSession.instance.gameTimeLeft/GameSession.instance.CalcZoneTravelTime(),
-                GameCreator.instance.adventureZones[GameSession.instance.zoneSelected].gameRules.bgMaterial.hue,
-                GameCreator.instance.adventureZones[GameSession.instance.zoneToTravelTo].gameRules.bgMaterial.hue
+            //travelingShaderMatProps.hue=(CoreSetup.instance.adventureZones[GameManager.instance.zoneToTravelTo].gameRules.bgMaterial.hue-CoreSetup.instance.adventureZones[GameManager.instance.zoneSelected].gameRules.bgMaterial.hue)*Time.deltaTime;
+            /*travelingShaderMatProps.hue=AssetsManager.Normalize(
+                GameManager.instance.gameTimeLeft/GameManager.instance.CalcZoneTravelTime(),
+                CoreSetup.instance.adventureZones[GameManager.instance.zoneSelected].gameRules.bgMaterial.hue,
+                CoreSetup.instance.adventureZones[GameManager.instance.zoneToTravelTo].gameRules.bgMaterial.hue
             );*/
             SetMatProps(travelingShaderMatProps);
         }
@@ -72,7 +72,7 @@ public class BGManager : MonoBehaviour{
         if(startVal==0&&targVal>0.5f){startVal=1;}else if(startVal>0.5f&&targVal==0){targVal=1;}
         shaderMatProps.value=Mathf.SmoothDamp(startVal, targVal, ref vel, smoothTime, maxSpeed, _deltaTime);
     }
-    public void SetMatProps(ShaderMatProps mat){shaderMatProps=mat;if(material!=null){material=GameAssets.instance.UpdateShaderMatProps(material,shaderMatProps);}UpdateMaterials();}
+    public void SetMatProps(ShaderMatProps mat){shaderMatProps=mat;if(material!=null){material=AssetsManager.instance.UpdateShaderMatProps(material,shaderMatProps);}UpdateMaterials();}
     [Button]public void UpdateMaterials(){foreach(Tag_BGColor t in transform.GetComponentsInChildren<Tag_BGColor>()){if(material!=null)t.GetComponent<Renderer>().sharedMaterial=material;}}
     public Texture2D GetBgTexture(){return text;}
     public Material GetBgMat(){return transform.GetComponentInChildren<Tag_BGColor>().GetComponent<Renderer>().sharedMaterial;}

@@ -10,8 +10,8 @@ public class WorldCanvas : MonoBehaviour{
     void Awake(){if(WorldCanvas.instance!=null){Destroy(gameObject);}else{instance=this;}}
     public GameObject DMGPopup(float dmg, Vector2 pos, Color color, float scale=1, bool crit=false){    if(SaveSerial.instance.settingsData.dmgPopups){
         GameObject go;
-        if(!crit)go=WorldCanvas.CreateOnUI(GameAssets.instance.GetVFX("DMGPopup"),pos);
-        else go=WorldCanvas.CreateOnUI(GameAssets.instance.GetVFX("DMGPopupCrit"),pos);
+        if(!crit)go=WorldCanvas.CreateOnUI(AssetsManager.instance.GetVFX("DMGPopup"),pos);
+        else go=WorldCanvas.CreateOnUI(AssetsManager.instance.GetVFX("DMGPopupCrit"),pos);
         go.GetComponentInChildren<TextMeshProUGUI>().color=color;
         go.transform.localScale=new Vector2(scale,scale);
         string symbol="";if(dmg<0){symbol="+";}

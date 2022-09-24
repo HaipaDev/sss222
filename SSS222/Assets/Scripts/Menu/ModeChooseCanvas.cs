@@ -11,7 +11,7 @@ public class ModeChooseCanvas : MonoBehaviour{
     void Start(){
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(1).gameObject.SetActive(false);
-        foreach(GameRules gr in GameCreator.instance.gamerulesetsPrefabs){
+        foreach(GameRules gr in CoreSetup.instance.gamerulesetsPrefabs){
             string name=gr.cfgName;     if(name.Contains(" Mode"))name=name.Replace(" Mode","");
             if(!gr.cfgName.Contains("Arcade Mode")){
                 GameObject go=Instantiate(elementPrefab,container);
@@ -21,7 +21,7 @@ public class ModeChooseCanvas : MonoBehaviour{
                 go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr.cfgDesc;
                 if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
                 if(gr.cfgIconsGo!=null){Instantiate(gr.cfgIconsGo,go.transform.GetChild(1));}
-                else{go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=GameAssets.instance.Spr(gr.cfgIconAssetName);}
+                else{go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=AssetsManager.instance.Spr(gr.cfgIconAssetName);}
             }
         }
     }

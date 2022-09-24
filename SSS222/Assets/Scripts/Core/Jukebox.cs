@@ -23,12 +23,12 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
         if(GameRules.instance!=null&&SceneManager.GetActiveScene().name=="Game"&&SaveSerial.instance.settingsData.windDownMusic){
             float _curMusicSpeed=GetComponent<AudioSource>().pitch;
             float _musicSpeed=1f;
-            if(GameRules.instance.musicSlowdownOnPause&&GameSession.GlobalTimeIsPausedNotSlowed){_musicSpeed=pauseSpeed;}
-            if(GameRules.instance.musicSlowdownOnPaceChange&&!GameSession.GlobalTimeIsPausedNotSlowed/*&&GameSession.instance.speedChanged*/){_musicSpeed=1-(GameSession.instance.defaultGameSpeed-GameSession.instance.gameSpeed);}
-            if(GameRules.instance.musicSlowdownOnPaceChange&&!GameSession.GlobalTimeIsPausedNotSlowed&&Player.instance!=null){_musicSpeed=1-(GameSession.instance.defaultGameSpeed-GameSession.instance.gameSpeed);}
+            if(GameRules.instance.musicSlowdownOnPause&&GameManager.GlobalTimeIsPausedNotSlowed){_musicSpeed=pauseSpeed;}
+            if(GameRules.instance.musicSlowdownOnPaceChange&&!GameManager.GlobalTimeIsPausedNotSlowed/*&&GameManager.instance.speedChanged*/){_musicSpeed=1-(GameManager.instance.defaultGameSpeed-GameManager.instance.gameSpeed);}
+            if(GameRules.instance.musicSlowdownOnPaceChange&&!GameManager.GlobalTimeIsPausedNotSlowed&&Player.instance!=null){_musicSpeed=1-(GameManager.instance.defaultGameSpeed-GameManager.instance.gameSpeed);}
             if(Player.instance==null){_musicSpeed=deadSpeed;inverted=false;}
 
-            if(GameRules.instance.musicSlowdownOnPause&&!GameSession.GlobalTimeIsPausedNotSlowed&&!GameRules.instance.musicSlowdownOnPaceChange){_musicSpeed=1f;}
+            if(GameRules.instance.musicSlowdownOnPause&&!GameManager.GlobalTimeIsPausedNotSlowed&&!GameRules.instance.musicSlowdownOnPaceChange){_musicSpeed=1f;}
             
             int _mult=1;if(inverted){_mult=-1;}else{_mult=1;}
             if(_curMusicSpeed>_musicSpeed*_mult)_curMusicSpeed=Mathf.Clamp(_curMusicSpeed-=windUpDownSpeed,_musicSpeed,upperPitchLimit)*_mult;
@@ -38,7 +38,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
         }else{GetComponent<AudioSource>().pitch=1;}
     }
     public void SetMusic(AudioClip clip,bool force=false){if(currentMusic!=clip||force)currentMusic=clip;GetComponent<AudioSource>().loop=true;}
-    public void SetMusicToCstmzMusic(bool force=false){SetMusic(GameAssets.instance.GetMusic(SaveSerial.instance.playerData.musicName).track,force);}
+    public void SetMusicToCstmzMusic(bool force=false){SetMusic(AssetsManager.instance.GetMusic(SaveSerial.instance.playerData.musicName).track,force);}
     public void Pause(){GetComponent<AudioSource>().Pause();}
     public void UnPause(){GetComponent<AudioSource>().UnPause();}
     public void PauseFor(float delay){StartCoroutine(PauseForI(delay));}

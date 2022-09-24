@@ -14,7 +14,7 @@ public class ModeInfoManager : MonoBehaviour{
     float _escapeDelay;
     void Start(){
         SetActivePanel(0);
-        startIMG.sprite=startSprites[GameSession.instance.gamemodeSelected-1];
+        startIMG.sprite=startSprites[GameManager.instance.gamemodeSelected-1];
 
         SetSandboxCanvasToModeInfo();
     }
