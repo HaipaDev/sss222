@@ -271,7 +271,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool particles=true;		
 		public bool screenflash=true;
 		
-		public bool upscaleHUD=true;
+		public bool classicHUD=false;
 		public bool playerWeaponsFade=true;
 		public float hudVis_graphics=0.9f;
 		public float hudVis_text=1f;

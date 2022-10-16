@@ -11,6 +11,7 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
     [SerializeField] List<RectTransformAndPos> rescaleAndMove16by9;
     [SerializeField] List<RectTransformAndPos> onlyMove16by9;
     [SerializeField] List<RectTransformAlign> changeAlignment16by9;
+    [SerializeField] List<RectTransformAndPos> move9by16;
     [SceneObjectsOnly][SerializeField] GameObject hpPopup;
     [DisableInEditorMode][SerializeField] float hpCount;
     [DisableInEditorMode][SerializeField] float hpTimer;
@@ -56,9 +57,14 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
             foreach(RectTransformAlign rt in changeAlignment16by9){
                 rt.trans.GetComponent<LayoutGroup>().childAlignment=rt.align;
             }
+        }else{
+            foreach(RectTransformAndPos rt in move9by16){
+                rt.trans.anchoredPosition=new Vector2(rt.pos.x,rt.pos.y);
+            }
         }
     }
-    public static bool _canUpscaleHud(){return (Camera.main.aspect>=1.33&&SaveSerial.instance.settingsData.upscaleHUD&&!GameManager.instance.CheckGamemodeSelected("Classic"));}
+    public static bool _canUpscaleHud(){return (Camera.main.aspect>=1.33&&!SaveSerial.instance.settingsData.classicHUD&&!GameManager.instance.CheckGamemodeSelected("Classic"));}
+    //public static bool _isClassicHud(){return (SaveSerial.instance.settingsData.classicHUD||GameManager.instance.CheckGamemodeSelected("Classic"));}
     void Update(){
         if(SaveSerial.instance!=null)if(popupSumTime!=SaveSerial.instance.settingsData.popupSumTime){popupSumTime=SaveSerial.instance.settingsData.popupSumTime;}
 

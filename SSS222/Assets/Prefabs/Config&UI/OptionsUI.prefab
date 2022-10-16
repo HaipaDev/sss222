@@ -11663,12 +11663,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4409950210981751480}
   m_Layer: 5
-  m_Name: UpscaleHud-Toggle_par
+  m_Name: ClassicHud-Toggle_par
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4409950210981751480
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12974,7 +12974,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: UPSCALE & REPOSITION HUD ON BIGGER ASPECT RATIOS
+  m_text: CLASSIC HUD
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6e897014a7348ee479ca75190b434e70, type: 2}
   m_sharedMaterial: {fileID: -4472182291292323351, guid: 6e897014a7348ee479ca75190b434e70,
@@ -14784,7 +14784,7 @@ GameObject:
   - component: {fileID: 8683532400426988570}
   - component: {fileID: 7233496976386111198}
   m_Layer: 5
-  m_Name: UpscaleHud-Toggle
+  m_Name: ClassicHud-Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14868,7 +14868,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7347657155336693382}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
-        m_MethodName: SetHudUpscale
+        m_MethodName: SetClassicHud
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21794,7 +21794,7 @@ MonoBehaviour:
   particlesToggle: {fileID: 2225894070579116947}
   screenflashToggle: {fileID: 3676721586329566927}
   playerWeaponsFadeToggle: {fileID: 7166519791889567117}
-  hudUpscaleToggle: {fileID: 7233496976386111198}
+  classicHudToggle: {fileID: 7233496976386111198}
   hudVis_graphicsSlider: {fileID: 5707715889998559773}
   hudVis_textSlider: {fileID: 1485173910877741246}
   hudVis_barsSlider: {fileID: 8551540892781437809}

@@ -44,7 +44,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [SceneObjectsOnly][SerializeField]Toggle screenflashToggle;
     [SceneObjectsOnly][SerializeField]Toggle playerWeaponsFadeToggle;
 
-    [SceneObjectsOnly][SerializeField]Toggle hudUpscaleToggle;
+    [SceneObjectsOnly][SerializeField]Toggle classicHudToggle;
     [SceneObjectsOnly][SerializeField]Slider hudVis_graphicsSlider;
     [SceneObjectsOnly][SerializeField]Slider hudVis_textSlider;
     [SceneObjectsOnly][SerializeField]Slider hudVis_barsSlider;
@@ -92,7 +92,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         screenflashToggle.isOn=settingsData.screenflash;
         playerWeaponsFadeToggle.isOn=settingsData.playerWeaponsFade;
 
-        hudUpscaleToggle.isOn=settingsData.upscaleHUD;
+        classicHudToggle.isOn=settingsData.classicHUD;
         hudVis_graphicsSlider.value=settingsData.hudVis_graphics;
         hudVis_textSlider.value=settingsData.hudVis_text;
         hudVis_barsSlider.value=settingsData.hudVis_barFill;
@@ -252,7 +252,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         if(isOn==false&&FindObjectOfType<PostProcessVolume>()!=null){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
     }
 
-    public void SetHudUpscale(bool val){settingsData.upscaleHUD=val;}
+    public void SetClassicHud(bool val){settingsData.classicHUD=val;}
     public void SetHudVis_Graphics(float val){settingsData.hudVis_graphics=val;}
     public void SetHudVis_Text(float val){settingsData.hudVis_text=val;}
     public void SetHudVis_BarFill(float val){settingsData.hudVis_barFill=val;}
