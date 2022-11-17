@@ -252,7 +252,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         if(isOn==false&&FindObjectOfType<PostProcessVolume>()!=null){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
     }
 
-    public void SetClassicHud(bool val){settingsData.classicHUD=val;}
+    public void SetClassicHud(bool val){settingsData.classicHUD=val;if(GameCanvas.instance!=null){GameCanvas.instance.ChangeHUDAligment();}}
     public void SetHudVis_Graphics(float val){settingsData.hudVis_graphics=val;}
     public void SetHudVis_Text(float val){settingsData.hudVis_text=val;}
     public void SetHudVis_BarFill(float val){settingsData.hudVis_barFill=val;}

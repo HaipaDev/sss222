@@ -2798,53 +2798,152 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b03ef14e05b8504c9891c692c5b8214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rescale16by9:
-  - {fileID: 7435893881885322177}
-  - {fileID: 1526484694775318043}
-  - {fileID: 3866546745968354135}
-  - {fileID: 3963267613138260097}
-  - {fileID: 1167553120558668925}
-  - {fileID: 7898855328462501139}
-  - {fileID: 432487846047178028}
-  - {fileID: 4764429935589315794}
-  rescaleAndMove16by9:
+  upscaledHud:
+  - trans: {fileID: 7435893881885322177}
+    pos: {x: 0, y: 0}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
+  - trans: {fileID: 1526484694775318043}
+    pos: {x: 0, y: 0}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
+  - trans: {fileID: 3866546745968354135}
+    pos: {x: 0, y: 0}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
+  - trans: {fileID: 3963267613138260097}
+    pos: {x: 0, y: 0}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
+  - trans: {fileID: 1167553120558668925}
+    pos: {x: 0, y: 0}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
+  - trans: {fileID: 7898855328462501139}
+    pos: {x: 0, y: 0}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
+  - trans: {fileID: 432487846047178028}
+    pos: {x: 0, y: 0}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
+  - trans: {fileID: 4764429935589315794}
+    pos: {x: 0, y: 0}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 2521916808574491117}
     pos: {x: 410, y: -395}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
+  - trans: {fileID: 2521916807951642110}
+    pos: {x: 0, y: 0}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 1
+    align: 0
   - trans: {fileID: 1112389194}
     pos: {x: 160, y: -1440}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 7192712848895982271}
     pos: {x: 488, y: 6}
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 1035728729264728904}
     pos: {x: 3044, y: -1800}
-  onlyMove16by9:
+    posAsOffset: 0
+    scale: 2
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 5200935096917740692}
     pos: {x: 930, y: 410}
-  changeAlignment16by9:
-  - trans: {fileID: 2521916807951642110}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
     align: 0
-  move9by16:
+  classicHud:
   - trans: {fileID: 7435893881885322177}
-    pos: {x: 1300, y: -41.4}
+    pos: {x: -421.5, y: -41.4}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 1526484694775318043}
     pos: {x: -421.5, y: -80}
-  - trans: {fileID: 2521916808574491117}
-    pos: {x: 0, y: -82}
-  - trans: {fileID: 3866546745968354135}
-    pos: {x: 1220, y: -152}
-  - trans: {fileID: 1112389194}
-    pos: {x: 1265, y: -650}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 3963267613138260097}
     pos: {x: -1290, y: -50}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 1167553120558668925}
     pos: {x: -1303, y: -92}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 7898855328462501139}
-    pos: {x: -1310, y: -145}
+    pos: {x: 0, y: -145}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 432487846047178028}
-    pos: {x: -1178, y: -145}
+    pos: {x: 0, y: -145}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 4764429935589315794}
     pos: {x: -1235, y: -464}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
+    align: 0
   - trans: {fileID: 1035728729264728904}
     pos: {x: -1360, y: 70}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
+    align: 0
+  - trans: {fileID: 3866546745968354135}
+    pos: {x: -152, y: -152}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
+    align: 0
+  - trans: {fileID: 1112389194}
+    pos: {x: 1265, y: -650}
+    posAsOffset: 0
+    scale: 1
+    changeAlign: 0
+    align: 0
   hpPopup: {fileID: 4206067267432462627}
   hpCount: 0
   hpTimer: 0
@@ -4637,7 +4736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 118.4, y: -41.4}
+  m_AnchoredPosition: {x: 118.400024, y: -41.399902}
   m_SizeDelta: {x: 276.88953, y: 122.80554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9219250354334835538
@@ -6935,6 +7034,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Padding.m_Left
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 58493022283278326, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 58493022283278326, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 58493022283278326, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 425
+      objectReference: {fileID: 0}
+    - target: {fileID: 58493022283278326, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 96.523
+      objectReference: {fileID: 0}
+    - target: {fileID: 58493022283278326, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 212.50003
+      objectReference: {fileID: 0}
+    - target: {fileID: 58493022283278326, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -49.961
       objectReference: {fileID: 0}
     - target: {fileID: 58493023979869157, guid: c3910c3b57144e94ba72d0ba5ab10dc8,
         type: 3}

@@ -7,11 +7,8 @@ using Sirenix.OdinInspector;
 
 public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
     float popupSumTime=0.25f;
-    [ChildGameObjectsOnly][SerializeField] List<RectTransform> rescale16by9;
-    [SerializeField] List<RectTransformAndPos> rescaleAndMove16by9;
-    [SerializeField] List<RectTransformAndPos> onlyMove16by9;
-    [SerializeField] List<RectTransformAlign> changeAlignment16by9;
-    [SerializeField] List<RectTransformAndPos> move9by16;
+    [SerializeField] List<HUDAlignment> upscaledHud;
+    [SerializeField] List<HUDAlignment> classicHud;
     [SceneObjectsOnly][SerializeField] GameObject hpPopup;
     [DisableInEditorMode][SerializeField] float hpCount;
     [DisableInEditorMode][SerializeField] float hpTimer;
@@ -41,8 +38,17 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
     [DisableInEditorMode][SerializeField] float ammoTimer;
     void Awake(){if(GameCanvas.instance!=null){Destroy(gameObject);}else{instance=this;}}
     void Start(){
-        if(_canUpscaleHud()){
-            foreach(RectTransform t in rescale16by9){
+        ChangeHUDAligment();
+    }
+    //int _hudAlignLastSet=-1;
+    public void ChangeHUDAligment(){
+        if(_canUpscaleHud()){//&&_hudAlignLastSet!=2){
+            foreach(HUDAlignment hudAl in upscaledHud){
+                _changeAlignment(hudAl);
+            }
+            //_hudAlignLastSet=2;
+
+            /*foreach(RectTransform t in rescale16by9){
                 t.localScale=new Vector2(2,2);
                 t.anchoredPosition=new Vector2(t.anchoredPosition.x*2,t.anchoredPosition.y*2);
             }
@@ -56,16 +62,34 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
             }
             foreach(RectTransformAlign rt in changeAlignment16by9){
                 rt.trans.GetComponent<LayoutGroup>().childAlignment=rt.align;
+            }*/
+
+        }else{// if(!_canUpscaleHud()&&_hudAlignLastSet!=1){
+            foreach(HUDAlignment hudAl in classicHud){
+                _changeAlignment(hudAl);
+                //rt.trans.anchoredPosition=new Vector2(rt.pos.x,rt.pos.y);
             }
-        }else{
-            foreach(RectTransformAndPos rt in move9by16){
-                rt.trans.anchoredPosition=new Vector2(rt.pos.x,rt.pos.y);
+            //_hudAlignLastSet=1;
+        }
+        void _changeAlignment(HUDAlignment hudAl){
+            if(hudAl.trans!=null){
+                if(hudAl.pos.x!=0&&hudAl.pos.y!=0)hudAl.trans.anchoredPosition=new Vector2(hudAl.pos.x,hudAl.pos.y);
+                if(hudAl.scale!=0){
+                    hudAl.trans.localScale=new Vector2(hudAl.scale,hudAl.scale);
+                    hudAl.trans.anchoredPosition=new Vector2(hudAl.trans.anchoredPosition.x*hudAl.scale,hudAl.trans.anchoredPosition.y*hudAl.scale);
+                }/*if((hudAl.pos.x!=0&&hudAl.pos.y!=0)&&(hudAl.scale!=0)){
+                    hudAl.trans.anchorMin=new Vector2(0,1);hudAl.trans.anchorMax=new Vector2(0,1);
+                }*/
+                //hudAl.trans.anchorMin=new Vector2(0,1);hudAl.trans.anchorMax=new Vector2(0,1);
+                if(hudAl.changeAlign)hudAl.trans.GetComponent<LayoutGroup>().childAlignment=hudAl.align;
             }
         }
     }
     public static bool _canUpscaleHud(){return (Camera.main.aspect>=1.33&&!SaveSerial.instance.settingsData.classicHUD&&!GameManager.instance.CheckGamemodeSelected("Classic"));}
     //public static bool _isClassicHud(){return (SaveSerial.instance.settingsData.classicHUD||GameManager.instance.CheckGamemodeSelected("Classic"));}
     void Update(){
+        //ChangeHUDAligment();
+
         if(SaveSerial.instance!=null)if(popupSumTime!=SaveSerial.instance.settingsData.popupSumTime){popupSumTime=SaveSerial.instance.settingsData.popupSumTime;}
 
         if(hpPopup!=null&&hpCount!=0){string symbol="-";if(hpCount>0){symbol="+";}hpPopup.GetComponentInChildren<TextMeshProUGUI>().text=

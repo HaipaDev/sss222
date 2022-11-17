@@ -491,6 +491,15 @@ public class RectTransformAlign{
 	public RectTransform trans;
 	public TextAnchor align;
 }
+[System.Serializable]
+public class HUDAlignment{
+	public RectTransform trans;
+	public Vector2 pos;
+	public bool posAsOffset;
+	public int scale=1;
+	public bool changeAlign;
+	[ShowIf("changeAlign")]public TextAnchor align;
+}
 
 public enum CstmzRarity{def,common,rare,epic,legend}
 [System.Serializable]public class CstmzRarityChance{public CstmzRarity rarity;public float chance;}
