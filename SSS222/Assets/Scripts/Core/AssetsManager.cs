@@ -494,11 +494,14 @@ public class RectTransformAlign{
 [System.Serializable]
 public class HUDAlignment{
 	public RectTransform trans;
-	public Vector2 pos;
-	public bool posAsOffset;
-	public int scale=1;
 	public bool changeAlign;
-	[ShowIf("changeAlign")]public TextAnchor align;
+	[ShowIf("changeAlign")]public AnchorPresets align;
+	public Vector2 pos;
+	//public bool posAsOffset;
+	public float scale=1;
+	[ShowIf("@this.scale!=1")]public bool multiplyPosByScale=true;
+	public bool changeLayoutGroupAlign;
+	[ShowIf("changeLayoutGroupAlign")]public TextAnchor layoutGroupAlign;
 }
 
 public enum CstmzRarity{def,common,rare,epic,legend}

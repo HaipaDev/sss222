@@ -33,7 +33,7 @@ public class PowerupDisplay : MonoBehaviour{
             if(number==-1&&Player.instance.powerups.Capacity==1)_id=0;
             if(_id>=0){
                 if(Player.instance.GetPowerup(_id)!=null){pwrup=Player.instance.GetPowerup(_id).name;}
-            }else{pwrup=Player.instance._curPwrupName();if(!GameRules.instance.displayCurrentPowerup||(GameCanvas._canUpscaleHud())){Destroy(gameObject);}}
+            }else{pwrup=Player.instance._curPwrupName();if(!GameRules.instance.displayCurrentPowerup/*||(GameCanvas._canUpscaleHud())*/){Destroy(gameObject);}}
 
             ammo=0;
             if(number>=0){ammo=Player.instance.GetPowerup(_id).ammo;}

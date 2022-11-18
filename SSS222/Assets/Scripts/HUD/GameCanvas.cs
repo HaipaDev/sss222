@@ -73,15 +73,18 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
         }
         void _changeAlignment(HUDAlignment hudAl){
             if(hudAl.trans!=null){
-                if(hudAl.pos.x!=0&&hudAl.pos.y!=0)hudAl.trans.anchoredPosition=new Vector2(hudAl.pos.x,hudAl.pos.y);
+                if(hudAl.changeAlign)hudAl.trans.GetComponent<RectTransform>().SetAnchor(hudAl.align);
+                var scaleFactor=GetComponent<Canvas>().scaleFactor;Debug.Log(scaleFactor);
+                if(hudAl.scale!=1)scaleFactor=0;
+                if(hudAl.pos.x!=0||hudAl.pos.y!=0)hudAl.trans.anchoredPosition=new Vector2(hudAl.pos.x,hudAl.pos.y);
                 if(hudAl.scale!=0){
                     hudAl.trans.localScale=new Vector2(hudAl.scale,hudAl.scale);
-                    hudAl.trans.anchoredPosition=new Vector2(hudAl.trans.anchoredPosition.x*hudAl.scale,hudAl.trans.anchoredPosition.y*hudAl.scale);
+                    if(hudAl.multiplyPosByScale)hudAl.trans.anchoredPosition=new Vector2(hudAl.trans.anchoredPosition.x*hudAl.scale,hudAl.trans.anchoredPosition.y*hudAl.scale);
                 }/*if((hudAl.pos.x!=0&&hudAl.pos.y!=0)&&(hudAl.scale!=0)){
                     hudAl.trans.anchorMin=new Vector2(0,1);hudAl.trans.anchorMax=new Vector2(0,1);
                 }*/
                 //hudAl.trans.anchorMin=new Vector2(0,1);hudAl.trans.anchorMax=new Vector2(0,1);
-                if(hudAl.changeAlign)hudAl.trans.GetComponent<LayoutGroup>().childAlignment=hudAl.align;
+                if(hudAl.changeLayoutGroupAlign)hudAl.trans.GetComponent<LayoutGroup>().childAlignment=hudAl.layoutGroupAlign;
             }
         }
     }
