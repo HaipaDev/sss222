@@ -111,6 +111,10 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         if(settingsData.ambienceVolume<=-50){settingsData.ambienceVolume=-80;}
         if(settingsData.musicVolume<=-50){settingsData.musicVolume=-80;}
 
+        if(GameCanvas.instance!=null){
+            if(!GameCanvas._isPossibleToUpscaleHud()){classicHudToggle.interactable=false;classicHudToggle.isOn=true;}
+            else{if(SaveSerial.instance!=null)if(SaveSerial.instance.settingsData!=null)classicHudToggle.interactable=true;classicHudToggle.isOn=SaveSerial.instance.settingsData.classicHUD;}
+        }
         if(GSceneManager.EscPressed()){Back();}
     }
     public void SetPanelActive(int i){panelActive=i;foreach(GameObject p in panels){p.SetActive(false);}panels[panelActive].SetActive(true);}
@@ -252,7 +256,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         if(isOn==false&&FindObjectOfType<PostProcessVolume>()!=null){FindObjectOfType<PostProcessVolume>().enabled=false;}//Destroy(FindObjectOfType<PostProcessVolume>());}
     }
 
-    public void SetClassicHud(bool val){settingsData.classicHUD=val;if(GameCanvas.instance!=null){GameCanvas.instance.ChangeHUDAligment();}}
+    public void SetClassicHud(bool val){if(GameCanvas._isPossibleToUpscaleHud()){settingsData.classicHUD=val;if(GameCanvas.instance!=null){GameCanvas.instance.ChangeHUDAligment();}}}
     public void SetHudVis_Graphics(float val){settingsData.hudVis_graphics=val;}
     public void SetHudVis_Text(float val){settingsData.hudVis_text=val;}
     public void SetHudVis_BarFill(float val){settingsData.hudVis_barFill=val;}

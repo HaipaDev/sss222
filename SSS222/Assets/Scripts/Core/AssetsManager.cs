@@ -497,7 +497,7 @@ public class HUDAlignment{
 	public bool changeAlign;
 	[ShowIf("changeAlign")]public AnchorPresets align;
 	public Vector2 pos;
-	//public bool posAsOffset;
+	public Vector2 widthAndHeight;
 	public float scale=1;
 	[ShowIf("@this.scale!=1")]public bool multiplyPosByScale=true;
 	public bool changeLayoutGroupAlign;

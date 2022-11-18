@@ -2795,7 +2795,8 @@ MonoBehaviour:
   - trans: {fileID: 6170805562282656012}
     changeAlign: 1
     align: 0
-    pos: {x: 140, y: -550}
+    pos: {x: 135, y: -550}
+    widthAndHeight: {x: 0, y: 0}
     scale: 2
     multiplyPosByScale: 1
     changeLayoutGroupAlign: 0
@@ -2804,6 +2805,7 @@ MonoBehaviour:
     changeAlign: 1
     align: 2
     pos: {x: -120, y: -340}
+    widthAndHeight: {x: 0, y: 0}
     scale: 2
     multiplyPosByScale: 1
     changeLayoutGroupAlign: 0
@@ -2812,6 +2814,7 @@ MonoBehaviour:
     changeAlign: 0
     align: 0
     pos: {x: 55, y: -153}
+    widthAndHeight: {x: 0, y: 0}
     scale: 0.0001
     multiplyPosByScale: 0
     changeLayoutGroupAlign: 0
@@ -2819,8 +2822,9 @@ MonoBehaviour:
   - trans: {fileID: 2521916808574491117}
     changeAlign: 1
     align: 0
-    pos: {x: 460, y: -385}
-    scale: 2
+    pos: {x: 345, y: -385}
+    widthAndHeight: {x: 0, y: 0}
+    scale: 1.5
     multiplyPosByScale: 0
     changeLayoutGroupAlign: 0
     layoutGroupAlign: 0
@@ -2828,6 +2832,7 @@ MonoBehaviour:
     changeAlign: 0
     align: 4
     pos: {x: 0, y: 0}
+    widthAndHeight: {x: 0, y: 0}
     scale: 1
     multiplyPosByScale: 1
     changeLayoutGroupAlign: 1
@@ -2835,7 +2840,8 @@ MonoBehaviour:
   - trans: {fileID: 7192712848895982271}
     changeAlign: 0
     align: 0
-    pos: {x: 365, y: 365}
+    pos: {x: 290, y: 365}
+    widthAndHeight: {x: 0, y: 0}
     scale: 1.25
     multiplyPosByScale: 0
     changeLayoutGroupAlign: 0
@@ -2844,6 +2850,7 @@ MonoBehaviour:
     changeAlign: 1
     align: 5
     pos: {x: -400, y: -615}
+    widthAndHeight: {x: 0, y: 0}
     scale: 2
     multiplyPosByScale: 0
     changeLayoutGroupAlign: 0
@@ -2852,6 +2859,16 @@ MonoBehaviour:
     changeAlign: 0
     align: 0
     pos: {x: 945, y: 460}
+    widthAndHeight: {x: 0, y: 0}
+    scale: 1
+    multiplyPosByScale: 1
+    changeLayoutGroupAlign: 0
+    layoutGroupAlign: 0
+  - trans: {fileID: 1112389194}
+    changeAlign: 0
+    align: 0
+    pos: {x: 105, y: -630}
+    widthAndHeight: {x: 0, y: 0}
     scale: 1
     multiplyPosByScale: 1
     changeLayoutGroupAlign: 0
@@ -2860,7 +2877,8 @@ MonoBehaviour:
   - trans: {fileID: 6170805562282656012}
     changeAlign: 1
     align: 4
-    pos: {x: -400, y: 400}
+    pos: {x: -400, y: 410}
+    widthAndHeight: {x: 0, y: 0}
     scale: 1
     multiplyPosByScale: 1
     changeLayoutGroupAlign: 0
@@ -2868,23 +2886,8 @@ MonoBehaviour:
   - trans: {fileID: 3993359483649968962}
     changeAlign: 1
     align: 4
-    pos: {x: 400, y: 620}
-    scale: 1
-    multiplyPosByScale: 1
-    changeLayoutGroupAlign: 0
-    layoutGroupAlign: 0
-  - trans: {fileID: 5200935096917740692}
-    changeAlign: 0
-    align: 0
-    pos: {x: 0, y: 450}
-    scale: 1
-    multiplyPosByScale: 1
-    changeLayoutGroupAlign: 0
-    layoutGroupAlign: 0
-  - trans: {fileID: 1035728729264728904}
-    changeAlign: 1
-    align: 4
-    pos: {x: 350, y: -590}
+    pos: {x: 415, y: 620}
+    widthAndHeight: {x: 0, y: 0}
     scale: 1
     multiplyPosByScale: 1
     changeLayoutGroupAlign: 0
@@ -2893,6 +2896,7 @@ MonoBehaviour:
     changeAlign: 0
     align: 0
     pos: {x: 40, y: -150}
+    widthAndHeight: {x: 0, y: 0}
     scale: 1
     multiplyPosByScale: 1
     changeLayoutGroupAlign: 0
@@ -2901,6 +2905,7 @@ MonoBehaviour:
     changeAlign: 0
     align: 0
     pos: {x: 0, y: 415}
+    widthAndHeight: {x: 0, y: 0}
     scale: 1
     multiplyPosByScale: 1
     changeLayoutGroupAlign: 0
@@ -2909,6 +2914,7 @@ MonoBehaviour:
     changeAlign: 1
     align: 1
     pos: {x: 0, y: -80}
+    widthAndHeight: {x: 0, y: 0}
     scale: 1
     multiplyPosByScale: 1
     changeLayoutGroupAlign: 0
@@ -2917,10 +2923,39 @@ MonoBehaviour:
     changeAlign: 0
     align: 1
     pos: {x: 0, y: 0}
+    widthAndHeight: {x: 0, y: 0}
     scale: 1
     multiplyPosByScale: 1
     changeLayoutGroupAlign: 1
     layoutGroupAlign: 1
+  - trans: {fileID: 1035728729264728904}
+    changeAlign: 1
+    align: 4
+    pos: {x: 350, y: -590}
+    widthAndHeight: {x: 0, y: 0}
+    scale: 1
+    multiplyPosByScale: 1
+    changeLayoutGroupAlign: 0
+    layoutGroupAlign: 0
+  - trans: {fileID: 5200935096917740692}
+    changeAlign: 0
+    align: 0
+    pos: {x: 0, y: 450}
+    widthAndHeight: {x: 0, y: 0}
+    scale: 1
+    multiplyPosByScale: 1
+    changeLayoutGroupAlign: 0
+    layoutGroupAlign: 0
+  - trans: {fileID: 1112389194}
+    changeAlign: 0
+    align: 0
+    pos: {x: 44, y: -1070}
+    widthAndHeight: {x: 82.5, y: 1700}
+    scale: 1
+    multiplyPosByScale: 1
+    changeLayoutGroupAlign: 0
+    layoutGroupAlign: 1
+  _runHudCoroutine: 1
   hpPopup: {fileID: 4206067267432462627}
   hpCount: 0
   hpTimer: 0

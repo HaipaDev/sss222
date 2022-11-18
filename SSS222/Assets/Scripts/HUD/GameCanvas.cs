@@ -6,9 +6,9 @@ using TMPro;
 using Sirenix.OdinInspector;
 
 public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
-    float popupSumTime=0.25f;
     [SerializeField] List<HUDAlignment> upscaledHud;
     [SerializeField] List<HUDAlignment> classicHud;
+    [SerializeField] bool _runHudCoroutine=true;
     [SceneObjectsOnly][SerializeField] GameObject hpPopup;
     [DisableInEditorMode][SerializeField] float hpCount;
     [DisableInEditorMode][SerializeField] float hpTimer;
@@ -36,63 +36,37 @@ public class GameCanvas : MonoBehaviour{    public static GameCanvas instance;
     [SceneObjectsOnly][SerializeField] GameObject ammoPopup;
     [DisableInEditorMode][SerializeField] float ammoCount;
     [DisableInEditorMode][SerializeField] float ammoTimer;
+    float popupSumTime=0.25f;
+
     void Awake(){if(GameCanvas.instance!=null){Destroy(gameObject);}else{instance=this;}}
     void Start(){
         ChangeHUDAligment();
+        StartCoroutine(ChangeHUDAligmentCoroutine());
     }
-    //int _hudAlignLastSet=-1;
+    IEnumerator ChangeHUDAligmentCoroutine(){
+        yield return new WaitForSeconds(0.5f);
+        if(_runHudCoroutine)ChangeHUDAligment();
+        StartCoroutine(ChangeHUDAligmentCoroutine());
+    }
     public void ChangeHUDAligment(){
-        if(_canUpscaleHud()){//&&_hudAlignLastSet!=2){
-            foreach(HUDAlignment hudAl in upscaledHud){
-                _changeAlignment(hudAl);
-            }
-            //_hudAlignLastSet=2;
-
-            /*foreach(RectTransform t in rescale16by9){
-                t.localScale=new Vector2(2,2);
-                t.anchoredPosition=new Vector2(t.anchoredPosition.x*2,t.anchoredPosition.y*2);
-            }
-            foreach(RectTransformAndPos rt in rescaleAndMove16by9){
-                rt.trans.anchorMin=new Vector2(0,1);rt.trans.anchorMax=new Vector2(0,1);
-                rt.trans.localScale=new Vector2(2,2);
-                rt.trans.anchoredPosition=new Vector2(rt.pos.x,rt.pos.y);
-            }
-            foreach(RectTransformAndPos rt in onlyMove16by9){
-                rt.trans.anchoredPosition=new Vector2(rt.pos.x,rt.pos.y);
-            }
-            foreach(RectTransformAlign rt in changeAlignment16by9){
-                rt.trans.GetComponent<LayoutGroup>().childAlignment=rt.align;
-            }*/
-
-        }else{// if(!_canUpscaleHud()&&_hudAlignLastSet!=1){
-            foreach(HUDAlignment hudAl in classicHud){
-                _changeAlignment(hudAl);
-                //rt.trans.anchoredPosition=new Vector2(rt.pos.x,rt.pos.y);
-            }
-            //_hudAlignLastSet=1;
-        }
+        if(_canSetUpscaledHud()){foreach(HUDAlignment hudAl in upscaledHud){_changeAlignment(hudAl);}}
+        else{foreach(HUDAlignment hudAl in classicHud){_changeAlignment(hudAl);}}
         void _changeAlignment(HUDAlignment hudAl){
             if(hudAl.trans!=null){
                 if(hudAl.changeAlign)hudAl.trans.GetComponent<RectTransform>().SetAnchor(hudAl.align);
-                var scaleFactor=GetComponent<Canvas>().scaleFactor;Debug.Log(scaleFactor);
-                if(hudAl.scale!=1)scaleFactor=0;
                 if(hudAl.pos.x!=0||hudAl.pos.y!=0)hudAl.trans.anchoredPosition=new Vector2(hudAl.pos.x,hudAl.pos.y);
+                if(hudAl.widthAndHeight.x!=0||hudAl.widthAndHeight.y!=0)hudAl.trans.sizeDelta=new Vector2(hudAl.widthAndHeight.x,hudAl.widthAndHeight.y);
                 if(hudAl.scale!=0){
                     hudAl.trans.localScale=new Vector2(hudAl.scale,hudAl.scale);
                     if(hudAl.multiplyPosByScale)hudAl.trans.anchoredPosition=new Vector2(hudAl.trans.anchoredPosition.x*hudAl.scale,hudAl.trans.anchoredPosition.y*hudAl.scale);
-                }/*if((hudAl.pos.x!=0&&hudAl.pos.y!=0)&&(hudAl.scale!=0)){
-                    hudAl.trans.anchorMin=new Vector2(0,1);hudAl.trans.anchorMax=new Vector2(0,1);
-                }*/
-                //hudAl.trans.anchorMin=new Vector2(0,1);hudAl.trans.anchorMax=new Vector2(0,1);
+                }
                 if(hudAl.changeLayoutGroupAlign)hudAl.trans.GetComponent<LayoutGroup>().childAlignment=hudAl.layoutGroupAlign;
             }
         }
     }
-    public static bool _canUpscaleHud(){return (Camera.main.aspect>=1.33&&!SaveSerial.instance.settingsData.classicHUD&&!GameManager.instance.CheckGamemodeSelected("Classic"));}
-    //public static bool _isClassicHud(){return (SaveSerial.instance.settingsData.classicHUD||GameManager.instance.CheckGamemodeSelected("Classic"));}
+    public static bool _canSetUpscaledHud(){return (_isPossibleToUpscaleHud()&&!SaveSerial.instance.settingsData.classicHUD);}
+    public static bool _isPossibleToUpscaleHud(){return (Camera.main.aspect>=1.33&&!GameManager.instance.CheckGamemodeSelected("Classic"));}
     void Update(){
-        //ChangeHUDAligment();
-
         if(SaveSerial.instance!=null)if(popupSumTime!=SaveSerial.instance.settingsData.popupSumTime){popupSumTime=SaveSerial.instance.settingsData.popupSumTime;}
 
         if(hpPopup!=null&&hpCount!=0){string symbol="-";if(hpCount>0){symbol="+";}hpPopup.GetComponentInChildren<TextMeshProUGUI>().text=
