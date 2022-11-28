@@ -263,8 +263,10 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		
 		
 		public PlaneDir playfieldRot=PlaneDir.vert;
-		public int quality=4;
+		public int resolution=0;
 		public bool fullscreen=true;
+		public bool vSync=false;
+		public int quality=4;
 		public bool pprocessing;
 		public bool screenshake=true;
 		public bool dmgPopups=true;

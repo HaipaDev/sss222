@@ -35,8 +35,10 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [SceneObjectsOnly][SerializeField]Toggle turnUpBossMusicToggle;
     
     [Header("Graphics")]
-    [SceneObjectsOnly][SerializeField]Dropdown qualityDropdopwn;
+    [SceneObjectsOnly][SerializeField]Dropdown resolutionDropdown;
     [SceneObjectsOnly][SerializeField]Toggle fullscreenToggle;
+    [SceneObjectsOnly][SerializeField]Toggle vSyncToggle;
+    [SceneObjectsOnly][SerializeField]Dropdown qualityDropdopwn;
     [SceneObjectsOnly][SerializeField]Toggle pprocessingToggle;
     [SceneObjectsOnly][SerializeField]Toggle screenshakeToggle;
     [SceneObjectsOnly][SerializeField]Toggle dmgPopupsToggle;
@@ -55,8 +57,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [AssetsOnly][SerializeField]GameObject pprocessingPrefab;
     [SceneObjectsOnly]public PostProcessVolume postProcessVolume;
     SaveSerial.SettingsData settingsData;
-    void Start(){
-        instance=this;if(SaveSerial.instance!=null)settingsData=SaveSerial.instance.settingsData;
+    void Start(){   instance=this;if(SaveSerial.instance!=null)settingsData=SaveSerial.instance.settingsData;
 
         scbuttonsToggle.isOn=settingsData.scbuttons;
         dtapMouseShootToggle.isOn=settingsData.dtapMouseShoot;
@@ -71,9 +72,6 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         cheatToggle.isOn=GameManager.instance.cheatmode;
         bool h=false;if(settingsData.playfieldRot==PlaneDir.horiz){h=true;}horizPlayfieldToggle.isOn=h;
 
-        foreach(Transform t in steeringButton.transform.GetChild(0)){t.gameObject.SetActive(false);}
-        steeringButton.transform.GetChild(0).GetChild((int)settingsData.inputType).gameObject.SetActive(true);
-
 
         masterSlider.value=settingsData.masterVolume;
         soundSlider.value=settingsData.soundVolume;
@@ -82,9 +80,11 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         musicWinddownToggle.isOn=settingsData.windDownMusic;
         turnUpBossMusicToggle.isOn=settingsData.bossVolumeTurnUp;
 
-
-        qualityDropdopwn.value=settingsData.quality;
+        SetAvailableResolutions();
+        resolutionDropdown.value=settingsData.resolution;
         fullscreenToggle.isOn=settingsData.fullscreen;
+        vSyncToggle.isOn=settingsData.vSync;
+        qualityDropdopwn.value=settingsData.quality;
         pprocessingToggle.isOn=settingsData.pprocessing;
         screenshakeToggle.isOn=settingsData.screenshake;
         dmgPopupsToggle.isOn=settingsData.dmgPopups;
@@ -101,6 +101,9 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         hudVis_notifsSlider.value=settingsData.hudVis_notif;
         if(SceneManager.GetActiveScene().name=="Options")OpenSettings();
         SetPanelActive(0);
+        foreach(Scrollbar sc in GetComponentsInChildren<Scrollbar>()){
+            sc.value=1;
+        }
     }
     void Update(){postProcessVolume=FindObjectOfType<PostProcessVolume>();
         if(settingsData.pprocessing==true&&postProcessVolume==null){postProcessVolume=Instantiate(pprocessingPrefab,Camera.main.transform).GetComponent<PostProcessVolume>();}
@@ -246,7 +249,14 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     public void SetFullscreen(bool isOn){
         Screen.fullScreen=isOn;
         settingsData.fullscreen=isOn;
-        Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,isOn,60);
+        //Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,isOn);
+    }
+    public void SetVSync(bool isOn){
+        QualitySettings.vSyncCount=AssetsManager.BoolToInt(isOn);
+        settingsData.vSync=isOn;
+    }
+    public void SetResolution(int resIndex){
+        Screen.SetResolution(_availableResolutionsList[resIndex].x,_availableResolutionsList[resIndex].y,settingsData.fullscreen);
     }
     public void SetPostProcessing(bool isOn){
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
@@ -267,4 +277,57 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     
 
     public void PlayDing(){if(Application.isPlaying)GetComponent<AudioSource>().Play();}
+
+    void SetAvailableResolutions(){
+        resolutionDropdown.ClearOptions();
+        foreach(Vector2Int r in resolutionsList){
+            if(Display.main.systemWidth>Display.main.systemHeight){//Horizontal
+                Debug.Log("Horizontal "+Display.main.systemWidth+"x"+Display.main.systemHeight);
+                if(r.x>r.y){
+                    if(r.x<=Display.main.systemWidth&&r.y<=Display.main.systemHeight){
+                        Debug.Log(r);
+                        _availableResolutionsList.Add(r);
+                        resolutionDropdown.AddOptions(new List<string>(){(r.x+"x"+r.y)});
+                    }
+                }
+            }else{//Vertical
+                if(r.y>r.x){
+                Debug.Log("Vertical "+Display.main.systemWidth+"x"+Display.main.systemHeight);
+                    if(r.x<=Display.main.systemWidth&&r.y<=Display.main.systemHeight){
+                        Debug.Log(r);
+                        _availableResolutionsList.Add(r);
+                        resolutionDropdown.AddOptions(new List<string>(){(r.x+"x"+r.y)});
+                    }
+                }
+            }
+        }
+    }
+    public List<Vector2Int> _availableResolutionsList;
+    public List<Vector2Int> resolutionsList=new List<Vector2Int>(){
+        //16:9
+        new Vector2Int(3840,2160),
+        new Vector2Int(2560,1440),
+        new Vector2Int(1920,1080),
+        new Vector2Int(1600,900),
+        new Vector2Int(1366,768),
+        new Vector2Int(1280,720),
+        
+        //16:10
+        new Vector2Int(1920,1200),
+        new Vector2Int(1680,1050),
+        new Vector2Int(1440,900),
+        new Vector2Int(1280,800),
+
+        //4:3
+        new Vector2Int(1024,768),
+        new Vector2Int(800,600),
+        new Vector2Int(640,480),
+
+        //21:9
+        new Vector2Int(2560,1080),
+
+        //9:16
+        new Vector2Int(1080,1920),
+        new Vector2Int(720,1280),
+    };
 }
