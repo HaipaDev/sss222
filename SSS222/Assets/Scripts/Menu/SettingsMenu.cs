@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
+using TMPro;
 using Sirenix.OdinInspector;
 
 public class SettingsMenu : MonoBehaviour{      public static SettingsMenu instance;
@@ -35,10 +36,10 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [SceneObjectsOnly][SerializeField]Toggle turnUpBossMusicToggle;
     
     [Header("Graphics")]
-    [SceneObjectsOnly][SerializeField]Dropdown resolutionDropdown;
+    [SceneObjectsOnly][SerializeField]TMP_Dropdown resolutionDropdown;
     [SceneObjectsOnly][SerializeField]Toggle fullscreenToggle;
     [SceneObjectsOnly][SerializeField]Toggle vSyncToggle;
-    [SceneObjectsOnly][SerializeField]Dropdown qualityDropdopwn;
+    [SceneObjectsOnly][SerializeField]TMP_Dropdown qualityDropdopwn;
     [SceneObjectsOnly][SerializeField]Toggle pprocessingToggle;
     [SceneObjectsOnly][SerializeField]Toggle screenshakeToggle;
     [SceneObjectsOnly][SerializeField]Toggle dmgPopupsToggle;
@@ -81,7 +82,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         turnUpBossMusicToggle.isOn=settingsData.bossVolumeTurnUp;
 
         SetAvailableResolutions();
-        resolutionDropdown.value=settingsData.resolution;
+        //resolutionDropdown.value=_availableResolutionsList.FindIndex(e=>e==settingsData.resolution);
         fullscreenToggle.isOn=settingsData.fullscreen;
         vSyncToggle.isOn=settingsData.vSync;
         qualityDropdopwn.value=settingsData.quality;
@@ -256,7 +257,9 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         settingsData.vSync=isOn;
     }
     public void SetResolution(int resIndex){
-        Screen.SetResolution(_availableResolutionsList[resIndex].x,_availableResolutionsList[resIndex].y,settingsData.fullscreen);
+        Vector2Int _res=_availableResolutionsList[resIndex];
+        Screen.SetResolution(_res.x,_res.y,settingsData.fullscreen);
+        settingsData.resolution=_res;
     }
     public void SetPostProcessing(bool isOn){
         postProcessVolume=FindObjectOfType<PostProcessVolume>();
@@ -282,28 +285,29 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         resolutionDropdown.ClearOptions();
         foreach(Vector2Int r in resolutionsList){
             if(Display.main.systemWidth>Display.main.systemHeight){//Horizontal
-                Debug.Log("Horizontal "+Display.main.systemWidth+"x"+Display.main.systemHeight);
                 if(r.x>r.y){
                     if(r.x<=Display.main.systemWidth&&r.y<=Display.main.systemHeight){
-                        Debug.Log(r);
                         _availableResolutionsList.Add(r);
                         resolutionDropdown.AddOptions(new List<string>(){(r.x+"x"+r.y)});
                     }
                 }
             }else{//Vertical
                 if(r.y>r.x){
-                Debug.Log("Vertical "+Display.main.systemWidth+"x"+Display.main.systemHeight);
                     if(r.x<=Display.main.systemWidth&&r.y<=Display.main.systemHeight){
-                        Debug.Log(r);
                         _availableResolutionsList.Add(r);
                         resolutionDropdown.AddOptions(new List<string>(){(r.x+"x"+r.y)});
                     }
                 }
             }
         }
+        if(_availableResolutionsList.Count==0){foreach(Vector2Int r in forcedResolutionsList){
+            _availableResolutionsList.Add(r);
+            resolutionDropdown.AddOptions(new List<string>(){(r.x+"x"+r.y)});
+        }}
+        resolutionDropdown.value=_availableResolutionsList.FindIndex(e=>e==settingsData.resolution);
     }
-    public List<Vector2Int> _availableResolutionsList;
-    public List<Vector2Int> resolutionsList=new List<Vector2Int>(){
+    [DisableInEditorMode]public List<Vector2Int> _availableResolutionsList;
+    [HideInEditorMode]public List<Vector2Int> resolutionsList=new List<Vector2Int>(){
         //16:9
         new Vector2Int(3840,2160),
         new Vector2Int(2560,1440),
@@ -329,5 +333,10 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         //9:16
         new Vector2Int(1080,1920),
         new Vector2Int(720,1280),
+    };
+    [HideInEditorMode]public List<Vector2Int> forcedResolutionsList=new List<Vector2Int>(){
+        new Vector2Int(1920,1080),
+        new Vector2Int(640,480),
+        new Vector2Int(1080,1920),
     };
 }
