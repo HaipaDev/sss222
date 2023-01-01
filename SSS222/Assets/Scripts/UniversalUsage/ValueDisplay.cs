@@ -139,6 +139,7 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="joystickSize"){_txt=System.Math.Round(ss.joystickSize,2).ToString();}
             else if(value=="loginUsername"){if(Login.developerNicknames.Contains(sh.username)){_txt="<color="+Login.developerNicknameColor+">"+sh.username+"</color>";}else{_txt=sh.username;}}
             else if(value=="masterVolume"){_txt=ss.masterVolume.ToString();}
+            else if(value=="masterOOFVolume"){_txt=ss.masterOOFVolume.ToString();}
             else if(value=="soundVolume"){_txt=ss.soundVolume.ToString();}
             else if(value=="ambienceVolume"){_txt=ss.ambienceVolume.ToString();}
             else if(value=="musicVolume"){_txt=ss.musicVolume.ToString();}

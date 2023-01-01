@@ -29,6 +29,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [Header("Sound")]
     public AudioMixer audioMixer;
     [SceneObjectsOnly][SerializeField]Slider masterSlider;
+    [SceneObjectsOnly][SerializeField]Slider masterOOFSlider;
     [SceneObjectsOnly][SerializeField]Slider soundSlider;
     [SceneObjectsOnly][SerializeField]Slider ambienceSlider;
     [SceneObjectsOnly][SerializeField]Slider musicSlider;
@@ -75,6 +76,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
 
 
         masterSlider.value=settingsData.masterVolume;
+        masterOOFSlider.value=settingsData.masterOOFVolume;
         soundSlider.value=settingsData.soundVolume;
         ambienceSlider.value=settingsData.ambienceVolume;
         musicSlider.value=settingsData.musicVolume;
@@ -210,6 +212,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
 
     #region//Sound
     public void SetMasterVolume(float val){settingsData.masterVolume=(float)System.Math.Round(val,2);if(val>1.15f)StatsAchievsManager.instance.DeepFried();}
+    public void SetMasterOOFVolume(float val){settingsData.masterOOFVolume=(float)System.Math.Round(val,2);}
     public void SetSoundVolume(float val){settingsData.soundVolume=(float)System.Math.Round(val,2);if(val>1.15f)StatsAchievsManager.instance.DeepFried();}
     public void SetAmbienceVolume(float val){settingsData.ambienceVolume=(float)System.Math.Round(val,2);if(val>1.15f)StatsAchievsManager.instance.DeepFried();}
     public void SetMusicVolume(float val){settingsData.musicVolume=(float)System.Math.Round(val,2);if(val>1.15f)StatsAchievsManager.instance.DeepFried();}
@@ -280,6 +283,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     
 
     public void PlayDing(){if(Application.isPlaying)GetComponent<AudioSource>().Play();}
+    public void PlayDingOOF(){audioMixer.SetFloat("MasterVolume", AssetsManager.InvertNormalizedMin(settingsData.masterOOFVolume,-50));if(Application.isPlaying)GetComponent<AudioSource>().Play();}
 
     void SetAvailableResolutions(){
         resolutionDropdown.ClearOptions();

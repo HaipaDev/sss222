@@ -255,6 +255,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool autosubmitScores=true;
 		
 		public float masterVolume=0.95f;
+		public float masterOOFVolume=0.25f;
 		public float soundVolume=0.95f;
 		public float ambienceVolume=-0.55f;
 		public float musicVolume=0.66f;

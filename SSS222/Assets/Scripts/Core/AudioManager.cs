@@ -20,6 +20,32 @@ public class AudioManager : MonoBehaviour{	public static AudioManager instance;
 			s.source.outputAudioMixerGroup = mixerGroup;
 		}
 	}
+	void Update(){
+		var ss=SaveSerial.instance.settingsData;
+		float _currentMasterVolume;audioMixer.GetFloat("MasterVolume",out _currentMasterVolume);
+		if(Application.isFocused){
+			var _minVolume=-50;
+			if(ss.masterVolume>0){_minVolume=-50;}else{_minVolume=-80;}
+			if(_currentMasterVolume==-80&&_minVolume==-50){_currentMasterVolume=-50;}
+			if(_currentMasterVolume>AssetsManager.InvertNormalizedMin(ss.masterVolume,_minVolume)+0.5f){audioMixer.SetFloat("MasterVolume", _currentMasterVolume-0.5f);}
+			else if(_currentMasterVolume<AssetsManager.InvertNormalizedMin(ss.masterVolume,_minVolume)-0.5f){audioMixer.SetFloat("MasterVolume", _currentMasterVolume+0.5f);}
+			else {audioMixer.SetFloat("MasterVolume", AssetsManager.InvertNormalizedMin(ss.masterVolume,_minVolume));}
+		}else{
+			var _minVolume=-50;
+			if(ss.masterOOFVolume>0){_minVolume=-50;}else{_minVolume=-80;}
+			//if(_currentMasterVolume==-80&&_minVolume==-50){_currentMasterVolume=-50;}
+			if(_currentMasterVolume>AssetsManager.InvertNormalizedMin(ss.masterOOFVolume,_minVolume)+0.5f){audioMixer.SetFloat("MasterVolume", _currentMasterVolume-0.5f);}
+			else if(_currentMasterVolume<AssetsManager.InvertNormalizedMin(ss.masterOOFVolume,_minVolume)-0.5f){audioMixer.SetFloat("MasterVolume", _currentMasterVolume+0.5f);}
+			else {audioMixer.SetFloat("MasterVolume", AssetsManager.InvertNormalizedMin(ss.masterOOFVolume,_minVolume));}
+		}
+		if(ss.soundVolume>0){audioMixer.SetFloat("SoundVolume", AssetsManager.InvertNormalizedMin(ss.soundVolume,-50));}
+		else{audioMixer.SetFloat("SoundVolume", -80);}
+		if(ss.ambienceVolume>0){audioMixer.SetFloat("AmbienceVolume", AssetsManager.InvertNormalizedMin(ss.ambienceVolume,-50));}
+		else{audioMixer.SetFloat("AmbienceVolume", -80);}
+		if(ss.musicVolume>0){audioMixer.SetFloat("MusicVolume", AssetsManager.InvertNormalizedMin(ss.musicVolume,-50));}
+		else{audioMixer.SetFloat("MusicVolume", -80);}
+	}
+
 
 	public void Play(string sound){
 		Sound s = Array.Find(sounds, item => item.name == sound);
@@ -90,12 +116,6 @@ public class AudioManager : MonoBehaviour{	public static AudioManager instance;
 			Debug.LogWarning("Sound: " + sound + " not found!");
 			return null;
 		}else{return s.source;}
-	}
-	void Update(){
-		audioMixer.SetFloat("MasterVolume", AssetsManager.InvertNormalizedMin(SaveSerial.instance.settingsData.masterVolume,-50));
-		audioMixer.SetFloat("SoundVolume", AssetsManager.InvertNormalizedMin(SaveSerial.instance.settingsData.soundVolume,-50));
-		audioMixer.SetFloat("AmbienceVolume", AssetsManager.InvertNormalizedMin(SaveSerial.instance.settingsData.ambienceVolume,-50));
-		audioMixer.SetFloat("MusicVolume", AssetsManager.InvertNormalizedMin(SaveSerial.instance.settingsData.musicVolume,-50));
 	}
 }
 
