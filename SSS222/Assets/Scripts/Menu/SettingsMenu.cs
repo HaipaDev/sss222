@@ -12,7 +12,7 @@ using Sirenix.OdinInspector;
 public class SettingsMenu : MonoBehaviour{      public static SettingsMenu instance;
     [SerializeField] int panelActive=0;
     [SerializeField] GameObject[] panels;
-    [Header("Game")]
+    [Title("Game")]
     [SceneObjectsOnly][SerializeField]GameObject steeringButton;
     [SceneObjectsOnly][SerializeField]Toggle vibrationsToggle;
     [SceneObjectsOnly][SerializeField]Toggle horizPlayfieldToggle;
@@ -26,7 +26,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [SceneObjectsOnly][SerializeField]Toggle allowSelectingEmptySlotsToggle;
     [SceneObjectsOnly][SerializeField]Toggle allowScrollingEmptySlotsToggle;
     [SceneObjectsOnly][SerializeField]Toggle cheatToggle;
-    [Header("Sound")]
+    [Title("Sound")]
     public AudioMixer audioMixer;
     [SceneObjectsOnly][SerializeField]Slider masterSlider;
     [SceneObjectsOnly][SerializeField]Slider masterOOFSlider;
@@ -36,9 +36,10 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [SceneObjectsOnly][SerializeField]Toggle musicWinddownToggle;
     [SceneObjectsOnly][SerializeField]Toggle turnUpBossMusicToggle;
     
-    [Header("Graphics")]
+    [Title("Graphics")]
+    [SceneObjectsOnly][SerializeField]TMP_Dropdown windowModeDropdown;
     [SceneObjectsOnly][SerializeField]TMP_Dropdown resolutionDropdown;
-    [SceneObjectsOnly][SerializeField]Toggle fullscreenToggle;
+    //[SceneObjectsOnly][SerializeField]Toggle fullscreenToggle;
     [SceneObjectsOnly][SerializeField]Toggle vSyncToggle;
     [SceneObjectsOnly][SerializeField]TMP_Dropdown qualityDropdopwn;
     [SceneObjectsOnly][SerializeField]Toggle pprocessingToggle;
@@ -84,8 +85,8 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         turnUpBossMusicToggle.isOn=settingsData.bossVolumeTurnUp;
 
         SetAvailableResolutions();
-        //resolutionDropdown.value=_availableResolutionsList.FindIndex(e=>e==settingsData.resolution);
-        fullscreenToggle.isOn=settingsData.fullscreen;
+        windowModeDropdown.value=settingsData.windowMode;
+        //fullscreenToggle.isOn=settingsData.fullscreen;
         vSyncToggle.isOn=settingsData.vSync;
         qualityDropdopwn.value=settingsData.quality;
         pprocessingToggle.isOn=settingsData.pprocessing;
@@ -251,9 +252,29 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     public void SetScreenflash(bool isOn){settingsData.screenflash=isOn;}
     public void SetPlayerWeaponsFade(bool isOn){settingsData.playerWeaponsFade=isOn;}
     public void SetFullscreen(bool isOn){
-        Screen.fullScreen=isOn;
-        settingsData.fullscreen=isOn;
-        //Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,isOn);
+        /*Screen.fullScreen=isOn;
+        settingsData.fullscreen=isOn;*/
+    }
+    public FullScreenMode GetFullScreenMode(int id){
+        switch(id){
+            case 0:return FullScreenMode.ExclusiveFullScreen;
+            case 1:return FullScreenMode.FullScreenWindow;
+            case 2:return FullScreenMode.Windowed;
+            default:return FullScreenMode.ExclusiveFullScreen;
+        }
+    }
+    public int GetFullScreenModeID(FullScreenMode fullScreenMode){
+        switch(fullScreenMode){
+            case FullScreenMode.ExclusiveFullScreen:return 0;
+            case FullScreenMode.FullScreenWindow:return 1;
+            case FullScreenMode.Windowed:return 2;
+            default:return 0;
+        }
+    }
+    public void SetWindowMode(int id){
+        settingsData.windowMode=id;
+        Screen.SetResolution(settingsData.resolution.x,settingsData.resolution.y,GetFullScreenMode(settingsData.windowMode));
+        if(Screen.fullScreenMode!=GetFullScreenMode(settingsData.windowMode)){var _id=GetFullScreenModeID(Screen.fullScreenMode);settingsData.windowMode=_id;windowModeDropdown.value=_id;}
     }
     public void SetVSync(bool isOn){
         QualitySettings.vSyncCount=AssetsManager.BoolToInt(isOn);
@@ -261,7 +282,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     }
     public void SetResolution(int resIndex){
         Vector2Int _res=_availableResolutionsList[resIndex];
-        Screen.SetResolution(_res.x,_res.y,settingsData.fullscreen);
+        Screen.SetResolution(_res.x,_res.y,GetFullScreenMode(settingsData.windowMode));
         settingsData.resolution=_res;
     }
     public void SetPostProcessing(bool isOn){
@@ -309,6 +330,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
             resolutionDropdown.AddOptions(new List<string>(){(r.x+"x"+r.y)});
         }}
         resolutionDropdown.value=_availableResolutionsList.FindIndex(e=>e==settingsData.resolution);
+        //if(_availableResolutionsList.FindIndex(e=>e==settingsData.resolution)==-1){resolutionDropdown.AddOptions(new List<TMP_Dropdown.OptionData>(){new TMP_Dropdown.OptionData(settingsData.resolution.x+"x"+settingsData.resolution.y)});}
     }
     [DisableInEditorMode]public List<Vector2Int> _availableResolutionsList;
     [HideInEditorMode]public List<Vector2Int> resolutionsList=new List<Vector2Int>(){

@@ -264,9 +264,9 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		
 		
 		public PlaneDir playfieldRot=PlaneDir.vert;
+		public int windowMode=1;
 		public Vector2Int resolution=new Vector2Int(1920,1080);
-		//public int resolution=0;
-		public bool fullscreen=true;
+		//public bool fullScreen=true;
 		public bool vSync=false;
 		public int quality=4;
 		public bool pprocessing;
