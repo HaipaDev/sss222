@@ -41,6 +41,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [SceneObjectsOnly][SerializeField]TMP_Dropdown resolutionDropdown;
     //[SceneObjectsOnly][SerializeField]Toggle fullscreenToggle;
     [SceneObjectsOnly][SerializeField]Toggle vSyncToggle;
+    [SceneObjectsOnly][SerializeField]Toggle lockCursorToggle;
     [SceneObjectsOnly][SerializeField]TMP_Dropdown qualityDropdopwn;
     [SceneObjectsOnly][SerializeField]Toggle pprocessingToggle;
     [SceneObjectsOnly][SerializeField]Toggle screenshakeToggle;
@@ -52,6 +53,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [SceneObjectsOnly][SerializeField]Toggle classicHudToggle;
     [SceneObjectsOnly][SerializeField]Slider hudVis_graphicsSlider;
     [SceneObjectsOnly][SerializeField]Slider hudVis_textSlider;
+    [SceneObjectsOnly][SerializeField]Slider hudVis_barTextSlider;
     [SceneObjectsOnly][SerializeField]Slider hudVis_barsSlider;
     [SceneObjectsOnly][SerializeField]Slider hudVis_absorpSlider;
     [SceneObjectsOnly][SerializeField]Slider hudVis_popupsSlider;
@@ -60,7 +62,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     [AssetsOnly][SerializeField]GameObject pprocessingPrefab;
     [SceneObjectsOnly]public PostProcessVolume postProcessVolume;
     SaveSerial.SettingsData settingsData;
-    void Start(){   instance=this;if(SaveSerial.instance!=null)settingsData=SaveSerial.instance.settingsData;
+    void Start(){   instance=this;if(SaveSerial.instance!=null){settingsData=SaveSerial.instance.settingsData;}
 
         scbuttonsToggle.isOn=settingsData.scbuttons;
         dtapMouseShootToggle.isOn=settingsData.dtapMouseShoot;
@@ -88,6 +90,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         windowModeDropdown.value=settingsData.windowMode;
         //fullscreenToggle.isOn=settingsData.fullscreen;
         vSyncToggle.isOn=settingsData.vSync;
+        lockCursorToggle.isOn=settingsData.lockCursor;
         qualityDropdopwn.value=settingsData.quality;
         pprocessingToggle.isOn=settingsData.pprocessing;
         screenshakeToggle.isOn=settingsData.screenshake;
@@ -99,6 +102,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         classicHudToggle.isOn=settingsData.classicHUD;
         hudVis_graphicsSlider.value=settingsData.hudVis_graphics;
         hudVis_textSlider.value=settingsData.hudVis_text;
+        hudVis_barTextSlider.value=settingsData.hudVis_barText;
         hudVis_barsSlider.value=settingsData.hudVis_barFill;
         hudVis_absorpSlider.value=settingsData.hudVis_absorpFill;
         hudVis_popupsSlider.value=settingsData.hudVis_popups;
@@ -127,11 +131,11 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     public void SetPanelActive(int i){panelActive=i;foreach(GameObject p in panels){p.SetActive(false);}panels[panelActive].SetActive(true);}
     public void OpenSettings(){transform.GetChild(0).gameObject.SetActive(true);transform.GetChild(1).gameObject.SetActive(false);}
     public void OpenDeleteAll(){transform.GetChild(1).gameObject.SetActive(true);transform.GetChild(0).gameObject.SetActive(false);}
-    public void Close(){transform.GetChild(0).gameObject.SetActive(false);transform.GetChild(1).gameObject.SetActive(false);}
+    public void Close(){SaveSerial.instance.SaveSettings();transform.GetChild(0).gameObject.SetActive(false);transform.GetChild(1).gameObject.SetActive(false);}
     public void Back(){
         if(transform.GetChild(1).gameObject.activeSelf){OpenSettings();return;}
         else{
-            if(SceneManager.GetActiveScene().name=="Options"){GSceneManager.instance.LoadStartMenu();}
+            if(SceneManager.GetActiveScene().name=="Options"){GSceneManager.instance.LoadStartMenu();SaveSerial.instance.SaveSettings();}
             else if(SceneManager.GetActiveScene().name=="Game"&&PauseMenu.GameIsPaused){Close();PauseMenu.instance.Pause();}
         }
     }
@@ -255,7 +259,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         /*Screen.fullScreen=isOn;
         settingsData.fullscreen=isOn;*/
     }
-    public FullScreenMode GetFullScreenMode(int id){
+    public static FullScreenMode GetFullScreenMode(int id){
         switch(id){
             case 0:return FullScreenMode.ExclusiveFullScreen;
             case 1:return FullScreenMode.FullScreenWindow;
@@ -263,7 +267,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
             default:return FullScreenMode.ExclusiveFullScreen;
         }
     }
-    public int GetFullScreenModeID(FullScreenMode fullScreenMode){
+    public static int GetFullScreenModeID(FullScreenMode fullScreenMode){
         switch(fullScreenMode){
             case FullScreenMode.ExclusiveFullScreen:return 0;
             case FullScreenMode.FullScreenWindow:return 1;
@@ -274,11 +278,16 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     public void SetWindowMode(int id){
         settingsData.windowMode=id;
         Screen.SetResolution(settingsData.resolution.x,settingsData.resolution.y,GetFullScreenMode(settingsData.windowMode));
-        if(Screen.fullScreenMode!=GetFullScreenMode(settingsData.windowMode)){var _id=GetFullScreenModeID(Screen.fullScreenMode);settingsData.windowMode=_id;windowModeDropdown.value=_id;}
+        //if(Screen.fullScreenMode!=GetFullScreenMode(settingsData.windowMode)){var _id=GetFullScreenModeID(Screen.fullScreenMode);settingsData.windowMode=_id;}
+        //if(settingsData.windowMode!=GetFullScreenModeID(Screen.fullScreenMode)){var _id=GetFullScreenModeID(Screen.fullScreenMode);settingsData.windowMode=_id;}
     }
     public void SetVSync(bool isOn){
         QualitySettings.vSyncCount=AssetsManager.BoolToInt(isOn);
         settingsData.vSync=isOn;
+    }
+    public void SetLockCursor(bool isOn){
+        Cursor.lockState=(CursorLockMode)(AssetsManager.BoolToInt(isOn)*2);
+        settingsData.lockCursor=isOn;
     }
     public void SetResolution(int resIndex){
         Vector2Int _res=_availableResolutionsList[resIndex];
@@ -296,6 +305,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     public void SetClassicHud(bool val){if(GameCanvas._isPossibleToUpscaleHud()){settingsData.classicHUD=val;if(GameCanvas.instance!=null){GameCanvas.instance.ChangeHUDAligment();}}}
     public void SetHudVis_Graphics(float val){settingsData.hudVis_graphics=val;}
     public void SetHudVis_Text(float val){settingsData.hudVis_text=val;}
+    public void SetHudVis_BarText(float val){settingsData.hudVis_barText=val;}
     public void SetHudVis_BarFill(float val){settingsData.hudVis_barFill=val;}
     public void SetHudVis_AbsorpFill(float val){settingsData.hudVis_absorpFill=val;}
     public void SetHudVis_Popups(float val){settingsData.hudVis_popups=val;}

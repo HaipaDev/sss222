@@ -84,8 +84,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 #endregion
 #region//Player Data
 	public PlayerData playerData=new PlayerData();
-	public double buildFirstLoaded;
-	public double buildLastLoaded;
+	public float buildFirstLoaded;
+	public float buildLastLoaded;
 	[System.Serializable]public class PlayerData{
 		public Highscore[] highscore=new Highscore[0];
 		public string skinName="def";
@@ -116,9 +116,9 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public void Load(){
 		if(ES3.FileExists(_playerDataPath())){
 			var settings=new ES3Settings(_playerDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
-			if(ES3.KeyExists("buildFirstLoaded",settings))buildFirstLoaded=ES3.Load<float>("buildFirstLoaded",settings);
+			if(ES3.KeyExists("buildFirstLoaded",settings)){buildFirstLoaded=ES3.Load<float>("buildFirstLoaded",8,settings);}
 			else Debug.LogWarning("Key for buildFirstLoaded not found in: "+_playerDataPath());
-			if(ES3.KeyExists("buildLastLoaded",settings))buildLastLoaded=ES3.Load<float>("buildLastLoaded",settings);
+			if(ES3.KeyExists("buildLastLoaded",settings)){buildLastLoaded=ES3.Load<float>("buildLastLoaded",8,settings);}
 			else Debug.LogWarning("Key for buildLastLoaded not found in: "+_playerDataPath());
 			if(ES3.KeyExists("playerData",settings))ES3.LoadInto<PlayerData>("playerData",playerData,settings);
 			else Debug.LogWarning("Key for playerData not found in: "+_playerDataPath());
@@ -268,6 +268,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public Vector2Int resolution=new Vector2Int(1920,1080);
 		//public bool fullScreen=true;
 		public bool vSync=false;
+		public bool lockCursor=false;
 		public int quality=4;
 		public bool pprocessing;
 		public bool screenshake=true;
@@ -278,6 +279,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool classicHUD=false;
 		public bool playerWeaponsFade=true;
 		public float hudVis_graphics=0.9f;
+		public float hudVis_barText=1f;
 		public float hudVis_text=1f;
 		public float hudVis_barFill=1f;
 		public float hudVis_absorpFill=0.5f;
@@ -298,13 +300,13 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	
 	public string _settingsDataPath(){return Application.persistentDataPath+"/"+filenameSettings+".json";}
 	public void SaveSettings(){
-		var settings=new ES3Settings(_settingsDataPath());
+		var settings=new ES3Settings(_settingsDataPath(),ES3.EncryptionType.None);
 		ES3.Save("settingsData",settingsData,settings);
 		Debug.Log("Settings saved");
 	}
 	public void LoadSettings(){
 		if(ES3.FileExists(_settingsDataPath())){
-		var settings=new ES3Settings(_settingsDataPath());
+		var settings=new ES3Settings(_settingsDataPath(),ES3.EncryptionType.None);
 			if(ES3.KeyExists("settingsData",settings))ES3.LoadInto<SettingsData>("settingsData",settingsData,settings);
 			else Debug.LogWarning("Key for settingsData not found in: "+_settingsDataPath());
 		}else Debug.LogWarning("Settings file not found in: "+_settingsDataPath());
@@ -312,9 +314,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public void ResetSettings(){
 		settingsData=new SettingsData();
 		GC.Collect();
-		if(ES3.FileExists(_settingsDataPath())){
-			ES3.DeleteFile(_settingsDataPath());
-		}
+		if(ES3.FileExists(_settingsDataPath())){ES3.DeleteFile(_settingsDataPath());}
 	}
 #endregion
 }

@@ -55,11 +55,11 @@ public class AssetsManager : MonoBehaviour{	public static AssetsManager instance
 			return null;
 		}
 		GameObject objref=Instantiate(o.gobj,pos,Quaternion.identity);
-		for(var i=1;i<amnt-1;i++){
-		var rndX=UnityEngine.Random.Range(-rangeX,rangeX);
-		var rndY=UnityEngine.Random.Range(-rangeY,rangeY);
-		var poss=pos+new Vector2(rndX,rndY);
-        Instantiate(o.gobj,poss,Quaternion.identity);
+		for(var i=0;i<amnt-1;i++){
+			var rndX=UnityEngine.Random.Range(-rangeX,rangeX);
+			var rndY=UnityEngine.Random.Range(-rangeY,rangeY);
+			var poss=pos+new Vector2(rndX,rndY);
+			Instantiate(o.gobj,poss,Quaternion.identity);
 		}
         return objref;
 	}

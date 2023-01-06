@@ -13,6 +13,11 @@ public class HUD_Visibility : MonoBehaviour{
         savAlpha=GetTransparency();
     }
     void Update(){
+        if(gameObject.name=="ScoreText"){
+            if(FindObjectOfType<BossAI>()!=null){type=HUDVis_type.barText;}
+            else{type=HUDVis_type.text;}
+        }
+
         if(type==HUDVis_type.graphics){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_graphics);}
         if(type==HUDVis_type.text){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_text);}
         if(type==HUDVis_type.barFill){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_barFill);}
@@ -44,5 +49,5 @@ public class HUD_Visibility : MonoBehaviour{
     }
 }
 enum HUDVis_type{
-    graphics,text,barFill,absorpFill,popups,notif
+    graphics,text,barFill,absorpFill,popups,notif,barText
 }

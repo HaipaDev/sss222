@@ -206,13 +206,13 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
 [Title("Leveling", titleAlignment: TitleAlignments.Centered)]
     [FoldoutGroup("Leveling",false,VisibleIf="@this._isAdventureSubZone==false")]public float xpMax=100f;
     [FoldoutGroup("Leveling")]public float xpMaxOvefillMult=1.5f;
-    [FoldoutGroup("Leveling")]public float xp_wave=20f;
-    [FoldoutGroup("Leveling")]public float xp_shop=3f;
-    [FoldoutGroup("Leveling")]public float xp_powerup=1f;
-    [FoldoutGroup("Leveling")]public float xp_flying=7f;
-    [FoldoutGroup("Leveling")]public float flyingTimeReq=25f;
-    [FoldoutGroup("Leveling")]public float xp_staying=-2f;
-    [FoldoutGroup("Leveling")]public float stayingTimeReq=4f;
+    [FoldoutGroup("Leveling")]public float xp_wave=20;
+    [FoldoutGroup("Leveling")]public float xp_shop=3;
+    [FoldoutGroup("Leveling")]public float xp_powerup=1;
+    [FoldoutGroup("Leveling")]public float xp_flying=7;
+    [FoldoutGroup("Leveling")]public float flyingTimeReq=25;
+    [FoldoutGroup("Leveling")]public float xp_staying=-2;
+    [FoldoutGroup("Leveling")]public float stayingTimeReq=4;
     [FoldoutGroup("Leveling")]public List<ShipLvlFractionsValues> shipLvlFractionsValues;
     //[FoldoutGroup("Leveling")][ShowIf("@this._isAdventure()")]public int savePointsFromLvl=5;
 [Header("Changes per level")]

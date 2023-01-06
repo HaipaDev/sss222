@@ -38,16 +38,15 @@ public class CoreSetup : MonoBehaviour{   public static CoreSetup instance;
     void LoadPre(){
         if(FindObjectOfType<SaveSerial>()==null){Instantiate(saveSerialPrefab);}
         if(FindObjectOfType<ES3ReferenceMgr>()==null){Instantiate(easySavePrefab);}
-        if(FindObjectOfType<GSceneManager>()==null){var go=Instantiate(gsceneManagerPrefab);go.GetComponent<GSceneManager>().enabled=true;}
-            /*Idk it disables itself so I guess Ill turn it on manually*/
+        if(FindObjectOfType<GSceneManager>()==null){var go=Instantiate(gsceneManagerPrefab);go.GetComponent<GSceneManager>().enabled=true;}/*Idk it disables itself? so I guess Ill turn it on manually*/
         if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
+        if(FindObjectOfType<AudioManager>()==null){Instantiate(audioManagerPrefab);}
     }
     void Load(){
         LoadPre();
         if(FindObjectOfType<GameManager>()==null){Instantiate(gameManagerPrefab);}
 
         if(FindObjectOfType<AssetsManager>()==null){Instantiate(assetsManagerPrefab);}
-        if(FindObjectOfType<AudioManager>()==null){Instantiate(audioManagerPrefab);}
 
         //if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
         if(FindObjectOfType<DiscordPresence.PresenceManager>()==null){Instantiate(discordPresencePrefab);}

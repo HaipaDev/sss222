@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
     public float horizCameraSize=3.92f;
     [Header("Other")]
     public string gameVersion;
-	public double buildVersion;
+	public float buildVersion;
     [SerializeField][ReadOnly] string _tempSandboxSaveName;
     [SerializeField][ReadOnly] string _selectedUsersDataName;
     public bool isSteam=true;

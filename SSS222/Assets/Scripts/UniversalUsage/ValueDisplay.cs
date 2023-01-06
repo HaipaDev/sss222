@@ -60,12 +60,13 @@ public class ValueDisplay : MonoBehaviour{
     #endregion
     #region//Player
         if(Player.instance!=null){      var p=Player.instance;
-            if(value=="hpOffMax"){
+            if(value=="hpOfMax"){
                 if(GameManager.instance.CheckGamemodeSelected("Classic")||p.health<=5){
                     _txt=System.Math.Round(p.health,1).ToString()+"/"+p.healthMax.ToString();}//Round to .1
                 else _txt=Mathf.RoundToInt(p.health).ToString()+"/"+p.healthMax.ToString();
             }
-            else if(value=="energyOffMax") _txt=Mathf.RoundToInt(p.energy).ToString()+"/"+p.energyMax.ToString();
+            else if(value=="energyOfMax") _txt=Mathf.RoundToInt(p.energy).ToString()+"/"+p.energyMax.ToString();
+            else if(value=="xpOfMax") _txt=Mathf.RoundToInt(GameManager.instance.xp).ToString()+"/"+GameManager.instance.xpMax.ToString();
             else if(value=="max_hp") _txt=p.healthMax.ToString();
             else if(value=="max_energy") _txt=p.energyMax.ToString();
             else if(value=="speedBase") _txt=(p.moveSpeedBase).ToString();
