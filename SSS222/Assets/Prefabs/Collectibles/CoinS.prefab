@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3676386598028052292}
   - component: {fileID: 1529301144}
   - component: {fileID: -6575572109222253960}
+  - component: {fileID: 6153949076196426405}
   m_Layer: 0
   m_Name: CoinS
   m_TagString: Collectibles
@@ -229,3 +230,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04326831ef30704a84404316f25314d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6153949076196426405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056705403108089519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe7168c078b5a8a41b35824fabe55eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horiz: 1
+  rotateSpeedH: 20
+  vert: 0
+  rotateSpeedV: 20

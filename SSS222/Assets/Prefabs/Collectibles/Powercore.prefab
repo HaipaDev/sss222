@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1529301144}
   - component: {fileID: 6096651369177037775}
   - component: {fileID: -6004509003753769221}
+  - component: {fileID: 485021675905086545}
   m_Layer: 0
   m_Name: Powercore
   m_TagString: Collectibles
@@ -327,3 +328,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04326831ef30704a84404316f25314d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &485021675905086545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056705403108089519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe7168c078b5a8a41b35824fabe55eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horiz: 1
+  rotateSpeedH: 5
+  vert: 1
+  rotateSpeedV: 5

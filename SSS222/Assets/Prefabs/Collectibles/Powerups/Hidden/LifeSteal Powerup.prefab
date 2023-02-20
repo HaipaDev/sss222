@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -4038565239938054672}
   - component: {fileID: 9005043153457768599}
   - component: {fileID: -1159023726621563788}
+  - component: {fileID: 7953310788690613565}
   m_Layer: 0
   m_Name: LifeSteal Powerup
   m_TagString: Collectibles
@@ -165,3 +166,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distReqMulti: 6
   speedFollowMulti: 5
+--- !u!114 &7953310788690613565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274471404120805607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed99c060435d6043b0a0540786abe35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assetName: Glow
+  materialClone: 0
+  color: {r: 0.15267888, g: 0.4433962, b: 0.24479015, a: 0.23529412}
+  size: {x: 1.2, y: 1.2}
+  emissionSpeed: 4
+  maxParticles: 2
+  offset: {x: 0, y: 0}
+  alignToDirection: 0

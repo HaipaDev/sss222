@@ -9,10 +9,11 @@ public class HoverUIEnable : MonoBehaviour{
     [SerializeField] GameObject obj;
     [SerializeField] bool followMouse=true;
     void Update(){
-        if(CheckAllOtherPointers()){obj.SetActive(true);}
+        //if(CheckAllOtherPointers()){obj.SetActive(true);}
+        if(IsPointerOverUIElement()){obj.SetActive(true);}
         else{obj.SetActive(false);}
 
-        if(followMouse){
+        if(followMouse&&obj.activeSelf){
             obj.transform.position=Input.mousePosition;
         }
     }

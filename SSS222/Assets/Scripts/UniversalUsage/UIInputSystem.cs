@@ -15,11 +15,11 @@ public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHa
     [SerializeField]Vector2 mousePosPrev;
     void Start(){
         instance=this;
-        es=FindObjectOfType<EventSystem>();
+        if(FindObjectOfType<EventSystem>()!=null)es=FindObjectOfType<EventSystem>();
         if(es!=null)btn=es.firstSelectedGameObject.GetComponent<Button>();mousePosPrev=Input.mousePosition;
     }
     public void SetSelected(){
-        es.SetSelectedGameObject(null);
+        if(es!=null)es.SetSelectedGameObject(null);
         if(es!=null&&btn!=null){es.SetSelectedGameObject(btn.gameObject);btnLast=btn;}
     }
     void Update(){

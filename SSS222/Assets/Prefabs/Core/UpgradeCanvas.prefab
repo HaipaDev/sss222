@@ -3956,6 +3956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go: {fileID: 915316370113210191}
+  setScrollbarPos: 1
 --- !u!1 &1133747387035363826
 GameObject:
   m_ObjectHideFlags: 0
@@ -15287,6 +15288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go: {fileID: 9004398416781448764}
+  setScrollbarPos: 1
 --- !u!1 &4699670548249721681
 GameObject:
   m_ObjectHideFlags: 0
@@ -24960,7 +24962,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000030994415, y: -960.0004}
+  m_AnchoredPosition: {x: -0.0000030994415, y: -961.23083}
   m_SizeDelta: {x: 1073.725, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8810354502628922436
@@ -27522,6 +27524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go: {fileID: 915316370113210191}
+  setScrollbarPos: 1
 --- !u!1 &8999406501878586796
 GameObject:
   m_ObjectHideFlags: 0

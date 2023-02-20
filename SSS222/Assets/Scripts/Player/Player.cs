@@ -1149,7 +1149,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     public void Recoil(float strength, float time){if(recoilOn)StartCoroutine(RecoilI(strength,time));}
     IEnumerator RecoilI(float strength,float time){     if(!GameManager.GlobalTimeIsPaused){
         Shake.instance.CamShake(0.1f,1/(time*4));
-        if(SaveSerial.instance.settingsData.vibrations)Vibrator.Vibrate(2);
+        //if(SaveSerial.instance.settingsData.vibrations)Vibrator.Vibrate(2);
         vel = Vector2.down*strength;
         yield return new WaitForSeconds(time);
         vel=Vector2.zero;

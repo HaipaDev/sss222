@@ -8,7 +8,7 @@ using Sirenix.OdinInspector;
 
 public class PowerupDisplay : MonoBehaviour{
     [Header("Config")]
-    [SceneObjectsOnly][SerializeField] GameObject numberDisplay;
+    [ChildGameObjectsOnly][SerializeField] GameObject numberDisplay;
     [SerializeField] Image bg;
     [SerializeField] TextMeshProUGUI txt;
     [SerializeField] Image highlightIMG;

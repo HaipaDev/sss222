@@ -13,8 +13,7 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
     void Awake(){
         if(SteamManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
     }
-    void Start(){//IEnumerator Start(){
-        //yield return new WaitForSeconds(0.1f);
+    void Start(){
         if(Application.platform==RuntimePlatform.WindowsPlayer||Application.platform==RuntimePlatform.WindowsEditor){
         if(GameManager.instance!=null){if(GameManager.instance.isSteam){
             InitSteam();
@@ -50,6 +49,7 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
             var result = await lb.SubmitScoreAsync(score);
         }
     }
+    #if !UNITY_ANDROID
     public async Task<Texture2D> GetAvatarCurrent(SteamId steamId){return await GetAvatar(SteamClient.SteamId);}
     public async Task<Texture2D> GetAvatar(SteamId steamId){
         // Get the task
@@ -94,4 +94,5 @@ public class SteamManager : MonoBehaviour{  public static SteamManager instance;
         avatar.Apply();
         return avatar;
     }
+    #endif
 }

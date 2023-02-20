@@ -49,7 +49,9 @@ public class CoreSetup : MonoBehaviour{   public static CoreSetup instance;
         if(FindObjectOfType<AssetsManager>()==null){Instantiate(assetsManagerPrefab);}
 
         //if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
+        #if !UNITY_ANDROID
         if(FindObjectOfType<DiscordPresence.PresenceManager>()==null){Instantiate(discordPresencePrefab);}
+        #endif
         if(FindObjectOfType<SteamManager>()==null){Instantiate(steamManagerPrefab);}
         if(FindObjectOfType<StatsAchievsManager>()==null){Instantiate(statsAchievsManagerPrefab);}
         

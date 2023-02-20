@@ -322,15 +322,17 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
                 }
             }
             
-            if(presenceTimeSet==false){
-                DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                int presenceTimeTotal = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
-                DiscordPresence.PresenceManager.UpdatePresence(detail: presenceDetails, state: presenceStatus, start: presenceTimeTotal);
-                presenceTimeSet=true;
-            }
-            DiscordPresence.PresenceManager.UpdatePresence(detail: presenceDetails, state: presenceStatus);
+            if(DiscordPresence.PresenceManager.instance!=null){
+                if(presenceTimeSet==false){
+                    DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                    int presenceTimeTotal = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
+                    DiscordPresence.PresenceManager.UpdatePresence(detail: presenceDetails, state: presenceStatus, start: presenceTimeTotal);
+                    presenceTimeSet=true;
+                }
+                DiscordPresence.PresenceManager.UpdatePresence(detail: presenceDetails, state: presenceStatus);
 
-            presenceTimer=1f;
+                presenceTimer=1f;
+            }
         }
 
         //Check if using any GamePad

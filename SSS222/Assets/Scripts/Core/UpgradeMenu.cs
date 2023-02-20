@@ -155,6 +155,10 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             if(pmodules._isModuleEquipped(name)&&name!=""){pmodules.ClearModule(name);}
             pmodules.SetModule(selectedModuleSlot,name);
             if(name=="DkSurge"){SetAutoascend(false);}
+
+            foreach(Tag_ModuleTxtUpgradeEquip t in FindObjectsOfType<Tag_ModuleTxtUpgradeEquip>()){
+                t.UpdateTxt();
+            }
             //BackToModulesSkillsInventory();
         }
     }
@@ -167,6 +171,10 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         if(pmodules._isSkillUnlocked(name)||name==""){
             if(pmodules._isSkillEquipped(name)&&name!=""){pmodules.ClearSkill(name);}
             pmodules.SetSkill(selectedSkillSlot,name);
+
+            foreach(Tag_ModuleTxtUpgradeEquip t in FindObjectsOfType<Tag_ModuleTxtUpgradeEquip>()){
+                t.UpdateTxt();
+            }
             //BackToModulesSkillsInventory();
         }
     }
@@ -210,6 +218,9 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         foreach(Transform t in goModule0.transform.GetChild(2)){Destroy(t.gameObject);}
         goModule0.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(()=>SetModuleSlot(""));
         goModule0.transform.GetChild(5).GetChild(1).GetChild(0).GetComponent<XPFill>().valueName="moduleEmptyThisSlot";
+        Destroy(goModule0.transform.GetChild(8).GetChild(0).GetChild(0).GetComponent<Tag_ModuleTxtUpgradeEquip>());
+        goModule0.transform.GetChild(8).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text="Unequip";
+        Destroy(goModule0.transform.GetChild(7).gameObject);
         Destroy(goModule0.transform.GetChild(6).gameObject);
         Destroy(goModule0.transform.GetChild(5).GetChild(0).gameObject);
         Destroy(goModule0.transform.GetChild(4).gameObject);
@@ -235,6 +246,8 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             go.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(()=>SetModuleSlot(m.item.name));
             go.transform.GetChild(5).GetChild(0).GetComponent<ValueDisplay>().value="moduleEquippedSlot_"+m.item.name;
             go.transform.GetChild(5).GetChild(1).GetChild(0).GetComponent<XPFill>().valueName="moduleEquippedThisSlot_"+m.item.name;
+            go.transform.GetChild(8).GetChild(0).GetChild(0).GetComponent<Tag_ModuleTxtUpgradeEquip>().value=m.item.name;
+            go.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Tag_ModuleTxtUpgradeEquip>().value=m.item.name;
             go.transform.GetChild(6).GetComponent<ShipLevelRequired>().value=m.lvlExpire;
             if(m.lvlExpire==0){Destroy(go.transform.GetChild(6).gameObject);}
         }
@@ -251,6 +264,9 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
         foreach(Transform t in goSkill0.transform.GetChild(2)){Destroy(t.gameObject);}
         goSkill0.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(()=>SetSkillSlot(""));
         goSkill0.transform.GetChild(5).GetChild(1).GetChild(0).GetComponent<XPFill>().valueName="skillEmptyThisSlot";
+        Destroy(goSkill0.transform.GetChild(8).GetChild(0).GetChild(0).GetComponent<Tag_ModuleTxtUpgradeEquip>());
+        goSkill0.transform.GetChild(8).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text="Unequip";
+        Destroy(goSkill0.transform.GetChild(7).gameObject);
         Destroy(goSkill0.transform.GetChild(6).gameObject);
         Destroy(goSkill0.transform.GetChild(5).GetChild(0).gameObject);
         Destroy(goSkill0.transform.GetChild(4).gameObject);
@@ -276,6 +292,8 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             go.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(()=>SetSkillSlot(s.item.name));
             go.transform.GetChild(5).GetChild(0).GetComponent<ValueDisplay>().value="skillEquippedSlot_"+s.item.name;
             go.transform.GetChild(5).GetChild(1).GetChild(0).GetComponent<XPFill>().valueName="skillEquippedThisSlot_"+s.item.name;
+            go.transform.GetChild(8).GetChild(0).GetChild(0).GetComponent<Tag_ModuleTxtUpgradeEquip>().value=s.item.name;go.transform.GetChild(8).GetChild(0).GetChild(0).GetComponent<Tag_ModuleTxtUpgradeEquip>().skill=true;
+            go.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Tag_ModuleTxtUpgradeEquip>().value=s.item.name;go.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Tag_ModuleTxtUpgradeEquip>().skill=true;
             go.transform.GetChild(6).GetComponent<ShipLevelRequired>().value=s.lvlExpire;
             if(s.lvlExpire==0){Destroy(go.transform.GetChild(6).gameObject);}
         }

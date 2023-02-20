@@ -20,6 +20,7 @@ public class HUD_Visibility : MonoBehaviour{
 
         if(type==HUDVis_type.graphics){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_graphics);}
         if(type==HUDVis_type.text){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_text);}
+        if(type==HUDVis_type.barText){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_barText);}
         if(type==HUDVis_type.barFill){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_barFill);}
         if(type==HUDVis_type.absorpFill){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_absorpFill);}
         if(type==HUDVis_type.popups){SetAlphaVal(SaveSerial.instance.settingsData.hudVis_popups);}

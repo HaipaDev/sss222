@@ -40,13 +40,15 @@ public class ScoreUserDataCanvas : MonoBehaviour{
         Destroy(steamPfp.gameObject);
         //SetSteamAvatar();
     }
-    async void SetSteamAvatar(){
+    /*async void SetSteamAvatar(){
+        #if UNITY_ANDROID
         if(steamId!=0){
             var _steamId=new Steamworks.SteamId();_steamId.Value=steamId;
             var txtr=await SteamManager.instance.GetAvatar(_steamId);
             if(steamPfp!=null){steamPfp.sprite=Sprite.Create(txtr,Rect.zero,Vector2.zero);}
         }
-    }
+        #endif
+    }*/
     void Update(){
         if(titleText!=null)titleText.text=GameManager.instance.GetCurrentGamemodeName()+" highscore for:";
         if(usernameText!=null)usernameText.text=GameManager.instance.GetSelectedUsersDataName();

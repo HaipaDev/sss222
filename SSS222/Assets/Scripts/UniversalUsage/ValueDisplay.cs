@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,14 +12,30 @@ public class ValueDisplay : MonoBehaviour{
     [HideInPlayMode][SerializeField] bool onValidate=false;
     TextMeshProUGUI txt;
     TMP_InputField tmpInput;
+    PlayerModules pmodules;
+    int m_id=-1,s_id=-1;
+    Module m=null;Skill s=null;
+    void SetModulesAndSkillsVariables(){
+        if(Player.instance!=null){
+            pmodules=Player.instance.GetComponent<PlayerModules>();
+            if(pmodules!=null){
+                if(m_id==-1){}//Debug.Log("m_id = -1");if(value.Contains("moduleEquippedSlot_")){m_id=pmodules.moduleSlots.FindIndex(x=>x==value.Split('_')[1]);}}
+                if(s_id==-1){}//Debug.Log("s_id = -1");if(value.Contains("skillEquippedSlot_")){s_id=pmodules.moduleSlots.FindIndex(x=>x==value.Split('_')[1]);}}
+
+                if(m!=null){Debug.Log("m is null");if(value.Contains("moduleLvl_")){m=pmodules.modulesList.Find(x=>x.name==value.Split('_')[1]);}}
+                if(s!=null){Debug.Log("s is null");if(value.Contains("skillLvl_")){s=pmodules.skillsList.Find(x=>x.name==value.Split('_')[1]);}}
+            }
+        }
+    }
     void Start(){
         if(GetComponent<TextMeshProUGUI>()!=null)txt=GetComponent<TextMeshProUGUI>();
         if(GetComponent<TMP_InputField>()!=null)tmpInput=GetComponent<TMP_InputField>();
-        if(onlyOnEnable)ChangeText();
+        if(onlyOnEnable){SetModulesAndSkillsVariables();ChangeText();}
     }
-    void OnEnable(){if(onlyOnEnable)ChangeText();}
-    void OnValidate(){if(onValidate)ChangeText();}
-    void Update(){if(!onlyOnEnable)ChangeText();}
+    void OnEnable(){if(onlyOnEnable){SetModulesAndSkillsVariables();ChangeText();}}
+    void OnValidate(){if(onValidate){SetModulesAndSkillsVariables();ChangeText();}}
+    void Update(){if(!onlyOnEnable){SetModulesAndSkillsVariables();ChangeText();}}
+
 
     void ChangeText(){      string _txt="";
     #region//GameManager
@@ -83,21 +99,24 @@ public class ValueDisplay : MonoBehaviour{
                 if(value.Contains("cooldownSkill_")){
                     var id=int.Parse(value.Split('_')[1]);
                     var s=pmodules.GetSkillFromID(id);
-                    if(
-                    (s.name=="Teleport"&&pmodules.timerTeleport==-4)||
-                    (s.name=="Determined"&&pmodules.timerDetemined==-4)||
-                    (s.name=="GiveItToMe"&&pmodules.timerGiveItToMe==-4)||
-                    (s.name!="Teleport"&&s.name!="Determined"&&s.name!="GiveItToMe")
-                    ){if(s.cooldown>=10){_txt=System.Math.Round(s.cooldown,0).ToString();}else{_txt=System.Math.Round(s.cooldown,1).ToString();}}
-                    else if(s.name=="Teleport"&&pmodules.timerTeleport!=-4){_txt=System.Math.Round(pmodules.timerTeleport,1).ToString();}
-                    else if(s.name=="Determined"&&pmodules.timerDetemined!=-4){_txt=System.Math.Round(pmodules.timerDetemined,1).ToString();}
-                    else if(s.name=="GiveItToMe"&&pmodules.timerGiveItToMe!=-4){_txt=System.Math.Round(pmodules.timerGiveItToMe,1).ToString();}
+                    if(s!=null){
+                        if(
+                        (s.name=="Teleport"&&pmodules.timerTeleport==-4)||
+                        (s.name=="Determined"&&pmodules.timerDetemined==-4)||
+                        (s.name=="GiveItToMe"&&pmodules.timerGiveItToMe==-4)||
+                        (s.name!="Teleport"&&s.name!="Determined"&&s.name!="GiveItToMe")
+                        ){
+                            if(s.cooldown>=10){_txt=System.Math.Round(s.cooldown,0).ToString();}else{_txt=System.Math.Round(s.cooldown,1).ToString();}
+                        }else if(s.name=="Teleport"&&pmodules.timerTeleport!=-4){_txt=System.Math.Round(pmodules.timerTeleport,1).ToString();}
+                        else if(s.name=="Determined"&&pmodules.timerDetemined!=-4){_txt=System.Math.Round(pmodules.timerDetemined,1).ToString();}
+                        else if(s.name=="GiveItToMe"&&pmodules.timerGiveItToMe!=-4){_txt=System.Math.Round(pmodules.timerGiveItToMe,1).ToString();}
+                    }
                 }
-                if(value.Contains("moduleEquippedSlot_")){var m=pmodules.moduleSlots.FindIndex(x=>x==value.Split('_')[1]);if(m!=-1){_txt="Slot: "+(m+1).ToString();}else _txt="Not-Eq";}
-                if(value.Contains("skillEquippedSlot_")){var s=pmodules.skillsSlots.FindIndex(x=>x==value.Split('_')[1]);if(s!=-1){_txt="Slot: "+(s+1).ToString();}else _txt="Not-Eq";}
+                if(value.Contains("moduleEquippedSlot_")){if(m_id!=-1){_txt="Slot: "+(m_id+1).ToString();}else{_txt="Not-Eq";}}
+                if(value.Contains("skillEquippedSlot_")){if(s_id!=-1){_txt="Slot: "+(s_id+1).ToString();}else{_txt="Not-Eq";}}
 
-                if(value.Contains("moduleLvl_")){var m=pmodules.modulesList.Find(x=>x.name==value.Split('_')[1]);if(m!=null){_txt="Lvl "+m.lvl.ToString();}else _txt="";}
-                if(value.Contains("skillLvl_")){var s=pmodules.skillsList.Find(x=>x.name==value.Split('_')[1]);if(s!=null){_txt="Lvl "+s.lvl.ToString();}else _txt="";}
+                if(value.Contains("moduleLvl_")){if(m!=null){_txt="Lvl "+m.lvl.ToString();}else _txt="";}
+                if(value.Contains("skillLvl_")){if(s!=null){_txt="Lvl "+s.lvl.ToString();}else _txt="";}
 
                 if(value=="lvl_ship"){_txt="Ship Level: "+pmodules.shipLvl.ToString();}
                 if(value=="lvlPopup"){
