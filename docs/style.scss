@@ -1,19 +1,23 @@
 $bgColor:rgb(49,9,49);
 $textColor: white;
 $accentColor: #ffb8ff;
+$linkHoverColor: #ffeeff;
 
 body{
+	margin:0;
+	min-height: 100%;
 	background-image:url("img/sss222bg.png");
 	//background-repeat:repeat;
 	background-color: $bgColor;
 	//background-blend-mode: screen;
 	background-size:160% 120%;
 	cursor: url("img/cursor.png"), auto;
-	font-family: "deathstar";
+	font-family: "deathstar", "Arial", "Open Sans";
 	letter-spacing:2px;
 	color: $textColor;
 }div.bodyoverlay{background-color: rgb(0,0,0,0.2);}
 a{color:$accentColor;text-decoration:none;cursor:url("img/cursor.png"), auto;}
+a:hover{color:$linkHoverColor;}
 a:active{color:$accentColor;}
 @font-face {
     font-family: "moonhouse";
@@ -29,7 +33,7 @@ a:active{color:$accentColor;}
     font-weight: normal;
     font-style: normal;
 }
-h1.title{font-family: "moonhouse";letter-spacing:2.5px;margin-bottom:30px;}
+h1.title{font-family: "moonhouse", "Arial", "Open Sans";letter-spacing:2.5px;margin-bottom:30px;}
 h2.shortDesc{color:#c476f5;}
 
 div.logo{
@@ -69,7 +73,7 @@ a.release{
 	background-position:-24px -12px;
 	background-size:112% 130%;
 	border:none;
-	font-family: "moonhouse";
+	font-family: "moonhouse", "Arial", "Open Sans";
 	color: white;
 	letter-spacing:3px;
 	line-height:24px;

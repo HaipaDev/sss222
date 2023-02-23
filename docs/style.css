@@ -1,9 +1,11 @@
 body {
+  margin: 0;
+  min-height: 100%;
   background-image: url("img/sss222bg.png");
   background-color: rgb(49, 9, 49);
   background-size: 160% 120%;
   cursor: url("img/cursor.png"), auto;
-  font-family: "deathstar";
+  font-family: "deathstar", "Arial", "Open Sans";
   letter-spacing: 2px;
   color: white;
 }
@@ -16,6 +18,10 @@ a {
   color: #ffb8ff;
   text-decoration: none;
   cursor: url("img/cursor.png"), auto;
+}
+
+a:hover {
+  color: #ffeeff;
 }
 
 a:active {
@@ -35,7 +41,7 @@ a:active {
   font-style: normal;
 }
 h1.title {
-  font-family: "moonhouse";
+  font-family: "moonhouse", "Arial", "Open Sans";
   letter-spacing: 2.5px;
   margin-bottom: 30px;
 }
@@ -85,7 +91,7 @@ a.release {
   background-position: -24px -12px;
   background-size: 112% 130%;
   border: none;
-  font-family: "moonhouse";
+  font-family: "moonhouse", "Arial", "Open Sans";
   color: white;
   letter-spacing: 3px;
   line-height: 24px;
