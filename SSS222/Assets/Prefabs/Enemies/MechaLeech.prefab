@@ -34,6 +34,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -149,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  off: 0
   waveConfig: {fileID: 0}
   waypointsL: []
   waypointIndex: 0
@@ -170,13 +172,24 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   sizeAvg: 1
   spr: {fileID: 0}
+  sprMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   health: 26
   healthMax: 26
+  defense: 0
+  defenseOnPhase: 1
   healthBySize: 0
   shooting: 0
+  bulletAssetName: 
   shootTime: {x: 1.75, y: 2.8}
-  shotCounter: 0
-  bullet: {fileID: 0}
+  shootTimer: 0
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
@@ -185,14 +198,17 @@ MonoBehaviour:
   killOnDash: 1
   giveScore: 1
   scoreValue: {x: 1, y: 10}
-  xpAmnt: 4
   xpChance: 100
+  xpAmnt: 4
+  accumulateXp: 1
   drops: []
   dropValues: []
   destroyOut: 1
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  _dmgHeals: 0
+  bullet: {fileID: 0}
 --- !u!114 &-9217246664307849931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +237,7 @@ MonoBehaviour:
   selfPos: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
   target: {fileID: 4546529352650547393, guid: 66b81f7bdde32c745aab52038b28a5f4, type: 3}
-  targetTag: Player
+  targetTag: 
   targetObj: {fileID: 0}
   dist: 0
   distReq: 50

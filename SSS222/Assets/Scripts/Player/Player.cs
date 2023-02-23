@@ -351,7 +351,7 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }
                 if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
             }
-            if(Application.platform==RuntimePlatform.Android){mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);}
+            if(Application.platform==RuntimePlatform.Android){if(Input.touchCount>0)mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);}
             else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
 
             if(weaponsLimited){if(_curPwrup().timer>0){_curPwrup().timer-=Time.deltaTime;}
@@ -451,34 +451,36 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
 
     void MoveWithMouse(){
-        mouseDir=mousePos-(Vector2)transform.position;
-        mousePos.x=Mathf.Clamp(mousePos.x,xRange.x,xRange.y);
-        mousePos.y=Mathf.Clamp(mousePos.y,yRange.x,yRange.y);
-        //dist in FixedUpdate()
-        float distX=0;if(moveX){distX=Mathf.Abs(mousePos.x-transform.position.x);}
-        float distY=0;if(moveY){distY=Mathf.Abs(mousePos.y-transform.position.y);}
-        if((moveX&&distX>0f&&distX<0.35f)||(moveY&&distY>0f&&distY<0.35f)){dist=0.35f;}
-        if(dist>=0.3f&&!GameManager.GlobalTimeIsPaused){moving=true;}
-        if((moveX&&moveY)&&dist<=0.05f){moving=false;}
-        if(((moveX&&!moveY)||!moveX&&moveY)&&dist<=0.24f){moving=false;}
+        if(Application.platform!=RuntimePlatform.Android||(Application.platform==RuntimePlatform.Android&&UIInputSystem.instance.currentSelected==null)){
+            mouseDir=mousePos-(Vector2)transform.position;
+            mousePos.x=Mathf.Clamp(mousePos.x,xRange.x,xRange.y);
+            mousePos.y=Mathf.Clamp(mousePos.y,yRange.x,yRange.y);
+            //dist in FixedUpdate()
+            float distX=0;if(moveX){distX=Mathf.Abs(mousePos.x-transform.position.x);}
+            float distY=0;if(moveY){distY=Mathf.Abs(mousePos.y-transform.position.y);}
+            if((moveX&&distX>0f&&distX<0.35f)||(moveY&&distY>0f&&distY<0.35f)){dist=0.35f;}
+            if(dist>=0.3f&&!GameManager.GlobalTimeIsPaused){moving=true;}
+            if((moveX&&moveY)&&dist<=0.05f){moving=false;}
+            if(((moveX&&!moveY)||!moveX&&moveY)&&dist<=0.24f){moving=false;}
 
-        float step=moveSpeedCurrent*Time.deltaTime;if(GameRules.instance.playerTimeIndependentFromDelta)step=moveSpeedCurrent*Time.unscaledDeltaTime;//Mathf.Clamp(Time.deltaTime,0.008f,0.015f);
-        if (moveX && moveY)transform.position=Vector2.MoveTowards(transform.position,mousePos*moveDir,step);
-        if (moveX && !moveY)transform.position=Vector2.MoveTowards(transform.position,new Vector2(mousePos.x*moveDir,transform.position.y),step);
-        if (!moveX && moveY)transform.position=Vector2.MoveTowards(transform.position,new Vector2(transform.position.x,mousePos.y*moveDir),step);
+            float step=moveSpeedCurrent*Time.deltaTime;if(GameRules.instance.playerTimeIndependentFromDelta)step=moveSpeedCurrent*Time.unscaledDeltaTime;//Mathf.Clamp(Time.deltaTime,0.008f,0.015f);
+            if (moveX && moveY)transform.position=Vector2.MoveTowards(transform.position,mousePos*moveDir,step);
+            if (moveX && !moveY)transform.position=Vector2.MoveTowards(transform.position,new Vector2(mousePos.x*moveDir,transform.position.y),step);
+            if (!moveX && moveY)transform.position=Vector2.MoveTowards(transform.position,new Vector2(transform.position.x,mousePos.y*moveDir),step);
 
-        if(Input.GetButtonDown("Fire2")){
-            float timeSinceLastClick=Time.time-lastClickTime;
-            if(timeSinceLastClick<=DCLICK_TIME){DClick(0);}
-            else{lastClickTime=Time.time;}
+            if(Input.GetButtonDown("Fire2")){
+                float timeSinceLastClick=Time.time-lastClickTime;
+                if(timeSinceLastClick<=DCLICK_TIME){DClick(0);}
+                else{lastClickTime=Time.time;}
+            }
+
+            var newXpos=transform.position.x;
+            var newYpos=transform.position.y;
+
+            if(moveX)newXpos=Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
+            if(moveY)newYpos=Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
+            var newPos=new Vector2(newXpos,newYpos);transform.position=newPos;
         }
-
-        var newXpos=transform.position.x;
-        var newYpos=transform.position.y;
-
-        if(moveX)newXpos=Mathf.Clamp(transform.position.x,xRange.x,xRange.y);
-        if(moveY)newYpos=Mathf.Clamp(transform.position.y,yRange.x,yRange.y);
-        var newPos=new Vector2(newXpos,newYpos);transform.position=newPos;
     }
     public Vector2 dragStartPos=Vector2.zero;
     float dragStopTimer;

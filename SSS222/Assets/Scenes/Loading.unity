@@ -410,6 +410,16 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 83631086193f78b4baf62f5ee93fc521, type: 2}
+    - target: {fileID: 3127279537771424114, guid: a1d042a2d7fa16449ba3191e111a4031,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 3127279537771424114, guid: a1d042a2d7fa16449ba3191e111a4031,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.105882354
+      objectReference: {fileID: 0}
     - target: {fileID: 5723858701084346833, guid: a1d042a2d7fa16449ba3191e111a4031,
         type: 3}
       propertyPath: m_Pivot.x
