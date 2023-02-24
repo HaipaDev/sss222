@@ -48,7 +48,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         StatsAchievsManager.instance.SaveStats();
         SaveSerial.instance.SaveStats();
         GameManager.instance.ResetMusicPitch();
-        if(Jukebox.instance!=null)Jukebox.instance.SetMusicToCstmzMusic();
+        if(Jukebox.instance!=null){if(GameRules.instance._isAdventureBossZone){Jukebox.instance.CrossfadeBossToBG();}}//Jukebox.instance.SetMusicToCstmzMusic();}
         if(GameManager.instance.gamemodeSelected!=0)SceneManager.LoadScene("Menu");
         else{if(GameRules.instance!=null){if(GameRules.instance.cfgName.Contains("Sandbox")){SceneManager.LoadScene("SandboxMode");}}}
         yield return new WaitForSecondsRealtime(0.01f);
@@ -106,7 +106,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             
             if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureZones[i].gameRules,boss);}
             else{Instantiate(CoreSetup.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureZones[i].gameRules,boss);}
-            if(boss){if(Jukebox.instance!=null)Jukebox.instance.SetMusic(null);}
+            if(boss){if(Jukebox.instance!=null)Jukebox.instance.PauseBGMusic();}
             yield return new WaitForSecondsRealtime(0.2f);
             GameManager.instance.EnterGameScene();
             GameManager.instance.LoadAdventurePost();

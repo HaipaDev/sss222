@@ -20,7 +20,11 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         //shop=FindObjectOfType<Shop>();
     }
     void Update(){
-        if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton7)){
+        var _isEditor=false;
+        #if UNITY_EDITOR
+            _isEditor=true;
+        #endif
+        if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton7)||(!Application.isFocused&&!_isEditor)){
             if(GameIsPaused){
                 if(pauseMenuUI.activeSelf){Resume();return;}
                 if(optionsUI.transform.GetChild(0).gameObject.activeSelf){SaveSerial.instance.SaveSettings();pauseMenuUI.SetActive(true);return;}
@@ -75,11 +79,6 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         GameManager.instance.speedChanged=true; GameManager.instance.gameSpeed+=slowPauseSpeed;
         yield return new WaitForEndOfFrame();
         }
-    }
-    public void Menu(){
-        //GameManager.instance.gameSpeed = prevGameSpeed;
-        GameManager.instance.gameSpeed = 1f;
-        SceneManager.LoadScene("Menu");
     }
     public void OpenOptions(){
         optionsUI.GetComponent<SettingsMenu>().OpenSettings();

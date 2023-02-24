@@ -36,8 +36,10 @@ public class Follow : MonoBehaviour{
 
     void Update(){
     if(!GameManager.GlobalTimeIsPaused){
-        if(target!=null){targetObj=GameObject.FindGameObjectWithTag(target.tag);}
-        else{targetObj=GameObject.FindGameObjectWithTag(targetTag);}
+        if(targetObj!=null){
+            if(target!=null){targetObj=GameObject.FindGameObjectWithTag(target.tag);}
+            else{targetObj=GameObject.FindGameObjectWithTag(targetTag);}
+        }
 
         if(targetObj==null){rb.velocity=new Vector2(hspeed,-vspeed);}
         else{

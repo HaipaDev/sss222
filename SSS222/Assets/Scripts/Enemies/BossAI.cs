@@ -63,7 +63,7 @@ public class BossAI : MonoBehaviour{
         phase=-1;
         en.defense=-1;
         GetComponent<PointPathing>().enabled=false;
-        Jukebox.instance.SetMusic(null);
+        Jukebox.instance.PauseBossMusic();
         AudioManager.instance.Play(GameRules.instance.bossInfo.preDeathAudio);
         AssetsManager.instance.VFX(GameRules.instance.bossInfo.preDeathVFX,transform.position,3f);
         yield return new WaitForSeconds(GameRules.instance.bossInfo.deathLength);
@@ -227,10 +227,10 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
         GetComponent<PointPathing>().enabled=false;
         if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=false;
         AudioManager.instance.Play(phasesInfo[p].audioAsset);
-        if(Jukebox.instance!=null&&GameRules.instance.bossInfo.pauseOstOnPhaseChange)Jukebox.instance.PauseFor(phasesInfo[p].delay);
+        if(Jukebox.instance!=null&&GameRules.instance.bossInfo.pauseOstOnPhaseChange)Jukebox.instance.PauseBossMusicFor(phasesInfo[p].delay);
         yield return new WaitForSeconds(phasesInfo[p].delay);
         if(p==0){
-            if(Jukebox.instance==null){Instantiate(CoreSetup.instance.GetJukeboxPrefab());}if(Jukebox.instance!=null)Jukebox.instance.SetMusic(GameRules.instance.bossInfo.ost,true);if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameManager.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}
+            if(Jukebox.instance==null){Instantiate(CoreSetup.instance.GetJukeboxPrefab());}if(Jukebox.instance!=null)Jukebox.instance.SetBossMusic(GameRules.instance.bossInfo.ost);if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameManager.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}
             en.health=GameRules.instance.bossInfo.healthStart;
         }
         AssetsManager.instance.VFX(phasesInfo[p].vfxAsset,transform.position,3f);

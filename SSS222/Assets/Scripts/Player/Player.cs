@@ -412,46 +412,48 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
     
     void MovePlayer(){
-        var deltaX=0f;var axisX=(Input.GetAxis("Horizontal")*moveDir);
-        var deltaY=0f;var axisY=(Input.GetAxis("Vertical")*moveDir);
-        if(Input.GetButtonDown("Horizontal")){
-            float timeSinceLastClick=Time.time-lastClickTime;
-            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || (dashDir<-1||dashDir>1))){dashDir=(int)Input.GetAxisRaw("Horizontal")*2;DClick(dashDir);}//deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
-            //else{deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
-            lastClickTime=Time.time;
+        if(Application.isFocused){
+            var deltaX=0f;var axisX=(Input.GetAxis("Horizontal")*moveDir);
+            var deltaY=0f;var axisY=(Input.GetAxis("Vertical")*moveDir);
+            if(Input.GetButtonDown("Horizontal")){
+                float timeSinceLastClick=Time.time-lastClickTime;
+                if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || (dashDir<-1||dashDir>1))){dashDir=(int)Input.GetAxisRaw("Horizontal")*2;DClick(dashDir);}//deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
+                //else{deltaX=(Input.GetAxis("Horizontal")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
+                lastClickTime=Time.time;
+            }
+            if(Input.GetButtonDown("Vertical")){
+                float timeSinceLastClick=Time.time-lastClickTime;
+                if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || ((dashDir<0&&dashDir>-2) || (dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical");DClick(dashDir);}//deltaY=Input.GetAxis("Vertical")*moveDir*Time.deltaTime*moveSpeedCurrent;}
+                //else{deltaY=(Input.GetAxis("Vertical")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
+                lastClickTime=Time.time;
+            }
+            
+
+            float step=moveSpeedCurrent*Time.deltaTime;if(GameRules.instance.playerTimeIndependentFromDelta)step=moveSpeedCurrent*Time.unscaledDeltaTime;//*Mathf.Clamp(Time.deltaTime,0.008f,0.015f);
+            if(inputType==InputType.touch){
+                deltaX=joystick.Horizontal*step;
+                deltaY=joystick.Vertical*step;
+            }else{
+                if(Input.GetButton("Horizontal"))deltaX=axisX*step;
+                if(Input.GetButton("Vertical"))deltaY=axisY*step;
+
+                if(Input.GetButtonUp("Horizontal")){deltaX-=(axisX*step)/100;}//deltaX=0;}
+                if(Input.GetButtonUp("Vertical")){deltaY-=(axisY*step)/100;}//deltaY=0;}
+            }
+            
+
+            var newXpos=transform.position.x;
+            var newYpos=transform.position.y;
+
+            if(moveX==true)newXpos=Mathf.Clamp(newXpos,xRange.x,xRange.y)+deltaX;
+            if(moveY==true)newYpos=Mathf.Clamp(newYpos,yRange.x,yRange.y)+deltaY;
+            var newPos=new Vector2(newXpos,newYpos);transform.position=newPos;
+            //Debug.Log("deltaX: "+deltaX+" | deltaY: "+deltaY+" | newPos: "+newPos);
         }
-        if(Input.GetButtonDown("Vertical")){
-            float timeSinceLastClick=Time.time-lastClickTime;
-            if(timeSinceLastClick<=DCLICK_TIME && (dashDir==0 || ((dashDir<0&&dashDir>-2) || (dashDir>1||dashDir<2)))){dashDir=(int)Input.GetAxisRaw("Vertical");DClick(dashDir);}//deltaY=Input.GetAxis("Vertical")*moveDir*Time.deltaTime*moveSpeedCurrent;}
-            //else{deltaY=(Input.GetAxis("Vertical")*moveDir)*(Time.deltaTime*moveSpeedCurrent);}
-            lastClickTime=Time.time;
-        }
-        
-
-        float step=moveSpeedCurrent*Time.deltaTime;if(GameRules.instance.playerTimeIndependentFromDelta)step=moveSpeedCurrent*Time.unscaledDeltaTime;//*Mathf.Clamp(Time.deltaTime,0.008f,0.015f);
-        if(inputType==InputType.touch){
-            deltaX=joystick.Horizontal*step;
-            deltaY=joystick.Vertical*step;
-        }else{
-            if(Input.GetButton("Horizontal"))deltaX=axisX*step;
-            if(Input.GetButton("Vertical"))deltaY=axisY*step;
-
-            if(Input.GetButtonUp("Horizontal")){deltaX-=(axisX*step)/100;}//deltaX=0;}
-            if(Input.GetButtonUp("Vertical")){deltaY-=(axisY*step)/100;}//deltaY=0;}
-        }
-        
-
-        var newXpos=transform.position.x;
-        var newYpos=transform.position.y;
-
-        if(moveX==true)newXpos=Mathf.Clamp(newXpos,xRange.x,xRange.y)+deltaX;
-        if(moveY==true)newYpos=Mathf.Clamp(newYpos,yRange.x,yRange.y)+deltaY;
-        var newPos=new Vector2(newXpos,newYpos);transform.position=newPos;
-        //Debug.Log("deltaX: "+deltaX+" | deltaY: "+deltaY+" | newPos: "+newPos);
     }
 
     void MoveWithMouse(){
-        if(Application.platform!=RuntimePlatform.Android||(Application.platform==RuntimePlatform.Android&&UIInputSystem.instance.currentSelected==null)){
+        if((Application.platform!=RuntimePlatform.Android||(Application.platform==RuntimePlatform.Android&&UIInputSystem.instance.currentSelected==null))&&Application.isFocused){
             mouseDir=mousePos-(Vector2)transform.position;
             mousePos.x=Mathf.Clamp(mousePos.x,xRange.x,xRange.y);
             mousePos.y=Mathf.Clamp(mousePos.y,yRange.x,yRange.y);

@@ -241,7 +241,7 @@ MonoBehaviour:
   targetObj: {fileID: 0}
   dist: 0
   distReq: 50
-  speedFollow: 5
+  speedFollow: 7
   vspeed: 0
   hspeed: 0
   rotateTowards: 1
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f19f394ac284834b8e769ab6deb8ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catch_distance: 1.5
+  catch_distance: 1.2
   shake_distance: 0.05
   count_max: 3
   fallSpeed: 6

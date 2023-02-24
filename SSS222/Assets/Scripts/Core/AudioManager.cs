@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine.Audio;
 using System;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class AudioManager : MonoBehaviour{	public static AudioManager instance;
 			s.source.outputAudioMixerGroup = mixerGroup;
 		}
 	}
+	List<Sound> pausedSounds = new List<Sound>();
 	void Update(){
 		if(SaveSerial.instance!=null){
 			var ss=SaveSerial.instance.settingsData;
@@ -45,6 +47,17 @@ public class AudioManager : MonoBehaviour{	public static AudioManager instance;
 			else{audioMixer.SetFloat("AmbienceVolume", -80);}
 			if(ss.musicVolume>0){audioMixer.SetFloat("MusicVolume", AssetsManager.InvertNormalizedMin(ss.musicVolume,-50));}
 			else{audioMixer.SetFloat("MusicVolume", -80);}
+		}
+		if(GameManager.GlobalTimeIsPausedNotSlowed){
+			foreach(Sound s in sounds){if(s.clip.length>0.2f&&!pausedSounds.Contains(s)){s.source.Pause();pausedSounds.Add(s);}}
+		}else{
+			if(pausedSounds.Count>0){
+				for(int i=pausedSounds.Count-1;i>=0;i--){
+					Sound s=pausedSounds[i];
+					s.source.UnPause();
+					pausedSounds.RemoveAt(i);
+				}
+			}
 		}
 	}
 
@@ -103,7 +116,16 @@ public class AudioManager : MonoBehaviour{	public static AudioManager instance;
 		s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
 		s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
-		s.source.Stop ();
+		s.source.Stop();
+ 	}
+	public void Pause(string sound){
+		Sound s = Array.Find(sounds, item => item.name == sound);
+		if(s == null){
+			Debug.LogWarning("Sound: " + sound + " not found!");
+			return;
+  		}
+
+		s.source.Pause();
  	}
 	public AudioClip Get(string sound){
 		Sound s = Array.Find(sounds, item => item.name == sound);

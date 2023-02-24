@@ -26,6 +26,7 @@ public class CargoShip : MonoBehaviour{
     }
     void Start(){
         TurnShieldOn();
+        SetPopupImageSprites();
     }
     void Update(){
         if(health>=healthStart/2&&health!=healthStart){if(tagged[0]==false){Shop.instance.RepChange(repMinusHit[0],false);tagged[0]=true;}}
@@ -118,4 +119,11 @@ public class CargoShip : MonoBehaviour{
         transform.eulerAngles=new Vector3(transform.rotation.x,transform.rotation.y,zRot);
     }
     public void StopCargo(){GetComponent<Rigidbody2D>().velocity=Vector3.zero;GetComponent<Tag_PauseVelocity>().velPaused=Vector2.zero;}
+
+    void SetPopupImageSprites(){
+        //GetComponentInChildren<SimpleAnimController>().AddSimpleAnim(GetComponentInChildren<SimpleAnimController>().GetComponent<UnityEngine.UI.Image>().sprite);
+        foreach(ShopSlot slot in Shop.instance.currentSlotsList){
+            GetComponentInChildren<SimpleAnimController>().AddSimpleAnim(slot.item.img);
+        }
+    }
 }
