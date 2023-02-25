@@ -351,8 +351,8 @@ public class Player : MonoBehaviour{    public static Player instance;
                 }
                 if(overheatedTimer<=0&&overheatTimerMax!=4&&overheated!=false){overheated=false;if(autoShoot){shootCoroutine=null;Shoot();}}
             }
-            if(Application.platform==RuntimePlatform.Android){if(Input.touchCount>0)mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);}
-            else{mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
+            if(Input.touchSupported&&Input.touchCount>0){mousePos=Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);}
+            else{if(!Input.touchSupported||(Input.touchSupported&&MouseInBoundaries()))mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);}
 
             if(weaponsLimited){if(_curPwrup().timer>0){_curPwrup().timer-=Time.deltaTime;}
             if(_curPwrup().timer<=0&&_curPwrup().timer!=-4){_curPwrup().timer=-4;
@@ -362,6 +362,11 @@ public class Player : MonoBehaviour{    public static Player instance;
 
             if(collidedIdChangeTime>0){collidedIdChangeTime-=Time.deltaTime;}
         }
+    }
+    bool MouseInBoundaries(){
+        var mpos=Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if((mpos.x<xRange.x||mpos.x>xRange.y)||(mpos.y<yRange.x||mpos.y>yRange.y)){return false;}
+        else{return true;}
     }
     public void SetInputType(InputType type){inputType=type;}
     void FixedUpdate(){
@@ -453,7 +458,7 @@ public class Player : MonoBehaviour{    public static Player instance;
     }
 
     void MoveWithMouse(){
-        if((Application.platform!=RuntimePlatform.Android||(Application.platform==RuntimePlatform.Android&&UIInputSystem.instance.currentSelected==null))&&Application.isFocused){
+        if((Application.platform!=RuntimePlatform.Android||(Input.touchSupported&&UIInputSystem.instance.currentSelected==null&&Input.touchCount>0))&&Application.isFocused){
             mouseDir=mousePos-(Vector2)transform.position;
             mousePos.x=Mathf.Clamp(mousePos.x,xRange.x,xRange.y);
             mousePos.y=Mathf.Clamp(mousePos.y,yRange.x,yRange.y);

@@ -349,6 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -816,6 +817,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 95258685207150233, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 21.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124815018832421960, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -21.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124815018832421960, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1897885583140552806, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 21.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1897885583140552806, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3987131770509279330, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106496386640357572, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -21.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4235524440420333196, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.14
+      objectReference: {fileID: 0}
     - target: {fileID: 5332070753956726137, guid: 9c31fcef3b72c694095fd2d3da75b5af,
         type: 3}
       propertyPath: m_RootOrder
@@ -875,6 +916,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Background Far
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040325780371356271, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 21.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437635041498768369, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827849550372153819, guid: 9c31fcef3b72c694095fd2d3da75b5af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -21.11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c31fcef3b72c694095fd2d3da75b5af, type: 3}

@@ -246,6 +246,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public bool dtapMouseShoot;
 		public bool scbuttons;
 		public bool vibrations=true;
+		public bool pauseWhenOOF=true;
 		public bool discordRPC=true;
 		public bool autoselectNewItem=true;
 		public bool alwaysReplaceCurrentSlot=false;

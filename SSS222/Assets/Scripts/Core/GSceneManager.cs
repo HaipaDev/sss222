@@ -47,6 +47,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         SaveSerial.instance.SaveLogin();
         StatsAchievsManager.instance.SaveStats();
         SaveSerial.instance.SaveStats();
+        AudioManager.instance.ClearPausedSounds();
         GameManager.instance.ResetMusicPitch();
         if(Jukebox.instance!=null){if(GameRules.instance._isAdventureBossZone){Jukebox.instance.CrossfadeBossToBG();}}//Jukebox.instance.SetMusicToCstmzMusic();}
         if(GameManager.instance.gamemodeSelected!=0)SceneManager.LoadScene("Menu");
@@ -68,17 +69,21 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameManager.instance.ResetMusicPitch();
         yield return new WaitForSecondsRealtime(0.05f);
         if(GameManager.instance.gamemodeSelected==-1){
-            if(GameManager.instance.zoneToTravelTo==-1){LoadAdventureZone(GameManager.instance.zoneSelected,true);}
-            else{ReloadScene();}
+            if(GameManager.instance.zoneToTravelTo==-1){
+                if(GameRules.instance._isAdventureBossZone){if(Jukebox.instance!=null){Jukebox.instance.StopBossMusic();}}
+                LoadAdventureZone(GameManager.instance.zoneSelected,true);
+            }else{ReloadScene();}
             //yield return new WaitForSecondsRealtime(0.1f);GameManager.instance.LoadAdventurePre();GameManager.instance.LoadAdventurePost();
         }else{ReloadScene();}
         GameManager.instance.ResetAfterAdventure();
+        AudioManager.instance.ClearPausedSounds();
         GameManager.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }
     public void LoadGameScene(){
         SceneManager.LoadScene("Game");GameManager.instance.ResetScore();
         GameManager.instance.gameSpeed=1f;
+        AudioManager.instance.ClearPausedSounds();
         GameManager.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }
@@ -91,6 +96,8 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             if(Player.instance!=null)GameManager.instance.SaveAdventure();
             if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureTravelZonePrefab,false);}
             else{Instantiate(CoreSetup.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureTravelZonePrefab,false);}
+            if(boss){if(Jukebox.instance!=null)Jukebox.instance.FadeOutBGMusic();}
+            else{if(Jukebox.instance!=null)Jukebox.instance.CrossfadeBossToBG();}
             StartCoroutine(ResetStuffAndLoadGameScene());
             yield return new WaitForSecondsRealtime(0.2f);
             GameManager.instance.EnterGameScene();
@@ -107,6 +114,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureZones[i].gameRules,boss);}
             else{Instantiate(CoreSetup.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureZones[i].gameRules,boss);}
             if(boss){if(Jukebox.instance!=null)Jukebox.instance.PauseBGMusic();}
+            else{if(Jukebox.instance!=null)Jukebox.instance.StopBossMusic();Jukebox.instance.UnPauseBGMusic();}
             yield return new WaitForSecondsRealtime(0.2f);
             GameManager.instance.EnterGameScene();
             GameManager.instance.LoadAdventurePost();

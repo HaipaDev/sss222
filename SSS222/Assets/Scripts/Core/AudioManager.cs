@@ -49,14 +49,21 @@ public class AudioManager : MonoBehaviour{	public static AudioManager instance;
 			else{audioMixer.SetFloat("MusicVolume", -80);}
 		}
 		if(GameManager.GlobalTimeIsPausedNotSlowed){
-			foreach(Sound s in sounds){if(s.clip.length>0.2f&&!pausedSounds.Contains(s)){s.source.Pause();pausedSounds.Add(s);}}
+			foreach(Sound s in sounds){if(s.source.isPlaying&&s.clip.length>0.2f&&!pausedSounds.Contains(s)){s.source.Pause();pausedSounds.Add(s);}}
 		}else{
 			if(pausedSounds.Count>0){
 				for(int i=pausedSounds.Count-1;i>=0;i--){
-					Sound s=pausedSounds[i];
-					s.source.UnPause();
+					pausedSounds[i].source.UnPause();
 					pausedSounds.RemoveAt(i);
 				}
+			}
+		}
+	}
+	public void ClearPausedSounds(){
+		if(pausedSounds.Count>0){
+			for(int i=pausedSounds.Count-1;i>=0;i--){
+				pausedSounds[i].source.Stop();
+				pausedSounds.RemoveAt(i);
 			}
 		}
 	}
