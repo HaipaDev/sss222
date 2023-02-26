@@ -522,6 +522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go: {fileID: 7411510094995366389}
+  setScrollbarPos: 1
 --- !u!114 &8469835877192704190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,11 +535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad78330489eef2a43960def062108cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerHeld: -4
-  timerUp: 0
-  timerDelay: -4
-  timerDelay2: -4
-  fakeButton: 0
 --- !u!1 &1545875707032592832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,7 +1171,6 @@ GameObject:
   - component: {fileID: 7865634934013441153}
   - component: {fileID: 8217655564114580793}
   - component: {fileID: 9097839132721239304}
-  - component: {fileID: 3652414085661732446}
   - component: {fileID: 5675067801261054395}
   m_Layer: 5
   m_Name: AdventureModeButton
@@ -1302,21 +1297,6 @@ MonoBehaviour:
           m_StringArgument: Adventure
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &3652414085661732446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4324225270732203493}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88dd165c92e0b34c84d2274e82a3506, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  components: 1
-  button: 1
-  inOrderedList: 0
 --- !u!114 &5675067801261054395
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -87,39 +87,50 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameManager.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }
-    public void LoadAdventureZone(int i, bool _force=false){StartCoroutine(LoadAdventureZoneI(i,_force));}
+    public void LoadAdventureZone(int i, bool _force=false){Debug.Log("LoadAdventureZoneI("+i+", "+_force+");");
+        StartCoroutine(LoadAdventureZoneI(i,_force));}
     IEnumerator LoadAdventureZoneI(int i, bool _force=false){
         GameManager.instance.SetGamemodeSelected(-1);
         bool boss=CoreSetup.instance.adventureZones[i].isBoss;
-        if((GameManager.instance.zoneToTravelTo==-1&&GameManager.instance.zoneSelected!=i&&GameManager.instance.zoneSelected!=-1)||(_force)){//Travel
+        if((GameManager.instance.zoneToTravelTo==-1&&GameManager.instance.zoneSelected!=i&&GameManager.instance.zoneSelected!=-1)||(GameManager.instance.zoneToTravelTo!=-1&&_force)){//Travel
+            //if(GameManager.instance.zoneSelected!=-1&&GameManager.instance.zoneToTravelTo==-1){}
+            Debug.Log("TRAVEL");
             GameManager.instance.zoneToTravelTo=i;
             if(Player.instance!=null)GameManager.instance.SaveAdventure();
             if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureTravelZonePrefab,false);}
             else{Instantiate(CoreSetup.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureTravelZonePrefab,false);}
-            if(boss){if(Jukebox.instance!=null)Jukebox.instance.FadeOutBGMusic();}
-            else{if(Jukebox.instance!=null)Jukebox.instance.CrossfadeBossToBG();}
+            if(boss){if(Jukebox.instance!=null)Jukebox.instance.FadeOutBGMusic();Debug.Log("FadeOutBGMusic();");}
+            else{if(Jukebox.instance!=null)Jukebox.instance.CrossfadeBossToBG();Debug.Log("CrossfadeBossToBG();");}
             StartCoroutine(ResetStuffAndLoadGameScene());
             yield return new WaitForSecondsRealtime(0.2f);
             GameManager.instance.EnterGameScene();
-            if(GameManager.instance.zoneSelected==-1)GameManager.instance.LoadAdventurePre();
+            //if(GameManager.instance.zoneSelected==-1)GameManager.instance.LoadAdventurePre();
             GameManager.instance.LoadAdventurePost();
             GameRules.instance.EnterGameScene();
         }else if((GameManager.instance.zoneSelected==-1)||(GameManager.instance.zoneToTravelTo==-1&&_force)){
-            if(GameManager.instance.zoneSelected==-1)GameManager.instance.LoadAdventurePre();
+            Debug.Log("LOAD A REGULAR ZONE");
+            //if(GameManager.instance.zoneSelected==-1)GameManager.instance.LoadAdventurePre();
             GameManager.instance.zoneSelected=i;
             GameManager.instance.zoneToTravelTo=-1;
             GameManager.instance.gameTimeLeft=-4;
+            //GameManager.instance.SaveAdventure();
             StartCoroutine(ResetStuffAndLoadGameScene());
             
             if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureZones[i].gameRules,boss);}
             else{Instantiate(CoreSetup.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureZones[i].gameRules,boss);}
-            if(boss){if(Jukebox.instance!=null)Jukebox.instance.PauseBGMusic();}
-            else{if(Jukebox.instance!=null)Jukebox.instance.StopBossMusic();Jukebox.instance.UnPauseBGMusic();}
+            if(boss){if(Jukebox.instance!=null)Jukebox.instance.PauseBGMusic();Debug.Log("PauseBGMusic();");}
+            else{if(Jukebox.instance!=null)Jukebox.instance.StopBossMusic();Jukebox.instance.UnPauseBGMusic();
+                if(Jukebox.instance.BGMusicSilenced()){Jukebox.instance.FadeInBGMusic();Debug.Log("BGMusicSilenced, FadeIn();");}
+                Debug.Log("StopBossMusic(); UnPauseBGMusic();");}
             yield return new WaitForSecondsRealtime(0.2f);
             GameManager.instance.EnterGameScene();
             GameManager.instance.LoadAdventurePost();
             GameRules.instance.EnterGameScene();
+            GameManager.instance.zoneToTravelTo=-1;
+            GameManager.instance.gameTimeLeft=-4;
+            GameManager.instance.SaveAdventure();
         }
+        //if(GameManager.instance.zoneSelected==-1){GameManager.instance.LoadAdventurePre();LoadAdventureZone(GameManager.instance.zoneSelected);}
         IEnumerator ResetStuffAndLoadGameScene(){
             GameManager.instance.ResetScore();
             yield return new WaitForSecondsRealtime(0.05f);
@@ -130,14 +141,14 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         }
     }
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");GameManager.instance.ResetTempSandboxSaveName();GameManager.instance.defaultGameSpeed=1;StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();}
-    public void LoadAdventureZonesScene(){StartCoroutine(LoadAdventureZonesSceneI());}
+    public void LoadAdventureZonesScene(){Debug.Log("LoadAdventureZonesScene()");StartCoroutine(LoadAdventureZonesSceneI());}
     IEnumerator LoadAdventureZonesSceneI(){
         SceneManager.LoadScene("AdventureZones");GameManager.instance.gamemodeSelected=-1;
         yield return new WaitForSecondsRealtime(0.03f);
         GameManager.instance.LoadAdventurePre();
         yield return new WaitForSecondsRealtime(0.02f);
-        if(GameManager.instance.zoneToTravelTo!=-1){LoadAdventureZone(GameManager.instance.zoneToTravelTo,true);}
-        else if(GameManager.instance.zoneSelected!=-1){LoadAdventureZone(GameManager.instance.zoneSelected,true);}
+        if(GameManager.instance.zoneToTravelTo!=-1){Debug.Log("Load Travel Zone");LoadAdventureZone(GameManager.instance.zoneToTravelTo,true);yield break;}
+        else if(GameManager.instance.zoneSelected!=-1){Debug.Log("Load Regular Zone");LoadAdventureZone(GameManager.instance.zoneSelected,true);yield break;}
         //else{LoadGameScene();}
     }
     public void LoadSandboxModeScene(){SceneManager.LoadScene("SandboxMode");GameManager.instance.SetGamemodeSelected(0);StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();}
@@ -182,20 +193,4 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             else if(scene=="ScoreSubmit"){LoadGameModeInfoScene();}
     }}
     public static bool CheckScene(string name){return SceneManager.GetActiveScene().name==name;}
-
-    /*void LoadLevel(string sceneName){
-        //StartCoroutine(LoadTransition(sceneName));
-        LoadTransition(sceneName);
-    }
-    void LoadTransition(string sceneName){
-        //transition=FindObjectOfType<Tag_Transition>().GetComponent<ParticleSystem>();
-        transitioner=FindObjectOfType<Tag_Transition>().GetComponent<Animator>();
-        
-        //transition.Play();
-        transitioner.SetTrigger("Start");
-
-        //yield return new WaitForSeconds(transitionTime);
-
-        SceneManager.LoadScene(sceneName);
-    }*/
 }

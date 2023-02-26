@@ -292,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -490,6 +491,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8469835877192704190, guid: 8a784139e3e9e63488fc974d2b0c6329,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8972392137798979312, guid: 8a784139e3e9e63488fc974d2b0c6329,
         type: 3}
       propertyPath: m_Pivot.x
@@ -600,7 +606,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ModeChoose Canvas
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8207689573450616887, guid: 8a784139e3e9e63488fc974d2b0c6329, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8a784139e3e9e63488fc974d2b0c6329, type: 3}
 --- !u!1 &7411510095155739036 stripped
 GameObject:

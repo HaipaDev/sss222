@@ -12,7 +12,6 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     [SerializeField]float lowerPitchLimit=0.1f;
     [SerializeField]float upperPitchLimit=2f;
     [DisableInEditorMode]public bool inverted=false;
-    [SerializeField]AudioClip currentMusic;
 
     [SerializeField] float fadeDuration=1f;
     bool fadingIn=false;
@@ -23,6 +22,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     float fadeStartTime;
     AudioSource fadingInSource;
     AudioSource fadingOutSource;
+    bool fadeOutPauseInsteadOfStop;
     [SerializeField] public float crossfadeDuration=1.0f;
     bool isCrossFading;
 
@@ -35,7 +35,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
         if(bgmusicSource==null){
             bgmusicSource=GetComponent<AudioSource>();
             bgmusicSource.loop=true;
-            endVolumeDef=bgmusicSource.volume;
+            //endVolumeDef=bgmusicSource.volume;
             endVolume=endVolumeDef;
         }
 
@@ -50,10 +50,8 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
         SetMusicToCstmzMusic();
     }
     void Update(){
-        if(currentMusic!=null)if(bgmusicSource.clip!=currentMusic){bgmusicSource.clip=currentMusic;bgmusicSource.Play();}
-
-       
         if(fadingIn&&fadingInSource!=null){
+            if(!fadingInSource.isPlaying){fadingInSource.UnPause();fadingInSource.Play();}
             float progress=(Time.time - fadeStartTime) / fadeDuration;
             fadingInSource.volume=Mathf.Lerp(startVolume, endVolume, progress);
 
@@ -68,8 +66,13 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
 
             if(fadingOutSource.volume==0f){
                 fadingOut=false;
-                if(fadingOutSource==bgmusicSource)StopBGMusic();
-                else if(fadingOutSource==bgmusicSource)StopBossMusic();
+                if(!fadeOutPauseInsteadOfStop){
+                    if(fadingOutSource==bgmusicSource){StopBGMusic();}
+                    else if(fadingOutSource==bgmusicSource){StopBossMusic();}
+                }else{
+                    if(fadingOutSource==bgmusicSource){StopBGMusic();}
+                    else if(fadingOutSource==bgmusicSource){StopBossMusic();}
+                }
             }
         }
 
@@ -96,13 +99,14 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
         }
     }
     public void SetMusic(AudioClip clip,bool force=false){
-        if(currentMusic!=clip||force){
-            currentMusic=clip;
+        if(bgmusicSource.clip!=clip||force){
+            bgmusicSource.clip=clip;
             bgmusicSource.loop=true;
+            bgmusicSource.Play();
         }
     }
     public void SetBossMusic(AudioClip clip){
-        if (bossMusicSource.clip != null && bossMusicSource.isPlaying){// Already playing boss music
+        if(bossMusicSource.clip != null && bossMusicSource.isPlaying){// Already playing boss music
             return;
         }
 
@@ -116,7 +120,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
         else{
             // Play boss music immediately
             bossMusicSource.Play();
-            bossMusicSource.volume=1;
+            bossMusicSource.volume=endVolumeDef;
         }
     }
 
@@ -133,7 +137,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
             fadingInSource.volume=0f;
         }
     }
-    public void FadeOut(AudioSource source=null){
+    public void FadeOut(AudioSource source=null,bool pauseInsteadOfStop=false){
         if(source==null){
             fadingOutSource=bgmusicSource;
         }else{fadingOutSource=source;}
@@ -142,15 +146,16 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
             fadingOut=true;
             startVolume=fadingOutSource.volume;
             fadeStartTime=Time.time;
+            fadeOutPauseInsteadOfStop=pauseInsteadOfStop;
         }
     }
     public void FadeInBGMusic(){FadeIn(bgmusicSource);}
-    public void FadeOutBGMusic(){FadeIn(bgmusicSource);}
+    public void FadeOutBGMusic(bool pauseInsteadOfStop=false){FadeOut(bgmusicSource,pauseInsteadOfStop);}
     public void FadeInBossMusic(){FadeIn(bossMusicSource);}
-    public void FadeOutBossMusic(){FadeIn(bossMusicSource);}
+    public void FadeOutBossMusic(bool pauseInsteadOfStop=false){FadeOut(bossMusicSource,pauseInsteadOfStop);}
 
-    public void CrossfadeBossToBG(){Crossfade(bossMusicSource,bgmusicSource);}
-    public void CrossfadeBGToBoss(){Crossfade(bgmusicSource,bossMusicSource,true);}
+    public void CrossfadeBossToBG(){if(bossMusicSource.isPlaying)Crossfade(bossMusicSource,bgmusicSource);}
+    public void CrossfadeBGToBoss(){if(bgmusicSource.isPlaying)Crossfade(bgmusicSource,bossMusicSource,true);}
     public void Crossfade(AudioSource audioSource1, AudioSource audioSource2,bool pauseInsteadOfStop=false){
         if(!isCrossFading){StartCoroutine(CrossfadeCoroutine(audioSource1, audioSource2, pauseInsteadOfStop));}
     }
@@ -161,9 +166,9 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
         float _endVolume=0.0f;
 
         audioSource2.volume=_endVolume;
-        audioSource2.UnPause();
-        audioSource2.Play();
-        while(t<crossfadeDuration) {
+        if(!audioSource2.isPlaying)audioSource2.Play();
+        else audioSource2.UnPause();
+        while(t<crossfadeDuration){
             t+=Time.deltaTime;
             audioSource1.volume=Mathf.Lerp(_startVolume, _endVolume, t / crossfadeDuration);
             audioSource2.volume=Mathf.Lerp(_endVolume, _startVolume, t / crossfadeDuration);
@@ -177,24 +182,26 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     }
 
     public void SetMusicToCstmzMusic(bool force=false){SetMusic(AssetsManager.instance.GetMusic(SaveSerial.instance.playerData.musicName).track,force);}
-    public void PlayBGMusic(){bgmusicSource.Play();}
+    public void PlayBGMusic(bool fadeIn=false){bgmusicSource.Play();if(fadeIn){FadeInBGMusic();}}
     public void StopBGMusic(){bgmusicSource.Stop();}
-    public void PlayBossMusic(){bossMusicSource.Play();}
-    public void StopBossMusic(){bossMusicSource.Stop();}
     public void PauseBGMusic(){bgmusicSource.Pause();}
-    public void UnPauseBGMusic(){bgmusicSource.UnPause();}
+    public void UnPauseBGMusic(bool fadeIn=false){bgmusicSource.UnPause();if(fadeIn){FadeInBGMusic();}}
     public void PauseBGMusicFor(float delay){StartCoroutine(PauseBGMusicForI(delay));}
     IEnumerator PauseBGMusicForI(float delay){
         PauseBGMusic();
         yield return new WaitForSeconds(delay);
         UnPauseBGMusic();
     }
+    public bool BGMusicSilenced(){return bgmusicSource.volume==0;}
+    public void PlayBossMusic(bool fadeIn=false){bossMusicSource.Play();if(fadeIn){FadeInBossMusic();}}
+    public void StopBossMusic(){bossMusicSource.Stop();}
     public void PauseBossMusic(){bossMusicSource.Pause();}
-    public void UnPauseBossMusic(){bossMusicSource.UnPause();}
+    public void UnPauseBossMusic(bool fadeIn=false){bossMusicSource.UnPause();if(fadeIn){FadeInBossMusic();}}
     public void PauseBossMusicFor(float delay){StartCoroutine(PauseBossMusicForI(delay));}
     IEnumerator PauseBossMusicForI(float delay){
         PauseBossMusic();
         yield return new WaitForSeconds(delay);
         UnPauseBossMusic();
     }
+    public bool BossMusicSilenced(){return bossMusicSource.volume==0;}
 }

@@ -429,7 +429,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         StatsAchievsManager.instance.SetSteamStats();
         if(SaveSerial.instance.settingsData.autosubmitScores)SubmitScore.SubmitScoreFunc();
     }
-    public void SaveAdventure(){StartCoroutine(SaveAdventureI());}
+    public void SaveAdventure(){Debug.Log("SaveAdventure();");StartCoroutine(SaveAdventureI());}
     IEnumerator SaveAdventureI(){
         //next steps in SaveSerial
         yield return new WaitForSecondsRealtime(0.02f);
@@ -521,7 +521,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         //currentPlaytime=ss.GameManagerTime;
         Debug.Log("Adventure preloaded");
     }
-    public void LoadAdventurePost(){StartCoroutine(LoadAdventureI());}
+    public void LoadAdventurePost(){Debug.Log("LoadAdventurePost();");StartCoroutine(LoadAdventureI());}
     IEnumerator LoadAdventureI(){
         //First load from SaveSerial
         _adventureLoading=true;

@@ -152,7 +152,61 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         SetDroppedItem();
         _itemDropped=true;
     }
-    public void SetDroppedItem(){
+    public void SetDroppedItem() {
+        // Find the lockbox by name
+        var lb = AssetsManager.instance.lockboxes.Find(x => x.name == _lockboxSelected);
+
+        // Create a new custom loot table
+        LootTableCstmz lt = gameObject.AddComponent<LootTableCstmz>();
+        lt.itemList = new List<LootTableEntryCstmz>();
+
+        // Filter the skins by category and rarity and add them to the loot table
+        var skins = AssetsManager.instance.skins.Where(s => s.category == lb.category && s.rarity != 0);
+        foreach (var s in skins) {
+            var chance = lb.skinDrops.Find(x => x.rarity == s.rarity)?.chance ?? 0;
+            lt.itemList.Add(new LootTableEntryCstmz {lootItem = s.name, cstmzType = CstmzType.skin, dropChance = chance});
+        }
+
+        // Sum up the loot table
+        lt.SumUp();
+
+        // Keep trying to get a new item until a skin is found that is not unlocked
+        while(true){
+            // Get the next item from the loot table
+            var r = lt.GetItem();
+            Debug.Log(r.lootItem + " | " + r.cstmzType + " | " + r.dropChance);
+
+            // If the item is a skin and it is not unlocked, use it
+            if (r.cstmzType == CstmzType.skin) {
+                if (!_isSkinUnlocked(r.lootItem) || _allCategorySkinsUnlocked(lb.category)) {
+                    var s = GetSkin(r.lootItem);
+                    cosmeticDropParent.SetSkin(s);
+                    PlayRaritySound(s.rarity);
+                    UnlockSkin(r.lootItem);
+                    if (_allCategorySkinsUnlocked(lb.category)) {
+                        Debug.Log("All Skins unlocked, trying to find other items");
+                    }
+                    else {
+                        break; // Found a skin to use
+                    }
+                }
+            }
+            else {
+                // Stop the cosmetic drop animation if the item is not a skin
+                cosmeticDropParent.StopAnimatingCosmeticDrop();
+            }
+        }
+
+        // Check if everything in the category is unlocked
+        if (_literallyEverythingInCategoryUnlocked(lb.category)) {
+            QuitOpeningLockbox();
+            SaveSerial.instance.playerData.dynamCelestStars += lb.cost;
+        }
+
+        // Destroy the custom loot table
+        Destroy(lt);
+    }
+    /*public void SetDroppedItem(){
         var lb=AssetsManager.instance.lockboxes.Find(x=>x.name==_lockboxSelected);
         LootTableCstmz lt=gameObject.AddComponent<LootTableCstmz>();
         lt.itemList=new List<LootTableEntryCstmz>();
@@ -173,7 +227,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 cosmeticDropParent.SetSkin(s);
                 PlayRaritySound(s.rarity);
                 UnlockSkin(r.lootItem);
-                if(_allCategorySkinsUnlocked(lb.category)&&!(_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Skins unlocked, trying to find other items");}
+                if(_allCategorySkinsUnlocked(lb.category)&&!(_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){Debug.Log("All Skins unlocked, trying to find other items");}
             }
             else if(r.cstmzType==CstmzType.trail&&(!_isTrailUnlocked(r.lootItem)||_allCategoryTrailsUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
@@ -181,7 +235,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 cosmeticDropParent.SetTrail(t);
                 PlayRaritySound(t.rarity);
                 UnlockTrail(r.lootItem);
-                if(_allCategoryTrailsUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Trails unlocked, trying to find other items");}
+                if(_allCategoryTrailsUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){Debug.Log("All Trails unlocked, trying to find other items");}
             }
             else if(r.cstmzType==CstmzType.flares&&(!_isFlaresUnlocked(r.lootItem)||_allCategoryFlaresUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
@@ -189,7 +243,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 cosmeticDropParent.SetFlares(f);
                 PlayRaritySound(f.rarity);
                 UnlockFlares(r.lootItem);
-                if(_allCategoryFlaresUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Flares unlocked, trying to find other items");}
+                if(_allCategoryFlaresUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){Debug.Log("All Flares unlocked, trying to find other items");}
             }
             else if(r.cstmzType==CstmzType.deathFx&&(!_isDeathFxUnlocked(r.lootItem)||_allCategoryDeathFxUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
@@ -197,7 +251,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 cosmeticDropParent.SetDeathFx(d);
                 PlayRaritySound(d.rarity);
                 UnlockDeathFx(r.lootItem);
-                if(_allCategoryDeathFxUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All DeathFx unlocked, trying to find other items");}
+                if(_allCategoryDeathFxUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){Debug.Log("All DeathFx unlocked, trying to find other items");}
             }
             else if(r.cstmzType==CstmzType.music&&(!_isMusicUnlocked(r.lootItem)||_allCategoryMusicUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
@@ -205,14 +259,14 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 cosmeticDropParent.SetMusic(m);
                 PlayRaritySound(m.rarity);
                 UnlockMusic(r.lootItem);
-                if(_allCategoryMusicUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Music unlocked, trying to find other items");}
+                if(_allCategoryMusicUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category))){Debug.Log("All Music unlocked, trying to find other items");}
             }
             //dropTypeText.text=r.cstmzType.ToString();
             if(r.cstmzType!=CstmzType.skin){cosmeticDropParent.StopAnimatingCosmeticDrop();}
         }
         if(_literallyEverythingInCategoryUnlocked(lb.category)){QuitOpeningLockbox();SaveSerial.instance.playerData.dynamCelestStars+=lb.cost;}
         Destroy(lt);
-    }
+    }*/
     public void OpenCloseLockboxButton(){QuitOpeningLockbox();}//if(!_itemDropped){OpenLockbox(_lockboxSelected);}else{QuitOpeningLockbox();}}
     public void QuitOpeningLockbox(){if(_itemDropped){OpenLockboxesPanel();_itemDropped=false;cosmeticDropParent.Stop();}}
     public void CraftCelestStar(){
