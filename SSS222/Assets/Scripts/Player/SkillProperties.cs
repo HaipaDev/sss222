@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 
 [CreateAssetMenu(menuName = "Skill Properties")]
 public class SkillProperties : ScriptableObject{
-    [SerializeField] public string name = "";
+    [SerializeField] public new string name = "";
     [SerializeField] public string displayName = "";
     [TextArea][SerializeField] public string desc = "";
     [SerializeField] public TMPro.VertexGradient descGradient;

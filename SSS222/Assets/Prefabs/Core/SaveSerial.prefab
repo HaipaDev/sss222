@@ -123,6 +123,7 @@ MonoBehaviour:
     dtapMouseShoot: 0
     scbuttons: 0
     vibrations: 1
+    pauseWhenOOF: 1
     discordRPC: 1
     autoselectNewItem: 1
     alwaysReplaceCurrentSlot: 0
@@ -131,22 +132,27 @@ MonoBehaviour:
     allowScrollingEmptySlots: 0
     autosubmitScores: 1
     masterVolume: 0.95
+    masterOOFVolume: 0.25
     soundVolume: 0.95
     ambienceVolume: 0.55
     musicVolume: 0.66
     windDownMusic: 1
     bossVolumeTurnUp: 1
     playfieldRot: 0
+    windowMode: 1
+    resolution: {x: 1920, y: 1080}
+    vSync: 0
+    lockCursor: 0
     quality: 4
-    fullscreen: 1
     pprocessing: 0
     screenshake: 1
     dmgPopups: 1
     particles: 1
     screenflash: 1
-    upscaleHUD: 1
+    classicHUD: 0
     playerWeaponsFade: 1
     hudVis_graphics: 0.9
+    hudVis_barText: 1
     hudVis_text: 1
     hudVis_barFill: 1
     hudVis_absorpFill: 0.5

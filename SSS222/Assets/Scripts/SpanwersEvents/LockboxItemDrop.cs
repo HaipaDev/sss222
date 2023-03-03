@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LockboxItemDrop : MonoBehaviour{
-    public string name;
+    public new string name;
     void Start(){
         if(name!=""){
             var lb=AssetsManager.instance.lockboxes.Find(x=>x.name==name);

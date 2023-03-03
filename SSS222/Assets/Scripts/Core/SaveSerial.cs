@@ -72,8 +72,10 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 	void AutoLogin(){
 		//TimeSpan tsSession=DateTime.Now.Subtract(hyperGamerLoginData.lastLoggedIn);
-		if(false/*tsSession.TotalDays>=14*/){LogOut();}
-		else{TryLogin(hyperGamerLoginData.username,hyperGamerLoginData.password);}
+		//if(tsSession.TotalDays>=14){LogOut();}
+		//else{
+			TryLogin(hyperGamerLoginData.username,hyperGamerLoginData.password);
+		//}
 	}
 	public void TryLogin(string username, string password){
 		//try{

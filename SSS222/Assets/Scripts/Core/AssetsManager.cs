@@ -350,8 +350,8 @@ public class AssetsManager : MonoBehaviour{	public static AssetsManager instance
 		if(go.GetComponent<UnityEngine.UI.Extensions.UIParticleSystem>()==null){
 			var ps=go.GetComponent<ParticleSystem>();var psMain=ps.main;
 			if(mult==0){
-				if(ps.startSize<=1){mult=100;}
-				if(ps.startSize<=10&&ps.startSize>1){mult=10;}
+				if(psMain.startSize.constantMin<=1){mult=100;}
+				if(psMain.startSize.constantMin<=10&&psMain.startSize.constantMin>1){mult=10;}
 			}
 			if(dur>0){Destroy(go,dur);}
 			else if(dur==0){Destroy(go,psMain.startLifetime.constantMax+psMain.duration);}

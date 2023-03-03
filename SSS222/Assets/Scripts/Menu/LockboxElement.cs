@@ -12,7 +12,7 @@ public class LockboxElement : MonoBehaviour{//, IEventSystemHandler, IPointerEnt
     [SerializeField] public TextMeshProUGUI titleText;
     [SerializeField] public TextMeshProUGUI countText;
     [SerializeField] public TextMeshProUGUI costText;
-    [DisableInEditorMode] public string name;
+    [DisableInEditorMode] public new string name;
     void Start(){}
     void Update(){
         if(countText!=null)countText.text="x"+_lockboxCount(name).count.ToString();

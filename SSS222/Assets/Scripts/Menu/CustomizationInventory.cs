@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -152,61 +151,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
         SetDroppedItem();
         _itemDropped=true;
     }
-    public void SetDroppedItem() {
-        // Find the lockbox by name
-        var lb = AssetsManager.instance.lockboxes.Find(x => x.name == _lockboxSelected);
-
-        // Create a new custom loot table
-        LootTableCstmz lt = gameObject.AddComponent<LootTableCstmz>();
-        lt.itemList = new List<LootTableEntryCstmz>();
-
-        // Filter the skins by category and rarity and add them to the loot table
-        var skins = AssetsManager.instance.skins.Where(s => s.category == lb.category && s.rarity != 0);
-        foreach (var s in skins) {
-            var chance = lb.skinDrops.Find(x => x.rarity == s.rarity)?.chance ?? 0;
-            lt.itemList.Add(new LootTableEntryCstmz {lootItem = s.name, cstmzType = CstmzType.skin, dropChance = chance});
-        }
-
-        // Sum up the loot table
-        lt.SumUp();
-
-        // Keep trying to get a new item until a skin is found that is not unlocked
-        while(true){
-            // Get the next item from the loot table
-            var r = lt.GetItem();
-            Debug.Log(r.lootItem + " | " + r.cstmzType + " | " + r.dropChance);
-
-            // If the item is a skin and it is not unlocked, use it
-            if (r.cstmzType == CstmzType.skin) {
-                if (!_isSkinUnlocked(r.lootItem) || _allCategorySkinsUnlocked(lb.category)) {
-                    var s = GetSkin(r.lootItem);
-                    cosmeticDropParent.SetSkin(s);
-                    PlayRaritySound(s.rarity);
-                    UnlockSkin(r.lootItem);
-                    if (_allCategorySkinsUnlocked(lb.category)) {
-                        Debug.Log("All Skins unlocked, trying to find other items");
-                    }
-                    else {
-                        break; // Found a skin to use
-                    }
-                }
-            }
-            else {
-                // Stop the cosmetic drop animation if the item is not a skin
-                cosmeticDropParent.StopAnimatingCosmeticDrop();
-            }
-        }
-
-        // Check if everything in the category is unlocked
-        if (_literallyEverythingInCategoryUnlocked(lb.category)) {
-            QuitOpeningLockbox();
-            SaveSerial.instance.playerData.dynamCelestStars += lb.cost;
-        }
-
-        // Destroy the custom loot table
-        Destroy(lt);
-    }
-    /*public void SetDroppedItem(){
+    public void SetDroppedItem(){
         var lb=AssetsManager.instance.lockboxes.Find(x=>x.name==_lockboxSelected);
         LootTableCstmz lt=gameObject.AddComponent<LootTableCstmz>();
         lt.itemList=new List<LootTableEntryCstmz>();
@@ -227,7 +172,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 cosmeticDropParent.SetSkin(s);
                 PlayRaritySound(s.rarity);
                 UnlockSkin(r.lootItem);
-                if(_allCategorySkinsUnlocked(lb.category)&&!(_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){Debug.Log("All Skins unlocked, trying to find other items");}
+                if(_allCategorySkinsUnlocked(lb.category)&&!(_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Skins unlocked, trying to find other items");}
             }
             else if(r.cstmzType==CstmzType.trail&&(!_isTrailUnlocked(r.lootItem)||_allCategoryTrailsUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
@@ -235,7 +180,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 cosmeticDropParent.SetTrail(t);
                 PlayRaritySound(t.rarity);
                 UnlockTrail(r.lootItem);
-                if(_allCategoryTrailsUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){Debug.Log("All Trails unlocked, trying to find other items");}
+                if(_allCategoryTrailsUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Trails unlocked, trying to find other items");}
             }
             else if(r.cstmzType==CstmzType.flares&&(!_isFlaresUnlocked(r.lootItem)||_allCategoryFlaresUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
@@ -243,7 +188,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 cosmeticDropParent.SetFlares(f);
                 PlayRaritySound(f.rarity);
                 UnlockFlares(r.lootItem);
-                if(_allCategoryFlaresUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){Debug.Log("All Flares unlocked, trying to find other items");}
+                if(_allCategoryFlaresUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Flares unlocked, trying to find other items");}
             }
             else if(r.cstmzType==CstmzType.deathFx&&(!_isDeathFxUnlocked(r.lootItem)||_allCategoryDeathFxUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
@@ -251,7 +196,7 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 cosmeticDropParent.SetDeathFx(d);
                 PlayRaritySound(d.rarity);
                 UnlockDeathFx(r.lootItem);
-                if(_allCategoryDeathFxUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){Debug.Log("All DeathFx unlocked, trying to find other items");}
+                if(_allCategoryDeathFxUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryMusicUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All DeathFx unlocked, trying to find other items");}
             }
             else if(r.cstmzType==CstmzType.music&&(!_isMusicUnlocked(r.lootItem)||_allCategoryMusicUnlocked(lb.category))){
                 i=new KeyValuePair<string,CstmzType>(r.lootItem,r.cstmzType);
@@ -259,14 +204,14 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
                 cosmeticDropParent.SetMusic(m);
                 PlayRaritySound(m.rarity);
                 UnlockMusic(r.lootItem);
-                if(_allCategoryMusicUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category))){Debug.Log("All Music unlocked, trying to find other items");}
+                if(_allCategoryMusicUnlocked(lb.category)&&!(_allCategorySkinsUnlocked(lb.category)||_allCategoryTrailsUnlocked(lb.category)||_allCategoryFlaresUnlocked(lb.category)||_allCategoryDeathFxUnlocked(lb.category))){/*i=new KeyValuePair<string,CstmzType>("",0);*/Debug.Log("All Music unlocked, trying to find other items");}
             }
             //dropTypeText.text=r.cstmzType.ToString();
             if(r.cstmzType!=CstmzType.skin){cosmeticDropParent.StopAnimatingCosmeticDrop();}
         }
         if(_literallyEverythingInCategoryUnlocked(lb.category)){QuitOpeningLockbox();SaveSerial.instance.playerData.dynamCelestStars+=lb.cost;}
         Destroy(lt);
-    }*/
+    }
     public void OpenCloseLockboxButton(){QuitOpeningLockbox();}//if(!_itemDropped){OpenLockbox(_lockboxSelected);}else{QuitOpeningLockbox();}}
     public void QuitOpeningLockbox(){if(_itemDropped){OpenLockboxesPanel();_itemDropped=false;cosmeticDropParent.Stop();}}
     public void CraftCelestStar(){
@@ -574,78 +519,36 @@ public class CustomizationInventory : MonoBehaviour{    public static Customizat
     public CstmzMusic GetMusic(string str){return AssetsManager.instance.GetMusic(str);}
     public void SetMusic(string str){musicName=str;if(Jukebox.instance==null){Instantiate(CoreSetup.instance.GetJukeboxPrefab());}Jukebox.instance.SetMusic(AssetsManager.instance.GetMusic(musicName).track,true);HighlightSelectedElement();HighlightSelectedType();}
 
-    /*private static HashSet<string> unlockedSkins = new HashSet<string>(SaveSerial.instance.playerData.skinsUnlocked);
-    private static HashSet<string> unlockedTrail = new HashSet<string>(SaveSerial.instance.playerData.trailsUnlocked);
-    private static HashSet<string> unlockedFlares = new HashSet<string>(SaveSerial.instance.playerData.flaresUnlocked);
-    private static HashSet<string> unlockedDeathFx = new HashSet<string>(SaveSerial.instance.playerData.deathFxUnlocked);
-    private static HashSet<string> unlockedMusic = new HashSet<string>(SaveSerial.instance.playerData.musicUnlocked);
-    public static bool _isSkinUnlocked(string name){return unlockedSkins.Contains(name)||name=="def";}
-    public static bool _isTrailUnlocked(string name){return unlockedTrail.Contains(name)||name=="def";}
-    public static bool _isFlaresUnlocked(string name){return unlockedFlares.Contains(name)||name=="def";}
-    public static bool _isDeathFxUnlocked(string name){return unlockedDeathFx.Contains(name)||name=="def";}
-    public static bool _isMusicUnlocked(string name){return unlockedMusic.Contains(name)||name==CstmzMusic._cstmzMusicDef;}*/
+
     public static bool _isSkinUnlocked(string name){return SaveSerial.instance.playerData.skinsUnlocked.Contains(name)||name=="def";}
-
     public static bool _isTrailUnlocked(string name){return SaveSerial.instance.playerData.trailsUnlocked.Contains(name)||name=="def";}
-
     public static bool _isFlaresUnlocked(string name){return SaveSerial.instance.playerData.flaresUnlocked.Contains(name)||name=="def";}
-
     public static bool _isDeathFxUnlocked(string name){return SaveSerial.instance.playerData.deathFxUnlocked.Contains(name)||name=="def";}
-
     public static bool _isMusicUnlocked(string name){return SaveSerial.instance.playerData.musicUnlocked.Contains(name)||name==CstmzMusic._cstmzMusicDef;}
-    
     public static bool _allCategorySkinsUnlocked(CstmzCategory category){
-        var unlockedSet=new HashSet<string>(SaveSerial.instance.playerData.skinsUnlocked);
-        var allCategoryItems=AssetsManager.instance.skins.FindAll(x=>x.category==category);
-        foreach (CstmzSkin s in allCategoryItems){
-            if(!unlockedSet.Contains(s.name)){
-                return false;// optimization: stop early if an item is not unlocked
-            }
-        }
-        return true;
+        var count=0;var _allCategoryItems=AssetsManager.instance.skins.FindAll(x=>x.category==category);
+        foreach(CstmzSkin s in _allCategoryItems){if(SaveSerial.instance.playerData.skinsUnlocked.Contains(s.name))count++;}
+        return count==_allCategoryItems.Count;
     }
     public static bool _allCategoryTrailsUnlocked(CstmzCategory category){
-        var unlockedSet = new HashSet<string>(SaveSerial.instance.playerData.trailsUnlocked);
-        var allCategoryItems = AssetsManager.instance.trails.FindAll(x => x.category == category);
-        foreach(CstmzTrail t in allCategoryItems){
-            if(!unlockedSet.Contains(t.name)){
-                return false; // optimization: stop early if an item is not unlocked
-            }
-        }
-        return true;
+        var count=0;var _allCategoryItems=AssetsManager.instance.trails.FindAll(x=>x.category==category);
+        foreach(CstmzTrail t in _allCategoryItems){if(SaveSerial.instance.playerData.trailsUnlocked.Contains(t.name))count++;}
+        return count==_allCategoryItems.Count;
     }
-
     public static bool _allCategoryFlaresUnlocked(CstmzCategory category){
-        var unlockedSet = new HashSet<string>(SaveSerial.instance.playerData.flaresUnlocked);
-        var allCategoryItems = AssetsManager.instance.flares.FindAll(x => x.category == category);
-        foreach(CstmzFlares f in allCategoryItems){
-            if(!unlockedSet.Contains(f.name)){
-                return false; // optimization: stop early if an item is not unlocked
-            }
-        }
-        return true;
+        var count=0;var _allCategoryItems=AssetsManager.instance.flares.FindAll(x=>x.category==category);
+        foreach(CstmzFlares f in _allCategoryItems){if(SaveSerial.instance.playerData.flaresUnlocked.Contains(f.name))count++;}
+        return count==_allCategoryItems.Count;
     }
-
     public static bool _allCategoryDeathFxUnlocked(CstmzCategory category){
-        var unlockedSet = new HashSet<string>(SaveSerial.instance.playerData.deathFxUnlocked);
-        var allCategoryItems = AssetsManager.instance.deathFxs.FindAll(x => x.category == category);
-        foreach(CstmzDeathFx d in allCategoryItems){
-            if(!unlockedSet.Contains(d.name)){
-                return false; // optimization: stop early if an item is not unlocked
-            }
-        }
-        return true;
+        var count=0;var _allCategoryItems=AssetsManager.instance.deathFxs.FindAll(x=>x.category==category);
+        foreach(CstmzDeathFx d in _allCategoryItems){if(SaveSerial.instance.playerData.deathFxUnlocked.Contains(d.name))count++;}
+        return count==_allCategoryItems.Count;
     }
-
     public static bool _allCategoryMusicUnlocked(CstmzCategory category){
-        var unlockedSet = new HashSet<string>(SaveSerial.instance.playerData.musicUnlocked);
-        var allCategoryItems = AssetsManager.instance.musics.FindAll(x => x.category == category);
-        foreach (CstmzMusic m in allCategoryItems){
-            if(!unlockedSet.Contains(m.name)){
-                return false; // optimization: stop early if an item is not unlocked
-            }
-        }
-        return true;
+        var count=0;var _allCategoryItems=AssetsManager.instance.musics.FindAll(x=>x.category==category);
+        foreach(CstmzMusic m in _allCategoryItems){if(SaveSerial.instance.playerData.deathFxUnlocked.Contains(m.name))count++;}
+        return count==_allCategoryItems.Count;
     }
     public static bool _literallyEverythingInCategoryUnlocked(CstmzCategory category){return (_allCategorySkinsUnlocked(category)&&_allCategoryTrailsUnlocked(category)&&_allCategoryFlaresUnlocked(category)&&_allCategoryDeathFxUnlocked(category)&&_allCategoryMusicUnlocked(category));}
     public static void UnlockSkin(string name,bool _outsideOfLockbox=false){if(!_isSkinUnlocked(name)){SaveSerial.instance.playerData.skinsUnlocked.Add(name);if(_outsideOfLockbox)CosmeticPopups.instance.AddToQueue(name,CstmzType.skin);}}

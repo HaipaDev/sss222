@@ -417,9 +417,9 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 #region//Enemies
     #region///returns
     bool _canModifySpriteEn(){bool b=true;string s=enemyToModify;
-        if(false
+        /*if(false
         ){
-            b=false;}
+            b=false;}*/
     return b;}
     bool _canChangeSpriteEn(){bool b=true;string s=enemyToModify;
         if(s=="Vortex Wheel"
