@@ -27,7 +27,7 @@ public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHa
         else{if((Vector2)Input.mousePosition!=mousePosPrev){inputSelecting=false;}}
         if(!inputSelecting){if(GetButtonUnderMouse()!=null)btn=GetButtonUnderMouse();if(btn!=btnLast)SetSelected();}
         currentSelected=es.currentSelectedGameObject;
-        if(currentSelected!=null&&currentSelected.GetComponent<ButtonScript>()==null){currentSelected.AddComponent<ButtonScript>();}
+        //if(currentSelected!=null&&currentSelected.GetComponent<ButtonScript>()==null){currentSelected.AddComponent<ButtonScript>();}
         if(currentSelected!=lastSelected||lastSelected==null){/*AudioManager.instance.Play("ButtonSelect");*/lastSelected=currentSelected;}
     }
     public Button FindClosestButton(){
@@ -39,25 +39,30 @@ public class UIInputSystem : MonoBehaviour, IEventSystemHandler, IPointerEnterHa
         return closest;
     }
     public Button GetButtonUnderMouse(){
-        PointerEventData eventDataCurrentPosition=new PointerEventData(EventSystem.current);
+        Button btn=null;
+
+        /*PointerEventData eventDataCurrentPosition=new PointerEventData(EventSystem.current);
         eventDataCurrentPosition.position=(Vector2)Input.mousePosition;
         List<RaycastResult> results=new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition,results);
-        Button btn=null;
-        foreach(RaycastResult rr in results){if(rr.gameObject.GetComponent<Button>()!=null){btn=rr.gameObject.GetComponent<Button>();}}//else{btn=null;}}
+        foreach(RaycastResult rr in results){if(rr.gameObject.GetComponent<Button>()!=null){btn=rr.gameObject.GetComponent<Button>();}}//else{btn=null;}}*/
         return btn;
     }
     Vector3 MousePosToCanvas(){return CanvasPositioningExtensions.ScreenToCanvasPosition(FindObjectOfType<Canvas>(),Input.mousePosition);}
     public void OnPointerEnter(PointerEventData eventData){
-        if(eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>()==null){currentSelected=null;}
-        foreach(GameObject go in eventData.hovered){Debug.Log(go.name);if(go.GetComponent<Button>()!=null){btn=go.GetComponent<Button>();}}
+        /*if(eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>()==null){currentSelected=null;}
+        else{if(eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<ScrollRect>()==null){
+            foreach(GameObject go in eventData.hovered){Debug.Log(go.name);if(go.GetComponent<Button>()!=null){btn=go.GetComponent<Button>();}}
+        }}*/
     }
     public void OnPointerExit(PointerEventData eventData){currentSelected=null;}
-    public static bool IsPointerOverUIObject(){
+
+    /*public static bool IsPointerOverUIObject(){
+        return false;
         PointerEventData eventDataCurrentPosition=new PointerEventData(EventSystem.current);
         eventDataCurrentPosition.position=(Vector2)Input.mousePosition;
         List<RaycastResult> results=new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition,results);
         return results.Count>0;
-    }
+    }*/
 }

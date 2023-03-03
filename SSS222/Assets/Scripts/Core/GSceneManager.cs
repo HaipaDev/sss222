@@ -87,8 +87,8 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         GameManager.instance.EnterGameScene();
         GameRules.instance.EnterGameScene();
     }
-    public void LoadAdventureZone(int i, bool _force=false){Debug.Log("LoadAdventureZoneI("+i+", "+_force+");");
-        StartCoroutine(LoadAdventureZoneI(i,_force));}
+    public void LoadAdventureZone(int i, bool _force=false){gameObject.SetActive(true);Debug.Log("LoadAdventureZoneI("+i+", "+_force+");");
+        GSceneManager.instance.StartCoroutine(GSceneManager.instance.LoadAdventureZoneI(i,_force));}
     IEnumerator LoadAdventureZoneI(int i, bool _force=false){
         GameManager.instance.SetGamemodeSelected(-1);
         bool boss=CoreSetup.instance.adventureZones[i].isBoss;
@@ -142,13 +142,17 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
     }
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");GameManager.instance.ResetTempSandboxSaveName();GameManager.instance.defaultGameSpeed=1;StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();}
     public void LoadAdventureZonesScene(){Debug.Log("LoadAdventureZonesScene()");StartCoroutine(LoadAdventureZonesSceneI());}
+    public void LoadAdventureFromMainMenu(){
+        if(GameManager.instance.zoneToTravelTo!=-1){Debug.Log("Load Travel Zone");LoadAdventureZone(GameManager.instance.zoneToTravelTo,true);return;}
+        else if(GameManager.instance.zoneSelected!=-1){Debug.Log("Load Regular Zone");LoadAdventureZone(GameManager.instance.zoneSelected,true);return;}
+    }
     IEnumerator LoadAdventureZonesSceneI(){
         SceneManager.LoadScene("AdventureZones");GameManager.instance.gamemodeSelected=-1;
         yield return new WaitForSecondsRealtime(0.03f);
         GameManager.instance.LoadAdventurePre();
-        yield return new WaitForSecondsRealtime(0.02f);
+        /*yield return new WaitForSecondsRealtime(0.02f);
         if(GameManager.instance.zoneToTravelTo!=-1){Debug.Log("Load Travel Zone");LoadAdventureZone(GameManager.instance.zoneToTravelTo,true);yield break;}
-        else if(GameManager.instance.zoneSelected!=-1){Debug.Log("Load Regular Zone");LoadAdventureZone(GameManager.instance.zoneSelected,true);yield break;}
+        else if(GameManager.instance.zoneSelected!=-1){Debug.Log("Load Regular Zone");LoadAdventureZone(GameManager.instance.zoneSelected,true);yield break;}*/
         //else{LoadGameScene();}
     }
     public void LoadSandboxModeScene(){SceneManager.LoadScene("SandboxMode");GameManager.instance.SetGamemodeSelected(0);StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();}

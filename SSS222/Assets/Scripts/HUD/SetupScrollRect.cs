@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FixScrollRect : MonoBehaviour{
+public class SetupScrollRect : MonoBehaviour{
     [SerializeField]GameObject go;
     [SerializeField]float setScrollbarPos=1;
     void Awake(){Fix();}
