@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1887362649180442507}
   - component: {fileID: 5381357303093761109}
   - component: {fileID: 4830943442673253679}
+  - component: {fileID: 4919120328660754931}
   m_Layer: 8
   m_Name: EnBurstBall
   m_TagString: PlayerWeapons
@@ -79,12 +80,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 37f408ab21775e7479dc45386eaeb0b9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 20203903bc872f74680e17656f0a87c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2962963, y: 0.44444445}
+  m_Size: {x: 0.6666667, y: 0.6666667}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -128,8 +129,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.33333334, y: 0.33333334}
-    newSize: {x: 0.2962963, y: 0.44444445}
+    oldSize: {x: 0.6666667, y: 0.6666667}
+    newSize: {x: 0.6666667, y: 0.6666667}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -285,3 +286,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 0
+--- !u!114 &4919120328660754931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313808222654050488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe7168c078b5a8a41b35824fabe55eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateZ: 1
+  rotateSpeedZ: 30
+  horiz: 0
+  rotateSpeedH: 20
+  vert: 0
+  rotateSpeedV: 20

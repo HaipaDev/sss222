@@ -13,8 +13,8 @@ public class BlindnessUI : MonoBehaviour{
     }
     void Update(){
         if(scaleWithPlayer){if(Player.instance!=null){if(Player.instance._hasStatus("blind")){scale=7-Player.instance.GetStatus("blind").strength;}else{on=false;}}else{on=false;}}
-        GetComponent<Image>().enabled=on;
-        transform.parent.GetComponent<Image>().enabled=on;
+        transform.GetComponent<Image>().enabled=on;
+        transform.GetChild(0).GetComponent<Image>().enabled=on;
         GetComponent<RectTransform>().localScale=new Vector2(scale,scale);
     }
 }
