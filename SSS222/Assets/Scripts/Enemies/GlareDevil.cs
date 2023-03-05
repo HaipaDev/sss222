@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GlareDevil : MonoBehaviour{
-    [SerializeField]float radiusBlind=3f;
+    [SerializeField]float radiusBlind=4f;
     [SerializeField]float timerBlindMax=3.3f;
-    [SerializeField]Vector2 efxBlind=new Vector2(4,4);
+    [SerializeField]Vector2 efxBlind=new Vector2(6,4);
 
     float timerBlind=-4;
     PointPathing path;
@@ -27,5 +27,5 @@ public class GlareDevil : MonoBehaviour{
         if(Player.instance!=null)if(Vector2.Distance(Player.instance.transform.position,transform.position)<radiusBlind){Blind();}
         if(timerBlind>0)timerBlind-=Time.deltaTime;
     }}
-    void Blind(){if(timerBlind<=0&&timerBlind!=-4){Player.instance.Blind(efxBlind.x,efxBlind.y);AudioManager.instance.Play("GlareDevil");timerBlind=timerBlindMax;}}
+    void Blind(){if(timerBlind<=0&&timerBlind!=-4){Player.instance.Blind(efxBlind.x,0,efxBlind.y);AudioManager.instance.Play("GlareDevil");timerBlind=timerBlindMax;}}
 }

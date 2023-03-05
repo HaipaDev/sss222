@@ -13,6 +13,7 @@ public class BossAI : MonoBehaviour{
         en.size=Vector2.zero;
         var b=GameRules.instance.bossInfo;
         phasesInfo=b.phasesInfo;
+        for(int i=0;i<phasesInfo.Count;i++){phasesInfo[i].name="Phase "+(i+1);}
 
         en.name=b.name;
         en.type=b.type;
@@ -226,19 +227,23 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
         en.defense=-1;
         GetComponent<PointPathing>().enabled=false;
         if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=false;
-        AudioManager.instance.Play(phasesInfo[p].audioAsset);
+        if(!System.String.IsNullOrEmpty(phasesInfo[p].audioOnChangeStartAsset))AudioManager.instance.Play(phasesInfo[p].audioOnChangeStartAsset);
+        if(!System.String.IsNullOrEmpty(phasesInfo[p].vfxOnChangeStartAsset))AssetsManager.instance.VFX(phasesInfo[p].vfxOnChangeStartAsset,transform.position,3f);
         if(Jukebox.instance!=null&&GameRules.instance.bossInfo.pauseOstOnPhaseChange)Jukebox.instance.PauseBossMusicFor(phasesInfo[p].delay);
         yield return new WaitForSeconds(phasesInfo[p].delay);
         if(p==0){
-            if(Jukebox.instance==null){Instantiate(CoreSetup.instance.GetJukeboxPrefab());}if(Jukebox.instance!=null)Jukebox.instance.SetBossMusic(GameRules.instance.bossInfo.ost);if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameManager.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}
+            if(Jukebox.instance==null){Instantiate(CoreSetup.instance.GetJukeboxPrefab());}
+            if(Jukebox.instance!=null)Jukebox.instance.SetBossMusic(GameRules.instance.bossInfo.ost);
+            if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameManager.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}
             en.health=GameRules.instance.bossInfo.healthStart;
+            FindObjectOfType<BossTitleDisplay>().TurnOnBossDisplay();
         }
-        AssetsManager.instance.VFX(phasesInfo[p].vfxAsset,transform.position,3f);
+        if(!System.String.IsNullOrEmpty(phasesInfo[p].audioOnChangeEndAsset))AudioManager.instance.Play(phasesInfo[p].audioOnChangeEndAsset);
+        if(!System.String.IsNullOrEmpty(phasesInfo[p].vfxOnChangeEndAsset))AssetsManager.instance.VFX(phasesInfo[p].vfxOnChangeEndAsset,transform.position,3f);
         Shake.instance.CamShake(phasesInfo[p].camShakeStrength,phasesInfo[p].camShakeSpeed);
         GetComponent<PointPathing>().enabled=true;
         phase=p;
         SetBossSpecificVars();
         _phaseCor=null;
-
     }
 }

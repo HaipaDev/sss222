@@ -255,6 +255,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.bossTitleSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f828eef9156c4fe4fbf26a6e6b589c9b,
+        type: 3}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: managedReferences[2].kills
       value: 9
       objectReference: {fileID: 0}
@@ -463,6 +469,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].name
+      value: Phase 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].name
+      value: Phase 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: bossInfo.phasesInfo.Array.data[0].delay
       value: 3
       objectReference: {fileID: 0}
@@ -593,6 +609,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].vfxOnChangeEndAsset
+      value: MoonOfLunacy-Spawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].vfxOnChangeEndAsset
+      value: MoonOfLunacy-Phase2End
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: bossInfo.phasesInfo.Array.data[0].sprMatProps.pixelate
       value: 1
       objectReference: {fileID: 0}
@@ -600,6 +626,16 @@ PrefabInstance:
         type: 3}
       propertyPath: bossInfo.phasesInfo.Array.data[1].sprMatProps.pixelate
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].vfxOnChangeStartAsset
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].vfxOnChangeStartAsset
+      value: MoonOfLunacy-Phase2Start
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
@@ -619,10 +655,20 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].audioOnChangeStartAsset
+      value: MoonOfLunacy-Spawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: bossInfo.phasesInfo.Array.data[1].anims.Array.data[0].spr
       value: 
       objectReference: {fileID: 21300000, guid: cc617dcc8b2ee894b87f23cb991edacf,
         type: 3}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].audioOnChangeStartAsset
+      value: MoonOfLunacy-Phase2
+      objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: bossInfo.phaseSprites.Array.data[0].anim.Array.data[0].spr

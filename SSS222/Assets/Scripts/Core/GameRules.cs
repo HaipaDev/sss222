@@ -389,6 +389,8 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
                 if(co.colliEventsType==colliEventsType.playerDmg){co.colliEvents=new colliEvent_PlayerDmg();}
             }
         }*/
+
+        if(_isAdventureBossZone)for(int i=0;i<bossInfo.phasesInfo.Count;i++){bossInfo.phasesInfo[i].name="Phase "+(i+1);}
         CapToMaxValues();
         SumUpWavesWeightsTotal();
         SumUpAllPowerupSpawnersWeightsTotal();
@@ -603,17 +605,22 @@ public class BossClass{
     public float xpChance = 100f;
     public List<LootTableEntryDrops> drops;
     public List<BossPhaseInfo> phasesInfo;
+    public Sprite bossTitleSprite;
 }
 [System.Serializable]
 public class BossPhaseInfo{
+    [Title("$name", titleAlignment: TitleAlignments.Centered)]
+    [ReadOnly]public string name;
     public int defense;
     public Vector2 size=Vector2.one;
     public ShaderMatProps sprMatProps;
     public List<SimpleAnim> anims;
 [Header("Transformation")]
     public float delay=1f;
-    public string audioAsset;
-    public string vfxAsset;
+    public string audioOnChangeStartAsset;
+    public string vfxOnChangeStartAsset;
+    public string audioOnChangeEndAsset;
+    public string vfxOnChangeEndAsset;
     public float camShakeStrength=2f;
     public float camShakeSpeed=0.2f;
 }
@@ -735,6 +742,7 @@ public class HLaserSettings{
 
 [System.Serializable]
 public class AdventureZoneData{
+    [Title("$name", titleAlignment: TitleAlignments.Centered)]
     public bool enabled=true;
     public string name="1";
     public GameRules gameRules;

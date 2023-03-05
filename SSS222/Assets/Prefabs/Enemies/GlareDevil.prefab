@@ -34,6 +34,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -149,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e1bac992fc84d4db5a37ac92a2a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  off: 0
   waveConfig: {fileID: 0}
   waypointsL: []
   waypointIndex: 0
@@ -170,13 +172,24 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   sizeAvg: 1
   spr: {fileID: 0}
+  sprMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   health: 33
   healthMax: 33
+  defense: 0
+  defenseOnPhase: 1
   healthBySize: 0
   shooting: 0
+  bulletAssetName: 
   shootTime: {x: 1.75, y: 2.8}
-  shotCounter: 0
-  bullet: {fileID: 0}
+  shootTimer: 0
   bulletSpeed: 5
   DBullets: 0
   bulletDist: 0.35
@@ -185,14 +198,17 @@ MonoBehaviour:
   killOnDash: 1
   giveScore: 1
   scoreValue: {x: 1, y: 10}
-  xpAmnt: 4
   xpChance: 100
+  xpAmnt: 4
+  accumulateXp: 1
   drops: []
   dropValues: []
   destroyOut: 1
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  _dmgHeals: 0
+  bullet: {fileID: 0}
 --- !u!114 &-1660457734484328102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,9 +234,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08207ecde4a8e4c41a2f540e398be6dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radiusBlind: 3
-  timerBlindMax: 3.3
-  efxBlind: {x: 4, y: 4}
+  radiusBlind: 4
+  timerBlindMax: 6.5
+  efxBlind: {x: 6, y: 3}
 --- !u!114 &637602792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,7 +252,8 @@ MonoBehaviour:
   assetName: GlowFlare
   materialClone: 0
   color: {r: 0.41960788, g: 0.96470594, b: 0.854902, a: 1}
-  size: 0
+  size: {x: 0, y: 0}
   emissionSpeed: 8.63
   maxParticles: 0
   offset: {x: 0.4, y: 0.22}
+  alignToDirection: 0

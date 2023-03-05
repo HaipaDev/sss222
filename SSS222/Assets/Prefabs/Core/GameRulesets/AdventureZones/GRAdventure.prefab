@@ -815,6 +815,7 @@ MonoBehaviour:
     colliEvents: []
   startingPosPlayer: {x: 0, y: -6.24}
   autoShootPlayer: 0
+  playerTimeIndependentFromDelta: 1
   moveX: 1
   moveY: 1
   playfieldPadding: {x: 0.1, y: 0.45}
@@ -887,6 +888,8 @@ MonoBehaviour:
   - 1.75
   - 2
   - 2.5
+  matrixLimit: 0.05
+  accelLimit: -2
   matrixTime: 7
   accelTime: 7
   onfireTickrate: 0.38
@@ -1579,9 +1582,9 @@ MonoBehaviour:
     radius: 5
     moveSpeed: 5
   glareDevilSettings:
-    radiusBlind: 3
-    timerBlindMax: 3.3
-    efxBlind: {x: 4, y: 4}
+    radiusBlind: 4
+    timerBlindMax: 6.5
+    efxBlind: {x: 6, y: 4}
   goblinBossSettings:
     goblinBossSprite: {fileID: 21300000, guid: 39a25c8b6bd02054f89bc66720513032, type: 3}
     transformVfxAssetName: DarkEnergy
@@ -1781,6 +1784,7 @@ MonoBehaviour:
   playerModulesCapacity: 4
   timeTeleport: 3
   timeDetemined: 5
+  timeGiveItToMe: 8
   playerExhaustROF: 1
   crystalMend_refillCost: 2
   energyDiss_refillCost: 3.3

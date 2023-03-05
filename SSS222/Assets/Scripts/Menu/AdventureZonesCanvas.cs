@@ -23,7 +23,7 @@ public class AdventureZonesCanvas : MonoBehaviour{
             go.name="Zone_"+CoreSetup.instance.adventureZones[i].name;
             go.GetComponent<RectTransform>().anchoredPosition=CoreSetup.instance.adventureZones[i].pos;
             if((SaveSerial.instance.advD!=null&&SaveSerial.instance.advD.lockedZones!=null&&!SaveSerial.instance.advD.lockedZones.Contains(CoreSetup.instance.adventureZones[i].name))||SaveSerial.instance.advD==null||SaveSerial.instance.advD.lockedZones==null||SaveSerial.instance.advD.lockedZones.Count==0){
-                go.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(()=>GSceneManager.instance.LoadAdventureZone(_i));
+                go.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(()=>GSceneManager.instance.LoadAdventureZone(_i,(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="AdventureZones")));
             }
 
             var mat=AssetsManager.instance.UpdateShaderMatProps(AssetsManager.instance.GetMat("AIOShaderMat_UI",true),CoreSetup.instance.adventureZones[i].gameRules.bgMaterial,true);

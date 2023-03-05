@@ -440,6 +440,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: glareDevilSettings.efxBlind.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: glareDevilSettings.efxBlind.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: shopList.Array.data[7].priceE
       value: 26
       objectReference: {fileID: 0}
@@ -467,6 +477,11 @@ PrefabInstance:
         type: 3}
       propertyPath: shopList.Array.data[9].priceS
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: glareDevilSettings.radiusBlind
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
