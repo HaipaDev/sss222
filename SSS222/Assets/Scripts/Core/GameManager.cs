@@ -73,7 +73,6 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
     public float currentPlaytime=0;
     public float presenceTimer=0;
     public bool presenceTimeSet=false;
-    public float _preBossMusicVolume;
     public bool _adventureLoading;
     public bool _lvlEventsLoading;
     bool _coreSpawnedPreAscend;
@@ -715,6 +714,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         else if(gamemodeSelected==0){n="Sandbox Mode";}
         return n;}
     public bool _isSandboxMode(){return (SceneManager.GetActiveScene().name.Contains("Sandbox")||(GSceneManager.CheckScene("Game")&&GetCurrentGamemodeName().Contains("Sandbox")));}
+    public string _bossHealthPercentLeft(){var b=FindObjectOfType<BossAI>();return System.Math.Round(((b.GetComponent<Enemy>().health/b.GetComponent<Enemy>().healthMax)*100f),2).ToString()+"%";}
 
         
     //public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}

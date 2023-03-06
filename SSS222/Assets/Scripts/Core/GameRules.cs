@@ -584,6 +584,7 @@ public class EnemyClass{
 }
 [System.Serializable]
 public class BossClass{
+    public string codeName;
     public string name;
     public enemyType type;
     public float healthStart=25;
@@ -592,12 +593,13 @@ public class BossClass{
     public Vector2 spawnPos;
     public bool scaleUpOnSpawn=true;
     public AudioClip ost;
-    public bool pauseOstOnPhaseChange=true;
     public float deathLength=3f;
-    public string preDeathAudio="Explosion";
-    public string preDeathVFX="Explosion";
-    public string deathAudio="Explosion";
-    public string deathVFX="Explosion";
+    public string playerKillQuip="MoonOfLunacy-Laugh2";
+    public Sprite deathSprite;
+    public string deathStartAudio="MoonOfLunacy-Death";
+    public string deathStartVFX="ExplosionsLong";
+    public string deathEndAudio="Explosion";
+    public string deathEndVFX="ExplosionBig";
     public float deathShakeStrength=4f;
     public float deathShakeSpeed=0.3f;
 [Header("Drops & PhaseInfo")]
@@ -623,6 +625,7 @@ public class BossPhaseInfo{
     public string vfxOnChangeEndAsset;
     public float camShakeStrength=2f;
     public float camShakeSpeed=0.2f;
+    public bool pauseOstOnPhaseChange=true;
 }
 [System.Serializable]
 public class CometSettings{

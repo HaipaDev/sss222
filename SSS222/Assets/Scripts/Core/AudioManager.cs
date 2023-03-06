@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour{	public static AudioManager instance;
 	public AudioMixer audioMixer;
 	public AudioMixerGroup mixerGroup;
 	[AssetsOnly,Searchable]public Sound[] sounds;
+    [DisableInEditorMode]public float _preBossMusicVolume;
 
 	void Awake(){
 		if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}

@@ -7,10 +7,13 @@ public class BossAI : MonoBehaviour{
     public List<BossPhaseInfo> phasesInfo;
     [ReadOnly]public int phase;
     Enemy en;
+    bool _preAttackVFXSpawned;
+    bool _playerKilled;
+    void Awake(){if(GameRules.instance.bossInfo.scaleUpOnSpawn){GetComponent<Enemy>().size=Vector2.zero;transform.localScale=Vector2.zero;}}
     void Start(){
         phase=-1;
         en=GetComponent<Enemy>();
-        en.size=Vector2.zero;
+        en.size=Vector2.zero;transform.localScale=Vector2.zero;
         var b=GameRules.instance.bossInfo;
         phasesInfo=b.phasesInfo;
         for(int i=0;i<phasesInfo.Count;i++){phasesInfo[i].name="Phase "+(i+1);}
@@ -33,43 +36,48 @@ public class BossAI : MonoBehaviour{
         en.drops=b.drops;
 
         ChangePhase(0);
-        //Spawn FX
-        /*AudioManager.instance.Play(phasesInfo[0].audioAsset);
-        AssetsManager.instance.VFX(phasesInfo[0].vfxAsset,transform.position);
-        Shake.instance.CamShake(phasesInfo[0].camShakeStrength,phasesInfo[0].camShakeSpeed);*/
         SetBossSpecificVars();
     }
     void Update(){
+        var b=GameRules.instance.bossInfo;
         if(!GameManager.GlobalTimeIsPaused){
-            if(phase==-1&&GameRules.instance.bossInfo.scaleUpOnSpawn){
+            if(phase==-1&&b.scaleUpOnSpawn){
                 var scaleUpSpeed=phasesInfo[0].delay/10f*Time.deltaTime;
                 if(Vector2.Distance(en.size,phasesInfo[0].size)>scaleUpSpeed){
                     en.spr=phasesInfo[0].anims[0].spr;en.size+=new Vector2(scaleUpSpeed,scaleUpSpeed);
-                    if(en.health<=GameRules.instance.bossInfo.healthStart){en.health+=en.healthMax*scaleUpSpeed;}
+                    if(en.health<=b.healthStart){en.health+=en.healthMax*scaleUpSpeed;}
                 }
             }
-            if(phase>=0){
+            if(Player.instance.health<=0&&!_playerKilled){_playerKilled=true;AudioManager.instance.Play(b.playerKillQuip);}
+            if(_playerKilled){PlayerDeathFunction();}
+            /*if(phase>=0){
                 en.defense=phasesInfo[phase].defense;
                 en.size=phasesInfo[phase].size;
                 en.sprMatProps=phasesInfo[phase].sprMatProps;
 
                 en.spr=phasesInfo[phase].anims[0].spr;//Animate later
-            }
+            }*/
 
             if(_isMOL()){MoonOfLunacyAI();}
         }
     }
     public void Die(){StartCoroutine(DieI());}
     IEnumerator DieI(){
+        var b=GameRules.instance.bossInfo;
         phase=-1;
         en.defense=-1;
+        en.name=b.name;
+        en.spr=b.deathSprite;
         GetComponent<PointPathing>().enabled=false;
+        if(transform.childCount>0)for(var t=transform.childCount-1;t>0;t--){Destroy(transform.GetChild(t).gameObject);}
+
         Jukebox.instance.PauseBossMusic();
-        AudioManager.instance.Play(GameRules.instance.bossInfo.preDeathAudio);
-        AssetsManager.instance.VFX(GameRules.instance.bossInfo.preDeathVFX,transform.position,3f);
-        yield return new WaitForSeconds(GameRules.instance.bossInfo.deathLength);
-        AssetsManager.instance.VFX(GameRules.instance.bossInfo.deathVFX,transform.position,3f);
-        Shake.instance.CamShake(GameRules.instance.bossInfo.deathShakeStrength,GameRules.instance.bossInfo.deathShakeSpeed);
+        AudioManager.instance.Play(b.deathStartAudio);
+        AssetsManager.instance.VFX(b.deathStartVFX,transform.position,b.deathLength+2);
+        yield return new WaitForSeconds(b.deathLength);
+        AudioManager.instance.Play(b.deathEndAudio);
+        AssetsManager.instance.VFX(b.deathEndVFX,transform.position,b.deathLength+2);
+        Shake.instance.CamShake(b.deathShakeStrength,b.deathShakeSpeed);
         SaveSerial.instance.advD.defeatedBosses.Add(en.name);
         StatsAchievsManager.instance.BossDefeated(en.name);
         UpgradeMenu.instance.OpenZoneMapPostBoss();
@@ -88,6 +96,42 @@ public class BossAI : MonoBehaviour{
     }*/
     
     bool CheckName(string name){return GetComponent<Enemy>().name.Contains(name);}
+
+    IEnumerator _phaseCor;
+    public void ChangePhase(int p){if(phasesInfo.Count>p){if(_phaseCor==null){_phaseCor=ChangePhaseI(p);StartCoroutine(_phaseCor);}}else{Debug.LogError("Cant change to phase: "+p);}}
+    public IEnumerator ChangePhaseI(int p){
+        phase=-1;
+        en.defense=-1;
+        GetComponent<PointPathing>().enabled=false;
+        if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=false;
+        if(!System.String.IsNullOrEmpty(phasesInfo[p].audioOnChangeStartAsset))AudioManager.instance.Play(phasesInfo[p].audioOnChangeStartAsset);
+        if(!System.String.IsNullOrEmpty(phasesInfo[p].vfxOnChangeStartAsset))AssetsManager.instance.VFX(phasesInfo[p].vfxOnChangeStartAsset,transform.position,phasesInfo[p].delay+2);
+        if(Jukebox.instance!=null&&phasesInfo[p].pauseOstOnPhaseChange)Jukebox.instance.PauseBossMusicFor(phasesInfo[p].delay);
+        yield return new WaitForSeconds(phasesInfo[p].delay);
+        if(p>=0){
+            en.defense=phasesInfo[p].defense;
+            en.size=phasesInfo[p].size;
+            en.sprMatProps=phasesInfo[p].sprMatProps;
+
+            en.spr=phasesInfo[p].anims[0].spr;//Animate later
+        }
+        if(p==0){
+            if(Jukebox.instance==null){Instantiate(CoreSetup.instance.GetJukeboxPrefab());}
+            if(Jukebox.instance!=null)Jukebox.instance.SetBossMusic(GameRules.instance.bossInfo.ost);
+            if(SaveSerial.instance.settingsData.bossVolumeTurnUp){AudioManager.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}
+            en.health=GameRules.instance.bossInfo.healthStart;
+            FindObjectOfType<BossTitleDisplay>().TurnOnBossDisplay();
+        }
+        if(!System.String.IsNullOrEmpty(phasesInfo[p].audioOnChangeEndAsset))AudioManager.instance.Play(phasesInfo[p].audioOnChangeEndAsset);
+        if(!System.String.IsNullOrEmpty(phasesInfo[p].vfxOnChangeEndAsset))AssetsManager.instance.VFX(phasesInfo[p].vfxOnChangeEndAsset,transform.position,phasesInfo[p].delay+2);
+        Shake.instance.CamShake(phasesInfo[p].camShakeStrength,phasesInfo[p].camShakeSpeed);
+        GetComponent<PointPathing>().enabled=true;
+        phase=p;
+        SetBossSpecificVars();
+        _phaseCor=null;
+    }
+
+    
     void SetBossSpecificVars(){
         if(_isMOL()){
             if(phase==0){
@@ -102,33 +146,41 @@ public class BossAI : MonoBehaviour{
             }
         }
     }
-bool _preAttackVFXSpawned;
+    void PlayerDeathFunction(){
+        if(_isMOL()){//SpinOutOfFrame
+            var rotSpeed=_molP2_attack2FollowSpeed*360*Time.deltaTime;AudioManager.instance.Play("Spin");
+            transform.Rotate(new Vector3(0,0,rotSpeed));
+            GetComponent<Rigidbody2D>().velocity=new Vector2(0,7f);
+            if(GetComponent<Follow>()!=null){Destroy(GetComponent<Follow>());}
+        }
+        if(transform.position.y>15){Destroy(gameObject);}
+    }
 #region ///Moon of Lunacy
 bool _isMOL(){return CheckName("Moon of Lunacy");}
 [Header("Phase1")]
     [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack1Time=4.5f;
-    [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack1Timer=-4;
-    [ShowIf("@this._isMOL()")][SerializeField]int _molP1_attack1Count;
+    [ShowIf("@this._isMOL()")][DisableInPlayMode][SerializeField]float _molP1_attack1Timer=-4;
+    [ShowIf("@this._isMOL()")][DisableInPlayMode][SerializeField]int _molP1_attack1Count;
     [ShowIf("@this._isMOL()")][SerializeField]int _molP1_attack1CountFor2=3;
     [ShowIf("@this._isMOL()")][SerializeField]Vector2 _molP1_attack1CountFor2Range=new Vector2(3,4);
     [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack2Time=1.5f;
-    [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack2Timer=-4;
-    [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack2SubTime1=0.5f;
+    [ShowIf("@this._isMOL()")][DisableInPlayMode][SerializeField]float _molP1_attack2Timer=-4;
+    [ShowIf("@this._isMOL()")][DisableInPlayMode][SerializeField]float _molP1_attack2SubTime1=0.5f;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack2SubTime1Limit=1.5f;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP1_attack2DistanceForForce=2.7f;
 [Header("Phase2")]
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack1Time=3f;
-    [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack1Timer=-4;
-    [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack1Count;
+    [ShowIf("@this._isMOL()")][DisableInPlayMode][SerializeField]float _molP2_attack1Timer=-4;
+    [ShowIf("@this._isMOL()")][DisableInPlayMode][SerializeField]float _molP2_attack1Count;
     [ShowIf("@this._isMOL()")][SerializeField]int _molP2_attack1CountFor2=3;
     [ShowIf("@this._isMOL()")][SerializeField]Vector2 _molP2_attack1CountFor2Range=new Vector2(2,4);
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack2Time=2.5f;
-    [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack2Timer=-4;
-    [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack2SubTime1=0.25f;
+    [ShowIf("@this._isMOL()")][DisableInPlayMode][SerializeField]float _molP2_attack2Timer=-4;
+    [ShowIf("@this._isMOL()")][DisableInPlayMode][SerializeField]float _molP2_attack2SubTime1=0.25f;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack2SubTime1Limit=2f;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack2FollowSpeed=2.5f;
     [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack2Duration=5;
-    [ShowIf("@this._isMOL()")][SerializeField]float _molP2_attack2DurationTimer=-4;
+    [ShowIf("@this._isMOL()")][DisableInPlayMode][SerializeField]float _molP2_attack2DurationTimer=-4;
     [ShowIf("@this._isMOL()")][ReadOnly][SerializeField]float _molDistToPlayer;
     void MoonOfLunacyAI(){
         if(phase==0){
@@ -218,32 +270,4 @@ bool _isMOL(){return CheckName("Moon of Lunacy");}
         }
     }
 #endregion
-
-
-    IEnumerator _phaseCor;
-    public void ChangePhase(int p){if(phasesInfo.Count>p){if(_phaseCor==null){_phaseCor=ChangePhaseI(p);StartCoroutine(_phaseCor);}}else{Debug.LogError("Cant change to phase: "+p);}}
-    public IEnumerator ChangePhaseI(int p){
-        phase=-1;
-        en.defense=-1;
-        GetComponent<PointPathing>().enabled=false;
-        if(GetComponent<Follow>()!=null)GetComponent<Follow>().enabled=false;
-        if(!System.String.IsNullOrEmpty(phasesInfo[p].audioOnChangeStartAsset))AudioManager.instance.Play(phasesInfo[p].audioOnChangeStartAsset);
-        if(!System.String.IsNullOrEmpty(phasesInfo[p].vfxOnChangeStartAsset))AssetsManager.instance.VFX(phasesInfo[p].vfxOnChangeStartAsset,transform.position,3f);
-        if(Jukebox.instance!=null&&GameRules.instance.bossInfo.pauseOstOnPhaseChange)Jukebox.instance.PauseBossMusicFor(phasesInfo[p].delay);
-        yield return new WaitForSeconds(phasesInfo[p].delay);
-        if(p==0){
-            if(Jukebox.instance==null){Instantiate(CoreSetup.instance.GetJukeboxPrefab());}
-            if(Jukebox.instance!=null)Jukebox.instance.SetBossMusic(GameRules.instance.bossInfo.ost);
-            if(SaveSerial.instance.settingsData.bossVolumeTurnUp){GameManager.instance._preBossMusicVolume=SaveSerial.instance.settingsData.musicVolume;SaveSerial.instance.settingsData.musicVolume=1f;}
-            en.health=GameRules.instance.bossInfo.healthStart;
-            FindObjectOfType<BossTitleDisplay>().TurnOnBossDisplay();
-        }
-        if(!System.String.IsNullOrEmpty(phasesInfo[p].audioOnChangeEndAsset))AudioManager.instance.Play(phasesInfo[p].audioOnChangeEndAsset);
-        if(!System.String.IsNullOrEmpty(phasesInfo[p].vfxOnChangeEndAsset))AssetsManager.instance.VFX(phasesInfo[p].vfxOnChangeEndAsset,transform.position,3f);
-        Shake.instance.CamShake(phasesInfo[p].camShakeStrength,phasesInfo[p].camShakeSpeed);
-        GetComponent<PointPathing>().enabled=true;
-        phase=p;
-        SetBossSpecificVars();
-        _phaseCor=null;
-    }
 }

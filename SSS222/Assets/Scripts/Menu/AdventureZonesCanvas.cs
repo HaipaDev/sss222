@@ -44,7 +44,7 @@ public class AdventureZonesCanvas : MonoBehaviour{
                         if(CoreSetup.instance.adventureZones[i].bossBlackOutImg){var lvreq=img.gameObject.AddComponent<ShipLevelRequired>();lvreq.adventureData=true;lvreq.blackOutImg=true;lvreq.value=CoreSetup.instance.adventureZones[i].lvlReq;}
                     }
                 }
-                if((SaveSerial.instance.advD!=null&&SaveSerial.instance.advD.lockedZones!=null&&!SaveSerial.instance.advD.defeatedBosses.Contains(CoreSetup.instance.adventureZones[i].gameRules.bossInfo.name))||SaveSerial.instance.advD==null||SaveSerial.instance.advD.defeatedBosses==null||SaveSerial.instance.advD.defeatedBosses.Count==0){
+                if((SaveSerial.instance.advD!=null&&SaveSerial.instance.advD.lockedZones!=null&&!(SaveSerial.instance.advD.defeatedBosses.Contains(CoreSetup.instance.adventureZones[i].gameRules.bossInfo.name)||SaveSerial.instance.advD.defeatedBosses.Contains(CoreSetup.instance.adventureZones[i].gameRules.bossInfo.codeName)))||SaveSerial.instance.advD==null||SaveSerial.instance.advD.defeatedBosses==null||SaveSerial.instance.advD.defeatedBosses.Count==0){
                     Destroy(go.transform.GetChild(6).gameObject);
                 }
                 Destroy(go.transform.GetChild(2).gameObject);

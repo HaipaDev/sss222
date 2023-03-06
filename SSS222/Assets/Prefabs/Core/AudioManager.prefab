@@ -678,6 +678,15 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: MoonOfLunacy-Laugh2
+    clip: {fileID: 8300000, guid: 34f19ca4ba117bc4b9b066d6c3f6d6bb, type: 3}
+    volume: 1
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
   - name: Spin
     clip: {fileID: 8300000, guid: 7901bc790a198b848ba6953e168c5424, type: 3}
     volume: 0.8
@@ -786,3 +795,4 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  _preBossMusicVolume: 0

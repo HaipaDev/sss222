@@ -135,6 +135,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.codeName
+      value: MOL
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: bossInfo.deathVFX
       value: ExplosionBig
       objectReference: {fileID: 0}
@@ -203,6 +208,12 @@ PrefabInstance:
       propertyPath: bossInfo.deathLength
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.deathSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cf8889e4bc77ede4a86d569e666b11cc,
+        type: 3}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
       propertyPath: bossInfo.healthStart
@@ -629,8 +640,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[0].pauseOstOnPhaseChange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
       propertyPath: bossInfo.phasesInfo.Array.data[0].vfxOnChangeStartAsset
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].audioOnChangeEndAsset
+      value: MoonOfLunacy-Laugh2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
+        type: 3}
+      propertyPath: bossInfo.phasesInfo.Array.data[1].pauseOstOnPhaseChange
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3525102429318315049, guid: 3ed435af9cf40c9489efd9ad88a6e37e,
         type: 3}
