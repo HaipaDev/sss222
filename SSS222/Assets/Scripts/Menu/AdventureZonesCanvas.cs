@@ -7,17 +7,25 @@ using Sirenix.OdinInspector;
 
 public class AdventureZonesCanvas : MonoBehaviour{
     [AssetsOnly][SerializeField] GameObject zoneButtonPrefab;
+    [AssetsOnly][SerializeField] GameObject zoneLinePrefab;
     [ChildGameObjectsOnly][SerializeField] Transform listContent;
+    [ChildGameObjectsOnly][SerializeField] Tag_ZonesLine travelLine;
     [ChildGameObjectsOnly][SerializeField] ShipUI shipUI;
     [SerializeField] float regularZoneSize=1.7f;
     [SerializeField] float bossZoneSize=2.5f;
     void Start(){Setup();}
     void Update(){
         if(listContent.Find("Zone_0")!=null){Setup();}
+
+        //Set Travel Line
+        if(travelLine!=null){
+            if(GameManager.instance.zoneToTravelTo!=-1&&travelLine.BothPointsNull())travelLine.SetPoints(GameManager.instance.zoneSelected,GameManager.instance.zoneToTravelTo);
+            if(GameManager.instance.zoneToTravelTo==-1&&!travelLine.BothPointsNull())travelLine.SetBothPointsNull();
+        }else{Debug.LogWarning("Travel Line not set in the inspector");}
     }
     public void Setup(){
-        foreach(Transform t in listContent){if(t.name!="Future"&&t!=shipUI.transform)Destroy(t.gameObject);}
-        for(var i=0;i<CoreSetup.instance.adventureZones.Capacity;i++){if(CoreSetup.instance.adventureZones[i].enabled){
+        foreach(Transform t in listContent){if(t.name!="Future"&&t!=shipUI.transform&&t!=travelLine.transform)Destroy(t.gameObject);}
+        for(var i=0;i<CoreSetup.instance.adventureZones.Capacity;i++){if(!CoreSetup.instance.adventureZones[i].enabled){break;}
             var _i=i;
             var go=Instantiate(zoneButtonPrefab,listContent);
             go.name="Zone_"+CoreSetup.instance.adventureZones[i].name;
@@ -53,7 +61,16 @@ public class AdventureZonesCanvas : MonoBehaviour{
                 if(go.transform.childCount>5){Destroy(go.transform.GetChild(5).gameObject);}
                 else{Destroy(go.transform.GetChild(4).gameObject);}
             }
-        }}
+
+            //Setup line
+            if(i<CoreSetup.instance.adventureZones.Capacity-1){
+                var l=Instantiate(zoneLinePrefab,listContent);
+                l.name="_zonesLine_"+(i+1)+"-"+(i+2);
+                l.GetComponent<Tag_ZonesLine>().SetPoints(i,i+1);
+                l.transform.SetAsFirstSibling();
+            }
+        }
+        travelLine.transform.SetAsLastSibling();
         shipUI.transform.SetAsLastSibling();
     }
     public void Back(){if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Game"){UpgradeMenu.instance.Back();}else{GSceneManager.instance.LoadGameModeChooseScene();}}

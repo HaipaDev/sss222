@@ -31,23 +31,30 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
     void Awake(){
         if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
     }
-    IEnumerator Start(){yield return new WaitForSecondsRealtime(0.1f);
+    void Start(){
         if(bgmusicSource==null){
             bgmusicSource=GetComponent<AudioSource>();
             bgmusicSource.loop=true;
             //endVolumeDef=bgmusicSource.volume;
             endVolume=endVolumeDef;
         }
+        if(bossMusicSource==null){SetupBossMusicSource();}
 
-        if(bossMusicSource==null){
-            bossMusicSource=gameObject.AddComponent<AudioSource>();
+        StartCoroutine(SetMusicToCstmzI());
+    }
+    IEnumerator SetMusicToCstmzI(){
+        yield return new WaitForSecondsRealtime(0.1f);
+        SetMusicToCstmzMusic();
+    }
+    void SetupBossMusicSource(){
+        if(bgmusicSource==null){bgmusicSource=GetComponent<AudioSource>();bgmusicSource.Stop();}
+        bossMusicSource=gameObject.AddComponent<AudioSource>();
+        if(bgmusicSource!=null){
             bossMusicSource.outputAudioMixerGroup=bgmusicSource.outputAudioMixerGroup;
             bossMusicSource.priority=bgmusicSource.priority;
             bossMusicSource.volume=bgmusicSource.volume;
-            bossMusicSource.loop=true;
         }
-
-        SetMusicToCstmzMusic();
+        bossMusicSource.loop=true;
     }
     void Update(){
         if(fadingIn&&fadingInSource!=null){
@@ -106,22 +113,24 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
         }
     }
     public void SetBossMusic(AudioClip clip){
-        if(bossMusicSource.clip != null && bossMusicSource.isPlaying){// Already playing boss music
-            return;
-        }
+        if(bossMusicSource!=null){
+            if(bossMusicSource.clip != null && bossMusicSource.isPlaying){// Already playing boss music
+                return;
+            }
 
-        bossMusicSource.clip=clip;
-        bossMusicSource.loop=true;
+            bossMusicSource.clip=clip;
+            bossMusicSource.loop=true;
 
-        if(bgmusicSource.isPlaying){
-            // Fade out regular music
-            FadeOut();
-        }
-        else{
-            // Play boss music immediately
-            bossMusicSource.Play();
-            bossMusicSource.volume=endVolumeDef;
-        }
+            if(bgmusicSource.isPlaying){
+                // Fade out regular music
+                FadeOut();
+            }
+            else{
+                // Play boss music immediately
+                bossMusicSource.Play();
+                bossMusicSource.volume=endVolumeDef;
+            }
+        }else{Debug.LogWarning("Boss music source not present, adding manually");SetupBossMusicSource();SetBossMusic(clip);}
     }
 
     public void FadeIn(AudioSource source=null){

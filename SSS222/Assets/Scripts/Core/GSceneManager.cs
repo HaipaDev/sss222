@@ -141,7 +141,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         }
     }
     public void LoadGameModeChooseScene(){SceneManager.LoadScene("ChooseGameMode");GameManager.instance.ResetTempSandboxSaveName();GameManager.instance.defaultGameSpeed=1;StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();}
-    public void LoadAdventureZonesScene(){Debug.Log("LoadAdventureZonesScene()");StartCoroutine(LoadAdventureZonesSceneI());}
+    public void LoadAdventureZonesScene(){StartCoroutine(LoadAdventureZonesSceneI());}
     public void LoadAdventureFromMainMenu(){
         if(GameManager.instance.zoneToTravelTo!=-1){Debug.Log("Load Travel Zone");LoadAdventureZone(GameManager.instance.zoneToTravelTo,true);return;}
         else if(GameManager.instance.zoneSelected!=-1){Debug.Log("Load Regular Zone");LoadAdventureZone(GameManager.instance.zoneSelected,true);return;}
