@@ -53,8 +53,8 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="postgameInfo"){
                 if(gs.gamemodeSelected!=-1){_txt=gs.GetGameManagerTimeFormat();}
                 else{
-                    if(FindObjectOfType<BossAI>()==null){_txt=(Mathf.RoundToInt(gs.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";}
-                    else{_txt=GameManager.instance._bossHealthPercentLeft();}
+                    if(!GameRules.instance._isAdventureBossZone){_txt=(Mathf.RoundToInt(gs.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";}
+                    else{_txt=GameManager.instance._bossHealthPercentLeftGet();}
                 }
             }else if(value=="postgameInfo_txt"){
                 if(gs.gamemodeSelected!=-1){_txt="Time Played :";}

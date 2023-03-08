@@ -96,7 +96,7 @@ public class Enemy : MonoBehaviour{
         if(GetComponent<HealingDrone>()!=null){if(!GetComponent<HealingDrone>().enabled)GetComponent<HealingDrone>().enabled=true;}
     
             yield return new WaitForSeconds(0.04f);
-            if(drops!=null){
+            if(drops!=null&&drops.Count>0){
                 for(var d=0;d<drops.Count;d++){dropValues.Add(drops[d].dropChance);}
                 dropValues[0]*=GameManager.instance.enballDropMulti;
                 dropValues[1]*=GameManager.instance.coinDropMulti;

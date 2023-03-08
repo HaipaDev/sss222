@@ -286,8 +286,6 @@ public class GameRules : MonoBehaviour{     public static GameRules instance;
             //Boss info
             bossInfo=gr.bossInfo;
             shipScaleBoss=gr.shipScaleBoss;
-            //if(_isAdventureBossZone){AssetsManager.instance.Make(bossInfo.name,Vector2.zero);Debug.Log("Spawned: "+bossInfo.name);}
-            //if(gr.bossInfo.name!=""){AssetsManager.instance.Make(gr.bossInfo.name,Vector2.zero);Debug.Log("Spawned: "+gr.bossInfo.name);}
         }
     }
     void Awake(){if(GameRules.instance!=null&&this!=GameRules.instance){Destroy(gameObject);}else{DontDestroyOnLoad(gameObject);instance=this;}}

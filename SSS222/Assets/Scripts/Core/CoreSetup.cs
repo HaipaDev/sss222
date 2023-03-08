@@ -20,7 +20,7 @@ public class CoreSetup : MonoBehaviour{   public static CoreSetup instance;
     
     [Header("Networking, Advancements etc")]
     [AssetsOnly][SerializeField] GameObject dbaccessPrefab;
-    [AssetsOnly][SerializeField] GameObject discordPresencePrefab;
+    [AssetsOnly][SerializeField] GameObject discordRPCPrefab;
     [AssetsOnly][SerializeField] GameObject steamManagerPrefab;
     [AssetsOnly][SerializeField] GameObject statsAchievsManagerPrefab;
     [Header("Game Rulesets")]
@@ -49,8 +49,8 @@ public class CoreSetup : MonoBehaviour{   public static CoreSetup instance;
         if(FindObjectOfType<AssetsManager>()==null){Instantiate(assetsManagerPrefab);}
 
         //if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
-        #if !UNITY_ANDROID
-        if(FindObjectOfType<DiscordPresence.PresenceManager>()==null){Instantiate(discordPresencePrefab);}
+        #if (!UNITY_ANDROID && !UNITY_EDITOR) || (UNITY_ANDROID && UNITY_EDITOR)
+        if(FindObjectOfType<DiscordPresence.PresenceManager>()==null){Instantiate(discordRPCPrefab);}
         #endif
         if(FindObjectOfType<SteamManager>()==null){Instantiate(steamManagerPrefab);}
         if(FindObjectOfType<StatsAchievsManager>()==null){Instantiate(statsAchievsManagerPrefab);}

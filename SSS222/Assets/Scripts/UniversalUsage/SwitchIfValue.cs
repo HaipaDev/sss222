@@ -31,7 +31,7 @@ public class SwitchIfValue : MonoBehaviour{
             else if(valueName=="isBossZone"){value=AssetsManager.BoolToInt(FindObjectOfType<BossAI>()!=null);}
             else if(valueName=="breakEncounter"){
                 if(BreakEncounter.instance!=null){
-                    value=AssetsManager.BoolToInt(BreakEncounter.instance.calledBreak);
+                    value=(AssetsManager.BoolToInt(BreakEncounter.instance.calledBreak&&!FindObjectOfType<BreakEncounter>().waitForCargoSpawn));
                 }else{DisableIfNotPresent();}
             }
 

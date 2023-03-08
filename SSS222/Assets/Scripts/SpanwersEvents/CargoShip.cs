@@ -41,6 +41,7 @@ public class CargoShip : MonoBehaviour{
             Shop.instance.RepChange(repMinusKill,false);
             Destroy(gameObject,0.01f);
         }
+        if(visited&&FindObjectOfType<BreakEncounter>().calledBreak){SetCargoSpawnDir(dir.up);}
     }
     void OnDestroy(){
         if(visited==false&&Shop.instance.subbed==false){

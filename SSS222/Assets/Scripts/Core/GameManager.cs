@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
     public void RandomizeShopScoreMax(){
         if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;if(sr!=null){if(sr.scoreMaxSetRange.x!=-5&&sr.scoreMaxSetRange.y!=-5)spawnReqsMono.RandomizeScoreMax(-2);}}
     }
-    SpriteRenderer _blurImg;
+    Tag_BlurImg _blurImg;
     void Update(){
         if(gameSpeed>=0){Time.timeScale=gameSpeed;}if(gameSpeed<0){gameSpeed=0;}
         if(GSceneManager.CheckScene("Game")){
@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         
         //Restart with R or Space/Resume with Space
         if(GSceneManager.CheckScene("Game")){
-            if(_blurImg==null)_blurImg=GameObject.Find("BlurImage").GetComponent<SpriteRenderer>();_blurImg.enabled=(PauseMenu.GameIsPaused||UpgradeMenu.UpgradeMenuIsOpen||Shop.shopOpened);
+            if(_blurImg==null)_blurImg=FindObjectOfType<Tag_BlurImg>();_blurImg.on=(PauseMenu.GameIsPaused||UpgradeMenu.UpgradeMenuIsOpen||Shop.shopOpened);
             if((GameOverCanvas.instance==null||GameOverCanvas.instance.gameOver==false)&&PauseMenu.GameIsPaused==false){restartTimer=-4;}
             if(PauseMenu.GameIsPaused==true){if(restartTimer==-4)restartTimer=0.5f;}
             if(GameOverCanvas.instance!=null&&GameOverCanvas.instance.gameOver==true){if(restartTimer==-4)restartTimer=1f;}
@@ -714,7 +714,11 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         else if(gamemodeSelected==0){n="Sandbox Mode";}
         return n;}
     public bool _isSandboxMode(){return (SceneManager.GetActiveScene().name.Contains("Sandbox")||(GSceneManager.CheckScene("Game")&&GetCurrentGamemodeName().Contains("Sandbox")));}
-    public string _bossHealthPercentLeft(){var b=FindObjectOfType<BossAI>();return System.Math.Round(((b.GetComponent<Enemy>().health/b.GetComponent<Enemy>().healthMax)*100f),2).ToString()+"%";}
+    string _bossHealthPercentLeft="??";
+    public string _bossHealthPercentLeftGet(){
+        var b=FindObjectOfType<BossAI>();if(b!=null){_bossHealthPercentLeft=System.Math.Round(((b.GetComponent<Enemy>().health/b.GetComponent<Enemy>().healthMax)*100f),2).ToString()+"%";}//else{_bossHealthPercentLeft="??";}
+        return _bossHealthPercentLeft;
+    }
 
         
     //public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}

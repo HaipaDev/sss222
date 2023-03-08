@@ -109,7 +109,7 @@ public class Jukebox : MonoBehaviour{   public static Jukebox instance;
         if(bgmusicSource.clip!=clip||force){
             bgmusicSource.clip=clip;
             bgmusicSource.loop=true;
-            bgmusicSource.Play();
+            if(bossMusicSource==null||(bossMusicSource!=null&&!bossMusicSource.isPlaying)){bgmusicSource.Play();}
         }
     }
     public void SetBossMusic(AudioClip clip){

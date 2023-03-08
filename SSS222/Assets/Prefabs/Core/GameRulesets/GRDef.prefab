@@ -82,8 +82,8 @@ MonoBehaviour:
   crystalsOn: 1
   xpOn: 1
   coresOn: 1
-  shopOn: 1
-  shopCargoOn: 1
+  shopOn: 0
+  shopCargoOn: 0
   levelingOn: 1
   forceAutoAscend: 0
   modulesOn: 1
@@ -1021,6 +1021,7 @@ MonoBehaviour:
       rid: 2
     powerupSpawnPosRange: {x: -3, y: 3}
   bossInfo:
+    codeName: 
     name: 
     type: 0
     healthStart: 25
@@ -1028,18 +1029,20 @@ MonoBehaviour:
     spawnPos: {x: 0, y: 0}
     scaleUpOnSpawn: 1
     ost: {fileID: 0}
-    pauseOstOnPhaseChange: 1
     deathLength: 3
-    preDeathAudio: Explosion
-    preDeathVFX: Explosion
-    deathAudio: Explosion
-    deathVFX: Explosion
+    playerKillQuip: MoonOfLunacy-Laugh2
+    deathSprite: {fileID: 0}
+    deathStartAudio: MoonOfLunacy-Death
+    deathStartVFX: ExplosionsLong
+    deathEndAudio: Explosion
+    deathEndVFX: ExplosionBig
     deathShakeStrength: 4
     deathShakeSpeed: 0.3
     xpAmnt: 0
     xpChance: 100
     drops: []
     phasesInfo: []
+    bossTitleSprite: {fileID: 0}
   shipScaleBoss: 0.66
   enemyDefenseHit: 1
   enemyDefensePhase: 1

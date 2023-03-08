@@ -22,12 +22,12 @@ public class GameOverCanvas : MonoBehaviour{
         if(scoreTxt!=null&&highscoreTxt!=null){
             var color1=scoreTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient;
             var color2=highscoreTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient;
-            if(GameManager.instance.score>=GameManager.instance.GetHighscoreCurrent().score){
+            if(GameManager.instance.GetHighscoreCurrent()!=null){if(GameManager.instance.score>=GameManager.instance.GetHighscoreCurrent().score){
                 scoreDescTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient=color2;
                 scoreTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient=color2;
                 highscoreDescTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient=color1;
                 highscoreTxt.GetComponent<TMPro.TextMeshProUGUI>().colorGradient=color1;
-            }
+            }}
         }
     }
 }
