@@ -19,9 +19,20 @@ public class AdventureZonesCanvas : MonoBehaviour{
 
         //Set Travel Line
         if(travelLine!=null){
-            if(GameManager.instance.zoneToTravelTo!=-1&&travelLine.BothPointsNull())travelLine.SetPoints(GameManager.instance.zoneSelected,GameManager.instance.zoneToTravelTo);
-            if(GameManager.instance.zoneToTravelTo==-1&&!travelLine.BothPointsNull())travelLine.SetBothPointsNull();
+            if(GameManager.instance.zoneToTravelTo!=-1&&
+            (travelLine.GetPoint(0)!=travelLine.GetPosFromZoneId(GameManager.instance.zoneSelected)&&travelLine.GetPoint(1)!=travelLine.GetPosFromZoneId(GameManager.instance.zoneToTravelTo))
+            ){UpdateTravelLine();travelLine.SetPoints(GameManager.instance.zoneSelected,GameManager.instance.zoneToTravelTo,true);}
+            if(GameManager.instance.zoneToTravelTo==-1&&!travelLine.BothPointsNull()){UpdateTravelLine();travelLine.SetBothPointsNull();}
+            //if(travelLine!=null){travelLine.GetComponent<UnityEngine.UI.Extensions.UILineRenderer>().enabled=1;travelLine.GetComponent<UnityEngine.UI.Extensions.UILineRenderer>().Resolution=0;Debug.Log("Updating the line");}
         }else{Debug.LogWarning("Travel Line not set in the inspector");}
+    }
+    public void UpdateTravelLine(){StartCoroutine(UpdateTravelLineI());}
+    IEnumerator UpdateTravelLineI(){
+        yield return new WaitForSeconds(0.03f);
+        //if(travelLine!=null){travelLine.GetComponent<UnityEngine.UI.Extensions.UILineRenderer>().Resolution=1;travelLine.GetComponent<UnityEngine.UI.Extensions.UILineRenderer>().Resolution=0;
+        if(travelLine!=null){travelLine.GetComponent<UnityEngine.UI.Extensions.UILineRenderer>().enabled=false;travelLine.GetComponent<UnityEngine.UI.Extensions.UILineRenderer>().enabled=true;
+        Debug.Log("Updating the line");
+        }
     }
     public void Setup(){
         foreach(Transform t in listContent){if(t.name!="Future"&&t!=shipUI.transform&&t!=travelLine.transform)Destroy(t.gameObject);}

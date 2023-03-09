@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI.Extensions;
 
 public class Tag_ZonesLine : MonoBehaviour{
-    public void SetPoints(int zoneId1, int zoneId2){
+    public void SetPoints(int zoneId1, int zoneId2,bool debugPoints=false){
         var z1Pos=CoreSetup.instance.adventureZones[zoneId1].pos;
         var z2Pos=CoreSetup.instance.adventureZones[zoneId2].pos;
-        Debug.Log(zoneId1 +" = "+ z1Pos + " | " + zoneId2 +" = "+ z2Pos);
+        if(debugPoints)Debug.Log(zoneId1 +" = "+ z1Pos + " | " + zoneId2 +" = "+ z2Pos);
         GetComponent<UILineRenderer>().Points[0]=new Vector2(z1Pos.x,z1Pos.y);
         GetComponent<UILineRenderer>().Points[1]=new Vector2(z2Pos.x,z2Pos.y);
     }
@@ -16,9 +16,11 @@ public class Tag_ZonesLine : MonoBehaviour{
         GetComponent<UILineRenderer>().Points[1]=new Vector2(point2.x,point2.y);
     }
     public void SetBothPointsNull(){
+        Debug.Log("SetBothPointsNull()");
         GetComponent<UILineRenderer>().Points[0]=Vector2.zero;
         GetComponent<UILineRenderer>().Points[1]=Vector2.zero;
     }
     public Vector2 GetPoint(int id){return GetComponent<UILineRenderer>().Points[id];}
+    public Vector2 GetPosFromZoneId(int id){return CoreSetup.instance.adventureZones[id].pos;}
     public bool BothPointsNull(){return GetPoint(0)==Vector2.zero&&GetPoint(1)==Vector2.zero;}
 }

@@ -108,6 +108,7 @@ public class UpgradeMenu : MonoBehaviour{       public static UpgradeMenu instan
             zoneMap.SetActive(true);
         }
         zoneMap.GetComponent<AdventureZonesCanvas>().Setup();
+        zoneMap.GetComponent<AdventureZonesCanvas>().UpdateTravelLine();
     }
     public void OpenZoneMapPostBoss(){StartCoroutine(OpenZoneMapPostBossI());}
     IEnumerator OpenZoneMapPostBossI(){yield return new WaitForSeconds(3f);Open();OpenZoneMap();}

@@ -671,16 +671,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: The Future will expand the universe..
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 49a9807d678fff544a6041ff504d860d, type: 2}
-  m_sharedMaterial: {fileID: 7516542502403631768, guid: 49a9807d678fff544a6041ff504d860d,
+  m_fontAsset: {fileID: 11400000, guid: 45a08a4866d54094b853c1b628fdbdd1, type: 2}
+  m_sharedMaterial: {fileID: 7516542502403631768, guid: 45a08a4866d54094b853c1b628fdbdd1,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294901686
-  m_fontColor: {r: 0.7122642, g: 1, b: 0.99430627, a: 1}
+    rgba: 1593638696
+  m_fontColor: {r: 0.15566039, g: 1, b: 0.9884337, a: 0.36862746}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1328,7 +1328,7 @@ GameObject:
   - component: {fileID: 2608840699911832413}
   - component: {fileID: 2608840699911832408}
   - component: {fileID: 2608840699911832415}
-  - component: {fileID: 2608840699911832414}
+  - component: {fileID: 2734350160393191868}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1376,7 +1376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f17e3a0ffc213da4abc68fdebae1095b, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1394,7 +1394,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2608840699911832414
+--- !u!114 &2734350160393191868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1403,13 +1403,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2608840699911832412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Script: {fileID: 11500000, guid: c6c0770c7b77d3f45ab8c8d42b794c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shaderTypes: 0
-  normalStrength: 5
-  normalSmoothing: 1
-  computingNormal: 0
 --- !u!1 &2608840699961017297
 GameObject:
   m_ObjectHideFlags: 0

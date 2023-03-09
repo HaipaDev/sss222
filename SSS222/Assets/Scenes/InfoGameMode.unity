@@ -292,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -451,6 +452,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ModeInfo Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4981301248589486587, guid: 8bb4f7aeb1658914a82d0207fe7a7a8f,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4981301248589486587, guid: 8bb4f7aeb1658914a82d0207fe7a7a8f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bb4f7aeb1658914a82d0207fe7a7a8f, type: 3}

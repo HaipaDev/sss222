@@ -282,6 +282,8 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
             string presenceStatus="";
             string _prefixDetails="",_suffixDetails="";
             string _prefixStatus="",_suffixStatus="";
+            string smallImageKey="";
+            string smallImageText="";
             #if UNITY_EDITOR
             _prefixStatus="DEV | ";
             #endif
@@ -289,46 +291,69 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
             string nickname="";if(SaveSerial.instance!=null){if(SaveSerial.instance.hyperGamerLoginData!=null){nickname=SaveSerial.instance.hyperGamerLoginData.username;}}
             string nickInfo="";if(!String.IsNullOrEmpty(nickname))nickInfo=" | "+nickname;
             if(sceneName!="Game"){
-                if(sceneName=="SandboxMode"){presenceStatus=_prefixStatus+"Creating a gamemode"+nickInfo+_suffixStatus;}
-                else if(sceneName=="Customization"){
+                if(sceneName=="SandboxMode"){
+                    presenceStatus=_prefixStatus+"Creating a gamemode"+nickInfo+_suffixStatus;
+                    smallImageKey="sandbox";
+                    smallImageText="Sandbox Mode";
+                }else if(sceneName=="Customization"){
                     if(!CustomizationInventory.instance.lockboxesPanelOpen){presenceStatus=_prefixStatus+"Customizing"+nickInfo+_suffixStatus;}
                     else{presenceStatus=_prefixStatus+"Opening Lockboxes"+nickInfo+_suffixStatus;}
+                }else if(sceneName=="AdventureZones"){
+                    smallImageKey="adventure";
+                    smallImageText="Adventure Mode";
+                }else{
+                    presenceStatus=_prefixStatus+"In Menus"+nickInfo+_suffixStatus;
+                    if(GameRules.instance!=null){
+                        smallImageKey=GameRules.instance.cfgName;
+                        if(smallImageKey.Contains(" Mode"))smallImageKey=smallImageKey.Replace(" Mode","");
+                        if(smallImageKey.Contains("Adventure"))smallImageKey="Adventure";
+                        if(smallImageKey.Contains(" "))smallImageKey=smallImageKey.Replace(" ","");
+                        smallImageText=GameRules.instance.cfgName;
+                    }
                 }
-                else{presenceStatus=_prefixStatus+"In Menus"+nickInfo+_suffixStatus;}
                 presenceDetails=_prefixDetails+""+_suffixDetails;
             }else{
+                smallImageKey=GameRules.instance.cfgName;
+                if(smallImageKey.Contains(" Mode"))smallImageKey=smallImageKey.Replace(" Mode","");
+                if(smallImageKey.Contains("Adventure"))smallImageKey="Adventure";
+                if(smallImageKey.Contains(" "))smallImageKey=smallImageKey.Replace(" ","");
+                smallImageText=GameRules.instance.cfgName;
                 if(gamemodeSelected!=-1){
                     presenceDetails=_prefixDetails+"Score: "+score+" | "+"Game Time: "+GetGameManagerTimeFormat()+_suffixDetails;
-                    presenceStatus=_prefixStatus+GameRules.instance.cfgName+nickInfo+_suffixStatus;
+                    presenceStatus=_prefixStatus+nickInfo+_suffixStatus;
                 }else{//Adventure
                     if(zoneToTravelTo!=-1){//Traveling
                         presenceDetails=_prefixDetails+"Time left: "+GetGameTimeLeftFormat()+_suffixDetails;
                         presenceStatus=_prefixStatus+"Traveling to Zone "+CoreSetup.instance.adventureZones[zoneToTravelTo].name+nickInfo+_suffixStatus;
                     }else{
-                        if(FindObjectOfType<BossAI>()==null){
-                            var shipLvl="0";
+                        if(!GameRules.instance._isAdventureBossZone){
+                            var shipLvl="?";
                             if(FindObjectOfType<PlayerModules>()!=null){var pm=FindObjectOfType<PlayerModules>();shipLvl=pm.shipLvl.ToString()+" ("+pm.shipLvlFraction+"/"+pm.lvlFractionsMax+")";}
                             else{var advD=SaveSerial.instance.advD;shipLvl=advD.shipLvl.ToString();}
                             presenceDetails=_prefixDetails+"Lvl: "+shipLvl+" | "+"Game Time: "+GetGameManagerTimeFormat()+_suffixDetails;
-                            presenceStatus=_prefixStatus+"Adventure Zone "+CoreSetup.instance.adventureZones[zoneSelected].name+nickInfo+_suffixStatus;
+                            presenceStatus=_prefixStatus+CoreSetup.instance.adventureZones[zoneSelected].name+nickInfo+_suffixStatus;
                         }else{
-                            var b=FindObjectOfType<BossAI>();var be=b.GetComponent<Enemy>();
+                            smallImageKey=GameRules.instance.bossInfo.codeName;
+                            //var b=FindObjectOfType<BossAI>();var be=b.GetComponent<Enemy>();
                             //presenceDetails=_prefixDetails+"Boss Health: "+be.health+"/"+be.healthMax+_suffixDetails;
-                            presenceDetails=_prefixDetails+"Progress: "+System.Math.Round((be.health/be.healthMax)*100f,2)+"%"+_suffixDetails;
-                            presenceStatus=_prefixStatus+"Fighting "+GameRules.instance.bossInfo.name+nickInfo+_suffixStatus;
+                            presenceDetails=_prefixDetails+"Health Left: "+_bossHealthPercentLeftGet()+_suffixDetails;
+                            if(Player.instance!=null)presenceStatus=_prefixStatus+"Fighting Boss";
+                            else{presenceStatus=_prefixStatus+"Died during Boss Fight "+nickInfo+_suffixStatus;}
+                            smallImageText=GameRules.instance.bossInfo.name;
                         }
                     }
                 }
             }
+            smallImageKey=smallImageKey.ToLower();
             
             if(DiscordPresence.PresenceManager.instance!=null){
                 if(presenceTimeSet==false){
                     DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                     int presenceTimeTotal = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
-                    DiscordPresence.PresenceManager.UpdatePresence(detail: presenceDetails, state: presenceStatus, start: presenceTimeTotal);
+                    DiscordPresence.PresenceManager.UpdatePresence(detail: presenceDetails, state: presenceStatus, start: presenceTimeTotal, smallKey: smallImageKey, smallText: smallImageText);
                     presenceTimeSet=true;
                 }
-                DiscordPresence.PresenceManager.UpdatePresence(detail: presenceDetails, state: presenceStatus);
+                DiscordPresence.PresenceManager.UpdatePresence(detail: presenceDetails, state: presenceStatus, smallKey: smallImageKey, smallText: smallImageText);
 
                 presenceTimer=1f;
             }

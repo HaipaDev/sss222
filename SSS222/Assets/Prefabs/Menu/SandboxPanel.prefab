@@ -2066,7 +2066,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5376274147005569314}
         m_TargetAssemblyTypeName: SandboxCanvas, Assembly-CSharp
         m_MethodName: BrowseSandboxSaves
         m_Mode: 1
@@ -4129,7 +4129,6 @@ GameObject:
   - component: {fileID: 8398810045615183012}
   - component: {fileID: 5263156931201299805}
   - component: {fileID: 1001424627858503434}
-  - component: {fileID: 5345381719600009373}
   m_Layer: 5
   m_Name: YourModes-ScrollRect
   m_TagString: Untagged
@@ -4261,23 +4260,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &5345381719600009373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 445984864330437705}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad78330489eef2a43960def062108cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerHeld: -4
-  timerUp: 0
-  timerDelay: -4
-  timerDelay2: -4
-  fakeButton: 0
 --- !u!1 &455881640087316504
 GameObject:
   m_ObjectHideFlags: 0
@@ -25951,8 +25933,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -660.8}
-  m_SizeDelta: {x: -0.4, y: -1321.6}
+  m_AnchoredPosition: {x: 0, y: -643.1477}
+  m_SizeDelta: {x: -0.4, y: -1286.296}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7743938584703577697
 CanvasRenderer:
@@ -27895,7 +27877,6 @@ GameObject:
   - component: {fileID: 9008191510928090562}
   - component: {fileID: 6726716398471260757}
   - component: {fileID: 2773170727961221295}
-  - component: {fileID: 4046787297297991214}
   m_Layer: 5
   m_Name: BuiltInModes-ScrollRect
   m_TagString: Untagged
@@ -28027,23 +28008,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &4046787297297991214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3577886118212053347}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad78330489eef2a43960def062108cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerHeld: -4
-  timerUp: 0
-  timerDelay: -4
-  timerDelay2: -4
-  fakeButton: 0
 --- !u!1 &3581654258195968550
 GameObject:
   m_ObjectHideFlags: 0
@@ -45276,7 +45240,6 @@ GameObject:
   - component: {fileID: 4659538025243472244}
   - component: {fileID: 9134072692454144}
   - component: {fileID: 7646516856366820277}
-  - component: {fileID: 2269485192418628316}
   - component: {fileID: 3288421974636385917}
   m_Layer: 5
   m_Name: BasicCollectiblesScrollRect
@@ -45408,23 +45371,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &2269485192418628316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4210012167590162387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad78330489eef2a43960def062108cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerHeld: -4
-  timerUp: 0
-  timerDelay: -4
-  timerDelay2: -4
-  fakeButton: 0
 --- !u!114 &3288421974636385917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45438,6 +45384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go: {fileID: 0}
+  setScrollbarPos: 1
 --- !u!1 &4219696998933089945
 GameObject:
   m_ObjectHideFlags: 0
@@ -50165,7 +50112,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ef9b3f318773a734da46a0aa891823ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7e5563ad0b90a3e48a7bd93284580211, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -50493,7 +50440,6 @@ GameObject:
   - component: {fileID: 1767612173706119097}
   - component: {fileID: 2477069018533592007}
   - component: {fileID: 3458385580438726999}
-  - component: {fileID: 7938284971531334812}
   m_Layer: 5
   m_Name: SpawnsTypesScrollRect
   m_TagString: Untagged
@@ -50624,23 +50570,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &7938284971531334812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4990014120643366286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad78330489eef2a43960def062108cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerHeld: -4
-  timerUp: 0
-  timerDelay: -4
-  timerDelay2: -4
-  fakeButton: 0
 --- !u!1 &4999000115627178209
 GameObject:
   m_ObjectHideFlags: 0
@@ -58451,7 +58380,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1032525764328174731}
   m_HandleRect: {fileID: 7734527348726932079}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -59094,7 +59023,6 @@ GameObject:
   - component: {fileID: 7336276036843157642}
   - component: {fileID: 3048413288923022078}
   - component: {fileID: 5368601485510721899}
-  - component: {fileID: 1796905933275640896}
   m_Layer: 5
   m_Name: CollectiblesTypesScrollRect
   m_TagString: Untagged
@@ -59225,23 +59153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &1796905933275640896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6090769701751093489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad78330489eef2a43960def062108cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerHeld: -4
-  timerUp: 0
-  timerDelay: -4
-  timerDelay2: -4
-  fakeButton: 0
 --- !u!1 &6124131060621786782
 GameObject:
   m_ObjectHideFlags: 0
@@ -73813,7 +73724,6 @@ GameObject:
   - component: {fileID: 3428879962251660131}
   - component: {fileID: 4701540952135564952}
   - component: {fileID: 8163201913029879032}
-  - component: {fileID: 3506060874560945345}
   m_Layer: 5
   m_Name: PowerupsScrollRect
   m_TagString: Untagged
@@ -73944,23 +73854,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &3506060874560945345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8151663959043460775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad78330489eef2a43960def062108cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerHeld: -4
-  timerUp: 0
-  timerDelay: -4
-  timerDelay2: -4
-  fakeButton: 0
 --- !u!1 &8166104931758965755
 GameObject:
   m_ObjectHideFlags: 0
@@ -76903,7 +76796,6 @@ GameObject:
   - component: {fileID: 5630173527829717158}
   - component: {fileID: 2552271521008173312}
   - component: {fileID: 2724831376748991229}
-  - component: {fileID: 5696795845566471617}
   m_Layer: 5
   m_Name: WavesScrollRect
   m_TagString: Untagged
@@ -77034,23 +76926,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &5696795845566471617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8471496003709118168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad78330489eef2a43960def062108cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerHeld: -4
-  timerUp: 0
-  timerDelay: -4
-  timerDelay2: -4
-  fakeButton: 0
 --- !u!1 &8474031394155179780
 GameObject:
   m_ObjectHideFlags: 0
@@ -77089,7 +76964,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -660.8}
+  m_AnchoredPosition: {x: 0, y: -598}
   m_SizeDelta: {x: -0.4, y: -1321.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7522184901493006485
@@ -77144,7 +77019,6 @@ GameObject:
   - component: {fileID: 3208415810557268767}
   - component: {fileID: 5179710619537588224}
   - component: {fileID: 1760166420828241139}
-  - component: {fileID: 6231332131071837203}
   m_Layer: 5
   m_Name: WavesScrollRect
   m_TagString: Untagged
@@ -77275,23 +77149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &6231332131071837203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8491314536712048308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad78330489eef2a43960def062108cf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerHeld: -4
-  timerUp: 0
-  timerDelay: -4
-  timerDelay2: -4
-  fakeButton: 0
 --- !u!1 &8496049800905083385
 GameObject:
   m_ObjectHideFlags: 0

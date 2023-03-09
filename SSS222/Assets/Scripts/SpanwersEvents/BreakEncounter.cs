@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 public class BreakEncounter : MonoBehaviour{    public static BreakEncounter instance;
     [DisableInEditorMode][SerializeField] bool playerHeightRelativeToCargo=true;
     [ShowIf("playerHeightRelativeToCargo")][DisableInEditorMode][SerializeField] float playerHeightToQuitRelative=1.2f;
-    [HideIf("playerHeightRelativeToCargo")][DisableInEditorMode][SerializeField] float playerHeightToQuit=5f;
+    [DisableInEditorMode][SerializeField] float playerHeightToQuit=5f;
 
     [DisableInEditorMode][SerializeField] bool ascended;
     [DisableInEditorMode][SerializeField] int waveCount;
@@ -20,7 +20,7 @@ public class BreakEncounter : MonoBehaviour{    public static BreakEncounter ins
         if(calledBreak){
             if(Player.instance!=null){
                 if(((Player.instance.transform.position.y>playerHeightToQuit&&FindObjectOfType<CargoShip>()==null)||
-                    (FindObjectOfType<CargoShip>()!=null&&Player.instance.transform.position.y>FindObjectOfType<CargoShip>().transform.position.y+playerHeightToQuitRelative))
+                    (FindObjectOfType<CargoShip>()!=null&&playerHeightRelativeToCargo&&Player.instance.transform.position.y>FindObjectOfType<CargoShip>().transform.position.y+playerHeightToQuitRelative))
                 &&GameRules.instance.breakEncounterQuitWhenPlayerUp&&!waitForCargoSpawn){QuitBreak();}
             }
             if(FindObjectOfType<CargoShip>()!=null){if(FindObjectOfType<CargoShip>().transform.position.y<1f){FindObjectOfType<CargoShip>().StopCargo();}}
