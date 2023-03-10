@@ -138,7 +138,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 #endregion
 #region//Stats Data
-	public StatsData statsData=new StatsData(){statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()]};
+	public StatsData statsData=new StatsData();
 	[System.Serializable]public class StatsData{
 		public StatsGamemode[] statsGamemodesList=new StatsGamemode[0];
 		public float sandboxTime=0;
