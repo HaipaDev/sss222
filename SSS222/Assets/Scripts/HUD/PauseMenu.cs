@@ -24,12 +24,14 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         #if UNITY_EDITOR
             _isEditor=true;
         #endif
-        if(GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton7)
+        if((GSceneManager.EscPressed()||Input.GetKeyDown(KeyCode.Backspace)||Input.GetKeyDown(KeyCode.JoystickButton7))
         ||(!Application.isFocused&&!_isEditor&&SaveSerial.instance!=null&&SaveSerial.instance.settingsData.pauseWhenOOF)){
             if(GameIsPaused){
-                if(pauseMenuUI.activeSelf){Resume();return;}
-                if(optionsUI.transform.GetChild(0).gameObject.activeSelf){SaveSerial.instance.SaveSettings();pauseMenuUI.SetActive(true);return;}
-                if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();PauseEmpty();return;}
+                if(Application.isFocused){
+                    if(pauseMenuUI.activeSelf){Resume();return;}
+                    if(optionsUI.transform.GetChild(0).gameObject.activeSelf){SaveSerial.instance.SaveSettings();pauseMenuUI.SetActive(true);return;}
+                    if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();PauseEmpty();return;}
+                }
             }else{
                 if(_isPausable()){Pause();}
             }
@@ -56,11 +58,17 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         unpausedTimer=-1;
         //Debug.Log("Pausing");
     }
-    public bool _isPausable(){return
+    public bool _isPausable(){
+        var _isEditor=false;
+        #if UNITY_EDITOR
+            _isEditor=true;
+        #endif
+        return
         ((Shop.instance!=null&&!Shop.shopOpened)||(Shop.instance==null))&&
         ((UpgradeMenu.instance!=null&&!UpgradeMenu.UpgradeMenuIsOpen)||(UpgradeMenu.instance==null))
         &&!GameOverCanvas.instance.gameOver&&(unpausedTimer>=unpausedTimeReq||unpausedTimer==-1)
-        &&(FindObjectOfType<BossAI>()==null||(FindObjectOfType<BossAI>()!=null&&FindObjectOfType<BossAI>().GetComponent<Enemy>().health>0));
+        &&(FindObjectOfType<BossAI>()==null||(FindObjectOfType<BossAI>()!=null&&FindObjectOfType<BossAI>().GetComponent<Enemy>().health>0)&&
+        ((Application.isFocused)||(!Application.isFocused&&!_isEditor&&SaveSerial.instance!=null&&SaveSerial.instance.settingsData.pauseWhenOOF)));
     }
     public void Pause(){
         prevGameSpeed = GameManager.instance.gameSpeed;

@@ -939,12 +939,13 @@ public class Player : MonoBehaviour{    public static Player instance;
 #region//Statuses
     bool playedStatusTimerCloseSound=false;
     void Statuses(){
-        void CountdownStatusTimer(string name,string playSound="-",bool unscaledTime=false,bool revertToPrevSpeed=false,bool countQuickerWhenMoving=false,bool playTimerCloseSound=false){
+        void CountdownStatusTimer(string name,string playSound="-",bool unscaledTime=false,bool revertToPrevSpeed=false,bool countQuickerWhenMoving=false,bool countQuickerWhenStill=false,bool playTimerCloseSound=false){
             var s=GetStatus(name);
             if(_hasStatus(name)){
                 if(s.timer>0){
                     float _step=0;float _mult=1;
                     if(countQuickerWhenMoving){_mult=(1+dist);}
+                    if(countQuickerWhenStill){if(!moving)_mult=1.2f;}
                     if(!unscaledTime){_step=Time.deltaTime*_mult;}else{_step=Time.unscaledDeltaTime*_mult;}
                     s.timer-=_step;
                     if(playTimerCloseSound&&!playedStatusTimerCloseSound&&s.timer<=1.33f){AudioManager.instance.Play("TimerTicking");playedStatusTimerCloseSound=true;}
@@ -972,11 +973,11 @@ public class Player : MonoBehaviour{    public static Player instance;
             }
 
             if(_hasStatus("shadowdash")){
-                if(GetStatus("shadowdash").timer>0){GetStatus("shadowdash").timer-=Time.deltaTime;}
+                if(GetStatus("shadowdash").timer>0){CountdownStatusTimer("shadowdash",playTimerCloseSound:true);}
                 else{AudioManager.instance.Play("PowerupOff");RevertToSpeedPrev();RemoveStatus("shadowdash");}
 
                 if(dashTime<=0&&dashTime!=-4){vel=Vector2.zero;dashing=false;dashTime=-4;}
-                else{if(!GameManager.GlobalTimeIsPaused)dashTime-=Time.deltaTime;}
+                else{dashTime-=Time.deltaTime;}
                 if(dashTime>0&&dashed){var step=mouseShadowSpeed*Time.deltaTime;transform.position=Vector2.MoveTowards(transform.position,tpPos,step);dashed=false;}
                 if(energyOn&&energy<=0){RemoveStatus("shadowdash");}
                 Shadow();if(GetComponent<TrailVFX>()!=null){if(GetComponent<TrailVFX>().enabled==true)GetComponent<TrailVFX>().enabled=false;}
@@ -987,7 +988,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             }
             
             if(_hasStatus("blind")){
-                if(GetStatus("blind").timer>0){GetStatus("blind").timer-=Time.deltaTime;}
+                if(GetStatus("blind").timer>0){}//GetStatus("blind").timer-=Time.deltaTime;}
                 else{RemoveStatus("blind");if(BlindnessUI.instance!=null)BlindnessUI.instance.on=false;}
                 if(BlindnessUI.instance!=null){if(!BlindnessUI.instance.on)BlindnessUI.instance.on=true;}
             }
@@ -1029,7 +1030,7 @@ public class Player : MonoBehaviour{    public static Player instance;
             CountdownStatusTimer("power");
             CountdownStatusTimer("weakns");
             CountdownStatusTimer("hacked");
-            CountdownStatusTimer("blind");
+            CountdownStatusTimer("blind",countQuickerWhenStill:true);
             CountdownStatusTimer("noHeal");
             CountdownStatusTimer("lifeSteal");
             CountdownStatusTimer("thorns");
@@ -1041,8 +1042,8 @@ public class Player : MonoBehaviour{    public static Player instance;
             critChance=critChanceBase;
             if(_hasStatus("power")&&!_hasStatus("weak")){dmgMulti=dmgMultiBase*GetStatus("power").strength;}else if(!_hasStatus("power")&&_hasStatus("weak")){dmgMulti=dmgMultiBase/GetStatus("weak").strength;}
             if(!_hasStatus("power")&&!_hasStatus("weak")){dmgMulti=dmgMultiBase;}if(_hasStatus("power")&&_hasStatus("weak")){dmgMulti=(dmgMultiBase/GetStatus("weak").strength)*GetStatus("power").strength;}
-            if(_hasStatus("onfire")){if(_hasStatus("frozen")){RemoveStatus("frozen");/*Damage(1,dmgType.silent);*/}}
-            if(_hasStatus("infEnergy")){energy=infPrevEnergy;if(GetStatus("infEnergy").timer>0){GetStatus("infEnergy").timer-=Time.deltaTime;}else{RemoveStatus("infEnergy");}}
+            if(_hasStatus("onfire")){if(_hasStatus("frozen")){RemoveStatus("frozen");RemoveStatus("onfire");/*Damage(1,dmgType.silent);*/}}
+            if(_hasStatus("infEnergy")){energy=infPrevEnergy;if(GetStatus("infEnergy").timer>0){CountdownStatusTimer("infEnergy");}else{RemoveStatus("infEnergy");}}
 
             CountdownStatusTimer("speed",revertToPrevSpeed:true);
             CountdownStatusTimer("slow",revertToPrevSpeed:true);

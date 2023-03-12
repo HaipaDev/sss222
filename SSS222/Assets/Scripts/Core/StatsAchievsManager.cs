@@ -201,7 +201,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
 
 
     public void SaveAchievs(){      if(SaveSerial.instance!=null)if(SaveSerial.instance.playerData!=null){
-        if(SaveSerial.instance.playerData.achievsCompleted.Length!=achievsList.Count){SaveSerial.instance.playerData.achievsCompleted=new AchievData[achievsList.Count];}
+        if(SaveSerial.instance.playerData.achievsCompleted.Length!=achievsList.Count||SaveSerial.instance.playerData.achievsCompleted.Length==0){SaveSerial.instance.playerData.achievsCompleted=new AchievData[achievsList.Count];}
         if(SaveSerial.instance.playerData.achievsCompleted[0]==null){
             for(var i=0;i<SaveSerial.instance.playerData.achievsCompleted.Length;i++){
                 SaveSerial.instance.playerData.achievsCompleted[i]=new AchievData();}}
@@ -216,7 +216,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
             //SaveSerial.instance.playerData.achievsCompleted[i]=achievsList.Find(x=>x.id==i).completed;}
     }}
     public void LoadAchievs(){      if(SaveSerial.instance!=null)if(SaveSerial.instance.playerData!=null){
-        foreach(AchievData ad in SaveSerial.instance.playerData.achievsCompleted){var a=achievsList.Find(x=>x.name==ad.name);
+        if(SaveSerial.instance.playerData.achievsCompleted.Length>0)foreach(AchievData ad in SaveSerial.instance.playerData.achievsCompleted){var a=achievsList.Find(x=>x.name==ad.name);
             a.achievData.completed=ad.completed;
             a.achievData.dateAchieved=ad.dateAchieved;
         }
@@ -248,7 +248,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
         uniquePowerups=SaveSerial.instance.statsData.uniquePowerups;
         statsLoaded=true;
     }
-    [Button]public void ResetStatsAchievs(){statsGamemodesList=new List<StatsGamemode>();SetStatsList();statsTotal=new StatsTotal();foreach(Achievement a in achievsList){a.achievData=new AchievData();}}
+    [Button]public void ResetStatsAchievs(){statsGamemodesList=new List<StatsGamemode>();SetStatsList();statsTotal=new StatsTotal();foreach(Achievement a in achievsList){a.achievData=new AchievData();a.achievData.name=a.name;}}
     public static int GetStatsGMListCount(){return StatsAchievsManager.instance._statsGamemodesListCount;}
 }
 [System.Serializable]

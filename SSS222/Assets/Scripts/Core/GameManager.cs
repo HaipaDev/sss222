@@ -748,7 +748,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         
     //public int GetHighscore(int i){return SaveSerial.instance.playerData.highscore[i];}
     public Highscore GetHighscoreByName(string str){if(SaveSerial.instance.playerData.highscore.Length>GetGamemodeID(str)){return SaveSerial.instance.playerData.highscore[GetGamemodeID(str)];}return null;}
-    public Highscore GetHighscoreCurrent(){if(gamemodeSelected>0){if(SaveSerial.instance.playerData.highscore.Length>gamemodeSelected-1){return SaveSerial.instance.playerData.highscore[gamemodeSelected-1];}}return null;}
+    public Highscore GetHighscoreCurrent(){if(SaveSerial.instance!=null)if(SaveSerial.instance.playerData!=null)if(gamemodeSelected>0){if(SaveSerial.instance.playerData.highscore.Length>gamemodeSelected-1&&SaveSerial.instance.playerData.highscore.Length>0){return SaveSerial.instance.playerData.highscore[gamemodeSelected-1];}}return null;}
     public void SetCheatmode(){cheatmode=!cheatmode;return;}
     public void ReAddSpawnReqsMono(){RemoveSpawnReqsMono();AddSpawnReqsMono();}
     public void AddSpawnReqsMono(){if(GetComponent<spawnReqsMono>()==null){gameObject.AddComponent<spawnReqsMono>();}}

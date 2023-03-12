@@ -134,4 +134,4 @@ public class WaveConfig:ScriptableObject{
     public float GetMoveSpeedE(){return moveSpeedE;}
 #endregion
 }
-public enum wavePathType{startToEnd,btwn2Pts,randomPath,randomPathEach,randomPoint,shipPlace,loopPath}
+public enum wavePathType{startToEnd,btwn2Pts,randomPath,randomPathEach,randomPoint,shipPlace,loopPath,loopPathRandom}

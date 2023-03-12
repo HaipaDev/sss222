@@ -613,6 +613,7 @@ public class BossPhaseInfo{
     [ReadOnly]public string name;
     public int defense;
     public Vector2 size=Vector2.one;
+    public WaveConfig pathingInfo;
     public ShaderMatProps sprMatProps;
     public List<SimpleAnim> anims;
 [Header("Transformation")]

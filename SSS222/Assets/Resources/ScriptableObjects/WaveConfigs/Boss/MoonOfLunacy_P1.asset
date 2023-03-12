@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a14c5dde1fe9e4aaf080d5453ad783, type: 3}
+  m_Name: MoonOfLunacy_P1
+  m_EditorClassIdentifier: 
+  name: Moon of Lunacy - Phase 1
+  thumbnail: {fileID: 21300000, guid: 5a93596a45b906341b20063f565382c9, type: 3}
+  enemies:
+  - {fileID: 6432250634095115783, guid: 40724440f430c444b96f81b8fc3498fb, type: 3}
+  timeSpawn: 0
+  timeSpawnWave: -4
+  spawnRandomFactor: 0
+  numberOfEnemies: 1
+  moveSpeed: 1.85
+  randomSpeed: 0
+  moveSpeedS: 1.25
+  moveSpeedE: 1.55
+  wavePathType: 6
+  wavePaths:
+    rid: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 0
+      type: {class: WaveConfig/pathSingle, ns: , asm: Assembly-CSharp}
+      data:
+        path: {fileID: 5145534158373227189, guid: e14a4a2c385a08b439a03dce0afe4c43,
+          type: 3}

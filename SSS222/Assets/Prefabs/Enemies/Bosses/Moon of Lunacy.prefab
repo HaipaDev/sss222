@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   off: 0
-  waveConfig: {fileID: 11400000, guid: d3645a391c2cd6942953c457b255cdcb, type: 2}
+  waveConfig: {fileID: 11400000, guid: eb413c6b71eaa9e44ad42707e9a16ea1, type: 2}
   waypointsL: []
   waypointIndex: 0
   enemyIndex: 0
@@ -196,6 +196,7 @@ MonoBehaviour:
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  _dmgHeals: 0
   bullet: {fileID: 0}
 --- !u!114 &-1719784624319243089
 MonoBehaviour:
