@@ -119,21 +119,22 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		if(ES3.FileExists(_playerDataPath())){
 			var settings=new ES3Settings(_playerDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
 			if(ES3.KeyExists("buildFirstLoaded",settings)){buildFirstLoaded=ES3.Load<float>("buildFirstLoaded",8,settings);}
-			else Debug.LogWarning("Key for buildFirstLoaded not found in: "+_playerDataPath());
+			else{Debug.LogWarning("Key for buildFirstLoaded not found in: "+_playerDataPath());}
 			if(ES3.KeyExists("buildLastLoaded",settings)){buildLastLoaded=ES3.Load<float>("buildLastLoaded",8,settings);}
-			else Debug.LogWarning("Key for buildLastLoaded not found in: "+_playerDataPath());
-			if(ES3.KeyExists("playerData",settings))ES3.LoadInto<PlayerData>("playerData",playerData,settings);
-			else Debug.LogWarning("Key for playerData not found in: "+_playerDataPath());
+			else{Debug.LogWarning("Key for buildLastLoaded not found in: "+_playerDataPath());}
+			if(ES3.KeyExists("playerData",settings)){ES3.LoadInto<PlayerData>("playerData",playerData,settings);}
+			else{Debug.LogWarning("Key for playerData not found in: "+_playerDataPath());}
 			//var hi=-1;foreach(int h in playerData.highscore){hi++;if(h!=0)playerData.highscore[hi]=h;}
 			Debug.Log("Game Data loaded");
 		}else Debug.LogWarning("Game Data file not found in: "+_playerDataPath());
 	}
 	public void Delete(){
 		playerData=new PlayerData(){highscore=new Highscore[CoreSetup.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
+		Debug.Log("Game Data reset");
 		GC.Collect();
 		if(ES3.FileExists(_playerDataPath())){
 			ES3.DeleteFile(_playerDataPath());
-			Debug.Log("Game Data deleted");
+			Debug.Log("Game Data deleted!");
 		}
 	}
 #endregion
@@ -154,16 +155,17 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public void LoadStats(){
 		if(ES3.FileExists(_statsDataPath())){
 			var settings=new ES3Settings(_statsDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
-			if(ES3.KeyExists("statsData",settings))ES3.LoadInto<StatsData>("statsData",statsData,settings);
+			if(ES3.KeyExists("statsData",settings)){ES3.LoadInto<StatsData>("statsData",statsData,settings);Debug.Log("Stats data loaded");}
 			else Debug.LogWarning("Key for statsData not found in: "+_statsDataPath());
 		}else Debug.LogWarning("Stats Data file not found in: "+_statsDataPath());
 	}
 	public void DeleteStats(){
 		statsData=new StatsData(){statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()]};
+		Debug.Log("Stats Data reset");
 		GC.Collect();
 		if(ES3.FileExists(_statsDataPath())){
 			ES3.DeleteFile(_statsDataPath());
-			Debug.Log("Stats Data deleted");
+			Debug.Log("Stats Data deleted!");
 		}
 	}
 #endregion
@@ -186,6 +188,8 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public int holo_timeAt=0;
 		public float holo_posX=0;
 		public float holo_zoneSelected=0;
+		public int distanceTraveled;
+		public int breakWaveCount;
 		public bool calledBreak;
 		
 		public float health=0;
@@ -212,21 +216,22 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 
 	public string _advDataPath(){return Application.persistentDataPath+"/"+filenameAdventure+".hyper";}
 	public void SaveAdventure(){
-		var settings=new ES3Settings(_advDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
+		//var settings=new ES3Settings(_advDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
+		var settings=new ES3Settings(_advDataPath(),ES3.EncryptionType.None);
 		ES3.Save("advData",advD,settings);
 		Debug.Log("Adventure Data saved");
 	}
 	public void LoadAdventure(){
 		if(ES3.FileExists(_advDataPath())){
-			var settings=new ES3Settings(_advDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
+			//var settings=new ES3Settings(_advDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
+			var settings=new ES3Settings(_advDataPath(),ES3.EncryptionType.None);
 			if(ES3.KeyExists("advData",settings))ES3.LoadInto<AdventureData>("advData",advD,settings);
 			else Debug.LogWarning("Key for advData not found in: "+_advDataPath());
 		}else Debug.LogWarning("Adventure Data file not found in: "+_advDataPath());
 	}
 	public void ResetAdventure(){
-		if(advD==null){Debug.LogError("AdventureData null");}else{Debug.Log("AdventureData not empty");}
+		if(advD==null){Debug.LogError("AdventureData = null");}else{Debug.Log("AdventureData not empty");}
 		advD=new AdventureData();
-		GC.Collect();
 		Debug.Log("Adventure Data reset");
 	}
 	public void DeleteAdventure(){
@@ -314,10 +319,13 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 			else Debug.LogWarning("Key for settingsData not found in: "+_settingsDataPath());
 		}else Debug.LogWarning("Settings file not found in: "+_settingsDataPath());
 	}
-	public void ResetSettings(){
+	public void DeleteSettings(){
 		settingsData=new SettingsData();
 		GC.Collect();
-		if(ES3.FileExists(_settingsDataPath())){ES3.DeleteFile(_settingsDataPath());}
+		if(ES3.FileExists(_settingsDataPath())){
+			ES3.DeleteFile(_settingsDataPath());
+			Debug.Log("Settings deleted");
+		}
 	}
 #endregion
 }

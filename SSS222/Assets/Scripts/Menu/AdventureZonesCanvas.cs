@@ -31,7 +31,7 @@ public class AdventureZonesCanvas : MonoBehaviour{
         yield return new WaitForSeconds(0.03f);
         //if(travelLine!=null){travelLine.GetComponent<UnityEngine.UI.Extensions.UILineRenderer>().Resolution=1;travelLine.GetComponent<UnityEngine.UI.Extensions.UILineRenderer>().Resolution=0;
         if(travelLine!=null){travelLine.GetComponent<UnityEngine.UI.Extensions.UILineRenderer>().enabled=false;travelLine.GetComponent<UnityEngine.UI.Extensions.UILineRenderer>().enabled=true;
-        Debug.Log("Updating the line");
+        //Debug.Log("Updating the line");
         }
     }
     public void Setup(){

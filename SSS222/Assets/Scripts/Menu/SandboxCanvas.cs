@@ -48,6 +48,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [Title("Variables & Other obj", titleAlignment: TitleAlignments.Centered)]
     [AssetsOnly][SerializeField] GameObject sandboxIconsGo;
     [AssetsOnly][SerializeField] GameObject gameModeListElementPrefab;
+    [AssetsOnly][SerializeField] GameObject yoursPrefabElementPrefab;
     [DisableInEditorMode][SerializeField] public string saveSelected="Sandbox Mode";
     [DisableInEditorMode][SerializeField] public string _cachedSandboxName;
     [DisableInEditorMode][SerializeField] public int buildVersion=1;
@@ -115,6 +116,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="InfoGameMode"){FindObjectOfType<ModeInfoManager>().SetActivePanel(0);}
             else{GSceneManager.instance.LoadGameModeChooseScene();}
         }
+        _selectedBuiltinPreset="";
     }
     public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}
     public void OpenPresetAppearancePanel(){CloseAllPanels();presetAppearancePanel.SetActive(true);presetAppearanceMainPanel.SetActive(true);SetPresetIconPreviewsSprite();
@@ -124,10 +126,23 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void OpenPresetAppearanceIconSprLibPanel(){CloseAllPanels();presetAppearancePanel.SetActive(true);presetAppearanceIconSprLibPanel.SetActive(true);
         presetAppearanceMainPanel.SetActive(false);presetAppearanceIconPanel.SetActive(false);}
 
-    public void OpenPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);}
-    public void OpenBuiltInPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);}
-    public void OpenYoursPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);yoursPresetsPanel.SetActive(true);SetYoursPresetsButtons();HighlightSelectedPreset();}
-    public void OpenOnlinePresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);onlinePresetsPanel.SetActive(true);}
+    string _selectedPresetPanel;
+    public void OpenPresetsPanel(){//OpenBuiltInPresetsPanel();
+        switch(_selectedPresetPanel){
+            case "yours":
+                OpenYoursPresetsPanel();
+            break;
+            case "online":
+                OpenOnlinePresetsPanel();
+            break;
+            default:
+                OpenBuiltInPresetsPanel();
+            break;
+        }
+    }
+    public void OpenBuiltInPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);ResetBuiltinPresetButtonsColors();_selectedBuiltinPreset="";}
+    public void OpenYoursPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);yoursPresetsPanel.SetActive(true);SetYoursPresetsButtons();HighlightSelectedPreset();_selectedPresetPanel="yours";_selectedBuiltinPreset="";}
+    public void OpenOnlinePresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);onlinePresetsPanel.SetActive(true);_selectedBuiltinPreset="online";}
 
     public void OpenGlobalPanel(){CloseAllPanels();globalPanel.SetActive(true);}
     public void OpenDamagePanel(){CloseAllPanels();damagePanel.SetActive(true);}
@@ -239,11 +254,19 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
 #endregion
 #region//Setting Preset, Loading and Saving
-    public void SetPreset(string str){StartCoroutine(SetPresetI(str));SetPresetIconPreviewsSprite();}
-    public IEnumerator SetPresetI(string str){
+    string _selectedBuiltinPreset="";
+    public void SetBuiltinPreset(string str,string _buttonName){
+        if(_selectedBuiltinPreset!=str){
+            _selectedBuiltinPreset=str;
+            ResetBuiltinPresetButtonsColors();
+            builtInPresetsPanel.transform.GetChild(0).GetChild(0).Find(_buttonName).GetComponent<Image>().color=Color.blue;return;}
+        if(str==_selectedBuiltinPreset){SandboxCanvas.instance.StartCoroutine(SandboxCanvas.instance.SetBuiltinPresetI(str));SandboxCanvas.instance.SetPresetIconPreviewsSprite();}
+    }
+    void ResetBuiltinPresetButtonsColors(){foreach(Button b in builtInPresetsPanel.transform.GetComponentsInChildren<Button>()){b.GetComponent<Image>().color=new Color(1,1,1,0.56f);}}
+    public IEnumerator SetBuiltinPresetI(string str){
         if(GameRules.instance!=null)Destroy(GameRules.instance.gameObject);
         yield return new WaitForSecondsRealtime(0.02f);
-        defPresetGameruleset=CoreSetup.instance.gamerulesetsPrefabs[GameManager.instance.GetGamemodeID(str)];
+        SetDefPresetGameruleset(str);
         Debug.Log(defPresetGameruleset);
         var gr=Instantiate(defPresetGameruleset);
         gr.gameObject.name="GRSandbox";
@@ -251,9 +274,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         gr.cfgDesc="New Sandbox Mode Savefile!";
         //gr.cfgIconsGo=sandboxIconsGo;
         gr.cfgIconAssetName="questionMark";
+        gr.cfgIconsGo=null;
         OpenDefaultPanel();
         SetupEverything();
     }
+    public void SetDefPresetGameruleset(string str){defPresetGameruleset=CoreSetup.instance.gamerulesetsPrefabs[GameManager.instance.GetGamemodeID(str)];}
     public void SetPresetIcon(string v){GameRules.instance.cfgIconAssetName=v;OpenPresetAppearanceIconPanel();}
     public void SetPresetIconSprMatHue(float v){GameRules.instance.cfgIconShaderMatProps.hue=(float)Math.Round(v,2);UpdateIconSprMat();}
     public void SetPresetIconSprMatSatur(float v){GameRules.instance.cfgIconShaderMatProps.saturation=(float)Math.Round(v,2);UpdateIconSprMat();}
@@ -270,10 +295,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
     void HighlightSelectedPreset(){
         Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
-        foreach(Transform tt in yoursModesListTransform){tt.gameObject.GetComponent<Image>().color=Color.white;}
+        foreach(Transform tt in yoursModesListTransform){tt.gameObject.GetComponent<Image>().color=new Color(1,1,1,0.56f);}
         Transform t=yoursModesListTransform.Find(saveSelected+"-PresetButton");if(t!=null){GameObject goF=t.gameObject;goF.GetComponent<Image>().color=Color.blue;}
     }
     public string _sandboxDataDir(){return Application.persistentDataPath+"/SandboxData";}
+    public string _sandboxRecycleDir(){return _sandboxDataDir()+"/RecycleBin";}
     public string _sandboxSavesDir(){return _sandboxDataDir()+"/SandboxSaves";}
     public string _sandboxShipSkinsDir(){return _sandboxDataDir()+"/ShipSkins";}
     public string _currentSandboxFilePath(){return _sandboxSavesDir()+"/"+saveSelected+".json";}
@@ -287,12 +313,17 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 }else{
                     if(_cachedSandboxName!=""){SavePopup("\u0022"+saveSelected+"\u0022 <color=yellow> OVERRITEN WITH </color> "+_cachedSandboxName);_cachedSandboxName="";}
                     else{SavePopup("\u0022"+saveSelected+"\u0022 <color=green> SAVED </color>");HighlightSelectedPreset();}
+                    SetYoursPresetsButtons();
                 }
                 //var settings=new ES3Settings(_currentSandboxFilePath());
                 //settings.referenceMode=ES3.ReferenceMode.ByValue;
                 var settings=new ES3Settings(_currentSandboxFilePath(),ES3.Location.Cache);
-                if(ES3.KeyExists("buildVersion",_currentSandboxFilePath()))buildVersion++;
-                ES3.Save("buildVersion",buildVersion,settings);
+                if(ES3.KeyExists("saveBuildVersion",_currentSandboxFilePath()))buildVersion++;
+                if(ES3.KeyExists("buildVersion",_currentSandboxFilePath())){buildVersion++;ES3.DeleteKey("buildVersion",settings);}//Legacy
+                ES3.Save("saveBuildVersion",buildVersion,settings);
+                ES3.Save("gameBuildVersion",GameManager.instance.buildVersion,settings);
+                if(ES3.KeyExists("presetFrom",_currentSandboxFilePath())){if(defPresetGameruleset.cfgName!=ES3.Load<string>("presetFrom",_currentSandboxFilePath())){ES3.Save("presetFrom",defPresetGameruleset.cfgName,settings);}}//SetDefPresetGameruleset(_presetFromCache);}}
+                else ES3.Save("presetFrom",defPresetGameruleset.cfgName,settings);
                 ES3.Save("gamerulesData",GameRules.instance,settings);
                 ES3.StoreCachedFile(_currentSandboxFilePath());
             }else{
@@ -308,8 +339,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 if(ES3.KeyExists("gamerulesData",_currentSandboxFilePath())){
                     //Debug.Log("GameRules.instance PRE-LOAD: "+GameRules.instance);
                     ES3.LoadInto<GameRules>("gamerulesData",_currentSandboxFilePath(),GameRules.instance);
+                    SetPresetIconPreviewsSprite();
                     if(ES3.KeyExists("buildVersion",_currentSandboxFilePath()))buildVersion=ES3.Load<int>("buildVersion",_currentSandboxFilePath());
                     else buildVersion=1;
+                    if(ES3.KeyExists("presetFrom",_currentSandboxFilePath()))SetDefPresetGameruleset(ES3.Load<string>("presetFrom",_currentSandboxFilePath()));
+                    else SetDefPresetGameruleset("Arcade Mode");
                     //Debug.Log("GameRules.instance POST-LOAD: "+GameRules.instance);
                     //Debug.Log("----");
                     SavePopup("\u0022"+saveSelected+"\u0022 <color=blue> LOADED </color>");
@@ -330,8 +364,18 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void DeleteSandbox(){
         if(!String.IsNullOrEmpty(saveSelected)){
             if(ES3.FileExists(_currentSandboxFilePath())){
-                SavePopup("\u0022"+saveSelected+"\u0022 <color=orange> DELETED </color>");
-                ES3.DeleteFile(_currentSandboxFilePath());
+                //ES3.DeleteFile(_currentSandboxFilePath());
+                /*if(Application.platform==RuntimePlatform.WindowsPlayer||Application.platform==RuntimePlatform.WindowsEditor){
+                    SavePopup("\u0022"+saveSelected+"\u0022 <color=orange> MOVED TO RECYCLE BIN </color>");
+                    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(_currentSandboxFilePath(),Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
+                }else{
+                    SavePopup("\u0022"+saveSelected+"\u0022 <color=orange> MOVED TO RECYCLE IN SANDBOX DIR</color>");
+                    System.IO.Directory.CreateDirectory(_sandboxRecycleDir());
+                    System.IO.File.Move(_currentSandboxFilePath(),(_sandboxRecycleDir()+"/"+saveSelected+".json"));
+                }*/
+                SavePopup("\u0022"+saveSelected+"\u0022 <color=orange> MOVED TO RECYCLEBIN IN SANDBOX DIR</color>");
+                System.IO.Directory.CreateDirectory(_sandboxRecycleDir());
+                System.IO.File.Move(_currentSandboxFilePath(),(_sandboxRecycleDir()+"/"+saveSelected+".json"));
                 if(!String.IsNullOrEmpty(_cachedSandboxName))saveSelected=_cachedSandboxName;
                 SetYoursPresetsButtons();
             }else{
@@ -771,13 +815,14 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
 
     void SetBuiltInPresetsButtons(){
+        ResetBuiltinPresetButtonsColors();
         foreach(GameRules gr in CoreSetup.instance.gamerulesetsPrefabs){
             string name=gr.cfgName;     if(name.Contains(" Mode"))name=name.Replace(" Mode","");
             Transform builtInModesListTransform=builtInPresetsPanel.transform.GetChild(0).GetChild(0);
             GameObject go=Instantiate(gameModeListElementPrefab,builtInModesListTransform);
             builtInModesListTransform.GetComponent<ContentSizeFitter>().enabled=true;builtInModesListTransform.localPosition=new Vector2(0,-999);
             go.name=name+"-PresetButton";
-            go.GetComponent<Button>().onClick.AddListener(()=>SetPreset(gr.cfgName));
+            go.GetComponent<Button>().onClick.AddListener(()=>SetBuiltinPreset(gr.cfgName,go.name));
             go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=name;
             go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr.cfgDesc;
             if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
@@ -791,9 +836,52 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
         if(ES3.DirectoryExists(_sandboxSavesDir())){foreach(string f in ES3.GetFiles(_sandboxSavesDir())){if(f.Contains(".json")){AddNewYoursPresetButton(f);}else{Debug.LogWarning(f+" is not a JSON file");}}}
     }
-    GameRules _tempCurrentGr=null;
-    bool _debug=true;
+    GameObject _tempCurrentGrGo=null;
+    GameRules _tempCurrentGr;
+    bool _debug=false;
     void AddNewYoursPresetButton(string f,GameRules _grCur=null){
+        ES3.Save<GameRules>("gamerulesData",GameRules.instance,_sandboxSavesDir()+"/"+"_current.json");
+        Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
+        
+        var fpath=_sandboxSavesDir()+"/"+f;
+        if(ES3.FileExists(fpath)||_grCur!=null){if(ES3.KeyExists("gamerulesData",fpath)||_grCur!=null){
+            if(_debug){Debug.Log("GameRules.instance PRE-ASSIGN: "+GameRules.instance);
+            Debug.Log("GameRules.instance GameSpeed PRE-ASSIGN: "+GameRules.instance.defaultGameSpeed);
+            Debug.Log("_tempCurrentGr PRE-ASSIGN: "+_tempCurrentGr);
+            if(_tempCurrentGr!=null)Debug.Log("_tempCurrentGr GameSpeed PRE-ASSIGN: "+_tempCurrentGr.defaultGameSpeed);}
+            _tempCurrentGrGo=GameRules.instance.gameObject;
+            _tempCurrentGr=_tempCurrentGrGo.GetComponent<GameRules>();
+            if(_debug){Debug.Log("_tempCurrentGr POST-ASSIGN: "+_tempCurrentGr);
+            Debug.Log("_tempCurrentGr GameSpeed POST-ASSIGN: "+_tempCurrentGr.defaultGameSpeed);}
+            List<GameRules> gr=new List<GameRules>();if(_grCur==null){gr.Add(ES3.Load<GameRules>("gamerulesData",fpath));}else{gr.Add(_grCur);}
+
+            if(gr.Count>0&&gr[0]!=null){
+                string name=f;if(name.Contains(".json")){name=name.Replace(".json","");}
+                GameObject go=Instantiate(yoursPrefabElementPrefab,yoursModesListTransform);
+                yoursModesListTransform.GetComponent<ContentSizeFitter>().enabled=true;yoursModesListTransform.localPosition=new Vector2(0,-999);
+                go.name=name+"-PresetButton";
+                go.GetComponent<Button>().onClick.AddListener(()=>SelectPreset(name));
+                go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=name;
+                go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr[0].cfgDesc;//data.value;
+                var _timestamp=ES3.GetTimestamp(fpath);
+                go.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text=_timestamp.ToShortDateString()+" | "+_timestamp.ToShortTimeString();
+                if(go.transform.GetChild(1).GetChild(0)!=null){Destroy(go.transform.GetChild(1).GetChild(0).gameObject);}
+                if(gr[0].cfgIconsGo!=null){
+                    Instantiate(gr[0].cfgIconsGo,go.transform.GetChild(1));
+                }else{
+                    if(!String.IsNullOrEmpty(gr[0].cfgIconAssetName)){
+                        go.transform.GetChild(1).gameObject.AddComponent<Image>().sprite=AssetsManager.instance.SprAny(gr[0].cfgIconAssetName);
+                        go.transform.GetChild(1).gameObject.GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(go.transform.GetChild(1).gameObject.GetComponent<Image>().material,gr[0].cfgIconShaderMatProps,true);
+                    }//else{Instantiate(sandboxIconsGo,go.transform.GetChild(1));}
+                }
+            }
+        }}
+        ES3.LoadInto("gamerulesData",_sandboxSavesDir()+"/"+"_current.json",GameRules.instance);
+        ES3.DeleteFile(_sandboxSavesDir()+"/"+"_current.json");
+    }
+    /*
+    void AddNewYoursPresetButton(string f,GameRules _grCur=null){
+        ES3.Save<GameRules>("gamerulesData",GameRules.instance,_sandboxSavesDir()+"/"+"_current.json");
         Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
         
         var fpath=_sandboxSavesDir()+"/"+f;
@@ -803,7 +891,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             Debug.Log("GameRules.instance GameSpeed PRE-ASSIGN: "+GameRules.instance.defaultGameSpeed);
             Debug.Log("_tempCurrentGr PRE-ASSIGN: "+_tempCurrentGr);
             if(_tempCurrentGr!=null)Debug.Log("_tempCurrentGr GameSpeed PRE-ASSIGN: "+_tempCurrentGr.defaultGameSpeed);}
-            _tempCurrentGr=GameRules.instance;
+            _tempCurrentGrGo=GameRules.instance.gameObject;
+            _tempCurrentGr=_tempCurrentGrGo.GetComponent<GameRules>();
             if(_debug){Debug.Log("_tempCurrentGr POST-ASSIGN: "+_tempCurrentGr);
             Debug.Log("_tempCurrentGr GameSpeed POST-ASSIGN: "+_tempCurrentGr.defaultGameSpeed);}
             List<GameRules> gr=new List<GameRules>();if(_grCur==null){gr.Add(ES3.Load<GameRules>("gamerulesData",fpath));}else{gr.Add(_grCur);}//GameRules gr=(GameRules)grpre;
@@ -841,7 +930,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             }else{Debug.Log("!!NO GR FOR: "+f);}
             if(_debug)Debug.Log("----");
         }}
+        ES3.LoadInto("gamerulesData",_sandboxSavesDir()+"/"+"_current.json",GameRules.instance);
+        ES3.DeleteFile(_sandboxSavesDir()+"/"+"_current.json");
     }
+    */
 
     void SetPowerups(){
         if(powerupInventory!=null){
@@ -871,9 +963,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }else{Debug.LogError("PowerupInventory not assigned!");}
     }
     void SetPresetIconPreviewsSprite(){
-        presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().sprite=AssetsManager.instance.SprAny(GameRules.instance.cfgIconAssetName);
-        presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().sprite=AssetsManager.instance.SprAny(GameRules.instance.cfgIconAssetName);
+        var _spr=AssetsManager.instance.SprAny(GameRules.instance.cfgIconAssetName);
+        defaultPanel.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite=_spr;
+        presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().sprite=_spr;
+        presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().sprite=_spr;
 
+        //var _mat=;
+        defaultPanel.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(defaultPanel.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().material,GameRules.instance.cfgIconShaderMatProps,true);
         presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.cfgIconShaderMatProps,true);
         presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().material,GameRules.instance.cfgIconShaderMatProps,true);
     }

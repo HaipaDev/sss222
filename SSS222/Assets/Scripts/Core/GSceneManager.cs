@@ -96,7 +96,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             //if(GameManager.instance.zoneSelected!=-1&&GameManager.instance.zoneToTravelTo==-1){}
             Debug.Log("TRAVEL");
             GameManager.instance.zoneToTravelTo=i;
-            if(Player.instance!=null)GameManager.instance.SaveAdventure();
+            //if(Player.instance!=null)GameManager.instance.SaveAdventure();
             if(GameRules.instance!=null){GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureTravelZonePrefab,false);}
             else{Instantiate(CoreSetup.instance.adventureGamerulesPrefab);GameRules.instance.ReplaceAdventureZoneInfo(CoreSetup.instance.adventureTravelZonePrefab,false);}
             if(boss){if(Jukebox.instance!=null)Jukebox.instance.FadeOutBGMusic();Debug.Log("FadeOutBGMusic();");}
@@ -128,7 +128,7 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
             GameRules.instance.EnterGameScene();
             GameManager.instance.zoneToTravelTo=-1;
             GameManager.instance.gameTimeLeft=-4;
-            GameManager.instance.SaveAdventure();
+            //GameManager.instance.SaveAdventure();
         }
         //if(GameManager.instance.zoneSelected==-1){GameManager.instance.LoadAdventurePre();LoadAdventureZone(GameManager.instance.zoneSelected);}
         IEnumerator ResetStuffAndLoadGameScene(){

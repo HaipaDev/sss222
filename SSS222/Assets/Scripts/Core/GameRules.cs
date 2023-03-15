@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Sirenix.OdinInspector;
 
-public class GameRules : MonoBehaviour{     public static GameRules instance;
+public class GameRules : MonoBehaviour{     [ES3NonSerializable]public static GameRules instance;
     public bool _isAdventure(){return this.cfgName.Contains("Adventure");}
     public bool _isAdventureNotSubZone(){return this.cfgName.Contains("Adventure")&&!_isAdventureSubZone;}
 #region//Values

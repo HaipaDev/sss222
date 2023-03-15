@@ -7,7 +7,7 @@ public class Tag_ZonesLine : MonoBehaviour{
     public void SetPoints(int zoneId1, int zoneId2,bool debugPoints=false){
         var z1Pos=CoreSetup.instance.adventureZones[zoneId1].pos;
         var z2Pos=CoreSetup.instance.adventureZones[zoneId2].pos;
-        if(debugPoints)Debug.Log(zoneId1 +" = "+ z1Pos + " | " + zoneId2 +" = "+ z2Pos);
+        //if(debugPoints)Debug.Log(zoneId1 +" = "+ z1Pos + " | " + zoneId2 +" = "+ z2Pos);
         GetComponent<UILineRenderer>().Points[0]=new Vector2(z1Pos.x,z1Pos.y);
         GetComponent<UILineRenderer>().Points[1]=new Vector2(z2Pos.x,z2Pos.y);
         GetComponent<UILineRenderer>().SetAllDirty();
@@ -18,7 +18,7 @@ public class Tag_ZonesLine : MonoBehaviour{
         GetComponent<UILineRenderer>().SetAllDirty();
     }
     public void SetBothPointsNull(){
-        Debug.Log("SetBothPointsNull()");
+        //Debug.Log("SetBothPointsNull()");
         GetComponent<UILineRenderer>().Points[0]=Vector2.zero;
         GetComponent<UILineRenderer>().Points[1]=Vector2.zero;
         GetComponent<UILineRenderer>().SetAllDirty();

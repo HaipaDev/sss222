@@ -183,7 +183,7 @@ public class ValueDisplay : MonoBehaviour{
                     if(gr.scoreDisplay==scoreDisplay.score)_txt=GameManager.instance.score.ToString();
                     else if(gr.scoreDisplay==scoreDisplay.sessionTime)_txt=GameManager.instance.GetGameManagerTimeFormat().ToString();
                     else if(gr.scoreDisplay==scoreDisplay.timeLeft)_txt=GameManager.instance.GetGameTimeLeftFormat().ToString();
-                    else if(gr.scoreDisplay==scoreDisplay.sessionTimeAsDistance)_txt=(Mathf.RoundToInt(GameManager.instance.currentPlaytime)*GameRules.instance.secondToDistanceRatio).ToString()+"m";
+                    else if(gr.scoreDisplay==scoreDisplay.sessionTimeAsDistance)_txt=GameManager.instance.DistanceTraveledCur().ToString()+"m";
                     
                     else if(gr.scoreDisplay==scoreDisplay.bossHealth){
                         if(FindObjectOfType<BossAI>()!=null){

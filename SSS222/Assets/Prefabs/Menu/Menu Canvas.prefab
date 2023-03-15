@@ -3180,7 +3180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!95 &4600261428152334398
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3197,7 +3197,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &3125507176354402710
 GameObject:
   m_ObjectHideFlags: 0
@@ -6592,6 +6592,7 @@ MonoBehaviour:
   CloneDraggedObject: 0
   IsDropable: 0
   IsDisplacable: 0
+  EqualizeSizesOnDrag: 0
   maxItems: 2147483647
   OnElementDropped:
     m_PersistentCalls:
@@ -6615,6 +6616,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnElementDisplacedToReturned:
+    m_PersistentCalls:
+      m_Calls: []
+  OnElementDroppedWithMaxItems:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &5647718265212663187
@@ -8101,7 +8105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!95 &7718683771048427053
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8118,7 +8122,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &8499786351595275378
 GameObject:
   m_ObjectHideFlags: 0
@@ -8595,12 +8599,12 @@ PrefabInstance:
     - target: {fileID: 4087835778269462038, guid: 5bffdd0c4534e9446860cad690b05892,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 370
+      value: 306.87
       objectReference: {fileID: 0}
     - target: {fileID: 4087835778269462038, guid: 5bffdd0c4534e9446860cad690b05892,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 151.89
+      value: 128.559
       objectReference: {fileID: 0}
     - target: {fileID: 4087835778269462038, guid: 5bffdd0c4534e9446860cad690b05892,
         type: 3}
@@ -8720,12 +8724,12 @@ PrefabInstance:
     - target: {fileID: 1295936235002616026, guid: ba2d74a43da0bfc4c80f2c64e87d671b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 434.9
+      value: 349.016
       objectReference: {fileID: 0}
     - target: {fileID: 1295936235002616026, guid: ba2d74a43da0bfc4c80f2c64e87d671b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 151.89
+      value: 83.552
       objectReference: {fileID: 0}
     - target: {fileID: 1295936235002616026, guid: ba2d74a43da0bfc4c80f2c64e87d671b,
         type: 3}
@@ -8765,7 +8769,7 @@ PrefabInstance:
     - target: {fileID: 1295936235002616026, guid: ba2d74a43da0bfc4c80f2c64e87d671b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -435
+      value: -349.1158
       objectReference: {fileID: 0}
     - target: {fileID: 1295936235002616026, guid: ba2d74a43da0bfc4c80f2c64e87d671b,
         type: 3}

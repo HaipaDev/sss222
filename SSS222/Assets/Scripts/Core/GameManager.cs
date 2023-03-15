@@ -228,7 +228,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         if(!PauseMenu.GameIsPaused&&!Shop.shopOpened&&!UpgradeMenu.UpgradeMenuIsOpen&&
         (Player.instance!=null&&!Player.instance._hasStatus("matrix")&&!Player.instance._hasStatus("accel"))&&!speedChanged){gameSpeed=defaultGameSpeed;}
         if(Player.instance==null){gameSpeed=defaultGameSpeed;}
-        if(SceneManager.GetActiveScene().name!="Game"){gameSpeed=1;}
+        if(SceneManager.GetActiveScene().name!="Game"&&SceneManager.GetActiveScene().name!="SandboxMode"){gameSpeed=1;}
         
         //Restart with R or Space/Resume with Space
         if(GSceneManager.CheckScene("Game")){
@@ -388,6 +388,8 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         return (Vector2.Distance(CoreSetup.instance.adventureZones[zoneSelected].pos,CoreSetup.instance.adventureZones[zoneToTravelTo].pos)*CoreSetup.instance.adventureTravelZonePrefab.travelTimeToDistanceRatio)*_playerTravelCutRatio;
     }
     public float NormalizedZoneTravelTimeLeft(){return AssetsManager.Normalize(GameManager.instance.gameTimeLeft,0,GameManager.instance.CalcZoneTravelTime());}
+    public int DistanceTraveledCur(){return (Mathf.RoundToInt(GameManager.instance.currentPlaytime)*GameRules.instance.secondToDistanceRatio);}
+    public int DistanceTraveledCurReverse(float _playtime){return (Mathf.RoundToInt(_playtime)/GameRules.instance.secondToDistanceRatio);}
 
     public void AddToScore(int scoreValue){
         score+=Mathf.RoundToInt(scoreValue*scoreMulti);
@@ -482,7 +484,11 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
                 if(phb.GetTimeLeft()<=0){ss.holo_timeAt=Mathf.RoundToInt(currentPlaytime*GameRules.instance.holodeathTimeRatio);}
                 else{ss.holo_timeAt=Mathf.RoundToInt(phb.GetTimeLeft());}
             }
-            if(BreakEncounter.instance!=null){ss.calledBreak=BreakEncounter.instance.calledBreak;}else{ss.calledBreak=false;}
+            if(BreakEncounter.instance!=null){
+                ss.breakWaveCount=BreakEncounter.instance.GetWaveCount();
+                ss.calledBreak=BreakEncounter.instance.calledBreak;}
+            else{ss.calledBreak=false;}
+            
             if(p!=null){
                 if(p.health>0){
                     ss.xp=xp;
@@ -495,6 +501,10 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
                     ss.powerups=p.powerups;
                     ss.powerupCurID=p.powerupCurID;
                     ss.statuses=p.statuses;
+                    if(ss.calledBreak){
+                        ss.distanceTraveled=DistanceTraveledCur();
+                        
+                    }
                 }else{
                     //ss.GameManagerTime=0;
                     ss.xp=0;
@@ -558,7 +568,11 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
                 var phb=CreatePlayerHoloBody(new Vector2(ss.holo_posX,7.6f));
                 phb.SetTime(ss.holo_timeAt);
             }
-            if(ss.calledBreak&&_noBreak()){BreakEncounter.instance.CallBreak();BreakEncounter.instance.waitForCargoSpawn=false;}
+            currentPlaytime=DistanceTraveledCurReverse(ss.distanceTraveled);
+            if(BreakEncounter.instance!=null){
+                BreakEncounter.instance.SetWaveCount(ss.breakWaveCount);
+                if(ss.calledBreak&&_noBreak()){BreakEncounter.instance.CallBreak(true);}//BreakEncounter.instance.waitForCargoSpawn=false;}
+            }else{Debug.LogWarning("BreakEncounter instance not present!");}
             p.energy=ss.energy;
             if(ss.health>0){p.health=ss.health;xp=ss.xp;_coreSpawnedPreAscend=ss._coreSpawnedPreAscend;}
             else{xp=0;_coreSpawnedPreAscend=false;
@@ -605,10 +619,18 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         //currentPlaytime=ss.GameManagerTime;
         _adventureLoading=false;
     }
-    public void DeleteAll(){DeleteStatsAchievs();ResetSettings();SaveSerial.instance.Delete();SaveSerial.instance.DeleteAdventure();GSceneManager.instance.LoadStartMenu();gamemodeSelected=0;}
+    public void DeleteAll(){
+        SaveSerial.instance.Delete();
+        SaveSerial.instance.DeleteStats();
+        SaveSerial.instance.DeleteSettings();
+        SaveSerial.instance.DeleteAdventure();
+        gamemodeSelected=0;
+        Destroy(SaveSerial.instance.gameObject);
+        GSceneManager.instance.LoadStartMenu();
+    }
     public void DeleteAdventure(){SaveSerial.instance.DeleteAdventure();}
     public void ResetSettings(){
-        SaveSerial.instance.ResetSettings();
+        SaveSerial.instance.DeleteSettings();
         GSceneManager.instance.ReloadScene();
         SaveSerial.instance.SaveSettings();
     }

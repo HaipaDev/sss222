@@ -27,7 +27,7 @@ public class BreakEncounter : MonoBehaviour{    public static BreakEncounter ins
             if(FindObjectsOfType<Enemy>().Length==0&&waitForCargoSpawn){Shop.instance.SpawnCargo(dir.up);waitForCargoSpawn=false;}
         }
     }
-    public void CallBreak(){
+    public void CallBreak(bool saveAdventure=false){
         Debug.Log("Calling Break");
         calledBreak=true;
         waitForCargoSpawn=true;
@@ -52,4 +52,6 @@ public class BreakEncounter : MonoBehaviour{    public static BreakEncounter ins
             ||!GameRules.instance.breakEncounterCountWavesPostAscend)waveCount++;
         }
     }
+    public void SetWaveCount(int _count){waveCount=_count;}
+    public int GetWaveCount(){return waveCount;}
 }
