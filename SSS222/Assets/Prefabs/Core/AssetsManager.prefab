@@ -353,10 +353,26 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 5a93596a45b906341b20063f565382c9, type: 3}
   - name: MoonOfLunacy-2
     spr: {fileID: 21300000, guid: cc617dcc8b2ee894b87f23cb991edacf, type: 3}
+  - name: MoonOfLunacy-Death
+    spr: {fileID: 21300000, guid: cf8889e4bc77ede4a86d569e666b11cc, type: 3}
   - name: celestPoint
     spr: {fileID: 21300000, guid: 5f541d96308ae8048816389e10b35c7d, type: 3}
   - name: dynamCelestStar
     spr: {fileID: 21300000, guid: 85ee023a4e41fc94f9333c5c9baa3aac, type: 3}
+  - name: ship
+    spr: {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}
+  - name: cargo
+    spr: {fileID: 21300000, guid: d3c6432fb3453954fb19e3bd285c35f3, type: 3}
+  - name: laserBulb
+    spr: {fileID: 21300000, guid: 052f21698a50bc14aa7cc149064ebdb2, type: 3}
+  - name: laserBulb-green
+    spr: {fileID: 21300000, guid: 81aee6c68b7859c4cb570ed873afea3b, type: 3}
+  - name: laserBulb-red
+    spr: {fileID: 21300000, guid: c6574ac4e2986e34c945200e90484416, type: 3}
+  - name: laserBulb-orange
+    spr: {fileID: 21300000, guid: 493d300affea37d439f50f4d3f86bca4, type: 3}
+  - name: laserBulb-yellow
+    spr: {fileID: 21300000, guid: 01044059662f37948a1aaedd6953959b, type: 3}
   materials:
   - name: AIOShaderMat
     mat: {fileID: 2100000, guid: 94bd4665afcd8b743921007cb09b25c0, type: 2}
