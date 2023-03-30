@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class HoverUIEnable : MonoBehaviour{
     [SerializeField] GameObject obj;
     [SerializeField] bool followMouse=true;
+    [SerializeField] bool autoStartDisable=true;
+    void Start(){if(obj!=null){if(obj.activeSelf&&autoStartDisable){obj.SetActive(false);}}}
     void Update(){
         //if(CheckAllOtherPointers()){obj.SetActive(true);}
         if(IsPointerOverUIElement()){obj.SetActive(true);}

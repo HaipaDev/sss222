@@ -51,7 +51,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [AssetsOnly][SerializeField] GameObject yoursPrefabElementPrefab;
     [SceneObjectsOnly][SerializeField] public GameObject savePopup;
     [DisableInEditorMode][SerializeField] public string saveSelected="Sandbox Save #1";
-    [DisableInEditorMode][SerializeField] public string _cachedSandboxName;
+    //[DisableInEditorMode][SerializeField] public string _cachedSandboxName;
+    [DisableInEditorMode][SerializeField] public string curSaveFileName;
     [DisableInEditorMode][SerializeField] public SandboxSaveInfo saveInfo=new SandboxSaveInfo(){saveBuild=1};
     [DisableInEditorMode][SerializeField] public int savesCount;
     [DisableInEditorMode][SerializeField] public string _selectedDefPreset;
@@ -65,6 +66,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [SceneObjectsOnly][SerializeField]GameObject startingPowerupChoices;
     [Header("")]
     [DisableInEditorMode][SerializeField]public string enemyToModify;
+    [DisableInPlayMode][SerializeField]List<GSprite> enemySpritesPost;
     [DisableInEditorMode][SerializeField]List<GSprite> enemySprites;
     [Header("")]
     [SceneObjectsOnly][SerializeField]TMP_Dropdown wavesSpawnTypeDropdown;
@@ -86,7 +88,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     void Start(){
         instance=this;
         if(!String.IsNullOrEmpty(GameManager.instance.GetTempSandboxSaveName())){
-            SelectPreset(GameManager.instance.GetTempSandboxSaveName(),"");
+            SelectPreset(GameManager.instance.GetTempSandboxSaveName());
             //if(ES3.FileExists(_currentSandboxFilePath()))if(ES3.KeyExists("saveBuild",_currentSandboxFilePath()))saveBuild=ES3.Load<int>("saveBuild",_currentSandboxFilePath());
         }
 
@@ -98,6 +100,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             GameRules.instance.cfgDesc="New Sandbox Mode Savefile";
             saveInfo.desc="New Sandbox Mode Savefile";
             defPresetGameruleset=CoreSetup.instance.gamerulesetsPrefabs[0];
+            saveInfo.saveBuild=1;
+            saveInfo.gameBuild=GameManager.instance.buildVersion;
         }
         OpenDefaultPanel();
         SetupEverything();
@@ -190,7 +194,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     void CloseAllPanels(){
         defaultPanel.SetActive(false);
         presetAppearancePanel.SetActive(false);
-        if(presetsPanel.activeSelf){if(!String.IsNullOrEmpty(_cachedSandboxName)){saveSelected=_cachedSandboxName;_cachedSandboxName="";}}
+        //if(presetsPanel.activeSelf){if(!String.IsNullOrEmpty(_cachedSandboxName)){saveSelected=_cachedSandboxName;_cachedSandboxName="";}}
         presetsPanel.SetActive(false);
 
         globalPanel.SetActive(false);
@@ -212,7 +216,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         playerSpritePanel.SetActive(false);
         playerSpritesLibPanel.SetActive(false);
         startingPowerupChoices.SetActive(false);
-        Debug.Log("CloseAllPanels()");
 
         enemyMainPanel.SetActive(false);
         enemySpritePanel.SetActive(false);
@@ -226,8 +229,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         basicCollectiblesPanel.SetActive(false);
         powerupsPanel.SetActive(false);
 
+        //saveSelected=saveInfo.name;
         _selectedDefPreset="";
         StopRefreshYoursPanel();
+        ChangeSaveOverwriteBulb(false);
     }
     Coroutine refreshYoursPanelCor=null;
     void RefreshYoursPanel(){if(refreshYoursPanelCor==null)refreshYoursPanelCor=StartCoroutine(RefreshYoursPanelI());}
@@ -235,7 +240,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     IEnumerator RefreshYoursPanelI(){
         yield return new WaitForSecondsRealtime(0.2f);
         if(GetCountSaveFiles()!=savesCount)OpenYoursPresetsPanel();
-        if(refreshYoursPanelCor!=null)yield return RefreshYoursPanelI();
+        if(refreshYoursPanelCor!=null)refreshYoursPanelCor=null;RefreshYoursPanel();
         yield return null;
     }
     void OpenWavesSpawnReqsInputs(){
@@ -278,10 +283,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 #endregion
 #region//Setting Preset, Loading and Saving
     public void SetBuiltinPreset(string str,string _buttonName){
-        _selectedDefPreset=str;
-        ResetBuiltinPresetButtonsColors();
-        builtInPresetsPanel.transform.GetChild(0).GetChild(0).Find(_buttonName).GetComponent<Image>().color=Color.blue;
+        if(_selectedDefPreset!=str){
+            _selectedDefPreset=str;
+            ResetBuiltinPresetButtonsColors();
+            builtInPresetsPanel.transform.GetChild(0).GetChild(0).Find(_buttonName).GetComponent<Image>().color=Color.blue;
+        }else{DeselectBuiltinPreset();}
     }
+    public void DeselectBuiltinPreset(){_selectedDefPreset="";ResetBuiltinPresetButtonsColors();}
     void ResetBuiltinPresetButtonsColors(){foreach(Button b in builtInPresetsPanel.transform.GetChild(0).GetChild(0).GetComponentsInChildren<Button>()){b.GetComponent<Image>().color=new Color(1,1,1,0.56f);}}
     public void SetDefPresetSelected(){if(_selectedDefPreset!=""){
         SetDefPresetGameruleset(_selectedDefPreset);
@@ -318,20 +326,43 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetPresetIconSprMatPixelate(float v){GameRules.instance.cfgIconShaderMatProps.pixelate=Mathf.Clamp((float)Math.Round(v,2),(4/512),1);UpdateIconSprMat();}
     public void SetPresetIconSprMatBlur(float v){GameRules.instance.cfgIconShaderMatProps.blur=(float)Math.Round(v,2);UpdateIconSprMat();}
     void UpdateIconSprMat(){SetPresetIconPreviewsSprite();}
-    public void SelectPreset(string str,string name){
-        if(!String.IsNullOrEmpty(str)){
-            if(String.IsNullOrEmpty(_cachedSandboxName)){if(saveSelected!=_cachedSandboxName){_cachedSandboxName=saveSelected;}else{_cachedSandboxName="";}}saveSelected=str;
-            HighlightSelectedPresetDirect(name);
+    public void SelectPreset(string str){
+        if(!String.IsNullOrEmpty(str)&&str!=saveSelected){
+            if(String.IsNullOrEmpty(curSaveFileName)){curSaveFileName=saveSelected;}
+            saveSelected=str;
+            HighlightSelectedPresetDirect(str);
+            /*if(String.IsNullOrEmpty(curSaveFileName)){
+                if(saveSelected!=curSaveFileName){
+                    curSaveFileName=saveSelected;
+                }//else{_cachedSandboxName="";}
+            }else{
+                ResetYoursPresetButtonsColors();
+                if(curSaveFileName==""){curSaveFileName=saveSelected;}
+            }*/
+            if(str!=curSaveFileName&&curSaveFileName!=""){ChangeSaveOverwriteBulb();}else{ChangeSaveOverwriteBulb(false);}
         }
+        else if(str==saveSelected){DeselectPreset();}
+        else if(str==curSaveFileName){saveSelected=curSaveFileName;HighlightSelectedPresetDirect(curSaveFileName);}
+    }
+    //public void DeselectPreset(){if(_cachedSandboxName!=""){_cachedSandboxName="";saveSelected=_cachedSandboxName;ResetYoursPresetButtonsColors();ChangeSaveOverwriteBulb();}else{}}
+    public void DeselectPreset(){if(curSaveFileName!=""){saveSelected=curSaveFileName;ResetYoursPresetButtonsColors();ChangeSaveOverwriteBulb(false);}else{saveSelected=saveInfo.name;curSaveFileName=saveInfo.name;}}
+    void ChangeSaveOverwriteBulb(bool on=true){
+        Transform bulbs=yoursPresetsPanel.transform.GetChild(1);
+        bulbs.GetChild(1).gameObject.SetActive(!on);
+        bulbs.GetChild(2).gameObject.SetActive(on);
+    }
+    void ResetYoursPresetButtonsColors(){
+        Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
+        foreach(Transform tt in yoursModesListTransform){tt.gameObject.GetComponent<Image>().color=new Color(1,1,1,0.56f);}
     }
     void HighlightSelectedPreset(){
         Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
-        foreach(Transform tt in yoursModesListTransform){tt.gameObject.GetComponent<Image>().color=new Color(1,1,1,0.56f);}
+        ResetYoursPresetButtonsColors();
         Transform t=yoursModesListTransform.Find(saveSelected+"-PresetButton");if(t!=null){GameObject goF=t.gameObject;goF.GetComponent<Image>().color=Color.blue;}
     }
     void HighlightSelectedPresetDirect(string str){
         Transform yoursModesListTransform=yoursPresetsPanel.transform.GetChild(0).GetChild(0);
-        foreach(Transform tt in yoursModesListTransform){tt.gameObject.GetComponent<Image>().color=new Color(1,1,1,0.56f);}
+        ResetYoursPresetButtonsColors();
         Transform t=yoursModesListTransform.Find(str+"-PresetButton");if(t!=null){GameObject goF=t.gameObject;goF.GetComponent<Image>().color=Color.blue;}
     }
     public string _sandboxDataDir(){return Application.persistentDataPath+"/SandboxData";}
@@ -339,18 +370,21 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public string _sandboxSavesDir(){return _sandboxDataDir()+"/SandboxSaves";}
     public string _sandboxShipSkinsDir(){return _sandboxDataDir()+"/ShipSkins";}
     public string _currentSandboxFilePath(){return _sandboxSavesDir()+"/"+saveSelected+".json";}
-    public void SaveSandbox(){
+    public void SaveSandbox(){//string _overrideName=""){
+        if(String.IsNullOrEmpty(saveSelected)){if(String.IsNullOrEmpty(curSaveFileName)){saveSelected=curSaveFileName;}else{SavePopup("<color=orange> File name is empty </color>");}}
+        //if(_overrideName!=""){saveSelected=_overrideName;}
         if(!String.IsNullOrEmpty(saveSelected)){
             if(GameRules.instance!=null){
                 if(!ES3.FileExists(_currentSandboxFilePath())){
                     AddNewYoursPresetButton(saveSelected+".json",GameRules.instance);
                     HighlightSelectedPreset();
                     SavePopup("\u0022"+saveSelected+"\u0022 <color=green> CREATED </color>");
+                    if(curSaveFileName==""){curSaveFileName=saveSelected;}
                 }else{
-                    if(_cachedSandboxName!=""&&_cachedSandboxName!=saveSelected){
-                        SavePopup("\u0022"+saveSelected+"\u0022 <color=yellow> OVERRITEN WITH </color> "+_cachedSandboxName,1.3f);
-                        saveInfo.name=_cachedSandboxName;
-                        _cachedSandboxName="";
+                    if(curSaveFileName!=""&&curSaveFileName!=saveSelected){
+                        SavePopup("\u0022"+saveSelected+"\u0022 <color=yellow> OVERRITEN WITH </color> "+curSaveFileName,1.3f);
+                        saveInfo.name=curSaveFileName;
+                        //_cachedSandboxName="";
                     }else{
                         SavePopup("\u0022"+saveSelected+"\u0022 <color=green> SAVED </color>");
                         HighlightSelectedPreset();
@@ -379,9 +413,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             }else{
                 SavePopup("<color=red> GameRules.instance is null! </color>",1.5f);
             }
-        }else{
-            SavePopup("<color=orange> File name is empty </color>");
-        }
+        }/*else{
+            if(!String.IsNullOrEmpty(curSaveFileName)){SaveSandbox(curSaveFileName);}
+            //SavePopup("<color=orange> File name is empty </color>");
+        }*/
     }
     public void LoadSandbox(){
         if(!String.IsNullOrEmpty(saveSelected)){
@@ -394,8 +429,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                         GameRules.instance.cfgName=saveInfo.name;
                         GameRules.instance.cfgDesc=saveInfo.desc;
                         SetDefPresetGameruleset(saveInfo.presetFrom);
-                    }
-                    else{
+                    }else{
                         saveInfo.name=GameRules.instance.cfgName;
                         saveInfo.saveBuild=1;
                         saveInfo.gameBuild=GameManager.instance.buildVersion;
@@ -403,7 +437,9 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                         if(ES3.KeyExists("buildVersion",_currentSandboxFilePath())){saveInfo.saveBuild=ES3.Load<int>("buildVersion",_currentSandboxFilePath());}//Legacy
                     }
                     SavePopup("\u0022"+saveSelected+"\u0022 <color=blue> LOADED </color>");
-                    _cachedSandboxName="";
+                    ChangeSaveOverwriteBulb(false);
+                    curSaveFileName=saveSelected;//saveSelected="";
+                    //_cachedSandboxName="";
                 }
                 else{
                     Debug.LogWarning("No key by "+"gamerulesData"+"for: "+_currentSandboxFilePath());
@@ -411,7 +447,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 }
             }else{
                 Debug.LogWarning("No file at: "+_currentSandboxFilePath());
-                SavePopup("<color=orange> No file by name: "+saveSelected+"</color>");
+                SavePopup("<color=orange> No file by name: </color>"+saveSelected);
             }
         }else{
             SavePopup("<color=orange> File name is empty </color>");
@@ -434,10 +470,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 var _fname=saveSelected;
                 while(System.IO.File.Exists(_sandboxRecycleDir()+"/"+_fname+".json")){_fname+="_";}
                 System.IO.File.Move(_currentSandboxFilePath(),(_sandboxRecycleDir()+"/"+_fname+".json"));
-                if(!String.IsNullOrEmpty(_cachedSandboxName))saveSelected=_cachedSandboxName;
+                if(!String.IsNullOrEmpty(curSaveFileName))saveSelected=curSaveFileName;
                 SetYoursPresetsButtons();
+                ChangeSaveOverwriteBulb(false);
             }else{
-                SavePopup("File by name: \u0022"+saveSelected+"\u0022 doesn't exist");
+                SavePopup("<color=orange> No file by name: </color>"+saveSelected);
             }
         }else{
             SavePopup("<color=orange> File name is empty </color>");
@@ -512,7 +549,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         var powerupInventorySelectedPos=powerupInventory.transform.GetChild(0).GetChild(id).position;
         startingPowerupChoices.transform.position=new Vector2(powerupInventorySelectedPos.x+50f,powerupInventorySelectedPos.y+85f);
         powerupToSet=id;
-        Debug.Log("OpenStartingPowerupChoices()");
     }
     public void SetPowerupStarting(string v){
         if(GameRules.instance.powerupsStarting.Count<=powerupToSet){for(var i=GameRules.instance.powerupsStarting.Count;i<=powerupToSet;i++){
@@ -520,7 +556,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         if(GameRules.instance.powerupsStarting[powerupToSet]==null){GameRules.instance.powerupsStarting[powerupToSet]=new Powerup();}
         else{GameRules.instance.powerupsStarting[powerupToSet].name=v;}
         startingPowerupChoices.SetActive(false);
-        Debug.Log("SetPowerupStarting()");
         SetPowerups();
     }
 #endregion
@@ -715,7 +750,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         Destroy(prefab);
     }*/
     void SetStartingPowerupChoices(){
-        Debug.Log("SetStartingPowerupChoices()");
         Transform startingPowerupChoicesListTransform=startingPowerupChoices.transform.GetChild(0);//startingPowerupChoicesListTransform.GetComponent<ContentSizeFitter>().enabled=true;startingPowerupChoicesListTransform.localPosition=new Vector2(0,-999);
         GameObject prefab=startingPowerupChoicesListTransform.GetChild(0).gameObject;
             prefab.name="null";
@@ -784,6 +818,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }
         */
         enemySprites=enemySprites.OrderBy(x=>x.name).ToList();
+        enemySprites.AddRange(enemySpritesPost);
         
 
         Transform enemySprLibTransform=enemySpritesLibPanel.transform.GetChild(1).GetChild(0);enemySprLibTransform.GetComponent<ContentSizeFitter>().enabled=true;enemySprLibTransform.localPosition=new Vector2(0,-999);
@@ -944,8 +979,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
                 GameObject go=Instantiate(yoursPrefabElementPrefab,yoursModesListTransform);
                 yoursModesListTransform.GetComponent<ContentSizeFitter>().enabled=true;yoursModesListTransform.localPosition=new Vector2(0,-999);
-                go.name=name+"-PresetButton";
-                go.GetComponent<Button>().onClick.AddListener(()=>SelectPreset(fname,name));
+                go.name=fname+"-PresetButton";
+                go.GetComponent<Button>().onClick.AddListener(()=>SelectPreset(fname));
                 go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=name;
                 if(ES3.KeyExists("saveInfo",fpath)){go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=ES3.Load<SandboxSaveInfo>("saveInfo",fpath).desc;}
                 else{go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text=gr[0].cfgDesc;}
@@ -974,7 +1009,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
 
     void SetPowerups(){
-        Debug.Log("SetPowerups()");
         if(powerupInventory!=null){
             for(var i=0;i<GameRules.instance.powerupsCapacity;i++){
                 Sprite _spr;
