@@ -17,7 +17,7 @@ public class SliderValue : MonoBehaviour{
         float _val=0f;
         var s=SaveSerial.instance;  var ss=SaveSerial.instance.settingsData;
         SettingsMenu sm=null;if(SettingsMenu.instance!=null)sm=SettingsMenu.instance;
-        var gr=GameRules.instance;var sb=SandboxCanvas.instance;
+        var gr=GameRules.instance;var sb=SandboxCanvas.instance;var saveInfo=sb.saveInfo;
         if(gr!=null){
             switch(value){
                 case "powerupsCapacity":_val=gr.powerupsCapacity;break;
@@ -27,12 +27,13 @@ public class SliderValue : MonoBehaviour{
                 case "bgValueGR":_val=gr.bgMaterial.value;break;
                 case "bgNegativeGR":_val=gr.bgMaterial.negative;break;
 
-                case "sprMatHue_Icon":_val=gr.cfgIconShaderMatProps.hue;break;
-                case "sprMatSatur_Icon":_val=gr.cfgIconShaderMatProps.saturation;break;
-                case "sprMatValue_Icon":_val=gr.cfgIconShaderMatProps.value;break;
-                case "sprMatNegative_Icon":_val=gr.cfgIconShaderMatProps.negative;break;
-                case "sprMatPixelate_Icon":_val=gr.cfgIconShaderMatProps.pixelate;break;
-                case "sprMatBlur_Icon":_val=gr.cfgIconShaderMatProps.blur;break;
+                
+                case "sprMatHue_Icon":_val=saveInfo.iconShaderMatProps.hue;break;
+                case "sprMatSatur_Icon":_val=saveInfo.iconShaderMatProps.saturation;break;
+                case "sprMatValue_Icon":_val=saveInfo.iconShaderMatProps.value;break;
+                case "sprMatNegative_Icon":_val=saveInfo.iconShaderMatProps.negative;break;
+                case "sprMatPixelate_Icon":_val=saveInfo.iconShaderMatProps.pixelate;break;
+                case "sprMatBlur_Icon":_val=saveInfo.iconShaderMatProps.blur;break;
 
                 case "sprMatHue_Player":_val=gr.playerShaderMatProps.hue;break;
                 case "sprMatSatur_Player":_val=gr.playerShaderMatProps.saturation;break;

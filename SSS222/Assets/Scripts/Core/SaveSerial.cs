@@ -88,6 +88,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public PlayerData playerData=new PlayerData();
 	public float buildFirstLoaded;
 	public float buildLastLoaded;
+	public string lastEditedSandbox;
 	[System.Serializable]public class PlayerData{
 		public Highscore[] highscore=new Highscore[0];
 		public string skinName="def";
@@ -112,16 +113,23 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
         var settings=new ES3Settings(_playerDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
 		if(!ES3.KeyExists("buildFirstLoaded",settings)){buildFirstLoaded=GameManager.instance.buildVersion;ES3.Save("buildFirstLoaded",buildFirstLoaded,settings);}
 		buildLastLoaded=GameManager.instance.buildVersion;ES3.Save("buildLastLoaded",buildLastLoaded,settings);
+		ES3.Save("lastEditedSandbox",lastEditedSandbox,settings);
 		ES3.Save("playerData",playerData,settings);
 		Debug.Log("Game Data saved");
 	}
 	public void Load(){
 		if(ES3.FileExists(_playerDataPath())){
 			var settings=new ES3Settings(_playerDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
+
 			if(ES3.KeyExists("buildFirstLoaded",settings)){buildFirstLoaded=ES3.Load<float>("buildFirstLoaded",8,settings);}
 			else{Debug.LogWarning("Key for buildFirstLoaded not found in: "+_playerDataPath());}
+
 			if(ES3.KeyExists("buildLastLoaded",settings)){buildLastLoaded=ES3.Load<float>("buildLastLoaded",8,settings);}
 			else{Debug.LogWarning("Key for buildLastLoaded not found in: "+_playerDataPath());}
+
+			if(ES3.KeyExists("lastEditedSandbox",settings)){lastEditedSandbox=ES3.Load<string>("lastEditedSandbox","",settings);}
+			else{Debug.LogWarning("Key for lastEditedSandbox not found in: "+_playerDataPath());}
+
 			if(ES3.KeyExists("playerData",settings)){ES3.LoadInto<PlayerData>("playerData",playerData,settings);}
 			else{Debug.LogWarning("Key for playerData not found in: "+_playerDataPath());}
 			//var hi=-1;foreach(int h in playerData.highscore){hi++;if(h!=0)playerData.highscore[hi]=h;}

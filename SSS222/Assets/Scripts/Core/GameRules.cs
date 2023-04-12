@@ -19,9 +19,9 @@ public class GameRules : MonoBehaviour{     [ES3NonSerializable]public static Ga
     [ShowIf("@this._isAdventureSubZone&&this._isAdventureBossZone==false")][ES3NonSerializable]public bool _isAdventureTravelZone;
     [ShowIf("@this._isAdventureSubZone&&this._isAdventureTravelZone==false")][ES3NonSerializable]public bool _isAdventureBossZone;
     [ES3NonSerializable][HideIf("@this._isAdventureSubZone")][MultiLineProperty]public string cfgDesc;
-    [HideIf("@this._isAdventureSubZone&&this._isAdventureBossZone==false")]public string cfgIconAssetName;
+    [ES3NonSerializable][HideIf("@this._isAdventureSubZone&&this._isAdventureBossZone==false")]public string cfgIconAssetName;
     [HideIf("@this._isAdventureSubZone&&this._isAdventureBossZone==false")][InfoBox("Place a special GameObject with multiple icons here:")][AssetsOnly,ES3NonSerializable]public GameObject cfgIconsGo;
-    [HideIf("@this._isAdventureSubZone")]public ShaderMatProps cfgIconShaderMatProps;
+    [ES3NonSerializable][HideIf("@this._isAdventureSubZone")]public ShaderMatProps cfgIconShaderMatProps;
     [HideIf("@this._isAdventureTravelZone||this.cfgName.Contains(\"Adventure\")&&this._isAdventureSubZone==false")]public ShaderMatProps bgMaterial;
 [Title("Global", titleAlignment: TitleAlignments.Centered)]
     //[HideIfGroup("Global",Condition="_isAdventureZone")]
