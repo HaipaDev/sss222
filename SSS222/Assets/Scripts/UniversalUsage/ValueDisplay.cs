@@ -224,6 +224,9 @@ public class ValueDisplay : MonoBehaviour{
             else if(value=="energyMaxPlayerGR") _txt=gr.energyMaxPlayer.ToString();
             else if(value=="speedPlayerGR") _txt=gr.moveSpeedPlayer.ToString();
             else if(value=="powerupsCapacity") _txt=gr.powerupsCapacity.ToString();
+            else if(value=="spawnPosGRx") _txt=gr.startingPosPlayer.x.ToString();
+            else if(value=="spawnPosGRy") _txt=gr.startingPosPlayer.y.ToString();
+            else if(value=="defaultScalePlayerGR") _txt=gr.shipScaleDefault.ToString();
 
             else if(value=="energyGain_EnergyBallGR") _txt=gr.energyBall_energyGain.ToString();
             else if(value=="energyGain_BatteryGR") _txt=gr.battery_energyGain.ToString();

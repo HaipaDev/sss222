@@ -212,7 +212,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void OpenPlayerSpritesLibPanel(){CloseAllPanels();playerPanel.SetActive(true);playerSpritesLibPanel.SetActive(true);}
 
     public void OpenEnemiesPanel(){CloseAllPanels();enemiesPanel.SetActive(true);SetEnemyPreviewsSprite();}
-    public void OpenEnemyPanel(string str){CloseAllPanels();enemyPanel.SetActive(true);enemyMainPanel.SetActive(true);enemyToModify=str;SetEnemyPreviewsSprite();
+    public void OpenEnemyPanel(string str){CloseAllPanels();enemyPanel.SetActive(true);enemyMainPanel.SetActive(true);enemyToModify=str;SetEnemyPreviewsSprite();SetEnemyTypePreview();
         enemySpritePanel.SetActive(false);enemySpritesLibPanel.SetActive(false);}
     public void OpenEnemySpritePanel(){if(_canModifySpriteEn()){CloseAllPanels();enemyPanel.SetActive(true);enemySpritePanel.SetActive(true);SetEnemyPreviewsSprite();}}
     public void OpenEnemySpritesLibPanel(){if(_canChangeSpriteEn()){CloseAllPanels();enemyPanel.SetActive(true);enemySpritesLibPanel.SetActive(true);}}
@@ -724,7 +724,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         else if(i.moveX&&i.moveY){i.moveX=true;i.moveY=false;}
         OnChangeAnything();
     }
-    public void SetSpeed(string v){GameRules.instance.moveSpeedPlayer=float.Parse(v);OnChangeAnything();}
+    public void SetPlayerStartPosX(string v){GameRules.instance.startingPosPlayer.x=float.Parse(v);OnChangeAnything();}
+    public void SetPlayerStartPosY(string v){GameRules.instance.startingPosPlayer.y=float.Parse(v);OnChangeAnything();}
+    public void SetPlayerDefaultScale(string v){GameRules.instance.shipScaleDefault=float.Parse(v);OnChangeAnything();}
+    public void SetPlayerSpeed(string v){GameRules.instance.moveSpeedPlayer=float.Parse(v);OnChangeAnything();}
     public void SetPowerupsCapacity(float v){GameRules.instance.powerupsCapacity=(int)v;SetPowerups();OnChangeAnything();}
     public void SetAutoshoot(bool v){GameRules.instance.autoShootPlayer=v;OnChangeAnything();}
     public void OpenStartingPowerupChoices(int id){
@@ -787,6 +790,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetEnemyDefense(string v){_enMod().defense=int.Parse(v);OnChangeAnything();}
     public void SetEnemyScoreStart(string v){_enMod().scoreValue=new Vector2(float.Parse(v),_enMod().scoreValue.y);OnChangeAnything();}
     public void SetEnemyScoreEnd(string v){_enMod().scoreValue=new Vector2(_enMod().scoreValue.x,float.Parse(v));OnChangeAnything();}
+    public void SetEnemyType(int v){_enMod().type=(enemyType)v;}
 
     //Enemy Sprite
     public void SetEnemySprite(string v){_enMod().spr=enemySprites.Find(x=>x.name==v).spr;OpenEnemySpritePanel();}
@@ -1286,6 +1290,11 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 enemyMainPanel.transform.GetChild(1).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(enemyMainPanel.transform.GetChild(1).GetComponent<Image>().material,_enModSprMat(),true);
                 enemySpritePanel.transform.GetChild(1).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(enemySpritePanel.transform.GetChild(1).GetComponent<Image>().material,_enModSprMat(),true);
             }
+        }
+    }
+    void SetEnemyTypePreview(){
+        if(_enMod()!=null){
+            enemyMainPanel.transform.GetChild(8).GetComponent<TMP_Dropdown>().value=(int)_enMod().type;
         }
     }
 
