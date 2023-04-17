@@ -373,6 +373,8 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 493d300affea37d439f50f4d3f86bca4, type: 3}
   - name: laserBulb-yellow
     spr: {fileID: 21300000, guid: 01044059662f37948a1aaedd6953959b, type: 3}
+  - name: laserBulb-gray
+    spr: {fileID: 21300000, guid: abdf5c64e3d5bed439a155556f9999bc, type: 3}
   - name: gamepad
     spr: {fileID: 21300000, guid: a16a2d3ff0e7324459ea79bbed2b6489, type: 3}
   - name: skull1
@@ -393,6 +395,8 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 35dd6c8c8ee54b34aae51ebef938815e, type: 3}
   - name: exit
     spr: {fileID: 21300000, guid: c1dfc810affc27f4d961d54b8ae67d4a, type: 3}
+  - name: dice
+    spr: {fileID: 21300000, guid: 3a121aec5a261224dbc800b49916bd8e, type: 3}
   materials:
   - name: AIOShaderMat
     mat: {fileID: 2100000, guid: 94bd4665afcd8b743921007cb09b25c0, type: 2}

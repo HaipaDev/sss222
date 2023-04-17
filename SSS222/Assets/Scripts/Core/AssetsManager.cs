@@ -395,6 +395,16 @@ public class AssetsManager : MonoBehaviour{	public static AssetsManager instance
 	}
 	public static bool _isColorDark(Color color){bool b=false;float H,S,V;Color.RGBToHSV(color,out H,out S,out V);if(V<=0.3f){b=true;}return b;}
 	public static void MakeParticleLooping(ParticleSystem ps){var psMain=ps.main;psMain.loop=true;psMain.stopAction=ParticleSystemStopAction.None;}
+	public static void ReplaceShaderMat(ref ShaderMatProps shader1, ShaderMatProps shader2){
+		shader1.text=shader2.text;
+		shader1.hue=shader2.hue;
+		shader1.saturation=shader2.saturation;
+		shader1.value=shader2.value;
+		shader1.negative=shader2.negative;
+		shader1.pixelate=shader2.pixelate;
+		shader1.blur=shader2.blur;
+		shader1.lowResBlur=shader2.lowResBlur;
+	}
 
 	public class CoroutineWithData {
 		public Coroutine coroutine { get; private set; }

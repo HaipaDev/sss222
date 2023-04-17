@@ -291,6 +291,7 @@ public class ValueDisplay : MonoBehaviour{
             //Sandbox Speciffic
             if(SandboxCanvas.instance!=null){   var sb=SandboxCanvas.instance;
                 if(value=="saveSelected") _txt=sb.saveSelected.Replace(".json","");
+                else if(value=="curSaveFileName") _txt=sb.curSaveFileName.Replace(".json","");
                 else if(value=="saveInfoName") _txt=sb.saveInfo.name;
                 else if(value=="saveInfoDesc") _txt=sb.saveInfo.desc;
                 else if(value=="buildVersionSB") _txt="Build "+sb.saveInfo.saveBuild;
@@ -303,7 +304,8 @@ public class ValueDisplay : MonoBehaviour{
                 else if(value=="bgValueGR") _txt=gr.bgMaterial.value.ToString();
                 else if(value=="bgNegativeGR") _txt=gr.bgMaterial.negative.ToString();
                 else if(value=="bgPixelateGR") _txt=gr.bgMaterial.pixelate.ToString();
-                else if(value=="bgBlueGR") _txt=gr.bgMaterial.blur.ToString();
+                else if(value=="bgBlurGR") _txt=gr.bgMaterial.blur.ToString();
+                else if(value=="resetToPresetGR") _txt="RESET TO PRESET\n <color=grey>["+sb.defPresetGameruleset.cfgName+"]</color>";
 
                 if(sb._enMod()!=null){
                     if(value=="name_EnemySB") _txt=sb._enMod().name;

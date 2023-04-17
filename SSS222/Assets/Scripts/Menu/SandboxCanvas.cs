@@ -55,6 +55,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     [SceneObjectsOnly][SerializeField] public GameObject deleteSandboxPrompt;
     [SceneObjectsOnly][SerializeField] public GameObject quitSaveSandboxPrompt;
     [SceneObjectsOnly][SerializeField] public GameObject enterLoadSandboxPrompt;
+    [SceneObjectsOnly][SerializeField] public GameObject loadDefaultPrompt;
     [DisableInEditorMode][SerializeField] public string saveSelected="Sandbox Save #1";
     //[DisableInEditorMode][SerializeField] public string _cachedSandboxName;
     [DisableInEditorMode][SerializeField] public string curSaveFileName;
@@ -92,6 +93,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     Color defaultColor=new Color(1,1,1,0.56f);
     Color selectedColor=new Color(0.3f,0.3f,1,0.56f);
     Color activeColor=new Color(1,1,0.3f,0.56f);
+    bool _initiated=false;
 #endregion
 #region//Base
     void Start(){
@@ -110,7 +112,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             saveInfo.desc="New Sandbox Mode Savefile";
             defPresetGameruleset=CoreSetup.instance.gamerulesetsPrefabs[0];
             saveInfo.presetFrom=CoreSetup.instance.gamerulesetsPrefabs[0].cfgName;
-            saveInfo.saveBuild=0;
+            saveInfo.saveBuild=0;_modified=false;
             saveInfo.gameBuild=GameManager.instance.buildVersion;
             saveInfo.iconAssetName="questionMark";
         }
@@ -130,10 +132,17 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         defaultColor=new Color(1,1,1,0.56f);
         selectedColor=new Color(0.3f,0.3f,1,0.56f);
         activeColor=new Color(1,1,0.3f,0.56f);
+        StartCoroutine(Initiate());
     }
+    IEnumerator Initiate(){yield return new WaitForSecondsRealtime(0.5f);_initiated=true;}
+    string _backText;
     void Update(){
         if(GSceneManager.EscPressed()){Back();}
         GameManager.instance.defaultGameSpeed=GameRules.instance.defaultGameSpeed;
+
+        if(_anySavingPromptActive()&&_backText!="DON'T"){_backText="DON'T";}
+        else if(!_anySavingPromptActive()&&_backText!="BACK"){_backText="BACK";}
+        if(transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text!=_backText){transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text=_backText;}
     }
     public void Back(){
         if(_anyFirstLevelPanelsActive()){OpenDefaultPanel();}
@@ -153,11 +162,12 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 else if(basicCollectiblesPanel.activeSelf||powerupsPanel.activeSelf){OpenCollectiblesPanel();}
         else{
             if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="InfoGameMode"){FindObjectOfType<ModeInfoManager>().SetActivePanel(0);}
-            else{
+            else{//if SandboxMode
                 if(!_modified){
                     if(_anySavingPromptActive()){CloseSavingPrompts();}
                     else{QuitSandbox();}
                 }else{
+                    if(_anySavingPromptActive()){CloseSavingPrompts();return;}
                     if(!_anySavingPromptActive()){OpenQuitSavePrompt();}
                     if(saveInfo.saveBuild!=0){SaveSerial.instance.lastEditedSandbox=curSaveFileName;}
                 }
@@ -171,7 +181,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             loadSandboxPrompt.activeSelf||
             deleteSandboxPrompt.activeSelf||
             quitSaveSandboxPrompt.activeSelf||
-            enterLoadSandboxPrompt.activeSelf
+            enterLoadSandboxPrompt.activeSelf||
+            loadDefaultPrompt.activeSelf
         );
     }
     public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}
@@ -329,7 +340,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         SetPowerupSpawnersChoices();
     }
 #endregion
-#region//Setting Preset, Loading and Saving
+#region///Setting Preset, Loading and Saving
     public void SelectBuiltinPreset(string str){
         Transform builtInPresetsListTransform=builtInPresetsPanel.transform.GetChild(0).GetChild(0);
         if(_selectedDefPreset!=str){
@@ -353,6 +364,14 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         ResetBuiltinPresetButtonsColors();
         HighlightActiveBuiltinPreset();
     }}
+    public void OpenLoadBuiltinPresetPrompt(){
+        if(!String.IsNullOrEmpty(_selectedDefPreset)){
+            loadDefaultPrompt.SetActive(true);
+            loadDefaultPrompt.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=
+            "Are you sure you want to reset your current save file to \u0022"+_selectedDefPreset
+            +"\u0022 ?";
+        }else{}
+    }
     public void LoadBuiltinPresetSelected(){if(_selectedDefPreset!=""){
         StartCoroutine(LoadBuiltinPresetI(_selectedDefPreset));
         SavePopup(_selectedDefPreset+" <color=blue>LOADED</color>");
@@ -373,22 +392,18 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         //gr.cfgIconsGo=sandboxIconsGo;
         gr.cfgIconAssetName="questionMark";
         gr.cfgIconsGo=null;
+        CloseSavingPrompts();
         OpenDefaultPanel();
         SetupEverything();
     }
     void OnChangeAnything(){
-        if(saveInfo.saveBuild==0){saveInfo.saveBuild=1;}
-        if(!_modified){_modified=true;}
+        if(_initiated){
+            if(saveInfo.saveBuild==0){saveInfo.saveBuild=1;}
+            if(!_modified){_modified=true;}
+            Debug.Log("OnChangeAnything();");
+        }
     }
     public void SetDefPresetGameruleset(string str){defPresetGameruleset=CoreSetup.instance.gamerulesetsPrefabs[GameManager.instance.GetGamemodeID(str)];saveInfo.presetFrom=str;}
-    public void SetPresetIcon(string v){saveInfo.iconAssetName=v;OpenPresetAppearanceIconPanel();OnChangeAnything();}
-    public void SetPresetIconSprMatHue(float v){saveInfo.iconShaderMatProps.hue=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
-    public void SetPresetIconSprMatSatur(float v){saveInfo.iconShaderMatProps.saturation=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
-    public void SetPresetIconSprMatValue(float v){saveInfo.iconShaderMatProps.value=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
-    public void SetPresetIconSprMatNegative(float v){saveInfo.iconShaderMatProps.negative=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
-    public void SetPresetIconSprMatPixelate(float v){saveInfo.iconShaderMatProps.pixelate=Mathf.Clamp((float)Math.Round(v,2),(4/512),1);UpdateIconSprMat();OnChangeAnything();}
-    public void SetPresetIconSprMatBlur(float v){saveInfo.iconShaderMatProps.blur=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
-    void UpdateIconSprMat(){SetPresetIconPreviewsSprite();}
     public void SelectPreset(string str){
         if(!String.IsNullOrEmpty(str)&&str!=saveSelected){
             if(String.IsNullOrEmpty(curSaveFileName)){curSaveFileName=saveSelected;}
@@ -586,7 +601,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             if(ES3.FileExists(_selectedSandboxFilePath())){
                 if(ES3.KeyExists("gamerulesData",_selectedSandboxFilePath())){
                     ES3.LoadInto<GameRules>("gamerulesData",_selectedSandboxFilePath(),GameRules.instance);
-                    SetPresetIconPreviewsSprite();
                     if(ES3.KeyExists("saveInfo",_selectedSandboxFilePath())){
                         ES3.LoadInto("saveInfo",_selectedSandboxFilePath(),saveInfo);
                         //GameRules.instance.cfgName=saveInfo.name;
@@ -618,6 +632,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             SavePopup("<color=orange> File name is empty </color>");
         }
         CloseSavingPrompts();
+        SetPresetIconPreviewsSprite();
     }
     public void DeleteSandbox(bool deletePermanently=false){
         if(!String.IsNullOrEmpty(saveSelected)){
@@ -654,9 +669,19 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void BrowseSandboxSaves(){Application.OpenURL("file:///"+_sandboxSavesDir());}
 #endregion
 
-#region//Global
+#region///Preset Display
     public void SetSandboxName(string v){saveSelected=v;saveInfo.name=v;OnChangeAnything();}//GameRules.instance.cfgName=v;}//sandboxName=v;}
     public void SetSandboxDesc(string v){saveInfo.desc=v;OnChangeAnything();}//GameRules.instance.cfgName=v;}//sandboxName=v;}
+    public void SetPresetIcon(string v){saveInfo.iconAssetName=v;OpenPresetAppearanceIconPanel();OnChangeAnything();}
+    public void SetPresetIconSprMatHue(float v){saveInfo.iconShaderMatProps.hue=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
+    public void SetPresetIconSprMatSatur(float v){saveInfo.iconShaderMatProps.saturation=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
+    public void SetPresetIconSprMatValue(float v){saveInfo.iconShaderMatProps.value=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
+    public void SetPresetIconSprMatNegative(float v){saveInfo.iconShaderMatProps.negative=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
+    public void SetPresetIconSprMatPixelate(float v){saveInfo.iconShaderMatProps.pixelate=Mathf.Clamp((float)Math.Round(v,2),(4/512),1);UpdateIconSprMat();OnChangeAnything();}
+    public void SetPresetIconSprMatBlur(float v){saveInfo.iconShaderMatProps.blur=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
+    void UpdateIconSprMat(){SetPresetIconPreviewsSprite();}
+#endregion
+#region///Global
     public void SetGameSpeed(float v){GameRules.instance.defaultGameSpeed=(float)System.Math.Round(v,2);OnChangeAnything();}
     public void SetScoreDisplay(){scoreDisplay s=GameRules.instance.scoreDisplay;
         switch(s){
@@ -674,6 +699,19 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetShopCargoOn(bool v){GameRules.instance.shopCargoOn=v;OnChangeAnything();}
     public void SetModulesOn(bool v){GameRules.instance.modulesOn=v;OnChangeAnything();}
     public void SetBarrierOn(bool v){GameRules.instance.barrierOn=v;OnChangeAnything();}
+    public void ResetGlobal(){
+        GameRules.instance.defaultGameSpeed=defPresetGameruleset.defaultGameSpeed;
+        GameRules.instance.scoreDisplay=defPresetGameruleset.scoreDisplay;
+        GameRules.instance.crystalsOn=defPresetGameruleset.crystalsOn;
+        GameRules.instance.xpOn=defPresetGameruleset.xpOn;
+        GameRules.instance.coresOn=defPresetGameruleset.coresOn;
+        GameRules.instance.levelingOn=defPresetGameruleset.levelingOn;
+        GameRules.instance.shopOn=defPresetGameruleset.shopOn;
+        GameRules.instance.shopCargoOn=defPresetGameruleset.shopCargoOn;
+        GameRules.instance.modulesOn=defPresetGameruleset.modulesOn;
+        GameRules.instance.barrierOn=defPresetGameruleset.barrierOn;
+        OnChangeAnything();
+    }
     public void SetShopScoreRangeStart(string v){if(GameRules.instance.shopSpawnReqs is spawnScore){var sr=(spawnScore)GameRules.instance.shopSpawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}
         else{Debug.LogWarning("Shop spawns are not set by score!");GameRules.instance.shopSpawnReqsType=spawnReqsType.score;GameRules.instance.waveSpawnReqs=new spawnScore();var sr=(spawnScore)GameRules.instance.waveSpawnReqs;sr.scoreMaxSetRange.x=int.Parse(v);}
         OnChangeAnything();
@@ -686,13 +724,17 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetBackgroundSatur(float v){GameRules.instance.bgMaterial.saturation=(float)Math.Round(v,2);UpdateBgMaterial();OnChangeAnything();}
     public void SetBackgroundValue(float v){GameRules.instance.bgMaterial.value=(float)Math.Round(v,2);UpdateBgMaterial();OnChangeAnything();}
     public void SetBackgroundNegative(float v){GameRules.instance.bgMaterial.negative=(float)Math.Round(v,2);UpdateBgMaterial();OnChangeAnything();}
+    public void ResetBackgroundMaterial(){
+        AssetsManager.ReplaceShaderMat(ref GameRules.instance.bgMaterial,defPresetGameruleset.bgMaterial);
+        UpdateBgMaterial();OnChangeAnything();
+    }
     void UpdateBgMaterial(){
         GameRules.instance.bgMaterial.text=FindObjectOfType<BGManager>().GetBgTexture();
         //Material _mat=new Material(Resources.Load("AllIn1SpriteShader", typeof(Shader)) as Shader);
         //_mat=AssetsManager.instance.UpdateShaderMatProps(FindObjectOfType<BGManager>().GetBgMat(),GameRules.instance.bgMaterial);
     }
 #endregion
-#region//Player
+#region///Player
     //Player Sprite
     public void SetPlayerSprite(string v){}//GameRules.instance.playerSprite=playerSprites.Find(x=>x.name==v).spr;OpenPlayerSpritePanel();}
     public void SetPlayerSprMatHue(float v){GameRules.instance.playerShaderMatProps.hue=(float)Math.Round(v,2);UpdatePlayerSprMat();OnChangeAnything();}
@@ -702,6 +744,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetPlayerSprMatPixelate(float v){GameRules.instance.playerShaderMatProps.pixelate=Mathf.Clamp((float)Math.Round(v,2),(4/512),1);UpdatePlayerSprMat();OnChangeAnything();}
     public void SetPlayerSprMatBlur(float v){GameRules.instance.playerShaderMatProps.blur=(float)Math.Round(v,2);UpdatePlayerSprMat();OnChangeAnything();}
     void UpdatePlayerSprMat(){SetPlayerPreviewsSprite();}
+
     public void SetHealth(string v){GameRules.instance.healthPlayer=float.Parse(v);
         if(GameRules.instance.healthPlayer>GameRules.instance.healthMaxPlayer){GameRules.instance.healthMaxPlayer=GameRules.instance.healthPlayer;}
         OnChangeAnything();
@@ -717,6 +760,16 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         if(GameRules.instance.energyMaxPlayer==0){GameRules.instance.energyOnPlayer=false;}else{GameRules.instance.energyOnPlayer=true;}
         OnChangeAnything();
     }
+    public void ResetPlayerMain1(){
+        GameRules.instance.healthPlayer=defPresetGameruleset.healthPlayer;
+        GameRules.instance.healthMaxPlayer=defPresetGameruleset.healthMaxPlayer;
+        GameRules.instance.defensePlayer=defPresetGameruleset.defensePlayer;
+        GameRules.instance.energyPlayer=defPresetGameruleset.energyPlayer;
+        GameRules.instance.energyMaxPlayer=defPresetGameruleset.energyMaxPlayer;
+        if(GameRules.instance.energyMaxPlayer==0){GameRules.instance.energyOnPlayer=false;}else{GameRules.instance.energyOnPlayer=true;}
+        OnChangeAnything();
+    }
+
     public void SetMoveAxis(){
         var i=GameRules.instance;
         if(i.moveX&&!i.moveY){i.moveX=false;i.moveY=true;}
@@ -724,10 +777,18 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         else if(i.moveX&&i.moveY){i.moveX=true;i.moveY=false;}
         OnChangeAnything();
     }
+    public void SetPlayerSpeed(string v){GameRules.instance.moveSpeedPlayer=float.Parse(v);OnChangeAnything();}
     public void SetPlayerStartPosX(string v){GameRules.instance.startingPosPlayer.x=float.Parse(v);OnChangeAnything();}
     public void SetPlayerStartPosY(string v){GameRules.instance.startingPosPlayer.y=float.Parse(v);OnChangeAnything();}
     public void SetPlayerDefaultScale(string v){GameRules.instance.shipScaleDefault=float.Parse(v);OnChangeAnything();}
-    public void SetPlayerSpeed(string v){GameRules.instance.moveSpeedPlayer=float.Parse(v);OnChangeAnything();}
+    public void ResetPlayerMain2(){
+        GameRules.instance.moveX=defPresetGameruleset.moveX;
+        GameRules.instance.moveY=defPresetGameruleset.moveY;
+        GameRules.instance.moveSpeedPlayer=defPresetGameruleset.moveSpeedPlayer;
+        GameRules.instance.startingPosPlayer=defPresetGameruleset.startingPosPlayer;
+        GameRules.instance.shipScaleDefault=defPresetGameruleset.shipScaleDefault;
+        OnChangeAnything();
+    }
     public void SetPowerupsCapacity(float v){GameRules.instance.powerupsCapacity=(int)v;SetPowerups();OnChangeAnything();}
     public void SetAutoshoot(bool v){GameRules.instance.autoShootPlayer=v;OnChangeAnything();}
     public void OpenStartingPowerupChoices(int id){
@@ -748,8 +809,16 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         SetPowerups();
         OnChangeAnything();
     }
+    public void ResetPlayerMain3(){
+        GameRules.instance.autoShootPlayer=defPresetGameruleset.autoShootPlayer;
+        GameRules.instance.powerupsCapacity=defPresetGameruleset.powerupsCapacity;
+        GameRules.instance.powerupsStarting.Clear();
+        foreach(Powerup p in defPresetGameruleset.powerupsStarting){GameRules.instance.powerupsStarting.Add(p);}
+        SetPowerups();
+        OnChangeAnything();
+    }
 #endregion
-#region//Enemies
+#region///Enemy / Enemies
     #region///returns
     bool _canModifySpriteEn(){bool b=true;string s=enemyToModify;
         /*if(false
@@ -765,6 +834,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public EnemyClass _enGR(string str, GameRules gr){EnemyClass _en=null;if(!String.IsNullOrEmpty(str)){_en=System.Array.Find(gr.enemies,x=>x.name==str);}return _en;}
     public EnemyClass _en(string str){return _enGR(str,GameRules.instance);}
     public EnemyClass _enMod(){return _en(enemyToModify);}
+    public EnemyClass _enModDef(){return _enGR(enemyToModify,defPresetGameruleset);}
+
     public Sprite _enSprGR(string str,GameRules gr){Sprite _spr=null;
         if(_enGR(str,gr)!=null){
             if(_enGR(str,gr).spr!=null){_spr=_enGR(str,gr).spr;}
@@ -777,11 +848,14 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
     public Sprite _enSpr(string str){return _enSprGR(str,GameRules.instance);}
     public Sprite _enModSpr(){return _enSpr(enemyToModify);}
-    public ShaderMatProps _enSprMat(string str){
-        if(_en(str)!=null){return _en(str).sprMatProps;}
+    public Sprite _enModSprDef(){return _enSprGR(enemyToModify,defPresetGameruleset);}
+    public ShaderMatProps _enSprMatGR(string str, GameRules gr){
+        if(_en(str)!=null){return _enGR(str,gr).sprMatProps;}
         else return null;
     }
+    public ShaderMatProps _enSprMat(string str){return _enSprMatGR(str,GameRules.instance);}
     public ShaderMatProps _enModSprMat(){return _enSprMat(enemyToModify);}
+    public ShaderMatProps _enModSprMatDef(){return _enSprMatGR(enemyToModify,defPresetGameruleset);}
     #endregion///returns
 
     //Enemy Main Settings
@@ -791,6 +865,15 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetEnemyScoreStart(string v){_enMod().scoreValue=new Vector2(float.Parse(v),_enMod().scoreValue.y);OnChangeAnything();}
     public void SetEnemyScoreEnd(string v){_enMod().scoreValue=new Vector2(_enMod().scoreValue.x,float.Parse(v));OnChangeAnything();}
     public void SetEnemyType(int v){_enMod().type=(enemyType)v;}
+    public void ResetEnemyMain1(){
+        _enMod().healthStart=_enModDef().healthStart;
+        _enMod().healthMax=_enModDef().healthMax;
+        _enMod().defense=_enModDef().defense;
+        _enMod().type=_enModDef().type;
+    }
+    public void ResetEnemyMain2(){
+        _enMod().scoreValue=_enModDef().scoreValue;
+    }
 
     //Enemy Sprite
     public void SetEnemySprite(string v){_enMod().spr=enemySprites.Find(x=>x.name==v).spr;OpenEnemySpritePanel();}
@@ -801,8 +884,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetEnemySprMatPixelate(float v){if(_enModSprMat()!=null)_enModSprMat().pixelate=Mathf.Clamp((float)Math.Round(v,2),(4/512),1);UpdateEnModSprMat();OnChangeAnything();}
     public void SetEnemySprMatBlur(float v){if(_enModSprMat()!=null)_enModSprMat().blur=(float)Math.Round(v,2);UpdateEnModSprMat();OnChangeAnything();}
     void UpdateEnModSprMat(){SetEnemyPreviewsSprite();}
+    public void ResetEnemySprite(){
+        _enMod().spr=_enModSprDef();
+        AssetsManager.ReplaceShaderMat(ref _enMod().sprMatProps,_enModSprMatDef());
+        UpdateEnModSprMat();
+    }
 #endregion
-#region//Waves
+#region///Waves
     public void SetWaveSpawnReqsType(int v){    spawnReqsType srt=0;string t=wavesSpawnReqsTypes[v];
         switch(t){
             case "Time":srt=spawnReqsType.time;break;
@@ -834,6 +922,12 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         else{Debug.LogWarning("Wave spawns are not set by kills!");GameRules.instance.waveSpawnReqsType=spawnReqsType.kills;GameRules.instance.waveSpawnReqs=new spawnKills();var sr=(spawnKills)GameRules.instance.waveSpawnReqs;sr.killsNeeded=int.Parse(v);}
         OnChangeAnything();
     }
+    public void ResetWaveSpawns1(){
+        GameRules.instance.waveSpawnReqsType=defPresetGameruleset.waveSpawnReqsType;
+        GameRules.instance.waveSpawnReqs=defPresetGameruleset.waveSpawnReqs;
+        spawnReqsMono.Validate(ref GameRules.instance.waveSpawnReqs, ref GameRules.instance.waveSpawnReqsType);
+        OnChangeAnything();
+    }
 
     public void SetWaveWeight(string n, string v){
         LootTableEntryWaves e=GameRules.instance.waveList.Find(x=>x.lootItem.name==n);
@@ -852,24 +946,50 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         OnChangeAnything();
     }
     public void SetWaveStartingRandom(bool v){GameRules.instance.startingWaveRandom=v;OnChangeAnything();}
+    public void ResetWaveSpawns2(){
+        GameRules.instance.startingWave=defPresetGameruleset.startingWave;
+        GameRules.instance.startingWaveRandom=defPresetGameruleset.startingWaveRandom;
+        foreach(LootTableEntryWaves e in GameRules.instance.waveList){
+            LootTableEntryWaves ed=defPresetGameruleset.waveList.Find(x=>x.lootItem.name==e.lootItem.name);
+            e.dropChance=ed.dropChance;
+            e.levelReq=ed.levelReq;
+        }
+        SetWaveChoices();
+        OnChangeAnything();
+    }
 #endregion
-#region//Collectibles
+#region///Collectibles
     public void SetEnergyGain_EnergyBall(string v){GameRules.instance.energyBall_energyGain=float.Parse(v);OnChangeAnything();}
     public void SetEnergyGain_Battery(string v){GameRules.instance.battery_energyGain=float.Parse(v);OnChangeAnything();}
+    public void SetBlackEnergyGain_Ball(string v){GameRules.instance.benergyBallGain=float.Parse(v);OnChangeAnything();}
+    public void SetBlackEnergyGain_Vial(string v){GameRules.instance.benergyVialGain=float.Parse(v);OnChangeAnything();}
+    public void SetCrystalSmallGain(string v){GameRules.instance.crystalGain=int.Parse(v);OnChangeAnything();}
+    public void SetCrystalBigGain(string v){GameRules.instance.crystalBigGain=int.Parse(v);OnChangeAnything();}
     public void SetHpGain_Medkit(string v){GameRules.instance.medkit_hpGain=float.Parse(v);OnChangeAnything();}
     public void SetEnergyGain_Medkit(string v){GameRules.instance.medkit_energyGain=float.Parse(v);OnChangeAnything();}
     public void SetHpGain_LunarGel(string v){GameRules.instance.lunarGel_hpGain=float.Parse(v);OnChangeAnything();}
     public void SetEnergyGain_Powerups(string v){GameRules.instance.powerups_energyGain=float.Parse(v);OnChangeAnything();}
     public void SetEnergyNeeded_Powerups(string v){GameRules.instance.powerups_energyNeeded=float.Parse(v);OnChangeAnything();}
-    public void SetCrystalSmallGain(string v){GameRules.instance.crystalGain=int.Parse(v);OnChangeAnything();}
-    public void SetCrystalBigGain(string v){GameRules.instance.crystalBigGain=int.Parse(v);OnChangeAnything();}
-    public void SetBlackEnergyGain_Ball(string v){GameRules.instance.benergyBallGain=float.Parse(v);OnChangeAnything();}
-    public void SetBlackEnergyGain_Vial(string v){GameRules.instance.benergyVialGain=float.Parse(v);OnChangeAnything();}
+    public void ResetBasicCollectibles(){
+        GameRules.instance.energyBall_energyGain=defPresetGameruleset.energyBall_energyGain;
+        GameRules.instance.battery_energyGain=defPresetGameruleset.battery_energyGain;
+        GameRules.instance.benergyBallGain=defPresetGameruleset.benergyBallGain;
+        GameRules.instance.benergyVialGain=defPresetGameruleset.benergyVialGain;
+        GameRules.instance.crystalGain=defPresetGameruleset.crystalGain;
+        GameRules.instance.crystalBigGain=defPresetGameruleset.crystalBigGain;
+        GameRules.instance.medkit_hpGain=defPresetGameruleset.medkit_hpGain;
+        GameRules.instance.medkit_energyGain=defPresetGameruleset.medkit_energyGain;
+        GameRules.instance.lunarGel_hpGain=defPresetGameruleset.lunarGel_hpGain;
+        GameRules.instance.powerups_energyGain=defPresetGameruleset.powerups_energyGain;
+        GameRules.instance.powerups_energyNeeded=defPresetGameruleset.powerups_energyNeeded;
+        OnChangeAnything();
+    }
     ///Powerups
     #region//returns
     public PowerupsSpawnerGR _pwrSpawnGR(string str, GameRules gr){PowerupsSpawnerGR _pwSp=null;if(!String.IsNullOrEmpty(str)){_pwSp=gr.powerupSpawners.Find(x=>x.name==str);}return _pwSp;}
     public PowerupsSpawnerGR _pwrSpawn(string str){return _pwrSpawnGR(str,GameRules.instance);}
     public PowerupsSpawnerGR _pwrSpawnMod(){return _pwrSpawn(powerupSpawnerToModify);}
+    public PowerupsSpawnerGR _pwrSpawnModDef(){return _pwrSpawnGR(powerupSpawnerToModify,defPresetGameruleset);}
     #endregion//returns
     public void SetPowerupSpawnerReqsType(int v){    spawnReqsType srt=0;string t=pwrupsSpawnReqsTypes[v];
         switch(t){
@@ -913,6 +1033,12 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         else{Debug.LogWarning("Powerup spawns are not set by kills!");_pwrSpawnMod().spawnReqsType=spawnReqsType.kills;_pwrSpawnMod().spawnReqs=new spawnKills();var sr=(spawnKills)_pwrSpawnMod().spawnReqs;sr.killsNeeded=int.Parse(v);}
         OnChangeAnything();
     }
+    public void ResetPowerupSpawns1(){
+        _pwrSpawnMod().spawnReqsType=_pwrSpawnModDef().spawnReqsType;
+        _pwrSpawnMod().spawnReqs=_pwrSpawnModDef().spawnReqs;
+        spawnReqsMono.Validate(ref _pwrSpawnMod().spawnReqs, ref _pwrSpawnMod().spawnReqsType);
+        OnChangeAnything();
+    }
 
     public void SetPwrupWeight(string n, string v){
         LootTableEntryPowerup e=_pwrSpawnMod().powerupList.Find(x=>x.lootItem.name==n);
@@ -925,9 +1051,18 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         e.levelReq=int.Parse(v);
         OnChangeAnything();
     }
+    public void ResetPowerupSpawns2(){
+        foreach(LootTableEntryPowerup e in _pwrSpawnMod().powerupList){
+            LootTableEntryPowerup ed=_pwrSpawnModDef().powerupList.Find(x=>x.lootItem.name==e.lootItem.name);
+            e.dropChance=ed.dropChance;
+            e.levelReq=ed.levelReq;
+        }
+        SetPowerupsSpawnsChoices();
+        OnChangeAnything();
+    }
 #endregion
 
-#region//Start & Update functions
+#region///Start & Update functions
     void SetPresetIconSpritesLibrary(){
         presetIconSprites=new List<GSprite>();
         var _presetIconSpritesPre=presetIconSpritesPre;_presetIconSpritesPre.OrderBy(x=>x.name).ToList();presetIconSprites.AddRange(_presetIconSpritesPre);
@@ -1091,7 +1226,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             var lvlReqInput=go.transform.GetChild(6).GetComponent<TMP_InputField>();
                 lvlReqInput.text=e.levelReq.ToString();
                 lvlReqInput.onEndEdit.AddListener((string s)=>SetWaveLvlReq(e.lootItem.name,s));
-            var waveStartingT=go.transform.GetChild(8);
+            var waveStartingT=go.transform.GetChild(7);
                 waveStartingT.GetComponent<Button>().onClick.AddListener(()=>SetWaveStarting(e.lootItem.name));
                 waveStartingT.GetChild(0).GetComponent<ToggleValue>().value="waveStarting_"+e.lootItem.name;
         }
