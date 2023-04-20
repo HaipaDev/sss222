@@ -110,6 +110,7 @@ MonoBehaviour:
   type: 2
   size: {x: 1, y: 1}
   sizeAvg: 1
+  sprAsset: Comet
   spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
   sprMatProps:
     text: {fileID: 0}
@@ -137,14 +138,16 @@ MonoBehaviour:
   killOnDash: 1
   giveScore: 1
   scoreValue: {x: 1, y: 10}
-  xpAmnt: 0
   xpChance: 100
+  xpAmnt: 0
+  accumulateXp: 1
   drops: []
   dropValues: []
   destroyOut: 1
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  _dmgHeals: 0
   bullet: {fileID: 0}
 --- !u!114 &4548800055037187618
 MonoBehaviour:

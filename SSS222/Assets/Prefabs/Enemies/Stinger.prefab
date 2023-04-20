@@ -34,6 +34,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -170,6 +171,7 @@ MonoBehaviour:
   type: 0
   size: {x: 1, y: 1}
   sizeAvg: 1
+  sprAsset: Stinger
   spr: {fileID: 0}
   sprMatProps:
     text: {fileID: 0}
@@ -197,14 +199,16 @@ MonoBehaviour:
   killOnDash: 1
   giveScore: 1
   scoreValue: {x: 1, y: 10}
-  xpAmnt: 1.5
   xpChance: 100
+  xpAmnt: 1.5
+  accumulateXp: 1
   drops: []
   dropValues: []
   destroyOut: 1
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  _dmgHeals: 0
   bullet: {fileID: 0}
 --- !u!114 &9170640989436669197
 MonoBehaviour:

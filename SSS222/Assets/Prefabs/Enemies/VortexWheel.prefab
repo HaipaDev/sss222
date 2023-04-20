@@ -163,6 +163,7 @@ MonoBehaviour:
   type: 1
   size: {x: 1, y: 1}
   sizeAvg: 1
+  sprAsset: Vortex
   spr: {fileID: 0}
   sprMatProps:
     text: {fileID: 0}
@@ -190,14 +191,16 @@ MonoBehaviour:
   killOnDash: 1
   giveScore: 1
   scoreValue: {x: 1, y: 10}
-  xpAmnt: 5
   xpChance: 100
+  xpAmnt: 5
+  accumulateXp: 1
   drops: []
   dropValues: []
   destroyOut: 1
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  _dmgHeals: 0
   bullet: {fileID: 0}
 --- !u!114 &-1719784624319243089
 MonoBehaviour:

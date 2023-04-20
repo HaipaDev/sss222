@@ -861,13 +861,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: enemies.Array.data[2].sprAsset
+      value: EnComb_classic
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: enemies.Array.data[3].DBullets
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
+      propertyPath: enemies.Array.data[3].sprAsset
+      value: EnShip_classic
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
       propertyPath: enemies.Array.data[5].shooting
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: enemies.Array.data[5].sprAsset
+      value: Goblin_classic
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
+        type: 3}
+      propertyPath: enemies.Array.data[7].sprAsset
+      value: Leech_classic
       objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}

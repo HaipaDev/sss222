@@ -215,7 +215,7 @@ MonoBehaviour:
     gobj: {fileID: 274471404120805607, guid: 6dbbf2331f593fc42a226023fa27bac4, type: 3}
   - name: hackedPwrup
     gobj: {fileID: 274471404120805607, guid: de59f15fd0bd6d44f9bd2a57cfaafaea, type: 3}
-  - name: glareDevil
+  - name: GlareDevil
     gobj: {fileID: 3147796775416149952, guid: 92194164acca2da419099a7a32b0924b, type: 3}
   - name: infEnergyPwrup
     gobj: {fileID: 274471404120805607, guid: ac10109722a6fba46982fc73bae4abd7, type: 3}
@@ -397,6 +397,16 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: c1dfc810affc27f4d961d54b8ae67d4a, type: 3}
   - name: dice
     spr: {fileID: 21300000, guid: 3a121aec5a261224dbc800b49916bd8e, type: 3}
+  - name: EnShip_classic
+    spr: {fileID: 21300000, guid: 5f4813d488c7595449d8bc4a9ca0247a, type: 3}
+  - name: EnComb_classic
+    spr: {fileID: 21300000, guid: ec5062004304d664a832f10560d73d6d, type: 3}
+  - name: Goblin_classic
+    spr: {fileID: 21300000, guid: 7ebf289a99896f343aad150ee91c120e, type: 3}
+  - name: Leech_classic
+    spr: {fileID: 21300000, guid: ffab30b28033e47409b64fce61f21ac7, type: 3}
+  - name: Comet0
+    spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
   materials:
   - name: AIOShaderMat
     mat: {fileID: 2100000, guid: 94bd4665afcd8b743921007cb09b25c0, type: 2}

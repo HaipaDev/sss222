@@ -122,6 +122,12 @@ public class AssetsManager : MonoBehaviour{	public static AssetsManager instance
 		if(_spr==null)Debug.LogWarning("Sprite not found in the library of sprites nor for the object by name: "+str);
         return _spr;
 	}
+    public Sprite SprAnyReverse(string str){Sprite _spr;
+		_spr=GetObjSpr(str,true);
+		if(_spr==null)_spr=Spr(str,true);
+		if(_spr==null)Debug.LogWarning("Sprite not found in the library of sprites nor for the object by name: "+str);
+        return _spr;
+	}
     public GameObject GetEnemyBullet(string str){
 		GObject gobj=enemyBullets.Find(x=>x.name==str);
 		GameObject go=null;if(gobj!=null)go=gobj.gobj;

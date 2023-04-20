@@ -103,7 +103,7 @@ public class Goblin : MonoBehaviour{
         AssetsManager.instance.VFX(transformVfxAssetName,transform.position);
         confused=false;Destroy(transform.GetChild(0).gameObject);
         Enemy en=GetComponent<Enemy>();
-        en.spr=bossSprite;
+        en.SetSpr(bossSprite);
         en.health=bossHealth;en.healthMax=bossHealth;
         en.shooting=true;
         pos.x=transform.position.x;transform.rotation=new Quaternion(0,0,0,0);

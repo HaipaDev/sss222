@@ -556,7 +556,7 @@ public class EnemyClass{
     public string name;
     public enemyType type;
     public Vector2 size = Vector2.one;
-    public Sprite spr;
+    public string sprAsset;
     public ShaderMatProps sprMatProps;
     public float healthStart=25;
     public float healthMax=25;

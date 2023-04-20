@@ -61,7 +61,7 @@ public class CometRandomProperties : MonoBehaviour{
 
         yield return new WaitForSeconds(0.03f);
         int spriteIndex=Random.Range(0, sprites.Length);
-        en.spr=sprites[spriteIndex];
+        en.SetSpr(sprites[spriteIndex]);
         size=(float)System.Math.Round(Random.Range(sizes.x, sizes.y),2);
         en.size=new Vector2(en.size.x*size,en.size.y*size);
 
@@ -95,7 +95,7 @@ public class CometRandomProperties : MonoBehaviour{
     public void MakeLunar(){isLunar=true;TransformIntoLunar();}
     void TransformIntoLunar(){
         int spriteIndex=Random.Range(0,spritesLunar.Length);
-        en.spr=spritesLunar[spriteIndex];
+        en.SetSpr(spritesLunar[spriteIndex]);
         if(trail!=null){trail.SetNewTrail(lunarPart);}
 
         float sizeL=(float)System.Math.Round(Random.Range(sizeMultLunar.x, sizeMultLunar.y),2);

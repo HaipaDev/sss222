@@ -44,7 +44,7 @@ public class BossAI : MonoBehaviour{
             if(phase==-1&&b.scaleUpOnSpawn){
                 var scaleUpSpeed=phasesInfo[0].delay/10f*Time.deltaTime;
                 if(Vector2.Distance(en.size,phasesInfo[0].size)>scaleUpSpeed){
-                    en.spr=phasesInfo[0].anims[0].spr;en.size+=new Vector2(scaleUpSpeed,scaleUpSpeed);
+                    en.SetSpr(phasesInfo[0].anims[0].spr);en.size+=new Vector2(scaleUpSpeed,scaleUpSpeed);
                     if(en.health<=b.healthStart){en.health+=en.healthMax*scaleUpSpeed;}
                 }
             }
@@ -67,7 +67,7 @@ public class BossAI : MonoBehaviour{
         phase=-1;
         en.defense=-1;
         en.name=b.name;
-        en.spr=b.deathSprite;
+        en.SetSpr(b.deathSprite);
         GetComponent<PointPathing>().enabled=false;
         if(transform.childCount>0)for(var t=transform.childCount-1;t>0;t--){Destroy(transform.GetChild(t).gameObject);}
 
@@ -114,7 +114,7 @@ public class BossAI : MonoBehaviour{
             en.size=phasesInfo[p].size;
             en.sprMatProps=phasesInfo[p].sprMatProps;
 
-            en.spr=phasesInfo[p].anims[0].spr;//Animate later
+            en.SetSpr(phasesInfo[p].anims[0].spr);//Animate later
         }
         if(p==0){
             if(Jukebox.instance==null){Instantiate(CoreSetup.instance.GetJukeboxPrefab());}

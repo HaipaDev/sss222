@@ -88,7 +88,6 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public PlayerData playerData=new PlayerData();
 	public float buildFirstLoaded;
 	public float buildLastLoaded;
-	public string lastEditedSandbox;
 	[System.Serializable]public class PlayerData{
 		public Highscore[] highscore=new Highscore[0];
 		public string skinName="def";
@@ -113,7 +112,6 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
         var settings=new ES3Settings(_playerDataPath(),ES3.EncryptionType.AES,gitignoreScript.savefilesEncryptionKey);
 		if(!ES3.KeyExists("buildFirstLoaded",settings)){buildFirstLoaded=GameManager.instance.buildVersion;ES3.Save("buildFirstLoaded",buildFirstLoaded,settings);}
 		buildLastLoaded=GameManager.instance.buildVersion;ES3.Save("buildLastLoaded",buildLastLoaded,settings);
-		ES3.Save("lastEditedSandbox",lastEditedSandbox,settings);
 		ES3.Save("playerData",playerData,settings);
 		Debug.Log("Game Data saved");
 	}
@@ -126,9 +124,6 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 
 			if(ES3.KeyExists("buildLastLoaded",settings)){buildLastLoaded=ES3.Load<float>("buildLastLoaded",8,settings);}
 			else{Debug.LogWarning("Key for buildLastLoaded not found in: "+_playerDataPath());}
-
-			if(ES3.KeyExists("lastEditedSandbox",settings)){lastEditedSandbox=ES3.Load<string>("lastEditedSandbox","",settings);}
-			else{Debug.LogWarning("Key for lastEditedSandbox not found in: "+_playerDataPath());}
 
 			if(ES3.KeyExists("playerData",settings)){ES3.LoadInto<PlayerData>("playerData",playerData,settings);}
 			else{Debug.LogWarning("Key for playerData not found in: "+_playerDataPath());}
@@ -252,6 +247,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	}
 #endregion
 #region//Settings Data
+	public string lastEditedSandbox;
 	public SettingsData settingsData=new SettingsData();
 	[System.Serializable]public class SettingsData{
 		public InputType inputType;
@@ -282,7 +278,6 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		public PlaneDir playfieldRot=PlaneDir.vert;
 		public int windowMode=1;
 		public Vector2Int resolution=new Vector2Int(1920,1080);
-		//public bool fullScreen=true;
 		public bool vSync=false;
 		public bool lockCursor=false;
 		public int quality=4;
@@ -318,13 +313,17 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	public void SaveSettings(){
 		var settings=new ES3Settings(_settingsDataPath(),ES3.EncryptionType.None);
 		ES3.Save("settingsData",settingsData,settings);
+		ES3.Save("lastEditedSandbox",lastEditedSandbox,settings);
 		Debug.Log("Settings saved");
 	}
 	public void LoadSettings(){
 		if(ES3.FileExists(_settingsDataPath())){
 		var settings=new ES3Settings(_settingsDataPath(),ES3.EncryptionType.None);
-			if(ES3.KeyExists("settingsData",settings))ES3.LoadInto<SettingsData>("settingsData",settingsData,settings);
-			else Debug.LogWarning("Key for settingsData not found in: "+_settingsDataPath());
+			if(ES3.KeyExists("settingsData",settings)){ES3.LoadInto<SettingsData>("settingsData",settingsData,settings);}
+			else{Debug.LogWarning("Key for settingsData not found in: "+_settingsDataPath());}
+
+			if(ES3.KeyExists("lastEditedSandbox",settings)){lastEditedSandbox=ES3.Load<string>("lastEditedSandbox",settings);}
+			else{Debug.LogWarning("Key for lastEditedSandbox not found in: "+_settingsDataPath());}
 		}else Debug.LogWarning("Settings file not found in: "+_settingsDataPath());
 	}
 	public void DeleteSettings(){

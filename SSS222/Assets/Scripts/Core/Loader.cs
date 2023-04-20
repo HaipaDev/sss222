@@ -43,7 +43,10 @@ public class Loader : MonoBehaviour{
             SaveSerial.instance.LoadStats();
             loaded=true;
         }
-        if(Application.platform!=RuntimePlatform.Android){Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,SettingsMenu.GetFullScreenMode(ss.windowMode));//Screen.fullScreen=ss.fullscreen;if(ss.fullscreen)Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);
+        if(Application.platform!=RuntimePlatform.Android){Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,FullScreenMode.FullScreenWindow);//Screen.fullScreen=ss.fullscreen;if(ss.fullscreen)Screen.SetResolution(Display.main.systemWidth,Display.main.systemHeight,true,60);
+        if(Application.platform!=RuntimePlatform.Android){
+            Screen.SetResolution(ss.resolution.x,ss.resolution.y,SettingsMenu.GetFullScreenMode(ss.windowMode));
+        }
         QualitySettings.SetQualityLevel(ss.quality);}
         //if (Application.platform == RuntimePlatform.Android)ss.moveByMouse=false;
         audioMixer.SetFloat("MasterVolume", ss.masterVolume);

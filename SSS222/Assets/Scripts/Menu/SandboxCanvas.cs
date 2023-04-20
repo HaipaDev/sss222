@@ -94,6 +94,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     Color selectedColor=new Color(0.3f,0.3f,1,0.56f);
     Color activeColor=new Color(1,1,0.3f,0.56f);
     bool _initiated=false;
+    int sandboxSaveFormat=1;
 #endregion
 #region//Base
     void Start(){
@@ -134,7 +135,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         activeColor=new Color(1,1,0.3f,0.56f);
         StartCoroutine(Initiate());
     }
-    IEnumerator Initiate(){yield return new WaitForSecondsRealtime(0.5f);_initiated=true;}
+    IEnumerator Initiate(){yield return new WaitForSecondsRealtime(0.5f);SavePopup("Initiated",0.05f);_initiated=true;}
     string _backText;
     void Update(){
         if(GSceneManager.EscPressed()){Back();}
@@ -585,6 +586,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                     if(_overwriting&&!overwriteSaveInfo){if(ES3.FileExists(_selectedSandboxFilePath())){saveInfo=ES3.Load<SandboxSaveInfo>("saveInfo",_selectedSandboxFilePath());}}//If not overwriting then load the saveInfo back
                     ES3.Save("saveInfo",saveInfo,settings);
                 }*/
+                ES3.Save("saveFormat",sandboxSaveFormat,settings);
                 ES3.Save("saveInfo",saveInfo,settings);
                 ES3.Save("gamerulesData",GameRules.instance,settings);
                 ES3.StoreCachedFile(_selectedSandboxFilePath());
@@ -838,19 +840,32 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
     public Sprite _enSprGR(string str,GameRules gr){Sprite _spr=null;
         if(_enGR(str,gr)!=null){
-            if(_enGR(str,gr).spr!=null){_spr=_enGR(str,gr).spr;}
-            else{
-                if(str=="Comet"){_spr=GameRules.instance.cometSettings.sprites[0];}
-            }
+            if(!String.IsNullOrEmpty(_enGR(str,gr).sprAsset)&&str!="Comet"){_spr=AssetsManager.instance.SprAnyReverse(_enGR(str,gr).sprAsset);}
+            //else{
+                else if(str=="Comet"){_spr=GameRules.instance.cometSettings.sprites[0];}
+            //}
             if(_spr!=null)return _spr;
             else{Debug.LogWarning("No spr for: "+str);return null;}
         }else{Debug.LogWarning("No enemy by name: "+str);return null;}
     }
+    public string _enSprStrGR(string str,GameRules gr){string _spr="";
+        if(_enGR(str,gr)!=null){
+            if(!String.IsNullOrEmpty(_enGR(str,gr).sprAsset)){_spr=_enGR(str,gr).sprAsset;}
+            /*else{
+                if(str=="Comet"){_spr=GameRules.instance.cometSettings.sprites[0];}
+            }*/
+            else{Debug.LogWarning("No spr for: "+str);}
+        }else{Debug.LogWarning("No enemy by name: "+str);}
+        return _spr;
+    }
     public Sprite _enSpr(string str){return _enSprGR(str,GameRules.instance);}
+    public string _enSprStr(string str){return _enSprStrGR(str,GameRules.instance);}
     public Sprite _enModSpr(){return _enSpr(enemyToModify);}
+    public string _enModSprStr(){return _enSprStr(enemyToModify);}
     public Sprite _enModSprDef(){return _enSprGR(enemyToModify,defPresetGameruleset);}
+    public string _enModSprStrDef(){return _enSprStrGR(enemyToModify,defPresetGameruleset);}
     public ShaderMatProps _enSprMatGR(string str, GameRules gr){
-        if(_en(str)!=null){return _enGR(str,gr).sprMatProps;}
+        if(_enGR(str,gr)!=null){return _enGR(str,gr).sprMatProps;}
         else return null;
     }
     public ShaderMatProps _enSprMat(string str){return _enSprMatGR(str,GameRules.instance);}
@@ -859,24 +874,25 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     #endregion///returns
 
     //Enemy Main Settings
+    public void SetEnemyType(int v){_enMod().type=(enemyType)v;}
     public void SetEnemyHealth(string v){_enMod().healthStart=float.Parse(v);OnChangeAnything();}
     public void SetEnemyHealthMax(string v){_enMod().healthMax=float.Parse(v);OnChangeAnything();}
     public void SetEnemyDefense(string v){_enMod().defense=int.Parse(v);OnChangeAnything();}
-    public void SetEnemyScoreStart(string v){_enMod().scoreValue=new Vector2(float.Parse(v),_enMod().scoreValue.y);OnChangeAnything();}
-    public void SetEnemyScoreEnd(string v){_enMod().scoreValue=new Vector2(_enMod().scoreValue.x,float.Parse(v));OnChangeAnything();}
-    public void SetEnemyType(int v){_enMod().type=(enemyType)v;}
     public void ResetEnemyMain1(){
         _enMod().healthStart=_enModDef().healthStart;
         _enMod().healthMax=_enModDef().healthMax;
         _enMod().defense=_enModDef().defense;
         _enMod().type=_enModDef().type;
     }
+
+    public void SetEnemyScoreStart(string v){_enMod().scoreValue=new Vector2(float.Parse(v),_enMod().scoreValue.y);OnChangeAnything();}
+    public void SetEnemyScoreEnd(string v){_enMod().scoreValue=new Vector2(_enMod().scoreValue.x,float.Parse(v));OnChangeAnything();}
     public void ResetEnemyMain2(){
         _enMod().scoreValue=_enModDef().scoreValue;
     }
 
-    //Enemy Sprite
-    public void SetEnemySprite(string v){_enMod().spr=enemySprites.Find(x=>x.name==v).spr;OpenEnemySpritePanel();}
+    ///Enemy Sprite
+    public void SetEnemySprite(string v){_enMod().sprAsset=enemySprites.Find(x=>x.name==v).name;OpenEnemySpritePanel();}
     public void SetEnemySprMatHue(float v){if(_enModSprMat()!=null)_enModSprMat().hue=(float)Math.Round(v,2);UpdateEnModSprMat();OnChangeAnything();}
     public void SetEnemySprMatSatur(float v){if(_enModSprMat()!=null)_enModSprMat().saturation=(float)Math.Round(v,2);UpdateEnModSprMat();OnChangeAnything();}
     public void SetEnemySprMatValue(float v){if(_enModSprMat()!=null)_enModSprMat().value=(float)Math.Round(v,2);UpdateEnModSprMat();OnChangeAnything();}
@@ -885,7 +901,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetEnemySprMatBlur(float v){if(_enModSprMat()!=null)_enModSprMat().blur=(float)Math.Round(v,2);UpdateEnModSprMat();OnChangeAnything();}
     void UpdateEnModSprMat(){SetEnemyPreviewsSprite();}
     public void ResetEnemySprite(){
-        _enMod().spr=_enModSprDef();
+        _enMod().sprAsset=_enModSprStrDef();
         AssetsManager.ReplaceShaderMat(ref _enMod().sprMatProps,_enModSprMatDef());
         UpdateEnModSprMat();
     }
@@ -1140,15 +1156,17 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         foreach(GameRules gr in CoreSetup.instance.gamerulesetsPrefabs){
             foreach(EnemyClass e in gr.enemies){
                 Sprite _spr=_enSprGR(e.name,gr);
-                string _n=_spr.name;
+                //string _n=_spr.name;
+                string _n="";_n=_enSprStrGR(e.name,gr);
                 
-                if(e.name=="Comet"){
+                if(e.name!="Comet"){
+                    if(enemySprites.Exists(x=>x.name.Contains(_n))){_n+="_";}
+                    if(!enemySprites.Exists(x=>x.spr==_spr)){enemySprites.Add(new GSprite{name=_n,spr=_spr});}
+                }else{//For comets
                     foreach(Sprite _cspr in gr.cometSettings.sprites.Concat(gr.cometSettings.spritesLunar).ToArray()){
                         _n=_cspr.name;
                         if(!enemySprites.Exists(x=>x.spr==_cspr))enemySprites.Add(new GSprite{name=_n,spr=_cspr});
                     }
-                }else{      if(enemySprites.Exists(x=>x.name.Contains(_n))){_n+="_";}
-                    if(!enemySprites.Exists(x=>x.spr==_spr)){enemySprites.Add(new GSprite{name=_n,spr=_spr});}
                 }
             }
         }
@@ -1261,7 +1279,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             GameObject go=Instantiate(prefab,powerupsSpawnerListTransform);
             go.name=e.name;
             go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text=e.name;
-            Sprite _spr=AssetsManager.instance.Get(e.sprAssetName).GetComponent<SpriteRenderer>().sprite;
+            Sprite _spr=AssetsManager.instance.GetObjSpr(e.sprAssetName);
             if(AssetsManager.instance.Spr(e.sprAssetName)!=null)AssetsManager.instance.Spr(e.sprAssetName);
             if(_spr!=null)go.transform.GetChild(0).GetComponent<Image>().sprite=_spr;
             go.GetComponent<Button>().onClick.AddListener(()=>OpenPowerupsSpawnPanel(e.name));
@@ -1429,7 +1447,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     }
     void SetEnemyTypePreview(){
         if(_enMod()!=null){
-            enemyMainPanel.transform.GetChild(8).GetComponent<TMP_Dropdown>().value=(int)_enMod().type;
+            enemyMainPanel.transform.GetChild(3).GetComponent<TMP_Dropdown>().value=(int)_enMod().type;
         }
     }
 

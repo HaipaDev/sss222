@@ -12,7 +12,8 @@ public class Enemy : MonoBehaviour{
     [SerializeField] public enemyType type;
     [SerializeField] public Vector2 size=Vector2.one;
     [DisableInEditorMode] public float sizeAvg=1;
-    [SerializeField] public Sprite spr;
+    [SerializeField] public string sprAsset;
+    [DisableInEditorMode] public Sprite spr;
     [SerializeField] public ShaderMatProps sprMatProps;
     public float health=100f;
     public float healthMax=100f;
@@ -70,7 +71,7 @@ public class Enemy : MonoBehaviour{
         if(e!=null){
             type=e.type;
             size=e.size;
-            spr=e.spr;sprMatProps=e.sprMatProps;
+            sprAsset=e.sprAsset;sprMatProps=e.sprMatProps;
             health=e.healthStart;healthMax=e.healthMax;
             healthBySize=e.healthBySize;
             defense=e.defense;
@@ -117,12 +118,16 @@ public class Enemy : MonoBehaviour{
 
         bullet=AssetsManager.instance.GetEnemyBullet(bulletAssetName);
     }
-    void Start(){
+    IEnumerator Start(){
         rb=GetComponent<Rigidbody2D>();
         if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
+        if(spr!=AssetsManager.instance.SprAnyReverse(sprAsset))spr=AssetsManager.instance.SprAnyReverse(sprAsset);
 
         if(shooting)shootTimer=Random.Range(shootTime.x,shootTime.y);
         if(healthBySize){healthMax=Mathf.RoundToInt(healthMax*sizeAvg);health=Mathf.RoundToInt(health*sizeAvg);}
+
+        yield return new WaitForSeconds(0.02f);
+        if(spr!=AssetsManager.instance.SprAnyReverse(sprAsset))spr=AssetsManager.instance.SprAnyReverse(sprAsset);
     }
     void Update(){
         if(shooting){Shoot();}
@@ -233,7 +238,7 @@ public class Enemy : MonoBehaviour{
     void OnDestroy(){
         if(GetComponent<Goblin>()!=null)GetComponent<Goblin>().DropPowerup(false);
         if(GetComponent<EnCombatant>()!=null)Destroy(GetComponent<EnCombatant>().saber.gameObject);
-        if(randomizeWaveDeath==true){spawnReqsMono.AddScore(-5,-1);;}
+        if(randomizeWaveDeath==true){spawnReqsMono.AddScore(-5,-1);}
     }
     void DestroyOutside(){
         if((transform.position.x>6.5f || transform.position.x<-6.5f) || (transform.position.y>10f || transform.position.y<-10f)){if(yeeted==true){giveScore=true;health=-1;Die();}else{Destroy(gameObject,0.001f);if(GetComponent<Goblin>()!=null){foreach(GameObject obj in GetComponent<Goblin>().powerups)Destroy(obj);}}}
@@ -244,6 +249,8 @@ public class Enemy : MonoBehaviour{
         Die(explode);
     }
     public void Damage(float dmg){health-=dmg;}
+    public void SetSpr(Sprite _spr){spr=_spr;}
+    public void SetSprStr(string str){spr=AssetsManager.instance.SprAnyReverse(str);}
     //Collisions in EnemyCollider
     public void DispDmgCount(Vector2 pos){if(SaveSerial.instance.settingsData.dmgPopups)StartCoroutine(DispDmgCountI(pos));}
     IEnumerator DispDmgCountI(Vector2 pos){

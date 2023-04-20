@@ -1051,7 +1051,7 @@ MonoBehaviour:
   - name: Bat
     type: 0
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
+    sprAsset: Bat
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1093,7 +1093,7 @@ MonoBehaviour:
   - name: Comet
     type: 2
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
+    sprAsset: Comet
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1135,7 +1135,7 @@ MonoBehaviour:
   - name: Enemy Combatant
     type: 1
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
+    sprAsset: EnComb
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1177,7 +1177,7 @@ MonoBehaviour:
   - name: Enemy Ship
     type: 1
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
+    sprAsset: EnShip
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1222,7 +1222,7 @@ MonoBehaviour:
   - name: Glare Devil
     type: 0
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
+    sprAsset: GlareDevil
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1264,7 +1264,7 @@ MonoBehaviour:
   - name: Gremlin Burglar
     type: 0
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
+    sprAsset: Goblin
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1306,7 +1306,7 @@ MonoBehaviour:
   - name: Healing Drone
     type: 1
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
+    sprAsset: HDrone
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1351,7 +1351,7 @@ MonoBehaviour:
   - name: Leech
     type: 1
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
+    sprAsset: Leech
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1393,7 +1393,7 @@ MonoBehaviour:
   - name: Stinger
     type: 0
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
+    sprAsset: Stinger
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1435,7 +1435,7 @@ MonoBehaviour:
   - name: Vortex Wheel
     type: 1
     size: {x: 1, y: 1}
-    spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
+    sprAsset: Vortex
     sprMatProps:
       text: {fileID: 0}
       hue: 0

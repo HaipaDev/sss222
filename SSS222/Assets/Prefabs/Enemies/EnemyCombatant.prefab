@@ -35,6 +35,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3029618806795019912}
   m_Father: {fileID: 0}
@@ -172,16 +173,26 @@ MonoBehaviour:
   type: 1
   size: {x: 1, y: 1}
   sizeAvg: 1
+  sprAsset: EnComb
   spr: {fileID: 0}
+  sprMatProps:
+    text: {fileID: 0}
+    hue: 0
+    saturation: 0.5
+    value: 0.5
+    negative: 0
+    pixelate: 1
+    blur: 0
+    lowResBlur: 1
   health: 95
   healthMax: 95
   defense: 0
   defenseOnPhase: 1
   healthBySize: 0
   shooting: 0
+  bulletAssetName: 
   shootTime: {x: 1.75, y: 2.8}
-  shotCounter: 0
-  bullet: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1, type: 3}
+  shootTimer: 0
   bulletSpeed: 8
   DBullets: 0
   bulletDist: 0.35
@@ -190,14 +201,17 @@ MonoBehaviour:
   killOnDash: 1
   giveScore: 1
   scoreValue: {x: 1, y: 10}
-  xpAmnt: 1
   xpChance: 100
+  xpAmnt: 1
+  accumulateXp: 1
   drops: []
   dropValues: []
   destroyOut: 1
   yeeted: 0
   dmgCounted: 0
   dmgCount: 0
+  _dmgHeals: 0
+  bullet: {fileID: 5313808222654050488, guid: e9a9a54f9db0ceb419c3d774cb195fa1, type: 3}
 --- !u!114 &-4786581182047222638
 MonoBehaviour:
   m_ObjectHideFlags: 0

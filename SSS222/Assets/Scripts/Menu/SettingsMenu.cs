@@ -255,10 +255,6 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     public void SetParticles(bool isOn){settingsData.particles=isOn;}
     public void SetScreenflash(bool isOn){settingsData.screenflash=isOn;}
     public void SetPlayerWeaponsFade(bool isOn){settingsData.playerWeaponsFade=isOn;}
-    public void SetFullscreen(bool isOn){
-        /*Screen.fullScreen=isOn;
-        settingsData.fullscreen=isOn;*/
-    }
     public static FullScreenMode GetFullScreenMode(int id){
         switch(id){
             case 0:return FullScreenMode.ExclusiveFullScreen;
@@ -276,10 +272,8 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         }
     }
     public void SetWindowMode(int id){
-        settingsData.windowMode=id;
         Screen.SetResolution(settingsData.resolution.x,settingsData.resolution.y,GetFullScreenMode(settingsData.windowMode));
-        //if(Screen.fullScreenMode!=GetFullScreenMode(settingsData.windowMode)){var _id=GetFullScreenModeID(Screen.fullScreenMode);settingsData.windowMode=_id;}
-        //if(settingsData.windowMode!=GetFullScreenModeID(Screen.fullScreenMode)){var _id=GetFullScreenModeID(Screen.fullScreenMode);settingsData.windowMode=_id;}
+        settingsData.windowMode=id;
     }
     public void SetVSync(bool isOn){
         QualitySettings.vSyncCount=AssetsManager.BoolToInt(isOn);
@@ -317,6 +311,7 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
     public void PlayDingOOF(){audioMixer.SetFloat("MasterVolume", AssetsManager.InvertNormalizedMin(settingsData.masterOOFVolume,-50));if(Application.isPlaying)GetComponent<AudioSource>().Play();}
 
     void SetAvailableResolutions(){
+        _availableResolutionsList.Clear();
         resolutionDropdown.ClearOptions();
         foreach(Vector2Int r in resolutionsList){
             if(Display.main.systemWidth>Display.main.systemHeight){//Horizontal
@@ -339,8 +334,19 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
             _availableResolutionsList.Add(r);
             resolutionDropdown.AddOptions(new List<string>(){(r.x+"x"+r.y)});
         }}
+
+        Vector2Int _currentRes=SaveSerial.instance.settingsData.resolution;
+        if(!_availableResolutionsList.Contains(_currentRes)){
+            _availableResolutionsList.Insert(0,_currentRes);
+            List<TMP_Dropdown.OptionData> _optionsCache=new List<TMP_Dropdown.OptionData>();
+            for(var i=0;i<resolutionDropdown.options.Count;i++){_optionsCache.Add(resolutionDropdown.options[i]);}//Cache old options
+
+            resolutionDropdown.ClearOptions();
+            resolutionDropdown.AddOptions(new List<string>(){(_currentRes.x+"x"+_currentRes.y)});//Add current on top
+            resolutionDropdown.AddOptions(_optionsCache);
+        }
+
         resolutionDropdown.value=_availableResolutionsList.FindIndex(e=>e==settingsData.resolution);
-        //if(_availableResolutionsList.FindIndex(e=>e==settingsData.resolution)==-1){resolutionDropdown.AddOptions(new List<TMP_Dropdown.OptionData>(){new TMP_Dropdown.OptionData(settingsData.resolution.x+"x"+settingsData.resolution.y)});}
     }
     [DisableInEditorMode]public List<Vector2Int> _availableResolutionsList;
     [HideInEditorMode]public List<Vector2Int> resolutionsList=new List<Vector2Int>(){
@@ -362,6 +368,10 @@ public class SettingsMenu : MonoBehaviour{      public static SettingsMenu insta
         new Vector2Int(1024,768),
         new Vector2Int(800,600),
         new Vector2Int(640,480),
+
+        //3:2
+        new Vector2Int(2160,1440),
+        new Vector2Int(1440,960),
 
         //21:9
         new Vector2Int(2560,1080),
