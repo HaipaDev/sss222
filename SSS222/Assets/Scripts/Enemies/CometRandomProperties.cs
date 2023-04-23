@@ -9,7 +9,7 @@ public class CometRandomProperties : MonoBehaviour{
     [DisableInEditorMode]public float size=1;
     [SerializeField] public bool scoreBySize=false;
     [SerializeField] public CometScoreSize[] scoreSizes;
-    [SerializeField] Sprite[] sprites;
+    [SerializeField] string[] sprites;
     [Header("Lunar")]
     [SerializeField] Vector2 sizeMultLunar=new Vector2(0.88f,1.55f);
     [SerializeField] int lunarCometChance=10;
@@ -19,7 +19,7 @@ public class CometRandomProperties : MonoBehaviour{
     [SerializeField] public Vector2 lunarCrystalAmmounts;
     [SerializeField] public List<LootTableEntryDrops> lunarDrops;
     public List<float> dropValues;
-    [SerializeField] Sprite[] spritesLunar;
+    [SerializeField] string[] spritesLunar;
     [SerializeField] string lunarPart="Trail_Lunar";
     [DisableInEditorMode]public int healhitCount;
     [DisableInEditorMode]public bool isLunar;
@@ -61,7 +61,7 @@ public class CometRandomProperties : MonoBehaviour{
 
         yield return new WaitForSeconds(0.03f);
         int spriteIndex=Random.Range(0, sprites.Length);
-        en.SetSpr(sprites[spriteIndex]);
+        en.SetSprStr(sprites[spriteIndex]);
         size=(float)System.Math.Round(Random.Range(sizes.x, sizes.y),2);
         en.size=new Vector2(en.size.x*size,en.size.y*size);
 
@@ -95,7 +95,7 @@ public class CometRandomProperties : MonoBehaviour{
     public void MakeLunar(){isLunar=true;TransformIntoLunar();}
     void TransformIntoLunar(){
         int spriteIndex=Random.Range(0,spritesLunar.Length);
-        en.SetSpr(spritesLunar[spriteIndex]);
+        en.SetSprStr(spritesLunar[spriteIndex]);
         if(trail!=null){trail.SetNewTrail(lunarPart);}
 
         float sizeL=(float)System.Math.Round(Random.Range(sizeMultLunar.x, sizeMultLunar.y),2);

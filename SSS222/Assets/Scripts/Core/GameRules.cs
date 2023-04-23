@@ -47,7 +47,6 @@ public class GameRules : MonoBehaviour{     [ES3NonSerializable]public static Ga
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool barrierOn=false;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool breakEncounter=false;
 
-    [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool instaPause=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool musicSlowdownOnPause=true;
     [HideIf("_isAdventureSubZone")][FoldoutGroup("Global")]public bool musicSlowdownOnPaceChange=true;
     //public float upgradeMenuOpenGameSpeed=0;
@@ -632,7 +631,7 @@ public class CometSettings{
     public Vector2 sizes=new Vector2(0.4f,1.4f);
     public bool scoreBySize=false;
     public CometScoreSize[] scoreSizes;
-    [AssetsOnly]public Sprite[] sprites;
+    [AssetsOnly]public string[] sprites;
 [Header("Lunar")]
     public Vector2 sizeMultLunar=new Vector2(0.88f,1.55f);
     public int lunarCometChance=10;
@@ -640,7 +639,7 @@ public class CometSettings{
     public float lunarSpeedMulti=0.415f;
     public Vector2 lunarScore;
     public List<LootTableEntryDrops> lunarDrops;
-    [AssetsOnly]public Sprite[] spritesLunar;
+    [AssetsOnly]public string[] spritesLunar;
     [AssetsOnly]public string lunarPart="BFlameLunar";
 }
 [System.Serializable]
@@ -697,7 +696,7 @@ public class GlareDevilSettings{
 }
 [System.Serializable]
 public class GoblinBossSettings{
-    public Sprite goblinBossSprite;
+    public string goblinBossSprite;
     public string transformVfxAssetName="DarkEnergy";
     public float goblinbossHealth=50f;
     public List<LootTableEntryDrops> goblinBossDrops;

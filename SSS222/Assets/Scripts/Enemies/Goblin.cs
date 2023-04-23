@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 using Sirenix.OdinInspector;
 
 public class Goblin : MonoBehaviour{
-    [SerializeField] Sprite bossSprite;
+    [SerializeField] string bossSprite;
     [SerializeField] string transformVfxAssetName="DarkEnergy";
     [SerializeField] float bossHealth;
     [SerializeField] public List<LootTableEntryDrops> bossDrops;
@@ -103,7 +103,7 @@ public class Goblin : MonoBehaviour{
         AssetsManager.instance.VFX(transformVfxAssetName,transform.position);
         confused=false;Destroy(transform.GetChild(0).gameObject);
         Enemy en=GetComponent<Enemy>();
-        en.SetSpr(bossSprite);
+        en.SetSprStr(bossSprite);
         en.health=bossHealth;en.healthMax=bossHealth;
         en.shooting=true;
         pos.x=transform.position.x;transform.rotation=new Quaternion(0,0,0,0);

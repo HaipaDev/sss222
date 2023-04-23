@@ -121,13 +121,13 @@ public class Enemy : MonoBehaviour{
     IEnumerator Start(){
         rb=GetComponent<Rigidbody2D>();
         if(GetComponent<Tag_PauseVelocity>()==null){gameObject.AddComponent<Tag_PauseVelocity>();}
-        if(spr!=AssetsManager.instance.SprAnyReverse(sprAsset))spr=AssetsManager.instance.SprAnyReverse(sprAsset);
+        if(GetComponent<CometRandomProperties>()==null)if(spr!=AssetsManager.instance.SprAnyReverse(sprAsset))spr=AssetsManager.instance.SprAnyReverse(sprAsset);
 
         if(shooting)shootTimer=Random.Range(shootTime.x,shootTime.y);
         if(healthBySize){healthMax=Mathf.RoundToInt(healthMax*sizeAvg);health=Mathf.RoundToInt(health*sizeAvg);}
 
         yield return new WaitForSeconds(0.02f);
-        if(spr!=AssetsManager.instance.SprAnyReverse(sprAsset))spr=AssetsManager.instance.SprAnyReverse(sprAsset);
+        if(GetComponent<CometRandomProperties>()==null)if(spr!=AssetsManager.instance.SprAnyReverse(sprAsset))spr=AssetsManager.instance.SprAnyReverse(sprAsset);
     }
     void Update(){
         if(shooting){Shoot();}

@@ -101,15 +101,12 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         instance=this;
         if(!String.IsNullOrEmpty(GameManager.instance.GetTempSandboxSaveName())){
             SelectPreset(GameManager.instance.GetTempSandboxSaveName());
-            //if(ES3.FileExists(_selectedSandboxFilePath()))if(ES3.KeyExists("saveBuild",_selectedSandboxFilePath()))saveBuild=ES3.Load<int>("saveBuild",_selectedSandboxFilePath());
         }
 
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="SandboxMode"){
             CountSaveFiles();
-            //GameRules.instance.cfgName="Sandbox Save #"+(savesCount+1);
             saveSelected="Sandbox Save #"+(savesCount+1);
             saveInfo.name="Sandbox Save #"+(savesCount+1);
-            //GameRules.instance.cfgDesc="New Sandbox Mode Savefile";
             saveInfo.desc="New Sandbox Mode Savefile";
             defPresetGameruleset=CoreSetup.instance.gamerulesetsPrefabs[0];
             saveInfo.presetFrom=CoreSetup.instance.gamerulesetsPrefabs[0].cfgName;
@@ -121,13 +118,15 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         SetupEverything();
         SetWaveSpawnReqsInputs();
         SetStartingPowerupChoices();
-        SetBuiltInPresetsButtons();
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="SandboxMode"){
+            SetBuiltInPresetsButtons();
+            Destroy(defaultPanel.transform.GetChild(4).gameObject);//ModeInfo edit button
 
-        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="SandboxMode"&&
-        !String.IsNullOrEmpty(SaveSerial.instance.lastEditedSandbox)){
-            curSaveFileName=saveSelected;
-            saveSelected=SaveSerial.instance.lastEditedSandbox;
-            OpenEnterLoadPrompt();
+            if(!String.IsNullOrEmpty(SaveSerial.instance.lastEditedSandbox)){
+                curSaveFileName=saveSelected;
+                saveSelected=SaveSerial.instance.lastEditedSandbox;
+                OpenEnterLoadPrompt();
+            }
         }
 
         defaultColor=new Color(1,1,1,0.56f);
@@ -143,34 +142,34 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
         if(_anySavingPromptActive()&&_backText!="DON'T"){_backText="DON'T";}
         else if(!_anySavingPromptActive()&&_backText!="BACK"){_backText="BACK";}
-        if(transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text!=_backText){transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text=_backText;}
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name!="InfoGameMode")if(transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text!=_backText){transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text=_backText;}
     }
     public void Back(){
-        if(_anyFirstLevelPanelsActive()){OpenDefaultPanel();}
+        if(_anyFirstLevelPanelsActive()){OpenDefaultPanel();return;}
             else if(presetsPanel.activeSelf){
-                    if(_anySavingPromptActive()){CloseSavingPrompts();}
-                    else{OpenDefaultPanel();saveSelected=curSaveFileName;}
+                    if(_anySavingPromptActive()){CloseSavingPrompts();return;}
+                    else{OpenDefaultPanel();saveSelected=curSaveFileName;return;}
                 }
-            else if(presetAppearanceIconPanel.activeSelf){OpenPresetAppearancePanel();}
-                else if(presetAppearanceIconSprLibPanel.activeSelf){OpenPresetAppearanceIconPanel();}
-            else if(playerSpritePanel.activeSelf){OpenPlayerPanel();}
-                else if(playerSpritesLibPanel.activeSelf){OpenPlayerSpritePanel();}
-            else if(wavesPanel.activeSelf||disruptersPanel.activeSelf){OpenSpawnsPanel();}
-            else if(enemyMainPanel.activeSelf){OpenEnemiesPanel();}
-                else if(enemySpritePanel.activeSelf){OpenEnemyPanel(enemyToModify);}
-                    else if(enemySpritesLibPanel.activeSelf){OpenEnemySpritePanel();}
-            else if(collectiblesMainPanel.activeSelf){OpenDefaultPanel();}
-                else if(basicCollectiblesPanel.activeSelf||powerupsPanel.activeSelf){OpenCollectiblesPanel();}
+            else if(presetAppearanceIconPanel.activeSelf){OpenPresetAppearancePanel();return;}
+                else if(presetAppearanceIconSprLibPanel.activeSelf){OpenPresetAppearanceIconPanel();return;}
+            else if(playerSpritePanel.activeSelf){OpenPlayerPanel();return;}
+                else if(playerSpritesLibPanel.activeSelf){OpenPlayerSpritePanel();return;}
+            else if(wavesPanel.activeSelf||disruptersPanel.activeSelf){OpenSpawnsPanel();return;}
+            else if(enemyMainPanel.activeSelf){OpenEnemiesPanel();return;}
+                else if(enemySpritePanel.activeSelf){OpenEnemyPanel(enemyToModify);return;}
+                    else if(enemySpritesLibPanel.activeSelf){OpenEnemySpritePanel();return;}
+            else if(collectiblesMainPanel.activeSelf){OpenDefaultPanel();return;}
+                else if(basicCollectiblesPanel.activeSelf||powerupsPanel.activeSelf){OpenCollectiblesPanel();return;}
         else{
-            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="InfoGameMode"){FindObjectOfType<ModeInfoManager>().SetActivePanel(0);}
+            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="InfoGameMode"){FindObjectOfType<ModeInfoManager>().SetActivePanel(0);return;}
             else{//if SandboxMode
                 if(!_modified){
-                    if(_anySavingPromptActive()){CloseSavingPrompts();}
-                    else{QuitSandbox();}
+                    if(_anySavingPromptActive()){CloseSavingPrompts();return;}
+                    else{QuitSandbox();return;}
                 }else{
                     if(_anySavingPromptActive()){CloseSavingPrompts();return;}
-                    if(!_anySavingPromptActive()){OpenQuitSavePrompt();}
-                    if(saveInfo.saveBuild!=0){SaveSerial.instance.lastEditedSandbox=curSaveFileName;}
+                    if(!_anySavingPromptActive()){OpenQuitSavePrompt();return;}
+                    if(saveInfo.saveBuild!=0){SaveSerial.instance.lastEditedSandbox=curSaveFileName;return;}
                 }
             }
         }
@@ -196,19 +195,17 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
     string _selectedPresetPanel;
     public void OpenPresetsPanel(){
-        if(savesCount>0&&String.IsNullOrEmpty(_selectedPresetPanel)){OpenYoursPresetsPanel();}
-        else{
-            switch(_selectedPresetPanel){
-                case "yours":
-                    OpenYoursPresetsPanel();
-                break;
-                case "online":
-                    OpenOnlinePresetsPanel();
-                break;
-                default:
-                    OpenBuiltInPresetsPanel();
-                break;
-            }
+        if(savesCount>0&&String.IsNullOrEmpty(_selectedPresetPanel)){_selectedPresetPanel="yours";}
+        switch(_selectedPresetPanel){
+            case "yours":
+                OpenYoursPresetsPanel();
+            break;
+            case "online":
+                OpenOnlinePresetsPanel();
+            break;
+            default:
+                OpenBuiltInPresetsPanel();
+            break;
         }
     }
     public void OpenBuiltInPresetsPanel(){CloseAllPanels();presetsPanel.SetActive(true);builtInPresetsPanel.SetActive(true);ResetBuiltinPresetButtonsColors();/*HighlightActiveBuiltinPreset();*/_selectedPresetPanel="builtin";_selectedDefPreset="";}
@@ -378,19 +375,21 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         SavePopup(_selectedDefPreset+" <color=blue>LOADED</color>");
         _selectedDefPreset="";
     }}
+    public void LoadBuiltinPreset(string str,bool savePopup=false){if(str!=""){
+        StartCoroutine(LoadBuiltinPresetI(str));
+        if(savePopup)SavePopup(str+" <color=blue>LOADED</color>");
+    }}
 
     public IEnumerator LoadBuiltinPresetI(string str){
         if(GameRules.instance!=null)Destroy(GameRules.instance.gameObject);
         yield return new WaitForSecondsRealtime(0.02f);
         SetDefPresetGameruleset(str);
-        Debug.Log(defPresetGameruleset);
         var gr=Instantiate(defPresetGameruleset);
         gr.gameObject.name="GRSandbox";
         gr.cfgName="Sandbox Save #"+(savesCount+1);
         saveInfo.name="Sandbox Save #"+(savesCount+1);
         gr.cfgDesc="New Sandbox Mode Savefile";
         saveInfo.desc="New Sandbox Mode Savefile";
-        //gr.cfgIconsGo=sandboxIconsGo;
         gr.cfgIconAssetName="questionMark";
         gr.cfgIconsGo=null;
         CloseSavingPrompts();
@@ -401,7 +400,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         if(_initiated){
             if(saveInfo.saveBuild==0){saveInfo.saveBuild=1;}
             if(!_modified){_modified=true;}
-            Debug.Log("OnChangeAnything();");
         }
     }
     public void SetDefPresetGameruleset(string str){defPresetGameruleset=CoreSetup.instance.gamerulesetsPrefabs[GameManager.instance.GetGamemodeID(str)];saveInfo.presetFrom=str;}
@@ -517,6 +515,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         quitSaveSandboxPrompt.SetActive(false);
         if(enterLoadSandboxPrompt.activeSelf){saveSelected=curSaveFileName;}
         enterLoadSandboxPrompt.SetActive(false);
+        loadDefaultPrompt.SetActive(false);
     }
     public void OpenQuitSavePrompt(){
         quitSaveSandboxPrompt.SetActive(true);
@@ -578,8 +577,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                     if(defPresetGameruleset.cfgName!=ES3.Load<SandboxSaveInfo>("saveInfo",_selectedSandboxFilePath()).presetFrom){saveInfo.presetFrom=defPresetGameruleset.cfgName;}
                 }
                 saveInfo.gameBuild=GameManager.instance.buildVersion;
-                //saveInfo.author=SaveSerial.instance.hyperGamerLoginData.username;
-                if(ES3.KeyExists("buildVersion",_selectedSandboxFilePath())){saveInfo.saveBuild++;ES3.DeleteKey("buildVersion",settings);}//Legacy
+                //saveInfo.author=SaveSerial.instance.hyperGamerLoginData.username;//Make it set the unique ID later on
 
                 /*if(!_overwriting||(_overwriting&&overwriteSaveInfo)){
                     //var _saveInfo=saveInfo;
@@ -615,7 +613,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                         saveInfo.saveBuild=1;
                         saveInfo.gameBuild=GameManager.instance.buildVersion;
                         SetDefPresetGameruleset("Arcade Mode");
-                        if(ES3.KeyExists("buildVersion",_selectedSandboxFilePath())){saveInfo.saveBuild=ES3.Load<int>("buildVersion",_selectedSandboxFilePath());}//Legacy
                     }
                     SavePopup("\u0022"+saveSelected+"\u0022 <color=blue> LOADED </color>");
                     ChangeSaveOverwriteBulb(false);
@@ -668,6 +665,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }
         CloseSavingPrompts();
     }
+    public void BrowseSandboxData(){Application.OpenURL("file:///"+_sandboxDataDir());}
     public void BrowseSandboxSaves(){Application.OpenURL("file:///"+_sandboxSavesDir());}
 #endregion
 
@@ -682,6 +680,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     public void SetPresetIconSprMatPixelate(float v){saveInfo.iconShaderMatProps.pixelate=Mathf.Clamp((float)Math.Round(v,2),(4/512),1);UpdateIconSprMat();OnChangeAnything();}
     public void SetPresetIconSprMatBlur(float v){saveInfo.iconShaderMatProps.blur=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
     void UpdateIconSprMat(){SetPresetIconPreviewsSprite();}
+    public void ResetIconShaderMat(){
+        saveInfo.iconShaderMatProps=new ShaderMatProps();
+        UpdateIconSprMat();
+    }
 #endregion
 #region///Global
     public void SetGameSpeed(float v){GameRules.instance.defaultGameSpeed=(float)System.Math.Round(v,2);OnChangeAnything();}
@@ -842,7 +844,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         if(_enGR(str,gr)!=null){
             if(!String.IsNullOrEmpty(_enGR(str,gr).sprAsset)&&str!="Comet"){_spr=AssetsManager.instance.SprAnyReverse(_enGR(str,gr).sprAsset);}
             //else{
-                else if(str=="Comet"){_spr=GameRules.instance.cometSettings.sprites[0];}
+                else if(str=="Comet"){_spr=AssetsManager.instance.SprAnyReverse(GameRules.instance.cometSettings.sprites[0]);}
             //}
             if(_spr!=null)return _spr;
             else{Debug.LogWarning("No spr for: "+str);return null;}
@@ -1082,7 +1084,10 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     void SetPresetIconSpritesLibrary(){
         presetIconSprites=new List<GSprite>();
         var _presetIconSpritesPre=presetIconSpritesPre;_presetIconSpritesPre.OrderBy(x=>x.name).ToList();presetIconSprites.AddRange(_presetIconSpritesPre);
-        var _enemySprites=enemySprites.OrderBy(x=>x.name).ToList();presetIconSprites.AddRange(_enemySprites);
+        var _enemySprites=new List<GSprite>();
+        foreach(GSprite g in enemySprites){if(!presetIconSprites.Exists(x=>x.name==g.name)&&g.name!="questionMark")_enemySprites.Add(g);}
+        _enemySprites.OrderBy(x=>x.name).ToList();
+        presetIconSprites.AddRange(_enemySprites);
         if(!AssetsManager.instance.sprites.Contains(_enemySprites[0]))AssetsManager.instance.sprites.AddRange(_enemySprites);
         //foreach(GameRules gr in CoreSetup.instance.gamerulesetsPrefabs){}
         //presetIconSprites=presetIconSprites.OrderBy(x=>x.name).ToList();
@@ -1163,9 +1168,9 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                     if(enemySprites.Exists(x=>x.name.Contains(_n))){_n+="_";}
                     if(!enemySprites.Exists(x=>x.spr==_spr)){enemySprites.Add(new GSprite{name=_n,spr=_spr});}
                 }else{//For comets
-                    foreach(Sprite _cspr in gr.cometSettings.sprites.Concat(gr.cometSettings.spritesLunar).ToArray()){
-                        _n=_cspr.name;
-                        if(!enemySprites.Exists(x=>x.spr==_cspr))enemySprites.Add(new GSprite{name=_n,spr=_cspr});
+                    foreach(string _csprn in gr.cometSettings.sprites.Concat(gr.cometSettings.spritesLunar).ToArray()){
+                        Sprite _cspr=AssetsManager.instance.SprAnyReverse(_csprn);
+                        if(!enemySprites.Exists(x=>x.spr==_cspr))enemySprites.Add(new GSprite{name=_csprn,spr=_cspr});
                     }
                 }
             }
@@ -1451,7 +1456,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }
     }
 
-    void SavePopup(string str,float length=1f){StartCoroutine(SavePopupI(str,length));}
+    public void SavePopup(string str,float length=1f){SandboxCanvas.instance.StartCoroutine(SandboxCanvas.instance.SavePopupI(str,length));}
     IEnumerator SavePopupI(string str,float length=1f){
         savePopup.gameObject.SetActive(true);
         savePopup.GetComponentInChildren<TextMeshProUGUI>().text=str;

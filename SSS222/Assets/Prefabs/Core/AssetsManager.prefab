@@ -359,8 +359,16 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 5f541d96308ae8048816389e10b35c7d, type: 3}
   - name: dynamCelestStar
     spr: {fileID: 21300000, guid: 85ee023a4e41fc94f9333c5c9baa3aac, type: 3}
+  - name: starshard
+    spr: {fileID: 21300000, guid: 110353e3a7319eb42a02fd8c574d4386, type: 3}
   - name: ship
     spr: {fileID: 21300000, guid: 62da947b5916ee44f8085a9f53669831, type: 3}
+  - name: ship_reverse
+    spr: {fileID: 21300000, guid: 20ee7a3f3ef914e40b8a8b350f811ed9, type: 3}
+  - name: darkSurge
+    spr: {fileID: 21300000, guid: bd9b4157c1f519e4eba13efac08d371d, type: 3}
+  - name: dkSurge_reverse
+    spr: {fileID: 21300000, guid: 8dee6b7ea00ae6342bb3ae4325ae2e3c, type: 3}
   - name: cargo
     spr: {fileID: 21300000, guid: d3c6432fb3453954fb19e3bd285c35f3, type: 3}
   - name: laserBulb
@@ -385,7 +393,7 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: 4769a55ad087ef343acad84e2062c9d2, type: 3}
   - name: skull4
     spr: {fileID: 21300000, guid: ae556c081ee79da43a0be88b54ec3126, type: 3}
-  - name: redSkull
+  - name: skullRed
     spr: {fileID: 21300000, guid: d4d6f83fe87636046945675ea15d8b4e, type: 3}
   - name: exclamation
     spr: {fileID: 21300000, guid: c0017485f0b74e24e9b8ae26d5e51a65, type: 3}
@@ -407,6 +415,32 @@ MonoBehaviour:
     spr: {fileID: 21300000, guid: ffab30b28033e47409b64fce61f21ac7, type: 3}
   - name: Comet0
     spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
+  - name: Comet1
+    spr: {fileID: 21300000, guid: a96cf92567942b24da6085ec658da836, type: 3}
+  - name: Comet2
+    spr: {fileID: 21300000, guid: c8b78c577bddf8241b2e4e08235ef51d, type: 3}
+  - name: Comet3
+    spr: {fileID: 21300000, guid: c6e185be8e4515c41927fc135dc00be7, type: 3}
+  - name: Comet4
+    spr: {fileID: 21300000, guid: 2634062faf6b61048a41b04b5bd131ed, type: 3}
+  - name: CometLunar0
+    spr: {fileID: 21300000, guid: 8f5604571a603dc4ca74f76f5a8c070e, type: 3}
+  - name: CometLunar1
+    spr: {fileID: 21300000, guid: 4ca5f58d98a9d514e98f96344392f882, type: 3}
+  - name: Comet0_classic
+    spr: {fileID: 21300000, guid: 5ec7136927b5bf9479ec955cbeec1375, type: 3}
+  - name: Comet1_classic
+    spr: {fileID: 21300000, guid: 89e723b51930d4e449732dc9ff147a3e, type: 3}
+  - name: Comet2_classic
+    spr: {fileID: 21300000, guid: 8e24bcbd7156edf45b029a929d7ce4ab, type: 3}
+  - name: Comet3_classic
+    spr: {fileID: 21300000, guid: ebd26b50b0fd26548b3c923cb166f9e8, type: 3}
+  - name: Comet4_classic
+    spr: {fileID: 21300000, guid: ed48e6589613e724894bad22b211604f, type: 3}
+  - name: GoblinBoss
+    spr: {fileID: 21300000, guid: 39a25c8b6bd02054f89bc66720513032, type: 3}
+  - name: GoblinBoss_classic
+    spr: {fileID: 21300000, guid: 890dc7c14b246d14fa31ab7f2c20b46e, type: 3}
   materials:
   - name: AIOShaderMat
     mat: {fileID: 2100000, guid: 94bd4665afcd8b743921007cb09b25c0, type: 2}

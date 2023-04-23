@@ -156,6 +156,20 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
         //else{LoadGameScene();}
     }
     public void LoadSandboxModeScene(){SceneManager.LoadScene("SandboxMode");GameManager.instance.SetGamemodeSelected(0);StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();}
+    public void LoadSandboxModeSceneFromModeInfo(){GSceneManager.instance.StartCoroutine(GSceneManager.instance.LoadSandboxModeSceneFromModeInfoI());}
+    IEnumerator LoadSandboxModeSceneFromModeInfoI(){
+        var _defPreset=GameRules.instance.cfgName;
+        Destroy(GameRules.instance.gameObject);
+        yield return new WaitForSecondsRealtime(0.01f);
+        SceneManager.LoadScene("SandboxMode");
+        GameManager.instance.SetGamemodeSelected(0);
+        StatsAchievsManager.instance.SaveStats();SaveSerial.instance.SaveStats();
+        yield return new WaitForSecondsRealtime(0.01f);
+        SandboxCanvas.instance.LoadBuiltinPreset(_defPreset);
+        SandboxCanvas.instance.SetDefPresetGameruleset(_defPreset);
+        yield return new WaitForSecondsRealtime(0.7f);
+        SandboxCanvas.instance.SavePopup(_defPreset+" <color=blue>LOADED</color>");
+    }
     public void LoadGameModeInfoScene(){SceneManager.LoadScene("InfoGameMode");}
     public void LoadGameModeInfoSceneSet(int i){SceneManager.LoadScene("InfoGameMode");GameManager.instance.SetGamemodeSelected(i);}
     public void LoadGameModeInfoSceneSetStr(string str){SceneManager.LoadScene("InfoGameMode");GameManager.instance.SetGamemodeSelectedStr(str);}

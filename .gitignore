@@ -1,5 +1,4 @@
-# This .gitignore file should be placed at the root of your Unity project directory
-#
+# Preset from \/, modified
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
 **/[Ll]ibrary/
@@ -9,7 +8,12 @@
 **/[Bb]uilds/
 **/[Ll]ogs/
 **/[Mm]emoryCaptures/
-**/[Pp]lugins-gitignore/
+
+!/**/[Pp]lugins-gitignore/
+**/[Pp]lugins-gitignore/*
+!/**/[Pp]lugins-gitignore/Easy Save 3/
+**/[Pp]lugins-gitignore/Easy Save 3/*
+!/**/[Pp]lugins-gitignore/Easy Save 3/Resources
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/**/[Aa]ssets/**/*.meta

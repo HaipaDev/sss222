@@ -1248,33 +1248,28 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: cometSettings.sprites.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 5ec7136927b5bf9479ec955cbeec1375,
-        type: 3}
+      value: Comet0_classic
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: cometSettings.sprites.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: 89e723b51930d4e449732dc9ff147a3e,
-        type: 3}
+      value: Comet1_classic
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: cometSettings.sprites.Array.data[2]
-      value: 
-      objectReference: {fileID: 21300000, guid: 8e24bcbd7156edf45b029a929d7ce4ab,
-        type: 3}
+      value: Comet2_classic
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: cometSettings.sprites.Array.data[3]
-      value: 
-      objectReference: {fileID: 21300000, guid: ebd26b50b0fd26548b3c923cb166f9e8,
-        type: 3}
+      value: Comet3_classic
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: cometSettings.sprites.Array.data[4]
-      value: 
-      objectReference: {fileID: 21300000, guid: ed48e6589613e724894bad22b211604f,
-        type: 3}
+      value: Comet4_classic
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: dmgValues.Array.data[18].dmgBySpeed
@@ -1283,9 +1278,8 @@ PrefabInstance:
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: goblinBossSettings.goblinBossSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 890dc7c14b246d14fa31ab7f2c20b46e,
-        type: 3}
+      value: GoblinBoss_classic
+      objectReference: {fileID: 0}
     - target: {fileID: 1938246018583424785, guid: 5970a4153d8f26b47a04558f381b9897,
         type: 3}
       propertyPath: pwrupStatusList.Array.data[10].name

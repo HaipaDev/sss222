@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Sirenix.OdinInspector;
 
 public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
     public static bool GameIsPaused = false;
-    public GameObject pauseMenuUI;
-    public GameObject optionsUI;
-    public float prevGameSpeed = 1f;
-    float slowPauseSpeed = 0.075f;
+    [ChildGameObjectsOnly]public GameObject pauseMenuUI;
+    [ChildGameObjectsOnly]public GameObject optionsUI;
+    [ChildGameObjectsOnly]public GameObject quitRestartPrompt;
     float unpausedTimer;
     float unpausedTimeReq=0.3f;
-    IEnumerator slowDownCo;
     //Shop shop;
     void Start(){
         instance=this;
+        CloseQuitRestartPrompt();
         Resume();
-        if(GameRules.instance.instaPause)unpausedTimeReq=0;
+        unpausedTimeReq=0;
         //shop=FindObjectOfType<Shop>();
     }
     void Update(){
@@ -28,7 +28,8 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         ||(!Application.isFocused&&!_isEditor&&SaveSerial.instance!=null&&SaveSerial.instance.settingsData.pauseWhenOOF)){
             if(GameIsPaused){
                 if(Application.isFocused){
-                    if(pauseMenuUI.activeSelf){Resume();return;}
+                    if(_isQuitRestartPromptOpen()){CloseQuitRestartPrompt();return;}
+                    if(pauseMenuUI.activeSelf&&!_isQuitRestartPromptOpen()){Resume();return;}
                     if(optionsUI.transform.GetChild(0).gameObject.activeSelf){SaveSerial.instance.SaveSettings();pauseMenuUI.SetActive(true);return;}
                     if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();PauseEmpty();return;}
                 }
@@ -46,18 +47,63 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         if(optionsUI.transform.GetChild(0).gameObject.activeSelf){SettingsMenu.instance.Back();}
         //if(optionsUI.transform.GetChild(1).gameObject.activeSelf){optionsUI.GetComponent<SettingsMenu>().OpenSettings();}
         GameManager.instance.gameSpeed=1;
-        //StartCoroutine(SpeedUp());
-        GameIsPaused = false;
-        slowDownCo=null;
+        GameIsPaused=false;
         //Debug.Log("Resuming pause");
     }
     public void PauseEmpty(){
-        GameIsPaused = true;
-        if(!GameRules.instance.instaPause){if(slowDownCo==null)slowDownCo=SlowDown();StartCoroutine(slowDownCo);}
-        else{GameManager.instance.gameSpeed=0;}
+        GameIsPaused=true;
+        GameManager.instance.gameSpeed=0;
         unpausedTimer=-1;
         //Debug.Log("Pausing");
     }
+    public void Pause(){
+        pauseMenuUI.SetActive(true);
+        CloseQuitRestartPrompt();
+        PauseEmpty();
+        //ParticleSystem.Stop();
+        //var ptSystems = FindObjectOfType<ParticleSystem>();
+        //foreach(ptSystem in ptSystems){ParticleSystem.Pause();}
+    }
+    
+    public void OpenOptions(){
+        optionsUI.GetComponent<SettingsMenu>().OpenSettings();
+        pauseMenuUI.SetActive(false);
+    }
+
+    public void Restart(){
+        OpenQuitRestartPrompt();
+        _restartNotQuit=true;
+    }
+    public void Quit(){
+        OpenQuitRestartPrompt();
+        _restartNotQuit=false;
+    }
+    [DisableInEditorMode][ShowInInspector]bool _restartNotQuit;
+    public void QuitRestart(){
+        if(_restartNotQuit){GSceneManager.instance.RestartGame();}
+        else{GSceneManager.instance.LoadStartMenuGame();}
+    }
+    public void OpenQuitRestartPrompt(){
+        if(GameManager.instance.gamemodeSelected==0){//For sandbox skip the panel
+            QuitRestart();
+        }
+        else if(GameManager.instance.gamemodeSelected==-1){//For adventure change text
+            if(!BreakEncounter.instance.calledBreak){//If break not called
+                quitRestartPrompt.SetActive(true);
+                quitRestartPrompt.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text=
+                "Are you sure you want to quit and lose some of your current progress till the last checkpoint?\n"+
+                "(mainly the distance traveled)";
+            }else{QuitRestart();}
+        }
+        else{//For any normal gamemode
+            quitRestartPrompt.SetActive(true);
+        }
+    }
+    public void CloseQuitRestartPrompt(){
+        quitRestartPrompt.SetActive(false);
+    }
+    bool _isQuitRestartPromptOpen(){return quitRestartPrompt.activeSelf;}
+
     public bool _isPausable(){
         var _isEditor=false;
         #if UNITY_EDITOR
@@ -70,28 +116,4 @@ public class PauseMenu : MonoBehaviour{     public static PauseMenu instance;
         &&(FindObjectOfType<BossAI>()==null||(FindObjectOfType<BossAI>()!=null&&FindObjectOfType<BossAI>().GetComponent<Enemy>().health>0)&&
         ((Application.isFocused)||(!Application.isFocused&&!_isEditor&&SaveSerial.instance!=null&&SaveSerial.instance.settingsData.pauseWhenOOF)));
     }
-    public void Pause(){
-        prevGameSpeed = GameManager.instance.gameSpeed;
-        pauseMenuUI.SetActive(true);
-        PauseEmpty();
-        //ParticleSystem.Stop();
-        //var ptSystems = FindObjectOfType<ParticleSystem>();
-        //foreach(ptSystem in ptSystems){ParticleSystem.Pause();}
-    }
-    IEnumerator SlowDown(){
-        while(GameManager.instance.gameSpeed>0){
-        GameManager.instance.speedChanged=true; GameManager.instance.gameSpeed-=slowPauseSpeed;
-        yield return new WaitForEndOfFrame();
-        }
-    }IEnumerator SpeedUp(){
-        while(GameManager.instance.gameSpeed<1){
-        GameManager.instance.speedChanged=true; GameManager.instance.gameSpeed+=slowPauseSpeed;
-        yield return new WaitForEndOfFrame();
-        }
-    }
-    public void OpenOptions(){
-        optionsUI.GetComponent<SettingsMenu>().OpenSettings();
-        pauseMenuUI.SetActive(false);
-    }
-    public void PreviousGameSpeed(){GameManager.instance.gameSpeed = prevGameSpeed;}
 }

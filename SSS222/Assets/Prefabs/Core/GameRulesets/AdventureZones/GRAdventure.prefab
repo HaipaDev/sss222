@@ -89,7 +89,6 @@ MonoBehaviour:
   statUpgOn: 1
   barrierOn: 0
   breakEncounter: 1
-  instaPause: 0
   musicSlowdownOnPause: 1
   musicSlowdownOnPaceChange: 1
   scoreMulti: 1
@@ -1135,7 +1134,7 @@ MonoBehaviour:
   - name: Bat
     type: 0
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 7025dfe3643f8f44b8e137989a592764, type: 3}
+    sprAsset: Bat
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1177,7 +1176,7 @@ MonoBehaviour:
   - name: Comet
     type: 2
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
+    sprAsset: Comet
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1219,7 +1218,7 @@ MonoBehaviour:
   - name: Enemy Combatant
     type: 1
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 2686a080d9e7ec7489de672252b9a75c, type: 3}
+    sprAsset: EnComb
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1261,7 +1260,7 @@ MonoBehaviour:
   - name: Enemy Ship
     type: 1
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 6435e3baaf4ff7c4f884e5c3412affbf, type: 3}
+    sprAsset: EnShip
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1306,7 +1305,7 @@ MonoBehaviour:
   - name: Glare Devil
     type: 0
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 8ec20d55a2051984c8cf3f372d0cbbc4, type: 3}
+    sprAsset: GlareDevil
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1348,7 +1347,7 @@ MonoBehaviour:
   - name: Goblin Thief
     type: 0
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: fad3fe34306936f408493740263118c0, type: 3}
+    sprAsset: Goblin
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1390,7 +1389,7 @@ MonoBehaviour:
   - name: Healing Drone
     type: 1
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: d8a6ee7daa5bd0747a16a74f800808e2, type: 3}
+    sprAsset: HDrone
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1435,7 +1434,7 @@ MonoBehaviour:
   - name: Leech
     type: 1
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 3c77b40be7b935342bc54337c9c95b4b, type: 3}
+    sprAsset: Leech
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1477,7 +1476,7 @@ MonoBehaviour:
   - name: Stinger
     type: 0
     size: {x: 1, y: 1}
-    spr: {fileID: 21300000, guid: 7f5c56505087edb42bf07be507667ea0, type: 3}
+    sprAsset: Stinger
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1519,7 +1518,7 @@ MonoBehaviour:
   - name: Vortex Wheel
     type: 1
     size: {x: 1, y: 1}
-    spr: {fileID: 8582659201468183405, guid: 64ca140e22434e548b4b14a397eb6b69, type: 3}
+    sprAsset: Vortex
     sprMatProps:
       text: {fileID: 0}
       hue: 0
@@ -1563,11 +1562,11 @@ MonoBehaviour:
     scoreBySize: 0
     scoreSizes: []
     sprites:
-    - {fileID: 21300000, guid: 781f3dce2cffcac439f1922ea4c894d9, type: 3}
-    - {fileID: 21300000, guid: a96cf92567942b24da6085ec658da836, type: 3}
-    - {fileID: 21300000, guid: c8b78c577bddf8241b2e4e08235ef51d, type: 3}
-    - {fileID: 21300000, guid: c6e185be8e4515c41927fc135dc00be7, type: 3}
-    - {fileID: 21300000, guid: 2634062faf6b61048a41b04b5bd131ed, type: 3}
+    - Comet0
+    - Comet1
+    - Comet2
+    - Comet3
+    - Comet4
     sizeMultLunar: {x: 0.88, y: 1.55}
     lunarCometChance: 10
     lunarHealthMulti: 2.5
@@ -1578,8 +1577,8 @@ MonoBehaviour:
       ammount: {x: 6, y: 12}
       dropChance: 101
     spritesLunar:
-    - {fileID: 21300000, guid: 8f5604571a603dc4ca74f76f5a8c070e, type: 3}
-    - {fileID: 21300000, guid: 4ca5f58d98a9d514e98f96344392f882, type: 3}
+    - CometLunar0
+    - CometLunar1
     lunarPart: TrailLunar
   enCombatantSettings:
     speedFollowX: 3.5
@@ -1621,7 +1620,7 @@ MonoBehaviour:
     timerBlindMax: 4.4
     efxBlind: {x: 4, y: 4}
   goblinBossSettings:
-    goblinBossSprite: {fileID: 21300000, guid: 39a25c8b6bd02054f89bc66720513032, type: 3}
+    goblinBossSprite: GoblinBoss
     transformVfxAssetName: DarkEnergy
     goblinbossHealth: 50
     goblinBossDrops: []
