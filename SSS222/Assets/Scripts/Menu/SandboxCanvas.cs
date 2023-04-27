@@ -185,7 +185,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             loadDefaultPrompt.activeSelf
         );
     }
-    public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);}
+    public void OpenDefaultPanel(){CloseAllPanels();defaultPanel.SetActive(true);SetPresetIconPreviewsSprite();}
     public void OpenPresetAppearancePanel(){CloseAllPanels();presetAppearancePanel.SetActive(true);presetAppearanceMainPanel.SetActive(true);SetPresetIconPreviewsSprite();
         presetAppearanceIconPanel.SetActive(false);presetAppearanceIconSprLibPanel.SetActive(false);}
     public void OpenPresetAppearanceIconPanel(){CloseAllPanels();presetAppearancePanel.SetActive(true);presetAppearanceIconPanel.SetActive(true);SetPresetIconPreviewsSprite();
@@ -630,8 +630,8 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         }else{
             SavePopup("<color=orange> File name is empty </color>");
         }
+        if(enterLoadSandboxPrompt.activeSelf||defaultPanel.activeSelf)SetPresetIconPreviewsSprite();
         CloseSavingPrompts();
-        SetPresetIconPreviewsSprite();
     }
     public void DeleteSandbox(bool deletePermanently=false){
         if(!String.IsNullOrEmpty(saveSelected)){
@@ -1367,16 +1367,13 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                 if(_saveInfo!=null&&!String.IsNullOrEmpty(_saveInfo.iconAssetName)&&_saveInfo.iconAssetName!="questionMark"){
                     go.transform.GetChild(1).gameObject.GetComponent<Image>().sprite=AssetsManager.instance.SprAny(_saveInfo.iconAssetName);
                     go.transform.GetChild(1).gameObject.GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(go.transform.GetChild(1).gameObject.GetComponent<Image>().material,_saveInfo.iconShaderMatProps,true);
+                    go.transform.GetChild(1).eulerAngles=new Vector3(0,0,_saveInfo.iconRotation);
                 }else{
-                    /*if(gr[0].cfgIconsGo!=null){
-                        Instantiate(gr[0].cfgIconsGo,go.transform.GetChild(1));
-                        Destroy(go.transform.GetChild(1).GetComponent<Image>());
-                    }else{*/
-                        if(!String.IsNullOrEmpty(gr[0].cfgIconAssetName)){
-                            go.transform.GetChild(1).gameObject.GetComponent<Image>().sprite=AssetsManager.instance.SprAny(gr[0].cfgIconAssetName);
-                            go.transform.GetChild(1).gameObject.GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(go.transform.GetChild(1).gameObject.GetComponent<Image>().material,gr[0].cfgIconShaderMatProps,true);
-                        }
-                    //}
+                    if(_saveInfo==null||String.IsNullOrEmpty(_saveInfo.iconAssetName)){
+                        go.transform.GetChild(1).gameObject.GetComponent<Image>().sprite=AssetsManager.instance.SprAny("questionMark");
+                        go.transform.GetChild(1).gameObject.GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(go.transform.GetChild(1).gameObject.GetComponent<Image>().material,gr[0].cfgIconShaderMatProps,true);
+                        go.transform.GetChild(1).localRotation=new Quaternion(0,0,0,0);
+                    }
                 }
             }
         }}
@@ -1422,13 +1419,23 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
     void SetPresetIconPreviewsSprite(){
         var _spr=AssetsManager.instance.SprAny(saveInfo.iconAssetName);
         defaultPanel.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite=_spr;
-        presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().sprite=_spr;
+        presetAppearanceMainPanel.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite=_spr;
         presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().sprite=_spr;
 
         //var _mat=;
         defaultPanel.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(defaultPanel.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().material,saveInfo.iconShaderMatProps,true);
-        presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material,saveInfo.iconShaderMatProps,true);
+        presetAppearanceMainPanel.transform.GetChild(1).GetChild(0).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(presetAppearanceMainPanel.GetComponentInChildren<Button>().transform.GetChild(0).GetComponent<Image>().material,saveInfo.iconShaderMatProps,true);
         presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(presetAppearanceIconPanel.transform.GetChild(1).GetComponent<Image>().material,saveInfo.iconShaderMatProps,true);
+        
+        if(presetsPanel.activeSelf||defaultPanel.activeSelf){
+            //Update icon rotation only after loading
+            presetAppearanceIconPanel.transform.GetChild(2).GetChild(0).GetComponent<RotatePointButton>().UpdateAnglesZ(saveInfo.iconRotation);
+            //presetAppearanceIconPanel.transform.GetChild(1).eulerAngles=new Vector3(0,0,saveInfo.iconRotation);
+            presetAppearanceMainPanel.transform.GetChild(1).GetChild(0).eulerAngles=new Vector3(0,0,saveInfo.iconRotation);
+            defaultPanel.transform.GetChild(0).GetChild(0).GetChild(0).eulerAngles=new Vector3(0,0,saveInfo.iconRotation);
+            //presetAppearanceMainPanel.transform.GetChild(1).GetChild(0).localRotation=new Quaternion(0,0,saveInfo.iconRotation,Quaternion.identity.w);
+            //defaultPanel.transform.GetChild(0).GetChild(0).GetChild(0).localRotation=new Quaternion(0,0,saveInfo.iconRotation,Quaternion.identity.w);
+        }
     }
     void SetPlayerPreviewsSprite(){
         playerMainPanel.transform.GetChild(0).GetComponent<Image>().material=AssetsManager.instance.UpdateShaderMatProps(playerMainPanel.transform.GetChild(0).GetComponent<Image>().material,GameRules.instance.playerShaderMatProps,true);
@@ -1495,4 +1502,5 @@ public class SandboxSaveInfo{
     public string presetFrom;
     public string iconAssetName;
     public ShaderMatProps iconShaderMatProps;
+    public float iconRotation;
 }

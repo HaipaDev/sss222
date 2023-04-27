@@ -175,7 +175,7 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 #region //Adventure Data
 	public AdventureData advD=new AdventureData();
 	[System.Serializable]public class AdventureData{
-		public double buildLastLoaded;
+		public float buildLastSaved;
 		public int cores=0;
 		public float xp=0;
 		public bool _coreSpawnedPreAscend=false;
@@ -342,7 +342,7 @@ public class Highscore{
 	public int score;
 	public int playtime;
 	public string version;
-	public double build;
+	public float build;
 	public DateTime date;
 }
 [System.Serializable]

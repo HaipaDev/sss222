@@ -444,7 +444,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         if(gamemodeSelected>0&&(gamemodeSelected-1)<SaveSerial.instance.playerData.highscore.Length){
             if(score>GetHighscoreCurrent().score){
                 SaveSerial.instance.playerData.highscore[GameManager.instance.gamemodeSelected-1]=new Highscore(){score=score,playtime=Mathf.RoundToInt(currentPlaytime),
-                version=gameVersion,build=System.Math.Round(buildVersion,2),
+                version=gameVersion,build=(float)System.Math.Round(buildVersion,2),
                 date=DateTime.Now};
                 Debug.Log("Highscore set for: "+GetCurrentGamemodeName());
             }
@@ -464,7 +464,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         var ss=SaveSerial.instance.advD;
         if(s==null){Debug.LogError("SaveSerial not present");}
         if(ss!=null){
-            ss.buildLastLoaded=buildVersion;
+            ss.buildLastSaved=buildVersion;
             if(zoneToTravelTo!=-1&&p!=null&&p.health<=0){//Die during travel
                 if(CoreSetup.instance.adventureTravelZonePrefab.travelTimeToAddOnDeath==0&&Player.instance.GetComponent<PlayerModules>()==null){
                     zoneToTravelTo=-1;
