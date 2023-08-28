@@ -16,7 +16,7 @@ public class CosmeticPopups : MonoBehaviour{  public static CosmeticPopups insta
     public _CstmzItemNameAndType firstInQueue;
     
     void Awake(){
-        if(CosmeticPopups.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
+        //if(CosmeticPopups.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
         if(transform.GetChild(0).gameObject.activeSelf)transform.GetChild(0).gameObject.SetActive(false);
     }
     void Update(){

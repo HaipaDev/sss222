@@ -9,11 +9,9 @@ using Sirenix.OdinInspector;
 public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 	void Awake(){if(instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}}
 	IEnumerator Start(){
-		yield return new WaitForSecondsRealtime(0.01f);
-		playerData.highscore=new Highscore[CoreSetup.GetGamerulesetsPrefabsLength()];
-		for(int i=0;i<playerData.highscore.Length;i++){playerData.highscore[i]=new Highscore();}
-		//playerData.achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()];
-		statsData.statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()];
+		yield return new WaitForSecondsRealtime(0.02f);
+		RecreatePlayerData();
+		RecreateStatsAchievsData();
 		
 		if(String.IsNullOrEmpty(playerData.skinName)||AssetsManager.instance.GetSkin(playerData.skinName)==null){playerData.skinName="def";}
 		if(String.IsNullOrEmpty(playerData.trailName)||AssetsManager.instance.GetTrail(playerData.trailName)==null){playerData.trailName="def";}
@@ -132,13 +130,19 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		}else Debug.LogWarning("Game Data file not found in: "+_playerDataPath());
 	}
 	public void Delete(){
-		playerData=new PlayerData(){highscore=new Highscore[CoreSetup.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
+		playerData=new PlayerData();//{highscore=new Highscore[CoreSetup.GetGamerulesetsPrefabsLength()]/*,achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()]*/};
+		RecreatePlayerData();
 		Debug.Log("Game Data reset");
 		GC.Collect();
 		if(ES3.FileExists(_playerDataPath())){
 			ES3.DeleteFile(_playerDataPath());
 			Debug.Log("Game Data deleted!");
 		}
+	}
+	void RecreatePlayerData(){
+		playerData.highscore=new Highscore[CoreSetup.instance.GetGamerulesetsPrefabsLength()];
+		for(int i=0;i<playerData.highscore.Length;i++){playerData.highscore[i]=new Highscore();}
+		//playerData.achievsCompleted=new AchievData[StatsAchievsManager._AchievsListCount()];
 	}
 #endregion
 #region//Stats Data
@@ -163,13 +167,17 @@ public class SaveSerial : MonoBehaviour{	public static SaveSerial instance;
 		}else Debug.LogWarning("Stats Data file not found in: "+_statsDataPath());
 	}
 	public void DeleteStats(){
-		statsData=new StatsData(){statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()]};
+		statsData=new StatsData();//{statsGamemodesList=new StatsGamemode[StatsAchievsManager.GetStatsGMListCount()]};
+		RecreateStatsAchievsData();
 		Debug.Log("Stats Data reset");
 		GC.Collect();
 		if(ES3.FileExists(_statsDataPath())){
 			ES3.DeleteFile(_statsDataPath());
 			Debug.Log("Stats Data deleted!");
 		}
+	}
+	void RecreateStatsAchievsData(){
+		statsData.statsGamemodesList=new StatsGamemode[StatsAchievsManager.instance.GetStatsGMListCount()];
 	}
 #endregion
 #region //Adventure Data

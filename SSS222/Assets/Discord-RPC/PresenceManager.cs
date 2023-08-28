@@ -13,8 +13,7 @@ namespace DiscordPresence
     [Serializable]
     public class DiscordJoinRequestEvent : UnityEvent<DiscordRpc.JoinRequest> { }
 
-    public class PresenceManager : MonoBehaviour{
-        public static PresenceManager instance;
+    public class PresenceManager : MonoBehaviour{   public static PresenceManager instance;
         public DiscordRpc.RichPresence presence = new DiscordRpc.RichPresence();
         public string applicationId;
         public string optionalSteamId;

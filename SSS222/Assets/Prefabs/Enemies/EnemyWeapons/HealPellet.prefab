@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 24842559518470676}
   - component: {fileID: 6441261333678637232}
   - component: {fileID: 5820739300652673482}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: HealPellet
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
@@ -36,6 +36,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5306678, y: -5.66347, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0

@@ -186,13 +186,41 @@ public class GSceneManager : MonoBehaviour{ public static GSceneManager instance
     public void LoadWebsite(string url){Application.OpenURL(url);}
     public void SubmitScore(){if(SaveSerial.instance.hyperGamerLoginData.loggedIn){LoadScoreSubmitScene();}else{LoadLoginScene();}}
     public void ReloadScene(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        string _scene=SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(_scene);
         GameManager.instance.speedChanged=false;
         GameManager.instance.gameSpeed=1f;
     }
-    public void QuitGame(){
-        Application.Quit();
+    public void ReloadSceneUnload(){
+        string _scene=SceneManager.GetActiveScene().name;
+        SceneManager.UnloadSceneAsync(_scene);
+        SceneManager.LoadScene(_scene);
+        GameManager.instance.speedChanged=false;
+        GameManager.instance.gameSpeed=1f;
     }
+    public void ReloadSceneSwitch(){GSceneManager.instance.StartCoroutine(GSceneManager.instance.ReloadSceneSwitchI());}
+    IEnumerator ReloadSceneSwitchI(){
+        string _scene=SceneManager.GetActiveScene().name;
+        int _gm=GameManager.instance.gamemodeSelected;
+        Debug.Log(GameManager.instance.gamemodeSelected);
+        SceneManager.UnloadSceneAsync(_scene);
+        //SceneManager.LoadScene("ChooseGameMode");
+        LoadStartMenuGame();
+        Debug.Log(GameManager.instance.gamemodeSelected);
+        yield return new WaitForSeconds(0.1f);
+        GameManager.instance.gamemodeSelected=_gm;
+        Debug.Log(GameManager.instance.gamemodeSelected);
+        if(_scene=="Game"){GameManager.instance.ReAddSpawnReqsMono();}
+        SceneManager.LoadScene(_scene);
+        Debug.Log(GameManager.instance.gamemodeSelected);
+        GameManager.instance.gamemodeSelected=_gm;
+        Debug.Log(GameManager.instance.gamemodeSelected);
+        if(_scene=="Game"){GameManager.instance.ReAddSpawnReqsMono();}
+        GameManager.instance.speedChanged=false;
+        GameManager.instance.gameSpeed=1f;
+        Debug.Log(GameManager.instance.gamemodeSelected);
+    }
+    public void QuitGame(){Application.Quit();}
     /*void OnApplicationQuit(){
         GameManager.
     }*/

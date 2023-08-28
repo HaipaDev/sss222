@@ -5,10 +5,11 @@ using UnityEngine;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Threading.Tasks;
+using Sirenix.OdinInspector;
 
 
 public class DBAccess : MonoBehaviour{      public static DBAccess instance;
-    /*const*/ string MONGO_URI = gitignoreScript.mongoDBString;
+    const string MONGO_URI = gitignoreScript.mongoDBString;
     MongoClient client_SSS222;
     const string DATABASE_NAME_SSS222 = "sss222";
     IMongoDatabase db_SSS222;
@@ -22,15 +23,15 @@ public class DBAccess : MonoBehaviour{      public static DBAccess instance;
     IMongoCollection<Model_Score> scores_hardcore;
     IMongoCollection<Model_SSSCustomization> sssCustomizationData;
     IMongoCollection<HyperGamer> hyperGamers;
-    public string loginMessage;
-    public string loggedInMessage;
-    public string submitMessage;
+    [DisableInEditorMode]public string loginMessage;
+    [DisableInEditorMode]public string loggedInMessage;
+    [DisableInEditorMode]public string submitMessage;
 
-    public string hyperLastLoginAppDisplay="SSS222";
+    public const string hyperLastLoginAppDisplay="SSS222";
 
     void Awake(){
         if(DBAccess.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
-        MONGO_URI=gitignoreScript.mongoDBString;
+        //MONGO_URI=gitignoreScript.mongoDBString;
     }
     void Start(){
         client_SSS222=new MongoClient(MONGO_URI);

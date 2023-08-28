@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
                 }
             }
         }
-        if(SceneManager.GetActiveScene().name!="Game"&&setValues==true){setValues=false;}
+        if(!GSceneManager.CheckScene("Game")&&setValues==true){setValues=false;}
         
         bool _maxXpOverflow=false;bool _maxXpLowerCap=false;
         if(GameRules.instance!=null&&Player.instance!=null)if(Player.instance.GetComponent<PlayerModules>()!=null){
@@ -293,6 +293,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
             if(sceneName!="Game"){
                 if(sceneName=="SandboxMode"){
                     presenceStatus=_prefixStatus+"Creating a gamemode"+nickInfo+_suffixStatus;
+                    _prefixDetails=SandboxCanvas.instance.saveInfo.name;
                     smallImageKey="sandbox";
                     smallImageText="Sandbox Mode";
                 }else if(sceneName=="Customization"){
@@ -319,6 +320,7 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
                 if(smallImageKey.Contains(" "))smallImageKey=smallImageKey.Replace(" ","");
                 smallImageText=GameRules.instance.cfgName;
                 if(gamemodeSelected!=-1){
+                    if(gamemodeSelected==0)_suffixStatus=" | "+GameRules.instance.cfgDesc;//Sandbox
                     presenceDetails=_prefixDetails+"Score: "+score+" | "+"Game Time: "+GetGameManagerTimeFormat()+_suffixDetails;
                     presenceStatus=_prefixStatus+nickInfo+_suffixStatus;
                 }else{//Adventure
@@ -381,6 +383,12 @@ public class GameManager : MonoBehaviour{   public static GameManager instance;
         }else if(GSceneManager.CheckScene("AdventureZones")){
             gamemodeSelected=-1;
             //if(zoneSelected==-1){zoneSelected=0;}
+        }
+
+        //ReAdd spawnReqsMono if necessary or even restart scene
+        if(GSceneManager.CheckScene("Game")){
+            //if(GetComponent<spawnReqsMono>()==null&&currentPlaytime<1f)ReAddSpawnReqsMono();
+            if(GetComponent<spawnReqsMono>()==null&&currentPlaytime>1f){GSceneManager.instance.ReloadSceneSwitch();currentPlaytime=0f;}
         }
     }
     float _playerTravelCutRatio=1f;

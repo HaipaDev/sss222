@@ -7,9 +7,9 @@ using Steamworks.Data;
 using System.Threading.Tasks;
 
 public class SteamManager : MonoBehaviour{  public static SteamManager instance;
-    const int appID=mainAppID;
-    const int mainAppID=2000190;
-    const int playtestID=2000200;
+    const uint appID=mainAppID;
+    const uint mainAppID=2000190;
+    const uint playtestID=2000200;
     void Awake(){
         if(SteamManager.instance!=null){Destroy(gameObject);}else{instance=this;DontDestroyOnLoad(gameObject);gameObject.name=gameObject.name.Split('(')[0];}
     }

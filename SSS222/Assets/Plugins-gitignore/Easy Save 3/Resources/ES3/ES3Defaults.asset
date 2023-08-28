@@ -30,6 +30,7 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - Assembly-CSharp
+    - Plugins
     - Coffee.SoftMaskForUGUI
     - AllIn1SpriteShaderAssembly
     - Purchasing.Common
@@ -37,6 +38,7 @@ MonoBehaviour:
     - Coffee.UnmaskForUGUI
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - Coffee.SoftMaskForUGUI.Editor
+    - Project.Editor
     - Coffee.UnmaskForUGUI.Editor
     - SimpleFolderIcon
     showAdvancedSettings: 0

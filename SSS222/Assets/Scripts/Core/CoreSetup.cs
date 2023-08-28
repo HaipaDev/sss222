@@ -49,9 +49,9 @@ public class CoreSetup : MonoBehaviour{   public static CoreSetup instance;
         if(FindObjectOfType<AssetsManager>()==null){Instantiate(assetsManagerPrefab);}
 
         //if(FindObjectOfType<DBAccess>()==null){Instantiate(dbaccessPrefab);}
-        #if (!UNITY_ANDROID && !UNITY_EDITOR) || (UNITY_ANDROID && UNITY_EDITOR)
+        //#if (!UNITY_ANDROID && !UNITY_EDITOR) || (UNITY_ANDROID && UNITY_EDITOR)
         if(FindObjectOfType<DiscordPresence.PresenceManager>()==null){Instantiate(discordRPCPrefab);}
-        #endif
+        //#endif
         if(FindObjectOfType<SteamManager>()==null){Instantiate(steamManagerPrefab);}
         if(FindObjectOfType<StatsAchievsManager>()==null){Instantiate(statsAchievsManagerPrefab);}
         
@@ -68,6 +68,6 @@ public class CoreSetup : MonoBehaviour{   public static CoreSetup instance;
         //Destroy(gameObject);
     }
 
-    public static int GetGamerulesetsPrefabsLength(){return CoreSetup.instance._gamerulesetsPrefabsLength;}
+    public int GetGamerulesetsPrefabsLength(){return CoreSetup.instance._gamerulesetsPrefabsLength;}
     public GameObject GetJukeboxPrefab(){return jukeboxPrefab;}
 }

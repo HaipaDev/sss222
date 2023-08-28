@@ -249,7 +249,7 @@ public class StatsAchievsManager : MonoBehaviour{   public static StatsAchievsMa
         statsLoaded=true;
     }
     [Button]public void ResetStatsAchievs(){statsGamemodesList=new List<StatsGamemode>();SetStatsList();statsTotal=new StatsTotal();foreach(Achievement a in achievsList){a.achievData=new AchievData();a.achievData.name=a.name;}}
-    public static int GetStatsGMListCount(){return StatsAchievsManager.instance._statsGamemodesListCount;}
+    public int GetStatsGMListCount(){return StatsAchievsManager.instance._statsGamemodesListCount;}
 }
 [System.Serializable]
 public class Achievement{

@@ -11,6 +11,7 @@ public class BGManager : MonoBehaviour{
     [DisableInEditorMode][SerializeField]Material material;
     [SerializeField]Material _materialDef;
     [SerializeField]Texture2D text;
+    [SerializeField]Texture2D textMiddle;
     [DisableInPlayMode][SerializeField]bool setOnValidate;
     ShaderMatProps travelingShaderMatProps;
     IEnumerator Start(){
@@ -75,5 +76,6 @@ public class BGManager : MonoBehaviour{
     public void SetMatProps(ShaderMatProps mat){shaderMatProps=mat;if(material!=null){material=AssetsManager.instance.UpdateShaderMatProps(material,shaderMatProps);}UpdateMaterials();}
     [Button]public void UpdateMaterials(){foreach(Tag_BGColor t in transform.GetComponentsInChildren<Tag_BGColor>()){if(material!=null)t.GetComponent<Renderer>().sharedMaterial=material;}}
     public Texture2D GetBgTexture(){return text;}
+    public Texture2D GetBgTextureMiddle(){return textMiddle;}
     public Material GetBgMat(){return transform.GetComponentInChildren<Tag_BGColor>().GetComponent<Renderer>().sharedMaterial;}
 }

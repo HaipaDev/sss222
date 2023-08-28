@@ -107,6 +107,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
             CountSaveFiles();
             saveSelected="Sandbox Save #"+(savesCount+1);
             saveInfo.name="Sandbox Save #"+(savesCount+1);
+            GameRules.instance.cfgDesc=saveInfo.name;
             saveInfo.desc="New Sandbox Mode Savefile";
             defPresetGameruleset=CoreSetup.instance.gamerulesetsPrefabs[0];
             saveInfo.presetFrom=CoreSetup.instance.gamerulesetsPrefabs[0].cfgName;
@@ -286,7 +287,6 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 
         CloseSavingPrompts();
 
-        //saveSelected=saveInfo.name;
         _selectedDefPreset="";
         StopRefreshYoursPanel();
         ChangeSaveOverwriteBulb(false);
@@ -388,7 +388,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
         gr.gameObject.name="GRSandbox";
         gr.cfgName="Sandbox Save #"+(savesCount+1);
         saveInfo.name="Sandbox Save #"+(savesCount+1);
-        gr.cfgDesc="New Sandbox Mode Savefile";
+        gr.cfgDesc=saveInfo.name;
         saveInfo.desc="New Sandbox Mode Savefile";
         gr.cfgIconAssetName="questionMark";
         gr.cfgIconsGo=null;
@@ -603,21 +603,18 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
                     ES3.LoadInto<GameRules>("gamerulesData",_selectedSandboxFilePath(),GameRules.instance);
                     if(ES3.KeyExists("saveInfo",_selectedSandboxFilePath())){
                         ES3.LoadInto("saveInfo",_selectedSandboxFilePath(),saveInfo);
-                        //GameRules.instance.cfgName=saveInfo.name;
-                        //GameRules.instance.cfgDesc=saveInfo.desc;
-                        //GameRules.instance.cfgIconAssetName=saveInfo.iconAssetName;
-                        //saveInfo.iconShaderMatProps=saveInfo.iconShaderMatProps;
+                        GameRules.instance.cfgDesc=saveInfo.name;
                         SetDefPresetGameruleset(saveInfo.presetFrom);
                     }else{
                         saveInfo.name=GameRules.instance.cfgName;
+                        GameRules.instance.cfgDesc=saveInfo.name;
                         saveInfo.saveBuild=1;
                         saveInfo.gameBuild=GameManager.instance.buildVersion;
                         SetDefPresetGameruleset("Arcade Mode");
                     }
                     SavePopup("\u0022"+saveSelected+"\u0022 <color=blue> LOADED </color>");
                     ChangeSaveOverwriteBulb(false);
-                    curSaveFileName=saveSelected;//saveSelected="";
-                    //_cachedSandboxName="";
+                    curSaveFileName=saveSelected;
                 }
                 else{
                     Debug.LogWarning("No key by "+"gamerulesData"+"for: "+_selectedSandboxFilePath());
@@ -670,7 +667,7 @@ public class SandboxCanvas : MonoBehaviour{     public static SandboxCanvas inst
 #endregion
 
 #region///Preset Display
-    public void SetSandboxName(string v){saveSelected=v;saveInfo.name=v;OnChangeAnything();}//GameRules.instance.cfgName=v;}//sandboxName=v;}
+    public void SetSandboxName(string v){saveSelected=v;saveInfo.name=v;GameRules.instance.cfgDesc=v;OnChangeAnything();}//GameRules.instance.cfgName=v;}//sandboxName=v;}
     public void SetSandboxDesc(string v){saveInfo.desc=v;OnChangeAnything();}//GameRules.instance.cfgName=v;}//sandboxName=v;}
     public void SetPresetIcon(string v){saveInfo.iconAssetName=v;OpenPresetAppearanceIconPanel();OnChangeAnything();}
     public void SetPresetIconSprMatHue(float v){saveInfo.iconShaderMatProps.hue=(float)Math.Round(v,2);UpdateIconSprMat();OnChangeAnything();}
