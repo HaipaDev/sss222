@@ -12,3 +12,11 @@ With some help from my friends including sprites for some skins, the bosses and 
 - [ ] 1.1 - Rebalancing, A form of a Tutorial, Steam Cloud, Gamepad Support
 - [ ] 1.2 - Trading Changes, Improved Adventure Travel, Localizations
 - [ ] 1.3 - Technical changes | Improved Spacebox Mode
+
+
+
+
+
+
+
+####ZAJEBISTA GIERA POLECAM PLEKSON
